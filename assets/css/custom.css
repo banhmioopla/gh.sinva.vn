@@ -1,0 +1,68 @@
+.card-header {
+    background-color: #faf0ac;
+}
+.badge {
+	white-space: normal;
+	line-height: 1.25;
+}
+.apm-update-time{
+    font-size: .85em;
+}
+.service-list a{
+    background-color: #e7af4a3d;
+}
+
+.service-list a i{
+   color:red;
+   
+}
+
+.service-list a.carousel-control-prev{
+    left: -35px;
+    width: 54px;
+}
+
+.service-list a.carousel-control-next{
+    right: -35px;
+    width: 54px;
+}
+
+/* Xeditable */
+.editableform textarea.form-control {
+    width: 19em;
+}
+
+.editableform select.form-control {
+    width: 12em;
+}
+
+.editable-buttons {
+    display: block;
+}
+
+.editable-click, a.editable-click, a.editable-click:hover {
+    color: #3e5f61;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding : 0px;
+    margin-left: 0px;
+    display: inline;
+    border: 0px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border: 0px;
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
+        max-width: 1015px;
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-lg {
+        max-width: 675px;
+    }
+}

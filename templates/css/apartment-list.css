@@ -1,0 +1,210 @@
+.collapsing {
+    transition: 1s;
+}
+.list-group-item {
+    font-style: italic;
+    font-size: 10px;
+    padding: 5px;
+}
+
+.list-group-item span {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.blockquote-custom {
+    position: relative;
+    font-size: 0.9rem;
+}
+
+.blockquote-custom-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -12px;
+    left: 23px;
+}
+.room-status-count span{
+    font-size:10px;
+
+}
+
+.apm_room td{
+    font-size: 10px;
+    font-family: 'Comfortaa', serif;
+}
+.apm_room th{
+    font-size: 10px;
+    font-family: 'Comfortaa', serif;
+}
+.apm_room .item-room-price{
+    padding-right: 25px !important;
+    padding-left: 25px !important;
+}
+.apm_room .item-room-type{
+    padding-right: 25px !important;
+    padding-left: 25px !important;
+}
+/*.room-datatable th{
+    font-size: 12px;
+
+}*/
+.address{
+    font-size:13.5px;
+    color: #00363a;
+
+}
+
+.address-item-block .card-header{
+    background-color: #f9fccd;
+}
+
+.carousel-control-next {
+    right: -35px;
+    font-size: 32px;
+    color: red;
+}
+
+.carousel-control-prev {
+    left: -35px;
+    font-size: 32px;
+    color: red;
+}
+
+.carousel-inner .carousel-item {
+  transition: -webkit-transform 1s ease;
+  transition: transform 1s ease;
+  transition: transform 1s ease, -webkit-transform 1s ease;
+}
+
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    background: #02c0ce no-repeat center center;
+    border-radius: 50%;
+}
+
+.carousel-control-next:focus, .carousel-control-next:hover, .carousel-control-prev:focus, .carousel-control-prev:hover {
+    color: #b91d1d;
+}
+
+.address-item-block .editable-click {
+    color: #313a46;
+    line-height: 25px;
+}
+.wrapper {
+    padding-top: 115px;
+}
+
+#topnav .navbar-custom {
+    /*background-color: #02c0ce;
+    height: 45px;*/
+
+}
+
+.editable-buttons {
+    display: block;
+    margin-left: 15%;
+    margin-top: 3%;
+}
+.ui-state-highlight
+{
+    padding:24px;
+    background-color:#deffcc;
+    border:5px dotted #ccc;
+    cursor:move;
+    margin-top:22px;
+}
+
+
+@media (min-width: 768px) { 
+    .list-group-item {
+        font-size: 13.5px;
+        padding: 8px;
+        padding-right: 35px;
+    }
+    .list-group-item span {
+        font-size: 14.5px;
+        font-weight: bold;
+    }
+    .address{
+        font-size:15.5px;
+    }
+
+    .room-status-count span{
+        font-size:11.5px;
+        font-weight: bold;
+    }
+    .carousel-control-next {
+        right: -45px;
+        font-size: 32px;
+        color: red;
+    }
+
+    .carousel-control-prev {
+        left: -45px;
+        font-size: 32px;
+        color: red;
+    }
+
+    .apm_room td{
+        font-size: 12.5px;
+    }
+    .address .editableform .form-control {
+        width: 115%;
+        font-size: 12.5px;
+        font-weight: bold;
+    }
+    .address .editableform .form-control:disabled{
+        width: auto;
+    }
+
+}
+@media (min-width: 992px) {
+    .carousel-control-next {
+        right: -55px;
+        font-size: 32px;
+        color: red;
+    }
+
+    .carousel-control-prev {
+        left: -55px;
+        font-size: 32px;
+        color: red;
+    }
+    .wrapper {
+        padding-top: 115px;
+    }
+    .apm_room td{
+        font-size: 14.5px;
+    }
+    .blockquote-custom {
+        font-size: 0.99rem;
+    }
+
+    #topnav .navigation-menu > li > a {
+        padding-top: 12px;
+    /* padding-bottom: 20px; */
+    }
+
+}
+
+
+@media (min-width: 1200px) {
+
+    .carousel-control-next {
+        right: -75px;
+        font-size: 32px;
+        color: red;
+    }
+
+    .carousel-control-prev {
+        left: -75px;
+        font-size: 32px;
+        color: red;
+    }
+    
+}

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Highdmin - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- Custom box css -->
+        <link href="../plugins/custombox/css/custombox.min.css" rel="stylesheet">
+
+        <!-- App css -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+
+        <script src="assets/js/modernizr.min.js"></script>
+
+    </head>
+    <body><!-- Navigation Bar-->
+        <header id="topnav">
+            <div class="topbar-main">
+                <div class="container-fluid">
+                    <div class="menu-extras topbar-custom">
+
+                        <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                            <li class="menu-item">
+                                <!-- Mobile menu toggle-->
+                                <a class="navbar-toggle nav-link">
+                                    <div class="lines">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </a>
+                                <!-- End mobile menu toggle-->
+                            </li>
+                            
+
+                            <li class="dropdown notification-list">
+                                <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
+                                    <i class="fi-bell noti-icon"></i>
+                                    <span class="badge badge-danger badge-pill noti-icon-badge">4</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-lg">
+
+                                    <!-- item-->
+                                    <div class="dropdown-item noti-title">
+                                        <h6 class="m-0"><span class="float-right"><a href="" class="text-dark"><small>Clear All</small></a> </span>Notification</h6>
+                                    </div>
+
+                                    <div class="slimscroll" style="max-height: 230px;">
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-success"><i class="mdi mdi-comment-account-outline"></i></div>
+                                            <p class="notify-details">Caleb Flakelar commented on Admin<small class="text-muted">1 min ago</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-info"><i class="mdi mdi-account-plus"></i></div>
+                                            <p class="notify-details">New user registered.<small class="text-muted">5 hours ago</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-danger"><i class="mdi mdi-heart"></i></div>
+                                            <p class="notify-details">Carlos Crouch liked <b>Admin</b><small class="text-muted">3 days ago</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-warning"><i class="mdi mdi-comment-account-outline"></i></div>
+                                            <p class="notify-details">Caleb Flakelar commented on Admin<small class="text-muted">4 days ago</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-purple"><i class="mdi mdi-account-plus"></i></div>
+                                            <p class="notify-details">New user registered.<small class="text-muted">7 days ago</small></p>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-custom"><i class="mdi mdi-heart"></i></div>
+                                            <p class="notify-details">Carlos Crouch liked <b>Admin</b><small class="text-muted">13 days ago</small></p>
+                                        </a>
+                                    </div>
+
+                                    <!-- All-->
+                                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                        View all <i class="fi-arrow-right"></i>
+                                    </a>
+
+                                </div>
+                            </li>
+
+                            
+
+                            <li class="dropdown notification-list">
+                                <a class="nav-link dropdown-toggle waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
+                                    <img src="assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle"> <span class="ml-1 pro-user-name">Maxine K <i class="mdi mdi-chevron-down"></i> </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="fi-cog"></i> <span>Settings</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="fi-help"></i> <span>Support</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="fi-lock"></i> <span>Lock Screen</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="fi-power"></i> <span>Logout</span>
+                                    </a>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- end menu-extras -->
+
+                    <div class="clearfix"></div>
+
+                </div> <!-- end container -->
+            </div>
+            <!-- end topbar-main -->
+
+            <div class="navbar-custom">
+                <div class="container-fluid">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li class="has-submenu">
+                                <a href="index.html"><i class="icon-speedometer"></i>Dashboard</a>
+                            </li>
+
+                            <li class="has-submenu">
+                                <a href="#"><i class="icon-layers"></i>Apps</a>
+                                <ul class="submenu">
+                                    <li><a href="apps-calendar.html">Calendar</a></li>
+                                    <li><a href="apps-tickets.html">Tickets</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has-submenu">
+                                <a href="#"><i class="icon-briefcase"></i>UI Elements</a>
+                                <ul class="submenu megamenu">
+                                    <li>
+                                        <ul>
+                                            <li><a href="ui-typography.html">Typography</a></li>
+                                            <li><a href="ui-cards.html">Cards</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul>
+                                            <li><a href="ui-ribbons.html">Ribbons</a></li>
+                                            <li><a href="ui-tooltips-popovers.html">Tooltips & Popover</a></li>
+                                        </ul>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- End navigation menu -->
+                    </div> <!-- end #navigation -->
+                </div> <!-- end container -->
+            </div> <!-- end navbar-custom -->
+        </header>
+        <div class="wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-box m-2 row">
+                            <h4 class="header-title m-t-0 col-12">TP. HCM</h4>
+                            <div class="col-12 mt-2">
+                                <a class="btn btn-info waves-effect waves-light w-100">Q.1</a>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <a class="btn btn-info waves-effect waves-light w-100">Q.2</a>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <a class="btn btn-info waves-effect waves-light w-100">Q.BiTa</a>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <a class="btn btn-info waves-effect waves-light w-100">Q.FuNhu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-box m-2 row">
+                            <h4 class="header-title mb-4">Tổng quan</h4>
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-6 col-xl-3">
+                                    <div class="mb-0 widget-chart-two">
+                                        <div class="float-right">
+                                            <input data-plugin="knob" data-width="80" data-height="80" data-linecap=round
+                                                   data-fgColor="#0acf97" value="37" data-skin="tron" data-angleOffset="180"
+                                                   data-readOnly=true data-thickness=".1"/>
+                                        </div>
+                                        <div class="widget-chart-two-content">
+                                            <p class="text-muted mb-0 mt-2">Trống</p>
+                                            <h3>355</h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-lg-6 col-xl-3">
+                                    <div class="mb-0 widget-chart-two">
+                                        <div class="float-right">
+                                            <input data-plugin="knob" data-width="80" data-height="80" data-linecap=round
+                                                   data-fgColor="#f9bc0b" value="92" data-skin="tron" data-angleOffset="180"
+                                                   data-readOnly=true data-thickness=".1"/>
+                                        </div>
+                                        <div class="widget-chart-two-content">
+                                            <p class="text-muted mb-0 mt-2">Có update ngày Trống</p>
+                                            <h3>670</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end row -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card-box m-2">
+                            <h4 class="header-title mb-4">Dòng thời gian</h4>
+
+                            <div class="inbox-widget slimscroll" style="max-height: 370px;">
+                                <a href="#">
+                                    <div class="inbox-item">
+                                        <div class="inbox-item-img"><img src="assets/images/users/avatar-1.jpg" class="rounded-circle bx-shadow-lg" alt=""></div>
+                                        <p class="inbox-item-author">Nhật Dương</p>
+                                        <p class="inbox-item-text text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                        <p class="inbox-item-date">13:40 PM</p>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="inbox-item">
+                                        <div class="inbox-item-img"><img src="assets/images/users/avatar-2.jpg" class="rounded-circle bx-shadow-lg" alt=""></div>
+                                        <p class="inbox-item-author">Tomaslau</p>
+                                        <p class="inbox-item-text text-justify"> when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                        <p class="inbox-item-date">13:34 PM</p>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="inbox-item">
+                                        <div class="inbox-item-img"><img src="assets/images/users/avatar-3.jpg" class="rounded-circle bx-shadow-lg" alt=""></div>
+                                        <p class="inbox-item-author">Stillnotdavid</p>
+                                        <p class="inbox-item-text ">This theme is awesome!</p>
+                                        <p class="inbox-item-date">13:17 PM</p>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+
+        <!-- Modal-Effect -->
+        <script src="../plugins/custombox/js/custombox.min.js"></script>
+        <script src="../plugins/custombox/js/legacy.min.js"></script>
+        <script src="../plugins/jquery-knob/jquery.knob.js"></script>
+
+        <script src="../plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+        <script src="../plugins/counterup/jquery.counterup.min.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/jquery.core.js"></script>
+        <script src="assets/js/jquery.app.js"></script>
+
+    </body>
+</html>

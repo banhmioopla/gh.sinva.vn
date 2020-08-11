@@ -1,0 +1,41 @@
+
+.note .editableform textarea.form-control  {
+    width: 185%;
+    max-width: 600%;
+	background-color: #f9fccd;
+}
+/*.editable-pre-wrapped{
+	white-space: pre-line;
+	
+}*/
+blockquote .note div{
+	white-space: pre-line;
+}
+
+
+
+@media (min-width: 768px) {
+
+	.note .editableform textarea.form-control  {
+	    width: 330%;
+	    font-size: 13px;
+	}
+	.editable-pre-wrapped{
+		white-space: pre-line;
+		
+	}
+
+}
+
+@media (min-width: 992px) {
+	.note .editableform textarea.form-control  {
+	    width: 460%;
+    	font-size: 15px;
+	}
+
+}
+
+
+@media (min-width: 1200px) {
+
+}
