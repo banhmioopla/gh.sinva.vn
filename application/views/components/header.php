@@ -44,7 +44,6 @@
                     </button>
                     Cập nhật thất bại
                 </div>`;
-            
 		</script>
         <style type="text/css" media="screen">
             .apm-update-time {

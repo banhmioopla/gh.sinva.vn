@@ -34,6 +34,18 @@
     <script src="<?= $assets_path ?>js/jquery.core.js"></script>
     <script src="<?= $assets_path ?>js/jquery.app.js"></script>
     <script>
+        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editableform.buttons =
+        '<div class="d-flex justify-content-center mt-2">' +
+            '<button type="submit" class="btn btn-primary btn-sm editable-submit">'+
+                '<i class="fa fa-fw fa-check"></i>'+
+            '</button>'+
+            '<button type="button" class="btn btn-default btn-sm editable-cancel">'+
+                '<i class="fa fa-fw fa-times"></i>'+
+            '</button>'+
+        '</div>';
+    </script>
+    <script>
         for (var __i = 0; __i < commands.length; __i++) {
             commands[__i]();
         }

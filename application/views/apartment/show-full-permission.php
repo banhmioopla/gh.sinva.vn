@@ -27,9 +27,9 @@
             <div class="mt-2 mb-2 list-action">
                 <span class="d-flex justify-content-center">
                 <?php foreach($list_district as $district): ?>
-                    <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>" 
+                    <a href="<?= base_url().'admin/list-apartment?district_id='.$district['id'] ?>" 
                         class="btn m-1 btn-sm btn-outline-success
-                        <?= $district_code == $district['code'] ? 'active':'' ?>
+                        <?= $district_id == $district['id'] ? 'active':'' ?>
                         btn-rounded waves-light waves-effect">
                         <?= $district['name'] ?>
                     </a>
@@ -78,6 +78,11 @@
                                         </button>
                                         <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                             <i class="mdi mdi-folder-multiple-image"></i>
+                                        </button>
+                                        <button type="button" 
+                                                data-apartment-id="<?= $apartment['id'] ?>" 
+                                                class="btn m-1 btn-sm apartment-delete btn-outline-danger btn-rounded waves-light waves-effect">
+                                            <i class="mdi mdi-delete"></i>
                                         </button>
                                     </span>
                                 </div>
@@ -129,7 +134,10 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>">
+                                    <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>" data-pk="apm-1"
+                                    data-name= "note"
+                                    data-value="<?= $apartment['note'] ?>"
+                                    data-title="Enter username">
                                         <p><?= $apartment['note'] ?></p>
                                     </div>
                                     <div class="tab-pane service-list show active" id="apm-service-<?= $apartment['id'] ?>">
@@ -148,7 +156,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="apm-room-<?= $apartment['id'] ?>">
-                                        <?php $this->load->view('apartment/room-full-permission',[
+                                        <?php $this->load->view('apartment/room',[
                                             'apartment' => $apartment,
                                             'libRoom' => $libRoom,
                                         ]) ?>
@@ -179,6 +187,224 @@
         }).mouseleave(function() {
             $(this).find('.list-action').hide(600); 
         });
+        /* =========== MODIFY DATA JS ========= */
+        // if(modify_mode == 'view') return;
+        
+        $('.apm-note').editable({
+            type: "textarea",
+            url: '<?= base_url()."admin/update-apartment-editable" ?>',
+            inputclass: '',
+            rows: 8
+        });
 
+        $('.service-list ul li div').editable({
+            type: "text",
+            url: '<?= base_url()."admin/update-apartment-editable" ?>',
+            inputclass: ''
+        });
+        
+        $('body').delegate('.list-room .room-data', 'click', function(){
+            $(this).editable({
+                type: "text",
+                selector: '.room-add',
+                url: '<?= base_url()."admin/update-room-editable" ?>',
+                inputclass: '',
+                display: function (value ) {
+                    var name = $(this).data('name');
+                    var si = [
+                        { value: 1, symbol: "" },
+                        { value: 1E3, symbol: "k" },
+                        { value: 1E6, symbol: "Mi" },
+                        { value: 1E9, symbol: "Bi" }
+                    ];
+                    var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+                    var i;
+                    for (i = si.length - 1; i > 0; i--) {
+                        if (value >= si[i].value) {
+                            break;
+                        }
+                    }
+                    var data = value;
+                    if(name == 'price')
+                        data =(value / si[i].value).toFixed(1).replace(rx, "$1") + si[i].symbol
+                    $(this).html((data));
+                }
+            });
+        });
+
+        $('body').delegate('.list-room .room-select-type', 'click', function(){
+            $(this).editable({
+                type: 'select',
+                url: '<?= base_url() ?>admin/get-room-type',
+                inputclass: '',
+                source: function() {
+                    data = [];
+                    $.ajax({
+                        url: '<?= base_url() ?>admin/get-room-type',
+                        dataType: 'json',
+                        async: false,
+                        success: function(res) {
+                            data = res;
+                            return res;
+                        }
+                    });
+                    return data;
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.apartment-alert').html(notify_html_success);
+                    } else {
+                        $('.apartment-alert').html(notify_html_fail);
+                    }
+                    $('.apartment-alert').show();
+                    $('.apartment-alert').fadeOut(3000);
+                }
+            });
+        });
+        
+        $('body').delegate('.list-room .room-select-status', 'click',function(){
+            $(this).editable({
+                type: 'select',
+                url: '<?= base_url() ?>admin/get-room-status',
+                inputclass: '',
+                source: function() {
+                    data = [];
+                    $.ajax({
+                        url: '<?= base_url() ?>admin/get-room-status',
+                        dataType: 'json',
+                        async: false,
+                        success: function(res) {
+                            data = res;
+                            return res;
+                        }
+                    });
+                    return data;
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.apartment-alert').html(notify_html_success);
+                    } else {
+                        $('.apartment-alert').html(notify_html_fail);
+                    }
+                    $('.apartment-alert').show();
+                    $('.apartment-alert').fadeOut(3000);
+                }
+            });
+        });
+
+        $.fn.combodate.defaults.maxYear = 2035;
+        $.fn.combodate.defaults.minYear = 2020;
+        $('body').delegate('.list-room .room-time_available', 'click', function() {
+            $('.list-room .room-time_available').editable({
+                placement: 'right',
+                type: 'combodate',
+                template:"D / MM / YYYY",
+                format:"DD-MM-YYYY",
+                viewformat:"DD-MM-YYYY",
+                mode: 'inline',
+                combodate: {
+                    firstItem: 'name'
+                },
+                inputclass: 'form-control-sm',
+                url: '<?= base_url()."admin/update-room-editable" ?>'
+            });
+        });
+        
+        $('body').delegate('.room-delete', 'click', function() {
+            console.log('hello');
+            let this_btn = $(this);
+            let room_id = $(this).data('room-id');
+            console.log(room_id);
+            $.ajax({
+                type: 'POST',
+                url:'<?= base_url()."admin/update-room-editable" ?>',
+                data: {pk: room_id, name: 'active', value: 'NO'},
+                success:function(response) {
+                    let data = JSON.parse(response);
+                    if(data.status > 0) {
+                        this_btn.parents('tr').remove();
+                    }
+                }
+            });
+        });
+
+        $('body').delegate('.apartment-delete', 'click', function(){
+            let apartment_id = $(this).data('apartment-id');
+            let this_btn = $(this);
+            $.ajax({
+                url: '<?= base_url() ?>admin/update-apartment-editable',
+                data: {pk: apartment_id, name: 'active', value: 'NO', mode: 'del'},
+                type: 'POST',
+                success: function(response) {
+                    let data = JSON.parse(response);
+                    if(data.status > 0) {
+                        this_btn.parents('.apartment-block').fadeOut(1500, function(){
+                            this_btn.parents('.apartment-block').remove();
+                            $('#modal-apartment-detail-' + apartment_id).remove();
+                        });
+                    }
+                }
+            });
+        });
+
+        // Default Datatable
+        
+        $('.room-add').click(function(){
+            let apm_id = $(this).data('apartment-id');
+            // rooom.destroy();
+            let room = $('#list-room-' + apm_id).DataTable();
+            // console.log(t_room);
+            console.log(apm_id);
+            $.ajax({
+                type: 'POST',
+                url: '<?= base_url()."admin/create-room-datatable" ?>',
+                data: {apartment_id: apm_id},
+                success: function(data){
+                    data = JSON.parse(data);
+                    console.log(data);
+                    let room_id = data.room_id;
+                    let new_row = `
+                    <tr>
+                    <td><div class="room-data" 
+                            data-pk="${room_id}"
+                            data-value="CODE"
+                            data-name="code"
+                            >CODE</div></td>
+                    <td><div class="room-select-type" 
+                            data-pk="${room_id}"
+                            data-value="1"
+                            data-name="type_id"
+                            >Studio</div></td>
+                    <td><div class="room-data font-weight-bold"
+                            data-pk="${room_id}"
+                            data-value="0"
+                            data-name="price"
+                            >0</div></td>
+                    <td><div class="room-data" 
+                            data-pk= "${room_id}"
+                            data-value= "0"
+                            data-name="area">0</div></td>
+                    <td><div class="room-select-status" 
+                            data-pk="${room_id}"
+                            data-value="Full"
+                            data-name="status">Full</div></td>
+                    <td><div class="room-time_available" 
+                            data-pk="${room_id}"
+                            data-value="<?= date('d-m-Y', 0) ?>"
+                            data-name="time_available"><?= date('d-m-Y', 0) ?></div></td>
+                    <td class="d-flex justify-content-center">
+                        <button data-room-id="${room_id}" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                            <i class="mdi mdi-delete"></i>
+                        </button>
+                    </td>     
+                    </tr>
+                    `;
+                    room.row.add($(new_row)[0]).draw(false);
+                } // end success
+            }); 
+        });
+        
     });
 </script>

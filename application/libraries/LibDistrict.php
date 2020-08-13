@@ -9,16 +9,16 @@ class LibDistrict {
 		$this->CI->load->model('ghDistrict');
     }
     
-    public function getCbByActive($district_id = 0){
+    public function getCbByActive($district_code = ''){
         $list_district = $this->CI->ghDistrict->getByActive();
-        $cb = '<option value=0>chọn quận ...</option>';
+        $cb = '<option value="">chọn quận ...</option>';
         if(!empty($list_district)) {
             foreach ($list_district as $district) {
                 $selected = '';
-                if($district['id'] == $district_id) {
+                if($district['code'] == $district_code) {
                     $selected = 'selected';
                 }
-                $cb .= '<option '.$selected.' value='.$district['id'].'>quận '.$district['name'].'</option>';
+                $cb .= '<option '.$selected.' value='.$district['code'].'>Q. '.$district['name'].'</option>';
             }
         }
         return $cb;
@@ -29,8 +29,9 @@ class LibDistrict {
         return $district ? $district[0]['name'] :'';
     }
 
-    public function test() {
-        return "hello";
+    public function getNameByCode($district_code) {
+        $district = $this->CI->ghDistrict->get(['code' => $district_code]);
+        return $district ? $district[0]['name'] :'';
     }
 }
 ?>

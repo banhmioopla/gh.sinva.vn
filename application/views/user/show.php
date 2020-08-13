@@ -62,10 +62,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                <div class="user-role_id"
+                                <div class="user-role_code"
                                         data-pk="<?= $row['id'] ?>" 
-                                        data-value = "<?= $row['role_id'] ?>"
-                                        data-name="role_id">
+                                        data-value = "<?= $row['role_code'] ?>"
+                                        data-name="role_code">
                                     </div>
                                 </td>
                                 <td>
@@ -171,7 +171,16 @@
 <!-- end wrapper -->
 <script type="text/javascript">
     commands.push(function() {
-
+        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editableform.buttons =
+            '<div class="d-flex justify-content-center mt-2">' +
+                '<button type="submit" class="btn btn-primary btn-sm editable-submit">'+
+                    '<i class="fa fa-fw fa-check"></i>'+
+                '</button>'+
+                '<button type="button" class="btn btn-default btn-sm editable-cancel">'+
+                    '<i class="fa fa-fw fa-times"></i>'+
+                '</button>'+
+            '</div>';
 
         /* =========== MODIFY DATA JS ========= */
         // if(modify_mode == false) return;
@@ -227,7 +236,7 @@
                 }
             });
 
-            $('.user-role_id').editable({
+            $('.user-role_code').editable({
                 type: 'select',
                 url: '<?= base_url() ?>admin/get-user-role',
                 inputclass: '',

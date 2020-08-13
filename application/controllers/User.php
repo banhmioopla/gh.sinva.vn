@@ -91,7 +91,7 @@ class User extends CustomBaseStep {
 		$list_role = $this->ghRole->getAll();
 		$result = [];
 		foreach($list_role as $role) {
-			$result[] = ["value" => $role['id'], "text" => $role["name"]];
+			$result[] = ["value" => $role['code'], "text" => $role["name"]];
 		}
 		$pk = $this->input->post('pk');
 		if(isset($pk)) {

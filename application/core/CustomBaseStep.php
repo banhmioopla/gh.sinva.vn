@@ -10,15 +10,21 @@ class CustomBaseStep extends CI_Controller {
 		if($this->session->userdata('auth')) {
 			$this->auth = $this->session->userdata('auth');
 			$this->load->library('LibRole', null, 'libRole');
-			$this->auth['role_code'] = $this->libRole->getCodeById($this->auth['role_id']);
 			
 			$this->load->config('usermode');
 			// var_dump($this->auth['modifymode'] = $this->config->item('usermode')['consultant']); die;
 			$usermode = $this->config->item('usermode');
 			
 			// echo "<pre>"; print_r($usermode[$this->auth['role_code']]); die;
-			$this->auth['modifymode'] = $usermode[$this->auth['role_code']];
+			$this->auth['modifymode'] = 'view';
 			$this->menu = $this->config->item('accesscontrol')[$this->auth['role_code']];
+			
+			$this->load->model('ghUserDistrict');
+			$ghUserDistrict = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
+			$this->list_district_CRUD = [];
+			foreach($ghUserDistrict as $ud) {
+				$this->list_district_CRUD[] = $ud['district_code'];
+			}
 		}
 		
 	}

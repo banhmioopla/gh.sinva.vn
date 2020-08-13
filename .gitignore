@@ -8,7 +8,7 @@ application/logs/*
 
 !application/*/.htaccess
 
-template/*
+templates/*
 js-plugins/*
 
 composer.lock

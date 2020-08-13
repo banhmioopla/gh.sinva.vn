@@ -14,12 +14,14 @@ class Login extends CustomBaseStep {
 		$data['account_id'] = $this->input->post('account_id');
 		$data['password'] = $this->input->post('password');
 		if(!empty(get_cookie('account_id')) AND !empty(get_cookie('password'))){
-			$data['account_id'] = get_cookie('account_id');
-			$data['password'] = get_cookie('password');
+			if($data['account_id'] == get_cookie('account_id')) {
+				$data['account_id'] = get_cookie('account_id');
+				$data['password'] = get_cookie('password');
+			}
 		}
 		
 		$submit = $this->input->post('submit');
-		if(isset($submit) and !empty($data)) {
+		if(isset($submit) or !empty($data)) {
 			$user_profile = $this->ghUser->login($data);
 			if( !empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
@@ -27,7 +29,7 @@ class Login extends CustomBaseStep {
 					set_cookie('account_id', $data['account_id'],2592000);
 					set_cookie('password', $data['password'], 2592000);
 				}
-				var_dump($this->session);
+				// echo "<pre>", var_dump($this->session); die;
 				return redirect('/admin/list-user');
 			}
 		}

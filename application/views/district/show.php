@@ -90,6 +90,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">CODE<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <input type="text" required class="form-control"
+                                        id="code" name="code" placeholder="CODE">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="hori-pass1" class="col-4 col-form-label">Mở quận này<span class="text-danger">*</span></label>
                             <div class="col-8">
                                 <div>

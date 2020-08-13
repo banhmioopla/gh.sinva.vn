@@ -20,16 +20,25 @@ class Apartment extends CustomBaseStep {
 
 	public function show(){
 		
-		$district_id = $this->input->get('district-id');
+		$district_code = $this->input->get('district-code');
 		$data = [];
-		$district_id = !empty($district_id) ? $district_id: $this->district_default;
+		$district_code = !empty($district_code) ? $district_code: $this->district_default;
 		
-		$data['district_id'] = $district_id;
+		$data['district_code'] = $district_code;
 		
 		$data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
-		$data['list_apartment'] = $this->ghApartment->get(['district_id' => $district_id, 'active' => 'YES']);
-			$data['cb_district'] = $this->libDistrict->getCbByActive();
-			$data['cb_base_apartment_type'] = $this->libBaseApartmentType->getCbByActive();
+		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
+		$data['cb_district'] = $this->libDistrict->getCbByActive();
+		$data['cb_base_apartment_type'] = $this->libBaseApartmentType->getCbByActive();
+
+		
+		
+		$template = 'apartment/show';
+		if(in_array($district_code, $this->list_district_CRUD)) {
+			$this->auth['modifymode'] = 'edit';
+			$template = 'apartment/show-full-permission';
+		}
+
 		/*--- bring library to view ---*/
 		$data['libDistrict'] = $this->libDistrict;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
@@ -37,20 +46,20 @@ class Apartment extends CustomBaseStep {
 		$data['libBaseRoomType'] =  $this->libBaseRoomType;
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
-		$this->load->view('apartment/show', $data);
+		$this->load->view($template, $data);
 		$this->load->view('components/footer');
 	}
 
 	public function create() {
 		$data = $this->input->post();
 
-		if(!empty($data['address_street']) and !empty($data['district_id'])) {
+		if(!empty($data['address_street']) and !empty($data['district_code'])) {
 			$result = $this->ghApartment->insert($data);
 			$this->session->set_flashdata('fast_notify', [
 				'message' => 'Tạo dự án '.$data['address_street'].' thành công ',
 				'status' => 'success'
 			]);
-			return redirect('admin/list-apartment?district-id='.$data['district_id']);
+			return redirect('admin/list-apartment?district-code='.$data['district_id']);
 		}
 	}
 

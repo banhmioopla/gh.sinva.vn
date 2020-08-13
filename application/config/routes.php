@@ -338,4 +338,11 @@ $route['admin/create-room-datatable'] = function($params = []) {
 	return $controller.$action;
 };
 
+// user - district
+$route['admin/list-user-district'] = function($params = []) {
+	$controller = 'userdistrict';
+	$action = '/show';
+	return $controller.$action;
+};
+
 $route['translate_uri_dashes'] = FALSE;
