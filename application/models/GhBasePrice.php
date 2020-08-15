@@ -1,19 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class GhPartner extends CI_Model {
-    private $table = 'gh_partner';
+class GhBasePrice extends CI_Model {
+	private $table = 'gh_base_price';
 
 	public function get($where = []) {
-        return $this->db->get_where($this->table, $where)->result_array();
+        return $this->db->get_where($this->table, $where);
     }
 
     public function getByActive() {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }
 
-    public function getById($partner_id) {
-        return $this->db->get_where($this->table, ['id' => $partner_id])->result_array();
+    public function getById($price_id) {
+        return $this->db->get_where($this->table, ['id' => $price_id])->result_array();
     }
 
     public function getAll() {
@@ -24,20 +24,22 @@ class GhPartner extends CI_Model {
         return $this->db->insert($this->table, $data);
     }
 
-    public function updateById($partner_id, $data) {
-        $this->db->where('id', $partner_id);
+    public function updateById($price_id, $data) {
+        $this->db->where('id', $price_id);
         $this->db->update($this->table, $data);
         $result = $this->db->affected_rows();
         return $result;
     }
 
-    public function delete($partner_id) {
-        $this->db->where('id' , $partner_id);
+    public function delete($price_id) {
+        $this->db->where('id' , $price_id);
         $this->db->delete($this->table);
         $result = $this->db->affected_rows();
         return $result;
     }
+	
+
 }
 
-/* End of file mApartment.php */
-/* Location: ./application/models/role-manager/mApartment.php */
+/* End of file GhBaseApartmentType.php */
+/* Location: ./application/models/GhBaseApartmentType.php */

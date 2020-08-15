@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'Login';
 $route['404_override'] = '';
 
 $route['admin/list-apartment'] = function($params = []) {
@@ -321,6 +321,24 @@ $route['admin/update-apartment-editable'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/list-apartment-like-base'] = function($params = []) {
+	$controller = 'apartment';
+	$action = '/showLikeBase';
+	return $controller.$action;
+};
+
+$route['admin/apartment-get-district'] = function($params = []) {
+	$controller = 'apartment';
+	$action = '/getDistrict';
+	return $controller.$action;
+};
+$route['admin/apartment-get-partner'] = function($params = []) {
+	$controller = 'apartment';
+	$action = '/getPartner';
+	return $controller.$action;
+};
+//
+
 $route['admin/get-room-type'] = function($params = []) {
 	$controller = 'room';
 	$action = '/getType';
@@ -338,11 +356,57 @@ $route['admin/create-room-datatable'] = function($params = []) {
 	return $controller.$action;
 };
 
-// user - district
+// admin/userdistrict
 $route['admin/list-user-district'] = function($params = []) {
 	$controller = 'userdistrict';
 	$action = '/show';
 	return $controller.$action;
 };
+
+// admin/image
+$route['admin/upload-image'] = function($params = []) {
+	$controller = 'image';
+	$action = '/show';
+	return $controller.$action;
+};
+
+
+// admin/price
+$route['admin/list-price'] = function($params = []) {
+	$controller = 'baseprice';
+	$action = '/show';
+	return $controller.$action;
+};
+
+$route['admin/create-price'] = function($params = []) {
+	$controller = 'baseprice';
+	$action = '/create';
+	return $controller.$action;
+};
+
+$route['admin/update-price'] = function($params = []) {
+	$controller = 'baseprice';
+	$action = '/update';
+	return $controller.$action;
+};
+
+$route['admin/update-price'] = function($params = []) {
+	$controller = 'baseprice';
+	$action = '/update';
+	return $controller.$action;
+};
+
+$route['admin/delete-price'] = function($params = []) {
+	$controller = 'baseprice';
+	$action = '/delete';
+	return $controller.$action;
+};
+
+$route['admin/update-price-editable'] = function($params = []) {
+	$controller = 'baseprice';
+	$action = '/updateEditable';
+	return $controller.$action;
+};
+
 
 $route['translate_uri_dashes'] = FALSE;

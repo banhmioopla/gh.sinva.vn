@@ -30,6 +30,8 @@
     <script src="<?= $js_plugins_path ?>bootstrap-xeditable/js/bootstrap-editable.min.js"></script>
     <script src="<?= $js_plugins_path ?>moment/moment.js" type="text/javascript"></script>
     <script src="<?= $js_plugins_path ?>bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+    <script src="<?= $js_plugins_path ?>bootstrap-filestyle/js/bootstrap-filestyle.min.js" type="text/javascript"></script>
     <!-- App js -->
     <script src="<?= $assets_path ?>js/jquery.core.js"></script>
     <script src="<?= $assets_path ?>js/jquery.app.js"></script>

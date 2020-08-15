@@ -64,7 +64,6 @@
             $('select[name=account_id]').on('change', function() {
                 $('form[name=form-user-district]').submit();
             });
-
         });
     });
 </script>

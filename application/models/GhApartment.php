@@ -5,6 +5,7 @@ class GhApartment extends CI_Model {
     private $table = 'gh_apartment';
 
 	public function get($where = []) {
+        $this->db->order_by('id DESC, address_street ASC');
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
@@ -21,7 +22,9 @@ class GhApartment extends CI_Model {
     }
 
     public function getAll() {
-        return $this->db->get_where($this->table)->result_array();
+        $this->db->order_by('id','DESC'); 
+        $result = $this->db->get_where($this->table)->result_array();
+        return $result;
     }
 
     public function insert($data) {

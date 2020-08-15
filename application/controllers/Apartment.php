@@ -9,6 +9,7 @@ class Apartment extends CustomBaseStep {
 		$this->load->model(['ghApartment', 'ghDistrict']);
 		$this->load->config('label.apartment');
 		$this->load->library('LibDistrict', null, 'libDistrict');
+		$this->load->library('LibPartner', null, 'libPartner');
 		$this->load->library('LibRoom', null, 'libRoom');
 		$this->load->library('LibBaseApartmentType', null, 'libBaseApartmentType');
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
@@ -28,11 +29,9 @@ class Apartment extends CustomBaseStep {
 		
 		$data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
 		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
-		$data['cb_district'] = $this->libDistrict->getCbByActive();
+		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['cb_base_apartment_type'] = $this->libBaseApartmentType->getCbByActive();
 
-		
-		
 		$template = 'apartment/show';
 		if(in_array($district_code, $this->list_district_CRUD)) {
 			$this->auth['modifymode'] = 'edit';
@@ -50,6 +49,18 @@ class Apartment extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+	public function showLikeBase(){
+		$data['list_apartment'] = $this->ghApartment->getAll();
+		$data['cb_district'] = $this->libDistrict->cbActive();
+		$data['cb_partner'] = $this->libPartner->cbActive();
+
+		$data['libDistrict'] = $this->libDistrict;
+		$data['libPartner'] = $this->libPartner;
+		/*--- Load View ---*/
+		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('apartment/show-like-base', $data);
+		$this->load->view('components/footer');
+	}
 	public function create() {
 		$data = $this->input->post();
 
@@ -59,7 +70,7 @@ class Apartment extends CustomBaseStep {
 				'message' => 'Tạo dự án '.$data['address_street'].' thành công ',
 				'status' => 'success'
 			]);
-			return redirect('admin/list-apartment?district-code='.$data['district_id']);
+			return redirect('admin/list-apartment-like-base');
 		}
 	}
 
@@ -139,6 +150,32 @@ class Apartment extends CustomBaseStep {
 			echo json_encode(['status' => false]); die;
 		}
 		echo json_encode(['status' => false]); die;
+	}
+
+	public function getDistrict(){
+		$list_district = $this->ghDistrict->getAll();
+		$result = [];
+		foreach($list_district as $d) {
+			$result[] = ["value" => $d['code'], "text" => 'quận '.$d["name"]];
+		}
+		$pk = $this->input->post('pk');
+		if(isset($pk)) {
+			return die($this->updateEditable()); 
+		}
+		echo json_encode($result); die;
+	}
+
+	public function getPartner(){
+		$list_district = $this->ghPartner->getAll();
+		$result = [];
+		foreach($list_district as $d) {
+			$result[] = ["value" => $d['id'], "text" => 'ĐT '.$d["name"]];
+		}
+		$pk = $this->input->post('pk');
+		if(isset($pk)) {
+			return die($this->updateEditable()); 
+		}
+		echo json_encode($result); die;
 	}
 
 }

@@ -35,13 +35,36 @@ $accesscontrol['admin'] = [
                 'url' => '/admin/list-room-type',
                 'submenu' => null
             ],
+            [
+                'name' => 'DS Giá',
+                'url' => '/admin/list-price',
+                'submenu' => null
+            ],
         ]
     ],
     [
-        'name' => 'DS Dự Án',
-        'url' => '/admin/list-apartment',
+        'name' => 'Dự Án',
+        'url' => '#',
         'class-icon' => null,
-        'submenu' => null
+        'submenu' => [
+
+            [
+                'name' => 'Phân quận',
+                'url' => '/admin/list-user-district',
+                'class-icon' => ''
+            ],
+            [
+                'name' => 'DS (thẻ)*',
+                'url' => '/admin/list-apartment',
+                'class-icon' => ''
+            ],
+            [
+                'name' => 'DS địa chỉ tòa nhà (bảng) *',
+                'url' => '/admin/list-apartment-like-base',
+                'class-icon' => ''
+            ]
+            
+        ]
     ],
     [
         'name' => 'Hình ảnh',

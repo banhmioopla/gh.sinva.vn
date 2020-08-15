@@ -27,9 +27,9 @@
             <div class="mt-2 mb-2 list-action">
                 <span class="d-flex justify-content-center">
                 <?php foreach($list_district as $district): ?>
-                    <a href="<?= base_url().'admin/list-apartment?district_id='.$district['id'] ?>" 
+                    <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>" 
                         class="btn m-1 btn-sm btn-outline-success
-                        <?= $district_id == $district['id'] ? 'active':'' ?>
+                        <?= $district_code == $district['code'] ? 'active':'' ?>
                         btn-rounded waves-light waves-effect">
                         <?= $district['name'] ?>
                     </a>
@@ -40,7 +40,7 @@
                 <div class="col-12 apartment-block">
                     <div id="accordion" role="tablist" aria-multiselectable="true" class="m-b-30">
                         <div class="card">
-                            <div class="card-header" role="tab" id="headingThree">
+                            <div class="card-header" role="tab">
                                 <div class="row">
                                     <div class="col-6">
                                         <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">SONATA</a>
@@ -76,9 +76,12 @@
                                             data-overlaySpeed="200">
                                             <i class="mdi mdi-eye"></i>
                                         </button>
-                                        <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
-                                            <i class="mdi mdi-folder-multiple-image"></i>
-                                        </button>
+                                        <a href="/admin/upload-image?apartment-id=<?=$apartment['id'] ?>" target="_blank">
+                                            <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                                                <i class="mdi mdi-folder-multiple-image"></i>
+                                            </button>
+                                        </a>
+                                        
                                         <button type="button" 
                                                 data-apartment-id="<?= $apartment['id'] ?>" 
                                                 class="btn m-1 btn-sm apartment-delete btn-outline-danger btn-rounded waves-light waves-effect">
@@ -156,7 +159,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="apm-room-<?= $apartment['id'] ?>">
-                                        <?php $this->load->view('apartment/room',[
+                                        <?php $this->load->view('apartment/room-full-permission',[
                                             'apartment' => $apartment,
                                             'libRoom' => $libRoom,
                                         ]) ?>

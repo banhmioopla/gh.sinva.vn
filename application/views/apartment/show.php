@@ -43,7 +43,7 @@
                             <div class="card-header" role="tab" id="headingThree">
                                 <div class="row">
                                     <div class="col-6">
-                                        <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">SONATA</a>
+                                        <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">TÊN ĐỐI TÁC</a>
                                     </div>
                                     <div class="col-6 text-right">
                                         <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">12 | 22 | 23</a>
@@ -64,9 +64,6 @@
                                 <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i> <?= date('d/m/Y H:i', $apartment['time_update']) ?></div>
                                 <div class="mt-2 list-action" style="display:none">
                                     <span class="d-flex justify-content-center">
-                                        <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                            <i class="mdi mdi-credit-card-plus"></i>
-                                        </button>
                                         <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                             <i class="mdi mdi-comment-outline"></i>
                                         </button>
@@ -148,7 +145,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="apm-room-<?= $apartment['id'] ?>">
-                                        <?php $this->load->view('apartment/room-full-permission',[
+                                        <?php $this->load->view('apartment/room',[
                                             'apartment' => $apartment,
                                             'libRoom' => $libRoom,
                                         ]) ?>

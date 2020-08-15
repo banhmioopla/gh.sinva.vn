@@ -9,7 +9,7 @@ class LibDistrict {
 		$this->CI->load->model('ghDistrict');
     }
     
-    public function getCbByActive($district_code = ''){
+    public function cbActive($district_code = ''){
         $list_district = $this->CI->ghDistrict->getByActive();
         $cb = '<option value="">chọn quận ...</option>';
         if(!empty($list_district)) {

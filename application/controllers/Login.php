@@ -8,9 +8,12 @@ class Login extends CustomBaseStep {
 		$this->load->model('ghUser');
 		$this->load->helper('cookie');
 	}
+
+	public function index() {
+		$this->show();
+	}
 	public function show()
 	{
-		// $this->logout();
 		$data['account_id'] = $this->input->post('account_id');
 		$data['password'] = $this->input->post('password');
 		if(!empty(get_cookie('account_id')) AND !empty(get_cookie('password'))){
