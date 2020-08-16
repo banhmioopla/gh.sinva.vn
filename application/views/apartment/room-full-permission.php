@@ -33,11 +33,10 @@
                             data-value="<?= $room['type_id'] ?>"
                             data-name="type_id"
                             ><?= $libBaseRoomType->getNameById($room['type_id']) ?></div></td>
-                    <td><div class="room-data font-weight-bold"
+                    <td><div class="room-select-price" 
                             data-pk="<?= $room['id'] ?>"
-                            data-value="<?= $room['price'] ?>"
-                            data-name="price"
-                            ><?= money_format($room['price']) ?></div></td>
+                            data-value="<?= $room['base_price_id'] ?>"
+                            data-name="base_price_id"><?= $room['base_price_id'] ?></div></td>
                     <td><div class="room-data" 
                             data-pk= "<?= $room['id'] ?>"
                             data-value= "<?= $room['area'] ?>"

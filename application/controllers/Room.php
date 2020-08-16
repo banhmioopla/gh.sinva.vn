@@ -156,6 +156,19 @@ class Room extends CustomBaseStep {
 		}
 		echo json_encode($result); die;
 	}
+	public function getPrice() {
+		$list_price = $this->ghBasePrice->getAll();
+		$result = [];
+		foreach($list_type as $type) {
+			$result[] = ["value" => $type['id'], "text" => $type["name"]];
+		}
+		$pk = $this->input->post('pk');
+		if(isset($pk)) {
+			return die($this->updateEditable()); 
+		}
+		echo json_encode($result); die;
+	}
+
 
 }
 

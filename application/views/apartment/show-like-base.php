@@ -38,6 +38,7 @@
                             <th>Quận</th>
                             <th>Đường</th>
                             <th>Phường</th>
+                            <th>Số Lầu</th>
                             <th class="text-center">Mở</th>
                         </tr>
                         </thead>
@@ -70,6 +71,12 @@
                                 data-value="<?= $row['address_ward'] ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     phường <?= $row['address_ward'] ?>
+                                </td>
+                                <td class="apartment-data"
+                                data-name="number_of_floor"
+                                data-value="<?= $row['number_of_floor'] ?>"
+                                data-pk="<?= $row['id'] ?>">
+                                    <?= $row['number_of_floor'] ?> Lầu
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">

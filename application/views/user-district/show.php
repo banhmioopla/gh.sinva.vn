@@ -21,7 +21,7 @@
         <div class="row">
             <form method="post" class="col-md-6 col-12" name="form-user-district" action="<?= base_url().'/admin/list-user-district' ?>">
                 <div class="">
-                    <select class="custom-select mt-3" name="account_id">
+                    <select class="custom-select mt-3 form-control" name="account_id">
                         <?= $cb_product_manager ?>
                     </select>
                 </div>

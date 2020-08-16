@@ -21,7 +21,9 @@
         <link href="<?= $js_plugins_path ?>bootstrap-xeditable/css/bootstrap-editable.css" rel="stylesheet" />
         <!-- Spinkit css -->
         <link href="<?= $js_plugins_path ?>spinkit/spinkit.css" rel="stylesheet" />
-        
+
+        <!--venobox lightbox-->
+        <link rel="stylesheet" href="<?= $js_plugins_path ?>magnific-popup/css/magnific-popup.css" />
         <!-- App css -->
         <link href="<?= $assets_path ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/icons.css" rel="stylesheet" type="text/css" />

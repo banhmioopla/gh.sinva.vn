@@ -349,6 +349,11 @@ $route['admin/get-room-status'] = function($params = []) {
 	$action = '/getStatus';
 	return $controller.$action;
 };
+$route['admin/get-room-price'] = function($params = []) {
+	$controller = 'room';
+	$action = '/getPrice';
+	return $controller.$action;
+};
 
 $route['admin/create-room-datatable'] = function($params = []) {
 	$controller = 'room';

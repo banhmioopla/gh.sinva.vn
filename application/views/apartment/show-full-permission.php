@@ -266,7 +266,7 @@
             });
         });
         
-        $('body').delegate('.list-room .room-select-status', 'click',function(){
+        $('body').delegate('.list-room .room-select-price', 'click',function(){
             $(this).editable({
                 type: 'select',
                 url: '<?= base_url() ?>admin/get-room-status',
@@ -275,6 +275,37 @@
                     data = [];
                     $.ajax({
                         url: '<?= base_url() ?>admin/get-room-status',
+                        dataType: 'json',
+                        async: false,
+                        success: function(res) {
+                            data = res;
+                            return res;
+                        }
+                    });
+                    return data;
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.apartment-alert').html(notify_html_success);
+                    } else {
+                        $('.apartment-alert').html(notify_html_fail);
+                    }
+                    $('.apartment-alert').show();
+                    $('.apartment-alert').fadeOut(3000);
+                }
+            });
+        });
+
+        $('body').delegate('.list-room .room-select-status', 'click',function(){
+            $(this).editable({
+                type: 'select',
+                url: '<?= base_url() ?>admin/get-room-price',
+                inputclass: '',
+                source: function() {
+                    data = [];
+                    $.ajax({
+                        url: '<?= base_url() ?>admin/get-room-price',
                         dataType: 'json',
                         async: false,
                         success: function(res) {
