@@ -82,11 +82,11 @@
                     <?php foreach($list_room_type as $type):?>
                         <a href="#" data-filter=".roomtype-<?= $type['id'] ?>"><?= $type['name'] ?></a>
                     <?php endforeach;?>
-
+                    <br>
                     <?php foreach($list_price as $price):?>
-                        <a href="#" data-filter=".roomprice-<?= $price['id'] ?>"><?= $price['name'] ?></a>
+                        <a href="#" data-filter=".roomprice-<?= $price['id'] ?>"><?= money_format($price['code']) ?></a>
                     <?php endforeach;?>
-
+                    <br>
                     <?php foreach($list_room_code as $room):?>
                         <a href="#" data-filter=".roomcode-<?= $room['id'] ?>"><?= $room['code'] ?></a>
                     <?php endforeach;?>
@@ -103,17 +103,23 @@
                 <?= !empty($img['room_type_id']) ? 'roomtype-'.$img['room_type_id']:'' ?>
                 <?= !empty($img['room_price_id']) ? 'roomtype-'.$img['room_type_id']:'' ?>
                 image-item">
+                    
+                <div class="portfolio-masonry-box">
                     <a href="<?= base_url() ?>media/apartment/<?= $img['name'].'.jpg' ?>" class="image-popup">
-                        <div class="portfolio-masonry-box">
-                            <div class="portfolio-masonry-img">
-                                <img src="<?= base_url() ?>media/apartment/<?= $img['name'].'.jpg'?>" class="thumb-img img-fluid"
-                                    alt="work-thumbnail">
-                            </div>
-                            <div class="portfolio-masonry-detail">
-                                <h4 class="font-18">giỏ hàng</h4>
-                            </div>
+                        <div class="portfolio-masonry-img">
+                            <img src="<?= base_url() ?>media/apartment/<?= $img['name'].'.jpg'?>" class="thumb-img img-fluid"
+                                alt="work-thumbnail">
                         </div>
                     </a>
+                    <div class="portfolio-masonry-detail">
+                        <h4 class="font-18"><?= date('d-m-Y', $img['time_insert']) ?></h4>
+                        <div class="d-flex justify-content-center">
+                            <button data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-img">
+                                <i class="mdi mdi-delete"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 </div>
             <?php endforeach; ?>
             <?php endif; ?>
@@ -128,17 +134,17 @@
 <script type="text/javascript">
     commands.push(function() {
         $(window).on('load', function () {
-        var $container = $('.portfolioContainer');
-        $container.isotope({
-            filter: '*',
-            animationOptions: {
-                duration: 750,
-                easing: 'linear',
-                queue: false
-            }
-        });
+            var $container = $('.portfolioContainer');
+            $container.isotope({
+                filter: '*',
+                animationOptions: {
+                    duration: 750,
+                    easing: 'linear',
+                    queue: false
+                }
+            });
 
-        $('.portfolioFilter a').click(function () {
+            $('.portfolioFilter a').click(function () {
                 $('.portfolioFilter .current').removeClass('current');
                 $(this).addClass('current');
 
@@ -155,6 +161,19 @@
             });
         });
         $(document).ready(function () {
+            $('.delete-img').click(function(){
+                console.log($(this).data('img-id'));
+                var img_id = $(this).data('img-id');
+                var this_btn = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url() ?>admin/update-image',
+                    data: {img_id: img_id, field_name: 'active', field_value: 'NO'},
+                    success: function(response) {
+                        this_btn.parents('.portfolio-masonry-box').remove();
+                    }
+                });
+            });
             $('.image-popup').magnificPopup({
                 type: 'image',
                 closeOnContentClick: true,
@@ -165,6 +184,7 @@
                     preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
                 }
             });
+
         });
     });
     

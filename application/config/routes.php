@@ -375,6 +375,12 @@ $route['admin/upload-image'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/update-image'] = function($params = []) {
+	$controller = 'image';
+	$action = '/update';
+	return $controller.$action;
+};
+
 
 // admin/price
 $route['admin/list-price'] = function($params = []) {

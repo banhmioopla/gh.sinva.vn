@@ -97,6 +97,21 @@ class Image extends CustomBaseStep {
         $apartment_id = $this->input->post('apartment_id');
         $floor_number = $this->input->post('floor_number');  
     }
+
+    public function update() {
+		$img_id = $this->input->post('img_id');
+		$field_value = $this->input->post('field_value');
+		$field_name = $this->input->post('field_name');
+        // var_dump($this->input->post()); die;
+		if(!empty($img_id) and !empty($field_value)) {
+			$data = [
+				$field_name => $field_value
+			];
+			$result = $this->ghImage->updateById($img_id, $data);
+			echo json_encode(['status' => $result]); die;
+		}
+		echo json_encode(['status' => false]); die;
+	}
 }
 
 ?>
