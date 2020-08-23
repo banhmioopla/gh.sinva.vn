@@ -52,11 +52,10 @@
                                 </div>
                                 <div class="mt-1 apm-tag-list">
                                     <span>
-                                        <span class="badge badge-pink">test</span>
+                                    <?php if($apartment['tag_id']): ?>
+                                        <span class="badge badge-pink"><?= $libTag->getNameById($apartment['tag_id']) ?></span>
                                     </span>
-                                    <span>
-                                        <span class="badge badge-pink">test</span>
-                                    </span>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="col text-center text-purple font-weight-bold">
                                     <?=$apartment['address_street'] ?>

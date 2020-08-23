@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách quận</h3>
+                    <h3 class="page-title">Danh sách #</h3>
                 </div>
             </div>
         </div>
@@ -27,25 +27,25 @@
                 unset($_SESSION['fast_notify']);
             }  
         ?>
-        <div class="district-alert"></div>
+        <div class="tag-alert"></div>
         <div class="row">
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
-                    <table id="table-district" class="table table-bordered">
+                    <table id="table-tag" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Tên Quận</th>
+                            <th>Tên #</th>
                             <th>Số Căn Hộ</th>
                             <th class="text-center">Mở</th>
-                            <th class="text-center">Mô tả</th>
+                        
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($list_district as $row ): ?>
+                            <?php foreach($list_tag as $row ): ?>
                             <tr>
                                 <td>
-                                    <div class="district-name" 
+                                    <div class="tag-name" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="name">
                                             <?= $row['name'] ?>
@@ -54,20 +54,19 @@
                                 <td><i>-</i></td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <div class="checkbox checkbox-success is-active-district">
-                                            <input id="district-<?= $row['id'] ?>" 
+                                        <div class="checkbox checkbox-success is-active-tag">
+                                            <input id="tag-<?= $row['id'] ?>" 
                                                 value="<?= $row['active'] ?>"
                                                 type="checkbox" 
                                                 <?= $row['active'] =='YES' ? 'checked':'' ?>>
-                                            <label for="district-<?= $row['id'] ?>">
+                                            <label for="tag-<?= $row['id'] ?>">
                                             </label>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-secondary"><?= $row['note'] ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='district-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-district">
+                                        <button id='tag-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-tag">
                                             <i class="mdi mdi-delete"></i>
                                         </button>
                                     </div>
@@ -81,23 +80,16 @@
             <div class="col-12 col-md-5">
                 <div class="card-box">
                     <h4 class="header-title m-t-0">Thêm mới</h4>
-                    <form role="form" method="post" action="<?= base_url()?>admin/create-district">
+                    <form role="form" method="post" action="<?= base_url()?>admin/create-tag">
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Tên quận<span class="text-danger">*</span></label>
+                            <label for="name" class="col-4 col-form-label">Tên #<span class="text-danger">*</span></label>
                             <div class="col-8">
                                 <input type="text" required class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
+                                        id="name" name="name" placeholder="Tên #">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">CODE<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <input type="text" required class="form-control"
-                                        id="code" name="code" placeholder="CODE">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="hori-pass1" class="col-4 col-form-label">Mở quận này<span class="text-danger">*</span></label>
+                            <label for="hori-pass1" class="col-4 col-form-label">Mở # này<span class="text-danger">*</span></label>
                             <div class="col-8">
                                 <div>
                                     <div class=" checkbox checkbox-success">
@@ -106,12 +98,6 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Mô tả</label>
-                            <div class="col-8">
-                                <textarea class="form-control" rows="5" name="note" placeholder="Không bắt buộc"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -132,80 +118,74 @@
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('#table-district').DataTable({
+            $('#table-tag').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
-                responsive: true,
-                "fnDrawCallback": function() {
-                    $('.is-active-district input[type=checkbox]').click(function() {
-                        var is_active = 'NO';
-                        var this_id = $(this).attr('id');
-                        var matches = this_id.match(/(\d+)/);
-                        var district_id = matches[0];
-                        if($(this).is(':checked')) {
-                            is_active = 'YES';
-                        }
-                        console.log('hello');
-                        console.log(is_active );
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?= base_url() ?>admin/update-district',
-                            data: {field_value: is_active, district_id: district_id, field_name : 'active'},
-                            async: false,
-                            success:function(response){
-                                var data = JSON.parse(response);
-                                console.log(data);
-                                if(data.status == true) {
-                                    $('.district-alert').html(notify_html_success);
-                                } else {
-                                    $('.district-alert').html(notify_html_fail);
-                                }
-                            },
-                            beforeSend: function(){
-                                $('#loader').show();
-                            },
-                            complete: function(){
-                                $('#loader').hide();
-                            }
-                        });
-                    });
-                    // x editable
-                    $('.district-name').editable({
-                        type: "text",
-                        url: '<?= base_url() ?>admin/update-district-editable',
-                        inputclass: '',
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.district-alert').html(notify_html_success);
-                            } else {
-                                $('.district-alert').html(notify_html_fail);
-                            }
-                        }
-                    });
-                } // end fnDrawCallback
+                responsive: true
             });
             
-            
+            $('.is-active-tag input[type=checkbox]').click(function() {
+                var is_active = 'NO';
+                var this_id = $(this).attr('id');
+                var matches = this_id.match(/(\d+)/);
+                var tag_id = matches[0];
+                if($(this).is(':checked')) {
+                    is_active = 'YES';
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url() ?>admin/update-tag',
+                    data: {field_value: is_active, tag_id: tag_id, field_name : 'active'},
+                    async: false,
+                    success:function(response){
+                        var data = JSON.parse(response);
+                        if(data.status == true) {
+                            $('.tag-alert').html(notify_html_success);
+                        } else {
+                            $('.tag-alert').html(notify_html_fail);
+                        }
+                    },
+                    beforeSend: function(){
+                        $('#loader').show();
+                    },
+                    complete: function(){
+                        $('#loader').hide();
+                    }
+                });
+            });
 
-            $('.delete-district').click(function(){
+            $('.tag-name').editable({
+                type: "text",
+                url: '<?= base_url() ?>admin/update-tag-editable',
+                inputclass: '',
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.tag-alert').html(notify_html_success);
+                    } else {
+                        $('.tag-alert').html(notify_html_fail);
+                    }
+                }
+            });
+
+            $('.delete-tag').click(function(){
                 var this_id = $(this).attr('id');
                 var this_click = $(this);
                 var matches = this_id.match(/(\d+)/);
-                var district_id = matches[0];
-                if(district_id > 0) {
+                var tag_id = matches[0];
+                if(tag_id > 0) {
                     $.ajax({
                         type: 'POST',
-                        url: '<?= base_url() ?>admin/delete-district',
-                        data: {district_id: district_id},
+                        url: '<?= base_url() ?>admin/delete-tag',
+                        data: {tag_id: tag_id},
                         success: function(response) {
                             var data = JSON.parse(response);
                             if(data.status == true) {
-                                $('.district-alert').html(notify_html_success);
+                                $('.tag-alert').html(notify_html_success);
                                 this_click.parents('tr').remove();
 
                             } else {
-                                $('.district-alert').html(notify_html_fail);
+                                $('.tag-alert').html(notify_html_fail);
                             }
                         }
                     });

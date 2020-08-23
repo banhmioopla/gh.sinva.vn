@@ -39,6 +39,7 @@
                             <th>Đường</th>
                             <th>Phường</th>
                             <th>Số Lầu</th>
+                            <th>Tag #</th>
                             <th class="text-center">Mở</th>
                         </tr>
                         </thead>
@@ -77,6 +78,12 @@
                                 data-value="<?= $row['number_of_floor'] ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     <?= $row['number_of_floor'] ?> Lầu
+                                </td>
+                                <td class="apartment-select-tag"
+                                data-name="tag_id"
+                                data-value="<?= $row['tag_id'] ?>"
+                                data-pk="<?= $row['id'] ?>">
+                                    # <?= $row['tag_id'] ? $libTag->getNameById($row['tag_id']):'chọn...' ?>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
@@ -170,38 +177,41 @@
                         type:'text',
                         url: '<?= base_url()."admin/update-apartment-editable" ?>'
                     });
+                    $('.is-active-apartment input[type=checkbox]').click(function() {
+                        var is_active = 'NO';
+                        var this_id = $(this).attr('id');
+                        var matches = this_id.match(/(\d+)/);
+                        var apartment_id = matches[0];
+                        if($(this).is(':checked')) {
+                            is_active = 'YES';
+                        }
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>admin/update-apartment-editable',
+                            data: {value: is_active, pk: apartment_id, name : 'active'},
+                            async: false,
+                            success:function(response){
+                                var data = JSON.parse(response);
+                                if(data.status == true) {
+                                    $('.apartment-alert').html(notify_html_success);
+                                } else {
+                                    $('.apartment-alert').html(notify_html_fail);
+                                }
+                            },
+                            beforeSend: function(){
+                                $('#loader').show();
+                            },
+                            complete: function(){
+                                $('#loader').hide();
+                            }
+                        });
+                    });
                 }
+            });
+            $('body').delegate('click', '.is-active-apartment input[type=checkbox]', function(){
+                
             });
             
-            $('.is-active-apartment input[type=checkbox]').click(function() {
-                var is_active = 'NO';
-                var this_id = $(this).attr('id');
-                var matches = this_id.match(/(\d+)/);
-                var apartment_id = matches[0];
-                if($(this).is(':checked')) {
-                    is_active = 'YES';
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>admin/update-apartment-editable',
-                    data: {value: is_active, pk: apartment_id, name : 'active'},
-                    async: false,
-                    success:function(response){
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.apartment-alert').html(notify_html_success);
-                        } else {
-                            $('.apartment-alert').html(notify_html_fail);
-                        }
-                    },
-                    beforeSend: function(){
-                        $('#loader').show();
-                    },
-                    complete: function(){
-                        $('#loader').hide();
-                    }
-                });
-            });
 
             $('body').delegate('.apartment-select-district', 'click', function(){
                 $(this).editable({
@@ -243,6 +253,37 @@
                         data = [];
                         $.ajax({
                             url: '<?= base_url() ?>admin/apartment-get-partner',
+                            dataType: 'json',
+                            async: false,
+                            success: function(res) {
+                                data = res;
+                                return res;
+                            }
+                        });
+                        return data;
+                    },
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        if(data.status == true) {
+                            $('.apartment-alert').html(notify_html_success);
+                        } else {
+                            $('.apartment-alert').html(notify_html_fail);
+                        }
+                        $('.apartment-alert').show();
+                        $('.apartment-alert').fadeOut(3000);
+                    }
+                });
+            });
+
+            $('body').delegate('.apartment-select-tag', 'click', function(){
+                $(this).editable({
+                    type: 'select',
+                    url: '<?= base_url() ?>admin/apartment-get-tag',
+                    inputclass: '',
+                    source: function() {
+                        data = [];
+                        $.ajax({
+                            url: '<?= base_url() ?>admin/apartment-get-tag',
                             dataType: 'json',
                             async: false,
                             success: function(res) {

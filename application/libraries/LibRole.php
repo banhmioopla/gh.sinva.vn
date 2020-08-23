@@ -16,7 +16,7 @@ class LibRole{
             if($role['id'] == $role_id) {
                 $selected = 'selected';
             }
-            $cb .= '<option '.$selected.' value='.$role['id'].'>quận '.$role['name'].'</option>';
+            $cb .= '<option '.$selected.' value='.$role['id'].'> quyền'.$role['name'].'</option>';
         }
 
         return $cb;
@@ -26,6 +26,11 @@ class LibRole{
         $role = $this->CI->ghRole->get(['id' => $role_id]);
         
         return !empty($role) ? $role[0]['code']: 'consultant';
+    }
+
+    public function getNameByCode($tag_id) {
+        $tag = $this->CI->ghRole->get(['code' => $tag_id]);
+        return $tag ? $tag[0]['name'] :'';
     }
 }
 

@@ -5,7 +5,7 @@ class GhTag extends CI_Model {
     private $table = 'gh_tag';
 
 	public function get($where = []) {
-        return $this->db->get_where($this->table, $where);
+        return $this->db->get_where($this->table, $where)->result_array();
     }
 
     public function getByTypeApartment() {

@@ -19,14 +19,13 @@
         <!-- end page title end breadcrumb -->
 
         <div class="row">
-            <form method="post" class="col-md-6 col-12" name="form-user-district" action="<?= base_url().'/admin/list-user-district' ?>">
+            <form method="post" class="col-md-6 col-12 card-box" name="form-user-district" action="<?= base_url().'/admin/list-user-district' ?>">
                 <div class="">
                     <select class="custom-select mt-3 form-control" name="account_id">
                         <?= $cb_product_manager ?>
                     </select>
                 </div>
                 <div class="mt-3">
-                    
                     <?php foreach($list_district as $district):?>
 
                         <div class=" col-3 checkbox checkbox-custom form-check-inline">

@@ -40,6 +40,11 @@ $accesscontrol['admin'] = [
                 'url' => '/admin/list-price',
                 'submenu' => null
             ],
+            [
+                'name' => 'DS # (Tag)',
+                'url' => '/admin/list-tag',
+                'submenu' => null
+            ],
         ]
     ],
     [
@@ -67,12 +72,6 @@ $accesscontrol['admin'] = [
         ]
     ],
     [
-        'name' => 'Hình ảnh',
-        'url' => '/admin/list-image',
-        'class-icon' => null,
-        'submenu' => null
-    ],
-    [
         'name' => 'Văn bản',
         'url' => '/admin/list-document',
         'class-icon' => null,
@@ -84,26 +83,95 @@ $accesscontrol['admin'] = [
         'class-icon' => null,
         'submenu' => null
     ],
+    [
+        'name' => 'Đăng xuất',
+        'url' => '/admin/logout',
+        'class-icon' => null,
+        'submenu' => null
+    ],
 
 ];
 
 $accesscontrol['product-manager'] = [
     [
-        'name' => 'Tòa nhà',
+        'name' => 'Dữ liệu nền',
+        'url' => '/admin/list-apartment',
+        'class-icon' => '',
+        'submenu' => [
+            [
+                'name' => '<div class="text-danger">DS Tòa Nhà (bảng)* </div>',
+                'url' => '/admin/list-apartment-like-base',
+                'class-icon' => ''
+            ],
+            [
+                'name' => 'DS Quận (HCM)',
+                'url' => '/admin/list-district',
+                'submenu' => null
+            ],
+            [
+                'name' => 'DS Thành Viên',
+                'url' => '/admin/list-user',
+                'submenu' => null
+            ],
+            [
+                'name' => 'DS Đối Tác',
+                'url' => '/admin/list-user',
+                'submenu' => null
+            ],
+            [
+                'name' => 'DS Quyền',
+                'url' => '/admin/list-role',
+                'submenu' => null
+            ],
+            [
+                'name' => 'DS Loại Dự Án',
+                'url' => '/admin/list-apartment-type',
+                'submenu' => null
+            ],
+            [
+                'name' => 'DS Loại Phòng',
+                'url' => '/admin/list-room-type',
+                'submenu' => null
+            ],
+            [
+                'name' => 'DS Giá',
+                'url' => '/admin/list-price',
+                'submenu' => null
+            ],
+            [
+                'name' => 'DS # (Tag)',
+                'url' => '/admin/list-tag',
+                'submenu' => null
+            ],
+        ]
+    ],
+    [
+        'name' => 'Danh Sách Dự Án',
+        'url' => '/admin/list-apartment',
+        'submenu' => [
+            [
+                'name' => '<div class="text-danger"> DS Dự Án (thẻ) </div>',
+                'url' => '/admin/list-apartment-like-base',
+                'class-icon' => ''
+            ]
+        ]
+    ],
+    [
+        'name' => 'Lịch Làm',
         'url' => '/admin/helloA',
         'submenu' => null
     ],
     [
-        'name' => 'Phòng',
+        'name' => 'Tài Khoản',
         'url' => '/admin/helloA',
         'submenu' => [
             [
-                'name' => 'F1',
+                'name' => 'Đổi mật khẩu',
                 'url' => '/admin/helloA1',
                 'submenu' => null
             ],
             [
-                'name' => 'F2',
+                'name' => 'Lịch Làm',
                 'url' => '/admin/helloA2',
                 'submenu' => null
             ],
@@ -140,11 +208,6 @@ $accesscontrol['consultant'] = [
     [
         'name' => 'Dự Án',
         'url' => '/admin/list-apartment',
-        'submenu' => null
-    ],
-    [
-        'name' => 'Kho Ảnh',
-        'url' => '/admin/helloA',
         'submenu' => null
     ],
     [

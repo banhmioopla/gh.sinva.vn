@@ -24,8 +24,8 @@ class GhDistrict extends CI_Model {
         return $this->db->insert($this->table, $data);
     }
 
-    public function updateById($img_id, $data) {
-        $this->db->where('id', $img_id);
+    public function updateById($id, $data) {
+        $this->db->where('id', $id);
         $this->db->update($this->table, $data);
         $result = $this->db->affected_rows();
         return $result;

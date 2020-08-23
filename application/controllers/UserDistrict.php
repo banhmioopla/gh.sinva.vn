@@ -21,9 +21,7 @@ class UserDistrict extends CustomBaseStep {
         $districts = $this->input->post('code');
 
         if($mode == 'update' and !empty($districts) and !empty($account_id)) {
-            echo "vv";
             foreach($districts as $code) {
-                echo "cc";
                 $ud_model = $this->ghUserDistrict->get(['user_id' => $account_id, 'district_code' => $code]);
                 if($ud_model) {
                     $delete = $this->ghUserDistrict->delete(['user_id' => $account_id, 'district_code' => $code]);

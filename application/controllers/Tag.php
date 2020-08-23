@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class District extends CustomBaseStep {
+class Tag extends CustomBaseStep {
 	private $access_control;
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('ghDistrict');
+		$this->load->model('ghTag');
 	}
 	public function index()
 	{
@@ -14,11 +14,11 @@ class District extends CustomBaseStep {
     }
 
 	private function show(){
-		$data['list_district'] = $this->ghDistrict->getAll();
+		$data['list_tag'] = $this->ghTag->getAll();
 		
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
-		$this->load->view('district/show', $data);
+		$this->load->view('tag/show', $data);
 		$this->load->view('components/footer');
 	}
 
@@ -30,50 +30,51 @@ class District extends CustomBaseStep {
 		}
 
 		if(!empty($data['name'])) {
-			$result = $this->ghDistrict->insert($data);
+			$result = $this->ghTag->insert($data);
 			$this->session->set_flashdata('fast_notify', [
-				'message' => 'Tạo quận '.$data['name'].' thành công ',
+				'message' => 'Tạo #'.$data['name'].' thành công ',
 				'status' => 'success'
 			]);
-			return redirect('admin/list-district');
+			return redirect('admin/list-tag');
 		}
 	}
 
 	// Ajax
 	public function update() {
-		$district_id = $this->input->post('district_id');
+		$tag_id = $this->input->post('tag_id');
 		$field_value = $this->input->post('field_value');
 		$field_name = $this->input->post('field_name');
-		if(!empty($district_id) and !empty($field_value)) {
+
+		if(!empty($tag_id) and !empty($field_value)) {
 			$data = [
 				$field_name => $field_value
 			];
-			$result = $this->ghDistrict->updateById($district_id, $data);
+			$result = $this->ghTag->updateById($tag_id, $data);
 			echo json_encode(['status' => $result]); die;
 		}
 		echo json_encode(['status' => false]); die;
 	}
 
 	public function updateEditable() {
-		$district_id = $this->input->post('pk');
+		$tag_id = $this->input->post('pk');
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
 
-		if(!empty($district_id) and !empty($field_value)) {
+		if(!empty($tag_id) and !empty($field_value)) {
 			$data = [
 				$field_name => $field_value
 			];
 
-			$old_district = $this->ghDistrict->getById($district_id);
-			$old_log = json_encode($old_district[0]);
+			$old_tag = $this->ghTag->getById($tag_id);
+			$old_log = json_encode($old_Tag[0]);
 			
-			$result = $this->ghDistrict->updateById($district_id, $data);
+			$result = $this->ghTag->updateById($tag_id, $data);
 			
-			$modified_district = $this->ghDistrict->getById($district_id);
-			$modified_log = json_encode($modified_district[0]);
+			$modified_tag = $this->ghTag->getById($tag_id);
+			$modified_log = json_encode($modified_tag[0]);
 			
 			$log = [
-				'table_name' => 'gh_district',
+				'table_name' => 'gh_tag',
 				'old_content' => $old_log,
 				'modified_content' => $modified_log,
 				'time_insert' => time(),
@@ -87,21 +88,21 @@ class District extends CustomBaseStep {
 	}
 
 	public function delete(){
-		$district_id = $this->input->post('district_id');
-		if(!empty($district_id)) {
-			$old_district = $this->ghDistrict->getById($district_id);
+		$tag_id = $this->input->post('tag_id');
+		if(!empty($Tag_id)) {
+			$old_tag = $this->ghTag->getById($tag_id);
 
 			$log = [
-				'table_name' => 'gh_district',
+				'table_name' => 'gh_tag',
 				'old_content' => null,
-				'modified_content' => json_encode($old_district[0]),
+				'modified_content' => json_encode($old_tag[0]),
 				'time_insert' => time(),
 				'action' => 'delete'
 			];
 
 			// call model
 			$tracker = $this->ghActivityTrack->insert($log);
-			$result = $this->ghDistrict->delete($district_id);
+			$result = $this->ghTag->delete($tag_id);
 			
 			if($result > 0) {
 				echo json_encode(['status' => true]); die;
@@ -112,6 +113,3 @@ class District extends CustomBaseStep {
 	}
 
 }
-
-/* End of file Apartment.php */
-/* Location: ./application/controllers/role-manager/Apartment.php */

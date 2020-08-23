@@ -101,7 +101,7 @@
                 <div class="col-sm-6 col-md-3
                 <?= !empty($img['room_id']) ? 'roomcode-'.$img['room_id']:'' ?>
                 <?= !empty($img['room_type_id']) ? 'roomtype-'.$img['room_type_id']:'' ?>
-                <?= !empty($img['room_price_id']) ? 'roomtype-'.$img['room_type_id']:'' ?>
+                <?= !empty($img['room_price_id']) ? 'roomprice-'.$img['room_price_id']:'' ?>
                 image-item">
                     
                 <div class="portfolio-masonry-box">

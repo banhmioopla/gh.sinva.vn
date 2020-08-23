@@ -65,8 +65,7 @@
                                 <div class="user-role_code"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-value = "<?= $row['role_code'] ?>"
-                                        data-name="role_code">
-                                    </div>
+                                        data-name="role_code"><?= $libRole->getNameByCode($row['role_code']) ?></div>
                                 </td>
                                 <td>
                                     <div class="user-phone_number user"
@@ -189,109 +188,114 @@
             $('#table-user').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
-                responsive: true
-            });
-            
-            $('.is-active-user input[type=checkbox]').click(function() {
-                var is_active = 'NO';
-                var this_id = $(this).attr('id');
-                var matches = this_id.match(/(\d+)/);
-                var user_id = matches[0];
-                if($(this).is(':checked')) {
-                    is_active = 'YES';
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>admin/update-user',
-                    data: {field_value: is_active, user_id: user_id, field_name : 'active'},
-                    async: false,
-                    success:function(response){
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.user-alert').html(notify_html_success);
-                        } else {
-                            $('.user-alert').html(notify_html_fail);
+                responsive: true,
+                "fnDrawCallback": function() {
+                    $('.is-active-user input[type=checkbox]').click(function() {
+                        var is_active = 'NO';
+                        var this_id = $(this).attr('id');
+                        var matches = this_id.match(/(\d+)/);
+                        var user_id = matches[0];
+                        if($(this).is(':checked')) {
+                            is_active = 'YES';
                         }
-                    },
-                    beforeSend: function(){
-                        $('#loader').show();
-                    },
-                    complete: function(){
-                        $('#loader').hide();
-                    }
-                });
-            });
-
-            $('.user-name, .user-phone_number').editable({
-                type: "text",
-                url: '<?= base_url() ?>admin/update-user-editable',
-                inputclass: '',
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.user-alert').html(notify_html_success);
-                    } else {
-                        $('.user-alert').html(notify_html_fail);
-                    }
-                }
-            });
-
-            $('.user-role_code').editable({
-                type: 'select',
-                url: '<?= base_url() ?>admin/get-user-role',
-                inputclass: '',
-                source: function() {
-                    data = [];
-                    $.ajax({
-                        url: '<?= base_url() ?>admin/get-user-role',
-                        dataType: 'json',
-                        async: false,
-                        success: function(res) {
-                            data = res;
-                            return res;
-                        }
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>admin/update-user',
+                            data: {field_value: is_active, user_id: user_id, field_name : 'active'},
+                            async: false,
+                            success:function(response){
+                                var data = JSON.parse(response);
+                                if(data.status == true) {
+                                    $('.user-alert').html(notify_html_success);
+                                } else {
+                                    $('.user-alert').html(notify_html_fail);
+                                }
+                            },
+                            beforeSend: function(){
+                                $('#loader').show();
+                            },
+                            complete: function(){
+                                $('#loader').hide();
+                            }
+                        });
                     });
-                    console.log(data);
-                    return data;
-                },
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.user-alert').html(notify_html_success);
-                    } else {
-                        $('.user-alert').html(notify_html_fail);
-                    }
-                    $('.user-alert').show();
-                    $('.user-alert').fadeOut(3000);
-                }
-            });
 
-            $('.delete-user').click(function(){
-                var this_id = $(this).attr('id');
-                var this_click = $(this);
-                var matches = this_id.match(/(\d+)/);
-                var user_id = matches[0];
-                if(user_id > 0) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '<?= base_url() ?>admin/delete-user',
-                        data: {user_id: user_id},
+                    $('.user-name, .user-phone_number').editable({
+                        type: "text",
+                        url: '<?= base_url() ?>admin/update-user-editable',
+                        inputclass: '',
                         success: function(response) {
                             var data = JSON.parse(response);
-                            console.log(data);
                             if(data.status == true) {
                                 $('.user-alert').html(notify_html_success);
-                                this_click.parents('tr').remove();
                             } else {
                                 $('.user-alert').html(notify_html_fail);
                             }
-                            $('.user-alert').show();
-                            $('.user-alert').fadeOut(3000);
                         }
                     });
+                    
+                    $('.delete-user').click(function(){
+                        var this_id = $(this).attr('id');
+                        var this_click = $(this);
+                        var matches = this_id.match(/(\d+)/);
+                        var user_id = matches[0];
+                        if(user_id > 0) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>admin/delete-user',
+                                data: {user_id: user_id},
+                                success: function(response) {
+                                    var data = JSON.parse(response);
+                                    console.log(data);
+                                    if(data.status == true) {
+                                        $('.user-alert').html(notify_html_success);
+                                        this_click.parents('tr').remove();
+                                    } else {
+                                        $('.user-alert').html(notify_html_fail);
+                                    }
+                                    $('.user-alert').show();
+                                    $('.user-alert').fadeOut(3000);
+                                }
+                            });
+                        }
+                        $('.user-alert').fadeOut(1000);
+                    });
+
+                    $('.user-role_code').click('.user-role_code', function(){
+                        $(this).editable({
+                            type: 'select',
+                            url: '<?= base_url() ?>admin/get-user-role',
+                            inputclass: '',
+                            source: function() {
+                                data = [];
+                                $.ajax({
+                                    url: '<?= base_url() ?>admin/get-user-role',
+                                    dataType: 'json',
+                                    async: false,
+                                    success: function(res) {
+                                        data = res;
+                                        return res;
+                                    }
+                                });
+                                console.log(data);
+                                return data;
+                            },
+                            success: function(response) {
+                                var data = JSON.parse(response);
+                                if(data.status == true) {
+                                    $('.user-alert').html(notify_html_success);
+                                } else {
+                                    $('.user-alert').html(notify_html_fail);
+                                }
+                                $('.user-alert').show();
+                                $('.user-alert').fadeOut(3000);
+                            }
+                        });
+                    });   
                 }
-                $('.user-alert').fadeOut(1000);
             });
+            
+            
         });
     });
 </script>

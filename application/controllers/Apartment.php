@@ -6,13 +6,14 @@ class Apartment extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['ghApartment', 'ghDistrict']);
+		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag']);
 		$this->load->config('label.apartment');
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibPartner', null, 'libPartner');
 		$this->load->library('LibRoom', null, 'libRoom');
 		$this->load->library('LibBaseApartmentType', null, 'libBaseApartmentType');
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
+		$this->load->library('LibTag', null, 'libTag');
 	}
 	public function index()
 	{
@@ -43,6 +44,7 @@ class Apartment extends CustomBaseStep {
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		$data['libRoom'] =  $this->libRoom;
 		$data['libBaseRoomType'] =  $this->libBaseRoomType;
+		$data['libTag'] = $this->libTag;
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view($template, $data);
@@ -53,9 +55,11 @@ class Apartment extends CustomBaseStep {
 		$data['list_apartment'] = $this->ghApartment->getAll();
 		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['cb_partner'] = $this->libPartner->cbActive();
+		$data['cb_tag'] = $this->libPartner->cbActive();
 
 		$data['libDistrict'] = $this->libDistrict;
 		$data['libPartner'] = $this->libPartner;
+		$data['libTag'] = $this->libTag;
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view('apartment/show-like-base', $data);
@@ -170,6 +174,20 @@ class Apartment extends CustomBaseStep {
 		$result = [];
 		foreach($list_district as $d) {
 			$result[] = ["value" => $d['id'], "text" => 'ĐT '.$d["name"]];
+		}
+		$pk = $this->input->post('pk');
+		if(isset($pk)) {
+			return die($this->updateEditable()); 
+		}
+		echo json_encode($result); die;
+	}
+
+	public function getTag(){
+		
+		$list_tag = $this->ghTag->getAll();
+		$result[] = ["value" => 0, "text" => 'chọn ...'];
+		foreach($list_tag as $tag) {
+			$result[] = ["value" => $tag['id'], "text" => '#'.$tag["name"]];
 		}
 		$pk = $this->input->post('pk');
 		if(isset($pk)) {

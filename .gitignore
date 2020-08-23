@@ -10,7 +10,7 @@ application/logs/*
 
 templates/*
 js-plugins/*
-
+media/*
 composer.lock
 
 user_guide_src/build/*

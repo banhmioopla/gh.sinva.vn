@@ -72,7 +72,38 @@ $route['admin/delete-apartment-type'] = function($params = []) {
 };
 
 $route['admin/update-apartment-type-editable'] = function($params = []) {
-	$controller = 'BaseApartmentType';
+	$controller = 'Tag';
+	$action = '/updateEditable';
+	return $controller.$action;
+};
+
+// -- tag
+$route['admin/list-tag'] = function($params = []) {
+	$controller = 'Tag';
+	$action = '/index';
+	return $controller.$action;
+};
+
+$route['admin/create-tag'] = function($params = []) {
+	$controller = 'Tag';
+	$action = '/create';
+	return $controller.$action;
+};
+
+$route['admin/update-tag'] = function($params = []) {
+	$controller = 'Tag';
+	$action = '/update';
+	return $controller.$action;
+};
+
+$route['admin/delete-tag'] = function($params = []) {
+	$controller = 'Tag';
+	$action = '/delete';
+	return $controller.$action;
+};
+
+$route['admin/update-tag-editable'] = function($params = []) {
+	$controller = 'Tag';
 	$action = '/updateEditable';
 	return $controller.$action;
 };
@@ -335,6 +366,12 @@ $route['admin/apartment-get-district'] = function($params = []) {
 $route['admin/apartment-get-partner'] = function($params = []) {
 	$controller = 'apartment';
 	$action = '/getPartner';
+	return $controller.$action;
+};
+
+$route['admin/apartment-get-tag'] = function($params = []) {
+	$controller = 'apartment';
+	$action = '/getTag';
 	return $controller.$action;
 };
 //
