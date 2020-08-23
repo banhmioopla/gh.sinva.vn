@@ -17,7 +17,7 @@ $accesscontrol['admin'] = [
             ],
             [
                 'name' => 'DS Đối Tác',
-                'url' => '/admin/list-user',
+                'url' => '/admin/list-partner',
                 'submenu' => null
             ],
             [
@@ -115,7 +115,7 @@ $accesscontrol['product-manager'] = [
             ],
             [
                 'name' => 'DS Đối Tác',
-                'url' => '/admin/list-user',
+                'url' => '/admin/list-partner',
                 'submenu' => null
             ],
             [
@@ -157,8 +157,8 @@ $accesscontrol['product-manager'] = [
         ]
     ],
     [
-        'name' => 'Lịch Làm',
-        'url' => '/admin/helloA',
+        'name' => 'Google Drive',
+        'url' => '/admin/list-google',
         'submenu' => null
     ],
     [

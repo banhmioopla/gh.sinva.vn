@@ -8,6 +8,7 @@ class Apartment extends CustomBaseStep {
 		parent::__construct();
 		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag']);
 		$this->load->config('label.apartment');
+		$this->load->helper('money');
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibPartner', null, 'libPartner');
 		$this->load->library('LibRoom', null, 'libRoom');

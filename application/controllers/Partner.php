@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Partner extends CI_Controller {
+class Partner extends CustomBaseStep {
 
 	public function __construct()
 	{
@@ -17,7 +17,7 @@ class Partner extends CI_Controller {
 	private function show(){
         $data['list_partner'] = $this->ghPartner->getAll();
 		/*--- Load View ---*/
-		$this->load->view('components/header');
+		$this->load->view('components/header', ['menu' =>$this->menu]);
 		$this->load->view('partner/show', $data);
 		$this->load->view('components/footer');
 	}

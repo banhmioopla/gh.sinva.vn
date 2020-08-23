@@ -19,7 +19,7 @@ $route['normal/list-apartment'] = function($params = []) {
 
 $route['admin/list-district'] = function($params = []) {
 	$controller = 'district';
-	$action = '/index';
+	$action = '/index'; // hàm
 	return $controller.$action;
 };
 
@@ -44,6 +44,12 @@ $route['admin/delete-district'] = function($params = []) {
 $route['admin/update-district-editable'] = function($params = []) {
 	$controller = 'district';
 	$action = '/updateEditable';
+	return $controller.$action;
+};
+// -- google drive
+$route['admin/list-google'] = function($params = []) {
+	$controller = 'TempGoogle';
+	$action = '/index';
 	return $controller.$action;
 };
 // -- apartment type
