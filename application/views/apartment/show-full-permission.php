@@ -18,7 +18,7 @@
                             <li class="breadcrumb-item active">Quận XXX</li>
                         </ol>
                     </div>
-                    <h3>Quận XXX</h3>
+                    <h3>Dự Án</h3>
                 </div>
             </div>
         </div>
