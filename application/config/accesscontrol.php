@@ -2,7 +2,7 @@
 $accesscontrol['admin'] = [
     [
         'name' => 'Dữ liệu nền',
-        'url' => '/admin/list-apartment',
+        'url' => '',
         'class-icon' => '',
         'submenu' => [
             [
@@ -94,15 +94,10 @@ $accesscontrol['admin'] = [
 
 $accesscontrol['product-manager'] = [
     [
-        'name' => 'Dữ liệu nền',
-        'url' => '/admin/list-apartment',
+        'name' => 'Dữ liệu nền (QLDA)',
+        'url' => '',
         'class-icon' => '',
         'submenu' => [
-            [
-                'name' => '<div class="text-danger">DS Tòa Nhà (bảng)* </div>',
-                'url' => '/admin/list-apartment-like-base',
-                'class-icon' => ''
-            ],
             [
                 'name' => 'DS Quận (HCM)',
                 'url' => '/admin/list-district',
@@ -119,7 +114,7 @@ $accesscontrol['product-manager'] = [
                 'submenu' => null
             ],
             [
-                'name' => 'DS Quyền',
+                'name' => 'DS Quyền Thành Viên',
                 'url' => '/admin/list-role',
                 'submenu' => null
             ],
@@ -232,6 +227,8 @@ $accesscontrol['consultant'] = [
         ]
     ],
 ];
+
+
 
 $config['accesscontrol'] = $accesscontrol;
 ?>

@@ -15,24 +15,23 @@
                             <li class="breadcrumb-item">
                                 <a href="#">Test</a>
                             </li>
-                            <li class="breadcrumb-item active">Quận XXX</li>
+                            <li class="breadcrumb-item active">DS Dự Án</li>
                         </ol>
                     </div>
-                    <h3>Quận XXX</h3>
+                    <h3>DS Dự Án</h3>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="card card-body pl-0 pr-0 col-12 col-md-8 offset-md-2">
             <div class="mt-2 mb-2 list-action">
-                <span class="d-flex justify-content-center">
+                <span class="d-flex justify-content-center flex-wrap">
                 <?php foreach($list_district as $district): ?>
                     <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>" 
                         class="btn m-1 btn-sm btn-outline-success
                         <?= $district_code == $district['code'] ? 'active':'' ?>
                         btn-rounded waves-light waves-effect">
-                        <?= $district['name'] ?>
-                    </a>
+                        <?= $district['name'] ?></a>
                 <?php endforeach; ?>
                 </span>
             </div>

@@ -65,7 +65,7 @@
                                 <div class="user-role_code"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-value = "<?= $row['role_code'] ?>"
-                                        data-name="role_code"><?= $libRole->getNameByCode($row['role_code']) ?></div>
+                                        data-name="role_code">quyền <?= $libRole->getNameByCode($row['role_code']) ?></div>
                                 </td>
                                 <td>
                                     <div class="user-phone_number user"

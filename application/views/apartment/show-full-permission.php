@@ -25,7 +25,7 @@
         <div class="row">
             <div class="card card-body pl-0 pr-0 col-12 col-md-8 offset-md-2">
             <div class="mt-2 mb-2 list-action">
-                <span class="d-flex justify-content-center">
+                <span class="d-flex justify-content-center flex-wrap">
                 <?php foreach($list_district as $district): ?>
                     <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>" 
                         class="btn m-1 btn-sm btn-outline-success

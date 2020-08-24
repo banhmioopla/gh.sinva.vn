@@ -11,6 +11,7 @@ application/logs/*
 templates/*
 js-plugins/*
 media/*
+application/config/database.php
 composer.lock
 
 user_guide_src/build/*

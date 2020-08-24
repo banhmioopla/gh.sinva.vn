@@ -7,7 +7,7 @@
             <th>Giá</th>
             <th>Diện Tích</th>
             <th>Trạng Thái</th>
-            <th>Ngày checkout</th>
+            <th>Checkout</th>
         </tr>
         </thead>
         <tbody>
@@ -17,10 +17,10 @@
                 <tr>
                     <td><div><?= $room['code'] ?></div></td>
                     <td><div><?= $libBaseRoomType->getNameById($room['type_id']) ?></div></td>
-                    <td><div><?= money_format($room['price']) ?></div></td>
+                    <td><div><?= $room['temp_price'] ?></div></td>
                     <td><div><?= $room['area'] ?></div></td>
                     <td><div><?= $room['status'] ?></div></td>
-                    <td><div><?= date('d-m-Y',$room['time_available']) ?></div></td>
+                    <td><div><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?></div></td>
                 </tr>
             <?php endforeach; ?>
             <?php endif; ?>

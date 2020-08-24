@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Hello World</title>
+        <title>Sinva | Hệ thống quản lý phòng </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -84,49 +84,49 @@
                                 <!-- End mobile menu toggle-->
                             </li>
                             <li class="dropdown notification-list hide-phone">
-                                <a class="nav-link dropdown-toggle waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <!-- <a class="nav-link dropdown-toggle waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="mdi mdi-earth"></i> English
                                     <i class="mdi mdi-chevron-down"></i>
-                                </a>
+                                </a> -->
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">
+                                    <!-- <a href="javascript:void(0);" class="dropdown-item">
                                         Spanish
-                                    </a>
+                                    </a> -->
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">
+                                    <!-- <a href="javascript:void(0);" class="dropdown-item">
                                         Italian
-                                    </a>
+                                    </a> -->
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">
+                                    <!-- <a href="javascript:void(0);" class="dropdown-item">
                                         French
-                                    </a>
+                                    </a> -->
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item">
+                                    <!-- <a href="javascript:void(0);" class="dropdown-item">
                                         Russian
-                                    </a>
+                                    </a> -->
                                 </div>
                             </li>
                             <li class="dropdown notification-list">
-                                <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <!-- <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="fi-bell noti-icon"></i>
                                     <span class="badge badge-danger badge-pill noti-icon-badge">4</span>
-                                </a>
+                                </a> -->
                                 <div class="dropdown-menu dropdown-menu-right dropdown-lg">
                                     <!-- item-->
-                                    <div class="dropdown-item noti-title">
+                                    <!-- <div class="dropdown-item noti-title">
                                         <h6 class="m-0">
                                             <span class="float-right">
                                                 <a href="" class="text-dark">
-                                                    <small>Clear All</small>
+                                                    <small>x</small>
                                                 </a>
                                             </span>
-                                            Notification
+                                            Thông báo
                                         </h6>
-                                    </div>
+                                    </div> -->
                                     <div class="slimscroll" style="max-height: 230px;">
                                         <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-success">
                                                 <i class="mdi mdi-comment-account-outline"></i>
                                             </div>
@@ -134,9 +134,9 @@
                                                 Caleb Flakelar commented on Admin
                                                 <small class="text-muted">1 min ago</small>
                                             </p>
-                                        </a>
+                                        </a> -->
                                         <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-info">
                                                 <i class="mdi mdi-account-plus"></i>
                                             </div>
@@ -144,9 +144,9 @@
                                                 New user registered.
                                                 <small class="text-muted">5 hours ago</small>
                                             </p>
-                                        </a>
+                                        </a> -->
                                         <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-danger">
                                                 <i class="mdi mdi-heart"></i>
                                             </div>
@@ -155,9 +155,9 @@
                                                 <b>Admin</b>
                                                 <small class="text-muted">3 days ago</small>
                                             </p>
-                                        </a>
+                                        </a> -->
                                         <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-warning">
                                                 <i class="mdi mdi-comment-account-outline"></i>
                                             </div>
@@ -165,9 +165,9 @@
                                                 Caleb Flakelar commented on Admin
                                                 <small class="text-muted">4 days ago</small>
                                             </p>
-                                        </a>
+                                        </a> -->
                                         <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-purple">
                                                 <i class="mdi mdi-account-plus"></i>
                                             </div>
@@ -175,9 +175,9 @@
                                                 New user registered.
                                                 <small class="text-muted">7 days ago</small>
                                             </p>
-                                        </a>
+                                        </a> -->
                                         <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-custom">
                                                 <i class="mdi mdi-heart"></i>
                                             </div>
@@ -186,7 +186,7 @@
                                                 <b>Admin</b>
                                                 <small class="text-muted">13 days ago</small>
                                             </p>
-                                        </a>
+                                        </a> -->
                                     </div>
                                     <!-- All-->
                                     <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
@@ -196,10 +196,10 @@
                                 </div>
                             </li>
                             <li class="dropdown notification-list">
-                                <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <!-- <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="fi-speech-bubble noti-icon"></i>
                                     <span class="badge badge-dark badge-pill noti-icon-badge">6</span>
-                                </a>
+                                </a> -->
                                 <div class="dropdown-menu dropdown-menu-right dropdown-lg">
                                     <!-- item-->
                                     <div class="dropdown-item noti-title">
@@ -265,7 +265,7 @@
                                 <a class="nav-link dropdown-toggle waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img src="<?= $assets_path ?>images/users/avatar-1.jpg" alt="user" class="rounded-circle" />
                                     <span class="ml-1 pro-user-name">
-                                        Maxine K
+                                        <?= $this->session->auth['name'] ?>
                                         <i class="mdi mdi-chevron-down"></i>
                                     </span>
                                 </a>
