@@ -46,7 +46,7 @@
                                         <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">SONATA</a>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">12 | 22 | 23</a>
+                                        <!-- <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">12 | 22 | 23</a> -->
                                     </div>
                                     <h4 class="col text-center d-none">Tiêu đề Shock</h4>
                                 </div>
@@ -59,26 +59,28 @@
                                 <div class="col text-center text-purple font-weight-bold">
                                     <?=$apartment['address_street'] ?>
                                 </div>
-                                <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i> <?= date('d/m/Y H:i', $apartment['time_update']) ?></div>
+                                <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i>
+                                    <?= $apartment['time_update'] ? date('d/m/Y H:i', $apartment['time_update']) :'' ?>
+                                </div>
                                 <div class="mt-2 list-action" style="display:none">
                                     <span class="d-flex justify-content-center">
-                                        <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                                        <!-- <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
                                             <i class="mdi mdi-credit-card-plus"></i>
-                                        </button>
-                                        <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                                        </button> -->
+                                        <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                             <i class="mdi mdi-comment-outline"></i>
-                                        </button>
+                                        </button> -->
                                         <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect" 
                                             data-toggle="modal"
                                             data-target="#modal-apartment-detail-<?=$apartment['id'] ?>"
                                             data-overlaySpeed="200">
                                             <i class="mdi mdi-eye"></i>
                                         </button>
-                                        <a href="/admin/upload-image?apartment-id=<?=$apartment['id'] ?>" target="_blank">
-                                            <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                                        <!-- <a href="/admin/upload-image?apartment-id=<?//=$apartment['id'] ?>" target="_blank"> -->
+                                            <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                                 <i class="mdi mdi-folder-multiple-image"></i>
-                                            </button>
-                                        </a>
+                                            </button> -->
+                                        <!-- </a> -->
                                         
                                         <button type="button" 
                                                 data-apartment-id="<?= $apartment['id'] ?>" 
@@ -128,11 +130,11 @@
                                             <i class="mdi mdi-border-all mr-2"></i>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a href="#apm-map" data-toggle="tab" aria-expanded="false" class="nav-link">
                                             <i class="mdi mdi-google-maps mr-2"></i>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>" data-pk="apm-1"
@@ -205,31 +207,11 @@
         });
         
         $('body').delegate('.list-room .room-data', 'click', function(){
+            console.log('123123');
             $(this).editable({
                 type: "text",
-                selector: '.room-add',
                 url: '<?= base_url()."admin/update-room-editable" ?>',
-                inputclass: '',
-                display: function (value ) {
-                    var name = $(this).data('name');
-                    var si = [
-                        { value: 1, symbol: "" },
-                        { value: 1E3, symbol: "k" },
-                        { value: 1E6, symbol: "Mi" },
-                        { value: 1E9, symbol: "Bi" }
-                    ];
-                    var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-                    var i;
-                    for (i = si.length - 1; i > 0; i--) {
-                        if (value >= si[i].value) {
-                            break;
-                        }
-                    }
-                    var data = value;
-                    if(name == 'price')
-                        data =(value / si[i].value).toFixed(1).replace(rx, "$1") + si[i].symbol
-                    $(this).html((data));
-                }
+                inputclass: ''
             });
         });
 
@@ -264,7 +246,7 @@
             });
         });
         
-        $('body').delegate('.list-room .room-select-price', 'click',function(){
+        $('body').delegate('.list-room .room-select-status', 'click',function(){
             $(this).editable({
                 type: 'select',
                 url: '<?= base_url() ?>admin/get-room-status',
@@ -295,7 +277,7 @@
             });
         });
 
-        $('body').delegate('.list-room .room-select-status', 'click',function(){
+        $('body').delegate('.list-room .room-select-price', 'click',function(){
             $(this).editable({
                 type: 'select',
                 url: '<?= base_url() ?>admin/get-room-price',
@@ -326,7 +308,7 @@
             });
         });
 
-        $.fn.combodate.defaults.maxYear = 2035;
+        $.fn.combodate.defaults.maxYear = 2030;
         $.fn.combodate.defaults.minYear = 2020;
         $('body').delegate('.list-room .room-time_available', 'click', function() {
             $('.list-room .room-time_available').editable({

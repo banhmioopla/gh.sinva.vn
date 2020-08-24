@@ -45,7 +45,7 @@
                                         <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">TÊN ĐỐI TÁC</a>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">12 | 22 | 23</a>
+                                        <!-- <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">12 | 22 | 23</a> -->
                                     </div>
                                     <h4 class="col text-center d-none">Tiêu đề Shock</h4>
                                 </div>
@@ -62,18 +62,18 @@
                                 <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i> <?= date('d/m/Y H:i', $apartment['time_update']) ?></div>
                                 <div class="mt-2 list-action" style="display:none">
                                     <span class="d-flex justify-content-center">
-                                        <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                                        <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                             <i class="mdi mdi-comment-outline"></i>
-                                        </button>
-                                        <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect" 
+                                        </button> -->
+                                        <button type="button" class="btn m-f btn-sm btn-outline-warning btn-rounded waves-light waves-effect" 
                                             data-toggle="modal"
                                             data-target="#modal-apartment-detail-<?=$apartment['id'] ?>"
                                             data-overlaySpeed="200">
                                             <i class="mdi mdi-eye"></i>
                                         </button>
-                                        <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                                        <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                             <i class="mdi mdi-folder-multiple-image"></i>
-                                        </button>
+                                        </button> -->
                                     </span>
                                 </div>
                             </div>
@@ -117,11 +117,11 @@
                                             <i class="mdi mdi-border-all mr-2"></i>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a href="#apm-map" data-toggle="tab" aria-expanded="false" class="nav-link">
                                             <i class="mdi mdi-google-maps mr-2"></i>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>">

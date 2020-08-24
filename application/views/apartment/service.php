@@ -97,3 +97,36 @@
         </li>
     </ul>
 </div>
+
+<div class="carousel-item">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <i><?= $label_apartment['television'] ?></i>  
+            <div class="text-right" 
+                data-name="television"
+                data-value="<?= $apartment['television'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['television'] ?></div>
+        </li>
+        <li class="list-group-item">
+            <i><?= $label_apartment['makeup_table'] ?></i>
+            <div class="text-right"
+                data-name="makeup_table"
+                data-value="<?= $apartment['makeup_table'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['makeup_table'] ?></div>
+        </li>
+        <li class="list-group-item">
+            <i><?= $label_apartment['sofa'] ?></i>
+            <div class="text-right"
+                data-name="sofa"
+                data-value="<?= $apartment['sofa'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['sofa'] ?></div>
+        </li>
+        <li class="list-group-item">
+            <i><?= $label_apartment['car_park'] ?></i>
+            <div class="text-right"
+                data-name="car_park"
+                data-value="<?= $apartment['car_park'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['car_park'] ?></div>
+        </li>
+    </ul>
+</div>

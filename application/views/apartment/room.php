@@ -19,7 +19,7 @@
                     <td><div><?= $libBaseRoomType->getNameById($room['type_id']) ?></div></td>
                     <td><div><?= $room['temp_price'] ?></div></td>
                     <td><div><?= $room['area'] ?></div></td>
-                    <td><div><?= $room['status'] ?></div></td>
+                    <td class="text-center"><div><?= $room['status'] == 'Available' ? '<span class="text-primary">trống</span>':'' ?></div></td>
                     <td><div><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?></div></td>
                 </tr>
             <?php endforeach; ?>

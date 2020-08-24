@@ -14,6 +14,10 @@ $apartment['number_of_people'] = 'Số người ở';
 $apartment['kitchen'] = 'Bếp';
 $apartment['pet'] = 'Thú cưng';
 $apartment['contract_long_term'] = 'HĐ dài hạn';
+$apartment['television'] = 'TV';
+$apartment['makeup_table'] = 'Bàn Makeup';
+$apartment['sofa'] = 'Sofa';
+$apartment['car_park'] = 'Bãi xe oto';
 
 $config['label.apartment'] = $apartment;
 ?>

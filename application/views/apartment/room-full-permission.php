@@ -27,28 +27,28 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['code'] ?>"
                             data-name="code"
-                            ><?= $room['code'] ?></div></td>
+                            ><?= $room['code'] ? $room['code'] : '#' ?></div></td>
                     <td><div class="room-select-type" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['type_id'] ?>"
                             data-name="type_id"
-                            ><?= $libBaseRoomType->getNameById($room['type_id']) ?></div></td>
+                            ><?= $room['type_id'] ? $libBaseRoomType->getNameById($room['type_id']): '#' ?></div></td>
                     <td><div class="room-select-price" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['base_price_id'] ?>"
-                            data-name="base_price_id"><?= $room['base_price_id'] ?></div></td>
+                            data-name="base_price_id"><?= $room['base_price_id'] ? $room['base_price_id']: '#' ?></div></td>
                     <td><div class="room-data" 
                             data-pk= "<?= $room['id'] ?>"
                             data-value= "<?= $room['area'] ?>"
-                            data-name="area"><?= $room['area'] ?></div></td>
+                            data-name="area"><?= $room['area'] ? $room['area']: '#' ?></div></td>
                     <td><div class="room-select-status" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['status'] ?>"
-                            data-name="status"><?= $room['status'] ?></div></td>
+                            data-name="status"><?= $room['status'] == 'Available' ? 'trống':'đang thuê' ?></div></td>
                     <td><div class="room-time_available" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= date('d-m-Y',$room['time_available']) ?>"
-                            data-name="time_available"><?= date('d-m-Y',$room['time_available']) ?></div></td>
+                            data-name="time_available"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'#' ?></div></td>
                     <td class="d-flex justify-content-center">
                         <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                             <i class="mdi mdi-delete"></i>
