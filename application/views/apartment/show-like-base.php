@@ -39,6 +39,8 @@
                             <th>Đường</th>
                             <th>Phường</th>
                             <th>Số Lầu</th>
+                            <th>KT3</th>
+                            <th>Hướng</th>
                             <th>Tag #</th>
                             <th class="text-center">Mở</th>
                         </tr>
@@ -78,6 +80,18 @@
                                 data-value="<?= $row['number_of_floor'] ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     <?= $row['number_of_floor'] ?> Lầu
+                                </td>
+                                <td class="apartment-data"
+                                data-name="kt3"
+                                data-value="<?= $row['kt3'] ?>"
+                                data-pk="<?= $row['id'] ?>">
+                                    <?= $row['kt3'] ? $row['kt3']:'#' ?>
+                                </td>
+                                <td class="apartment-select-direction"
+                                data-name="direction"
+                                data-value="<?= $row['direction'] ?>"
+                                data-pk="<?= $row['id'] ?>">
+                                    <?= $row['direction'] == 'east' ? 'Đông':($row['direction'] == 'west' ? 'Tây':($row['direction'] == 'south' ? 'Nam': ($row['direction'] == 'north' ? 'Bắc':'#'))) ?>
                                 </td>
                                 <td class="apartment-select-tag"
                                 data-name="tag_id"
@@ -293,6 +307,30 @@
                         });
                         return data;
                     },
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        if(data.status == true) {
+                            $('.apartment-alert').html(notify_html_success);
+                        } else {
+                            $('.apartment-alert').html(notify_html_fail);
+                        }
+                        $('.apartment-alert').show();
+                        $('.apartment-alert').fadeOut(3000);
+                    }
+                });
+            });
+
+            $('body').delegate('.apartment-select-direction', 'click', function(){
+                $(this).editable({
+                    type: 'select',
+                    url: '<?= base_url() ?>admin/update-apartment-editable',
+                    inputclass: '',
+                    source: [
+                        {'value': 'east', 'text':'Đông'},
+                        {'value': 'west', 'text':'Tây'},
+                        {'value': 'south', 'text':'Nam'},
+                        {'value': 'north', 'text':'Bắc'},
+                    ],
                     success: function(response) {
                         var data = JSON.parse(response);
                         if(data.status == true) {

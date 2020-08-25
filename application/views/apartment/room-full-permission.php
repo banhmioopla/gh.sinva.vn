@@ -41,10 +41,10 @@
                             data-pk= "<?= $room['id'] ?>"
                             data-value= "<?= $room['area'] ?>"
                             data-name="area"><?= $room['area'] ? $room['area']: '#' ?></div></td>
-                    <td><div class="room-select-status" 
+                    <td><div class="room-select-status text-primary" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['status'] ?>"
-                            data-name="status"><?= $room['status'] == 'Available' ? 'trống':'đang thuê' ?></div></td>
+                            data-name="status"><?= $room['status'] == 'Available' ? 'trống':($room['status'] == 'Consulting' ? 'đang dắt khách' : 'đã thuê') ?></div></td>
                     <td><div class="room-time_available" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= date('d-m-Y',$room['time_available']) ?>"

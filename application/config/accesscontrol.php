@@ -141,11 +141,16 @@ $accesscontrol['product-manager'] = [
         ]
     ],
     [
-        'name' => 'Danh Sách Dự Án',
-        'url' => '/admin/list-apartment',
+        'name' => 'Dự Án',
+        'url' => '',
         'submenu' => [
             [
-                'name' => '<div class="text-danger"> DS Dự Án (thẻ) </div>',
+                'name' => '<div class="text-primary"> DS Dự Án (thẻ) </div>',
+                'url' => '/admin/list-apartment',
+                'class-icon' => ''
+            ],
+            [
+                'name' => '<div class="text-danger"> DS Dự Án (bảng) </div>',
                 'url' => '/admin/list-apartment-like-base',
                 'class-icon' => ''
             ]
@@ -206,11 +211,6 @@ $accesscontrol['consultant'] = [
         'submenu' => null
     ],
     [
-        'name' => 'Lịch Làm',
-        'url' => '/admin/helloA',
-        'submenu' => null
-    ],
-    [
         'name' => 'Tài Khoản',
         'url' => '/admin/helloA',
         'submenu' => [
@@ -225,6 +225,11 @@ $accesscontrol['consultant'] = [
                 'submenu' => null
             ],
         ]
+    ],
+    [
+        'name' => 'Google Drive',
+        'url' => '/admin/list-google',
+        'submenu' => null
     ],
 ];
 

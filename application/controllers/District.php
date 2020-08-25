@@ -6,7 +6,7 @@ class District extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct();
-		// $this->load->model('ghDistrict'); quận
+		$this->load->model('ghDistrict');
 	}
 	public function index()
 	{

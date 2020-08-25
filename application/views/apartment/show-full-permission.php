@@ -15,7 +15,7 @@
                             <li class="breadcrumb-item">
                                 <a href="#">Test</a>
                             </li>
-                            <li class="breadcrumb-item active">Quận XXX</li>
+                            <li class="breadcrumb-item active">Dự Án</li>
                         </ol>
                     </div>
                     <h3>Dự Án</h3>
@@ -43,10 +43,10 @@
                             <div class="card-header" role="tab">
                                 <div class="row">
                                     <div class="col-6">
-                                        <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">SONATA</a>
+                                        <a class="collapsed text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
                                     </div>
-                                    <div class="col-6 text-right">
-                                        <!-- <a class="collapsed text-secondary font-weight-bold" data-toggle="collapse" href="#collapseThree">12 | 22 | 23</a> -->
+                                    <div class="col-6 text-right font-weight-bold">
+                                    <?= $apartment['direction'] == 'east' ? 'Đông':($apartment['direction'] == 'west' ? 'Tây':($apartment['direction'] == 'south' ? 'Nam': ($apartment['direction'] == 'north' ? 'Bắc':'#'))) ?>
                                     </div>
                                     <h4 class="col text-center d-none">Tiêu đề Shock</h4>
                                 </div>
