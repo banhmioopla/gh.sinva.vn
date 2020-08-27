@@ -58,7 +58,7 @@ class Apartment extends CustomBaseStep {
 		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['cb_partner'] = $this->libPartner->cbActive();
 		$data['cb_tag'] = $this->libPartner->cbActive();
-
+		$data['label_apartment'] =  $this->config->item('label.apartment');
 		$data['libDistrict'] = $this->libDistrict;
 		$data['libPartner'] = $this->libPartner;
 		$data['libTag'] = $this->libTag;

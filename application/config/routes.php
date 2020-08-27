@@ -427,37 +427,37 @@ $route['admin/update-image'] = function($params = []) {
 
 // admin/price
 $route['admin/list-price'] = function($params = []) {
-	$controller = 'baseprice';
+	$controller = 'BasePrice';
 	$action = '/show';
 	return $controller.$action;
 };
 
 $route['admin/create-price'] = function($params = []) {
-	$controller = 'baseprice';
+	$controller = 'BasePrice';
 	$action = '/create';
 	return $controller.$action;
 };
 
 $route['admin/update-price'] = function($params = []) {
-	$controller = 'baseprice';
+	$controller = 'BasePrice';
 	$action = '/update';
 	return $controller.$action;
 };
 
 $route['admin/update-price'] = function($params = []) {
-	$controller = 'baseprice';
+	$controller = 'BasePrice';
 	$action = '/update';
 	return $controller.$action;
 };
 
 $route['admin/delete-price'] = function($params = []) {
-	$controller = 'baseprice';
+	$controller = 'BasePrice';
 	$action = '/delete';
 	return $controller.$action;
 };
 
 $route['admin/update-price-editable'] = function($params = []) {
-	$controller = 'baseprice';
+	$controller = 'BasePrice';
 	$action = '/updateEditable';
 	return $controller.$action;
 };

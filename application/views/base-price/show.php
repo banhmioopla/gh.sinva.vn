@@ -48,7 +48,7 @@
                                         data-pk="<?= $row['id'] ?>"
                                         data-value="<?= $row['name'] ?>"
                                         data-name="name">
-                                            <?= money_format($row['name']) ?>
+                                            <?= money_format($row['name'],1) ?>
                                     </div>
                                 </td>
                                 <td><i>-</i></td>

@@ -18,6 +18,14 @@ $apartment['television'] = 'TV';
 $apartment['makeup_table'] = 'Bàn Makeup';
 $apartment['sofa'] = 'Sofa';
 $apartment['car_park'] = 'Bãi xe oto';
+$apartment['east'] = 'Đông';
+$apartment['west'] = 'Tây';
+$apartment['south'] = 'Nam';
+$apartment['north'] = 'Bắc';
+$apartment['east-south'] = 'Đông Nam';
+$apartment['west-south'] = 'Tây Nam';
+$apartment['east-north'] = 'Đông Bắc';
+$apartment['west-north'] = 'Tây Bắc';
 
 $config['label.apartment'] = $apartment;
 ?>

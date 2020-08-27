@@ -91,7 +91,7 @@
                                 data-name="direction"
                                 data-value="<?= $row['direction'] ?>"
                                 data-pk="<?= $row['id'] ?>">
-                                    <?= $row['direction'] == 'east' ? 'Đông':($row['direction'] == 'west' ? 'Tây':($row['direction'] == 'south' ? 'Nam': ($row['direction'] == 'north' ? 'Bắc':'#'))) ?>
+                                    <?= $row['direction'] ? $label_apartment[$row['direction']]:'#' ?>
                                 </td>
                                 <td class="apartment-select-tag"
                                 data-name="tag_id"
@@ -330,6 +330,10 @@
                         {'value': 'west', 'text':'Tây'},
                         {'value': 'south', 'text':'Nam'},
                         {'value': 'north', 'text':'Bắc'},
+                        {'value': 'east-south', 'text':'Đông Nam'},
+                        {'value': 'west-south', 'text':'Tây Nam'},
+                        {'value': 'east-north', 'text':'Đông Bắc'},
+                        {'value': 'west-south', 'text':'Tây Bắc'},
                     ],
                     success: function(response) {
                         var data = JSON.parse(response);
