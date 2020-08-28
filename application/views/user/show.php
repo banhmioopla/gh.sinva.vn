@@ -41,7 +41,7 @@
                             <th>Sinh nhật</th>
                             <th>TG cập nhật</th>
                             <th class="text-center">Mở</th>
-                            <th class="text-center">Tùy Chọn</th>
+                            <!-- <th class="text-center">Tùy Chọn</th> -->
                         </tr>
                         </thead>
                         <tbody>
@@ -96,13 +96,13 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='user-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-user">
+                                        <button id='user-del-<?//= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-user">
                                             <i class="mdi mdi-delete"></i>
                                         </button>    
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>

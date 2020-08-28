@@ -37,7 +37,7 @@
                             <th>Loại Phòng</th>
                             <th>Số Lượng Phòng</th>
                             <th class="text-center">Mở</th>
-                            <th class="text-center">Tùy Chọn</th>
+                            <!-- <th class="text-center">Tùy Chọn</th> -->
                         </tr>
                         </thead>
                         <tbody>
@@ -63,13 +63,13 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='baseroomtype-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-baseroomtype">
+                                        <button id='baseroomtype-del-<?//= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-baseroomtype">
                                             <i class="mdi mdi-delete"></i>
                                         </button>
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>
@@ -120,7 +120,52 @@
             $('#table-baseroomtype').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
-                responsive: true
+                responsive: true,
+                "fnDrawCallback": function() {
+                    $('.is-active-baseroomtype input[type=checkbox]').click(function() {
+                    var is_active = 'NO';
+                    var this_id = $(this).attr('id');
+                    var matches = this_id.match(/(\d+)/);
+                    var baseroomtype_id = matches[0];
+                    if($(this).is(':checked')) {
+                        is_active = 'YES';
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?= base_url() ?>admin/update-room-type',
+                        data: {field_value: is_active, baseroomtype_id: baseroomtype_id, field_name : 'active'},
+                        async: false,
+                        success:function(response){
+                            var data = JSON.parse(response);
+                            if(data.status == true) {
+                                $('.baseroomtype-alert').html(notify_html_success);
+                            } else {
+                                $('.baseroomtype-alert').html(notify_html_fail);
+                            }
+                        },
+                        beforeSend: function(){
+                            $('#loader').show();
+                        },
+                        complete: function(){
+                            $('#loader').hide();
+                        }
+                    });
+                });
+
+                $('.baseroomtype-name').editable({
+                    type: "text",
+                    url: '<?= base_url() ?>admin/update-room-type-editable',
+                    inputclass: '',
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        if(data.status == true) {
+                            $('.baseroomtype-alert').html(notify_html_success);
+                        } else {
+                            $('.baseroomtype-alert').html(notify_html_fail);
+                        }
+                    }
+                });
+                }
             });
             
             $('.is-active-baseroomtype input[type=checkbox]').click(function() {

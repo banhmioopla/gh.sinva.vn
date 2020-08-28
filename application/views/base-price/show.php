@@ -34,10 +34,11 @@
                     <table id="table-baseprice" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Giá Phòng</th>
+                            <th>Giá hiển thị</th>
+                            <th>Giá trị</th>
                             <th>Số Lượng Phòng</th>
                             <th class="text-center">Mở</th>
-                            <th class="text-center">Tùy Chọn</th>
+                            <!-- <th class="text-center">Tùy Chọn</th> -->
                         </tr>
                         </thead>
                         <tbody>
@@ -48,7 +49,15 @@
                                         data-pk="<?= $row['id'] ?>"
                                         data-value="<?= $row['name'] ?>"
                                         data-name="name">
-                                            <?= money_format($row['name'],1) ?>
+                                            <?= $row['name'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="baseprice-name" 
+                                        data-pk="<?= $row['id'] ?>"
+                                        data-value="<?= $row['code'] ?>"
+                                        data-name="code">
+                                            <?= $row['code'] ?>
                                     </div>
                                 </td>
                                 <td><i>-</i></td>
@@ -64,13 +73,13 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='baseprice-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-baseprice">
+                                        <button id='baseprice-del-<?//= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-baseprice">
                                             <i class="mdi mdi-delete"></i>
                                         </button>
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>
@@ -121,52 +130,55 @@
             $('#table-baseprice').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
-                responsive: true
+                responsive: true,
+                "fnDrawCallback": function() {
+                    $('.is-active-baseprice input[type=checkbox]').click(function() {
+                    var is_active = 'NO';
+                    var this_id = $(this).attr('id');
+                    var matches = this_id.match(/(\d+)/);
+                    var baseprice_id = matches[0];
+                    if($(this).is(':checked')) {
+                        is_active = 'YES';
+                    }
+                    $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>admin/update-price',
+                            data: {field_value: is_active, price_id: baseprice_id, field_name : 'active'},
+                            async: false,
+                            success:function(response){
+                                var data = JSON.parse(response);
+                                if(data.status == true) {
+                                    $('.baseprice-alert').html(notify_html_success);
+                                } else {
+                                    $('.baseprice-alert').html(notify_html_fail);
+                                }
+                            },
+                            beforeSend: function(){
+                                $('#loader').show();
+                            },
+                            complete: function(){
+                                $('#loader').hide();
+                            }
+                        });
+                    });
+
+                    $('.baseprice-name').editable({
+                        type: "text",
+                        url: '<?= base_url() ?>admin/update-price-editable',
+                        inputclass: '',
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            if(data.status == true) {
+                                $('.baseprice-alert').html(notify_html_success);
+                            } else {
+                                $('.baseprice-alert').html(notify_html_fail);
+                            }
+                        }
+                    });
+                }
             });
             
-            $('.is-active-baseprice input[type=checkbox]').click(function() {
-                var is_active = 'NO';
-                var this_id = $(this).attr('id');
-                var matches = this_id.match(/(\d+)/);
-                var baseprice_id = matches[0];
-                if($(this).is(':checked')) {
-                    is_active = 'YES';
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>admin/update-price',
-                    data: {field_value: is_active, price_id: baseprice_id, field_name : 'active'},
-                    async: false,
-                    success:function(response){
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.baseprice-alert').html(notify_html_success);
-                        } else {
-                            $('.baseprice-alert').html(notify_html_fail);
-                        }
-                    },
-                    beforeSend: function(){
-                        $('#loader').show();
-                    },
-                    complete: function(){
-                        $('#loader').hide();
-                    }
-                });
-            });
-
-            $('.baseprice-name').editable({
-                type: "text",
-                url: '<?= base_url() ?>admin/update-price-editable',
-                inputclass: '',
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.baseprice-alert').html(notify_html_success);
-                    } else {
-                        $('.baseprice-alert').html(notify_html_fail);
-                    }
-                }
-            });
+            
 
             $('.delete-baseprice').click(function(){
                 var this_id = $(this).attr('id');
