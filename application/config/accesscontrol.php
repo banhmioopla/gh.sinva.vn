@@ -157,6 +157,11 @@ $accesscontrol['product-manager'] = [
         ]
     ],
     [
+        'name' => 'Phân quận',
+        'url' => '/admin/list-user-district',
+        'submenu' => null
+    ],
+    [
         'name' => 'Google Drive',
         'url' => '/admin/list-google',
         'submenu' => null
