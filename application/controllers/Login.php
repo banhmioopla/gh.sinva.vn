@@ -19,11 +19,11 @@ class Login extends CI_Controller {
 		if(!empty(get_cookie('account_id')) AND !empty(get_cookie('password'))){
 			
 			$data['account_id'] = get_cookie('account_id');
-				$data['password'] = get_cookie('password');
-				$user_profile = $this->ghUser->login($data);
-				if(!empty($user_profile)) {
-					$this->session->set_userdata(['auth' => $user_profile[0]]);
-				}
+			$data['password'] = get_cookie('password');
+			$user_profile = $this->ghUser->login($data);
+			if(!empty($user_profile)) {
+				$this->session->set_userdata(['auth' => $user_profile[0]]);
+			}
 		}
 		
 		$submit = $this->input->post('submit');
@@ -41,8 +41,10 @@ class Login extends CI_Controller {
 	}
 
 	public function logout(){
+		unset($_COOKIE['account_id']);
+		unset($_COOKIE['password']);
 		$this->session->sess_destroy();
-		$this->show();
+		return $this->show();
 	}
 
 }
