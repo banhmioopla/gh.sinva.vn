@@ -389,30 +389,30 @@ $route['admin/apartment-get-tag'] = function($params = []) {
 //
 
 $route['admin/get-room-type'] = function($params = []) {
-	$controller = 'room';
+	$controller = 'Room';
 	$action = '/getType';
 	return $controller.$action;
 };
 $route['admin/get-room-status'] = function($params = []) {
-	$controller = 'room';
+	$controller = 'Room';
 	$action = '/getStatus';
 	return $controller.$action;
 };
 $route['admin/get-room-price'] = function($params = []) {
-	$controller = 'room';
+	$controller = 'Room';
 	$action = '/getPrice';
 	return $controller.$action;
 };
 
 $route['admin/create-room-datatable'] = function($params = []) {
-	$controller = 'room';
+	$controller = 'Room';
 	$action = '/createDatatable';
 	return $controller.$action;
 };
 
 // admin/userdistrict
 $route['admin/list-user-district'] = function($params = []) {
-	$controller = 'userdistrict';
+	$controller = 'Userdistrict';
 	$action = '/show';
 	return $controller.$action;
 };
