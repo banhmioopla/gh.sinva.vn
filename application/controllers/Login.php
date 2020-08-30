@@ -33,7 +33,7 @@ class Login extends CI_Controller {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
 				set_cookie('account_id', $user_profile[0]['account_id'],2592000);
 				set_cookie('password', $user_profile[0]['password'], 2592000);
-				return redirect('/admin/list-user');
+				return redirect('/admin/list-apartment');
 			}
 		}
 		// load_view
