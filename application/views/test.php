@@ -28,7 +28,7 @@
                         <div class="card-header" role="tab" id="headingThree">
                             <div class="row">
                                 <div class="col-12">
-                                    <a class="collapsed text-dark font-weight-bold" data-toggle="collapse" href="#collapseThree">ZACOLAND</a>
+                                    <a class="collapsed text-dark font-weight-bold" data-toggle="collapse" href="#collapseThree">##</a>
                                 </div>
                                 <div class="col pr-2">số 14 đường số 1 Tân Hóa (p.1)</div>
                                 <div class="col-4 pl-0 font-weight-bold text-primary text-center apm-time-update">12/12/2019</div>
@@ -82,7 +82,7 @@
                     <div class="modal-content">
                         <div class="custom-modal-title">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">ZACOLAND</h4>
+                            <h4 class="modal-title">##</h4>
                         </div>
                         <div class="modal-body">
                             <div class="">
