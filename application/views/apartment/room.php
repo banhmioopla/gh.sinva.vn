@@ -24,7 +24,7 @@
                     <td><div><?= $room['area'] ?></div></td>
                     <td class="text-center"><div><?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>
                     <td><div class="text-success"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?></div></td>
-                    <td><div class="text-success"><?= $room['temp_time_checkout'] ? date('d-m-Y',$room['temp_time_checkout']) :'' ?></div></td>
+                    <td><div class="text-success"><?= $room['temp_time_checkout'] ? $room['temp_time_checkout'] :'' ?></div></td>
                 </tr>
             <?php endforeach; ?>
             <?php endif; ?>
