@@ -17,10 +17,13 @@ class Login extends CI_Controller {
 		$data['account_id'] = $this->input->post('account_id');
 		$data['password'] = $this->input->post('password');
 		if(!empty(get_cookie('account_id')) AND !empty(get_cookie('password'))){
-			if($data['account_id'] == get_cookie('account_id')) {
-				$data['account_id'] = get_cookie('account_id');
+			
+			$data['account_id'] = get_cookie('account_id');
 				$data['password'] = get_cookie('password');
-			}
+				$user_profile = $this->ghUser->login($data);
+				if(!empty($user_profile)) {
+					$this->session->set_userdata(['auth' => $user_profile[0]]);
+				}
 		}
 		
 		$submit = $this->input->post('submit');
@@ -28,11 +31,8 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if( !empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
-				if(empty(get_cookie('account_id'))) {
-					set_cookie('account_id', $data['account_id'],2592000);
-					set_cookie('password', $data['password'], 2592000);
-				}
-				// echo "<pre>", var_dump($this->session); die;
+				set_cookie('account_id', $user_profile[0]['account_id'],2592000);
+				set_cookie('password', $user_profile[0]['password'], 2592000);
 				return redirect('/admin/list-user');
 			}
 		}
