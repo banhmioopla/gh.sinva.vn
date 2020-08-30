@@ -124,16 +124,6 @@ $accesscontrol['product-manager'] = [
                 'submenu' => null
             ],
             [
-                'name' => 'DS Loại Phòng',
-                'url' => '/admin/list-room-type',
-                'submenu' => null
-            ],
-            [
-                'name' => 'DS Giá',
-                'url' => '/admin/list-price',
-                'submenu' => null
-            ],
-            [
                 'name' => 'DS # (Tag)',
                 'url' => '/admin/list-tag',
                 'submenu' => null
