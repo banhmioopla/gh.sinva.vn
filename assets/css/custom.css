@@ -55,10 +55,16 @@
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     border: 0px;
 }
+.apm-note p {
+    white-space: pre-line;
+}
 
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;
+    }
+    .editableform textarea.form-control {
+        width: 44em;
     }
 }
 
