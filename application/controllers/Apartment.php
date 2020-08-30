@@ -54,7 +54,7 @@ class Apartment extends CustomBaseStep {
 	}
 
 	public function showLikeBase(){
-		$data['list_apartment'] = $this->ghApartment->getAll();
+		$data['list_apartment'] = $this->ghApartment->getByUserDistrict($this->auth['account_id']);
 		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['cb_partner'] = $this->libPartner->cbActive();
 		$data['cb_tag'] = $this->libPartner->cbActive();

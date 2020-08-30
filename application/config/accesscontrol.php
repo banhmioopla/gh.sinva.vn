@@ -157,31 +157,10 @@ $accesscontrol['product-manager'] = [
         ]
     ],
     [
-        'name' => 'Phân quận',
-        'url' => '/admin/list-user-district',
-        'submenu' => null
-    ],
-    [
         'name' => 'Google Drive',
         'url' => '/admin/list-google',
         'submenu' => null
-    ],
-    [
-        'name' => 'Tài Khoản',
-        'url' => '/admin/helloA',
-        'submenu' => [
-            [
-                'name' => 'Đổi mật khẩu',
-                'url' => '/admin/helloA1',
-                'submenu' => null
-            ],
-            [
-                'name' => 'Lịch Làm',
-                'url' => '/admin/helloA2',
-                'submenu' => null
-            ],
-        ]
-    ],
+    ]
 ];
 
 $accesscontrol['human-resource'] = [

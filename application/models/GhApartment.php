@@ -27,6 +27,14 @@ class GhApartment extends CI_Model {
         return $result;
     }
 
+    public function getByUserDistrict($account_id) {
+        $q = "SELECT * FROM gh_apartment, gh_user_district 
+                WHERE gh_apartment.district_code = gh_user_district.district_code AND gh_user_district.user_id = $account_id
+        ";
+        $result = $this->db->query($q);
+        return $result->result_array();
+    }
+
     public function insert($data) {
         return $this->db->insert($this->table, $data);
     }
