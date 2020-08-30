@@ -216,22 +216,6 @@ $accesscontrol['consultant'] = [
         'submenu' => null
     ],
     [
-        'name' => 'Tài Khoản',
-        'url' => '/admin/helloA',
-        'submenu' => [
-            [
-                'name' => 'Đổi mật khẩu',
-                'url' => '/admin/helloA1',
-                'submenu' => null
-            ],
-            [
-                'name' => 'Lịch Làm',
-                'url' => '/admin/helloA2',
-                'submenu' => null
-            ],
-        ]
-    ],
-    [
         'name' => 'Google Drive',
         'url' => '/admin/list-google',
         'submenu' => null
