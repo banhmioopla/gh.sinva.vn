@@ -14,23 +14,21 @@ class Login extends CI_Controller {
 	}
 	public function show()
 	{
-		if(!empty($this->input->post())) {
-			$data['account_id'] = $this->input->post('account_id');
-			$data['password'] = $this->input->post('password');
-			if(!empty(get_cookie('account_id')) AND !empty(get_cookie('password'))){
-				
-				$data['account_id'] = get_cookie('account_id');
-				$data['password'] = get_cookie('password');
-				$user_profile = $this->ghUser->login($data);
-				if(!empty($user_profile)) {
-					$this->session->set_userdata(['auth' => $user_profile[0]]);
-				}
+		$data['account_id'] = $this->input->post('account_id');
+		$data['password'] = $this->input->post('password');
+		if(!empty(get_cookie('account_id')) AND !empty(get_cookie('password'))){
+			
+			$data['account_id'] = get_cookie('account_id');
+			$data['password'] = get_cookie('password');
+			$user_profile = $this->ghUser->login($data);
+			if(!empty($user_profile)) {
+				$this->session->set_userdata(['auth' => $user_profile[0]]);
 			}
 		}
 		
 		
 		$submit = $this->input->post('submit');
-		if(isset($submit) or isset($data)) {
+		if(isset($submit) or !empty($data['account_id'])) {
 			$user_profile = $this->ghUser->login($data);
 			if( !empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
