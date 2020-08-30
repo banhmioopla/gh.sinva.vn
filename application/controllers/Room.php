@@ -78,6 +78,11 @@ class Room extends CustomBaseStep {
 					$field_name => strtotime($field_value)
 				];
 			}
+			if($field_name == 'type_id') {
+				$data = [
+					$field_name => implode(',', $field_value)
+				];
+			}
 			$data['time_update'] = time();
 
 			$old_room = $this->ghRoom->getById($room_id);
@@ -135,6 +140,7 @@ class Room extends CustomBaseStep {
 		}
 		$pk = $this->input->post('pk');
 		if(isset($pk)) {
+			var_dump($this->input->post());die;
 			return die($this->updateEditable()); 
 		}
 		echo json_encode($result); die;
@@ -144,7 +150,9 @@ class Room extends CustomBaseStep {
 		$list_status = [
 			['id' => 'Available', 'text' => 'trống'],
 			['id' => 'Full', 'text' => 'đã thuê'],
-			['id' => 'Consulting', 'text' => 'đang dắt khách']
+			['id' => 'Consulting', 'text' => 'đang tư vấn'],
+			['id' => 'Deposited', 'text' => 'đã cọc'],
+
 		];
 		$result = [];
 		foreach($list_status as $status) {

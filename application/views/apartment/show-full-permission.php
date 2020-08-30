@@ -180,16 +180,15 @@
     </div>
 </div>
 <script>
-
     commands.push(function() {
         
         var t_room = $('.list-room').DataTable();
-
-        $('.apartment-block').mouseenter(function() {
-            $(this).find('.list-action').show(600);
-        }).mouseleave(function() {
-            $(this).find('.list-action').hide(600); 
-        });
+        $('.apartment-block').find('.list-action').show();
+        // $('.apartment-block').mouseenter(function() {
+        //     $(this).find('.list-action').show(600);
+        // }).mouseleave(function() {
+        //     $(this).find('.list-action').hide(600); 
+        // });
         /* =========== MODIFY DATA JS ========= */
         // if(modify_mode == 'view') return;
         
@@ -212,6 +211,20 @@
                 type: "text",
                 url: '<?= base_url()."admin/update-room-editable" ?>',
                 inputclass: ''
+            });
+        });
+        
+        $('body').delegate('.list-room .room-price, .list-room .room-area', 'click', function(){
+            $(this).editable({
+                type: "number",
+                url: '<?= base_url()."admin/update-room-editable" ?>',
+                inputclass: '',
+                display: function(value, response) {
+                    return false;   //disable this method
+                },
+                success: function(response, newValue) {
+                    $(this).html(nFormatter(newValue));
+                }
             });
         });
 
@@ -277,38 +290,7 @@
             });
         });
 
-        $('body').delegate('.list-room .room-select-price', 'click',function(){
-            $(this).editable({
-                type: 'select',
-                url: '<?= base_url() ?>admin/get-room-price',
-                inputclass: '',
-                source: function() {
-                    data = [];
-                    $.ajax({
-                        url: '<?= base_url() ?>admin/get-room-price',
-                        dataType: 'json',
-                        async: false,
-                        success: function(res) {
-                            data = res;
-                            return res;
-                        }
-                    });
-                    return data;
-                },
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.apartment-alert').html(notify_html_success);
-                    } else {
-                        $('.apartment-alert').html(notify_html_fail);
-                    }
-                    $('.apartment-alert').show();
-                    $('.apartment-alert').fadeOut(3000);
-                }
-            });
-        });
-
-        $.fn.combodate.defaults.maxYear = 2030;
+        $.fn.combodate.defaults.maxYear = 2022;
         $.fn.combodate.defaults.minYear = 2020;
         $('body').delegate('.list-room .room-time_available', 'click', function() {
             $('.list-room .room-time_available').editable({

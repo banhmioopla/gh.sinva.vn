@@ -5,6 +5,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Login';
 $route['404_override'] = '';
 
+$route['admin/logout'] = function($params = []) {
+	$controller = 'Login';
+	$action = '/logout';
+	return $controller.$action;
+};
+
 $route['admin/list-apartment'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/show';

@@ -168,12 +168,12 @@
     commands.push(function() {
         
         var t_room = $('.list-room').DataTable();
-
-        $('.apartment-block').mouseenter(function() {
-            $(this).find('.list-action').show(600);
-        }).mouseleave(function() {
-            $(this).find('.list-action').hide(600); 
-        });
+        $('.apartment-block').find('.list-action').show();
+        // $('.apartment-block').mouseenter(function() {
+        //     $(this).find('.list-action').show(600);
+        // }).mouseleave(function() {
+        //     $(this).find('.list-action').hide(600); 
+        // });
 
     });
 </script>

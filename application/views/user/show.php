@@ -78,11 +78,11 @@
                                     <div class="user-date_of_birth user"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="date_of_birth">
-                                        <?= date('d-m-Y',$row['date_of_birth']) ?>
+                                        <?= $row['date_of_birth'] ? date('d-m-Y',$row['date_of_birth']) :'#' ?>
                                     </div>
                                 </td>
                                 <td>
-                                    <?= date('d-m-Y',$row['time_update']) ?>
+                                    <?= $row['time_update'] ? date('d-m-Y',$row['time_update']):'#' ?>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">

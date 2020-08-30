@@ -26,6 +26,10 @@ $apartment['east-south'] = 'Đông Nam';
 $apartment['west-south'] = 'Tây Nam';
 $apartment['east-north'] = 'Đông Bắc';
 $apartment['west-north'] = 'Tây Bắc';
+$apartment['Full'] = '#';
+$apartment['Available'] = 'trống';
+$apartment['Consulting'] = 'đang tư vấn';
+$apartment['Deposited'] = 'đã cọc';
 
 $config['label.apartment'] = $apartment;
 ?>

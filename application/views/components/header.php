@@ -216,7 +216,7 @@
                                         <!-- item-->
                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon">
-                                                <img src="<?= $assets_path ?>images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
+                                                <img src="<?= $assets_path ?>images/users/batman-anim-1.gif" class="img-fluid rounded-circle" alt="" />
                                             </div>
                                             <p class="notify-details">Cristina Pride</p>
                                             <p class="text-muted font-13 mb-0 user-msg">Hi, How are you? What about our next meeting</p>
@@ -263,7 +263,7 @@
                             </li>
                             <li class="dropdown notification-list">
                                 <a class="nav-link dropdown-toggle waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                    <img src="<?= $assets_path ?>images/users/avatar-1.jpg" alt="user" class="rounded-circle" />
+                                    <img src="<?= $assets_path ?>images/users/batman-anim-1.gif" alt="user" class="rounded-circle" />
                                     <span class="ml-1 pro-user-name">
                                         <?= $this->session->auth['name'] ?>
                                         <i class="mdi mdi-chevron-down"></i>
@@ -272,32 +272,27 @@
                                 <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                                     <!-- item-->
                                     <div class="dropdown-item noti-title">
-                                        <h6 class="text-overflow m-0">Welcome !</h6>
+                                        <h6 class="text-overflow m-0">sinva.vn</h6>
                                     </div>
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <i class="fi-head"></i>
-                                        <span>My Account</span>
+                                        <span>Tài khoản</span>
                                     </a>
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <i class="fi-cog"></i>
-                                        <span>Settings</span>
+                                        <span>Cài đặt</span>
                                     </a>
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <i class="fi-help"></i>
-                                        <span>Support</span>
+                                        <span>Hỗ trợ</span>
                                     </a>
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="fi-lock"></i>
-                                        <span>Lock Screen</span>
-                                    </a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <a href="<?= base_url().'admin/logout'?>" class="dropdown-item notify-item">
                                         <i class="fi-power"></i>
-                                        <span>Logout</span>
+                                        <span>Đăng xuất</span>
                                     </a>
                                 </div>
                             </li>
