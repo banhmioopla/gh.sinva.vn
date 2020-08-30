@@ -7,13 +7,13 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Sinva | Hệ thống quản lý phòng </title>
+        <title>SinvaTour | Hệ thống quản lý phòng nội bộ </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
-        <!-- <link rel="shortcut icon" href="<?= $assets_path ?>images/favicon.ico" /> -->
+        <link rel="shortcut icon" href="<?= $assets_path ?>images/favicon.png" />
         <!-- DataTables -->
         <link href="<?= $js_plugins_path ?>datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
         <!-- Custom box css -->
@@ -66,7 +66,7 @@
                         <!-- Image Logo -->
                         <a href="index.html" class="logo">
                             <img src="<?= $assets_path ?>images/logo_sm.png" alt="" height="26" class="logo-small" />
-                            <img src="<?= $assets_path ?>images/logo.png" alt="" height="22" class="logo-large" />
+                            <img src="<?= $assets_path ?>images/logo-gh.png" alt="" height="22" class="logo-large" />
                         </a>
                     </div>
                     <!-- End Logo container-->

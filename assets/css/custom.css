@@ -59,6 +59,10 @@
     white-space: pre-line;
 }
 
+#topnav .navbar-custom {
+    background-color: #074070;
+}
+
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;
