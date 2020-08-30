@@ -24,31 +24,31 @@ $route['normal/list-apartment'] = function($params = []) {
 };
 
 $route['admin/list-district'] = function($params = []) {
-	$controller = 'district';
+	$controller = 'District';
 	$action = '/index'; // hàm
 	return $controller.$action;
 };
 
 $route['admin/create-district'] = function($params = []) {
-	$controller = 'district';
+	$controller = 'District';
 	$action = '/create';
 	return $controller.$action;
 };
 
 $route['admin/update-district'] = function($params = []) {
-	$controller = 'district';
+	$controller = 'District';
 	$action = '/update';
 	return $controller.$action;
 };
 
 $route['admin/delete-district'] = function($params = []) {
-	$controller = 'district';
+	$controller = 'District';
 	$action = '/delete';
 	return $controller.$action;
 };
 
 $route['admin/update-district-editable'] = function($params = []) {
-	$controller = 'district';
+	$controller = 'District';
 	$action = '/updateEditable';
 	return $controller.$action;
 };
@@ -184,99 +184,99 @@ $route['admin/update-room-editable'] = function($params = []) {
 
 // -- partner
 $route['admin/list-partner'] = function($params = []) {
-	$controller = 'partner';
+	$controller = 'Partner';
 	$action = '/index';
 	return $controller.$action;
 };
 
 $route['admin/create-partner'] = function($params = []) {
-	$controller = 'partner';
+	$controller = 'Partner';
 	$action = '/create';
 	return $controller.$action;
 };
 
 $route['admin/update-partner'] = function($params = []) {
-	$controller = 'partner';
+	$controller = 'Partner';
 	$action = '/update';
 	return $controller.$action;
 };
 
 $route['admin/delete-partner'] = function($params = []) {
-	$controller = 'partner';
+	$controller = 'Partner';
 	$action = '/delete';
 	return $controller.$action;
 };
 
 $route['admin/update-partner-editable'] = function($params = []) {
-	$controller = 'partner';
+	$controller = 'Partner';
 	$action = '/updateEditable';
 	return $controller.$action;
 };
 
 // -- role
 $route['admin/list-role'] = function($params = []) {
-	$controller = 'role';
+	$controller = 'Role';
 	$action = '/index';
 	return $controller.$action;
 };
 
 $route['admin/create-role'] = function($params = []) {
-	$controller = 'role';
+	$controller = 'Role';
 	$action = '/create';
 	return $controller.$action;
 };
 
 $route['admin/update-role'] = function($params = []) {
-	$controller = 'role';
+	$controller = 'Role';
 	$action = '/update';
 	return $controller.$action;
 };
 
 $route['admin/delete-role'] = function($params = []) {
-	$controller = 'role';
+	$controller = 'Role';
 	$action = '/delete';
 	return $controller.$action;
 };
 
 $route['admin/update-role-editable'] = function($params = []) {
-	$controller = 'role';
+	$controller = 'Role';
 	$action = '/updateEditable';
 	return $controller.$action;
 };
 
 // -- user
 $route['admin/list-user'] = function($params = []) {
-	$controller = 'user';
+	$controller = 'User';
 	$action = '/index';
 	return $controller.$action;
 };
 
 $route['admin/get-user-role'] = function($params = []) {
-	$controller = 'user';
+	$controller = 'User';
 	$action = '/getRole';
 	return $controller.$action;
 };
 
 $route['admin/create-user'] = function($params = []) {
-	$controller = 'user';
+	$controller = 'User';
 	$action = '/create';
 	return $controller.$action;
 };
 
 $route['admin/update-user'] = function($params = []) {
-	$controller = 'user';
+	$controller = 'User';
 	$action = '/update';
 	return $controller.$action;
 };
 
 $route['admin/delete-user'] = function($params = []) {
-	$controller = 'user';
+	$controller = 'User';
 	$action = '/delete';
 	return $controller.$action;
 };
 
 $route['admin/update-user-editable'] = function($params = []) {
-	$controller = 'user';
+	$controller = 'User';
 	$action = '/updateEditable';
 	return $controller.$action;
 };
@@ -335,54 +335,54 @@ $route['admin/login'] = function($params = []) {
 
 // -- apartment
 $route['admin/list-apartment'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/show';
 	return $controller.$action;
 };
 
 $route['admin/create-apartment'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/create';
 	return $controller.$action;
 };
 
 $route['admin/update-apartment'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/update';
 	return $controller.$action;
 };
 
 $route['admin/delete-apartment'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/delete';
 	return $controller.$action;
 };
 
 $route['admin/update-apartment-editable'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/updateEditable';
 	return $controller.$action;
 };
 
 $route['admin/list-apartment-like-base'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/showLikeBase';
 	return $controller.$action;
 };
 
 $route['admin/apartment-get-district'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/getDistrict';
 	return $controller.$action;
 };
 $route['admin/apartment-get-partner'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/getPartner';
 	return $controller.$action;
 };
 
 $route['admin/apartment-get-tag'] = function($params = []) {
-	$controller = 'apartment';
+	$controller = 'Apartment';
 	$action = '/getTag';
 	return $controller.$action;
 };
@@ -412,20 +412,20 @@ $route['admin/create-room-datatable'] = function($params = []) {
 
 // admin/userdistrict
 $route['admin/list-user-district'] = function($params = []) {
-	$controller = 'Userdistrict';
+	$controller = 'UserDistrict';
 	$action = '/show';
 	return $controller.$action;
 };
 
 // admin/image
 $route['admin/upload-image'] = function($params = []) {
-	$controller = 'image';
+	$controller = 'Image';
 	$action = '/show';
 	return $controller.$action;
 };
 
 $route['admin/update-image'] = function($params = []) {
-	$controller = 'image';
+	$controller = 'Image';
 	$action = '/update';
 	return $controller.$action;
 };
