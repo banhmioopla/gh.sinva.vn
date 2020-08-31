@@ -71,6 +71,7 @@ class Apartment extends CustomBaseStep {
 		$data = $this->input->post();
 
 		if(!empty($data['address_street']) and !empty($data['district_code'])) {
+			$data['time_update'] = time();
 			$result = $this->ghApartment->insert($data);
 			$this->session->set_flashdata('fast_notify', [
 				'message' => 'Tạo dự án '.$data['address_street'].' thành công ',
@@ -87,6 +88,7 @@ class Apartment extends CustomBaseStep {
 		$field_name = $this->input->post('field_name');
 
 		if(!empty($apartment_id) and !empty($field_value)) {
+			$data['time_update'] = time();
 			$data = [
 				$field_name => $field_value
 			];
@@ -105,11 +107,12 @@ class Apartment extends CustomBaseStep {
 
 		if(!empty($apartment_id) and !empty($field_value)) {
 			$data = [
-				$field_name => $field_value
+				$field_name => $field_value,
+				'time_update' => time()
 			];
 
 			if(isset($mode) and $mode == 'del') {
-				$inactive_room = $this->ghRoom->updateByApartmentId($apartment_id, ['active' => 'NO']);
+				$inactive_room = $this->ghRoom->updateByApartmentId($apartment_id, ['active' => 'NO', 'time_update' => time()]);
 			}
 			$old_apartment = $this->ghApartment->getById($apartment_id);
 			$old_log = json_encode($old_apartment[0]);
