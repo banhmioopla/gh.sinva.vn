@@ -19,7 +19,7 @@
                 <tr>
                     <td><div><?= $room['code'] ?></div></td>
                     <td><div><?= $room['type'] ?></div></td>
-                    <td><div class="text-success"><?= $room['price'] ?></div></td>
+                    <td><div class="text-success"><?= money_format($room['price'],1) ?></div></td>
                     <td><div><?= $room['temp_price'] ?></div></td>
                     <td><div><?= $room['area'] ?></div></td>
                     <td class="text-center"><div><?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>

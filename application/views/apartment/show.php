@@ -37,7 +37,7 @@
                 <div class="col text-center text-purple font-weight-bold">
                     <?=$apartment['address_street'] ?>
                 </div>
-                <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i> <?= date('d/m/Y H:i', $apartment['time_update']) ?></div>
+                <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ?  date('d/m/Y H:i', $apartment['time_update']) :'' ?></div>
                 <div class="mt-2 list-action" >
                     <span class="d-flex justify-content-center">
                         <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">

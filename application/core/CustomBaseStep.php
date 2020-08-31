@@ -5,6 +5,7 @@ class CustomBaseStep extends CI_Controller {
     public function __construct()
 	{
 		parent::__construct();
+		date_default_timezone_set('Asia/Ho_Chi_Minh');
 		if(!$this->session->has_userdata('auth'))
 		{
 			$this->session->sess_destroy();

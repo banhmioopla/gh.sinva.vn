@@ -8,6 +8,7 @@ class Room extends CustomBaseStep {
 		parent::__construct();
 		$this->load->model('ghRoom');
 		$this->load->model('ghBaseRoomType');
+		$this->load->model('ghApartment');
 	}
 	public function index()
 	{
@@ -87,7 +88,7 @@ class Room extends CustomBaseStep {
 
 			$old_room = $this->ghRoom->getById($room_id);
 			$old_log = json_encode($old_room[0]);
-		
+			$this->ghApartment->updateById($old_room[0]['apartment_id'], ['time_update' => time()]);
 			$result = $this->ghRoom->updateById($room_id, $data);
 			
 			$modified_room = $this->ghRoom->getById($room_id);
