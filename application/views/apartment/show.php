@@ -37,7 +37,7 @@
             </div>
                 <?php foreach ($list_apartment as $apartment): ?>
                 <div class="col-12 apartment-block">
-                    <div id="accordion" role="tablist" aria-multiselectable="true" class="m-b-30">
+                    <div class="m-b-30">
                         <div class="card">
                             <div class="card-header" role="tab" id="headingThree">
                                 <div class="row">
