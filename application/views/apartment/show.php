@@ -37,7 +37,7 @@
             </div>
                 <?php foreach ($list_apartment as $apartment): ?>
                 <div class="col-12 apartment-block">
-                    <div class="m-b-30">
+                    <div id="accordion" role="tablist" aria-multiselectable="true" class="m-b-30">
                         <div class="card">
                             <div class="card-header" role="tab" id="headingThree">
                                 <div class="row">
@@ -82,81 +82,26 @@
                 </div>
 
                 <!--  Modal Card - Large -->
-            <div class="modal fade apartment-detail" 
-            id="modal-apartment-detail-<?=$apartment['id'] ?>" 
-            tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="custom-modal-title">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">##</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="">
-                                <h5 class="header-title m-t-0 mb-3"><?= $apartment['address_street']?></h5>
-    
-                                <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
-                                    <li class="nav-item">
-                                        <a href="#apm-note-<?= $apartment['id'] ?>" 
-                                            data-toggle="tab" 
-                                            aria-expanded="false" 
-                                            class="nav-link">
-                                            <i class="mdi mdi-note-text mr-2"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#apm-service-<?= $apartment['id'] ?>" 
-                                            data-toggle="tab" 
-                                            aria-expanded="true" 
-                                            class="nav-link active">
-                                            <i class="mdi mdi-paw mr-2"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#apm-room-<?= $apartment['id'] ?>" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                            <i class="mdi mdi-border-all mr-2"></i>
-                                        </a>
-                                    </li>
-                                    <!-- <li class="nav-item">
-                                        <a href="#apm-map" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                            <i class="mdi mdi-google-maps mr-2"></i>
-                                        </a>
-                                    </li> -->
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>">
-                                        <p><?= $apartment['note'] ?></p>
-                                    </div>
-                                    <div class="tab-pane service-list show active" id="apm-service-<?= $apartment['id'] ?>">
-                                        <div id="carouselButton" class="carousel slide" data-ride="carousel">
-                                            <div class="carousel-inner">
-                                                <?php $this->load->view('apartment/service', ['apartment' => $apartment, 'label_apartment' => $label_apartment]) ?>
-                                            </div>
-                                            <a class="carousel-control-prev" 
-                                                href="#carouselButton" 
-                                                role="button" 
-                                                data-slide="prev"><i class="dripicons-chevron-left"></i> </a>
-                                            <a class="carousel-control-next" 
-                                                href="#carouselButton" 
-                                                role="button" 
-                                                data-slide="next"><i class="dripicons-chevron-right"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="apm-room-<?= $apartment['id'] ?>">
-                                        <?php $this->load->view('apartment/room',[
-                                            'apartment' => $apartment,
-                                            'libRoom' => $libRoom,
-                                        ]) ?>
-                                    </div>
-                                    <div class="tab-pane" id="apm-map">
-                                        <!-- Develop -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
+            <!-- Modal -->
+<div class="modal fade" id="modal-apartment-detail-<?=$apartment['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
                 <?php endforeach; ?>
             </div>
         </div>
