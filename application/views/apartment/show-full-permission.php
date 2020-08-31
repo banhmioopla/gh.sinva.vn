@@ -3,27 +3,7 @@
         <div class="sk-cube sk-cube1"></div>
     </div>
     <div class="container-fluid">
-        <!-- Page-Title -->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="page-title-box">
-                    <div class="btn-group pull-right">
-                        <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item">
-                                <a href="#">Test</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="#">Test</a>
-                            </li>
-                            <li class="breadcrumb-item active">Dự Án</li>
-                        </ol>
-                    </div>
-                    <h3>Dự Án</h3>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="card card-body pl-0 pr-0 col-12 col-md-8 offset-md-2">
+        <div class="card card-body pl-0 pr-0 col-12 col-md-8 offset-md-2">
             <div class="mt-2 mb-2 list-action">
                 <span class="d-flex justify-content-center flex-wrap">
                 <?php foreach($list_district as $district): ?>
@@ -31,152 +11,135 @@
                         class="btn m-1 btn-sm btn-outline-success
                         <?= $district_code == $district['code'] ? 'active':'' ?>
                         btn-rounded waves-light waves-effect">
-                        <?= $district['name'] ?>
-                    </a>
+                        <?= $district['name'] ?></a>
                 <?php endforeach; ?>
                 </span>
             </div>
-                <?php foreach ($list_apartment as $apartment): ?>
-                <div class="col-12 apartment-block">
-                    <div id="accordion" role="tablist" aria-multiselectable="true" class="m-b-30">
-                        <div class="card">
-                            <div class="card-header" role="tab">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a class="collapsed text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
-                                    </div>
-                                    <div class="col-6 text-right font-weight-bold">
-                                    <?= $apartment['direction'] == 'east' ? 'Đông':($apartment['direction'] == 'west' ? 'Tây':($apartment['direction'] == 'south' ? 'Nam': ($apartment['direction'] == 'north' ? 'Bắc':'#'))) ?>
-                                    </div>
-                                    <h4 class="col text-center d-none">Tiêu đề Shock</h4>
+            <?php foreach ($list_apartment as $apartment): ?>
+            <div class="card-header mt-1" role="tab" id="headingThree">
+                <div class="row">
+                    <div class="col-6">
+                        <a class="collapsed text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a class="collapsed text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'Hướng...' ?></a>
+                    </div>
+                    <h4 class="col text-center d-none">Tiêu đề Shock</h4>
+                </div>
+                <div class="mt-1 apm-tag-list">
+                    <span>
+                    <?php if($apartment['tag_id']): ?>
+                        <span class="badge badge-pink"><?= $libTag->getNameById($apartment['tag_id']) ?></span>
+                    </span>
+                    <?php endif; ?>
+                </div>
+                <div class="col text-center text-purple font-weight-bold">
+                    <?=$apartment['address_street'] ?>
+                </div>
+                <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i> <?= date('d/m/Y H:i', $apartment['time_update']) ?></div>
+                <div class="mt-2 list-action">
+                    <span class="d-flex justify-content-center">
+                        <!-- <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                            <i class="mdi mdi-credit-card-plus"></i>
+                        </button> -->
+                        <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                            <i class="mdi mdi-comment-outline"></i>
+                        </button> -->
+                        <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect" 
+                            data-toggle="collapse" 
+                            data-parent="#accordion"
+                            aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>"
+                            data-target="#modal-apartment-detail-<?=$apartment['id'] ?>">
+                            <i class="mdi mdi-eye"></i>
+                        </button>
+                        <!-- <a href="/admin/upload-image?apartment-id=<?//=$apartment['id'] ?>" target="_blank"> -->
+                            <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                                <i class="mdi mdi-folder-multiple-image"></i>
+                            </button> -->
+                        <!-- </a> -->
+                        
+                        <button type="button" 
+                                data-apartment-id="<?= $apartment['id'] ?>" 
+                                class="btn m-1 btn-sm apartment-delete btn-outline-danger btn-rounded waves-light waves-effect">
+                            <i class="mdi mdi-delete"></i>
+                        </button>
+                    </span>
+                </div> 
+            </div>
+            <div id="modal-apartment-detail-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-detail-<?=$apartment['id'] ?>">
+                <div class="card-body">
+                    <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
+                        <li class="nav-item">
+                            <a href="#apm-note-<?= $apartment['id'] ?>" 
+                                data-toggle="tab" 
+                                aria-expanded="false" 
+                                class="nav-link">
+                                <i class="mdi mdi-note-text mr-2"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#apm-service-<?= $apartment['id'] ?>" 
+                                data-toggle="tab" 
+                                aria-expanded="true" 
+                                class="nav-link active">
+                                <i class="mdi mdi-paw mr-2"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#apm-room-<?= $apartment['id'] ?>" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                <i class="mdi mdi-border-all mr-2"></i>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a href="#apm-map" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                <i class="mdi mdi-google-maps mr-2"></i>
+                            </a>
+                        </li> -->
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>" data-pk="apm-1"
+                        data-name= "note"
+                        data-value="<?= $apartment['note'] ?>"
+                        data-title="Enter username">
+                            <p><?= $apartment['note'] ?></p>
+                        </div>
+                        <div class="tab-pane service-list show active" id="apm-service-<?= $apartment['id'] ?>">
+                            <div id="carouselButton" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <?php $this->load->view('apartment/service', ['apartment' => $apartment, 'label_apartment' => $label_apartment]) ?>
                                 </div>
-                                <div class="mt-1 apm-tag-list">
-                                <?php if($apartment['tag_id']): ?>
-                                        <span class="badge badge-warning"><?= $libTag->getNameById($apartment['tag_id']) ?></span>
-                                    </span>
-                                <?php endif; ?>
-                                </div>
-                                <div class="col text-center text-purple font-weight-bold">
-                                    <?=$apartment['address_street'] ?>
-                                </div>
-                                <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i>
-                                    <?= $apartment['time_update'] ? date('d/m/Y H:i', $apartment['time_update']) :'' ?>
-                                </div>
-                                <div class="mt-2 list-action" style="display:none">
-                                    <span class="d-flex justify-content-center">
-                                        <!-- <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                            <i class="mdi mdi-credit-card-plus"></i>
-                                        </button> -->
-                                        <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
-                                            <i class="mdi mdi-comment-outline"></i>
-                                        </button> -->
-                                        <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect" 
-                                            data-toggle="modal"
-                                            data-target="#modal-apartment-detail-<?=$apartment['id'] ?>"
-                                            data-overlaySpeed="200">
-                                            <i class="mdi mdi-eye"></i>
-                                        </button>
-                                        <!-- <a href="/admin/upload-image?apartment-id=<?//=$apartment['id'] ?>" target="_blank"> -->
-                                            <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
-                                                <i class="mdi mdi-folder-multiple-image"></i>
-                                            </button> -->
-                                        <!-- </a> -->
-                                        
-                                        <button type="button" 
-                                                data-apartment-id="<?= $apartment['id'] ?>" 
-                                                class="btn m-1 btn-sm apartment-delete btn-outline-danger btn-rounded waves-light waves-effect">
-                                            <i class="mdi mdi-delete"></i>
-                                        </button>
-                                    </span>
-                                </div>
+                                <a class="carousel-control-prev" 
+                                    href="#carouselButton" 
+                                    role="button" 
+                                    data-slide="prev"><i class="dripicons-chevron-left"></i> </a>
+                                <a class="carousel-control-next" 
+                                    href="#carouselButton" 
+                                    role="button" 
+                                    data-slide="next"><i class="dripicons-chevron-right"></i></a>
                             </div>
+                        </div>
+                        <div class="tab-pane" id="apm-room-<?= $apartment['id'] ?>">
+                            <?php $this->load->view('apartment/room-full-permission',[
+                                'apartment' => $apartment,
+                                'libRoom' => $libRoom,
+                            ]) ?>
+                        </div>
+                        <div class="tab-pane" id="apm-map">
+                            <!-- Develop -->
                         </div>
                     </div>
+                    <div class="float-right mt-1">
+                        <a class="collapsed btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect" 
+                            data-toggle="collapse" 
+                            data-parent="#accordion" 
+                            href="#modal-apartment-detail-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>">
+                            <i class="mdi mdi-eye"></i>
+                        </a>
+                    </div>
                 </div>
-
-                <!--  Modal Card - Large -->
-            <div class="modal fade apartment-detail" 
-            id="modal-apartment-detail-<?=$apartment['id'] ?>" 
-            tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="custom-modal-title">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">##</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="">
-                                <h5 class="header-title m-t-0 mb-3"><?= $apartment['address_street']?></h5>
-    
-                                <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
-                                    <li class="nav-item">
-                                        <a href="#apm-note-<?= $apartment['id'] ?>" 
-                                            data-toggle="tab" 
-                                            aria-expanded="false" 
-                                            class="nav-link">
-                                            <i class="mdi mdi-note-text mr-2"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#apm-service-<?= $apartment['id'] ?>" 
-                                            data-toggle="tab" 
-                                            aria-expanded="true" 
-                                            class="nav-link active">
-                                            <i class="mdi mdi-paw mr-2"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#apm-room-<?= $apartment['id'] ?>" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                            <i class="mdi mdi-border-all mr-2"></i>
-                                        </a>
-                                    </li>
-                                    <!-- <li class="nav-item">
-                                        <a href="#apm-map" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                            <i class="mdi mdi-google-maps mr-2"></i>
-                                        </a>
-                                    </li> -->
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>" data-pk="apm-1"
-                                    data-name= "note"
-                                    data-value="<?= $apartment['note'] ?>"
-                                    data-title="Enter username">
-                                        <p><?= $apartment['note'] ?></p>
-                                    </div>
-                                    <div class="tab-pane service-list show active" id="apm-service-<?= $apartment['id'] ?>">
-                                        <div id="carouselButton" class="carousel slide" data-ride="carousel">
-                                            <div class="carousel-inner">
-                                                <?php $this->load->view('apartment/service', ['apartment' => $apartment, 'label_apartment' => $label_apartment]) ?>
-                                            </div>
-                                            <a class="carousel-control-prev" 
-                                                href="#carouselButton" 
-                                                role="button" 
-                                                data-slide="prev"><i class="dripicons-chevron-left"></i> </a>
-                                            <a class="carousel-control-next" 
-                                                href="#carouselButton" 
-                                                role="button" 
-                                                data-slide="next"><i class="dripicons-chevron-right"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="apm-room-<?= $apartment['id'] ?>">
-                                        <?php $this->load->view('apartment/room-full-permission',[
-                                            'apartment' => $apartment,
-                                            'libRoom' => $libRoom,
-                                        ]) ?>
-                                    </div>
-                                    <div class="tab-pane" id="apm-map">
-                                        <!-- Develop -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-                <?php endforeach; ?>
             </div>
+            <?php endforeach; ?>
         </div>
-        <!-- end container -->
     </div>
 </div>
 <script>

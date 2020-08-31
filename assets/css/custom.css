@@ -62,7 +62,11 @@
 #topnav .navbar-custom {
     background-color: #074070;
 }
-
+html, body { height: 100%; }
+.card-header {
+    background-color: #faf0ac;
+    margin-top: 10px !important;
+}
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;

@@ -3,15 +3,15 @@
 	$js_plugins_path = base_url().'js-plugins/';
 	$assets_path  = base_url().'assets/';
 ?>
-<footer class="footer">
+<!-- <footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center footer-notifier">
-                <?= date('Y') ?> © Giỏ hàng. - gh.sinva.vn
+                <?//= date('Y') ?> © Giỏ hàng. - gh.sinva.vn
             </div>
         </div>
     </div>
-</footer>
+</footer> -->
     <!-- End Footer -->
     <!-- jQuery  -->
     <script src="<?= $assets_path ?>js/jquery.min.js"></script>
@@ -23,9 +23,6 @@
     <!-- Required datatable js -->
     <script src="<?= $js_plugins_path ?>datatables/jquery.dataTables.min.js"></script>
     <script src="<?= $js_plugins_path ?>datatables/dataTables.bootstrap4.min.js"></script>
-    <!-- Modal-Effect -->
-    <script src="<?= $js_plugins_path ?>custombox/js/custombox.min.js"></script>
-    <script src="<?= $js_plugins_path ?>custombox/js/legacy.min.js"></script>
     <!-- Bootstrap-editable -->
     <script src="<?= $js_plugins_path ?>bootstrap-xeditable/js/bootstrap-editable.min.js"></script>
     <script src="<?= $js_plugins_path ?>moment/moment.js" type="text/javascript"></script>

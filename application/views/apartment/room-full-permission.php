@@ -38,7 +38,7 @@
                     <td><div class="room-price text-success" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['price'] ?>"
-                            data-name="price"><?= $room['price'] ? money_format($room['price']): '#' ?></div></td>
+                            data-name="price"><?= $room['price'] ? money_format($room['price'],1): '#' ?></div></td>
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['temp_price'] ?>"
