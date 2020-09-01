@@ -91,16 +91,16 @@
                             <p><?= $apartment['note'] ?></p>
                         </div>
                         <div class="tab-pane service-list show active" id="apm-service-<?= $apartment['id'] ?>">
-                            <div id="carouselButton" class="carousel slide" data-ride="carousel">
+                            <div id="carouselButton-<?= $apartment['id'] ?>" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <?php $this->load->view('apartment/service', ['apartment' => $apartment, 'label_apartment' => $label_apartment]) ?>
                                 </div>
                                 <a class="carousel-control-prev" 
-                                    href="#carouselButton" 
+                                    href="#carouselButton-<?= $apartment['id'] ?>" 
                                     role="button" 
                                     data-slide="prev"><i class="dripicons-chevron-left"></i> </a>
                                 <a class="carousel-control-next" 
-                                    href="#carouselButton" 
+                                    href="#carouselButton-<?= $apartment['id'] ?>" 
                                     role="button" 
                                     data-slide="next"><i class="dripicons-chevron-right"></i></a>
                             </div>
