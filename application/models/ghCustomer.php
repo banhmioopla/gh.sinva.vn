@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class GhCustomer extends CI_Model {
+class GhCustomer extends CI_Model { 
     private $table = 'gh_customer';
 
 	public function get($where = []) {
