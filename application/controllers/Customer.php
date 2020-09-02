@@ -26,9 +26,7 @@ class Customer extends CustomBaseStep {
 	public function create() {
 	
 		$data = $this->input->post();
-		if(empty($data['active'])) {
-			$data['active'] = 'NO';
-		}
+		$data['birthdate'] = strtotime($data['birthdate']);
 
 		if(!empty($data['name'])) {
 			$result = $this->ghCustomer->insert($data);
@@ -59,7 +57,6 @@ class Customer extends CustomBaseStep {
 		$customer_id = $this->input->post('pk');
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
-
 		if(!empty($customer_id) and !empty($field_value)) {
 			$data = [
 				$field_name => $field_value
@@ -67,7 +64,10 @@ class Customer extends CustomBaseStep {
 
 			$old_customer = $this->ghCustomer->getById($customer_id);
 			$old_log = json_encode($old_customer[0]);
-			
+			if($field_name == 'birthdate') {
+				$data['birthdate'] = strtotime($data['birthdate']);
+			}
+
 			$result = $this->ghCustomer->updateById($customer_id, $data);
 			
 			$modified_customer = $this->ghCustomer->getById($customer_id);

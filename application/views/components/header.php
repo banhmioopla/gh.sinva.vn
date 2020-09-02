@@ -23,6 +23,8 @@
         <!-- Spinkit css -->
         <link href="<?= $js_plugins_path ?>spinkit/spinkit.css" rel="stylesheet" />
 
+        <!-- datepicker -->
+        <link href="<?= $js_plugins_path ?>bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
         <!--venobox lightbox-->
         <link rel="stylesheet" href="<?= $js_plugins_path ?>magnific-popup/css/magnific-popup.css" />
         <!-- App css -->

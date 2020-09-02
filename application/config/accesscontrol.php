@@ -191,6 +191,24 @@ $accesscontrol['consultant'] = [
     ],
 ];
 
+$accesscontrol['customer-care'] = [
+    [
+        'name' => 'Dự Án',
+        'url' => '/admin/list-apartment',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Google Drive',
+        'url' => '/admin/list-google',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Khách Hàng',
+        'url' => '/admin/list-customer',
+        'submenu' => null
+    ],
+];
+
 
 
 $config['accesscontrol'] = $accesscontrol;

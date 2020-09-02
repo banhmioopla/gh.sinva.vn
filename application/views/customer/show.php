@@ -27,11 +27,11 @@
                 unset($_SESSION['fast_notify']);
             }  
         ?>
-        <div class="district-alert"></div>
+        <div class="customer-alert"></div>
         <div class="row">
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
-                    <table id="table-district" class="table table-bordered">
+                    <table id="table-customer" class="table table-bordered">
                         <thead>
                         <tr>
                             <th>Họ tên</th>
@@ -48,37 +48,53 @@
                             <?php foreach($list_customer as $row ): ?>
                             <tr>
                                 <td>
-                                    <div class="customer-name" 
+                                    <div class="customer-data" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="name">
                                             <?= $row['name'] ?>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-phone" 
+                                    <div class="customer-data" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="phone">
                                             <?= $row['phone'] ?>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-phone" 
+                                    <div class="customer-data" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="email">
                                             <?= $row['email'] ?>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-ID_card" 
+                                    <div class="customer-data" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="ID_card">
                                             <?= $row['ID_card'] ?>
                                     </div>
                                 </td>
-                                <td class="text-secondary"><?= $row['note'] ?></td>
+                                <td>
+                                    <div class="customer-birthdate" 
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="birthdate">
+                                            <?= date('d/m/Y', $row['birthdate']) ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="customer-get-status	" 
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="status">
+                                            <?= $row['status'] ?>
+                                    </div>
+                                </td>
+                                <td class="text-secondary customer-data"
+                                    data-pk="<?= $row['id'] ?>" 
+                                    data-name="note"><?= $row['note'] ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='district-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-district">
+                                        <button id='district-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-customer">
                                             <i class="mdi mdi-delete"></i>
                                         </button>
                                     </div>
@@ -92,30 +108,80 @@
             <div class="col-12 col-md-5">
                 <div class="card-box">
                     <h4 class="header-title m-t-0">Thêm mới</h4>
-                    <form role="form" method="post" action="<?= base_url()?>admin/create-district">
+                    <form role="form" method="post" action="<?= base_url()?>admin/create-customer">
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Tên quận<span class="text-danger">*</span></label>
+                            <label for="name" class="col-4 col-form-label">Họ tên<span class="text-danger">*</span></label>
                             <div class="col-8">
                                 <input type="text" required class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
+                                        id="name" name="name" placeholder="tên khách hàng">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">CODE<span class="text-danger">*</span></label>
+                            <label for="name" class="col-4 col-form-label">Giới tính<span class="text-danger">*</span></label>
                             <div class="col-8">
-                                <input type="text" required class="form-control"
-                                        id="code" name="code" placeholder="CODE">
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="gender" checked id="gender-male" value="male">
+                                    <label for="gender-male">
+                                        Nam
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="gender" id="gender-female" value="female">
+                                    <label for="gender-female">
+                                        Nữ
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="hori-pass1" class="col-4 col-form-label">Mở quận này<span class="text-danger">*</span></label>
+                            <label for="birthdate" class="col-4 col-form-label">Ngày sinh<span class="text-danger">*</span></label>
                             <div class="col-8">
-                                <div>
-                                    <div class=" checkbox checkbox-success">
-                                        <input id="active" type="checkbox" value="YES" name="active">
-                                        <label for="active">
-                                        </label>
-                                    </div>
+                            <input type="text" name="birthdate" class="form-control" placeholder="mm/dd/yyyy"
+                                id="datepicker">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">Số điện thoại<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <input type="number" required class="form-control"
+                                        id="phone" name="phone" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">Email</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control"
+                                        id="email" name="email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">Cmnd, passport</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control"
+                                        id="ID_card" name="ID_card" placeholder="Cmnd, passport">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">Nguồn<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="status" checked id="sinva-info-form" value="sinva-info-form">
+                                    <label for="sinva-info-form">
+                                        Form dắt khách
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="status" id="sinva-rented" value="sinva-rented">
+                                    <label for="sinva-rented">
+                                        Hợp đồng do sinva tư vấn
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="status" id="orther" value="orther">
+                                    <label for="orther">
+                                        Không rõ nguồn
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +209,7 @@
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('#table-district').DataTable({
+            $('#table-customer').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true,
@@ -162,34 +228,52 @@
                             }
                         }
                     });
+                    
+                    $('.customer-birthdate').editable({
+                        url: '<?= base_url() ?>admin/update-customer-editable',
+                        placement: 'right',
+                        type: 'combodate',
+                        template:"D / MM / YYYY",
+                        format:"DD-MM-YYYY",
+                        viewformat:"DD-MM-YYYY",
+                        mode: 'inline',
+                        combodate: {
+                            firstItem: 'name'
+                        },
+                        inputclass: 'form-control-sm',
+                    });
+
+                    $('.delete-customer').click(function(){
+                        var this_id = $(this).attr('id');
+                        var this_click = $(this);
+                        var matches = this_id.match(/(\d+)/);
+                        var district_id = matches[0];
+                        if(district_id > 0) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>admin/delete-customer',
+                                data: {district_id: district_id},
+                                success: function(response) {
+                                    var data = JSON.parse(response);
+                                    if(data.status == true) {
+                                        $('.customer-alert').html(notify_html_success);
+                                        this_click.parents('tr').remove();
+
+                                    } else {
+                                        $('.customer-alert').html(notify_html_fail);
+                                    }
+                                }
+                            });
+                        }
+                    });
                 } // end fnDrawCallback
             });
             
-            
-
-            $('.delete-district').click(function(){
-                var this_id = $(this).attr('id');
-                var this_click = $(this);
-                var matches = this_id.match(/(\d+)/);
-                var district_id = matches[0];
-                if(district_id > 0) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '<?= base_url() ?>admin/delete-district',
-                        data: {district_id: district_id},
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.district-alert').html(notify_html_success);
-                                this_click.parents('tr').remove();
-
-                            } else {
-                                $('.district-alert').html(notify_html_fail);
-                            }
-                        }
-                    });
-                }
+            $('#datepicker').datepicker({
+                format: "dd/mm/yyyy",
             });
+            
+            
         });
     });
 </script>
