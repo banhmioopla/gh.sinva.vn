@@ -62,7 +62,7 @@ class GhRoom extends CI_Model {
     public function getNumberByTimeavailable($apartment_id) {
         $result = $this->db->get_where(
             $this->table, 
-            ['apartment_id' => $apartment_id, 'time_available' => '> 0', 'active' => 'YES'])->result_array();
+            ['apartment_id' => $apartment_id, 'time_available > ' => 0, 'active' => 'YES'])->result_array();
         return count($result) > 0 ? count($result): null;
     }
 }
