@@ -18,7 +18,15 @@
             <?php if(!empty($list_room)): ?>
                 <?php foreach($list_room as $room): ?>
                 <tr>
-                    <td><div><?= $room['code'] ?></div></td>
+                    <td>
+                        <div>
+                            <?= $room['code'] ?>
+                        </div>
+                        <hr>
+                            <i class="room-time_update text-warning font-weight-bold">
+                                <?= $room['time_update'] ? date('d/m/Y H:m',$room['time_update']):'' ?>
+                            </i>
+                    </td>
                     <td><div><?= $room['type'] ?></div></td>
                     <td><div class="text-success"><?= money_format11($room['price'],1) ?></div></td>
                     <td><div><?= $room['temp_price'] ?></div></td>

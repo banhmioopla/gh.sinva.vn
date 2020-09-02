@@ -65,6 +65,12 @@ class GhRoom extends CI_Model {
             ['apartment_id' => $apartment_id, 'time_available > ' => 0, 'active' => 'YES'])->result_array();
         return count($result) > 0 ? count($result): null;
     }
+    public function getMaxTimeUpdate($apartment_id){
+        $this->db->where(['apartment_id' => $apartment_id]);
+        $this->db->select_max('time_update');
+        $result = $this->db->get($this->table);
+        return $result->result_array() ? $result->result_array()[0]['time_update']:'';
+    }
 }
 
 /* End of file mApartment.php */

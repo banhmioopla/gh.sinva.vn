@@ -30,7 +30,11 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['code'] ?>"
                             data-name="code"
-                            ><?= $room['code'] ? $room['code'] : '#' ?></div></td>
+                            ><?= $room['code'] ? $room['code'] : '#' ?></div>
+                            <hr>
+                            <i class="room-time_update text-warning font-weight-bold">
+                                <?= $room['time_update'] ? date('d/m/Y H:m',$room['time_update']):'' ?>
+                            </i> </td>
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['type'] ?>"
