@@ -15,6 +15,7 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibBaseApartmentType', null, 'libBaseApartmentType');
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
 		$this->load->library('LibTag', null, 'libTag');
+		$this->load->library('LibUser', null, 'libUser');
 	}
 	public function index()
 	{
@@ -47,6 +48,7 @@ class Apartment extends CustomBaseStep {
 		$data['libBaseRoomType'] =  $this->libBaseRoomType;
 		$data['libTag'] = $this->libTag;
 		$data['libPartner'] = $this->libPartner;
+		$data['libUser'] = $this->libUser;
 		$data['ghRoom'] = $this->ghRoom;
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);

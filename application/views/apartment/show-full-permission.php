@@ -231,6 +231,15 @@ function money_format11( $n, $precision = 1 ) {
                 }
             });
         });
+        
+        $('body').delegate('.list-room .room-consulting_user_id', 'click', function(){
+            $(this).editable({
+                type: "number",
+                url: '<?= base_url()."admin/update-room-editable" ?>',
+                inputclass: '',
+                placeholder:'171020XXX',
+            });
+        });
 
         $('body').delegate('.list-room .room-select-type', 'click', function(){
             $(this).editable({

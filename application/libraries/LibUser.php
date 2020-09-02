@@ -22,6 +22,11 @@ class LibUser {
         }
         return $cb;
     }
+
+    public function getNameByAccountid($account_id){
+        $list_user = $this->CI->ghUser->get(['account_id' => $account_id]);
+        return $list_user ? $list_user[0]['name'] : '#';
+    }
 }
 
 

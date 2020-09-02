@@ -3,6 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class GhUser extends CI_Model {
     private $table = 'gh_user';
+    const ROLE_CONSULTANT = 'consultant';
+    const ROLE_PROJECT_MANAGER = 'consultant';
+    const ROLE_PROJECT_CEO = 'consultant';
+    const ROLE_ADMIN = 'consultant';
 
 	public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();

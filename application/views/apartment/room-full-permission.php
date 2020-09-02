@@ -17,6 +17,7 @@
             <th>Trạng Thái</th>
             <th>Ng.Trống</th>
             <th>Ng.Trống*</th>
+            <th>Dẫn khách</th>
             <th>Tùy Chọn</th>
         </tr>
         </thead>
@@ -59,6 +60,10 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['temp_time_checkout'] ?>"
                             data-name="temp_time_checkout"><?= $room['temp_time_checkout'] ? $room['temp_time_checkout'] :'#' ?></div></td>
+                    <td><div class="room-consulting_user_id" 
+                            data-pk="<?= $room['id'] ?>"
+                            data-value="<?= $room['consulting_user_id'] ?>"
+                            data-name="consulting_user_id"><?= $room['consulting_user_id'] ? $libUser->getNameByAccountid($room['consulting_user_id']) :'#' ?></div></td>
                     <td class="d-flex justify-content-center">
                         <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                             <i class="mdi mdi-delete"></i>
