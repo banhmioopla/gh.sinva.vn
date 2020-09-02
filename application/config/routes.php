@@ -10,7 +10,38 @@ $route['admin/logout'] = function($params = []) {
 	$action = '/logout';
 	return $controller.$action;
 };
+// customer
+$route['admin/list-customer'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/index';
+	return $controller.$action;
+};
 
+$route['admin/create-customer'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/create';
+	return $controller.$action;
+};
+
+$route['admin/update-customer'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/update';
+	return $controller.$action;
+};
+
+$route['admin/delete-customer'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/delete';
+	return $controller.$action;
+};
+
+$route['admin/update-customer-editable'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/updateEditable';
+	return $controller.$action;
+};
+
+// apartment
 $route['admin/list-apartment'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/show';
@@ -25,7 +56,7 @@ $route['normal/list-apartment'] = function($params = []) {
 
 $route['admin/list-district'] = function($params = []) {
 	$controller = 'District';
-	$action = '/index'; // hàm
+	$action = '/index';
 	return $controller.$action;
 };
 

@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách quận</h3>
+                    <h3 class="page-title">Danh sách khách hàng</h3>
                 </div>
             </div>
         </div>
@@ -34,34 +34,45 @@
                     <table id="table-district" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Tên Quận</th>
-                            <th>Số Căn Hộ</th>
-                            <th class="text-center">Mở</th>
-                            <th class="text-center">Mô tả</th>
+                            <th>Họ tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Cmnd, Passport</th>
+                            <th>Ngày sinh</th>
+                            <th class="text-center">Nguồn</th>
+                            <th class="text-center">Ghi chú</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($list_district as $row ): ?>
+                            <?php foreach($list_customer as $row ): ?>
                             <tr>
                                 <td>
-                                    <div class="district-name" 
+                                    <div class="customer-name" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="name">
                                             <?= $row['name'] ?>
                                     </div>
                                 </td>
-                                <td><i>-</i></td>
                                 <td>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="checkbox checkbox-success is-active-district">
-                                            <input id="district-<?= $row['id'] ?>" 
-                                                value="<?= $row['active'] ?>"
-                                                type="checkbox" 
-                                                <?= $row['active'] =='YES' ? 'checked':'' ?>>
-                                            <label for="district-<?= $row['id'] ?>">
-                                            </label>
-                                        </div>
+                                    <div class="customer-phone" 
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="phone">
+                                            <?= $row['phone'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="customer-phone" 
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="email">
+                                            <?= $row['email'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="customer-ID_card" 
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="ID_card">
+                                            <?= $row['ID_card'] ?>
                                     </div>
                                 </td>
                                 <td class="text-secondary"><?= $row['note'] ?></td>
@@ -137,49 +148,17 @@
                 'pagingType': "full_numbers",
                 responsive: true,
                 "fnDrawCallback": function() {
-                    $('.is-active-district input[type=checkbox]').click(function() {
-                        var is_active = 'NO';
-                        var this_id = $(this).attr('id');
-                        var matches = this_id.match(/(\d+)/);
-                        var district_id = matches[0];
-                        if($(this).is(':checked')) {
-                            is_active = 'YES';
-                        }
-                        console.log('hello');
-                        console.log(is_active );
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?= base_url() ?>admin/update-district',
-                            data: {field_value: is_active, district_id: district_id, field_name : 'active'},
-                            async: false,
-                            success:function(response){
-                                var data = JSON.parse(response);
-                                console.log(data);
-                                if(data.status == true) {
-                                    $('.district-alert').html(notify_html_success);
-                                } else {
-                                    $('.district-alert').html(notify_html_fail);
-                                }
-                            },
-                            beforeSend: function(){
-                                $('#loader').show();
-                            },
-                            complete: function(){
-                                $('#loader').hide();
-                            }
-                        });
-                    });
                     // x editable
-                    $('.district-name').editable({
+                    $('.customer-data').editable({
                         type: "text",
-                        url: '<?= base_url() ?>admin/update-district-editable',
+                        url: '<?= base_url() ?>admin/update-customer-editable',
                         inputclass: '',
                         success: function(response) {
                             var data = JSON.parse(response);
                             if(data.status == true) {
-                                $('.district-alert').html(notify_html_success);
+                                $('.customer-alert').html(notify_html_success);
                             } else {
-                                $('.district-alert').html(notify_html_fail);
+                                $('.customer-alert').html(notify_html_fail);
                             }
                         }
                     });
