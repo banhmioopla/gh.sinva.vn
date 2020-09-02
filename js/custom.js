@@ -6,8 +6,8 @@ $(document).ready(function () {
 function nFormatter(num, digits = 1) {
     var si = [
         { value: 1, symbol: "" },
-        { value: 1E3, symbol: "k" },
-        { value: 1E6, symbol: "mi" },
+        { value: 1E3, symbol: " k" },
+        { value: 1E6, symbol: " mi" },
         { value: 1E9, symbol: "bi" },
         { value: 1E12, symbol: "T" },
         { value: 1E15, symbol: "P" },

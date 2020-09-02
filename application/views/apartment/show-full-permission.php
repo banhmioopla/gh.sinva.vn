@@ -7,11 +7,11 @@ function money_format11( $n, $precision = 1 ) {
     } else if ($n < 900000) {
         // 0.9k-850k
         $n_format = number_format($n / 1000, $precision);
-        $suffix = 'k';
+        $suffix = ' k';
     } else if ($n < 900000000) {
         // 0.9m-850m
         $n_format = number_format($n / 1000000, $precision);
-        $suffix = 'mi';
+        $suffix = ' mi';
     } else if ($n < 900000000000) {
         // 0.9b-850b
         $n_format = number_format($n / 1000000000, $precision);
