@@ -52,6 +52,8 @@ function money_format11( $n, $precision = 1 ) {
             </div>
             <?php foreach ($list_apartment as $apartment): ?>
             <div class="card-header mt-1" role="tab" id="headingThree">
+                <?php if($apartment['short_message']) echo '<h5 class="col text-center notifier-apartment">'.$apartment["short_message"].'</h5>'; ?>
+                
                 <div class="row">
                     <div class="col-4">
                         <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
@@ -63,7 +65,7 @@ function money_format11( $n, $precision = 1 ) {
                     <div class="col-4 text-right">
                         <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'#' ?></a>
                     </div>
-                    <h5 class="col text-center d-none">Tiêu đề Shock</h5>
+                    <h5 class="col text-center notifier-apartment d-none">Tiêu đề Shock</h5>
                 </div>
                 <div class="mt-1 apm-tag-list">
                     <span>

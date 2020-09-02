@@ -69,6 +69,12 @@ html, body { height: 100%; }
 .apm-direction {
     font-size: .9em;
 }
+.notifier-apartment{
+    background-color: gold;
+    color: red;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;

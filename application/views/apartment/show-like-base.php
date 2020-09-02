@@ -38,6 +38,7 @@
                             <th>Quận</th>
                             <th>Đường</th>
                             <th>Phường</th>
+                            <th>Thông báo ngắn</th>
                             <th>Số Lầu</th>
                             <th>KT3</th>
                             <th>Hướng</th>
@@ -74,6 +75,12 @@
                                 data-value="<?= $row['address_ward'] ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     phường <?= $row['address_ward'] ?>
+                                </td>
+                                <td class="apartment-short_message"
+                                data-name="short_message"
+                                data-value="<?= $row['short_message'] ?>"
+                                data-pk="<?= $row['id'] ?>">
+                                    <?= $row['short_message'] ? $row['short_message']:'#' ?>
                                 </td>
                                 <td class="apartment-data"
                                 data-name="number_of_floor"
@@ -189,6 +196,11 @@
                 "fnDrawCallback": function() {
                     $('.apartment-data').editable({
                         type:'text',
+                        url: '<?= base_url()."admin/update-apartment-editable" ?>'
+                    });
+                    $('.apartment-short_message').editable({
+                        type:'text',
+                        placeholder: 'nhập tối đa 50 kí tự',
                         url: '<?= base_url()."admin/update-apartment-editable" ?>'
                     });
                     $('.is-active-apartment input[type=checkbox]').click(function() {
