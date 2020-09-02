@@ -35,7 +35,7 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['type'] ?>"
                             data-name="type"
-                            ><?= $room['type'] ? $libBaseRoomType->getNameById($room['type']): '#' ?></div></td>
+                            ><?= $room['type'] ? $room['type']: '#' ?></div></td>
                     <td><div class="room-price text-success" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['price'] ?>"
