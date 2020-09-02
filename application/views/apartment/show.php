@@ -53,6 +53,7 @@ function money_format11( $n, $precision = 1 ) {
             <?php foreach ($list_apartment as $apartment): ?>
             <!-- item -->
             <div class="card-header mt-1" role="tab" id="headingThree">
+                <?php if($apartment['short_message']) echo '<h5 class="col text-center notifier-apartment">'.$apartment["short_message"].'</h5>'; ?>
                 <div class="row">
                 <div class="col-4">
                         <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
