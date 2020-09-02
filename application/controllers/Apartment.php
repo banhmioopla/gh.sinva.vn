@@ -47,6 +47,7 @@ class Apartment extends CustomBaseStep {
 		$data['libBaseRoomType'] =  $this->libBaseRoomType;
 		$data['libTag'] = $this->libTag;
 		$data['libPartner'] = $this->libPartner;
+		$data['ghRoom'] = $this->ghRoom;
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view($template, $data);

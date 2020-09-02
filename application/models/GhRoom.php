@@ -51,6 +51,20 @@ class GhRoom extends CI_Model {
         $result = $this->db->affected_rows();
         return $result;
     }
+
+    public function getNumberByStatus($apartment_id, $status) {
+        $result = $this->db->get_where(
+            $this->table, 
+            ['apartment_id' => $apartment_id, 'status' => $status, 'active' => 'YES'])->result_array();
+        return count($result) > 0 ? count($result): null;
+    }
+
+    public function getNumberByTimeavailable($apartment_id) {
+        $result = $this->db->get_where(
+            $this->table, 
+            ['apartment_id' => $apartment_id, 'time_available > 0', 'active' => 'YES'])->result_array();
+        return count($result) > 0 ? count($result): null;
+    }
 }
 
 /* End of file mApartment.php */

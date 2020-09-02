@@ -54,12 +54,16 @@ function money_format11( $n, $precision = 1 ) {
             <!-- item -->
             <div class="card-header mt-1" role="tab" id="headingThree">
                 <div class="row">
-                    <div class="col-6">
-                        <a class="collapsed text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
-                    </div>
-                    <div class="col-6 text-right">
-                        <a class="collapsed text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'Hướng...' ?></a>
-                    </div>
+                <div class="col-4">
+                        <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
+                </div>
+                <div class="col-4 text-center font-weight-bold">
+                    <span class="text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></span>
+                    <span class="text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></span>
+                </div>
+                <div class="col-4 text-right">
+                    <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'#' ?></a>
+                </div>
                     <h4 class="col text-center d-none">Tiêu đề Shock</h4>
                 </div>
                 <div class="mt-1 apm-tag-list">
