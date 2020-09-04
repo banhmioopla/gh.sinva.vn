@@ -78,8 +78,8 @@ function money_format11( $n, $precision = 1 ) {
                     <?=$apartment['address_street'] ?>
                 </div>
 
-                <div class="col text-center text-primary font-weight-bold mt-2"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ? date('d/m/Y H:i', $apartment['time_update']) :'' ?></div>
-                <div class="col text-center text-warning font-weight-bold"><i class="mdi mdi-update"></i> <?= date('d/m/Y H:i',$ghRoom->getMaxTimeUpdate($apartment['id'])) ?></div>
+                <div class="col text-center text-warning font-weight-bold mt-2"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ? date('d/m/Y H:i', 
+                max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></div>
 
                 <div class="mt-2 list-action">
                     <span class="d-flex justify-content-center">
@@ -361,6 +361,28 @@ function money_format11( $n, $precision = 1 ) {
                     }
                 }
             });
+        });
+
+        $("body").delegate('.room-status', 'click', function(){
+            var content = $(this).text().trim();
+            console.log(">> room.status current is: " + content);
+            var room_id = $(this).data('id');
+            if (content === "#") {
+                content = "trống";
+                var db_value = 'Available'
+            } else {
+                content ="#";
+                var db_value = 'Full' 
+            }
+            $(this).text(content);
+            $.ajax({
+                method: 'post',
+                url:'<?= base_url()."admin/update-room-editable" ?>',
+                data: {pk: room_id, name: 'status', value: db_value},
+                success: function(){
+                    console.log('>> room.status updated to: '+ content);
+                }
+            })
         });
 
         // Default Datatable

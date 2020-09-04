@@ -31,10 +31,7 @@
                             data-value="<?= $room['code'] ?>"
                             data-name="code"
                             ><?= $room['code'] ? $room['code'] : '#' ?></div>
-                            <hr>
-                            <i class="room-time_update text-warning font-weight-bold">
-                                <?= $room['time_update'] ? date('d/m/Y H:m',$room['time_update']):'' ?>
-                            </i> </td>
+                            </td>
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['type'] ?>"
@@ -52,10 +49,9 @@
                             data-pk= "<?= $room['id'] ?>"
                             data-value= "<?= $room['area'] ?>"
                             data-name="area"><?= $room['area'] > 0 ? $room['area']: '#' ?></div></td>
-                    <td><div class="room-select-status text-primary" 
-                            data-pk="<?= $room['id'] ?>"
-                            data-value="<?= $room['status'] ?>"
-                            data-name="status"><?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>
+                    <td><div class="room-status text-primary" 
+                            data-id="<?= $room['id'] ?>">
+                            <?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>
                     <td><div class="room-time_available text-success" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= date('d-m-Y',$room['time_available']) ?>"
