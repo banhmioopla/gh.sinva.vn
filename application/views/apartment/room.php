@@ -22,10 +22,6 @@
                         <div>
                             <?= $room['code'] ?>
                         </div>
-                        <hr>
-                            <i class="room-time_update text-warning font-weight-bold">
-                                <?= $room['time_update'] ? date('d/m/Y H:m',$room['time_update']):'' ?>
-                            </i>
                     </td>
                     <td><div><?= $room['type'] ?></div></td>
                     <td><div class="text-success"><?= money_format11($room['price'],1) ?></div></td>

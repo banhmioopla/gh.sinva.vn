@@ -288,9 +288,9 @@
                                         <span>Cài đặt</span>
                                     </a>
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <a href="<?= base_url().'admin/change-password-user'?>" class="dropdown-item notify-item">
                                         <i class="fi-help"></i>
-                                        <span>Hỗ trợ</span>
+                                        <span>Đổi mật khẩu</span>
                                     </a>
                                     <!-- item-->
                                     <a href="<?= base_url().'admin/logout'?>" class="dropdown-item notify-item">

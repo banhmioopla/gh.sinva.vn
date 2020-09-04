@@ -306,6 +306,12 @@ $route['admin/delete-user'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/change-password-user'] = function($params = []) {
+	$controller = 'User';
+	$action = '/changePassword';
+	return $controller.$action;
+};
+
 $route['admin/update-user-editable'] = function($params = []) {
 	$controller = 'User';
 	$action = '/updateEditable';

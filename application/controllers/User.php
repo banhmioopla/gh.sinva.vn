@@ -40,6 +40,19 @@ class User extends CustomBaseStep {
 		return redirect('admin/list-user');
 	}
 
+	public function changePassword() {
+		$user_profile = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
+		/*--- Load View ---*/
+		if(isset($_POST['submitForm'])) {
+			$new_password = $this->input->post('password');
+			$this->ghUser->updateById($this->auth['id'], ['password' => $new_password]);
+			$user_profile = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
+		}
+		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('user/change-password', $user_profile[0]);
+		$this->load->view('components/footer');
+	}
+
 	// Ajax
 	public function update() {
 		$user_id = $this->input->post('user_id');
