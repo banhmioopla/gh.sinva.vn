@@ -7,19 +7,38 @@ class Contract extends CustomBaseStep {
 	{
 		parent::__construct();
 		$this->load->model('ghContract');
+		$this->load->model('ghRoom');
+		$this->load->model('ghApartment');
+		$this->load->library('LibCustomer', null, 'libCustomer');
+		$this->load->library('LibDistrict', null, 'libDistrict');
+		$this->load->library('LibUser', null, 'libUser');
 	}
 	public function index()
 	{
 		$this->show();
     }
 
-	private function show(){
+	public function show(){
 		$this->load->model('ghContract'); // load model ghUser
-		$data['gh_contract'] = $this->ghContract->getAll();
+		$data['list_contract'] = $this->ghContract->getAll();
 		
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
-		$this->load->view('district/show', $data);
+		$this->load->view('contract/show', $data);
+		$this->load->view('components/footer');
+	}
+
+	public function createShow(){
+		$room_id = $this->input->get('room-id');
+		$data['room'] = $this->ghRoom->get(['id' =>$room_id])[0];
+		$data['apartment'] = $this->ghApartment->get(['id' =>$data['room']['apartment_id']])[0];
+		$data['select_customer'] = $this->libCustomer->cb();
+		$data['select_user'] = $this->libUser->cb();
+		$data['libDistrict'] = $this->libDistrict;
+		
+		/*--- Load View ---*/
+		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('contract/create-show', $data);
 		$this->load->view('components/footer');
 	}
 

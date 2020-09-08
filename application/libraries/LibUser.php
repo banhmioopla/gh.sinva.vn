@@ -27,6 +27,22 @@ class LibUser {
         $list_user = $this->CI->ghUser->get(['account_id' => $account_id]);
         return $list_user ? $list_user[0]['name'] : '#';
     }
+
+    public function cb($account_id = 0) {
+        $list_user = $this->CI->ghUser->get(['role_code <>' => '']);
+        $cb = '<option value=0>chọn thành viên ...</option>';
+        if(!empty($list_user)) {
+            foreach ($list_user as $user) {
+                $selected = '';
+                if($user['account_id'] == $account_id) {
+                    $selected = 'selected';
+                }
+
+                $cb .= '<option '.$selected.' value='.$user['account_id'].'>'.$user['name'].'</option>';
+            }
+        }
+        return $cb;
+    }
 }
 
 

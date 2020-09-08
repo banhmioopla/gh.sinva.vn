@@ -16,6 +16,8 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
 		$this->load->library('LibTag', null, 'libTag');
 		$this->load->library('LibUser', null, 'libUser');
+
+		$this->permission_modify = [['customer-care' => 0], 'product-manager'];
 	}
 	public function index()
 	{
@@ -23,7 +25,7 @@ class Apartment extends CustomBaseStep {
     }
 
 	public function show(){
-		
+		$data['permissions'] = ['product-manager', 'customer-care'];
 		$district_code = $this->input->get('district-code');
 		$data = [];
 		$district_code = !empty($district_code) ? $district_code: $this->district_default;

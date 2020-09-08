@@ -27,7 +27,7 @@
                 unset($_SESSION['fast_notify']);
             }  
         ?>
-        <div class="district-alert"></div>
+        <div class="contract-alert"></div>
         <div class="row">
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
@@ -36,17 +36,19 @@
                         <tr>
                             <th>Địa chỉ</th>
                             <th>Tên khách thuê</th>
-                            <th>Thông tin phòng</th>
-                            <th class="text-center">Tình trạng HĐ</th>
+                            <th>Thành viên tư vấn</th>
+                            <th>Mã Phòng</th>
+                            <th>Dịch vụ</th>
+                            <th class="text-center">Tình trạng</th>
                             <th class="text-center">Mô tả</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($list_district as $row ): ?>
+                            <?php foreach($list_contract as $row ): ?>
                             <tr>
                                 <td>
-                                    <div class="district-name" 
+                                    <div class="contract-name" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="name">
                                             <?= $row['name'] ?>
@@ -57,7 +59,7 @@
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-active-contract">
-                                            <input id="district-<?= $row['id'] ?>" 
+                                            <input id="contract-<?= $row['id'] ?>" 
                                                 value="<?= $row['status'] ?>"
                                                 type="checkbox" 
                                                 <?= $row['status'] =='YES' ? 'checked':'' ?>>
@@ -69,7 +71,7 @@
                                 <td class="text-secondary"><?= $row['note'] ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='district-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-contract">
+                                        <button id='contract-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-contract">
                                             <i class="mdi mdi-delete"></i>
                                         </button>
                                     </div>
@@ -85,10 +87,64 @@
                     <h4 class="header-title m-t-0">Thêm mới</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-contract">
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Chọn<span class="text-danger">*</span></label>
+                            <label for="name" class="col-4 col-form-label">chọn thành viên<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <select type="text" class="form-control"
+                                        id="name" name="name" placeholder="Tên quận">
+                                        <?= $select_user?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">chọn khách<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <select type="text" class="form-control"
+                                        id="name" name="name" placeholder="Tên quận">
+                                        <?= $select_user?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">chọn khách<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <select type="text" class="form-control"
+                                        id="name" name="name" placeholder="Tên quận">
+                                        <?= $select_user?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">Khách Hàng Mới<span class="text-danger">*</span></label>
                             <div class="col-8">
                                 <input type="text" required class="form-control"
+                                        id="code" name="code" placeholder="CODE">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">chọn quận<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <select type="text" class="form-control"
                                         id="name" name="name" placeholder="Tên quận">
+                                        <?= $select_user?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">chọn dự án<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <select type="text" class="form-control"
+                                        id="name" name="name" placeholder="Tên quận">
+                                        <?= $select_user?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">chọn phòng<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <select type="text" class="form-control"
+                                        id="name" name="name" placeholder="Tên quận">
+                                        <?= $select_user?>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -98,18 +154,7 @@
                                         id="code" name="code" placeholder="CODE">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="hori-pass1" class="col-4 col-form-label">Mở quận này<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <div>
-                                    <div class=" checkbox checkbox-success">
-                                        <input id="active" type="checkbox" value="YES" name="active">
-                                        <label for="active">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Mô tả</label>
                             <div class="col-8">
@@ -158,9 +203,9 @@
                                 var data = JSON.parse(response);
                                 console.log(data);
                                 if(data.status == true) {
-                                    $('.district-alert').html(notify_html_success);
+                                    $('.contract-alert').html(notify_html_success);
                                 } else {
-                                    $('.district-alert').html(notify_html_fail);
+                                    $('.contract-alert').html(notify_html_fail);
                                 }
                             },
                             beforeSend: function(){
@@ -172,16 +217,16 @@
                         });
                     });
                     // x editable
-                    $('.district-name').editable({
+                    $('.contract-name').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-contract-editable',
                         inputclass: '',
                         success: function(response) {
                             var data = JSON.parse(response);
                             if(data.status == true) {
-                                $('.district-alert').html(notify_html_success);
+                                $('.contract-alert').html(notify_html_success);
                             } else {
-                                $('.district-alert').html(notify_html_fail);
+                                $('.contract-alert').html(notify_html_fail);
                             }
                         }
                     });
@@ -203,11 +248,11 @@
                         success: function(response) {
                             var data = JSON.parse(response);
                             if(data.status == true) {
-                                $('.district-alert').html(notify_html_success);
+                                $('.contract-alert').html(notify_html_success);
                                 this_click.parents('tr').remove();
 
                             } else {
-                                $('.district-alert').html(notify_html_fail);
+                                $('.contract-alert').html(notify_html_fail);
                             }
                         }
                     });

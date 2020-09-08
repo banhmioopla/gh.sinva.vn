@@ -234,9 +234,6 @@
                     });
                 }
             });
-            $('body').delegate('click', '.is-active-apartment input[type=checkbox]', function(){
-                
-            });
             
 
             $('body').delegate('.apartment-select-district', 'click', function(){

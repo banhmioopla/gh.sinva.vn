@@ -51,7 +51,7 @@ function money_format11( $n, $precision = 1 ) {
                 </span>
             </div>
             <?php foreach ($list_apartment as $apartment): ?>
-            <div class="card-header mt-1" role="tab" id="headingThree">
+            <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
                 <?php if($apartment['short_message']) echo '<h5 class="col text-center notifier-apartment">'.$apartment["short_message"].'</h5>'; ?>
                 
                 <div class="row">
@@ -199,7 +199,7 @@ function money_format11( $n, $precision = 1 ) {
         //     $(this).find('.list-action').hide(600); 
         // });
         /* =========== MODIFY DATA JS ========= */
-        // if(modify_mode == 'view') return;
+        if(modify_mode == 'false') return;
         
         $('.apm-note').editable({
             type: "textarea",
@@ -405,31 +405,44 @@ function money_format11( $n, $precision = 1 ) {
                     <tr>
                     <td><div class="room-data" 
                             data-pk="${room_id}"
-                            data-value="CODE"
+                            data-value=""
                             data-name="code"
-                            >CODE</div></td>
-                    <td><div class="room-select-type" 
+                            >##</div></td>
+                    <td><div class="room-data" 
                             data-pk="${room_id}"
                             data-value="1"
-                            data-name="type_id"
-                            >Studio</div></td>
-                    <td><div class="room-data font-weight-bold"
+                            data-name="type"
+                            >##</div></td>
+                    <td><div class="room-price text-success"
                             data-pk="${room_id}"
                             data-value="0"
                             data-name="price"
                             >0</div></td>
-                    <td><div class="room-data" 
+                    <td><div class="room-data"
+                            data-pk="${room_id}"
+                            data-value="0"
+                            data-name="temp_price"
+                            >0</div></td>
+                    <td><div class="room-area" 
                             data-pk= "${room_id}"
                             data-value= "0"
                             data-name="area">0</div></td>
-                    <td><div class="room-select-status" 
+                    <td><div class="room-status text-primary" 
                             data-pk="${room_id}"
                             data-value="Full"
-                            data-name="status">Full</div></td>
-                    <td><div class="room-time_available" 
+                            data-name="status">#</div></td>
+                    <td><div class="room-time_available text-success" 
                             data-pk="${room_id}"
-                            data-value="<?= date('d-m-Y', 0) ?>"
-                            data-name="time_available"><?= date('d-m-Y', 0) ?></div></td>
+                            data-value=""
+                            data-name="time_available">#</div></td>
+                    <td><div class="room-data" 
+                            data-pk="${room_id}"
+                            data-value="#"
+                            data-name="temp_time_checkout">#</div></td>
+                    <td><div class="room-consulting_user_id" 
+                            data-pk="${room_id}"
+                            data-value="#"
+                            data-name="consulting_user_id">#</div></td>
                     <td class="d-flex justify-content-center">
                         <button data-room-id="${room_id}" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                             <i class="mdi mdi-delete"></i>

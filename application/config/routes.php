@@ -10,6 +10,43 @@ $route['admin/logout'] = function($params = []) {
 	$action = '/logout';
 	return $controller.$action;
 };
+// contract
+$route['admin/list-contract'] = function($params = []) {
+	$controller = 'Contract';
+	$action = '/index';
+	return $controller.$action;
+};
+
+$route['admin/create-contract-show'] = function($params = []) {
+	$controller = 'Contract';
+	$action = '/createShow';
+	return $controller.$action;
+};
+
+$route['admin/create-contract'] = function($params = []) {
+	$controller = 'Contract';
+	$action = '/create';
+	return $controller.$action;
+};
+
+$route['admin/update-contract'] = function($params = []) {
+	$controller = 'Contract';
+	$action = '/update';
+	return $controller.$action;
+};
+
+$route['admin/delete-contract'] = function($params = []) {
+	$controller = 'Contract';
+	$action = '/delete';
+	return $controller.$action;
+};
+
+$route['admin/update-customer-editable'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/updateEditable';
+	return $controller.$action;
+};
+
 // customer
 $route['admin/list-customer'] = function($params = []) {
 	$controller = 'Customer';

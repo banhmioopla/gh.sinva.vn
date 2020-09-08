@@ -29,11 +29,6 @@
                 data-value="<?= $apartment['elevator'] ?>"
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['elevator'] ?></div>
         </li>
-    </ul>
-</div>
-
-<div class="carousel-item">
-    <ul class="list-group">
         <li class="list-group-item">
             <i><?= $label_apartment['washing_machine'] ?></i>  
             <div class="text-right"
@@ -41,6 +36,11 @@
                 data-value="<?= $apartment['washing_machine'] ?>"
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['washing_machine'] ?></div>
         </li>
+    </ul>
+</div>
+
+<div class="carousel-item">
+    <ul class="list-group">
         <li class="list-group-item">
             <i><?= $label_apartment['room_cleaning'] ?></i>
             <div class="text-right"
@@ -62,11 +62,6 @@
                 data-value="<?= $apartment['number_of_people'] ?>"
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['number_of_people'] ?></div>
         </li>
-    </ul>
-</div>
-
-<div class="carousel-item">
-    <ul class="list-group">
         <li class="list-group-item">
             <i><?= $label_apartment['deposit'] ?></i>  
             <div class="text-right" 
@@ -81,13 +76,10 @@
                 data-value="<?= $apartment['kitchen'] ?>"
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['kitchen'] ?></div>
         </li>
-        <li class="list-group-item">
-            <i><?= $label_apartment['pet'] ?></i>
-            <div class="text-right"
-                data-name="pet"
-                data-value="<?= $apartment['pet'] ?>"
-                data-pk="<?= $apartment['id'] ?>"><?= $apartment['pet'] ?></div>
-        </li>
+    </ul>
+</div>
+<div class="carousel-item">
+    <ul class="list-group">
         <li class="list-group-item">
             <i><?= $label_apartment['contract_long_term'] ?></i>
             <div class="text-right"
@@ -95,11 +87,24 @@
                 data-value="<?= $apartment['contract_long_term'] ?>"
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['contract_long_term'] ?></div>
         </li>
+        <li class="list-group-item">
+            <i><?= $label_apartment['contract_short_term'] ?></i>
+            <div class="text-right"
+                data-name="contract_long_term"
+                data-value="<?= $apartment['contract_short_term'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['contract_long_term'] ?></div>
+        </li>
     </ul>
 </div>
-
 <div class="carousel-item">
-    <ul class="list-group">
+    <ul class="list-group"> 
+        <li class="list-group-item">
+            <i><?= $label_apartment['pet'] ?></i>
+            <div class="text-right"
+                data-name="pet"
+                data-value="<?= $apartment['pet'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['pet'] ?></div>
+        </li>
         <li class="list-group-item">
             <i><?= $label_apartment['television'] ?></i>  
             <div class="text-right" 
@@ -115,18 +120,19 @@
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['makeup_table'] ?></div>
         </li>
         <li class="list-group-item">
-            <i><?= $label_apartment['sofa'] ?></i>
-            <div class="text-right"
-                data-name="sofa"
-                data-value="<?= $apartment['sofa'] ?>"
-                data-pk="<?= $apartment['id'] ?>"><?= $apartment['sofa'] ?></div>
-        </li>
-        <li class="list-group-item">
             <i><?= $label_apartment['car_park'] ?></i>
             <div class="text-right"
                 data-name="car_park"
                 data-value="<?= $apartment['car_park'] ?>"
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['car_park'] ?></div>
         </li>
+        <li class="list-group-item">
+            <i><?= $label_apartment['sofa'] ?></i>
+            <div class="text-right"
+                data-name="sofa"
+                data-value="<?= $apartment['sofa'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['sofa'] ?></div>
+        </li>
     </ul>
 </div>
+

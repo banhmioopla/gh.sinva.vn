@@ -11,6 +11,9 @@
             <th>Ng.Trống</th>
             <th>Ng.Trống*</th>
             <th>Dẫn khách</th>
+            <?php if($this->auth['role_code'] == 'customer-care'):?>
+            <th>Tùy chọn</th>
+            <?php endif; ?>
         </tr>
         </thead>
         <tbody>
@@ -30,7 +33,16 @@
                     <td class="text-center"><div><?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>
                     <td><div class="text-success"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?></div></td>
                     <td><div class="text-success"><?= $room['temp_time_checkout'] ? $room['temp_time_checkout'] :'' ?></div></td>
-                    <td><div class="text-success"><?= $room['consulting_user_id'] ? $libUser->getNameByAccountid($room['consulting_user_id']) :'' ?></div></td>
+                    <td><div><?= $room['consulting_user_id'] ? $libUser->getNameByAccountid($room['consulting_user_id']) :'' ?></div></td>
+                    <?php if($this->auth['role_code'] == 'customer-care'):?>
+                        <td class="d-flex justify-content-center">
+                        <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
+                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                                +<i class="mdi mdi-note-plus-outline"></i>
+                            </button>
+                        </a>
+                    </td>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
             <?php endif; ?>
