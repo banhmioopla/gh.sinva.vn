@@ -92,7 +92,7 @@
             <div class="text-right"
                 data-name="contract_long_term"
                 data-value="<?= $apartment['contract_short_term'] ?>"
-                data-pk="<?= $apartment['id'] ?>"><?= $apartment['contract_long_term'] ?></div>
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['contract_short_term'] ?></div>
         </li>
     </ul>
 </div>
