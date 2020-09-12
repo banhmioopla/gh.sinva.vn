@@ -109,8 +109,7 @@ class Apartment extends CustomBaseStep {
 		$field_value = $this->input->post('value');
 
 		$mode = $this->input->post('mode');
-
-		if(!empty($apartment_id) and !empty($field_value)) {
+		if(!empty($apartment_id) and !empty($field_name)) {
 			$data = [
 				$field_name => $field_value,
 				'time_update' => time()
@@ -118,6 +117,12 @@ class Apartment extends CustomBaseStep {
 
 			if(isset($mode) and $mode == 'del') {
 				$inactive_room = $this->ghRoom->updateByApartmentId($apartment_id, ['active' => 'NO', 'time_update' => time()]);
+			}
+			
+			if($field_name == '_reloadtime' and !empty($field_value)){
+				$data = [
+					'time_update' => time()
+				];
 			}
 			$old_apartment = $this->ghApartment->getById($apartment_id);
 			$old_log = json_encode($old_apartment[0]);
@@ -141,7 +146,7 @@ class Apartment extends CustomBaseStep {
 		echo json_encode(['status' => false]); die;
 	}
 
-	public function delete(){
+	public function delete(){  
 		$apartment_id = $this->input->post('apartment_id');
 		if(!empty($apartment_id)) {
 			$old_apartment = $this->ghApartment->getById($apartment_id);

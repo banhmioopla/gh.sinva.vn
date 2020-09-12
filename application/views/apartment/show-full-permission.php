@@ -78,7 +78,7 @@ function money_format11( $n, $precision = 1 ) {
                     <?=$apartment['address_street'] ?>
                 </div>
 
-                <div class="col text-center text-warning font-weight-bold mt-2"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ? date('d/m/Y H:i', 
+                <div class="col text-center text-warning font-weight-bold mt-2" id="time-update-<?= $apartment['id'] ?>"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ? date('d/m/Y H:i', 
                 max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></div>
 
                 <div class="mt-2 list-action">
@@ -89,6 +89,11 @@ function money_format11( $n, $precision = 1 ) {
                         <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                             <i class="mdi mdi-comment-outline"></i>
                         </button> -->
+                        <button type="button" 
+                                data-apartment-id="<?= $apartment['id'] ?>" 
+                                class="btn m-1 btn-sm apartment-reload-time btn-outline-custom btn-rounded waves-light waves-effect">
+                            <i class="mdi mdi-update"></i>
+                        </button>
                         <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect" 
                             data-toggle="collapse" 
                             data-parent="#accordion"
@@ -386,7 +391,15 @@ function money_format11( $n, $precision = 1 ) {
         });
 
         // Default Datatable
-        
+        $('.apartment-reload-time').click(function(){
+            var apm_id = $(this).data('apartment-id');
+            $.ajax({
+                url:'<?= base_url()."admin/update-apartment-editable" ?>',
+                data: {pk: apm_id, name: '_reloadtime', value: '1'},
+                method: 'POST'
+            });
+        });
+
         $('.room-add').click(function(){
             let apm_id = $(this).data('apartment-id');
             // rooom.destroy();
