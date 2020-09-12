@@ -61,6 +61,7 @@ function money_format11( $n, $precision = 1 ) {
                 <div class="col-4 text-center font-weight-bold">
                     <span class="text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></span>
                     <span class="text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></span>
+                    <span class="text-muted"><?= $ghRoom->getNumber($apartment['id']) ?></span>
                 </div>
                 <div class="col-4 text-right">
                     <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'#' ?></a>
