@@ -44,7 +44,7 @@
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['temp_price'] ?>"
-                            data-name="price"><?= $room['temp_price'] ? $room['temp_price']: '#' ?></div></td>
+                            data-name="temp_price"><?= $room['temp_price'] ? $room['temp_price']: '#' ?></div></td>
                     <td><div class="room-area" 
                             data-pk= "<?= $room['id'] ?>"
                             data-value= "<?= $room['area'] ?>"
