@@ -59,6 +59,13 @@ class GhRoom extends CI_Model {
         return count($result) > 0 ? count($result): null;
     }
 
+    public function getNumber($apartment_id){
+        $result = $this->db->get_where(
+            $this->table, 
+            ['apartment_id' => $apartment_id, 'active' => 'YES'])->result_array();
+        return count($result) > 0 ? count($result): null;
+    }
+
     public function getNumberByTimeavailable($apartment_id) {
         $result = $this->db->get_where(
             $this->table, 
