@@ -396,10 +396,13 @@ function money_format11( $n, $precision = 1 ) {
             $.ajax({
                 url:'<?= base_url()."admin/update-apartment-editable" ?>',
                 data: {pk: apm_id, name: '_reloadtime', value: '1'},
-                method: 'POST'
-            });
+                method: 'POST',
+                success:function(){
+                    var t = "<?= date('d/m/Y H:i') ?>";
+                    $('#time-update-'+apm_id).html('<i class="mdi mdi-update"></i>' + t);
+                }
+            })
         });
-
         $('.room-add').click(function(){
             let apm_id = $(this).data('apartment-id');
             // rooom.destroy();
