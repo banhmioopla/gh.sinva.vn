@@ -44,6 +44,10 @@
                     <h4 class="m-t-0">Thông tin dịch vụ</h4>
                     <table class="table">
                         <tr>
+                            <td><strong>Ghi Chú<strong></td>
+                            <td style="white-space: pre-line;"><?= $apartment['note'] ?></td>
+                        </tr>
+                        <tr>
                             <td><strong>Điện</strong></td>
                             <td><?= $apartment['electricity'] ?></td>
                         </tr>

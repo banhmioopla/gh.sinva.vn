@@ -91,8 +91,8 @@
                                 
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <a href="<?= base_url().'admin/contract-detail?id='.$row['id'] ?>" class="btn m-1 btn-sm btn-outline-custom btn-rounded waves-light waves-effect delete-contract">
-                                            Chi tiết
+                                        <a href="#" class="btn m-1 btn-sm btn-outline-muted btn-rounded waves-light waves-effect delete-contract">
+                                            đang code
                                         </a>
                                     </div>
                                 </td>

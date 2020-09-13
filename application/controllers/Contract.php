@@ -99,6 +99,7 @@ class Contract extends CustomBaseStep {
 			'time_open' => $post['time_open'],
 			'number_of_month' => $post['number_of_month'],
 			'service_set' => json_encode($service_set),
+			'status' => $post['status']
 		];
 		$result = $this->ghContract->insert($contract);
         $this->session->set_flashdata('fast_notify', [
