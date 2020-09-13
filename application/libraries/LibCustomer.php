@@ -8,10 +8,10 @@ class LibCustomer {
         $this->CI->load->model('ghCustomer');
     }
 
-    public function getNameById($room_type_id){
-        $room_type = $this->CI->ghCustomer->getById($room_type_id);
+    public function getNameById($id){
+        $customer = $this->CI->ghCustomer->getById($id);
 
-        $name = $room_type ? $room_type[0]['name'] : '';
+        $name = $customer ? $customer[0]['name'] : '';
         return $name;
     }
 

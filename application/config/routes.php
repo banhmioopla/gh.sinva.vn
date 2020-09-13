@@ -60,6 +60,12 @@ $route['admin/create-customer'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/customer-get-district'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/getDistrict';
+	return $controller.$action;
+};
+
 $route['admin/update-customer'] = function($params = []) {
 	$controller = 'Customer';
 	$action = '/update';

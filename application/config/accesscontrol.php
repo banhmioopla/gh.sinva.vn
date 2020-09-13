@@ -207,6 +207,11 @@ $accesscontrol['customer-care'] = [
         'url' => '/admin/list-customer',
         'submenu' => null
     ],
+    [
+        'name' => 'Hợp Đồng',
+        'url' => '/admin/list-contract',
+        'submenu' => null
+    ],
 ];
 
 

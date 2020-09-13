@@ -29,146 +29,77 @@
         ?>
         <div class="contract-alert"></div>
         <div class="row">
-            <div class="col-12 col-md-7">
+            <div class="col-12 col-md-12">
                 <div class="card-box table-responsive">
                     <table id="table-contract" class="table table-bordered">
                         <thead>
                         <tr>
+                            <th># ID Hợp Đồng</th>
+                            <th>Khách thuê</th>
                             <th>Địa chỉ</th>
-                            <th>Tên khách thuê</th>
-                            <th>Thành viên tư vấn</th>
                             <th>Mã Phòng</th>
-                            <th>Dịch vụ</th>
+                            <th>Giá thuê</th>
+                            <th>Ngày ký</th>
+                            <th>Số tháng ở</th>
                             <th class="text-center">Tình trạng</th>
-                            <th class="text-center">Mô tả</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
                             <?php foreach($list_contract as $row ): ?>
+                            <?php $service = json_decode($row['service_set'], true) ?>
                             <tr>
                                 <td>
-                                    <div class="contract-name" 
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="name">
-                                            <?= $row['name'] ?>
+                                    <div>
+                                            #<?= $row['id'] ?>
                                     </div>
                                 </td>
-                                <td><i>-</i></td>
-                                <td><i>-</i></td>
+                                <td><?= $libCustomer->getNameById($row['customer_id']) ?></td>
                                 <td>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="checkbox checkbox-success is-active-contract">
-                                            <input id="contract-<?= $row['id'] ?>" 
-                                                value="<?= $row['status'] ?>"
-                                                type="checkbox" 
-                                                <?= $row['status'] =='YES' ? 'checked':'' ?>>
-                                            <label for="contract-<?= $row['id'] ?>">
-                                            </label>
-                                        </div>
+                                    <div>
+                                    <?php 
+                                        $apartment = $ghApartment->get(['id' => $row['apartment_id']])
+                                    ?>
+                                        <?= $apartment ? $apartment[0]['address_street']:'' ?>
                                     </div>
                                 </td>
-                                <td class="text-secondary"><?= $row['note'] ?></td>
+                                <td>
+                                    <div>
+                                        <?= $service['code'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <?= $row['room_price'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <?=$row['time_open'] ? date('d/m/Y',$row['time_open']):'#' ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <?=$row['number_of_month'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <?=$row['status'] ?>
+                                    </div>
+                                </td>
+                                
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='contract-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-contract">
-                                            <i class="mdi mdi-delete"></i>
-                                        </button>
+                                        <a href="<?= base_url().'admin/contract-detail?id='.$row['id'] ?>" class="btn m-1 btn-sm btn-outline-custom btn-rounded waves-light waves-effect delete-contract">
+                                            Chi tiết
+                                        </a>
                                     </div>
                                 </td>
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="col-12 col-md-5">
-                <div class="card-box">
-                    <h4 class="header-title m-t-0">Thêm mới</h4>
-                    <form role="form" method="post" action="<?= base_url()?>admin/create-contract">
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">chọn thành viên<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <select type="text" class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
-                                        <?= $select_user?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">chọn khách<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <select type="text" class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
-                                        <?= $select_user?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">chọn khách<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <select type="text" class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
-                                        <?= $select_user?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Khách Hàng Mới<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <input type="text" required class="form-control"
-                                        id="code" name="code" placeholder="CODE">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">chọn quận<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <select type="text" class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
-                                        <?= $select_user?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">chọn dự án<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <select type="text" class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
-                                        <?= $select_user?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">chọn phòng<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <select type="text" class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
-                                        <?= $select_user?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">CODE<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <input type="text" required class="form-control"
-                                        id="code" name="code" placeholder="CODE">
-                            </div>
-                        </div>
-                    
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Mô tả</label>
-                            <div class="col-8">
-                                <textarea class="form-control" rows="5" name="note" placeholder="Không bắt buộc"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-8 offset-4">
-                                <button type="submit" class="btn btn-custom waves-effect waves-light">
-                                    Thêm mới
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div> <!-- end row -->

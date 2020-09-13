@@ -7,6 +7,7 @@ class Customer extends CustomBaseStep {
 	{
 		parent::__construct();
 		$this->load->model('ghCustomer');
+		$this->load->library('LibDistrict', null, 'libDistrict');
 	}
 	public function index()
 	{
@@ -15,8 +16,10 @@ class Customer extends CustomBaseStep {
 
 	private function show(){
 		$this->load->model('ghCustomer'); // load model ghUser
+		$this->load->library('LibDistrict', null, 'libDistrict'); // load model ghUser
 		$data['list_customer'] = $this->ghCustomer->getAll();
-		
+		$data['libDistrict'] = $this->libDistrict;
+		$data['select_district'] = $this->libDistrict->cbActive();
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('customer/show', $data);
@@ -57,7 +60,7 @@ class Customer extends CustomBaseStep {
 		$customer_id = $this->input->post('pk');
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
-		if(!empty($customer_id) and !empty($field_value)) {
+		if(!empty($customer_id) and !empty($field_name)) {
 			$data = [
 				$field_name => $field_value
 			];
@@ -65,7 +68,11 @@ class Customer extends CustomBaseStep {
 			$old_customer = $this->ghCustomer->getById($customer_id);
 			$old_log = json_encode($old_customer[0]);
 			if($field_name == 'birthdate') {
-				$data['birthdate'] = strtotime($data['birthdate']);
+				$data['birthdate'] = $data['birthdate'] ? strtotime($data['birthdate']): 0;
+			}
+
+			if($field_name == 'demand_time') {
+				$data['demand_time'] = $data['demand_time'] ? strtotime($data['demand_time']): 0;
 			}
 
 			$result = $this->ghCustomer->updateById($customer_id, $data);
@@ -111,6 +118,21 @@ class Customer extends CustomBaseStep {
 		}
 		echo json_encode(['status' => false]); die;
 	}
+
+	public function getDistrict(){
+		$this->load->model('ghDistrict');
+		$list_district = $this->ghDistrict->getAll();
+		$result = [];
+		foreach($list_district as $d) {
+			$result[] = ["value" => $d['code'], "text" => 'quận '.$d["name"]];
+		}
+		$pk = $this->input->post('pk');
+		if(isset($pk)) {
+			return die($this->updateEditable()); 
+		}
+		echo json_encode($result); die;
+	}
+
 
 }
 

@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách khách hàng</h3>
+                    <h3>Danh sách khách hàng</h3>
                 </div>
             </div>
         </div>
@@ -35,12 +35,13 @@
                         <thead>
                         <tr>
                             <th>Họ tên</th>
-                            <th>Số điện thoại</th>
-                            <th>Email</th>
-                            <th>Cmnd, Passport</th>
+                            <th>Giới tính</th>
                             <th>Ngày sinh</th>
+                            <th>Số điện thoại</th>
+                            <th>NhC giá</th>
+                            <th>NhC quận</th>
+                            <th>NhC Tgian</th>
                             <th class="text-center">Nguồn</th>
-                            <th class="text-center">Ghi chú</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
@@ -50,52 +51,64 @@
                                 <td>
                                     <div class="customer-data" 
                                         data-pk="<?= $row['id'] ?>" 
+                                        data-value ="<?= $row['name'] ?>"
                                         data-name="name">
                                             <?= $row['name'] ?>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-data" 
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="phone">
-                                            <?= $row['phone'] ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="customer-data" 
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="email">
-                                            <?= $row['email'] ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="customer-data" 
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="ID_card">
-                                            <?= $row['ID_card'] ?>
+                                    <div class="customer-gender" 
+                                        data-pk="<?= $row['id'] ?>"
+                                        data-name="gender">
+                                            <?= $row['gender'] ?>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="customer-birthdate" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="birthdate">
-                                            <?= date('d/m/Y', $row['birthdate']) ?>
+                                            <?= $row['birthdate'] > 0 ? date('d/m/Y',$row['birthdate']) : '#'  ?>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-get-status	" 
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="status">
-                                            <?= $row['status'] ?>
+                                    <div class="customer-data" 
+                                        data-pk="<?= $row['id'] ?>"
+                                        data-value ="<?= $row['phone'] ?>"
+                                        data-name="phone">
+                                            <?= $row['phone'] ?>
                                     </div>
                                 </td>
-                                <td class="text-secondary customer-data"
-                                    data-pk="<?= $row['id'] ?>" 
-                                    data-name="note"><?= $row['note'] ?></td>
+                                <td>
+                                    <div class="customer-demand_price"
+                                        data-pk="<?= $row['id'] ?>"
+                                        data-value ="<?= $row['demand_price'] ?>"
+                                        data-name="demand_price">
+                                        <?= number_format($row['demand_price']) ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="customer-demand_district_code"
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="demand_district_code">
+                                        <?= $libDistrict->getNameByCode($row['demand_district_code']) ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="customer-demand_time"
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="demand_time">
+                                        <?= $row['demand_time'] > 0 ? date('d/m/Y', $row['demand_time']) : '#' ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="customer-status text-center font-weight-bold">
+                                        <?= $row['status'] == 'sinva-rented' ? 'đã ký' :' đang theo dõi' ?>
+                                    </div>
+                                </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='district-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-customer">
-                                            <i class="mdi mdi-delete"></i>
+                                        <button class="btn m-1 btn-sm btn-outline-muted btn-rounded waves-light waves-effect delete-customer">
+                                            đang code
                                         </button>
                                     </div>
                                 </td>
@@ -105,9 +118,9 @@
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-6">
                 <div class="card-box">
-                    <h4 class="header-title m-t-0">Thêm mới</h4>
+                    <h4 class=" m-t-0">Khách Hàng Tiềm Năng</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-customer">
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Họ tên<span class="text-danger">*</span></label>
@@ -136,8 +149,7 @@
                         <div class="form-group row">
                             <label for="birthdate" class="col-4 col-form-label">Ngày sinh<span class="text-danger">*</span></label>
                             <div class="col-8">
-                            <input type="text" name="birthdate" class="form-control" placeholder="mm/dd/yyyy"
-                                id="datepicker">
+                            <input type="text" name="birthdate" class="form-control datepicker" placeholder="mm/dd/yyyy">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -168,27 +180,29 @@
                                 <div class="radio radio-custom">
                                     <input type="radio" name="status" checked id="sinva-info-form" value="sinva-info-form">
                                     <label for="sinva-info-form">
-                                        Form dắt khách
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="status" id="sinva-rented" value="sinva-rented">
-                                    <label for="sinva-rented">
-                                        Hợp đồng do sinva tư vấn
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="status" id="orther" value="orther">
-                                    <label for="orther">
-                                        Không rõ nguồn
+                                        Khách hàng tiềm năng
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">Mô tả</label>
+                            <label class="col-4 col-form-label">Nhu cầu giá</label>
                             <div class="col-8">
-                                <textarea class="form-control" rows="5" name="note" placeholder="Không bắt buộc"></textarea>
+                                <input type="number" name='demand_price' class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Nhu cầu quận</label>
+                            <div class="col-8">
+                                <select name="demand_district_code" class='form-control'>
+                                    <?= $select_district ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Nhu cầu thời gian</label>
+                            <div class="col-8">
+                                <input type="text" name='demand_time' class="form-control datepicker">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -228,8 +242,9 @@
                             }
                         }
                     });
-                    
-                    $('.customer-birthdate').editable({
+                    $.fn.combodate.defaults.maxYear = 2025;
+                    $.fn.combodate.defaults.minYear = 1970;
+                    $('.customer-birthdate, .customer-demand_time').editable({
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         placement: 'right',
                         type: 'combodate',
@@ -241,6 +256,30 @@
                             firstItem: 'name'
                         },
                         inputclass: 'form-control-sm',
+                    });
+
+                    $('.customer-demand_price').editable({
+                        type: 'number',
+                        url: '<?= base_url() ?>admin/update-customer-editable',
+                        inputclass: 'form-control-sm',
+                    });
+                    $('.customer-demand_district_code').editable({
+                        type: 'select',
+                        url: '<?= base_url() ?>admin/customer-get-district',
+                        inputclass: '',
+                        source: function() {
+                            data = [];
+                            $.ajax({
+                                url: '<?= base_url() ?>admin/customer-get-district',
+                                dataType: 'json',
+                                async: false,
+                                success: function(res) {
+                                    data = res;
+                                    return res;
+                                }
+                            });
+                            return data;
+                        },
                     });
 
                     $('.delete-customer').click(function(){
@@ -269,7 +308,7 @@
                 } // end fnDrawCallback
             });
             
-            $('#datepicker').datepicker({
+            $('.datepicker').datepicker({
                 format: "dd/mm/yyyy",
             });
             

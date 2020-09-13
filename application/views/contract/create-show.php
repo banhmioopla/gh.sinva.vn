@@ -15,60 +15,108 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Nhập hợp đồng - cọc</h3>
+                    <h2>Nhập hợp đồng - cọc</h2>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-6">
                 <div class="card-box">
-                <h4 class="header-title m-t-0">Thông tin dự án</h4>
-                <table class="table">
-                    <tr>
-                        <td><strong>Quận</strong></td>
-                        <td><?= $libDistrict->getNameByCode($apartment['district_code']) ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Địa chỉ<strong></td>
-                        <td><?= $apartment['address_street'] ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mã Phòng<strong></td>
-                        <td><?= $room['code'] ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Giá Phòng<strong></td>
-                        <td><?= number_format($room['price'], 0, '', ',')  ?></td>
-                    </tr>
-                </table>
+                    <h4 class="m-t-0">Thông tin dự án</h4>
+                    <table class="table">
+                        <tr>
+                            <td><strong>Quận</strong></td>
+                            <td><?= $libDistrict->getNameByCode($apartment['district_code']) ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Địa chỉ<strong></td>
+                            <td><?= $apartment['address_street'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mã Phòng<strong></td>
+                            <td><?= $room['code'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Giá Phòng<strong></td>
+                            <td><?= number_format($room['price'], 0, '', ',')  ?></td>
+                        </tr>
+                    </table>
+                    <h4 class="m-t-0">Thông tin dịch vụ</h4>
+                    <table class="table">
+                        <tr>
+                            <td><strong>Điện</strong></td>
+                            <td><?= $apartment['electricity'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nước<strong></td>
+                            <td><?= $apartment['water'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Internet<strong></td>
+                            <td><?= $apartment['internet'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Thang máy<strong></td>
+                            <td><?= $apartment['elevator'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Máy giặt<strong></td>
+                            <td><?= $apartment['washing_machine'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dọn phòng<strong></td>
+                            <td><?= $apartment['room_cleaning'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Giữ xe<strong></td>
+                            <td><?= $apartment['parking'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Giữ xe Oto<strong></td>
+                            <td><?= $apartment['car_park'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bếp<strong></td>
+                            <td><?= $apartment['kitchen'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>KT3<strong></td>
+                            <td><?= $apartment['kt3'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Thú cưng<strong></td>
+                            <td><?= $apartment['pet'] ?></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-6">
                 <div class="card-box">
-                    <h4 class="header-title m-t-0">Thêm hợp đồng mới</h4>
+                    <h4 class="m-t-0">Thêm hợp đồng mới</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-contract">
+                    <input type="hidden" name='room_id' value= '<?= $_GET["room-id"]?>'>
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Thành viên tư vấn<span class="text-danger">*</span></label>
                             <div class="col-8">
                                 <select type="text" class="form-control"
-                                        id="name" name="name" placeholder="Tên quận">
+                                        id="consultant_id" name="consultant_id" placeholder="Tên quận">
                                         <?= $select_user?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Khách Hàng Đã Nhập<span class="text-danger">*</span></label>
+                            <label for="name" class="col-4 col-form-label">Khách Hàng Tiềm Năng<span class="text-danger">*</span></label>
                             <div class="col-8">
                                 <select type="text" class="form-control"
-                                        id="customer_name" name="customer_name" placeholder="Tên quận">
+                                        id="customer_name" name="customer_name">
                                         <?= $select_customer?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Khách Hàng Mới<span class="text-danger">*</span></label>
+                            <label for="name" class="col-4 col-form-label">Khách Hàng Mới</label>
                             <div class="col-8">
-                                <input type="text" required class="form-control"
+                                <input type="text" class="form-control"
                                         id="customer_name_new" name="customer_name_new" placeholder="họ tên">
                             </div>
                         </div>
@@ -82,29 +130,31 @@
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Số tháng ở<span class="text-danger">*</span></label>
                             <div class="col-8">
-                                <input type="number" required class="form-control"
-                                        id="customer_name_new" name="customer_name_new">
+                                <input  type="number" 
+                                        required class="form-control"
+                                        id="number_of_month" 
+                                        name="number_of_month">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Tình trạng<span class="text-danger">*</span></label>
                             <div class="col-8">
                                 <div class="radio radio-custom">
-                                    <input type="radio" name="status" checked id="sinva-info-form" value="sinva-info-form">
+                                    <input type="radio" name="status" checked id="sinva-info-form" value="Active">
                                     <label for="sinva-info-form">
-                                        Đang ở
+                                        Đang ở (đang có hiệu lực)
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">
-                                    <input type="radio" name="status" id="sinva-rented" value="sinva-rented">
+                                    <input type="radio" name="status" id="sinva-rented" value="Pending">
                                     <label for="sinva-rented">
-                                        Đợi ký (đang cọc)
+                                        Đợi ký HĐ (đang cọc)
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">
-                                    <input type="radio" name="status" id="orther" value="orther">
-                                    <label for="orther">
-                                        Hủy
+                                    <input type="radio" name="status" id="sinva-rented" value="Cancel">
+                                    <label for="sinva-rented">
+                                        Hủy cọc
                                     </label>
                                 </div>
                             </div>

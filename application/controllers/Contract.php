@@ -6,9 +6,19 @@ class Contract extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct();
+		$permission_roles = [
+			'admin',
+			'customer-care',
+		];
+
+		if(!in_array($this->auth['role_code'], $permission_roles)) {
+			return redirect('admin/list-apartment');
+		}
+
 		$this->load->model('ghContract');
 		$this->load->model('ghRoom');
 		$this->load->model('ghApartment');
+		$this->load->model('ghCustomer');
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibUser', null, 'libUser');
@@ -21,7 +31,9 @@ class Contract extends CustomBaseStep {
 	public function show(){
 		$this->load->model('ghContract'); // load model ghUser
 		$data['list_contract'] = $this->ghContract->getAll();
-		
+		$data['libCustomer'] = $this->libCustomer;
+		$data['libUser'] = $this->libUser;
+		$data['ghApartment'] = $this->ghApartment;
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('contract/show', $data);
@@ -42,13 +54,55 @@ class Contract extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+	public function detailShow(){
+		$contract_id = $this->input->get('id');
+		$model = $this->ghContract->get(['id' => $contract_id])[0];
+		$data['contract'] = $model;
+		$data['libCustomer'] = $this->libCustomer;
+		$data['libUser'] = $this->libUser;
+		$data['ghApartment'] = $this->ghApartment;
+		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('contract/detail-show', $data);
+		$this->load->view('components/footer');
+	}
+
 	public function create() {
 	
-		$data = $this->input->post();
-
-		$result = $this->ghContract->insert($data);
+		$post = $this->input->post();
+		
+		if($post['time_open']) {
+			$dt = DateTime::createFromFormat('d/m/Y', $post['time_open']);
+			$post['time_open'] = $dt->getTimestamp();
+		} else {
+			$post['time_open'] = 0;
+		}
+		if(!$post['customer_name']) {
+			$customer_id = $this->ghCustomer->insert(
+				[
+					'name' => $post['customer_name_new'],
+					'status' => 'sinva-rented',
+				]);
+		} else {
+			$customer_id = $post['customer_name'];
+			$customer_model = $this->ghCustomer->updateById($customer_id, [
+				'status' => 'sinva-rented'
+			]);
+		}
+		
+		$service_set = $this->ghRoom->get(['id' =>$post['room_id']])[0];
+		$contract = [
+			'customer_id' => $customer_id,
+			'room_id' => $post['room_id'],
+			'apartment_id' => $service_set['apartment_id'],
+			'consultant_id' => $post['consultant_id'],
+			'room_price' => $service_set['price'],
+			'time_open' => $post['time_open'],
+			'number_of_month' => $post['number_of_month'],
+			'service_set' => json_encode($service_set),
+		];
+		$result = $this->ghContract->insert($contract);
         $this->session->set_flashdata('fast_notify', [
-            'message' => 'Tạo hợp đồng '.$data['name'].' thành công ',
+            'message' => 'Tạo hợp đồng thành công ',
             'status' => 'success'
         ]);
         return redirect('admin/list-contract');

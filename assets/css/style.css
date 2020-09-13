@@ -52,7 +52,7 @@ File: Main Css File
 45. Responsive
 */
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
-@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700");
+@import url("https://fonts.googleapis.com/css?family=Lobster:300,400,500,700");
 /* ===========
    Menu
  =============*/
@@ -723,7 +723,7 @@ html {
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-  font-family: "Rubik", sans-serif;
+  font-family: "Lobster", cursive;
   margin: 10px 0;
 }
 
