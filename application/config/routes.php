@@ -46,7 +46,12 @@ $route['admin/update-customer-editable'] = function($params = []) {
 	$action = '/updateEditable';
 	return $controller.$action;
 };
-
+// Cron
+$route['admin/cron-customer'] = function($params = []) {
+	$controller = 'CronCustomer';
+	$action = '/index';
+	return $controller.$action;
+};
 // customer
 $route['admin/list-customer'] = function($params = []) {
 	$controller = 'Customer';
