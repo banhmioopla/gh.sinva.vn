@@ -18,13 +18,16 @@ class CronCustomer extends CustomBaseStep {
             foreach($xlsx->rows() as $index => $row) {
                 if($index == 0) continue;
                 $data['name'] = $row[1];
-                $data['birthdate'] = empty($row[2]) ? strtotime($row[2]):0;
+                $data['birthdate'] = $row[2] ? strtotime($row[2]):0;
                 $data['gender'] = empty($row[3]) ? (($row[3] == 'Nam')? 'male':'female'):null;
                 $data['phone'] = trim($row[5]);
                 $data['email'] = trim($row[8]);
                 $data['note'] = trim($row[17]);
+                $data['status'] = 'sinva-rented';
                 $this->ghCustomer->insert($data);
+                // echo "<pre>"; print_r($data);
             }
+           
         } else {
             echo SimpleXLSX::parseError();
         }
