@@ -2,6 +2,9 @@
     <table id="list-room-<?= $apartment['id'] ?>" class="table list-room table-bordered ">
         <thead>
         <tr>
+        <?php if($this->auth['role_code'] == 'customer-care'): ?>
+            <th># ID</th>
+        <?php endif; ?>
             <th>Mã Phòng</th>
             <th>Loại Phòng</th>
             <th>Giá</th>
@@ -21,6 +24,13 @@
             <?php if(!empty($list_room)): ?>
                 <?php foreach($list_room as $room): ?>
                 <tr>
+                <?php if($this->auth['role_code'] == 'customer-care'): ?>
+                    <td>
+                        <div class="text-danger">
+                            <?= $room['id'] ?>
+                        </div>
+                    </td>
+                <?php endif; ?>
                     <td>
                         <div>
                             <?= $room['code'] ?>

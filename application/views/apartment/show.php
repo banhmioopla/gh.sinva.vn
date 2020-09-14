@@ -77,6 +77,7 @@ function money_format11( $n, $precision = 1 ) {
                 </div>
                 <div class="col text-center text-purple font-weight-bold">
                     <?=$apartment['address_street'] ?>
+                    <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
                 </div>
                 <div class="col text-center text-warning font-weight-bold mt-2"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ? date('d/m/Y H:i', 
                 max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></div>
