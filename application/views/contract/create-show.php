@@ -100,8 +100,8 @@
                     <form role="form" method="post" action="<?= base_url()?>admin/create-contract">
                     <input type="hidden" name='room_id' value= '<?= $_GET["room-id"]?>'>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Thành viên tư vấn<span class="text-danger">*</span></label>
-                            <div class="col-8">
+                            <label for="name" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
                                 <select type="text" class="form-control"
                                         id="consultant_id" name="consultant_id" placeholder="Tên quận">
                                         <?= $select_user?>
@@ -109,30 +109,30 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Khách Hàng Tiềm Năng # search<span class="text-danger">*</span></label>
-                            <div class="col-8">
+                            <label for="name" class="col-12 col-md-4 col-form-label">Khách Hàng Tiềm Năng # search<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
                             <select class="form-control select2" id="customer_name" name="customer_name">
                             </select>
                             </div>
                             
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Khách Hàng Mới</label>
-                            <div class="col-8">
+                            <label for="name" class="col-12 col-md-4 col-form-label">Khách Hàng Mới</label>
+                            <div class="col-md-8 col-12">
                                 <input type="text" class="form-control"
                                         id="customer_name_new" name="customer_name_new" placeholder="họ tên">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Ngày ký<span class="text-danger">*</span></label>
-                            <div class="col-8">
+                            <label for="name" class="col-12 col-md-4 col-form-label">Ngày ký<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
                                 <input type="text" required class="form-control contract-open"
                                         id="time_open" name="time_open">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Số tháng ở<span class="text-danger">*</span></label>
-                            <div class="col-8">
+                            <label for="name" class="col-12 col-md-4 col-form-label">Số tháng ở<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
                                 <input  type="number" 
                                         required class="form-control"
                                         id="number_of_month" 
@@ -140,8 +140,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Tình trạng<span class="text-danger">*</span></label>
-                            <div class="col-8">
+                            <label for="name" class="col-12 col-md-4 col-form-label">Tình trạng<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
                                 <div class="radio radio-custom">
                                     <input type="radio" name="status" checked id="sinva-info-form" value="Active">
                                     <label for="sinva-info-form">
@@ -164,8 +164,8 @@
                         </div>
                     
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">Ghi chú</label>
-                            <div class="col-8">
+                            <label class="col-12 col-md-4 col-form-label">Ghi chú</label>
+                            <div class="col-md-8 col-12">
                                 <textarea class="form-control" rows="5" name="note" placeholder="Không bắt buộc"></textarea>
                             </div>
                         </div>
