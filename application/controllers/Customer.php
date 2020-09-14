@@ -133,6 +133,29 @@ class Customer extends CustomBaseStep {
 		echo json_encode($result); die;
 	}
 
+	public function search(){
+		$q = $this->input->get('q');
+		$data = [['id' => 0, 'text' => 'tìm sdt']];
+		if(empty($q)) {
+			$customer = $this->ghCustomer->get();
+			if($customer) {
+				foreach($customer as $c){
+					$data[] = ['id' => $c['id'], 'text' => $c['phone'] .' - '. $c['name']];
+				}
+			}
+			
+		} else {
+			$customer = $this->ghCustomer->getLike('phone', $q);
+			if($customer) {
+				foreach($customer as $c){
+					$data[] = ['id' => $c['id'], 'text' => $c['phone'] .' - '. $c['name']];
+				}
+			}
+			
+		}
+		echo json_encode($data);
+	}
+
 
 }
 

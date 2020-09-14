@@ -53,6 +53,11 @@ $route['admin/cron-customer'] = function($params = []) {
 	return $controller.$action;
 };
 // customer
+$route['admin/search-customer'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/search';
+	return $controller.$action;
+};
 $route['admin/list-customer'] = function($params = []) {
 	$controller = 'Customer';
 	$action = '/index';

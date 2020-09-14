@@ -109,13 +109,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Khách Hàng Tiềm Năng<span class="text-danger">*</span></label>
+                            <label for="name" class="col-4 col-form-label">Khách Hàng Tiềm Năng # search<span class="text-danger">*</span></label>
                             <div class="col-8">
-                                <select type="text" class="form-control"
-                                        id="customer_name" name="customer_name">
-                                        <?= $select_customer?>
-                                </select>
+                            <select class="form-control select2" id="customer_name" name="customer_name">
+                            </select>
                             </div>
+                            
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Khách Hàng Mới</label>
@@ -188,6 +187,19 @@
 commands.push(function(){
     $('.contract-open').datepicker({
         format: "dd/mm/yyyy",
+    });
+    $(".select2").select2({
+        placeholder: "Search for an Item",
+        minimumInputLength: 2,
+        ajax: {
+            url: "<?= base_url().'admin/search-customer' ?>",
+            dataType: 'json',
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            }
+        }
     });
 });
 

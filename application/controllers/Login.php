@@ -17,14 +17,15 @@ class Login extends CI_Controller {
 		$data['account_id'] = $this->input->post('account_id');
 		$data['password'] = $this->input->post('password');
 		if(!empty(get_cookie('account_id')) AND !empty(get_cookie('password'))){
-			
 			$data['account_id'] = get_cookie('account_id');
 			$data['password'] = get_cookie('password');
 			$user_profile = $this->ghUser->login($data);
 			if(!empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
+			} else {
+				return redirect('/admin/logout');
 			}
-		}
+		} 
 		
 		
 		$submit = $this->input->post('submit');
