@@ -8,11 +8,9 @@
             <th>Mã Phòng</th>
             <th>Loại Phòng</th>
             <th>Giá</th>
-            <th>Giá*</th>
             <th>Diện Tích</th>
             <th>Trạng Thái</th>
             <th>Ng.Trống</th>
-            <th>Ng.Trống*</th>
             <th>Dẫn khách</th>
             <?php if($this->auth['role_code'] == 'customer-care'):?>
             <th>Tùy chọn</th>
@@ -38,11 +36,9 @@
                     </td>
                     <td><div><?= $room['type'] ?></div></td>
                     <td><div class="text-success"><?= money_format11($room['price'],1) ?></div></td>
-                    <td><div><?= $room['temp_price'] ?></div></td>
                     <td><div><?= $room['area'] ?></div></td>
                     <td class="text-center"><div><?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>
                     <td><div class="text-success"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?></div></td>
-                    <td><div class="text-success"><?= $room['temp_time_checkout'] ? $room['temp_time_checkout'] :'' ?></div></td>
                     <td><div><?= $room['consulting_user_id'] ? $libUser->getNameByAccountid($room['consulting_user_id']) :'' ?></div></td>
                     <?php if($this->auth['role_code'] == 'customer-care'):?>
                         <td class="d-flex justify-content-center">

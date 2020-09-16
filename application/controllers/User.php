@@ -30,6 +30,7 @@ class User extends CustomBaseStep {
 		$data = $this->input->post();
 		$data['time_insert'] = $data['time_update'] = time();
 		$data['password'] = $data['account_id'];
+		$data['role_code'] = 'consultant';
 		$data['date_of_birth'] = strtotime($data['date_of_birth']);
 
 		$result = $this->ghUser->insert($data);
