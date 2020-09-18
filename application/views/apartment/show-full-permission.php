@@ -425,42 +425,29 @@ function money_format11( $n, $precision = 1 ) {
                             data-pk="${room_id}"
                             data-value=""
                             data-name="code"
-                            >##</div></td>
+                            >#</div></td>
                     <td><div class="room-data" 
                             data-pk="${room_id}"
-                            data-value="1"
+                            data-value=""
                             data-name="type"
-                            >##</div></td>
+                            >#</div></td>
                     <td><div class="room-price text-success"
                             data-pk="${room_id}"
-                            data-value="0"
+                            data-value=""
                             data-name="price"
-                            >0</div></td>
-                    <td><div class="room-data"
-                            data-pk="${room_id}"
-                            data-value="0"
-                            data-name="temp_price"
-                            >0</div></td>
+                            >#</div></td>
                     <td><div class="room-area" 
                             data-pk= "${room_id}"
-                            data-value= "0"
+                            data-value= ""
                             data-name="area">0</div></td>
                     <td><div class="room-status text-primary" 
                             data-pk="${room_id}"
-                            data-value="Full"
+                            data-value=""
                             data-name="status">#</div></td>
                     <td><div class="room-time_available text-success" 
                             data-pk="${room_id}"
                             data-value=""
                             data-name="time_available">#</div></td>
-                    <td><div class="room-data" 
-                            data-pk="${room_id}"
-                            data-value="#"
-                            data-name="temp_time_checkout">#</div></td>
-                    <td><div class="room-consulting_user_id" 
-                            data-pk="${room_id}"
-                            data-value="#"
-                            data-name="consulting_user_id">#</div></td>
                     <td class="d-flex justify-content-center">
                         <button data-room-id="${room_id}" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                             <i class="mdi mdi-delete"></i>

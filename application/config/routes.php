@@ -10,6 +10,12 @@ $route['admin/logout'] = function($params = []) {
 	$action = '/logout';
 	return $controller.$action;
 };
+// report - booking customer
+$route['admin/list-rp-booking-customer'] = function($params = []) {
+	$controller = 'Report';
+	$action = '/showBookingCustomer';
+	return $controller.$action;
+};
 // contract
 $route['admin/list-contract'] = function($params = []) {
 	$controller = 'Contract';
