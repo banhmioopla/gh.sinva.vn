@@ -68,7 +68,38 @@ class CronCustomer extends CustomBaseStep {
         }
     }
 
-
+    public function follow() {
+        // require models
+        require APPPATH."/libraries/SimpleXLSX.php";
+        $this->load->model('ghCustomer');
+        // $this->load->model('ghApartment');
+        // $this->load->model('ghRoom');
+        $file_name = 'DSKH-SINVA-2020-follow.xlsx';
+        if ( $xlsx = SimpleXLSX::parse('./documents/'.$file_name) ) {
+            echo ' - Sheet Name = '.$xlsx->sheetName(0);
+            // echo "<pre>"; print_r($xlsx->rows());
+            // die;
+            $customer = [];
+            foreach($xlsx->rows() as $index => $row) {
+                if($index == 0 or empty($row[2])) {
+                    continue;
+                }
+                // Customer 
+                $customer['name'] = $row[2];
+                $customer['birthdate'] = $row[4] ? strtotime($row[4]):0;
+                $customer['gender'] = empty($row[3]) ? (($row[3] == 'Nam')? 'male':'female'):null;
+                $customer['status'] = 'sinva-info-form';
+                $customer['phone'] = trim($row[5]);
+                $customer['address_street'] = trim($row[7]);
+                $customer['email'] = trim($row[9]);
+                $customer['note'] =($row[0] ? 'TG: '.$row[0] : '').' '.trim($row[10]);
+                $customer_id = $this->ghCustomer->insert($customer);
+            }
+           
+        } else {
+            echo SimpleXLSX::parseError();
+        }
+    }
 }
 
 /* End of file Apartment.php */
