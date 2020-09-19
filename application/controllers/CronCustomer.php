@@ -12,7 +12,6 @@ class CronCustomer extends CustomBaseStep {
 	{
         // require models
         require APPPATH."/libraries/SimpleXLSX.php";
-        die;
         $this->load->model('ghCustomer');
         $this->load->model('ghApartment');
         $this->load->model('ghRoom');
@@ -22,7 +21,10 @@ class CronCustomer extends CustomBaseStep {
             // echo "<pre>"; print_r($xlsx->rows()); die;
             $customer = [];
             foreach($xlsx->rows() as $index => $row) {
-                if($index == 0 or empty($row[1])) continue;
+                if($index == 0 or empty($row[1])) {
+                    continue;
+                } 
+                
                 // Customer 
                 $customer['name'] = $row[1];
                 $customer['birthdate'] = $row[2] ? strtotime($row[2]):0;
