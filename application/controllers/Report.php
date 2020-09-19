@@ -16,14 +16,17 @@ class Report extends CustomBaseStep {
 		$this->show();
     }
 
-	public function showBookingCustomer(){ // thống kê dẫn khách
-        $data['list_apartment'] = $this->ghApartment->getByUserDistrict($this->auth['account_id']);
-        if($this->auth['role_code'] == 'ceo-product') {
-            $data['list_apartment'] = null;
-        }
-        foreach($data['list_apartment'] as $b ) {
-            $report = $this->ghBookingCustomer->get(['']);
-        }
+	public function showBookingCustomer() { // thống kê dẫn khách
+
+        $list_apartment = $this->ghApartment->getByUserDistrict($this->auth['account_id']);
+		$project = [];
+        foreach($list_apartment as $item ) {
+			$report = $this->ghBookingCustomer->getCurrentWeek();
+			if($report and $item) {
+				$project[] = array_merge($item, $report);
+			}
+		}
+		$data['project'] = $project;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		$data['libDistrict'] = $this->libDistrict;
 		

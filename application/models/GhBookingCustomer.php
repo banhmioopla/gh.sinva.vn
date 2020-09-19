@@ -33,6 +33,17 @@ class GhBookingCustomer extends CI_Model {
         $result = $this->db->affected_rows();
         return $result;
     }
+
+    public function getCurrentWeek() {
+        $current_year = date('Y');
+        $current_week = date('W');
+        $sql = "SELECT * 
+            FROM ".$this->table." 
+            WHERE WEEK(FROM_UNIXTIME(time_report)) = '$current_week' 
+            AND YEAR(FROM_UNIXTIME(time_report)) = '$current_year'";
+        $result = $this->db->query($sql)->result_array();
+        return $result ? $result[0]: false;
+    }
 }
 
 /* End of file mApartment.php */
