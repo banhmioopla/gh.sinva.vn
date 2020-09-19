@@ -19,17 +19,17 @@ class CronCustomer extends CustomBaseStep {
         $file_name = 'DSKH-SINVA-2020.xlsx';
         if ( $xlsx = SimpleXLSX::parse('./documents/'.$file_name) ) {
             // echo "<pre>"; print_r($xlsx->rows()); die;
+            echo ' - Sheet Name = '.$xlsx->sheetName(0);
             $customer = [];
             foreach($xlsx->rows() as $index => $row) {
                 if($index == 0 or empty($row[1])) {
                     continue;
-                } 
-                
+                }
                 // Customer 
                 $customer['name'] = $row[1];
                 $customer['birthdate'] = $row[2] ? strtotime($row[2]):0;
                 $customer['gender'] = empty($row[3]) ? (($row[3] == 'Nam')? 'male':'female'):null;
-                $customer['status'] = $row[4] ? 'sinva-rented': 'sinva-info-form';
+                $customer['status'] = 'sinva-rented';
                 $customer['phone'] = trim($row[6]);
                 $customer['address_street'] = trim($row[5]);
                 $customer['email'] = trim($row[8]);
