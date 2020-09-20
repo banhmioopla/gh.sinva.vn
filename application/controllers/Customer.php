@@ -2,27 +2,46 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Customer extends CustomBaseStep {
-	private $access_control;
+	private $access_role;
+	private $modify_role;
+	public $is_modify;
+	public $is_access;
+	
 	public function __construct()
 	{
 		parent::__construct();
+		$this->access_role = ['customer-care', 'ceo', 'cpo', 'cfo', 'cco'];
+		$this->modify_role = ['customer-care'];
+		$this->is_modify = in_array($this->auth['role_code'], $this->modify_role) ? true:false;
+		$this->is_access = in_array($this->auth['role_code'], $this->access_role) ? true:false;
+		if(!$this->is_access) {
+			return redirect('admin/list-apartment');
+		}
 		$this->load->model('ghCustomer');
+		$this->load->model('ghCareCustomer');
 		$this->load->library('LibDistrict', null, 'libDistrict');
+		$this->load->library('LibCustomer', null, 'libCustomer');
+		$this->load->library('LibUser', null, 'libUser');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	private function show(){
-		$this->load->model('ghCustomer'); // load model ghUser
-		$this->load->library('LibDistrict', null, 'libDistrict'); // load model ghUser
+	public function show(){
+		
 		$data['list_customer'] = $this->ghCustomer->getAll();
 		$data['libDistrict'] = $this->libDistrict;
 		$data['select_district'] = $this->libDistrict->cbActive();
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('customer/show', $data);
+		$this->load->view('components/footer');
+	}
+
+	public function care() {
+		$data['list_data'] = $this->ghCareCustomer->get(['user_id' => $this->auth['account_id']]);
+		$data['libCustomer'] = $this->libCustomer;
+		$data['libUser'] = $this->libUser;
+		/*--- Load View ---*/
+		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('customer/care', $data);
 		$this->load->view('components/footer');
 	}
 
@@ -38,6 +57,20 @@ class Customer extends CustomBaseStep {
 				'status' => 'success'
 			]);
 			return redirect('admin/list-customer');
+		}
+	}
+
+	public function createCare() {
+		$data = $this->input->post();
+		$data['time_insert'] = time();
+		$data['user_id'] = $this->auth['account_id'];
+		if(!empty($data['customer_id'])) {
+			$result = $this->ghCareCustomer->insert($data);
+			$this->session->set_flashdata('fast_notify', [
+				'message' => 'Tạo báo cáo chăm sóc thành công ',
+				'status' => 'success'
+			]);
+			return redirect('admin/list-care-customer');
 		}
 	}
 

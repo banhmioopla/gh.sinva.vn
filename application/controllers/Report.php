@@ -2,31 +2,77 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Report extends CustomBaseStep {
-
+	private $access_role;
+	private $modify_role;
+	private $is_modify;
+	private $no_update_D = ['Fri', 'Sar', 'Sun'];
 	public function __construct()
 	{
-		parent::__construct();//
+		parent::__construct();
+		
+		// Check permission
+		$this->access_role = ['product-manager', 'ceo', 'cpo', 'cfo', 'cco'];
+		$this->modify_role = ['product-manager'];
+		$this->is_modify = in_array($this->auth['role_code'], $this->modify_role) ? true:false;
+		$this->is_access = in_array($this->auth['role_code'], $this->access_role) ? true:false;
+		if(!$this->is_access) {
+			return redirect('admin/list-apartment');
+		}
+
         $this->load->model('ghBookingCustomer');
         $this->load->model('ghApartment');
-        $this->load->library('LibDistrict', null, 'libDistrict');
+        $this->load->model('ghRoom');
+		$this->load->library('LibDistrict', null, 'libDistrict');
         
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	public function showBookingCustomer() { // thống kê dẫn khách
+	// THỐNG KÊ DẪN KHÁCH
+	public function showBookingCustomer() { 
 
-        $list_apartment = $this->ghApartment->getByUserDistrict($this->auth['account_id']);
-		$project = [];
+		$list_apartment = $this->ghApartment->getByUserDistrict($this->auth['account_id']);
+		$data['list_data'] = null;
         foreach($list_apartment as $item ) {
-			$report = $this->ghBookingCustomer->getCurrentWeek();
-			if($report and $item) {
-				$project[] = array_merge($item, $report);
+			$report = $this->ghBookingCustomer->getCurrentWeek($item['id']);
+			if(!$report and $this->is_modify){
+				$new_report['user_id'] = $this->auth['account_id'];
+				$new_report['apartment_id'] = $item['id'];
+				$new_report['time_report'] = strtotime('this thursday');
+				$new_report['apartment_address_street'] = $item['address_street'];
+				$new_report['apartment_address_ward'] = $item['address_ward'];
+				$new_report['number_of_book'] = 0;
+				$new_report['number_of_deposit'] = 0;
+				$new_report['number_of_contract'] = 0;
+				$new_report['number_of_available_room'] = $this->ghRoom->getNumberByStatus($item['id'], 'Available');
+
+				$ready_room = $this->ghRoom->get([
+					'active' => 'YES',
+					'apartment_id' => $item['id'],
+					'time_available > ' => 0
+				]);
+				$new_report['number_of_ready_room'] = $ready_room ? count($ready_room[0]): 0;
+				$new_report['id'] = $this->ghBookingCustomer->insert($new_report);
+
+				$data['list_data'][] = $new_report;
+				unset($new_report['id']);
+			}
+			if($report) {
+				$today = date('D', time());
+				if(!in_array($today, $this->no_update_D)) {
+					$number_of_available_room = $this->ghRoom->getNumberByStatus($report['apartment_id'], 'Available');
+					$ready_room = $this->ghRoom->get([
+						'active' => 'YES',
+						'apartment_id' => $report['apartment_id'],
+						'time_available > ' => 0
+					]);
+					$number_of_ready_room =  $ready_room ? count($ready_room[0]): 0;
+					$this->ghBookingCustomer->updateById($report['id'], [
+						'number_of_available_room' => $number_of_available_room,
+						'number_of_ready_room' => $number_of_ready_room
+					]);
+				}
+				$data['list_data'][] = $report;
 			}
 		}
-		$data['project'] = $project;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		$data['libDistrict'] = $this->libDistrict;
 		
@@ -36,7 +82,7 @@ class Report extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
-	public function create() {
+	public function createBookingCustomer() {
 	
 		$data = $this->input->post();
 		
@@ -46,6 +92,10 @@ class Report extends CustomBaseStep {
 			'status' => 'success'
 		]);
 		return redirect('admin/show-booking-customer');
+	}
+
+	public function updateEditableBookingCustomer(){
+
 	}
 
 	// Ajax

@@ -14,6 +14,12 @@ class LibCustomer {
         $name = $customer ? $customer[0]['name'] : '';
         return $name;
     }
+    public function getPhoneById($id){
+        $customer = $this->CI->ghCustomer->getById($id);
+
+        $phone = $customer ? $customer[0]['phone'] : '';
+        return $phone;
+    }
 
     public function cb($price_id = 0) {
         $list_price = $this->CI->ghCustomer->get();

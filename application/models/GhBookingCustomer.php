@@ -34,13 +34,14 @@ class GhBookingCustomer extends CI_Model {
         return $result;
     }
 
-    public function getCurrentWeek() {
+    public function getCurrentWeek($apartment_id) {
         $current_year = date('Y');
         $current_week = date('W');
         $sql = "SELECT * 
             FROM ".$this->table." 
             WHERE WEEK(FROM_UNIXTIME(time_report)) = '$current_week' 
-            AND YEAR(FROM_UNIXTIME(time_report)) = '$current_year'";
+            AND YEAR(FROM_UNIXTIME(time_report)) = '$current_year'
+            AND apartment_id = $apartment_id";
         $result = $this->db->query($sql)->result_array();
         return $result ? $result[0]: false;
     }

@@ -150,6 +150,11 @@ $accesscontrol['product-manager'] = [
         'name' => 'Google Drive',
         'url' => '/admin/list-google',
         'submenu' => null
+    ],
+    [
+        'name' => 'Báo cáo dẫn khách',
+        'url' => '/admin/list-rp-booking-customer',
+        'submenu' => null
     ]
 ];
 
@@ -190,6 +195,28 @@ $accesscontrol['consultant'] = [
         'submenu' => null
     ],
 ];
+$accesscontrol['ceo'] = [
+    [
+        'name' => 'Dự Án',
+        'url' => '/admin/list-apartment',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Google Drive',
+        'url' => '/admin/list-google',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Báo cáo Chăm sóc',
+        'url' => '/admin/list-care-customer',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Báo cáo dẫn khách',
+        'url' => '/admin/list-rp-booking-customer',
+        'submenu' => null
+    ]
+];
 
 $accesscontrol['customer-care'] = [
     [
@@ -205,6 +232,11 @@ $accesscontrol['customer-care'] = [
     [
         'name' => 'Khách Hàng',
         'url' => '/admin/list-customer',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Báo cáo Chăm sóc',
+        'url' => '/admin/list-care-customer',
         'submenu' => null
     ],
     [

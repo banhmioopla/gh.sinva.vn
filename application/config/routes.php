@@ -16,6 +16,29 @@ $route['admin/list-rp-booking-customer'] = function($params = []) {
 	$action = '/showBookingCustomer';
 	return $controller.$action;
 };
+$route['admin/create-rp-booking-customer'] = function($params = []) {
+	$controller = 'Report';
+	$action = '/createBookingCustomer';
+	return $controller.$action;
+};
+
+$route['admin/update-rp-booking-customer'] = function($params = []) {
+	$controller = 'Report';
+	$action = '/update';
+	return $controller.$action;
+};
+
+$route['admin/delete-rp-booking-customer'] = function($params = []) {
+	$controller = 'Report';
+	$action = '/delete';
+	return $controller.$action;
+};
+
+$route['admin/update-rp-booking-customer-editable'] = function($params = []) {
+	$controller = 'Report';
+	$action = '/updateEditableBookingCustomer';
+	return $controller.$action;
+};
 // contract
 $route['admin/list-contract'] = function($params = []) {
 	$controller = 'Contract';
@@ -26,12 +49,6 @@ $route['admin/list-contract'] = function($params = []) {
 $route['admin/create-contract-show'] = function($params = []) {
 	$controller = 'Contract';
 	$action = '/createShow';
-	return $controller.$action;
-};
-
-$route['admin/create-contract'] = function($params = []) {
-	$controller = 'Contract';
-	$action = '/create';
 	return $controller.$action;
 };
 
@@ -71,7 +88,18 @@ $route['admin/search-customer'] = function($params = []) {
 };
 $route['admin/list-customer'] = function($params = []) {
 	$controller = 'Customer';
-	$action = '/index';
+	$action = '/show';
+	return $controller.$action;
+};
+$route['admin/list-care-customer'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/care';
+	return $controller.$action;
+};
+
+$route['admin/create-care-customer'] = function($params = []) {
+	$controller = 'Customer';
+	$action = '/createCare';
 	return $controller.$action;
 };
 
