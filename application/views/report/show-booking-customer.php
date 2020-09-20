@@ -83,7 +83,7 @@ function weekOfMonth($int_date) {
                                 </td>
 
                                 <td class="report-number_of_deposit"
-                                data-name="short_message"
+                                data-name="number_of_deposit"
                                 data-value="<?= $row['number_of_deposit'] > 0 ? $row['number_of_deposit'] : null ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     <?= $row['number_of_deposit'] > 0 ? $row['number_of_deposit']:'#' ?>
@@ -131,7 +131,7 @@ function weekOfMonth($int_date) {
                 "fnDrawCallback": function() {
                     $('.report-number_of_contract, .report-number_of_deposit, .report-number_of_book').editable({
                         type:'number',
-                        url: '<?= base_url()."admin/update-apartment-editable" ?>'
+                        url: '<?= base_url()."admin/update-rp-booking-customer-editable" ?>'
                     });
                 }
             });

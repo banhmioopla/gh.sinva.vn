@@ -5,6 +5,7 @@ class Report extends CustomBaseStep {
 	private $access_role;
 	private $modify_role;
 	private $is_modify;
+	private $is_view_all;
 	private $no_update_D = ['Fri', 'Sar', 'Sun'];
 	public function __construct()
 	{
@@ -12,9 +13,11 @@ class Report extends CustomBaseStep {
 		
 		// Check permission
 		$this->access_role = ['product-manager', 'ceo', 'cpo', 'cfo', 'cco'];
+		$this->access_view_all_role = ['ceo', 'cpo', 'cfo', 'cco'];
 		$this->modify_role = ['product-manager'];
 		$this->is_modify = in_array($this->auth['role_code'], $this->modify_role) ? true:false;
 		$this->is_access = in_array($this->auth['role_code'], $this->access_role) ? true:false;
+		$this->is_view_all = in_array($this->auth['role_code'], $this->access_view_all_role) ? true:false;
 		if(!$this->is_access) {
 			return redirect('admin/list-apartment');
 		}
@@ -30,6 +33,9 @@ class Report extends CustomBaseStep {
 	public function showBookingCustomer() { 
 
 		$list_apartment = $this->ghApartment->getByUserDistrict($this->auth['account_id']);
+		if($this->is_view_all) {
+			$list_apartment = $this->ghApartment->get();
+		}
 		$data['list_data'] = null;
         foreach($list_apartment as $item ) {
 			$report = $this->ghBookingCustomer->getCurrentWeek($item['id']);
@@ -39,6 +45,7 @@ class Report extends CustomBaseStep {
 				$new_report['time_report'] = strtotime('this thursday');
 				$new_report['apartment_address_street'] = $item['address_street'];
 				$new_report['apartment_address_ward'] = $item['address_ward'];
+				$new_report['apartment_district_code'] = $item['district_code'];
 				$new_report['number_of_book'] = 0;
 				$new_report['number_of_deposit'] = 0;
 				$new_report['number_of_contract'] = 0;
@@ -95,7 +102,35 @@ class Report extends CustomBaseStep {
 	}
 
 	public function updateEditableBookingCustomer(){
+		$report_id = $this->input->post('pk');
+		$field_name = $this->input->post('name');
+		$field_value = $this->input->post('value');
 
+		if(!empty($report_id) and !empty($field_value)) {
+			$data = [
+				$field_name => $field_value
+			];
+
+			$old_district = $this->ghBookingCustomer->getById($report_id);
+			$old_log = json_encode($old_district[0]);
+			
+			$result = $this->ghBookingCustomer->updateById($report_id, $data);
+			
+			$modified_district = $this->ghBookingCustomer->getById($report_id);
+			$modified_log = json_encode($modified_district[0]);
+			
+			$log = [
+				'table_name' => 'gh_booking_customer',
+				'old_content' => $old_log,
+				'modified_content' => $modified_log,
+				'time_insert' => time(),
+				'action' => 'update'
+			];
+			$tracker = $this->ghActivityTrack->insert($log);
+
+			echo json_encode(['status' => $result]); die;
+		}
+		echo json_encode(['status' => false]); die;
 	}
 
 	// Ajax
