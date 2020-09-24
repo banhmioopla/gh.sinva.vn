@@ -78,6 +78,11 @@ html, body { height: 100%; }
     padding-top: 4px;
     padding-bottom: 4px;
 }
+
+/* COLORS LIST */
+.bg-gh-apm-card{
+    background-color:  #faf0ac;
+}
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;

@@ -28,7 +28,7 @@ class CronCustomer extends CustomBaseStep {
                 // Customer 
                 $customer['name'] = $row[1];
                 $customer['birthdate'] = $row[2] ? strtotime($row[2]):0;
-                $customer['gender'] = empty($row[3]) ? (($row[3] == 'Nam')? 'male':'female'):null;
+                $customer['gender'] = !empty($row[3]) ? (($row[3] == 'Nam')? 'male':'female'):null;
                 $customer['status'] = 'sinva-rented';
                 $customer['phone'] = trim($row[6]);
                 $customer['address_street'] = trim($row[5]);
@@ -87,7 +87,7 @@ class CronCustomer extends CustomBaseStep {
                 // Customer 
                 $customer['name'] = $row[2];
                 $customer['birthdate'] = $row[4] ? strtotime($row[4]):0;
-                $customer['gender'] = empty($row[3]) ? (($row[3] == 'Nam')? 'male':'female'):null;
+                $customer['gender'] = !empty($row[3]) ? (($row[3] == 'Nam')? 'male':'female'):null;
                 $customer['status'] = 'sinva-info-form';
                 $customer['phone'] = trim($row[5]);
                 $customer['address_street'] = trim($row[7]);

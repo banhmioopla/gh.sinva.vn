@@ -20,6 +20,7 @@ $apartment['television'] = 'TV';
 $apartment['makeup_table'] = 'Bàn Makeup';
 $apartment['sofa'] = 'Sofa';
 $apartment['car_park'] = 'Bãi xe oto';
+$apartment['extra_fee'] = 'Phí khác <span class="text-success font-weight-bold">(* mới thêm từ gh)</span>';
 $apartment['east'] = 'Đông';
 $apartment['west'] = 'Tây';
 $apartment['south'] = 'Nam';

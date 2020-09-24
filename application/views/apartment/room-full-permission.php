@@ -23,7 +23,17 @@
             <?php $list_room = $libRoom->getByApartmentIdAndActive($apartment['id'])?>
             <?php if(!empty($list_room)): ?>
                 <?php foreach($list_room as $room): ?>
-                <tr>
+                    <?php
+                        if($room['status'] == 'Available') {
+                            $bg_for_available = 'bg-gh-apm-card';
+                            $color_for_available = 'text-primary';
+                        }
+                        else {
+                            $bg_for_available = '';
+                            $color_for_available = '';
+                        }   
+                    ?>
+                <tr class='<?= $bg_for_available ?>'>
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['code'] ?>"
@@ -35,7 +45,7 @@
                             data-value="<?= $room['type'] ?>"
                             data-name="type"
                             ><?= $room['type'] ? $room['type']: '#' ?></div></td>
-                    <td><div class="room-price text-success" 
+                    <td><div class="room-price font-weight-bold" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['price'] ?>"
                             data-name="price"><?= $room['price'] ? money_format11($room['price'],1): '#' ?></div></td>
@@ -43,7 +53,7 @@
                             data-pk= "<?= $room['id'] ?>"
                             data-value= "<?= $room['area'] ?>"
                             data-name="area"><?= $room['area'] > 0 ? $room['area']: '#' ?></div></td>
-                    <td><div class="room-status text-primary" 
+                    <td><div class="room-status font-weight-bold text-primary <?= $color_for_available ?>" 
                             data-id="<?= $room['id'] ?>">
                             <?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>
                     <td><div class="room-time_available text-success" 
