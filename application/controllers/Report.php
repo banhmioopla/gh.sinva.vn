@@ -24,19 +24,35 @@ class Report extends CustomBaseStep {
 
         $this->load->model('ghBookingCustomer');
         $this->load->model('ghApartment');
+        $this->load->model('ghDistrict');
         $this->load->model('ghRoom');
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->config('report_user_district');
-        
 	}
 
 	// THỐNG KÊ DẪN KHÁCH
-	public function showBookingCustomer() { 
-		$config_report = $this->config->item('report_user_district')[$this->auth['account_id']];
-		$set_district = implode(",",$config_report['list_district']);
-		$list_apartment = $this->ghApartment->getByDistrictReport($set_district);
+	public function showBookingCustomer() { 	
+		$district_data = [];
+		$list_apartment = [];
+		$list_district = [];
+		if(isset($this->config->item('report_user_district')[$this->auth['account_id']])) {
+			$config_report = $this->config->item('report_user_district')[$this->auth['account_id']];
+			$set_district = implode(",",$config_report['list_district']);
+			$list_apartment = $this->ghApartment->getByDistrictReport($set_district);
+			$list_district = $config_report['list_district'];
+		}
+		
+		
 		if($this->is_view_all) {
 			$list_apartment = $this->ghApartment->get(['active= "YES"']);
+			$district_model = $this->ghDistrict->get(['active= "YES"']);
+			foreach($district_model as $d) {
+				$list_district[] = $d['code'];
+			}
+		}
+		foreach($list_district as $d) {
+			$district_data[$d]['sum_available'] = 0;
+			$district_data[$d]['sum_ready_room'] = 0;
 		}
 		$data['list_data'] = null;
         foreach($list_apartment as $item ) {
@@ -62,9 +78,12 @@ class Report extends CustomBaseStep {
 				$new_report['id'] = $this->ghBookingCustomer->insert($new_report);
 
 				$data['list_data'][] = $new_report;
+				$district_data[$new_report['apartment_district_code']]['sum_available'] += $new_report['number_of_available_room'];
+				$district_data[$new_report['apartment_district_code']]['sum_ready_room'] += $new_report['number_of_ready_room'];
 				unset($new_report['id']);
 			}
 			if($report) {
+				$data['list_data'][] = $report;
 				$today = date('D', time());
 				if(!in_array($today, $this->no_update_D)) {
 					$number_of_available_room = $this->ghRoom->getNumberByStatus($report['apartment_id'], 'Available');
@@ -79,12 +98,17 @@ class Report extends CustomBaseStep {
 						'number_of_ready_room' => $number_of_ready_room
 					]);
 				}
+
 				$data['list_data'][] = $report;
+				$district_data[$report['apartment_district_code']]['sum_available'] += $report['number_of_available_room'];
+				$district_data[$report['apartment_district_code']]['sum_ready_room'] += $report['number_of_ready_room'];
+				
 			}
 		}
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		$data['libDistrict'] = $this->libDistrict;
-		
+		$data['list_district'] = $list_district;
+		$data['district_data'] = $district_data;
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('report/show-booking-customer', $data);
@@ -107,7 +131,7 @@ class Report extends CustomBaseStep {
 		$report_id = $this->input->post('pk');
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
-
+		var_dump($this->input->post());die;
 		if(!empty($report_id) and !empty($field_value)) {
 			$data = [
 				$field_name => $field_value

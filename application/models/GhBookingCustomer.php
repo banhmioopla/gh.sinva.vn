@@ -39,7 +39,7 @@ class GhBookingCustomer extends CI_Model {
         $current_week = date('W');
         $sql = "SELECT * 
             FROM ".$this->table." 
-            WHERE WEEK(FROM_UNIXTIME(time_report)) = '$current_week' 
+            WHERE WEEK(FROM_UNIXTIME(time_report))+1 = '$current_week' 
             AND YEAR(FROM_UNIXTIME(time_report)) = '$current_year'
             AND apartment_id = $apartment_id";
         $result = $this->db->query($sql)->result_array();

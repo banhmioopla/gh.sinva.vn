@@ -51,6 +51,42 @@ function weekOfMonth($int_date) {
         <div class="row">
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
+                    <table id='table-district' class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Quận</th>
+                            <th>Số Phòng Trống</th>
+                            <th>Số Phòng Sắp Trống</th>
+                        </tr>
+                        </thead>
+                        <?php 
+                        $sum_available = 0;
+                        $sum_ready_room = 0;
+                        ?>
+                        <?php 
+                            foreach($list_district as $d):
+                                $sum_ready_room += $district_data[$d]['sum_ready_room'];
+                                $sum_available += $district_data[$d]['sum_available'];
+                        ?>
+                            <tr>
+                                <td><?= $libDistrict->getNameByCode($d)?></td>
+                                <td><?= $district_data[$d]['sum_available'] ?></td>
+                                <td><?= $district_data[$d]['sum_ready_room'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <tr class="font-weight-bold bg-warning">
+                            <td>Tổng Cộng</td>
+                            <td><?= $sum_available ?></td>
+                            <td><?= $sum_ready_room ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-7">
+                <div class="card-box table-responsive">
                     <table id="table-apartment" class="table table-bordered">
                         <thead>
                         <tr>
@@ -123,7 +159,7 @@ function weekOfMonth($int_date) {
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('#table-apartment').DataTable({
+            $('#table-apartment, #table-district').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 "aaSorting": [],
