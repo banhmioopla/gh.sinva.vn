@@ -55,8 +55,8 @@ function weekOfMonth($int_date) {
                     <thead>
                         <tr>
                             <th>Quận</th>
-                            <th>Số Phòng Trống</th>
-                            <th>Số Phòng Sắp Trống</th>
+                            <th class="text-center">Số Phòng Trống</th>
+                            <th class="text-center">Số Phòng Sắp Trống</th>
                         </tr>
                         </thead>
                         <?php 
@@ -69,15 +69,15 @@ function weekOfMonth($int_date) {
                                 $sum_available += $district_data[$d]['sum_available'];
                         ?>
                             <tr>
-                                <td><?= $libDistrict->getNameByCode($d)?></td>
-                                <td><?= $district_data[$d]['sum_available'] ?></td>
-                                <td><?= $district_data[$d]['sum_ready_room'] ?></td>
+                                <td class="font-weight-bold">Quận <?= $libDistrict->getNameByCode($d)?></td>
+                                <td class="text-center"><?= $district_data[$d]['sum_available'] ?></td>
+                                <td class="text-center"><?= $district_data[$d]['sum_ready_room'] ?></td>
                             </tr>
                         <?php endforeach; ?>
                         <tr class="font-weight-bold bg-warning">
                             <td>Tổng Cộng</td>
-                            <td><?= $sum_available ?></td>
-                            <td><?= $sum_ready_room ?></td>
+                            <td class="text-center"><?= $sum_available ?></td>
+                            <td class="text-center"><?= $sum_ready_room ?></td>
                         </tr>
                     </table>
                 </div>
