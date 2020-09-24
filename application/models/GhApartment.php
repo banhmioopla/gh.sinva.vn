@@ -39,6 +39,15 @@ class GhApartment extends CI_Model {
         return $result->result_array();
     }
 
+    public function getByDistrictReport($set_district) {
+        $q = "SELECT * FROM gh_apartment 
+                WHERE FIND_IN_SET(gh_apartment.district_code, '".$set_district."')  
+                AND gh_apartment.active = 'YES'
+        ";
+        $result = $this->db->query($q);
+        return $result->result_array();
+    }
+
     public function insert($data) {
         return $this->db->insert($this->table, $data);
     }

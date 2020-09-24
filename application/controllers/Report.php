@@ -2,11 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Report extends CustomBaseStep {
-	private $access_role;
-	private $modify_role;
+	public $access_role;
+	public $modify_role;
 	private $is_modify;
 	private $is_view_all;
-	private $no_update_D = ['Fri', 'Sar', 'Sun'];
+	private $no_update_D = ['Sar', 'Sun'];
 	public function __construct()
 	{
 		parent::__construct();
@@ -26,15 +26,17 @@ class Report extends CustomBaseStep {
         $this->load->model('ghApartment');
         $this->load->model('ghRoom');
 		$this->load->library('LibDistrict', null, 'libDistrict');
+		$this->load->config('report_user_district');
         
 	}
 
 	// THỐNG KÊ DẪN KHÁCH
 	public function showBookingCustomer() { 
-
-		$list_apartment = $this->ghApartment->getByUserDistrict($this->auth['account_id']);
+		$config_report = $this->config->item('report_user_district')[$this->auth['account_id']];
+		$set_district = implode(",",$config_report['list_district']);
+		$list_apartment = $this->ghApartment->getByDistrictReport($set_district);
 		if($this->is_view_all) {
-			$list_apartment = $this->ghApartment->get();
+			$list_apartment = $this->ghApartment->get(['active= "YES"']);
 		}
 		$data['list_data'] = null;
         foreach($list_apartment as $item ) {
@@ -42,7 +44,7 @@ class Report extends CustomBaseStep {
 			if(!$report and $this->is_modify){
 				$new_report['user_id'] = $this->auth['account_id'];
 				$new_report['apartment_id'] = $item['id'];
-				$new_report['time_report'] = strtotime('this thursday');
+				$new_report['time_report'] = strtotime('this saturday');
 				$new_report['apartment_address_street'] = $item['address_street'];
 				$new_report['apartment_address_ward'] = $item['address_ward'];
 				$new_report['apartment_district_code'] = $item['district_code'];
