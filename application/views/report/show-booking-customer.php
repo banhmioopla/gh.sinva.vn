@@ -4,7 +4,9 @@ function weekOfMonth($int_date) {
     $firstOfMonth = date("Y-m-01");
     return intval(date("W", $int_date)) - intval(date("W", strtotime($firstOfMonth))) + 1;
 }
-
+$number_of_book = $this->is_modify ? 'report-number_of_book':''; 
+$number_of_deposit = $this->is_modify ? 'report-number_of_deposit':''; 
+$number_of_contract = $this->is_modify ? 'report-number_of_contract':''; 
 ?>
 
 <div class="wrapper">
@@ -27,14 +29,14 @@ function weekOfMonth($int_date) {
                     </div>
                     <h3 >Báo cáo dẫn khách Tuần Số (<?= date('W') ?>)</h3>
                     <div class="card-box">
-                        <blockquote class="blockquote">
+                        <!-- <blockquote class="blockquote">
                             <div class="font-weight-bold">Chú ý chú ý...</div>
                             <dd class="text-primary">
                             - GH sẽ tự động tạo bảng báo cáo & tự động cập nhật lại SL phòng trống, sắp trống hằng ngày trừ <i class="text-danger">thứ Sáu, thứ Bảy, Chủ nhật</i>. <br>
                             - Một tuần mới sẽ bắt đầu từ ngày Thứ Hai. Nếu bạn vào GH từ Thứ Hai trở đi, GH sẽ tự động tạo bảng báo cáo & tự động cập nhật lại SL phòng trống, sắp trống hằng ngày trừ <i class="text-danger">thứ Sáu, thứ Bảy, Chủ nhật...</i> Bruhhh...</dd>
                             <footer class="blockquote-footer text-right">Hãy ib góp ý tôi nếu bất cập.
                             <cite title="Source Title">Quốc Bình</cite></footer>
-                        </blockquote>
+                        </blockquote> -->
                     </div>
                 </div>
             </div>
@@ -67,12 +69,15 @@ function weekOfMonth($int_date) {
                             foreach($list_district as $d):
                                 $sum_ready_room += $district_data[$d]['sum_ready_room'];
                                 $sum_available += $district_data[$d]['sum_available'];
+                                $not_empty = ($district_data[$d]['sum_ready_room'] or $district_data[$d]['sum_available']) ? true:false;
+                                if($not_empty):
                         ?>
-                            <tr>
-                                <td class="font-weight-bold">Quận <?= $libDistrict->getNameByCode($d)?></td>
-                                <td class="text-center"><?= $district_data[$d]['sum_available'] ?></td>
-                                <td class="text-center"><?= $district_data[$d]['sum_ready_room'] ?></td>
-                            </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Quận <?= $libDistrict->getNameByCode($d)?></td>
+                                    <td class="text-center"><?= $district_data[$d]['sum_available'] ?></td>
+                                    <td class="text-center"><?= $district_data[$d]['sum_ready_room'] ?></td>
+                                </tr>
+                                <?php endif; ?>
                         <?php endforeach; ?>
                         <tr class="font-weight-bold bg-warning">
                             <td>Tổng Cộng</td>
@@ -111,20 +116,20 @@ function weekOfMonth($int_date) {
                                     <i>Quận <?= $libDistrict->getNameByCode($row['apartment_district_code']) ?></i>   
                                 </td>
 
-                                <td class="report-number_of_book"
+                                <td class="<?= $number_of_book ?>"
                                 data-name="number_of_book"
                                 data-value="<?= $row['number_of_book'] > 0 ? $row['number_of_book'] : null ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     <?= $row['number_of_book'] > 0 ? $row['number_of_book'] : '#' ?>
                                 </td>
 
-                                <td class="report-number_of_deposit"
+                                <td class="<?= $number_of_deposit ?>"
                                 data-name="number_of_deposit"
                                 data-value="<?= $row['number_of_deposit'] > 0 ? $row['number_of_deposit'] : null ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     <?= $row['number_of_deposit'] > 0 ? $row['number_of_deposit']:'#' ?>
                                 </td>
-                                <td class="report-number_of_contract"
+                                <td class="<?= $number_of_contract ?>"
                                 data-name="number_of_contract"
                                 data-value="<?= $row['number_of_contract'] > 0 ? $row['number_of_contract']:null ?>"
                                 data-pk="<?= $row['id'] ?>">
@@ -155,6 +160,7 @@ function weekOfMonth($int_date) {
 
     </div> <!-- end container -->
 </div>
+<?php var_dump($this->is_modify); ?>
 <!-- end wrapper -->
 <script type="text/javascript">
     commands.push(function() {
@@ -166,9 +172,10 @@ function weekOfMonth($int_date) {
                 responsive: true,
                 "fnDrawCallback": function() {
                     $('.report-number_of_contract, .report-number_of_deposit, .report-number_of_book').editable({
-                        type:'number',
-                        url: '<?= base_url()."admin/update-rp-booking-customer-editable" ?>'
+                            type:'number',
+                            url: '<?= base_url()."admin/update-rp-booking-customer-editable" ?>'
                     });
+                    
                 }
             });
             

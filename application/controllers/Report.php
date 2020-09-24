@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Report extends CustomBaseStep {
 	public $access_role;
 	public $modify_role;
-	private $is_modify;
+	public $is_modify;
 	private $is_view_all;
 	private $no_update_D = ['Sar', 'Sun'];
 	public function __construct()
@@ -68,7 +68,6 @@ class Report extends CustomBaseStep {
 				$new_report['number_of_deposit'] = 0;
 				$new_report['number_of_contract'] = 0;
 				$new_report['number_of_available_room'] = $this->ghRoom->getNumberByStatus($item['id'], 'Available');
-
 				$ready_room = $this->ghRoom->get([
 					'active' => 'YES',
 					'apartment_id' => $item['id'],
@@ -83,7 +82,6 @@ class Report extends CustomBaseStep {
 				unset($new_report['id']);
 			}
 			if($report) {
-				$data['list_data'][] = $report;
 				$today = date('D', time());
 				if(!in_array($today, $this->no_update_D)) {
 					$number_of_available_room = $this->ghRoom->getNumberByStatus($report['apartment_id'], 'Available');
@@ -131,7 +129,6 @@ class Report extends CustomBaseStep {
 		$report_id = $this->input->post('pk');
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
-		var_dump($this->input->post());die;
 		if(!empty($report_id) and !empty($field_value)) {
 			$data = [
 				$field_name => $field_value
