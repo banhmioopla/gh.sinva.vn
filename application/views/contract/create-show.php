@@ -1,3 +1,4 @@
+
 <div class="wrapper">
     <div class="sk-wandering-cubes" style="display:none" id="loader">
         <div class="sk-cube sk-cube1"></div>
@@ -102,8 +103,8 @@
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
-                                <select type="text" class="form-control"
-                                        id="consultant_id" name="consultant_id" placeholder="Tên quận">
+                                <select type="number" class="form-control"
+                                        id="consultant_id" name="consultant_id" placeholder="171020xxx">
                                         <?= $select_user?>
                                 </select>
                             </div>
@@ -137,6 +138,16 @@
                                         required class="form-control"
                                         id="number_of_month" 
                                         name="number_of_month">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="room_price" class="col-12 col-md-4 col-form-label">Gia Thue<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <input  type="text" 
+                                        required class="form-control"
+                                        id="room_price"
+                                        value="<?= number_format($room['price']) ?>"
+                                        name="room_price">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -201,6 +212,23 @@ commands.push(function(){
             }
         }
     });
+    $( 'input[name=room_price]' ).on('keyup', function() {
+        // 1
+        var $this = $( 'input[name=room_price]');
+        var input = $this.val();
+        console.log(input);
+        // 2
+        var input = input.replace(/[\D\s\._\-]+/g, "");
+        
+        // 3
+        input = input ? parseInt( input, 10 ) : 0;
+        
+        // 4
+        $this.val( function() {
+            return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
+        } );
+    });
+
 });
 
 </script>

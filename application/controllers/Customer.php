@@ -178,7 +178,7 @@ class Customer extends CustomBaseStep {
 			}
 			
 		} else {
-			$customer = $this->ghCustomer->getLike('phone', $q);
+			$customer = $this->ghCustomer->getLike(['phone' => $q, 'name' => $q]);
 			if($customer) {
 				foreach($customer as $c){
 					$data[] = ['id' => $c['id'], 'text' => $c['phone'] .' - '. $c['name']];

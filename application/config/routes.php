@@ -51,6 +51,11 @@ $route['admin/create-contract-show'] = function($params = []) {
 	$action = '/createShow';
 	return $controller.$action;
 };
+$route['admin/create-contract'] = function($params = []) {
+	$controller = 'Contract';
+	$action = '/create';
+	return $controller.$action;
+};
 
 $route['admin/update-contract'] = function($params = []) {
 	$controller = 'Contract';

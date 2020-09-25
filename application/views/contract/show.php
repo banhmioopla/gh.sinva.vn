@@ -65,7 +65,7 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <?//= $service['code'] ?>
+                                        <?= $service['code'] ?>
                                     </div>
                                 </td>
                                 <td>
@@ -75,7 +75,7 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <?//=$row['time_open'] ? date('d/m/Y',$row['time_open']):'#' ?>
+                                        <?=$row['time_check_in'] ? date('d/m/Y',$row['time_check_in']):'#' ?>
                                     </div>
                                 </td>
                                 <td>

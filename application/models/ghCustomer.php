@@ -20,9 +20,9 @@ class GhCustomer extends CI_Model {
         return $this->db->get_where($this->table)->result_array();
     }
 
-    public function getLike($col, $like) {
+    public function getLike($like = []) {
         $this->db->from($this->table);
-        $this->db->like($col, $like);
+        $this->db->or_like($like);
         return $this->db->get()->result_array();
     }
 
