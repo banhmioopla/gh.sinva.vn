@@ -101,6 +101,8 @@ $number_of_contract = $this->is_modify ? 'report-number_of_contract':'';
                             <th>Số HĐ Đã Ký</th>
                             <th>SL P. Trống</th>
                             <th>SL P. Sắp Trống</th>
+                            <th>Vấn đề phát sinh</th>
+                            <th>Đề xuất</th>
                             <th>Tùy Chọn</th>
                         </tr>
                         </thead>
@@ -143,7 +145,18 @@ $number_of_contract = $this->is_modify ? 'report-number_of_contract':'';
                                 <td class="report-number_of_ready_room">
                                     <?= $row['number_of_ready_room'] > 0 ?  $row['number_of_ready_room']:'-' ?>
                                 </td>
-
+                                <td class="report-issue"
+                                data-name="issue"
+                                data-value="<?= $row['issue'] ? $row['issue']:null ?>"
+                                data-pk="<?= $row['id'] ?>">
+                                    <?= $row['issue'] ?  $row['issue']:'#' ?>
+                                </td>
+                                <td class="report-recommendation"
+                                data-name="recommendation"
+                                data-value="<?= $row['recommendation'] ? $row['recommendation']:null?>"
+                                data-pk="<?= $row['id'] ?>">
+                                    <?= $row['recommendation'] ?  $row['recommendation']:'#' ?>
+                                </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <button class="btn btn-muted">đang code</button>
@@ -173,6 +186,11 @@ $number_of_contract = $this->is_modify ? 'report-number_of_contract':'';
                 "fnDrawCallback": function() {
                     $('.report-number_of_contract, .report-number_of_deposit, .report-number_of_book').editable({
                             type:'number',
+                            url: '<?= base_url()."admin/update-rp-booking-customer-editable" ?>'
+                    });
+
+                    $('.report-recommendation, .report-issue').editable({
+                            type:'textarea',
                             url: '<?= base_url()."admin/update-rp-booking-customer-editable" ?>'
                     });
                     

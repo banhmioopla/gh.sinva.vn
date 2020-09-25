@@ -78,6 +78,9 @@ html, body { height: 100%; }
     padding-top: 4px;
     padding-bottom: 4px;
 }
+.editable-pre-wrapped{
+    white-space: pre-line;
+}
 
 /* COLORS LIST */
 .bg-gh-apm-card{
