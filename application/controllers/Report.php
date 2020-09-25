@@ -37,8 +37,12 @@ class Report extends CustomBaseStep {
 		$list_district = [];
 		if(isset($this->config->item('report_user_district')[$this->auth['account_id']])) {
 			$config_report = $this->config->item('report_user_district')[$this->auth['account_id']];
-			$set_district = implode(",",$config_report['list_district']);
-			$list_apartment = $this->ghApartment->getByDistrictReport($set_district);
+			if($config_report['list_district']) {
+				$set_district = implode(",",$config_report['list_district']);
+				$list_apartment = $this->ghApartment->getByDistrictReport($set_district);
+			} else {
+				return redirect('admin/list-apartment');
+			}
 			$list_district = $config_report['list_district'];
 		}
 		
@@ -67,6 +71,8 @@ class Report extends CustomBaseStep {
 				$new_report['number_of_book'] = 0;
 				$new_report['number_of_deposit'] = 0;
 				$new_report['number_of_contract'] = 0;
+				$new_report['issue'] = null;
+				$new_report['recommendation'] = null;
 				$new_report['number_of_available_room'] = $this->ghRoom->getNumberByStatus($item['id'], 'Available');
 				$ready_room = $this->ghRoom->get([
 					'active' => 'YES',

@@ -65,7 +65,8 @@ $number_of_contract = $this->is_modify ? 'report-number_of_contract':'';
                         $sum_available = 0;
                         $sum_ready_room = 0;
                         ?>
-                        <?php 
+                        <?php
+                            if($list_district):
                             foreach($list_district as $d):
                                 $sum_ready_room += $district_data[$d]['sum_ready_room'];
                                 $sum_available += $district_data[$d]['sum_available'];
@@ -78,7 +79,10 @@ $number_of_contract = $this->is_modify ? 'report-number_of_contract':'';
                                     <td class="text-center"><?= $district_data[$d]['sum_ready_room'] ?></td>
                                 </tr>
                                 <?php endif; ?>
-                        <?php endforeach; ?>
+                        <?php 
+                            endforeach;
+                            endif;
+                        ?>
                         <tr class="font-weight-bold bg-warning">
                             <td>Tổng Cộng</td>
                             <td class="text-center"><?= $sum_available ?></td>
