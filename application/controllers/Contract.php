@@ -69,7 +69,6 @@ class Contract extends CustomBaseStep {
 	public function create() {
 	
 		$post = $this->input->post();
-		
 		if($post['time_open']) {
 			$dt = DateTime::createFromFormat('d/m/Y', $post['time_open']);
 			$post['time_open'] = $dt->getTimestamp();
@@ -95,11 +94,14 @@ class Contract extends CustomBaseStep {
 			'room_id' => $post['room_id'],
 			'apartment_id' => $service_set['apartment_id'],
 			'consultant_id' => $post['consultant_id'],
-			'room_price' => $post['room_price'] > 0 ? $post['room_price'] : $service_set['price'],
+			'room_price' => $post['room_price'] > 0 ? 
+					(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT) 
+						: $service_set['price'],
 			'time_check_in' => $post['time_open'],
 			'number_of_month' => $post['number_of_month'],
 			'service_set' => json_encode($service_set),
-			'status' => $post['status']
+			'status' => $post['status'],
+			'note' => $post['note']
 		];
 		$result = $this->ghContract->insert($contract);
         $this->session->set_flashdata('fast_notify', [

@@ -78,6 +78,37 @@ class GhRoom extends CI_Model {
         $result = $this->db->get($this->table);
         return $result->result_array() ? $result->result_array()[0]['time_update']:'';
     }
+
+    public function getNumberByDistrict($district_code, $where_string) {
+        $sql = "SELECT count(gh_room.id) as object_counter FROM  gh_room, gh_apartment 
+                WHERE gh_apartment.id = gh_room.apartment_id
+                AND gh_apartment.active = 'YES'
+                AND gh_room.active = 'YES'
+                AND gh_apartment.district_code = '$district_code'
+        ";
+        if(!empty($where_string)) {
+            $sql .= " AND $where_string";
+        }
+        $result = $this->db->query($sql);
+        // var_dump($result->result_array());die;
+        return $result->result_array() ? $result->result_array()[0]['object_counter'] : 0;
+    }
+
+    public function getTypeByDistrict($district_code, $where_string) {
+        $sql = "SELECT gh_room.type as room_type, count(gh_room.id) as object_counter FROM  gh_room, gh_apartment 
+                WHERE gh_apartment.id = gh_room.apartment_id
+                AND gh_apartment.active = 'YES'
+                AND gh_room.active = 'YES'
+                AND gh_apartment.district_code = '$district_code'
+        ";
+        if(!empty($where_string)) {
+            $sql .= " AND $where_string";
+        }
+        $sql .= ' GROUP BY gh_room.type';
+        $result = $this->db->query($sql);
+        // var_dump($result->result_array());die;
+        return $result->result_array() ? $result->result_array() : 0;
+    }
 }
 
 /* End of file mApartment.php */

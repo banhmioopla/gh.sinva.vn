@@ -43,6 +43,14 @@ class Apartment extends CustomBaseStep {
 			$template = 'apartment/show-full-permission';
 		}
 
+		$data['product_total'] = count($this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']));
+
+		$data['room_total'] = $this->ghRoom->getNumberByDistrict($district_code, null);
+		$data['available_room_total'] = $this->ghRoom->getNumberByDistrict($district_code, 'gh_room.status = "Available" ');
+		$data['ready_room_total'] = $this->ghRoom->getNumberByDistrict($district_code, 'gh_room.time_available > 0 ');
+		$data['list_ready_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.time_available > 0 ');
+		$data['list_available_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.status = "Available" ');
+
 		/*--- bring library to view ---*/
 		$data['libDistrict'] = $this->libDistrict;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
@@ -209,6 +217,25 @@ class Apartment extends CustomBaseStep {
 			return die($this->updateEditable()); 
 		}
 		echo json_encode($result); die;
+	}
+
+	public function dashboard() {
+		/*
+			- tất cả DA
+			- tất cả P. Trống , theo quận
+			- tất cả P. Strong , theo quận
+			- tất cả P Full , theo quận
+			- tổng kết số lượng phòng nhóm theo giá
+			- tổng kết số lượng phòng theo loại phòng
+		*/
+		$data['product_total'] = count($this->ghApartment->get(['active' => 'YES'])); 
+		$data['available_room_total'] = count($this->ghRoom->get(['active' => 'YES', 'status' => 'Available']));
+		$data['full_room_total'] = count($this->ghRoom->get(['active' => 'YES', 'status' => 'Full']));
+		$data['list_district'] = [];
+		/*--- Load View ---*/
+		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('apartment/dashboard', $data);
+		$this->load->view('components/footer');
 	}
 
 }

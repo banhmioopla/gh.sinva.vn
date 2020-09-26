@@ -41,6 +41,7 @@
                             <th>Giá thuê</th>
                             <th>Ngày ký</th>
                             <th>Số tháng ở</th>
+                            <th>Ghi chú HD</th>
                             <th class="text-center">Tình trạng</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
@@ -51,7 +52,7 @@
                             <tr>
                                 <td>
                                     <div>
-                                            #<?= $row['id'] ?>
+                                            #<?= (1000000 + $row['id']) ?>
                                     </div>
                                 </td>
                                 <td><?= $libCustomer->getNameById($row['customer_id']) ?></td>
@@ -65,12 +66,12 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <?= $service['code'] ?>
+                                        <?//= isset($service['code']) ? $service['code']:'-' ?>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
-                                        <?= $row['room_price'] ?>
+                                        <?= number_format($row['room_price']) ?>
                                     </div>
                                 </td>
                                 <td>
@@ -81,6 +82,11 @@
                                 <td>
                                     <div>
                                         <?=$row['number_of_month'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <?=$row['note'] ?>
                                     </div>
                                 </td>
                                 <td>

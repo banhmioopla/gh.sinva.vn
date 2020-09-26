@@ -29,7 +29,6 @@
     <script src="<?= $js_plugins_path ?>bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 
     <script src="<?= $js_plugins_path ?>bootstrap-filestyle/js/bootstrap-filestyle.min.js" type="text/javascript"></script>
-
     <script src="<?= $js_plugins_path ?>select2/js/select2.min.js" type="text/javascript"></script>
 
     <script type="text/javascript" src="<?= $js_plugins_path ?>isotope/js/isotope.pkgd.min.js"></script>
