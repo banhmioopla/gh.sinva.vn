@@ -40,7 +40,7 @@
                             <th>Mã Phòng</th>
                             <th>Giá thuê</th>
                             <th>Ngày ký</th>
-                            <th>Số tháng ở</th>
+                            <th>Thời hạn</th>
                             <th>Ghi chú HD</th>
                             <th class="text-center">Tình trạng</th>
                             <th class="text-center">Tùy Chọn</th>
