@@ -21,7 +21,10 @@ class CronCustomer extends CustomBaseStep {
             // echo "<pre>"; print_r($xlsx->rows()); die;
             echo ' - Sheet Name = '.$xlsx->sheetName(0);
             $customer = [];
+            $i  = 0;
             foreach($xlsx->rows() as $index => $row) {
+                $i += 1;
+                echo " - ii = ".$i. "<br>";
                 if($index == 0 or empty($row[1])) {
                     continue;
                 }
@@ -35,9 +38,9 @@ class CronCustomer extends CustomBaseStep {
                 $customer['email'] = trim($row[8]);
                 $customer['note'] = trim($row[18]);
                 $customer_id = $this->ghCustomer->insert($customer);
-
+                echo "- customer id = ".$customer_id. "<br>";
                 // Contract
-                if($row[1]) {
+                if($customer_id) {
                     $room = $this->ghRoom->get(['id' => $row[4]]);
                     $contract['service_set'] = null;
                     $contract['apartment_id'] = null;
