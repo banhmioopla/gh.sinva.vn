@@ -39,11 +39,11 @@ class CronCustomer extends CustomBaseStep {
                 // Contract
                 if($row[1]) {
                     $room = $this->ghRoom->get(['id' => $row[4]]);
+                    $contract['service_set'] = null;
+                    $contract['apartment_id'] = null;
                     if($room) {
                         $room = $room[0];
                         $apartment = $this->ghApartment->get(['id' => $room['apartment_id']]);
-                        $contract['service_set'] = null;
-                        $contract['apartment_id'] = null;
                         if($apartment) {
                             $apartment = $apartment[0];
                             $contract['service_set'] = json_encode($apartment);
