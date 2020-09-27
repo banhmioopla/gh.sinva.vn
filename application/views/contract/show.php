@@ -66,7 +66,7 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <?//= isset($service['code']) ? $service['code']:'-' ?>
+                                        <?= $row['room_code'] ?>
                                     </div>
                                 </td>
                                 <td>

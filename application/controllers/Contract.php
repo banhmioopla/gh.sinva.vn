@@ -22,6 +22,7 @@ class Contract extends CustomBaseStep {
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibUser', null, 'libUser');
+		$this->load->library('LibRoom', null, 'libRoom');
 	}
 	public function index()
 	{
@@ -34,6 +35,7 @@ class Contract extends CustomBaseStep {
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;
 		$data['ghApartment'] = $this->ghApartment;
+		$data['libRoom'] = $this->libRoom;
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('contract/show', $data);
@@ -88,7 +90,7 @@ class Contract extends CustomBaseStep {
 			]);
 		}
 		
-		$service_set = $this->ghRoom->get(['id' =>$post['room_id']])[0];
+		$service_set = $this->ghApartment->get(['id' =>$post['apartment_id']])[0];
 		$contract = [
 			'customer_id' => $customer_id,
 			'room_id' => $post['room_id'],
@@ -101,7 +103,8 @@ class Contract extends CustomBaseStep {
 			'number_of_month' => $post['number_of_month'],
 			'service_set' => json_encode($service_set),
 			'status' => $post['status'],
-			'note' => $post['note']
+			'note' => $post['note'],
+			'room_code' => $post['room_code']
 		];
 		$result = $this->ghContract->insert($contract);
         $this->session->set_flashdata('fast_notify', [

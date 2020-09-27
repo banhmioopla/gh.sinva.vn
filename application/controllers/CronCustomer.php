@@ -37,26 +37,28 @@ class CronCustomer extends CustomBaseStep {
                 $customer_id = $this->ghCustomer->insert($customer);
 
                 // Contract
-                if($row[4]) {
+                if($row[1]) {
                     $room = $this->ghRoom->get(['id' => $row[4]]);
                     if($room) {
                         $room = $room[0];
                         $apartment = $this->ghApartment->get(['id' => $room['apartment_id']]);
+                        $contract['service_set'] = null;
+                        $contract['apartment_id'] = null;
                         if($apartment) {
                             $apartment = $apartment[0];
-                            $contract['apartment_id'] = $apartment['id'];
-                            $contract['consultant_id'] = 0;
-                            $contract['room_id'] = $row[4];
-                            $contract['status'] = 'Active';
-                            $contract['customer_id'] = $customer_id;
                             $contract['service_set'] = json_encode($apartment);
-                            $contract['room_price'] = $row[10] ? $row[10]: $room['price'];
-                            $contract['time_check_in'] = $row[12] ? strtotime($row[12]):0;
-                            $contract['number_of_month'] = (strpos($row[13], 'năm') !== false) ?(int) filter_var($row[13], FILTER_SANITIZE_NUMBER_INT) * 12 :$row[13];
-                            $contract['note'] = trim($row[18]);
-                            $this->ghContract->insert($contract);
+                            $contract['apartment_id'] = $apartment['id'];
                         }
                     }
+                    $contract['room_price'] = $row[10];
+                    $contract['consultant_id'] = 0;
+                    $contract['room_id'] = $row[4];
+                    $contract['status'] = 'Active';
+                    $contract['customer_id'] = $customer_id;
+                    $contract['time_check_in'] = $row[12] ? strtotime($row[12]):0;
+                    $contract['number_of_month'] = (strpos($row[13], 'năm') !== false) ?(int) filter_var($row[13], FILTER_SANITIZE_NUMBER_INT) * 12 :$row[13];
+                    $contract['note'] = trim($row[18]);
+                    $this->ghContract->insert($contract);
                     
                     // echo "<pre>"; print_r($data);
                 }

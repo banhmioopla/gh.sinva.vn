@@ -14,6 +14,12 @@ class LibRoom {
         $room_list = $this->CI->ghRoom->getByApartmentId($apartment_id);
         return $room_list;
     }
+
+    public function getCodeById($room_id) {
+        $room = $this->CI->ghRoom->get(['id' => $room_id, 'active' => 'YES']);
+        return $room ? $room[0]['code'] : '';
+    }
+
     public function getByApartmentIdAndActive($apartment_id) {
         $room_list = $this->CI->ghRoom->getByApartmentIdAndActive($apartment_id);
         return $room_list;

@@ -100,6 +100,8 @@
                     <h4 class="m-t-0">Thêm hợp đồng mới</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-contract">
                     <input type="hidden" name='room_id' value= '<?= $_GET["room-id"]?>'>
+                    <input type="hidden" name='room_code' value= '<?= $room['code']?>'>
+                    <input type="hidden" name='apartment_id' value= '<?= $room['apartment_id']?>'>
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
