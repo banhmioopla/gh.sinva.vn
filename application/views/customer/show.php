@@ -38,6 +38,7 @@
                             <th>Giới tính</th>
                             <th>Ngày sinh</th>
                             <th>Số điện thoại</th>
+                            <th>Ghi Chú</th>
                             <th>NhC giá</th>
                             <th>NhC quận</th>
                             <th>NhC Tgian</th>
@@ -76,6 +77,14 @@
                                         data-value ="<?= $row['phone'] ?>"
                                         data-name="phone">
                                             <?= $row['phone'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="customer-note" 
+                                        data-pk="<?= $row['id'] ?>"
+                                        data-value ="<?= $row['note'] ?>"
+                                        data-name="note">
+                                            <?= $row['note'] ?>
                                     </div>
                                 </td>
                                 <td>
@@ -262,6 +271,12 @@
                         type: 'number',
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         inputclass: 'form-control-sm',
+                    });
+                    
+                    $('.customer-note').editable({
+                        type: 'textarea',
+                        url: '<?= base_url() ?>admin/update-customer-editable',
+                        inputclass: '',
                     });
                     $('.customer-demand_district_code').editable({
                         type: 'select',
