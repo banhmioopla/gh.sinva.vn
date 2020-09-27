@@ -57,7 +57,7 @@
                                 </td>
                                 <td><?= $libCustomer->getNameById($row['customer_id']) ?></td>
                                 <td>
-                                    <div>
+                                    <div class="font-weight-bold text-primary">
                                     <?php 
                                         $apartment = $ghApartment->get(['id' => $row['apartment_id']])
                                     ?>

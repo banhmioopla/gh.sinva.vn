@@ -52,7 +52,7 @@ class CronCustomer extends CustomBaseStep {
                             $contract['service_set'] = json_encode($apartment);
                             $contract['room_price'] = $row[10] ? $row[10]: $room['price'];
                             $contract['time_check_in'] = $row[12] ? strtotime($row[12]):0;
-                            $contract['number_of_month'] = $row[13];
+                            $contract['number_of_month'] = (strpos($row[13], 'năm') !== false) ?(int) filter_var($row[13], FILTER_SANITIZE_NUMBER_INT) * 12 :$row[13];
                             $contract['note'] = trim($row[18]);
                             $this->ghContract->insert($contract);
                         }
