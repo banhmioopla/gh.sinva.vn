@@ -111,21 +111,85 @@
                                 </select>
                             </div>
                         </div>
+                        <hr>
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">Khách Hàng Tiềm Năng # search<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                             <select class="form-control select2" id="customer_name" name="customer_name">
                             </select>
                             </div>
-                            
                         </div>
+                        <p class="text-info">GH: thông tin về khách hàng mới được nhập vào bảng khách hàng trước để tạo ID Khách hàng (IDKH). Sau khi có IDKH, IDKH sẽ được nhập qua bảng hợp đồng. IDKH đóng vai trò làm cầu nối giữa bảng hợp đồng & bảng khách hàng - điều này cũng trả lời cho câu hỏi - Hợp đồng này là của khách hàng nào! </p>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Khách Hàng Mới</label>
+                            <label for="name" class="col-12 col-md-4 col-form-label">** Họ Tên Khách Hàng Mới</label>
                             <div class="col-md-8 col-12">
                                 <input type="text" class="form-control"
                                         id="customer_name_new" name="customer_name_new" placeholder="họ tên">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="birthdate" class="col-4 col-form-label">** Ngày sinh<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                            <input type="text" name="birthdate_new" class="form-control datepicker" placeholder="mm/dd/yyyy">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-12 col-md-4 col-form-label">** Giới Tính<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="gender_new" checked id="male" value="male" checked>
+                                    <label for="male">
+                                        Nam
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="gender_new" id="sinva-rented" value="female">
+                                    <label for="sinva-rented">
+                                        Nữ
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="ID_card" class="col-4 col-form-label">** Cmnd hoặc passport</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control"
+                                        id="ID_card" name="ID_card_new" placeholder="Cmnd, passport">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-4 col-form-label">** Số điện thoại<span class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <input type="number" required class="form-control"
+                                        id="phone" name="phone_new" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-4 col-form-label">** Email</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control"
+                                        id="email" name="email_new" placeholder="Email">
+                            </div>
+                        </div>
+                        <p >Giải thích cơ chế của GH: <span class="text-info">Hãy hiểu rằng mỗi khách mới chỉ có 1 nguồn, nguồn khách sẽ được nhập vào Bảng Khách Hàng, hoàn toàn không nhập vào bảng hợp đồng. Ứng với mỗi hợp đồng sẽ có 1 ID khách hàng.</span>  </p>
+                        <div class="form-group row">
+                            <label for="name" class="col-12 col-md-4 col-form-label">** Nguồn<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <div class="radio radio-custom">
+                                    <input type="radio" disabled="" name="" checked id="male" value="male" checked>
+                                    <label for="male">
+                                        xx**xx
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" disabled="" name="" id="sinva-rented" value="female">
+                                    <label for="sinva-rented">
+                                        xx**xx
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">Ngày ký<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
@@ -198,7 +262,7 @@
 
 <script>
 commands.push(function(){
-    $('.contract-open').datepicker({
+    $('.contract-open, .datepicker').datepicker({
         format: "dd/mm/yyyy",
     });
     $(".select2").select2({

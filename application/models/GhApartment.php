@@ -31,10 +31,10 @@ class GhApartment extends CI_Model {
         $q = "SELECT * FROM gh_apartment, gh_user_district 
                 WHERE gh_apartment.district_code = gh_user_district.district_code AND gh_user_district.user_id = $account_id
         ";
-        if($account_id == 2019 or $account_id == 171020010) {
-            $q = "SELECT * FROM gh_apartment, gh_user_district 
-                WHERE gh_apartment.district_code = gh_user_district.district_code AND gh_user_district.user_id = $account_id AND gh_apartment.district_code = '7'";
-        }
+        // if($account_id == 2019 or $account_id == 171020010) {
+        //     $q = "SELECT * FROM gh_apartment, gh_user_district 
+        //         WHERE gh_apartment.district_code = gh_user_district.district_code AND gh_user_district.user_id = $account_id AND gh_apartment.district_code = '7'";
+        // }
         $result = $this->db->query($q);
         return $result->result_array();
     }

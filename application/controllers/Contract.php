@@ -71,16 +71,22 @@ class Contract extends CustomBaseStep {
 	public function create() {
 	
 		$post = $this->input->post();
+		var_dump($post);die;
 		if($post['time_open']) {
 			$dt = DateTime::createFromFormat('d/m/Y', $post['time_open']);
 			$post['time_open'] = $dt->getTimestamp();
 		} else {
 			$post['time_open'] = 0;
 		}
-		if(!$post['customer_name']) {
+		if($post['customer_name_new']) {
 			$customer_id = $this->ghCustomer->insert(
 				[
 					'name' => $post['customer_name_new'],
+					'gender' => $post['gender_new'],
+					'birthdate' => $post['birthdate_new'] ? strtotime($post['birthdate_new']) : 0,
+					'phone' => $post['phone_new'],
+					'email' => $post['email_new'],
+					'ID_card' => $post['ID_card_new'],
 					'status' => 'sinva-rented',
 				]);
 		} else {
@@ -94,7 +100,7 @@ class Contract extends CustomBaseStep {
 		$contract = [
 			'customer_id' => $customer_id,
 			'room_id' => $post['room_id'],
-			'apartment_id' => $service_set['apartment_id'],
+			'apartment_id' => $service_set['id'],
 			'consultant_id' => $post['consultant_id'],
 			'room_price' => $post['room_price'] > 0 ? 
 					(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT) 
