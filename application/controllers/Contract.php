@@ -71,24 +71,26 @@ class Contract extends CustomBaseStep {
 	public function create() {
 	
 		$post = $this->input->post();
-		var_dump($post);die;
+		// echo "<pre>"; var_dump($post); die;
 		if($post['time_open']) {
 			$dt = DateTime::createFromFormat('d/m/Y', $post['time_open']);
 			$post['time_open'] = $dt->getTimestamp();
 		} else {
 			$post['time_open'] = 0;
 		}
-		if($post['customer_name_new']) {
-			$customer_id = $this->ghCustomer->insert(
-				[
-					'name' => $post['customer_name_new'],
-					'gender' => $post['gender_new'],
-					'birthdate' => $post['birthdate_new'] ? strtotime($post['birthdate_new']) : 0,
-					'phone' => $post['phone_new'],
-					'email' => $post['email_new'],
-					'ID_card' => $post['ID_card_new'],
-					'status' => 'sinva-rented',
-				]);
+		if(isset($post['customer_name_new']) and !empty($post['customer_name_new'])) {
+			$new_customer_data = [
+				'name' => $post['customer_name_new'],
+				'gender' => $post['gender_new'],
+				'birthdate' => $post['birthdate_new'] ? strtotime(str_replace('/', '-', $post['birthdate_new'])) : 0,
+				'phone' => $post['phone_new'],
+				'email' => $post['email_new'],
+				'ID_card' => $post['ID_card_new'],
+				'status' => 'sinva-rented',
+				'source' => $post['source_new'],
+			];
+		
+			$customer_id = $this->ghCustomer->insert($new_customer_data);
 		} else {
 			$customer_id = $post['customer_name'];
 			$customer_model = $this->ghCustomer->updateById($customer_id, [
@@ -102,7 +104,7 @@ class Contract extends CustomBaseStep {
 			'room_id' => $post['room_id'],
 			'apartment_id' => $service_set['id'],
 			'consultant_id' => $post['consultant_id'],
-			'room_price' => $post['room_price'] > 0 ? 
+			'room_price' => $post['room_price'] ? 
 					(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT) 
 						: $service_set['price'],
 			'time_check_in' => $post['time_open'],
@@ -112,6 +114,7 @@ class Contract extends CustomBaseStep {
 			'note' => $post['note'],
 			'room_code' => $post['room_code']
 		];
+		// echo "<pre>"; var_dump($contract);die;
 		$result = $this->ghContract->insert($contract);
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Tạo hợp đồng thành công ',

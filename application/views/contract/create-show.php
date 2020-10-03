@@ -112,6 +112,7 @@
                             </div>
                         </div>
                         <hr>
+                        <h5>Thông tin khách thuê</h5>
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">Khách Hàng Tiềm Năng # search<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
@@ -120,6 +121,7 @@
                             </div>
                         </div>
                         <p class="text-info">GH: thông tin về khách hàng mới được nhập vào bảng khách hàng trước để tạo ID Khách hàng (IDKH). Sau khi có IDKH, IDKH sẽ được nhập qua bảng hợp đồng. IDKH đóng vai trò làm cầu nối giữa bảng hợp đồng & bảng khách hàng - điều này cũng trả lời cho câu hỏi - Hợp đồng này là của khách hàng nào! </p>
+                        <p >Giải thích cơ chế của GH: <span class="text-info">Hãy hiểu rằng mỗi khách mới chỉ có 1 nguồn, nguồn khách sẽ được nhập vào Bảng Khách Hàng, hoàn toàn không nhập vào bảng hợp đồng. Ứng với mỗi hợp đồng sẽ có 1 ID khách hàng.</span>  </p>
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">** Họ Tên Khách Hàng Mới</label>
                             <div class="col-md-8 col-12">
@@ -151,6 +153,23 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="name" class="col-12 col-md-4 col-form-label">** Trạng thái (KH)<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="status_new" checked id="status_rented" value="" checked>
+                                    <label for="status_rented">
+                                        Đã ký
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" disabled="" name="status_new" id="status_follow" value="">
+                                    <label for="status_follow">
+                                        Đang theo dõi
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="ID_card" class="col-4 col-form-label">** Cmnd hoặc passport</label>
                             <div class="col-8">
                                 <input type="text" class="form-control"
@@ -171,25 +190,38 @@
                                         id="email" name="email_new" placeholder="Email">
                             </div>
                         </div>
-                        <p >Giải thích cơ chế của GH: <span class="text-info">Hãy hiểu rằng mỗi khách mới chỉ có 1 nguồn, nguồn khách sẽ được nhập vào Bảng Khách Hàng, hoàn toàn không nhập vào bảng hợp đồng. Ứng với mỗi hợp đồng sẽ có 1 ID khách hàng.</span>  </p>
+                        
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">** Nguồn<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <div class="radio radio-custom">
-                                    <input type="radio" disabled="" name="" checked id="male" value="male" checked>
-                                    <label for="male">
-                                        xx**xx
+                                    <input type="radio" name="source_new" id="DepMarketing" value="DepMarketing">
+                                    <label for="DepMarketing">
+                                        Bộ phận marketing
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">
-                                    <input type="radio" disabled="" name="" id="sinva-rented" value="female">
-                                    <label for="sinva-rented">
-                                        xx**xx
+                                    <input type="radio" name="source_new" id="DepCustomerCare" value="DepCustomerCare">
+                                    <label for="DepCustomerCare">
+                                        Bộ phận chăm sóc khách hàng
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="source_new" id="DepSale" value="DepSale" checked>
+                                    <label for="DepSale">
+                                        Sale
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="source_new" id="DepReferral" value="DepReferral">
+                                    <label for="DepReferral">
+                                        Khách được giới thiệu
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <hr>
+                        <h5>Thông tin hợp đồng (hoặc cọc)</h5>
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">Ngày ký<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
@@ -217,23 +249,23 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Tình trạng<span class="text-danger">*</span></label>
+                            <label for="" class="col-12 col-md-4 col-form-label">Tình trạng<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <div class="radio radio-custom">
-                                    <input type="radio" name="status" checked id="sinva-info-form" value="Active">
-                                    <label for="sinva-info-form">
+                                    <input type="radio" name="status" checked id="sinva-Active" value="Active">
+                                    <label for="sinva-Active">
                                         Đang ở (đang có hiệu lực)
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">
-                                    <input type="radio" name="status" id="sinva-rented" value="Pending">
-                                    <label for="sinva-rented">
+                                    <input type="radio" name="status" id="sinva-Pending" value="Pending">
+                                    <label for="sinva-Pending">
                                         Đợi ký HĐ (đang cọc)
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">
-                                    <input type="radio" name="status" id="sinva-rented" value="Cancel">
-                                    <label for="sinva-rented">
+                                    <input type="radio" name="status" id="sinva-Cancel" value="Cancel">
+                                    <label for="sinva-Cancel">
                                         Hủy cọc
                                     </label>
                                 </div>

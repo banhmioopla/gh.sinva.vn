@@ -29,10 +29,19 @@ $apartment['east-south'] = 'Đông Nam';
 $apartment['west-south'] = 'Tây Nam';
 $apartment['east-north'] = 'Đông Bắc';
 $apartment['west-north'] = 'Tây Bắc';
+
 $apartment['Full'] = '#';
 $apartment['Available'] = 'trống';
 $apartment['Consulting'] = 'đang tư vấn';
 $apartment['Deposited'] = 'đã cọc';
+
+$apartment['sinva-rented'] = 'đã ký';
+$apartment['sinva-info-form'] = 'đang theo dõi';
+// 'DepMarketing','DepCustomerCare','DepSale','DepReferral'
+$apartment['DepMarketing'] = 'bộ phận marketing';
+$apartment['DepCustomerCare'] = 'bộ phận chăm sóc khách hàng';
+$apartment['DepSale'] = 'sale';
+$apartment['DepReferral'] = 'khách được giới thiệu';
 
 $config['label.apartment'] = $apartment;
 ?>

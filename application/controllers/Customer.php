@@ -17,6 +17,7 @@ class Customer extends CustomBaseStep {
 		if(!$this->is_access) {
 			return redirect('admin/list-apartment');
 		}
+		$this->load->config('label.apartment');
 		$this->load->model('ghCustomer');
 		$this->load->model('ghCareCustomer');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -29,6 +30,7 @@ class Customer extends CustomBaseStep {
 		$data['list_customer'] = $this->ghCustomer->getAll();
 		$data['libDistrict'] = $this->libDistrict;
 		$data['select_district'] = $this->libDistrict->cbActive();
+		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('customer/show', $data);
@@ -48,9 +50,11 @@ class Customer extends CustomBaseStep {
 	public function create() {
 	
 		$data = $this->input->post();
-		$data['birthdate'] = strtotime($data['birthdate']);
+		$data['birthdate'] = $data['birthdate'] ? strtotime(str_replace('/', '-', $data['birthdate'])) : 0;
+		$data['demand_time'] = $data['demand_time'] ? strtotime(str_replace('/', '-', $data['demand_time'])) : 0;
 
 		if(!empty($data['name'])) {
+			$data['status'] = 'sinva-info-form';
 			$result = $this->ghCustomer->insert($data);
 			$this->session->set_flashdata('fast_notify', [
 				'message' => 'thêm khách hàng: '.$data['name'].' thành công ',

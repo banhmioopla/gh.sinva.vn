@@ -43,6 +43,7 @@
                             <th>NhC quận</th>
                             <th>NhC Tgian</th>
                             <th class="text-center">Nguồn</th>
+                            <th class="text-center">Trạng thái</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
@@ -110,8 +111,13 @@
                                     </div>
                                 </td>
                                 <td>
+                                    <div class="customer-source text-center text-warning font-weight-bold">
+                                        <?= $row['source'] ? $label_apartment[$row['source']] : '' ?>
+                                    </div>
+                                </td>
+                                <td>
                                     <div class="customer-status text-center font-weight-bold">
-                                        <?= $row['status'] == 'sinva-rented' ? 'đã ký' :' đang theo dõi' ?>
+                                        <?= $row['status'] ? $label_apartment[$row['status']] : '' ?>
                                     </div>
                                 </td>
                                 <td>
@@ -184,16 +190,23 @@
                         </div>
                         
                         <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Nguồn<span class="text-danger">*</span></label>
-                            <div class="col-8">
+                            <label for="name" class="col-12 col-md-4 col-form-label">** Trạng thái (KH)<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
                                 <div class="radio radio-custom">
-                                    <input type="radio" name="status" checked id="sinva-info-form" value="sinva-info-form">
-                                    <label for="sinva-info-form">
-                                        Khách hàng tiềm năng
+                                    <input type="radio" disabled="" name="status" id="status_rented" value="">
+                                    <label for="status">
+                                        Đã ký
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="status" id="status_follow" value="" checked>
+                                    <label for="status_follow">
+                                        Đang theo dõi
                                     </label>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Nhu cầu giá</label>
                             <div class="col-8">
@@ -212,6 +225,35 @@
                             <label class="col-4 col-form-label">Nhu cầu thời gian</label>
                             <div class="col-8">
                                 <input type="text" name='demand_time' class="form-control datepicker">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-12 col-md-4 col-form-label">** Nguồn<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="source" id="DepMarketing" value="DepMarketing">
+                                    <label for="DepMarketing">
+                                        Bộ phận marketing
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="source" id="DepCustomerCare" value="DepCustomerCare">
+                                    <label for="DepCustomerCare">
+                                        Bộ phận chăm sóc khách hàng
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="source" id="DepSale" value="DepSale" checked>
+                                    <label for="DepSale">
+                                        Sale
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="source" id="DepReferral" value="DepReferral">
+                                    <label for="DepReferral">
+                                        Khách được giới thiệu
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
