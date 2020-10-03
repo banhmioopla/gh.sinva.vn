@@ -5,7 +5,7 @@ class Apartment extends CustomBaseStep {
 
 	public function __construct()
 	{
-		parent::__construct();
+		parent::__construct(); 
 		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
