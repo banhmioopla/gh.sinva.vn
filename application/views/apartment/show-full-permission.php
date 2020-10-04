@@ -1,36 +1,5 @@
-<?php
-function money_format11( $n, $precision = 1 ) {
-    if ($n < 900) {
-        // 0 - 900
-        $n_format = number_format($n, $precision);
-        $suffix = '';
-    } else if ($n < 900000) {
-        // 0.9k-850k
-        $n_format = number_format($n / 1000, $precision);
-        $suffix = ' k';
-    } else if ($n < 900000000) {
-        // 0.9m-850m
-        $n_format = number_format($n / 1000000, $precision);
-        $suffix = ' mi';
-    } else if ($n < 900000000000) {
-        // 0.9b-850b
-        $n_format = number_format($n / 1000000000, $precision);
-        $suffix = 'bi';
-    } else {
-        // 0.9t+
-        $n_format = number_format($n / 1000000000000, $precision);
-        $suffix = 'T';
-    }
-
-  // Remove unecessary zeroes after decimal. "1.0" -> "1"; "1.00" -> "1"
-  // Intentionally does not affect partials, eg "1.50" -> "1.50"
-    if ( $precision > 0 ) {
-        $dotzero = '.' . str_repeat( '0', $precision );
-        $n_format = str_replace( $dotzero, '', $n_format );
-    }
-
-    return $n_format . $suffix;
-}
+<?php 
+    include VIEWPATH.'functions.php';
 ?>
 
 <div class="wrapper">
@@ -217,268 +186,261 @@ function money_format11( $n, $precision = 1 ) {
 </div>
 <script>
     commands.push(function() {
+        $(document).ready(function () {
+            $.fn.combodate.defaults.maxYear = 2022;
+            $.fn.combodate.defaults.minYear = 2020;
+            var t_room = $('.list-room').DataTable({
+                "fnDrawCallback": function() {
+                    if(modify_mode == 'false') return;
+
+                    $('.apm-note').editable({
+                        type: "textarea",
+                        url: '<?= base_url()."admin/update-apartment-editable" ?>',
+                        inputclass: '',
+                        rows: 8
+                    });
+
+                    $('.service-list ul li div').editable({
+                        type: "text",
+                        url: '<?= base_url()."admin/update-apartment-editable" ?>',
+                        inputclass: ''
+                    });
+
+                    $('.list-room .room-data').editable({
+                        type: "text",
+                        url: '<?= base_url()."admin/update-room-editable" ?>',
+                        inputclass: ''
+                    }).on("shown", tab_key);
+
+                    $('.list-room .room-price, .list-room .room-area').editable({
+                        type: "number",
+                        url: '<?= base_url()."admin/update-room-editable" ?>',
+                        inputclass: '',
+                        display: function(value, response) {
+                            return false;   //disable this method
+                        },
+                        success: function(response, newValue) {
+                            $(this).html(nFormatter(newValue));
+                        }
+                    }).on("shown", tab_key);
+
+                    $('.list-room .room-consulting_user_id').editable({
+                        type: "number",
+                        url: '<?= base_url()."admin/update-room-editable" ?>',
+                        inputclass: '',
+                        placeholder:'171020XXX',
+                    });
+
+                    $('.list-room .room-select-type').editable({
+                        type: 'select',
+                        url: '<?= base_url() ?>admin/get-room-type',
+                        inputclass: '',
+                        source: function() {
+                            data = [];
+                            $.ajax({
+                                url: '<?= base_url() ?>admin/get-room-type',
+                                dataType: 'json',
+                                async: false,
+                                success: function(res) {
+                                    data = res;
+                                    return res;
+                                }
+                            });
+                            return data;
+                        },
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            if(data.status == true) {
+                                $('.apartment-alert').html(notify_html_success);
+                            } else {
+                                $('.apartment-alert').html(notify_html_fail);
+                            }
+                            $('.apartment-alert').show();
+                            $('.apartment-alert').fadeOut(3000);
+                        }
+                    });
+
+                    $('.list-room .room-select-status').editable({
+                        type: 'select',
+                        url: '<?= base_url() ?>admin/get-room-status',
+                        inputclass: '',
+                        source: function() {
+                            data = [];
+                            $.ajax({
+                                url: '<?= base_url() ?>admin/get-room-status',
+                                dataType: 'json',
+                                async: false,
+                                success: function(res) {
+                                    data = res;
+                                    return res;
+                                }
+                            });
+                            return data;
+                        },
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            if(data.status == true) {
+                                $('.apartment-alert').html(notify_html_success);
+                            } else {
+                                $('.apartment-alert').html(notify_html_fail);
+                            }
+                            $('.apartment-alert').show();
+                            $('.apartment-alert').fadeOut(3000);
+                        }
+                    });
+
+                    $('.list-room .room-time_available').editable({
+                        placement: 'right',
+                        type: 'combodate',
+                        template:"D / MM / YYYY",
+                        format:"DD-MM-YYYY",
+                        viewformat:"DD-MM-YYYY",
+                        mode: 'inline',
+                        combodate: {
+                            firstItem: 'name'
+                        },
+                        inputclass: 'form-control-sm',
+                        url: '<?= base_url()."admin/update-room-editable" ?>'
+                    });
+
+                    $('.room-delete').on('click', function() {
+                        let this_btn = $(this);
+                        let room_id = $(this).data('room-id');
+                        console.log('delete success room id = '+ room_id);
+                        $.ajax({
+                            type: 'POST',
+                            url:'<?= base_url()."admin/update-room-editable" ?>',
+                            data: {pk: room_id, name: 'active', value: 'NO'},
+                            success:function(response) {
+                                let data = JSON.parse(response);
+                                if(data.status > 0) {
+                                    this_btn.parents('tr').remove();
+                                }
+                            }
+                        });
+                    });
+
+                    $('.apartment-delete').on('click', function() {
+                        let apartment_id = $(this).data('apartment-id');
+                        let this_btn = $(this);
+                        $.ajax({
+                            url: '<?= base_url() ?>admin/update-apartment-editable',
+                            data: {pk: apartment_id, name: 'active', value: 'NO', mode: 'del'},
+                            type: 'POST',
+                            success: function(response) {
+                                let data = JSON.parse(response);
+                                if(data.status > 0) {
+                                    this_btn.parents('.apartment-block').fadeOut(1500, function(){
+                                        this_btn.parents('.apartment-block').remove();
+                                        $('#modal-apartment-detail-' + apartment_id).remove();
+                                    });
+                                }
+                            }
+                        });
+                    });
+
+                    $('.room-status').on('click', function() {
+                            var content = $(this).text().trim();
+                            console.log(">> room.status current is: " + content);
+                            var room_id = $(this).data('id');
+                            if (content === "#") {
+                                content = "trống";
+                                var db_value = 'Available'
+                            } else {
+                                content ="#";
+                                var db_value = 'Full' 
+                            }
+                            $(this).text(content);
+                            $.ajax({
+                                method: 'post',
+                                url:'<?= base_url()."admin/update-room-editable" ?>',
+                                data: {pk: room_id, name: 'status', value: db_value},
+                                success: function(){
+                                    console.log('>> room.status updated to: '+ content);
+                                }
+                            });
+                        });
+                    // End Draw
+                    }
+                });
+            $('.apartment-block').find('.list-action').show();
+            // Default Datatable
+            $('.apartment-reload-time').click(function(){
+                var apm_id = $(this).data('apartment-id');
+                $.ajax({
+                    url:'<?= base_url()."admin/update-apartment-editable" ?>',
+                    data: {pk: apm_id, name: '_reloadtime', value: '1'},
+                    method: 'POST',
+                    success:function(){
+                        var t = "<?= date('d/m/Y H:i') ?>";
+                        $('#time-update-'+apm_id).html('<i class="mdi mdi-update"></i>' + t);
+                    }
+                })
+            });
+
+            $('.room-add').click(function(){
+                let apm_id = $(this).data('apartment-id');
+                // rooom.destroy();
+                let room = $('#list-room-' + apm_id).DataTable();
+                // console.log(t_room);
+                console.log(apm_id);
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url()."admin/create-room-datatable" ?>',
+                    data: {apartment_id: apm_id},
+                    success: function(data){
+                        data = JSON.parse(data);
+                        console.log(data);
+                        let room_id = data.room_id;
+                        let new_row = `
+                        <tr>
+                        <td><div class="room-data" 
+                                data-pk="${room_id}"
+                                data-value=""
+                                data-name="code"
+                                >#</div></td>
+                        <td><div class="room-data" 
+                                data-pk="${room_id}"
+                                data-value=""
+                                data-name="type"
+                                >#</div></td>
+                        <td><div class="room-price text-success"
+                                data-pk="${room_id}"
+                                data-value=""
+                                data-name="price"
+                                >#</div></td>
+                        <td><div class="room-area" 
+                                data-pk= "${room_id}"
+                                data-value= ""
+                                data-name="area">0</div></td>
+                        <td><div class="room-status text-primary" 
+                                data-pk="${room_id}"
+                                data-value=""
+                                data-name="status">#</div></td>
+                        <td><div class="room-time_available text-success" 
+                                data-pk="${room_id}"
+                                data-value=""
+                                data-name="time_available">#</div></td>
+                        <td class="d-flex justify-content-center">
+                            <button data-room-id="${room_id}" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                                <i class="mdi mdi-delete"></i>
+                            </button>
+                        </td>     
+                        </tr>
+                        `;
+                        room.row.add($(new_row)[0]).draw(false);
+                    } // end success
+                }); 
+            });
+        });
         
-        var t_room = $('.list-room').DataTable();
-        $('.apartment-block').find('.list-action').show();
+        
+        
         // $('.apartment-block').mouseenter(function() {
         //     $(this).find('.list-action').show(600);
         // }).mouseleave(function() {
         //     $(this).find('.list-action').hide(600); 
         // });
-        /* =========== MODIFY DATA JS ========= */
-        if(modify_mode == 'false') return;
-        
-        $('.apm-note').editable({
-            type: "textarea",
-            url: '<?= base_url()."admin/update-apartment-editable" ?>',
-            inputclass: '',
-            rows: 8
-        });
-
-        $('.service-list ul li div').editable({
-            type: "text",
-            url: '<?= base_url()."admin/update-apartment-editable" ?>',
-            inputclass: ''
-        });
-        
-        $('body').delegate('.list-room .room-data', 'click', function(){
-            console.log('123123');
-            $(this).editable({
-                type: "text",
-                url: '<?= base_url()."admin/update-room-editable" ?>',
-                inputclass: ''
-            });
-        });
-        
-        $('body').delegate('.list-room .room-price, .list-room .room-area', 'click', function(){
-            $(this).editable({
-                type: "number",
-                url: '<?= base_url()."admin/update-room-editable" ?>',
-                inputclass: '',
-                display: function(value, response) {
-                    return false;   //disable this method
-                },
-                success: function(response, newValue) {
-                    $(this).html(nFormatter(newValue));
-                }
-            });
-        });
-        
-        $('body').delegate('.list-room .room-consulting_user_id', 'click', function(){
-            $(this).editable({
-                type: "number",
-                url: '<?= base_url()."admin/update-room-editable" ?>',
-                inputclass: '',
-                placeholder:'171020XXX',
-            });
-        });
-
-        $('body').delegate('.list-room .room-select-type', 'click', function(){
-            $(this).editable({
-                type: 'select',
-                url: '<?= base_url() ?>admin/get-room-type',
-                inputclass: '',
-                source: function() {
-                    data = [];
-                    $.ajax({
-                        url: '<?= base_url() ?>admin/get-room-type',
-                        dataType: 'json',
-                        async: false,
-                        success: function(res) {
-                            data = res;
-                            return res;
-                        }
-                    });
-                    return data;
-                },
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.apartment-alert').html(notify_html_success);
-                    } else {
-                        $('.apartment-alert').html(notify_html_fail);
-                    }
-                    $('.apartment-alert').show();
-                    $('.apartment-alert').fadeOut(3000);
-                }
-            });
-        });
-        
-        $('body').delegate('.list-room .room-select-status', 'click',function(){
-            $(this).editable({
-                type: 'select',
-                url: '<?= base_url() ?>admin/get-room-status',
-                inputclass: '',
-                source: function() {
-                    data = [];
-                    $.ajax({
-                        url: '<?= base_url() ?>admin/get-room-status',
-                        dataType: 'json',
-                        async: false,
-                        success: function(res) {
-                            data = res;
-                            return res;
-                        }
-                    });
-                    return data;
-                },
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.apartment-alert').html(notify_html_success);
-                    } else {
-                        $('.apartment-alert').html(notify_html_fail);
-                    }
-                    $('.apartment-alert').show();
-                    $('.apartment-alert').fadeOut(3000);
-                }
-            });
-        });
-
-        $.fn.combodate.defaults.maxYear = 2022;
-        $.fn.combodate.defaults.minYear = 2020;
-        $('body').delegate('.list-room .room-time_available', 'click', function() {
-            $('.list-room .room-time_available').editable({
-                placement: 'right',
-                type: 'combodate',
-                template:"D / MM / YYYY",
-                format:"DD-MM-YYYY",
-                viewformat:"DD-MM-YYYY",
-                mode: 'inline',
-                combodate: {
-                    firstItem: 'name'
-                },
-                inputclass: 'form-control-sm',
-                url: '<?= base_url()."admin/update-room-editable" ?>'
-            });
-        });
-        
-        $('body').delegate('.room-delete', 'click', function() {
-            console.log('hello');
-            let this_btn = $(this);
-            let room_id = $(this).data('room-id');
-            console.log(room_id);
-            $.ajax({
-                type: 'POST',
-                url:'<?= base_url()."admin/update-room-editable" ?>',
-                data: {pk: room_id, name: 'active', value: 'NO'},
-                success:function(response) {
-                    let data = JSON.parse(response);
-                    if(data.status > 0) {
-                        this_btn.parents('tr').remove();
-                    }
-                }
-            });
-        });
-
-        $('body').delegate('.apartment-delete', 'click', function(){
-            let apartment_id = $(this).data('apartment-id');
-            let this_btn = $(this);
-            $.ajax({
-                url: '<?= base_url() ?>admin/update-apartment-editable',
-                data: {pk: apartment_id, name: 'active', value: 'NO', mode: 'del'},
-                type: 'POST',
-                success: function(response) {
-                    let data = JSON.parse(response);
-                    if(data.status > 0) {
-                        this_btn.parents('.apartment-block').fadeOut(1500, function(){
-                            this_btn.parents('.apartment-block').remove();
-                            $('#modal-apartment-detail-' + apartment_id).remove();
-                        });
-                    }
-                }
-            });
-        });
-
-        $("body").delegate('.room-status', 'click', function(){
-            var content = $(this).text().trim();
-            console.log(">> room.status current is: " + content);
-            var room_id = $(this).data('id');
-            if (content === "#") {
-                content = "trống";
-                var db_value = 'Available'
-            } else {
-                content ="#";
-                var db_value = 'Full' 
-            }
-            $(this).text(content);
-            $.ajax({
-                method: 'post',
-                url:'<?= base_url()."admin/update-room-editable" ?>',
-                data: {pk: room_id, name: 'status', value: db_value},
-                success: function(){
-                    console.log('>> room.status updated to: '+ content);
-                }
-            })
-        });
-
-        // Default Datatable
-        $('.apartment-reload-time').click(function(){
-            var apm_id = $(this).data('apartment-id');
-            $.ajax({
-                url:'<?= base_url()."admin/update-apartment-editable" ?>',
-                data: {pk: apm_id, name: '_reloadtime', value: '1'},
-                method: 'POST',
-                success:function(){
-                    var t = "<?= date('d/m/Y H:i') ?>";
-                    $('#time-update-'+apm_id).html('<i class="mdi mdi-update"></i>' + t);
-                }
-            })
-        });
-        $('.room-add').click(function(){
-            let apm_id = $(this).data('apartment-id');
-            // rooom.destroy();
-            let room = $('#list-room-' + apm_id).DataTable();
-            // console.log(t_room);
-            console.log(apm_id);
-            $.ajax({
-                type: 'POST',
-                url: '<?= base_url()."admin/create-room-datatable" ?>',
-                data: {apartment_id: apm_id},
-                success: function(data){
-                    data = JSON.parse(data);
-                    console.log(data);
-                    let room_id = data.room_id;
-                    let new_row = `
-                    <tr>
-                    <td><div class="room-data" 
-                            data-pk="${room_id}"
-                            data-value=""
-                            data-name="code"
-                            >#</div></td>
-                    <td><div class="room-data" 
-                            data-pk="${room_id}"
-                            data-value=""
-                            data-name="type"
-                            >#</div></td>
-                    <td><div class="room-price text-success"
-                            data-pk="${room_id}"
-                            data-value=""
-                            data-name="price"
-                            >#</div></td>
-                    <td><div class="room-area" 
-                            data-pk= "${room_id}"
-                            data-value= ""
-                            data-name="area">0</div></td>
-                    <td><div class="room-status text-primary" 
-                            data-pk="${room_id}"
-                            data-value=""
-                            data-name="status">#</div></td>
-                    <td><div class="room-time_available text-success" 
-                            data-pk="${room_id}"
-                            data-value=""
-                            data-name="time_available">#</div></td>
-                    <td class="d-flex justify-content-center">
-                        <button data-room-id="${room_id}" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
-                            <i class="mdi mdi-delete"></i>
-                        </button>
-                    </td>     
-                    </tr>
-                    `;
-                    room.row.add($(new_row)[0]).draw(false);
-                } // end success
-            }); 
-        });
         
     });
 </script>
