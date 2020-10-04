@@ -34,8 +34,16 @@
                             <?= $district_code == $district['code'] ? 'active':'' ?>
                             btn-rounded waves-light waves-effect">
                             <?= $district['name'] ?></a>
+                            
                     <?php endforeach; ?>
                     </span>
+                </div>
+                <div class="card">
+                    <div class="form-group row">
+                        <div class="col-md-8 offset-md-2 col-12 offset-0">
+                            <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
+                        </div>
+                    </div>
                 </div>
                 <?php foreach ($list_apartment as $apartment): ?>
                 <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
@@ -62,7 +70,7 @@
                         </span>
                         <?php endif; ?>
                     </div>
-                    <div class="col text-center text-purple font-weight-bold">
+                    <div class="col text-center text-purple text-address font-weight-bold">
                         <?=$apartment['address_street'] ?>
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
                     </div>
@@ -432,6 +440,13 @@
                         room.row.add($(new_row)[0]).draw(false);
                     } // end success
                 }); 
+            });
+
+            $('.search-address').on('keyup', function(){
+                var value = $(this).val().toLowerCase();
+                $(".card-header.apartment-block").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
             });
         });
         

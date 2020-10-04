@@ -74,9 +74,16 @@ function money_format11( $n, $precision = 1 ) {
                         <?php endforeach; ?>
                     </span>
                 </div>
+                <div class="card">
+                    <div class="form-group row">
+                        <div class="col-md-8 offset-md-2 col-12 offset-0">
+                            <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
+                        </div>
+                    </div>
+                </div>
                 <?php foreach ($list_apartment as $apartment): ?>
                 <!-- item -->
-                <div class="card-header mt-1" role="tab" id="headingThree">
+                <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
                     <?php if($apartment['short_message']) echo '<h5 class="col text-center notifier-apartment">'.$apartment["short_message"].'</h5>'; ?>
                     <div class="row">
                     <div class="col-4">
@@ -210,6 +217,13 @@ function money_format11( $n, $precision = 1 ) {
         // }).mouseleave(function() {
         //     $(this).find('.list-action').hide(600); 
         // });
+
+        $('.search-address').on('keyup', function(){
+            var value = $(this).val().toLowerCase();
+            $(".card-header.apartment-block").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
 
     });
 </script>
