@@ -338,28 +338,6 @@
                             }
                         });
                     });
-
-                    $('.room-status').on('click', function() {
-                            var content = $(this).text().trim();
-                            console.log(">> room.status current is: " + content);
-                            var room_id = $(this).data('id');
-                            if (content === "#") {
-                                content = "trống";
-                                var db_value = 'Available'
-                            } else {
-                                content ="#";
-                                var db_value = 'Full' 
-                            }
-                            $(this).text(content);
-                            $.ajax({
-                                method: 'post',
-                                url:'<?= base_url()."admin/update-room-editable" ?>',
-                                data: {pk: room_id, name: 'status', value: db_value},
-                                success: function(){
-                                    console.log('>> room.status updated to: '+ content);
-                                }
-                            });
-                        });
                     // End Draw
                     }
                 });
@@ -376,6 +354,29 @@
                         $('#time-update-'+apm_id).html('<i class="mdi mdi-update"></i>' + t);
                     }
                 })
+            });
+
+            $('body').delegate('.room-status','click', function() {
+                var content = $(this).text().trim();
+                console.log(">> room.status current is: " + content);
+                var room_id = $(this).data('id');
+                if (content === "#") {
+                    content = "trống";
+                    var db_value = 'Available'
+                } else {
+                    content ="#";
+                    var db_value = 'Full' 
+                }
+                console.log(room_id);
+                $(this).text(content);
+                $.ajax({
+                    method: 'post',
+                    url:'<?= base_url()."admin/update-room-editable" ?>',
+                    data: {pk: room_id, name: 'status', value: db_value},
+                    success: function(){
+                        console.log('>> room.status updated to: '+ content);
+                    }
+                });
             });
 
             $('.room-add').click(function(){
