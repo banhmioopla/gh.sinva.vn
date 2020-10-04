@@ -3,24 +3,6 @@ $(document).ready(function () {
 
 });
 
-function tab_key() {
-    $(this).data('editable').input.$input.on('keydown', function (e) {
-
-        if (e.which == 9) {                                      // when tab key is pressed
-            e.preventDefault();
-            if (e.shiftKey) {                                      // shift + tab
-                $(this).blur()
-                    .parents().prevAll(":has(.editable):first") // find the parent of the editable before this one in the markup
-                    .find(".editable:last").editable('show');   // grab the editable and display it
-            } else {                                              // just tab
-                $(this).blur()
-                    .parents().nextAll(":has(.editable):first") // find the parent of the editable after this one in the markup
-                    .find(".editable:first").editable('show');  // grab the editable and display it
-            }
-        }
-    });
-}
-
 function nFormatter(num, digits = 1) {
     var si = [
         { value: 1, symbol: "" },
