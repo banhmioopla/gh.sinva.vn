@@ -40,7 +40,7 @@
                 </div>
                 <div class="card">
                     <div class="form-group row">
-                        <div class="col-md-8 offset-md-2 col-12 offset-0">
+                        <div class="col-md-8 offset-md-2 col-10 offset-1">
                             <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
                         </div>
                     </div>
