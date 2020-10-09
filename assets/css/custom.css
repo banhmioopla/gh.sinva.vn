@@ -86,6 +86,13 @@ html, body { height: 100%; }
 .bg-gh-apm-card{
     background-color:  #faf0ac;
 }
+
+.morecontent span {
+    display: none;
+}
+.morelink {
+    display: inline-block;
+}
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;

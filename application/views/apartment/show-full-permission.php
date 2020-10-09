@@ -77,9 +77,19 @@
 
                     <div class="col text-center text-warning font-weight-bold mt-2" id="time-update-<?= $apartment['id'] ?>"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ? date('d/m/Y H:i', 
                     max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></div>
+                    
+                    <div class="col text-center">
+                        <h5 class="mb-md-2 ">Mô tả dự án</h5>
+                        <div class="more apm-description" 
+                            data-pk="<?= $apartment['id'] ?>"
+                            data-name= "description"
+                            data-value="<?= $apartment['description'] ?>">
+                            <?= $apartment['description'] ?>
+                        </div>
+                    </div>
 
-                    <div class="mt-2 list-action">
-                        <span class="d-flex justify-content-center">
+                    <div class="mt-2 list-action border-top">
+                        <div class="d-flex justify-content-center">
                             <!-- <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
                                 <i class="mdi mdi-credit-card-plus"></i>
                             </button> -->
@@ -109,7 +119,7 @@
                                     class="btn m-1 btn-sm apartment-delete btn-outline-danger btn-rounded waves-light waves-effect">
                                 <i class="mdi mdi-delete"></i>
                             </button>
-                        </span>
+                        </div>
                     </div> 
                 </div>
                 <div id="modal-apartment-detail-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-detail-<?=$apartment['id'] ?>">
@@ -201,7 +211,7 @@
                 "fnDrawCallback": function() {
                     if(modify_mode == 'false') return;
 
-                    $('.apm-note').editable({
+                    $('.apm-note, .apm-description').editable({
                         type: "textarea",
                         url: '<?= base_url()."admin/update-apartment-editable" ?>',
                         inputclass: '',
@@ -447,6 +457,40 @@
                 $(".card-header.apartment-block").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
+            });
+
+            // viewmore
+            var showChar = 100;  // How many characters are shown by default
+            var ellipsestext = "...";
+            var moretext = "Xem thêm";
+            var lesstext = "Thu gọn";
+
+            $('.more').each(function() {
+                var content = $(this).html();
+        
+                if(content.length > showChar) {
+        
+                    var c = content.substr(0, showChar);
+                    var h = content.substr(showChar, content.length - showChar);
+        
+                    var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span> <a href="" class="morelink font-600 text-purple">' + moretext + '</a></span>';
+        
+                    $(this).html(html);
+                }
+        
+            });
+        
+            $(".morelink").click(function(){
+                if($(this).hasClass("less")) {
+                    $(this).removeClass("less");
+                    $(this).html(moretext);
+                } else {
+                    $(this).addClass("less");
+                    $(this).html(lesstext);
+                }
+                $(this).parent().prev().toggle();
+                $(this).prev().toggle();
+                return false;
             });
         });
         
