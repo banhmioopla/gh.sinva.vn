@@ -42,6 +42,10 @@ $apartment['DepMarketing'] = 'bộ phận marketing';
 $apartment['DepCustomerCare'] = 'bộ phận chăm sóc khách hàng';
 $apartment['DepSale'] = 'sale';
 $apartment['DepReferral'] = 'khách được giới thiệu';
+$apartment['contract.Active'] = 'còn hạn';
+$apartment['contract.Pending'] = 'đợi ký';
+$apartment['contract.Expired'] = 'hết hạn';
+$apartment['contract.Cancel'] = 'đã hủy';
 
 $config['label.apartment'] = $apartment;
 ?>

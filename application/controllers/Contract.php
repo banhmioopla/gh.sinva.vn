@@ -23,6 +23,7 @@ class Contract extends CustomBaseStep {
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibUser', null, 'libUser');
 		$this->load->library('LibRoom', null, 'libRoom');
+		$this->load->config('label.apartment');
 	}
 	public function index()
 	{
@@ -36,6 +37,7 @@ class Contract extends CustomBaseStep {
 		$data['libUser'] = $this->libUser;
 		$data['ghApartment'] = $this->ghApartment;
 		$data['libRoom'] = $this->libRoom;
+		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('contract/show', $data);
@@ -71,18 +73,27 @@ class Contract extends CustomBaseStep {
 	public function create() {
 	
 		$post = $this->input->post();
-		// echo "<pre>"; var_dump($post); die;
+		
 		if($post['time_open']) {
 			$dt = DateTime::createFromFormat('d/m/Y', $post['time_open']);
 			$post['time_open'] = $dt->getTimestamp();
 		} else {
 			$post['time_open'] = 0;
 		}
+
+		if($post['time_expire']) {
+			$dt = DateTime::createFromFormat('d/m/Y', $post['time_expire']);
+			$post['time_expire'] = $dt->getTimestamp();
+		} else {
+			$post['time_expire'] = 0;
+		}
+
 		if(isset($post['customer_name_new']) and !empty($post['customer_name_new'])) {
+			$birth_date_new = $post['birthdate_new'] ? strtotime(str_replace('/', '-', $post['birthdate_new'])) : 0;
 			$new_customer_data = [
 				'name' => $post['customer_name_new'],
 				'gender' => $post['gender_new'],
-				'birthdate' => $post['birthdate_new'] ? strtotime(str_replace('/', '-', $post['birthdate_new'])) : 0,
+				'birthdate' => $birth_date_new,
 				'phone' => $post['phone_new'],
 				'email' => $post['email_new'],
 				'ID_card' => $post['ID_card_new'],
@@ -99,22 +110,26 @@ class Contract extends CustomBaseStep {
 		}
 		
 		$service_set = $this->ghApartment->get(['id' =>$post['apartment_id']])[0];
+
+		$contract_room_price = $post['room_price'] > 0 ? 
+		(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT) 
+			: $service_set['price'];
+
 		$contract = [
 			'customer_id' => $customer_id,
 			'room_id' => $post['room_id'],
 			'apartment_id' => $service_set['id'],
 			'consultant_id' => $post['consultant_id'],
-			'room_price' => $post['room_price'] ? 
-					(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT) 
-						: $service_set['price'],
+			'room_price' => $contract_room_price,
 			'time_check_in' => $post['time_open'],
+			'time_expire' => $post['time_expire'],
 			'number_of_month' => $post['number_of_month'],
-			'service_set' => json_encode($service_set),
+			'service_set' => json_encode($service_set), // apartment data
 			'status' => $post['status'],
 			'note' => $post['note'],
 			'room_code' => $post['room_code']
 		];
-		// echo "<pre>"; var_dump($contract);die;
+		
 		$result = $this->ghContract->insert($contract);
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Tạo hợp đồng thành công ',

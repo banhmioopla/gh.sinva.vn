@@ -13,7 +13,7 @@ class District extends CustomBaseStep {
 		$this->show();
     }
 
-	private function show(){
+	public function show(){
 		$this->load->model('ghDistrict'); // load model ghUser
 		$data['list_district'] = $this->ghDistrict->getAll();
 		

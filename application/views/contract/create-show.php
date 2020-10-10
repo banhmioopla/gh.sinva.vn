@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-5">
                 <div class="card-box">
                     <h4 class="m-t-0">Thông tin dự án</h4>
                     <table class="table">
@@ -95,15 +95,16 @@
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-7">
                 <div class="card-box">
                     <h4 class="m-t-0">Thêm hợp đồng mới</h4>
+                    <hr>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-contract">
-                    <input type="hidden" name='room_id' value= '<?= $_GET["room-id"]?>'>
-                    <input type="hidden" name='room_code' value= '<?= $room['code']?>'>
-                    <input type="hidden" name='apartment_id' value= '<?= $room['apartment_id']?>'>
+                        <input type="hidden" name='room_id' value= '<?= $_GET["room-id"]?>'>
+                        <input type="hidden" name='room_code' value= '<?= $room['code']?>'>
+                        <input type="hidden" name='apartment_id' value= '<?= $room['apartment_id']?>'>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger">*</span></label>
+                            <label for="name" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger"> (bb)</span></label>
                             <div class="col-md-8 col-12">
                                 <select type="number" class="form-control"
                                         id="consultant_id" name="consultant_id" placeholder="171020xxx">
@@ -114,7 +115,7 @@
                         <hr>
                         <h5>Thông tin khách thuê</h5>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Khách Hàng Tiềm Năng # search<span class="text-danger">*</span></label>
+                            <label for="name" class="col-12 col-md-4 col-form-label">Khách Tiềm Năng</label>
                             <div class="col-md-8 col-12">
                             <select class="form-control select2" id="customer_name" name="customer_name">
                             </select>
@@ -132,7 +133,7 @@
                         <div class="form-group row">
                             <label for="birthdate" class="col-4 col-form-label">** Ngày sinh<span class="text-danger">*</span></label>
                             <div class="col-8">
-                            <input type="text" name="birthdate_new" class="form-control datepicker" placeholder="mm/dd/yyyy">
+                            <input type="text" name="birthdate_new" class="form-control datepicker" placeholder="dd/mm/yyyy">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -170,16 +171,16 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="ID_card" class="col-4 col-form-label">** Cmnd hoặc passport</label>
+                            <label for="ID_card" class="col-4 col-form-label">** CMT hoặc passport</label>
                             <div class="col-8">
                                 <input type="text" class="form-control"
                                         id="ID_card" name="ID_card_new" placeholder="Cmnd, passport">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-4 col-form-label">** Số điện thoại<span class="text-danger">*</span></label>
+                            <label for="phone" class="col-4 col-form-label">** Số điện thoại</label>
                             <div class="col-8">
-                                <input type="number" required class="form-control"
+                                <input type="number" class="form-control"
                                         id="phone" name="phone_new" placeholder="Số điện thoại">
                             </div>
                         </div>
@@ -223,14 +224,14 @@
                         <hr>
                         <h5>Thông tin hợp đồng (hoặc cọc)</h5>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Ngày ký<span class="text-danger">*</span></label>
+                            <label for="name" class="col-12 col-md-4 col-form-label">Ngày ký <span class="text-danger">(bb)</span></label>
                             <div class="col-md-8 col-12">
                                 <input type="text" required class="form-control contract-open"
                                         id="time_open" name="time_open">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Số tháng ở<span class="text-danger">*</span></label>
+                            <label for="name" class="col-12 col-md-4 col-form-label">Số tháng ở <span class="text-danger">(bb)</span></label>
                             <div class="col-md-8 col-12">
                                 <input  type="number" 
                                         required class="form-control"
@@ -239,7 +240,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="room_price" class="col-12 col-md-4 col-form-label">Gia Thue<span class="text-danger">*</span></label>
+                            <label for="name" class="col-12 col-md-4 col-form-label">Ngày hết hạn</label>
+                            <div class="col-md-8 col-12">
+                                <input type="text" class="form-control contract-time_expire"
+                                        id="time_expire" name="time_expire">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="room_price" class="col-12 col-md-4 col-form-label">Giá Thuê <span class="text-danger"> (bb)</span></label>
                             <div class="col-md-8 col-12">
                                 <input  type="text" 
                                         required class="form-control"
@@ -249,7 +257,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-12 col-md-4 col-form-label">Tình trạng<span class="text-danger">*</span></label>
+                            <label for="" class="col-12 col-md-4 col-form-label">Tình trạng</label>
                             <div class="col-md-8 col-12">
                                 <div class="radio radio-custom">
                                     <input type="radio" name="status" checked id="sinva-Active" value="Active">
@@ -275,7 +283,7 @@
                         <div class="form-group row">
                             <label class="col-12 col-md-4 col-form-label">Ghi chú</label>
                             <div class="col-md-8 col-12">
-                                <textarea class="form-control" rows="5" name="note" placeholder="Không bắt buộc"></textarea>
+                                <textarea class="form-control" rows="4" name="note"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -294,8 +302,8 @@
 
 <script>
 commands.push(function(){
-    $('.contract-open, .datepicker').datepicker({
-        format: "dd/mm/yyyy",
+    $('.contract-open, .datepicker, .contract-time_expire').datepicker({
+        format: "dd/mm/yyyy"
     });
     $(".select2").select2({
         placeholder: "Search for an Item",

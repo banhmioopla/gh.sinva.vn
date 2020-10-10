@@ -35,14 +35,13 @@
                         <thead>
                         <tr>
                             <th># ID Hợp Đồng</th>
-                            <th>Khách thuê</th>
-                            <th>Địa chỉ</th>
-                            <th>Mã Phòng</th>
+                            <th width="350px">Khách thuê</th>
                             <th>Giá thuê</th>
                             <th>Ngày ký</th>
-                            <th>Thời hạn</th>
-                            <th>Ghi chú HD</th>
-                            <th class="text-center">Tình trạng</th>
+                            <th>Ngày hết hạn</th>
+                            <th class="text-center">Thời hạn</th>
+                            <th width="200px">Ghi chú HD</th>
+                            <th class="text-center" width="200px">Tình trạng</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
@@ -52,34 +51,37 @@
                             <tr>
                                 <td>
                                     <div>
-                                            #<?= (1000000 + $row['id']) ?>
+                                        #<?= (10000 + $row['id']) ?>
                                     </div>
                                 </td>
-                                <td><?= $libCustomer->getNameById($row['customer_id']) ?></td>
                                 <td>
-                                    <div class="font-weight-bold text-primary">
+                                <div class="text-muted"><?= $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']) ?> </div>
+                                <div class="font-weight-bold text-primary">
                                     <?php 
                                         $apartment = $ghApartment->get(['id' => $row['apartment_id']])
                                     ?>
                                         <?= $apartment ? $apartment[0]['address_street']:'' ?>
                                     </div>
+                                    <h6 class="text-danger">
+                                         <?= $row['room_code'] ? 'mã phòng: '.$row['room_code'] : null ?>
+                                    </h6>
                                 </td>
                                 <td>
-                                    <div>
-                                        <?= $row['room_code'] ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
+                                    <div class="font-weight-bold">
                                         <?= number_format($row['room_price']) ?>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
-                                        <?=$row['time_check_in'] ? date('d/m/Y',$row['time_check_in']):'#' ?>
+                                        <?=$row['time_check_in'] ? date('d/m/Y',$row['time_check_in']):'-' ?>
                                     </div>
                                 </td>
                                 <td>
+                                    <div>
+                                        <?=$row['time_expire'] ? date('d/m/Y',$row['time_expire']):'-' ?>
+                                    </div>
+                                </td>
+                                <td class="text-center">
                                     <div>
                                         <?=$row['number_of_month'] ?>
                                     </div>
@@ -89,9 +91,24 @@
                                         <?=$row['note'] ?>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <div>
-                                        <?=$row['status'] ?>
+                                    <?php 
+                                        $statusClass = 'muted';
+                                        if($row['status'] == 'Active') {
+                                            $statusClass = 'success';
+                                        }
+                                        if($row['status'] == 'Pending') {
+                                            $statusClass = 'warning';
+                                        }
+                                        if($row['status'] == 'Cancel') {
+                                            $statusClass = 'danger';
+                                        }
+                                    ?>
+                                    <span class="badge badge-<?= $statusClass ?> badge-pill" style="font-size:100%">
+                                    <?= $label_apartment['contract.'.$row['status']] ?>
+                                    </span>
+                                        
                                     </div>
                                 </td>
                                 
