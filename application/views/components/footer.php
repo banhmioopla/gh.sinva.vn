@@ -34,6 +34,10 @@
     <script type="text/javascript" src="<?= $js_plugins_path ?>isotope/js/isotope.pkgd.min.js"></script>
     <script type="text/javascript" src="<?= $js_plugins_path ?>magnific-popup/js/jquery.magnific-popup.min.js"></script>
 
+    <!-- chart -->
+    <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.min.js"></script>
+    <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.pie.js"></script>
+
     <!-- datepicker -->
     <script src="<?= $js_plugins_path ?>bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <!-- App js -->

@@ -155,6 +155,11 @@ $accesscontrol['product-manager'] = [
         'name' => 'Báo cáo dẫn khách',
         'url' => '/admin/list-rp-booking-customer',
         'submenu' => null
+    ],
+    [
+        'name' => 'Bảng điều khiển',
+        'url' => '/admin/list-dashboard',
+        'submenu' => null
     ]
 ];
 
@@ -179,6 +184,11 @@ $accesscontrol['human-resource'] = [
                 'url' => '/admin/helloA2',
                 'submenu' => null
             ],
+            [
+                'name' => 'Bảng điều khiển',
+                'url' => '/admin/list-dashboard',
+                'submenu' => null
+            ]
         ]
     ],
 ];
@@ -194,6 +204,11 @@ $accesscontrol['consultant'] = [
         'url' => '/admin/list-google',
         'submenu' => null
     ],
+    [
+        'name' => 'Bảng điều khiển',
+        'url' => '/admin/list-dashboard',
+        'submenu' => null
+    ]
 ];
 $accesscontrol['ceo'] = [
     [
@@ -214,6 +229,11 @@ $accesscontrol['ceo'] = [
     [
         'name' => 'Báo cáo dẫn khách',
         'url' => '/admin/list-rp-booking-customer',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Bảng điều khiển',
+        'url' => '/admin/list-dashboard',
         'submenu' => null
     ]
 ];
@@ -244,6 +264,11 @@ $accesscontrol['customer-care'] = [
         'url' => '/admin/list-contract',
         'submenu' => null
     ],
+    [
+        'name' => 'Bảng điều khiển',
+        'url' => '/admin/list-dashboard',
+        'submenu' => null
+    ]
 ];
 
 
