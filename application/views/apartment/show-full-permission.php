@@ -53,7 +53,11 @@
                         <div class="col-4">
                             <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
                         </div>
-                        <div class="col-4 offset-4 text-right">
+                        <div class="col-4 text-center p-0">
+                            <span class="text-primary "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i', 
+                                max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
+                        </div>
+                        <div class="col-4 text-right">
                             <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'#' ?></a>
                         </div>
                         <h5 class="col text-center notifier-apartment d-none">Tiêu đề Shock</h5>
@@ -80,11 +84,9 @@
                             </div>
                         </div>
                         <div class="col-md-4 font-weight-bold" id="time-update-<?= $apartment['id'] ?>">
-                            <div>
+                            <div class="text-right text-md-left">
                                 <h5 class="mb-md-2">Số lượng phòng</h5>
-                                <span class="text-primary text-left"><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i', 
-                                max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
-                                <span class="text-right">
+                                <span>
                                     <span class="ml-4 text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?><i class="mdi mdi-checkerboard"></i></span>
                                     <span class="ml-2 text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
                                     <span class="ml-2 text-danger"><?= $ghRoom->getNumber($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
