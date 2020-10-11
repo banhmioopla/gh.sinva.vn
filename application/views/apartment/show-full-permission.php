@@ -95,13 +95,19 @@
                     
 
                     <div class="mt-2 list-action border-top">
-                        <div class="d-flex justify-content-center">
-                            <!-- <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                <i class="mdi mdi-credit-card-plus"></i>
-                            </button> -->
-                            <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                        <div class="d-flex justify-content-center notification-list">
+                            <?php 
+                            $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
+                            ?>
+                            <a class="m-1 collapsed btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect "
+                                data-toggle="collapse" 
+                                data-parent="#accordion" 
+                                href="#modal-apartment-comment-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-comment-<?=$apartment['id'] ?>">
                                 <i class="mdi mdi-comment-outline"></i>
-                            </button> -->
+                                <?php if(count($list_comment) > 0):?>
+                                    <span class="badge badge-danger badge-pill mr-2 noti-icon-badge"><?= count($list_comment) ?></span>
+                                <?php endif; ?>
+                            </a>
                             <button type="button" 
                                     data-apartment-id="<?= $apartment['id'] ?>" 
                                     class="btn m-1 btn-sm apartment-reload-time btn-outline-custom btn-rounded waves-light waves-effect">
@@ -128,6 +134,29 @@
                         </div>
                     </div> 
                 </div>
+                
+                <div id="modal-apartment-comment-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-comment-<?=$apartment['id'] ?>">
+                
+                    <div class="card-body">
+                        <h4 class="mb-4">Bình luận gần đây</h4>
+
+                        <div class="comment-list slimscroll">
+                            <div id='newContentComment'></div>
+                        <?php if(count($list_comment) > 0): ?>
+                            <?php foreach($list_comment as $comment):?>
+                                <div class="comment-box-item taskList">
+                                    <p class="commnet-item-date"><?= date('d/m/Y, H:i') ?></p>
+                                    <p class="commnet-item-msg text-info"><?= $comment['content'] ?></p>
+
+                                    <small class="commnet-item-user text-right text-danger"><?= $libUser->getNameByAccountid($comment['user_id']) ?></small>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif;?>
+                        </div>
+                    </div>
+            
+                </div>
+
                 <div id="modal-apartment-detail-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-detail-<?=$apartment['id'] ?>">
                     <div class="card-body">
                         <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
