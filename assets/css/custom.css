@@ -93,6 +93,15 @@ html, body { height: 100%; }
 .morelink {
     display: inline-block;
 }
+.address-text{
+    font-size: 22px;
+}
+.notification-list span.noti-icon-badge {
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    right: -5px;
+}
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;
@@ -100,10 +109,14 @@ html, body { height: 100%; }
     .editableform textarea.form-control {
         width: 44em;
     }
+    
 }
 
 @media (min-width: 576px) {
     .modal-lg {
         max-width: 675px;
+    }
+    .address-text{
+        font-size: 25px;
     }
 }

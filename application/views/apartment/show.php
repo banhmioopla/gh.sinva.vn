@@ -89,12 +89,7 @@ function money_format11( $n, $precision = 1 ) {
                     <div class="col-4">
                             <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
                     </div>
-                    <div class="col-4 text-center font-weight-bold">
-                        <span class="text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></span>
-                        <span class="text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></span>
-                        <span class="text-muted"><?= $ghRoom->getNumber($apartment['id']) ?></span>
-                    </div>
-                    <div class="col-4 text-right">
+                    <div class="col-4 offset-4 text-right">
                         <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'#' ?></a>
                     </div>
                         <h4 class="col text-center d-none">Tiêu đề Shock</h4>
@@ -106,28 +101,47 @@ function money_format11( $n, $precision = 1 ) {
                         </span>
                         <?php endif; ?>
                     </div>
-                    <div class="col text-center text-purple font-weight-bold">
+                    <div class="col text-center address-text text-purple font-weight-bold">
                         <?=$apartment['address_street'] ?>
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
                     </div>
                    
-                    <div class="col text-center text-warning font-weight-bold mt-2"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ? date('d/m/Y H:i', 
-                    max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></div>
-                     <?php if($apartment['description']): ?>
-                    <div class="col text-center">
-                        <h5 class="mb-md-2 ">Mô tả dự án</h5>
-                        <div class="more apm-description">
-                            <?= $apartment['description'] ?>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="mb-md-2">Mô tả dự án</h5>
+                            <div class="more apm-description">
+                                <?= $apartment['description'] ?>
+                            </div>
                         </div>
-                    
+                        <div class="col-md-4 font-weight-bold" id="time-update-<?= $apartment['id'] ?>">
+                            <div>
+                                <h5 class="mb-md-2">Số lượng phòng</h5>
+                                <span class="text-primary text-left"><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i', 
+                                max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
+                                <span class="text-right">
+                                    <span class="ml-4 text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?><i class="mdi mdi-checkerboard"></i></span>
+                                    <span class="ml-2 text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
+                                    <span class="ml-2 text-danger"><?= $ghRoom->getNumber($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <?php endif; ?>
                     <div class="mt-2 list-action" >
-                        <span class="d-flex justify-content-center">
-                            <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                        <span class="d-flex justify-content-center notification-list">
+                            <?php 
+                            $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
+                            ?>
+                            <a class="m-1 collapsed btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect "
+                                data-toggle="collapse" 
+                                data-parent="#accordion" 
+                                href="#modal-apartment-comment-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-comment-<?=$apartment['id'] ?>">
                                 <i class="mdi mdi-comment-outline"></i>
-                            </button> -->
-                            <a class="collapsed btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect" 
+                                <?php if(count($list_comment) > 0):?>
+                                    <span class="badge badge-danger badge-pill mr-2 noti-icon-badge"><?= count($list_comment) ?></span>
+                                <?php endif; ?>
+                            </a>
+                            
+                            <a class="m-1 collapsed btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect" 
                                 data-toggle="collapse" 
                                 data-parent="#accordion" 
                                 href="#modal-apartment-detail-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>">
@@ -139,6 +153,35 @@ function money_format11( $n, $precision = 1 ) {
                             </button> -->
                         </span>
                     </div>
+                </div>
+
+                <div id="modal-apartment-comment-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-comment-<?=$apartment['id'] ?>">
+                
+                    <div class="card-body">
+                        <h4 class="mb-4">Bình luận gần đây</h4>
+
+                        <div class="comment-list slimscroll">
+                            <div id='newContentComment'></div>
+                        <?php if(count($list_comment) > 0): ?>
+                            <?php foreach($list_comment as $comment):?>
+                                <div class="comment-box-item taskList">
+                                    <p class="commnet-item-date"><?= date('d/m/Y, H:i') ?></p>
+                                    <p class="commnet-item-msg text-info"><?= $comment['content'] ?></p>
+
+                                    <small class="commnet-item-user text-right text-danger"><?= $libUser->getNameByAccountid($this->auth['account_id']) ?></small>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif;?>
+                        
+                            <div class="comment-box-item mt-3">
+                                <input type="text" id="apm-comment-<?= $apartment['id'] ?>" class="new-comment border border-info form-control" placeholder = "nhập bình luận ...">
+                            </div>
+                            <button type="button" data-apm-id="<?= $apartment['id'] ?>" class="btn m-1 add-new-comment room-delete btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                                +<i class="mdi mdi-comment-plus-outline"></i>
+                            </button>
+                        </div>
+                    </div>
+            
                 </div>
                 <div id="modal-apartment-detail-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-detail-<?=$apartment['id'] ?>">
                     <div class="card-body">
@@ -199,21 +242,12 @@ function money_format11( $n, $precision = 1 ) {
                                 <!-- Develop -->
                             </div>
                         </div> <!-- end tab content , end item-->
-                        <div class="float-right mt-1">
-                            <a class="collapsed btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect" 
-                                data-toggle="collapse" 
-                                data-parent="#accordion" 
-                                href="#modal-apartment-detail-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>">
-                                <i class="mdi mdi-eye"></i>
-                            </a>
-                        </div>
+                        
                     </div>
                 </div>
                 <?php endforeach;?>
             </div>
-        </div>
-        
-        
+        </div> 
     </div>
 </div>
 <script>
@@ -267,6 +301,31 @@ function money_format11( $n, $precision = 1 ) {
                 $(this).parent().prev().toggle();
                 $(this).prev().toggle();
                 return false;
+            });
+
+            $('.add-new-comment').click(function() {
+                var apm_id = $(this).data('apm-id');
+                var content = $('#apm-comment-'+ apm_id).val();
+                var account_id = '<?= $this->auth['account_id'] ?>';
+                var user_name = '<?= $this->auth['name'] ?>';
+                var time = "<?= date('d/m/Y, H:i') ?>";
+                if(content.length > 0) {
+                    $.ajax({
+                        url: '/admin/create-apartment-comment',
+                        method: 'POST',
+                        data: {content: content, accountId: account_id, apmId: apm_id},
+                        success: function() {
+                            console.log('123');
+                            $('#newContentComment').after(function() {
+                                return `<div class='comment-box-item'>
+                                    <p class='commnet-item-date'>${time}</p>
+                                    <p class='commnet-item-msg text-info'>${content}</p>
+                                    <small class='commnet-item-user text-danger text-right'>${user_name}</small>`;
+                            });
+                        }
+                    })
+                }
+                
             });
 
     });

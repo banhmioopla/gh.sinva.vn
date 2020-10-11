@@ -6,7 +6,7 @@ class Apartment extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag']);
+		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag', 'ghApartmentComment']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -34,6 +34,7 @@ class Apartment extends CustomBaseStep {
 		
 		$data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
 		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
+
 		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['cb_base_apartment_type'] = $this->libBaseApartmentType->getCbByActive();
 
@@ -47,7 +48,9 @@ class Apartment extends CustomBaseStep {
 
 		$data['room_total'] = $this->ghRoom->getNumberByDistrict($district_code, null);
 		$data['available_room_total'] = $this->ghRoom->getNumberByDistrict($district_code, 'gh_room.status = "Available" ');
+
 		$data['ready_room_total'] = $this->ghRoom->getNumberByDistrict($district_code, 'gh_room.time_available > 0 ');
+
 		$data['list_ready_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.time_available > 0 ');
 		$data['list_available_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.status = "Available" ');
 
@@ -60,10 +63,26 @@ class Apartment extends CustomBaseStep {
 		$data['libPartner'] = $this->libPartner;
 		$data['libUser'] = $this->libUser;
 		$data['ghRoom'] = $this->ghRoom;
+		$data['ghApartmentComment'] = $this->ghApartmentComment;
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view($template, $data);
 		$this->load->view('components/footer');
+	}
+
+	public function createComment() {
+		$post  = $this->input->post();
+		$time = time();
+		$data = [
+			'content' => $post['content'],
+			'apartment_id' => $post['apmId'],
+			'user_id' => $post['accountId'],
+			'time_insert' => $time,
+		];
+
+		$this->ghApartmentComment->insert($data);
+		return json_encode([
+		]);
 	}
 
 	public function showLikeBase(){

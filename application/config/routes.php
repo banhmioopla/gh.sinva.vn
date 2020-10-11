@@ -210,6 +210,12 @@ $route['admin/update-apartment-type'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/create-apartment-comment'] = function($params = []) {
+	$controller = 'Apartment';
+	$action = '/createComment';
+	return $controller.$action;
+};
+
 $route['admin/delete-apartment-type'] = function($params = []) {
 	$controller = 'BaseApartmentType';
 	$action = '/delete';

@@ -11,8 +11,7 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
+                            <li class="breadcrumb-item"><a href="#">GioHang</a></li>
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>

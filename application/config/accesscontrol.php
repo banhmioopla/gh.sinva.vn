@@ -240,6 +240,11 @@ $accesscontrol['ceo'] = [
 
 $accesscontrol['customer-care'] = [
     [
+        'name' => 'Bảng điều khiển',
+        'url' => '/admin/list-dashboard',
+        'submenu' => null
+    ],
+    [
         'name' => 'Dự Án',
         'url' => '/admin/list-apartment',
         'submenu' => null
@@ -252,22 +257,23 @@ $accesscontrol['customer-care'] = [
     [
         'name' => 'Khách Hàng',
         'url' => '/admin/list-customer',
-        'submenu' => null
-    ],
-    [
-        'name' => 'Báo cáo Chăm sóc',
-        'url' => '/admin/list-care-customer',
-        'submenu' => null
-    ],
-    [
-        'name' => 'Hợp Đồng',
-        'url' => '/admin/list-contract',
-        'submenu' => null
-    ],
-    [
-        'name' => 'Bảng điều khiển',
-        'url' => '/admin/list-dashboard',
-        'submenu' => null
+        'submenu' => [
+            [
+                'name' => 'DS Khách Hàng',
+                'url' => '/admin/list-customer',
+                'submenu' => null
+            ],
+            [
+                'name' => 'Thống Kê Chăm sóc',
+                'url' => '/admin/list-care-customer',
+                'submenu' => null
+            ],
+            [
+                'name' => 'Hợp Đồng',
+                'url' => '/admin/list-contract',
+                'submenu' => null
+            ]
+        ]
     ]
 ];
 

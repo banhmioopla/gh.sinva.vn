@@ -53,12 +53,7 @@
                         <div class="col-4">
                             <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
                         </div>
-                        <div class="col-4 text-center font-weight-bold">
-                            <span class="text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></span>
-                            <span class="text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></span>
-                            <span class="text-muted"><?= $ghRoom->getNumber($apartment['id']) ?></span>
-                        </div>
-                        <div class="col-4 text-right">
+                        <div class="col-4 offset-4 text-right">
                             <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'#' ?></a>
                         </div>
                         <h5 class="col text-center notifier-apartment d-none">Tiêu đề Shock</h5>
@@ -70,23 +65,34 @@
                         </span>
                         <?php endif; ?>
                     </div>
-                    <div class="col text-center text-purple text-address font-weight-bold">
+                    <div class="col address-text text-center text-purple text-address font-weight-bold">
                         <?=$apartment['address_street'] ?>
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
                     </div>
-
-                    <div class="col text-center text-warning font-weight-bold mt-2" id="time-update-<?= $apartment['id'] ?>"><i class="mdi mdi-update"></i> <?= $apartment['time_update'] ? date('d/m/Y H:i', 
-                    max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></div>
-                    
-                    <div class="col text-center">
-                        <h5 class="mb-md-2 ">Mô tả dự án</h5>
-                        <div class="more apm-description" 
-                            data-pk="<?= $apartment['id'] ?>"
-                            data-name= "description"
-                            data-value="<?= $apartment['description'] ?>">
-                            <?= $apartment['description'] ?>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="mb-md-2">Mô tả dự án</h5>
+                            <div class="more apm-description" 
+                                data-pk="<?= $apartment['id'] ?>"
+                                data-name= "description"
+                                data-value="<?= $apartment['description'] ?>">
+                                <?= $apartment['description'] ?>
+                            </div>
+                        </div>
+                        <div class="col-md-4 font-weight-bold" id="time-update-<?= $apartment['id'] ?>">
+                            <div>
+                                <h5 class="mb-md-2">Số lượng phòng</h5>
+                                <span class="text-primary text-left"><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i', 
+                                max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
+                                <span class="text-right">
+                                    <span class="ml-4 text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?><i class="mdi mdi-checkerboard"></i></span>
+                                    <span class="ml-2 text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
+                                    <span class="ml-2 text-danger"><?= $ghRoom->getNumber($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
+                    
 
                     <div class="mt-2 list-action border-top">
                         <div class="d-flex justify-content-center">
