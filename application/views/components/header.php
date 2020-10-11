@@ -32,7 +32,7 @@
         <link href="<?= $assets_path ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/icons.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/style.css" rel="stylesheet" type="text/css" />
-        <link href="<?= $assets_path ?>css/custom.css?v=20201010" rel="stylesheet" type="text/css" />
+        <link href="<?= $assets_path ?>css/custom.css?v=20201011" rel="stylesheet" type="text/css" />
 		<script src="<?= $assets_path ?>js/modernizr.min.js"></script>
 		<script src="<?= base_url() ?>js/custom-header.js"></script>
 		<script>
