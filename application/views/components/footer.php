@@ -41,7 +41,7 @@
     <script src="<?= $js_plugins_path ?>bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <!-- App js -->
     <script src="<?= $assets_path ?>js/jquery.core.js"></script>
-    <script src="<?= $assets_path ?>js/jquery.app.js"></script>
+    <script src="<?= $assets_path ?>js/jquery.app.js?v=20201011"></script>
     <script>
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editableform.buttons =
