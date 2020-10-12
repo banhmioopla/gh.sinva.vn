@@ -135,6 +135,11 @@ $accesscontrol['product-manager'] = [
         'url' => '',
         'submenu' => [
             [
+                'name' => 'Phân quận',
+                'url' => '/admin/list-user-district',
+                'class-icon' => ''
+            ],
+            [
                 'name' => '<div class="text-primary"> DS Dự Án (thẻ) </div>',
                 'url' => '/admin/list-apartment',
                 'class-icon' => ''
