@@ -17,7 +17,7 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibTag', null, 'libTag');
 		$this->load->library('LibUser', null, 'libUser');
 
-		$this->permission_modify = [['customer-care' => 0], 'product-manager'];
+		$this->permission_modify = ['product-manager'];
 	}
 	public function index()
 	{
@@ -26,6 +26,15 @@ class Apartment extends CustomBaseStep {
 
 	public function show(){
 		$data['permissions'] = ['product-manager', 'customer-care'];
+
+		$current_user = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
+		$authorised_user = $this->ghUser->get(['account_id' => $current_user[0]['authorised_user_id']]);
+		if(!empty($authorised_user)) {
+			$this->permission_modify[] = $this->auth['role_code'];
+			$this->menu =array_merge($this->menu, $this->config->item('accesscontrol')[$authorised_user[0]['role_code']]);
+			
+		}
+
 		$district_code = $this->input->get('district-code');
 		$data = [];
 		$district_code = !empty($district_code) ? $district_code: $this->district_default;
@@ -39,7 +48,7 @@ class Apartment extends CustomBaseStep {
 		$data['cb_base_apartment_type'] = $this->libBaseApartmentType->getCbByActive();
 
 		$template = 'apartment/show';
-		if(in_array($district_code, $this->list_district_CRUD)) {
+		if(in_array($district_code, $this->list_district_CRUD) and in_array($this->auth['role_code'], $this->permission_modify)) {
 			$this->auth['modifymode'] = 'edit';
 			$template = 'apartment/show-full-permission';
 		}

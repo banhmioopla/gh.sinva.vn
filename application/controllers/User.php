@@ -76,7 +76,14 @@ class User extends CustomBaseStep {
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
 
-		if(!empty($user_id) and !empty($field_value)) {
+		if(!empty($user_id) and !empty($field_name)) {
+			if($field_name == 'authorised_user_id') {
+				if(empty($field_value)) {
+					$field_value = null;
+				} else {
+					$field_value = $this->auth['account_id'];
+				}
+			}
 			$data = [
 				$field_name => $field_value
 			];

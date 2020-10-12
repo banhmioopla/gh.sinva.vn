@@ -54,7 +54,7 @@
                             <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']):'#' ?></a>
                         </div>
                         <div class="col-4 text-center p-0">
-                            <span class="text-primary "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i', 
+                            <span class="text-primary" id="time-update-<?= $apartment['id'] ?>"><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i', 
                                 max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
                         </div>
                         <div class="col-4 text-right">
@@ -83,7 +83,7 @@
                                 <?= $apartment['description'] ?>
                             </div>
                         </div>
-                        <div class="col-md-4 font-weight-bold" id="time-update-<?= $apartment['id'] ?>">
+                        <div class="col-md-4 font-weight-bold" >
                             <div class="text-right text-md-left">
                                 <h5 class="mb-md-2">Số lượng phòng</h5>
                                 <span>

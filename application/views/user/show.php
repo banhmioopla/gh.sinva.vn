@@ -39,7 +39,7 @@
                             <th>Quyền</th>
                             <th>SĐT</th>
                             <th>Sinh nhật</th>
-                            <th>TG cập nhật</th>
+                            <th>Ủy quyền cho</th>
                             <th class="text-center">Mở</th>
                             <!-- <th class="text-center">Tùy Chọn</th> -->
                         </tr>
@@ -82,7 +82,16 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <?= $row['time_update'] ? date('d-m-Y',$row['time_update']):'#' ?>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="checkbox checkbox-success is-authorised">
+                                            <input id="user-<?= $row['id'] ?>" 
+                                                value="<?= $row['id'] ?>"
+                                                type="checkbox" 
+                                                <?= !empty($row['authorised_user_id']) ? 'checked':'' ?>>
+                                            <label for="user-<?= $row['id'] ?>">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
@@ -219,6 +228,25 @@
                             }
                         });
                     });
+                    $('.is-authorised input[type=checkbox]').click(function() {
+                        var this_id = $(this).attr('id');
+                        var val = $(this).val();
+                        var matches = this_id.match(/(\d+)/);
+                        var user_id = matches[0];
+                        var checked = '0';
+                        if($(this).is(':checked')) {
+                            checked = val;
+                        }
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>admin/update-user-editable',
+                            data: {pk: val, name: 'authorised_user_id', value: checked},
+                            async: false,
+                            success:function(response){
+                                var data = JSON.parse(response);
+                            }
+                        });
+                    })
 
                     $('.user-name, .user-phone_number').editable({
                         type: "text",
