@@ -20,6 +20,17 @@ class LibUser {
                 $cb .= '<option '.$selected.' value='.$user['account_id'].'>'.$user['account_id'].' - '.$user['name'].'</option>';
             }
         }
+
+        $list_user = $this->CI->ghUser->get(['active' => 'YES', 'authorised_user_id <> '=> null ]);
+        if(!empty($list_user)) {
+            foreach ($list_user as $user) {
+                $selected = '';
+                if($user['account_id'] == $account_id) {
+                    $selected = 'selected';
+                }
+                $cb .= '<option '.$selected.' value='.$user['account_id'].'>'.$user['account_id'].' - '.$user['name'].'</option>';
+            }
+        }
         return $cb;
     }
 
