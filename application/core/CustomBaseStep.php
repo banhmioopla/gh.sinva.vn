@@ -18,7 +18,7 @@ class CustomBaseStep extends CI_Controller {
 			return redirect('Login');
 		}
 		
-		$this->load->model('ghActivityTrack');
+		$this->load->model(['ghActivityTrack', 'ghUser']);
 		$this->district_default = '7';
 		$this->auth = $this->session->userdata('auth');
 		$this->load->library('LibRole', null, 'libRole');
@@ -34,6 +34,19 @@ class CustomBaseStep extends CI_Controller {
 		$this->list_district_CRUD = [];
 		foreach($ghUserDistrict as $ud) {
 			$this->list_district_CRUD[] = $ud['district_code'];
+		}
+
+		$current_user = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
+		$authorised_user = $this->ghUser->get(['account_id' => $current_user[0]['authorised_user_id']]);
+		if(!empty($authorised_user)) {
+			$this->permission_modify[] = $this->auth['role_code'];
+			$this->menu =array_merge($this->menu, );
+			$temp_menu = $this->menu;
+			foreach($this->config->item('accesscontrol')[$authorised_user[0]['role_code']] as $item) {
+				if(!in_array($item, $temp_menu)) 
+					$temp_menu[] = $item;
+			}
+			$this->menu = $temp_menu;
 		}
 		
 	}

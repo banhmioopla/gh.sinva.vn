@@ -27,14 +27,6 @@ class Apartment extends CustomBaseStep {
 	public function show(){
 		$data['permissions'] = ['product-manager', 'customer-care'];
 
-		$current_user = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
-		$authorised_user = $this->ghUser->get(['account_id' => $current_user[0]['authorised_user_id']]);
-		if(!empty($authorised_user)) {
-			$this->permission_modify[] = $this->auth['role_code'];
-			$this->menu =array_merge($this->menu, $this->config->item('accesscontrol')[$authorised_user[0]['role_code']]);
-			
-		}
-
 		$district_code = $this->input->get('district-code');
 		$data = [];
 		$district_code = !empty($district_code) ? $district_code: $this->district_default;
