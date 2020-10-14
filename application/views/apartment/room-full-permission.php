@@ -68,6 +68,13 @@
                         <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                             <i class="mdi mdi-delete"></i>
                         </button>
+                        <?php if($this->auth['role_code'] == 'customer-care'):?>
+                            <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
+                                <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                                    +<i class="mdi mdi-note-plus-outline"></i>
+                                </button>
+                            </a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
