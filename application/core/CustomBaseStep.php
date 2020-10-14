@@ -40,7 +40,6 @@ class CustomBaseStep extends CI_Controller {
 		$authorised_user = $this->ghUser->get(['account_id' => $current_user[0]['authorised_user_id']]);
 		if(!empty($authorised_user)) {
 			$this->permission_modify[] = $this->auth['role_code'];
-			$this->menu =array_merge($this->menu, );
 			$temp_menu = $this->menu;
 			foreach($this->config->item('accesscontrol')[$authorised_user[0]['role_code']] as $item) {
 				if(!in_array($item, $temp_menu)) 
