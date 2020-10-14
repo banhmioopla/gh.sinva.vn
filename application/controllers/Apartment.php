@@ -25,7 +25,9 @@ class Apartment extends CustomBaseStep {
     }
 
 	public function show(){
-		$data['permissions'] = ['product-manager', 'customer-care'];
+		if($this->authorised_mode) {
+			$this->permission_modify[] = $this->auth['role_code'];
+		}
 
 		$district_code = $this->input->get('district-code');
 		$data = [];
