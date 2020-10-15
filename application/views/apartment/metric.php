@@ -55,3 +55,23 @@
     </div>
 
 <?php endif; ?>
+
+<?php if($list_available_room_price): ?>
+    <div class="card-box tilebox-one">
+        <i class="mdi mdi-cat float-right text-success"></i>
+        <ul class="font-weight-bold">
+        <?php 
+            foreach($list_available_room_price as $room): 
+        ?>
+        <li class="m-b-20 text-success" >
+                <?= strip_tags(number_format($room['room_price']))?> 
+                <span class=" badge badge-success badge-pill">  <?= $room['object_counter'] ?> P</span>
+        </li>
+        <?php 
+            endforeach;
+        ?>
+        </ul>
+        
+    </div>
+
+<?php endif; ?>

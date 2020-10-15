@@ -60,6 +60,55 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-8">
+                <div class="card-box">
+                    <div class="head-title font-600">Thống Kê Phòng Trống</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col">Quận</th>
+                            <th scope="col">Danh Sách Giá - Số Lượng</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                        <?php foreach($list_district as $d):?>
+                        <?php 
+                        
+                        $list_room_price = $this->ghRoom->getPriceByDistrict($d['code'], 'gh_room.status = "Available" ');    
+                        ?>
+                            <tr>
+                                <td><?= $d['name'] ?></td>
+                                <td class="text-left">
+                                <div class="card-box tilebox-one">
+                                    <?php 
+                                        if($list_room_price):
+                                            $total = 0;
+                                        foreach($list_room_price as $room): 
+                                            $total += $room['object_counter'];
+                                    ?>
+                                    <li class="m-b-20 text-success" >
+                                    <span class=" badge badge-success badge-pill mr-2">  <?= $room['object_counter'] ?> P</span>
+                                            <?= strip_tags(number_format($room['room_price']))?> 
+                                    </li>
+                                    <?php 
+                                        endforeach;
+                                        echo "<hr>
+                                        <div class='font-weight-bold'>Tổng Số lượng:  ".$total."</div>";
+                                    else: echo "<div class='text-danger'> Không có phòng trống<div>";
+                                    endif;
+                                    ?>
+                                    
+                                </div>
+                                </td>
+                            </tr>
+                        <?php endforeach;?>
+                        </tbody>
+                    </table>
+                    <div id="table">
+                    </div>
+                </div>
+            </div>
         </div> <!-- end row -->
 
     </div> <!-- end container -->

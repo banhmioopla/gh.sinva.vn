@@ -37,7 +37,7 @@ class Dashboard extends CustomBaseStep {
 
         $list_contract = $this->ghContract->get();
         $total_contract = $list_contract ? count($list_contract) : 0;
-
+        $data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
         $data = [
             'total_customer' => $total_customer,
             'total_apartment' => $total_apartment,
@@ -45,7 +45,8 @@ class Dashboard extends CustomBaseStep {
             'total_contract' => $total_contract,
             'total_room_ready' => $total_room_ready,
             'total_room_available' => $total_room_available,
-            'total_room_full' => $total_room_full
+            'total_room_full' => $total_room_full,
+            'list_district' => $this->ghDistrict->get(['active' => 'YES'])
         ];
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('dashboard/show', $data);
