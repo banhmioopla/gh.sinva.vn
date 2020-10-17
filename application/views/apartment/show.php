@@ -149,6 +149,11 @@ function money_format11( $n, $precision = 1 ) {
                                 href="#modal-apartment-detail-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>">
                                 <i class="mdi mdi-eye"></i>
                             </a>
+                            <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
+                                <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                                    <i class="mdi mdi-folder-multiple-image"></i>
+                                </button>
+                            </a>
                             
                             <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                 <i class="mdi mdi-folder-multiple-image"></i>
