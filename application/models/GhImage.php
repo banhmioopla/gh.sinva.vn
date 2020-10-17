@@ -13,7 +13,7 @@ class GhImage extends CI_Model{
         if($apm_id){ 
             $this->db->where(['apartment_id' => $apm_id, 'active' => 'YES']); 
             $query = $this->db->get(); 
-            $result = $query->row_array(); 
+            $result = $query->result_array(); 
         }else{ 
             $this->db->where(['active' => 'YES']); 
             $this->db->order_by('time_insert','desc'); 
