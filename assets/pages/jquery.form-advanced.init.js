@@ -15,7 +15,7 @@ jQuery(document).ready(function () {
     });
 
     $('.selectpicker').selectpicker();
-    $(":file").filestyle({input: false});
+    $(":file").filestyle({ input: false });
 });
 
 

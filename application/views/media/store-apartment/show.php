@@ -1,3 +1,8 @@
+<?php 
+$role_delete = ['product-manager'];
+
+?>
+
 <div class="wrapper">
     <div class="container-fluid">
 
@@ -12,7 +17,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Starter</h4>
+                    <h4 class="page-title">Upload ảnh dự án</h4>
                 </div>
             </div>
         </div>
@@ -21,51 +26,35 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
-                    <h4 class="m-t-0 header-title">Upload Ảnh dự Án</h4>
-                    <h5 class="text-warning"><?= 'tại '.$apartment_model['address_street'] ?></h5>
-                    <p class="text-muted mb-0 font-14">
-                        Từ khi cúp họp, tôi quyết tâm mần chỗ upload ảnh này thiệt là đầu tư. 1 bức ảnh thuộc nhiều thể loại mà bạn muốn... let's kill this love
-                    </p>
+                    <span class="text-danger">Tính năng này đang thử nghiệm</span>
+                    <blockquote class="blockquote">
+                        <p>Có thể upload nhiều ảnh theo mã phòng. Ảnh có viền màu vàng sẽ là ảnh ở chế độ đợi duyệt. Hiện tại dù ảnh chưa duyệt hay đã duyệt thì cũng được hiển thị. <br> Bạn có quy ước nào về tính năng này ?... </p>
+                        <footer class="blockquote-footer">vui lòng inbox <cite title="Source Title">Quốc Bình.</cite></footer>
+                    </blockquote>
 
+                    <h4 class="text-warning font-weight-bold"><?= $apartment_model['address_street'] ?></h4>
                     <div class="upload-section">
                     <form method="post" enctype="multipart/form-data" class='form-group row' action="/admin/upload-image?apartment-id=<?= $this->input->get('apartment-id') ?>">
-                        <div class="col-3">
-                            <select class="custom-select mt-3 form-control" name="room_type_id">
-                                <?= $cb_room_type ?>
-                            </select>
-                        </div>
-                        <div class="col-3">
-                            <select class="custom-select mt-3 form-control" name="number_of_floor">
-                                    <option value = 0 >Chọn lầu</option>
-                                <?php for($i = 1; $i <= (int)$apartment_model['number_of_floor']; $i ++):?>
-                                    <option value = <?= $i ?>>Lầu <?= $i ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                        <div class="col-3">
-                            <select class="custom-select mt-3 form-control" name="room_price_id">
-                                <?= $cb_price ?>
-                            </select>
-                        </div>
-                        <div class="col-3">
+                        <div class="col-md-4 col-12">
                             <select class="custom-select mt-3 form-control" name="room_id">
                                 <?= $cb_room_code ?>
                             </select>
                         </div>
-                        <div class="col-12 col-md-12">
+                        <div class="col-12 col-md-12 choose-img">
                             <div class="demo-box">
                                 <div class="form-group">
                                     <p class="mb-2 mt-4 font-weight-bold text-muted">chọn ảnh tại đây</p>
-                                    <input type="file" 
+                                    <input type="file"
+                                    required
                                     class="filestyle" 
                                     name="files[]" multiple
                                     data-input="false" data-btnClass="btn-danger ">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2 col-12 btn-upload">
                             <button type="submit" name="fileSubmit" value="UPLOAD" class="w-100 btn btn-custom waves-effect waves-light">
-                                    Thêm mới
+                                    Tải ảnh lên GH
                             </button>
                         </div>
                     </form>
@@ -78,15 +67,6 @@
             <div class="col-lg-12 col-md-12 col-sm-12 ">
                 <div class="portfolioFilter text-center gallery-second">
                     <a href="#" data-filter="*" class="current">Tất cả</a>
-
-                    <?php foreach($list_room_type as $type):?>
-                        <a href="#" data-filter=".roomtype-<?= $type['id'] ?>"><?= $type['name'] ?></a>
-                    <?php endforeach;?>
-                    <br>
-                    <?php foreach($list_price as $price):?>
-                        <a href="#" data-filter=".roomprice-<?= $price['id'] ?>"><?= money_format($price['code']) ?></a>
-                    <?php endforeach;?>
-                    <br>
                     <?php foreach($list_room_code as $room):?>
                         <a href="#" data-filter=".roomcode-<?= $room['id'] ?>"><?= $room['code'] ?></a>
                     <?php endforeach;?>
@@ -95,28 +75,38 @@
             </div>
         </div>
         <div class="port">
+            <div class="col-md-12">
+                <button class="btn m-1 btn-sm btn-outline-warning btn-rounded waves-light waves-effect download-img-all">
+                    <i class="mdi mdi-cloud-download"></i> Tải tất cả [đang code]...
+                </button>
+            </div>
             <div class="portfolioContainer">
             <?php if($list_img): ?>
             <?php foreach($list_img as $img): ?>
                 <div class="col-sm-6 col-md-3
-                <?= !empty($img['room_id']) ? 'roomcode-'.$img['room_id']:'' ?>
-                <?= !empty($img['room_type_id']) ? 'roomtype-'.$img['room_type_id']:'' ?>
-                <?= !empty($img['room_price_id']) ? 'roomprice-'.$img['room_price_id']:'' ?>
-                image-item">
-                    
+                <?= !empty($img['room_id']) ? 'roomcode-'.$img['room_id']:'' ?> image-item">
+                <?php 
+                    $imgStatus = $img['status'] == 'Pending' ? 'warning' : '';
+                ?>
                 <div class="portfolio-masonry-box">
-                    <a href="<?= base_url() ?>media/apartment/<?= $img['name'].'.jpg' ?>" class="image-popup">
-                        <div class="portfolio-masonry-img">
-                            <img src="<?= base_url() ?>media/apartment/<?= $img['name'].'.jpg'?>" class="thumb-img img-fluid"
+                    <a href="<?= base_url() ?>media/apartment/<?= $img['name']?>" class="image-popup" >
+                        <div class="portfolio-masonry-img border border-<?= $imgStatus ?>" style="border-width:3px">
+                            <img src="<?= base_url() ?>media/apartment/<?= $img['name']?>" class="thumb-img img-fluid"
                                 alt="work-thumbnail">
                         </div>
                     </a>
                     <div class="portfolio-masonry-detail">
                         <h4 class="font-18"><?= date('d-m-Y', $img['time_insert']) ?></h4>
                         <div class="d-flex justify-content-center">
+                            <?php if(in_array($this->auth['role_code'], $role_delete)): ?>
                             <button data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-img">
                                 <i class="mdi mdi-delete"></i>
                             </button>
+                            <?php endif; ?>
+
+                            <a data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-warning btn-rounded waves-light waves-effect download-img" download="<?= $apartment_model['address_street'].'.'.$img['file_type']?>" href="<?= base_url() ?>media/apartment/<?= $img['name'] ?>">
+                                <i class="mdi mdi-cloud-download"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -161,6 +151,16 @@
             });
         });
         $(document).ready(function () {
+            $('.choose-img, .btn-upload').hide();
+            $('select[name=room_id]').on('change', function(){
+                console.log('change');
+                if($(this).val() == '0') {
+                    $('.choose-img, .btn-upload').hide();
+                } else {
+                    console.log('changexxx');
+                    $('.choose-img, .btn-upload').show();
+                }
+            });
             $('.delete-img').click(function(){
                 console.log($(this).data('img-id'));
                 var img_id = $(this).data('img-id');
@@ -173,6 +173,9 @@
                         this_btn.parents('.portfolio-masonry-box').remove();
                     }
                 });
+            });
+            $('.download-img-all').click(function(){
+                $('.download-img').click();
             });
             $('.image-popup').magnificPopup({
                 type: 'image',

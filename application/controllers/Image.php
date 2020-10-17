@@ -16,12 +16,8 @@ class Image extends CustomBaseStep {
     
     public function show() {
         $data = [];
-
         $apartment_id = $this->input->get('apartment-id');
         $room_id = $this->input->post('room_id');
-        $room_type_id = $this->input->post('room_type_id');
-        $room_price_id = $this->input->post('room_price_id');
-        $number_of_floor = $this->input->post('number_of_floor');
         
         if(!isset($apartment_id) and empty($apartment_id)) {
             redirect('notfound');
@@ -30,9 +26,7 @@ class Image extends CustomBaseStep {
         $apartment_model = $this->ghApartment->getById($apartment_id);
         $data['apartment_model'] = $apartment_model[0];
         
-        $data['cb_room_code'] = $this->libRoom->cbCodeByApartmentId($apartment_id, $room_id);
-        $data['cb_room_type'] = $this->libBaseRoomType->cbActive($room_type_id);          
-        $data['cb_price'] = $this->libBasePrice->cbActive($room_price_id);          
+        $data['cb_room_code'] = $this->libRoom->cbCodeByApartmentId($apartment_id, $room_id);         
 
 
         $submit_upload = $this->input->post('fileSubmit');
@@ -51,34 +45,35 @@ class Image extends CustomBaseStep {
             $this->upload->initialize($config); 
             $filesCount = count($_FILES['files']['name']); 
             $max_id = $this->ghImage->getMaxId()[0]['id'];
+            $uploadData = [];
             if(empty($max_id)){
                 $max_id = 1;
             }
-            
             for($i = 0; $i < $filesCount; $i++){ 
-                $_FILES['file']['name']  ='id'.$max_id.'-apm_'.$apartment_id.'-init_'.$time.'.jpg'; 
-                $_FILES['file']['type']     = $_FILES['files']['type'][$i]; 
+                
+                $ext = explode(".",$_FILES['files']['name'][$i])[1];
+                $file_name = 'apartment-'.$apartment_id.'-'.$time.'.'.$ext;
+
+                $_FILES['file']['name']  = $file_name; 
+                $_FILES['file']['type']  = $_FILES['files']['type'][$i]; 
                 $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i]; 
-                $_FILES['file']['error']     = $_FILES['files']['error'][$i]; 
-                $_FILES['file']['size']     = $_FILES['files']['size'][$i]; 
+                $_FILES['file']['error']    = $_FILES['files']['error'][$i]; 
+                $_FILES['file']['size'] = $_FILES['files']['size'][$i]; 
                 
                 if($this->upload->do_upload('file')){ 
                     // Uploaded file data 
                     $fileData = $this->upload->data(); 
-                    $uploadData[$i]['name'] = 'id'.$max_id.'-apm_'.$apartment_id.'-init_'.$time; 
-                    $uploadData[$i]['file_type'] = $fileData['image_type']; 
+                    $uploadData[$i]['name'] = $file_name; 
+                    $uploadData[$i]['file_type'] = $ext; 
                     $uploadData[$i]['time_insert'] = $time;
-                    $uploadData[$i]['apartment_id'] = $apartment_id; 
                     $uploadData[$i]['room_id'] = $room_id; 
-                    $uploadData[$i]['room_type_id'] = $room_type_id; 
-                    $uploadData[$i]['room_price_id'] = $room_price_id; 
-
+                    $uploadData[$i]['user_id'] = $this->auth['role_code']; 
+                    $uploadData[$i]['status'] = 'Pending'; 
                     $max_id += 1;
                 }
             } 
-                  
+            
             if(!empty($uploadData)){ 
-                // Insert files data into the database 
                 $insert = $this->ghImage->insert($uploadData);  
             }
         }

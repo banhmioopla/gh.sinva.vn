@@ -122,11 +122,11 @@
                                 data-target="#modal-apartment-detail-<?=$apartment['id'] ?>">
                                 <i class="mdi mdi-eye"></i>
                             </button>
-                            <!-- <a href="/admin/upload-image?apartment-id=<?//=$apartment['id'] ?>" target="_blank"> -->
-                                <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                            <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
+                                <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                     <i class="mdi mdi-folder-multiple-image"></i>
-                                </button> -->
-                            <!-- </a> -->
+                                </button>
+                            </a>
                             
                             <button type="button" 
                                     data-apartment-id="<?= $apartment['id'] ?>" 

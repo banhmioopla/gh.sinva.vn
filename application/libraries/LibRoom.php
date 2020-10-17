@@ -34,7 +34,7 @@ class LibRoom {
                 if($room['id'] == $room_id) {
                     $selected = 'selected';
                 }
-                $cb .= '<option '.$selected.' value='.$room['id'].'>'.$room['code'].'</option>';
+                $cb .= '<option '.$selected.' value='.$room['id'].'>'.$room['code']. ' - Giá: '.number_format($room['price']).'</option>';
             }
         }
         return $cb;
