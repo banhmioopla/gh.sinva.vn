@@ -52,7 +52,7 @@ class Image extends CustomBaseStep {
             for($i = 0; $i < $filesCount; $i++){ 
                 
                 $ext = explode(".",$_FILES['files']['name'][$i])[1];
-                $file_name = 'apartment-'.$apartment_id.'-'.$time.'.'.$ext;
+                $file_name = $max_id.'-apartment-'.$apartment_id.'-'.$time.'.'.$ext;
 
                 $_FILES['file']['name']  = $file_name; 
                 $_FILES['file']['type']  = $_FILES['files']['type'][$i]; 
