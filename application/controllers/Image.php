@@ -67,6 +67,7 @@ class Image extends CustomBaseStep {
                     $uploadData[$i]['file_type'] = $ext; 
                     $uploadData[$i]['time_insert'] = $time;
                     $uploadData[$i]['room_id'] = $room_id; 
+                    $uploadData[$i]['apartment_id'] = $apartment_id; 
                     $uploadData[$i]['user_id'] = $this->auth['role_code']; 
                     $uploadData[$i]['status'] = 'Pending'; 
                     $max_id += 1;
@@ -74,10 +75,10 @@ class Image extends CustomBaseStep {
             } 
             
             if(!empty($uploadData)){ 
-                $insert = $this->ghImage->insert($uploadData);  
+                $insert = $this->ghImage->insert($uploadData);
             }
         }
-        $data['list_img'] = $this->ghImage->getRows();
+        $data['list_img'] = $this->ghImage->getRows($apartment_id);
         $data['list_price'] = $this->ghBasePrice->get(['active' => true]);
         $data['list_room_type'] = $this->ghBaseRoomType->get(['active' => true]);
         $data['list_room_code'] = $this->ghRoom->get(['active' => true, 'apartment_id' => $apartment_id]);

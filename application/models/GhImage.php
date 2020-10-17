@@ -7,11 +7,11 @@ class GhImage extends CI_Model{
     } 
      
     
-    public function getRows($id = ''){ 
+    public function getRows($apm_id = ''){ 
         $this->db->select('*'); 
         $this->db->from('gh_media'); 
-        if($id){ 
-            $this->db->where(['id' => $id, 'active' => 'YES']); 
+        if($apm_id){ 
+            $this->db->where(['apartment_id' => $apm_id, 'active' => 'YES']); 
             $query = $this->db->get(); 
             $result = $query->row_array(); 
         }else{ 
