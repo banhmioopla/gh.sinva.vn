@@ -21,6 +21,7 @@
         </div>
         
         <div class="district-alert"></div>
+        <h3 class="page-title">Bộ Phận Dự Án</h3>
         <div class="row">
             <div class="col-12 col-md-3">
                 <div class="card-box widget-flat border-primary bg-primary text-white">
@@ -36,36 +37,47 @@
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng</p>
                 </div>
             </div>
+        </div> <!-- end row -->
+        <h3 class="page-title">Bộ Phận Chăm Sóc Khách Hàng</h3>
+        <div class="row">
             <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
+                <div class="card-box widget-flat border-custom bg-custom text-white">
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10"><?= $total_customer ?></h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng khách hàng</p>
                 </div>
             </div>
             <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
+                <div class="card-box widget-flat border-custom bg-custom text-white">
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10"><?= $total_contract ?></h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng hợp đồng</p>
                 </div>
             </div>
-            <?php $total_contract_this_month = 0; foreach($list_contract as $contract){
+            <?php 
+                $total_contract_this_month = 0; 
+                $total_contract_value_this_month = 0;
+                foreach($list_contract as $contract){
                     if($contract['time_check_in'] > strtotime(date('01-m-Y'))){
                         $total_contract_this_month += 1;
+                        $total_contract_value_this_month += $contract['room_price'];
                     }
                 }?>
             <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
+                <div class="card-box widget-flat border-custom bg-custom text-white">
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10"><?= $total_contract_this_month ?></h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng hợp đồng tháng <?= date('m/Y') ?></p>
                 </div>
             </div>
-            
-    
-            
-        </div> <!-- end row -->
+            <div class="col-12 col-md-3">
+                <div class="card-box widget-flat border-custom bg-custom text-white">
+                    <i class="fi-tag"></i>
+                    <h3 class="m-b-10"><?= number_format($total_contract_value_this_month) ?> vnđ</h3>
+                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng giá trị hợp đồng tháng <?= date('m/Y') ?></p>
+                </div>
+            </div>
+        </div>
         <h3 class="page-title">Bộ Phận Huấn Luyện Đào Tạo</h3>
         <div class="row">
             <div class="col-12 col-md-3">
@@ -130,6 +142,7 @@
                 </div>
             </div>
         </div>
+        <h3 class="page-title">Biểu đồ</h3>
         <div class="row">
             <div class="col-lg-4">
                 <div class="card-box">
