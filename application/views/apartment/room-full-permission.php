@@ -16,7 +16,9 @@
             <th>Trạng Thái</th>
             <th>Ng.Trống</th>
             <!-- <th>Dẫn khách</th> -->
-            <th>Tùy Chọn</th>
+            <?php if($check_option):?>
+            <th>Tùy chọn</th>
+            <?php endif; ?>
         </tr>
         </thead>
         <tbody>
@@ -64,19 +66,26 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['consulting_user_id'] ?>"
                             data-name="consulting_user_id"><?= $room['consulting_user_id'] ? $libUser->getNameByAccountid($room['consulting_user_id']) :'#' ?></div></td> -->
-                    <td class="d-flex justify-content-center">
-                        <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
-                            <i class="mdi mdi-delete"></i>
-                        </button>
-                        <a href="###" class=""></a>
-                        <?php if($this->auth['role_code'] == 'customer-care'):?>
-                            <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
-                                <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                    +<i class="mdi mdi-note-plus-outline"></i>
-                                </button>
-                            </a>
-                        <?php endif; ?>
+                    <?php if($check_option):?>
+                        <td class="d-flex flex-column flex-md-row justify-content-center">
+                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                                <i class="mdi mdi-delete"></i>
+                            </button>
+                        <?php if($check_contract):?>
+                        <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
+                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                                <i class="mdi mdi-file-document"></i>
+                            </button>
+                        </a>
+                        <?php endif;?>
+
+                        <?php if($check_consultant_booking):?>
+                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-success consultant-booking btn-rounded waves-light waves-effect">
+                                <i class="mdi mdi-car-hatchback"></i>
+                            </button>
+                        <?php endif;?>
                     </td>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
             <?php endif; ?>

@@ -37,6 +37,8 @@
     <!-- chart -->
     <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.min.js"></script>
     <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.pie.js"></script>
+    <!-- sweetalert2 -->
+    <script src="<?= $js_plugins_path ?>sweet-alert/sweetalert2.min.js"></script>
     <!-- datepicker -->
     <script src="<?= $js_plugins_path ?>bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <!-- App js -->

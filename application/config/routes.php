@@ -150,6 +150,12 @@ $route['admin/list-apartment'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/create-consultant-booking'] = function($params = []) {
+	$controller = 'Apartment';
+	$action = '/createConsultantBooking';
+	return $controller.$action;
+};
+
 $route['normal/list-apartment'] = function($params = []) {
 	$controller = 'role-sale/Apartment';
 	$action = '/showNormal';

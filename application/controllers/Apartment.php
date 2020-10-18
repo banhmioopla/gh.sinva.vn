@@ -6,7 +6,7 @@ class Apartment extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag', 'ghApartmentComment']);
+		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag', 'ghApartmentComment', 'ghConsultantBooking']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -29,11 +29,14 @@ class Apartment extends CustomBaseStep {
 			$this->permission_modify[] = $this->auth['role_code'];
 		}
 
+		
+
 		$district_code = $this->input->get('district-code');
 		$data = [];
 		$district_code = !empty($district_code) ? $district_code: $this->district_default;
 		
 		$data['district_code'] = $district_code;
+		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime('d-m-Y')]);
 		
 		$data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
 		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
@@ -85,6 +88,27 @@ class Apartment extends CustomBaseStep {
 		];
 
 		$this->ghApartmentComment->insert($data);
+		return json_encode([
+		]);
+	}
+
+	public function createConsultantBooking(){
+		$post  = $this->input->post();
+		if($post['time']) {
+			if(empty($post['time'])) {
+				$post['time'] = null;
+			} else {
+				$post['time'] = str_replace('/', '-', $post['time']);
+				$post['time'] = strtotime((string)$post['time']);
+			}
+		}
+
+		$data = [
+			'booking_user_id' => $this->auth['account_id'],
+			'time_booking' => $post['time'],
+			'room_id' => $post['roomId'],
+		];
+		$this->ghConsultantBooking->insert($data);
 		return json_encode([
 		]);
 	}

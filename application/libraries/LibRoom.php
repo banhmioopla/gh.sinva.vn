@@ -20,6 +20,19 @@ class LibRoom {
         return $room ? $room[0]['code'] : '';
     }
 
+    public function getAddressById($room_id) {
+        $room = $this->CI->ghRoom->get(['id' => $room_id, 'active' => 'YES']);
+        $address = '[không có thông tin]';
+        if($room) {
+            $address = '[không có thông tin] xx ';
+            $apartment = $this->CI->ghApartment->get(['id' => $room[0]['apartment_id']]);
+            if($apartment) {
+                $address = $apartment[0]['address_street'];
+            }
+        }
+        return $address;
+    }
+
     public function getByApartmentIdAndActive($apartment_id) {
         $room_list = $this->CI->ghRoom->getByApartmentIdAndActive($apartment_id);
         return $room_list;

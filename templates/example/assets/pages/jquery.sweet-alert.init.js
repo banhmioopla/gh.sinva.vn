@@ -60,11 +60,11 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then(function () {
                 swal({
-                        title: 'Deleted !',
-                        text: "Your file has been deleted",
-                        type: 'success',
-                        confirmButtonClass: 'btn btn-confirm mt-2'
-                    }
+                    title: 'Deleted !',
+                    text: "Your file has been deleted",
+                    type: 'success',
+                    confirmButtonClass: 'btn btn-confirm mt-2'
+                }
                 )
             })
         });
@@ -141,8 +141,8 @@
                 title: '<i>HTML</i> <u>example</u>',
                 type: 'info',
                 html: 'You can use <b>bold text</b>, ' +
-                '<a href="//coderthemes.com/">links</a> ' +
-                'and other HTML tags',
+                    '<a href="//coderthemes.com/">links</a> ' +
+                    'and other HTML tags',
                 showCloseButton: true,
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-confirm mt-2',
@@ -222,8 +222,8 @@
                     title: 'All done!',
                     confirmButtonClass: 'btn btn-confirm mt-2',
                     html: 'Your answers: <pre>' +
-                    JSON.stringify(result) +
-                    '</pre>',
+                        JSON.stringify(result) +
+                        '</pre>',
                     confirmButtonText: 'Lovely!',
                     showCancelButton: false
                 })
@@ -239,7 +239,7 @@
                 confirmButtonText: 'Show my public IP',
                 confirmButtonClass: 'btn btn-confirm mt-2',
                 text: 'Your public IP will be received ' +
-                'via AJAX request',
+                    'via AJAX request',
                 showLoaderOnConfirm: true,
                 preConfirm: function () {
                     return new Promise(function (resolve) {
@@ -259,7 +259,7 @@
         $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert
 }(window.jQuery),
 
-//initializing
+    //initializing
     function ($) {
         "use strict";
         $.SweetAlert.init()

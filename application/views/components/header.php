@@ -26,6 +26,8 @@
         <link href="<?= $js_plugins_path ?>select2/css/select2.min.css" rel="stylesheet" />
         <!-- datepicker -->
         <link href="<?= $js_plugins_path ?>bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+        <!-- sweet -->
+        <link href="<?= $js_plugins_path ?>sweet-alert/sweetalert2.min.css" rel="stylesheet" type="text/css" />
         <!--venobox lightbox-->
         <link rel="stylesheet" href="<?= $js_plugins_path ?>magnific-popup/css/magnific-popup.css" />
         <!-- App css -->

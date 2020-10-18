@@ -9,6 +9,7 @@ class Contract extends CustomBaseStep {
 		$permission_roles = [
 			'admin',
 			'customer-care',
+			'product-manager', 'ceo','consultant', 'human-resources'
 		];
 
 		if(!in_array($this->auth['role_code'], $permission_roles)) {

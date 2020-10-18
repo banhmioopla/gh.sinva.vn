@@ -1,6 +1,11 @@
 <?php 
     include VIEWPATH.'functions.php';
 ?>
+<?php
+$check_contract = in_array($this->auth['role_code'], ['ceo', 'customer-care']);
+$check_consultant_booking = in_array($this->auth['role_code'], ['product-manager', 'ceo','consultant', 'human-resources']);
+$check_option = in_array($this->auth['role_code'], ['product-manager', 'ceo','consultant', 'human-resources']);
+?>
 
 <div class="wrapper">
     <div class="sk-wandering-cubes" style="display:none" id="loader">
@@ -26,6 +31,17 @@
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
             <div class="card card-body pl-0 pr-0 col-12 col-md-8">
+                <?php if(count($consultant_booking)):?>
+                    <?php foreach($consultant_booking as $booking):?>
+                    <div class=" m-2 alert alert-primary alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <?= '<strong>'.$this->libUser->getNameByAccountid($booking['booking_user_id']) . '</strong> đã đăng ký dẫn khách ngày </strong> <strong>'. date('d/m/Y', $booking['time_booking']). '</strong> tại '. $this->libRoom->getAddressById($booking['room_id']) . ' : <strong>' . $this->libRoom->getCodeById($booking['room_id']). '</strong>'  ?>
+                    </div>
+                    <?php endforeach; ?>
+                
+                <?php endif; ?>
                 <div class="mt-2 mb-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap">
                     <?php foreach($list_district as $district): ?>
@@ -217,6 +233,9 @@
                                 <?php $this->load->view('apartment/room-full-permission',[
                                     'apartment' => $apartment,
                                     'libRoom' => $libRoom,
+                                    'check_option' =>$check_option,
+                                    'check_contract' =>$check_contract,
+                                    'check_consultant_booking' => $check_consultant_booking
                                 ]) ?>
                             </div>
                             <div class="tab-pane" id="apm-map">
@@ -529,6 +548,46 @@
                 $(this).prev().toggle();
                 return false;
             });
+        });
+
+            //Warning Message
+            $('.consultant-booking').click(function () {
+            let thisBooking = $(this);
+            let time = null;
+            swal({
+                title: '',
+                text: "Chúc Bạn Chốt Khách Thành Công!",
+                type: 'warning',
+                html: `
+                    <label>Vui Lòng Chọn Ngày Dẫn Khách</label>
+                    <input required class="datepicker form-control booking-time">`,
+                showCancelButton: true,
+                confirmButtonClass: 'btn btn-confirm mt-2',
+                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                confirmButtonText: 'Book',
+                onOpen: function() {
+                    $('.datepicker').datepicker({
+                        format: "dd/mm/yyyy",
+                    });
+                },
+            }).then(function () {
+                roomId = thisBooking.data('room-id');
+                time = $('.booking-time').val();
+                console.log(time);
+                console.log
+                $.ajax({
+                    method: "post",
+                    url: "<?= base_url(). 'admin/create-consultant-booking' ?>",
+                    data: {roomId: roomId, time: time }
+                });
+                swal({
+                    title: 'Đã Book Xong!',
+                    type: 'success',
+                    confirmButtonClass: 'btn btn-confirm mt-2'
+                }
+                );
+
+            })
         });
         
         
