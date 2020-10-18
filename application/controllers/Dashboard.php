@@ -26,6 +26,7 @@ class Dashboard extends CustomBaseStep {
         $total_apartment = $list_apartment ? count($list_apartment) : 0;
 
         $list_room = $this->ghRoom->get(['active' => 'YES']);
+        $list_user = $this->ghUser->get(['active' => 'YES', 'account_id > ' => 171020000]);
         $total_room = $list_room ? count($list_room) : 0;
         
         $list_room_ready = $this->ghRoom->get(['time_available > ' => 0, 'active' => 'YES']);
@@ -46,7 +47,9 @@ class Dashboard extends CustomBaseStep {
             'total_room_ready' => $total_room_ready,
             'total_room_available' => $total_room_available,
             'total_room_full' => $total_room_full,
-            'list_district' => $this->ghDistrict->get(['active' => 'YES'])
+            'list_district' => $this->ghDistrict->get(['active' => 'YES']),
+            'list_contract' => $list_contract,
+            'list_user' => $list_user
         ];
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('dashboard/show', $data);
