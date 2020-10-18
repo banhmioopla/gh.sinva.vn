@@ -188,7 +188,13 @@ $accesscontrol['human-resources'] = [
         'name' => 'DS Thành Viên',
         'url' => '/admin/list-user',
         'class-icon' => null,
-        'submenu' => null
+        'submenu' => [
+            [
+                'name' => 'DS Quyền',
+                'url' => '/admin/list-role',
+                'submenu' => null
+            ],
+        ]
     ]
 ];
 
