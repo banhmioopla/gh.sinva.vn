@@ -29,12 +29,31 @@ class User extends CustomBaseStep {
 	
 		$post = $this->input->post();
 		$data['time_insert'] = $data['time_update'] = time();
-		$data['password'] = $post['account_id'];
+		$data['password'] = $data['account_id'] = $post['account_id'];
 		$data['role_code'] = 'consultant';
-		$data['leader_id'] = $this->auth['account_id'] ;
-		$data['date_of_birth'] = strtotime($post['date_of_birth']);
-		$data['time_joined'] = strtotime($post['time_joined']);
+		$data['name'] = $post['name'];
+		$data['phone_number'] = $post['phone_number'];
 
+		if($post['date_of_birth']) {
+			if(empty($post['date_of_birth'])) {
+				$post['date_of_birth'] = null;
+			} else {
+				$post['date_of_birth'] = str_replace('/', '-', $post['date_of_birth']);
+				$post['date_of_birth'] = strtotime((string)$post['date_of_birth']);
+			}
+		}
+		if($post['time_joined']) {
+			if(empty($post['time_joined'])) {
+				$post['time_joined'] = null;
+			} else {
+				$post['time_joined'] = str_replace('/', '-', $post['time_joined']);
+				$post['time_joined'] = strtotime((string)$post['time_joined']);
+			}
+		}
+		$data['time_joined'] = $post['time_joined'];
+		$data['date_of_birth'] = $post['time_joined'];
+		$data['date_of_birth'] = $post['time_joined'];
+		$data['time_insert'] = time();
 		$result = $this->ghUser->insert($data);
 		$this->session->set_flashdata('fast_notify', [
 			'message' => 'Tạo thành viên: <strong>'.$data['account_id'].'<strong> thành công ',
