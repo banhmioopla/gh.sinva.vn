@@ -1,3 +1,10 @@
+<?php 
+$check_authorised = in_array($this->auth['role_code'], ['product-manager']);
+$check_role = in_array($this->auth['role_code'], ['product-manager', 'human-resources']);
+$check_birth = in_array($this->auth['role_code'], ['human-resources']);
+$check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
+?>
+
 <div class="wrapper">
 <div class="sk-wandering-cubes" style="display:none" id="loader">
     <div class="sk-cube sk-cube1"></div>
@@ -36,10 +43,19 @@
                         <tr>
                             <th class="text-center">ID</th>
                             <th>Tên</th>
+                            <?php if($check_role): ?>
                             <th>Quyền</th>
+                            <?php endif; ?>
                             <th>SĐT</th>
+                            <?php if($check_birth): ?>
                             <th>Sinh nhật</th>
+                            <?php endif; ?>
+                            <?php if($check_time_joined):?>
+                            <th>Ngày Vào Làm</th>
+                            <?php endif; ?>
+                            <?php if($check_authorised):?>
                             <th>Ủy quyền cho</th>
+                            <?php endif;?>
                             <th class="text-center">Mở</th>
                             <!-- <th class="text-center">Tùy Chọn</th> -->
                         </tr>
@@ -62,11 +78,13 @@
                                     </div>
                                 </td>
                                 <td>
+                                <?php if($check_role): ?>
                                 <div class="user-role_code"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-value = "<?= $row['role_code'] ?>"
                                         data-name="role_code">quyền <?= $libRole->getNameByCode($row['role_code']) ?></div>
                                 </td>
+                                <?php endif; ?>
                                 <td>
                                     <div class="user-phone_number user"
                                         data-pk="<?= $row['id'] ?>" 
@@ -74,13 +92,27 @@
                                         <?= $row['phone_number'] ?>
                                     </div>
                                 </td>
+                                <?php if($check_birth): ?>
                                 <td>
                                     <div class="user-date_of_birth user"
                                         data-pk="<?= $row['id'] ?>" 
-                                        data-name="date_of_birth">
-                                        <?= $row['date_of_birth'] ? date('d-m-Y',$row['date_of_birth']) :'#' ?>
+                                        data-name="date_of_birth"
+                                        data-value ="<?= $row['date_of_birth'] > 0 ? date('d-m-Y',$row['date_of_birth']) :'' ?>">
+                                        <?= $row['date_of_birth'] ? date('d/m/Y',$row['date_of_birth']) :'#' ?>
                                     </div>
                                 </td>
+                                <?php endif; ?>
+                                <?php if($check_time_joined): ?>
+                                <td>
+                                    <div class="user-time_joined user"
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="time_joined"
+                                        data-value ="<?= $row['time_joined'] > 0 ? date('d-m-Y',$row['time_joined']) :'' ?>">
+                                        <?= $row['time_joined'] ? date('d/m/Y',$row['time_joined']) :'#' ?>
+                                    </div>
+                                </td>
+                                <?php endif; ?>
+                                <?php if($check_authorised):?>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-authorised">
@@ -93,6 +125,7 @@
                                         </div>
                                     </div>
                                 </td>
+                                <?php endif; ?>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-active-user">
@@ -108,7 +141,7 @@
                                 <!-- <td>
                                     <div class="d-flex justify-content-center">
                                         <button id='user-del-<?//= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-user">
-                                            <i class="mdi mdi-delete"></i>
+                                            <i class="fa-check"></i>
                                         </button>    
                                     </div>
                                 </td> -->
@@ -132,15 +165,22 @@
                         <div class="form-group row">
                             <label for="date_of_birth" class="col-md-4 col-12 col-form-label">Ngày Sinh<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
-                                <input type="text" required class="form-control"
+                                <input type="text" required class="form-control datepicker"
                                         id="date_of_birth" name="date_of_birth" placeholder="31/12/1999">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="time_joined" class="col-md-4 col-12 col-form-label">Ngày Vào Làm<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <input type="text" required class="form-control datepicker"
+                                        id="time_joined" name="time_joined" placeholder="<?= date('d/m/Y') ?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="phone_number" class="col-md-4 col-12 col-form-label">Số điện thoại<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <input type="text" required class="form-control"
-                                        id="phone_number" name="phone_number" placeholder="0911 222 333">
+                                        id="phone_number" name="phone_number" placeholder="0911123123">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -194,11 +234,31 @@
         // if(modify_mode == false) return;
 
         $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: "dd/mm/yyyy"
+            });
             $('#table-user').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true,
                 "fnDrawCallback": function() {
+                    
+                    $('.user-date_of_birth, .user-time_joined').editable({
+                        placement: 'right',
+                        type: 'combodate',
+                        template:"D / MM / YYYY",
+                        format:"DD-MM-YYYY",
+                        viewformat:"DD-MM-YYYY",
+                        
+                        mode: 'inline',
+                        combodate: {
+                            firstItem: 'name',
+                            maxYear: '2020',
+                            minYear: '1990'
+                        },
+                        inputclass: 'form-control-sm',
+                        url: '<?= base_url()."admin/update-user-editable" ?>'
+                    });
                     $('.is-active-user input[type=checkbox]').click(function() {
                         var is_active = 'NO';
                         var this_id = $(this).attr('id');

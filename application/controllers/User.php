@@ -16,7 +16,7 @@ class User extends CustomBaseStep {
     }
 
 	private function show(){
-		$data['list_user'] = $this->ghUser->getAll();
+		$data['list_user'] = $this->ghUser->get(['account_id >' => 171020000]);
 		$data['max_account_id'] = $this->ghUser->getMaxAccountId()[0]['account_id'];
 		$data['libRole'] = $this->libRole;
 		/*--- Load View ---*/
@@ -27,12 +27,13 @@ class User extends CustomBaseStep {
 
 	public function create() {
 	
-		$data = $this->input->post();
+		$post = $this->input->post();
 		$data['time_insert'] = $data['time_update'] = time();
-		$data['password'] = $data['account_id'];
+		$data['password'] = $post['account_id'];
 		$data['role_code'] = 'consultant';
 		$data['leader_id'] = $this->auth['account_id'] ;
-		$data['date_of_birth'] = strtotime($data['date_of_birth']);
+		$data['date_of_birth'] = strtotime($post['date_of_birth']);
+		$data['time_joined'] = strtotime($post['time_joined']);
 
 		$result = $this->ghUser->insert($data);
 		$this->session->set_flashdata('fast_notify', [
@@ -84,10 +85,18 @@ class User extends CustomBaseStep {
 					$field_value = $this->auth['account_id'];
 				}
 			}
+			
+			if($field_name == 'date_of_birth' || $field_name == 'time_joined') {
+				if(empty($field_value)) {
+					$field_value = null;
+				} else {
+					$field_value = str_replace('/', '-', $field_value);
+					$field_value = strtotime((string)$field_value);
+				}
+			}
 			$data = [
 				$field_name => $field_value
 			];
-
 			$old_user = $this->ghUser->getById($user_id);
 			$old_log = json_encode($old_user[0]);
 			
@@ -128,7 +137,6 @@ class User extends CustomBaseStep {
 	
 		if(!empty($user_id)) {
 			$old_user = $this->ghUser->getById($user_id);
-			// var_dump($old_user[0]); die;
 			$log = [
 				'table_name' => 'gh_user',
 				'old_content' => null,

@@ -168,7 +168,7 @@ $accesscontrol['product-manager'] = [
     ]
 ];
 
-$accesscontrol['human-resource'] = [
+$accesscontrol['human-resources'] = [
     [
         'name' => 'Tòa nhà',
         'url' => '/admin/helloA',
@@ -178,6 +178,7 @@ $accesscontrol['human-resource'] = [
     [
         'name' => 'Phòng',
         'url' => '/admin/helloA',
+        'class-icon' => null,
         'submenu' => [
             [
                 'name' => 'F1',
@@ -196,6 +197,12 @@ $accesscontrol['human-resource'] = [
             ]
         ]
     ],
+    [
+        'name' => 'DS Thành Viên',
+        'url' => '/admin/list-user',
+        'class-icon' => null,
+        'submenu' => null
+    ]
 ];
 
 $accesscontrol['consultant'] = [
