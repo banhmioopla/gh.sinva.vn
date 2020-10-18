@@ -36,7 +36,7 @@ class Apartment extends CustomBaseStep {
 		$district_code = !empty($district_code) ? $district_code: $this->district_default;
 		
 		$data['district_code'] = $district_code;
-		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime('d-m-Y')]);
+		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);
 		
 		$data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
 		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
