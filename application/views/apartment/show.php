@@ -94,7 +94,7 @@ function money_format11( $n, $precision = 1 ) {
                                     max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
                     </div>
                     <div class="col-4 text-right">
-                        <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['direction'] ? $apartment['direction']:'#' ?></a>
+                        <a class="apm-direction text-secondary font-weight-bold"><?= $apartment['direction'] ? $label_apartment[$apartment['direction']]:'#' ?></a>
                     </div>
                         <h4 class="col text-center d-none">Tiêu đề Shock</h4>
                     </div>
