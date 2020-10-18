@@ -170,32 +170,19 @@ $accesscontrol['product-manager'] = [
 
 $accesscontrol['human-resources'] = [
     [
-        'name' => 'Tòa nhà',
-        'url' => '/admin/helloA',
-        'class-icon' => null,
+        'name' => 'Bảng điều khiển',
+        'url' => '/admin/list-dashboard',
         'submenu' => null
     ],
     [
-        'name' => 'Phòng',
-        'url' => '/admin/helloA',
-        'class-icon' => null,
-        'submenu' => [
-            [
-                'name' => 'F1',
-                'url' => '/admin/helloA1',
-                'submenu' => null
-            ],
-            [
-                'name' => 'F2',
-                'url' => '/admin/helloA2',
-                'submenu' => null
-            ],
-            [
-                'name' => 'Bảng điều khiển',
-                'url' => '/admin/list-dashboard',
-                'submenu' => null
-            ]
-        ]
+        'name' => 'Dự Án',
+        'url' => '/admin/list-apartment',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Google Drive',
+        'url' => '/admin/list-google',
+        'submenu' => null
     ],
     [
         'name' => 'DS Thành Viên',
