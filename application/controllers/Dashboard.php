@@ -39,6 +39,32 @@ class Dashboard extends CustomBaseStep {
         $list_contract = $this->ghContract->get();
         $total_contract = $list_contract ? count($list_contract) : 0;
         $data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
+        $chart_data = [];
+        $chart_data_trong = [];
+        $chart_data_full = [];
+        $chart_label = [];
+        $ii = 0;
+        foreach($data['list_district'] as $d) {
+            $chart_data[$ii] = [$ii, 0];
+            $chart_data_trong[$ii] = [$ii, 0];
+            $chart_data_full[$ii] = [$ii, 0];
+            $chart_label[$ii] = [$ii, $d['name']];
+            $ii ++;
+        }
+        
+        $iii = 0;
+        foreach($data['list_district'] as $d) {
+
+            // $list_apartment = $this->ghApartment->get(['active' => 'YES', 'district_code' => $d['code']]);
+            $chart_data[$iii] = [$iii,(int)$this->ghRoom->getNumberByDistrict($d['code'], 1)];
+            $chart_data_trong[$iii] = [$iii, (int)$this->ghRoom->getNumberByDistrict($d['code'], 'gh_room.status = "Available"')];
+            $chart_data_full[$iii] = [$iii, (int)$this->ghRoom->getNumberByDistrict($d['code'], 'gh_room.status = "Full"')];
+            $iii ++;
+        }
+        // echo "<pre>";
+        // var_dump($chart_data); 
+        // var_dump($chart_data_trong); 
+        // die;
         $data = [
             'total_customer' => $total_customer,
             'total_apartment' => $total_apartment,
@@ -49,7 +75,12 @@ class Dashboard extends CustomBaseStep {
             'total_room_full' => $total_room_full,
             'list_district' => $this->ghDistrict->get(['active' => 'YES']),
             'list_contract' => $list_contract,
-            'list_user' => $list_user
+            'list_user' => $list_user,
+
+            'chart_data_total' => json_encode($chart_data),
+            'chart_data_trong' => json_encode($chart_data_trong),
+            'chart_data_full' => json_encode($chart_data_full),
+            'chart_label' =>json_encode($chart_label)
         ];
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('dashboard/show', $data);

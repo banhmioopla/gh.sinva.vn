@@ -146,10 +146,21 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="card-box">
-                    <div class="head-title font-600">Trống - Full</div>
+                    <div class="head-title font-600">Trống - Tổng Phòng</div>
 
                     <div id="pie-chart">
                         <div id="trong_full" class="flot-chart mt-5" style="height: 350px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8">
+                <div class="card-box">
+                    <div class="head-title font-600">Trống - Full</div>
+
+                    <div id="pie-chart">
+                        <div id="ordered-bars-chart" class="flot-chart mt-5" style="height: 350px;">
                         </div>
                     </div>
                 </div>
@@ -273,8 +284,58 @@
                     var datas = [d_trong, d_full, d_saptrong_full];
                     var colors = ['#2d7bf4', '#dc3545', '#f3e97a'];
                     this.createPieGraph("#trong_full", pielabels, datas, colors);
+
+                    // Bar chart
+                    
+                    let chart_label = JSON.parse('<?= $chart_label ?>');
+                    let d1 = JSON.parse('<?= $chart_data_trong ?>');
+                    let d2 = JSON.parse('<?= $chart_data_total ?>');
+
+                    var data = [
+                                {label: "Trống", data: d1, bars: {fillColor: '#2d7bf4'}, color: "#2d7bf4"},
+                                {label: "Tổng Phòng", data: d2, bars: {fillColor: "#f5a742"}, color: "#f5a742"}
+                            ];
+                    var options = {
+                        xaxis: {
+                            min: 0,
+                            max: 10,
+                            mode: null,
+                            ticks: chart_label,
+                            tickLength: 0,
+                            axisLabel: "Quận",
+                            axisLabelUseCanvas: true,
+                            axisLabelFontSizePixels: 12,
+                            axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+                            axisLabelPadding: 5
+                        }, yaxis: {
+                            axisLabel: "Số Lượng Phòng",
+                            tickDecimals: 0,
+                            axisLabelUseCanvas: true,
+                            axisLabelFontSizePixels: 12,
+                            axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+                            axisLabelPadding: 5
+                        }, grid: {
+                            hoverable: true,
+                            clickable: true,
+                            borderWidth: 0
+                        }, legend: {
+                            labelBoxBorderColor: "none", 
+                            position: "right"
+                        }, series: {
+                            shadowSize: 1, 
+                            bars: {
+                                show: true, 
+                                barWidth: 0.2, 
+                                order: 1
+                            }
+                        },
+                        colors: colors,
+                        tooltip: true
+                    };
+                    $.plot($("#ordered-bars-chart"), data, options);
                 
                 },
+
                 //init flotchart
                 $.FlotChart = new FlotChart, $.FlotChart.Constructor =
                 FlotChart

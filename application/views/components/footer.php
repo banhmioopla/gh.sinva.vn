@@ -36,7 +36,14 @@
 
     <!-- chart -->
     <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.min.js"></script>
+    <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.tooltip.min.js"></script>
     <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.pie.js"></script>
+    <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.selection.js"></script>
+    <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.stack.js"></script>
+    <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.orderBars.min.js"></script>
+    <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.crosshair.js"></script>
+    <script src="<?= $js_plugins_path ?>flot-chart/curvedLines.js"></script>
+    <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.axislabels.js"></script>
     <!-- sweetalert2 -->
     <script src="<?= $js_plugins_path ?>sweet-alert/sweetalert2.min.js"></script>
     <!-- datepicker -->
