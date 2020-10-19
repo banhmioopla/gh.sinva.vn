@@ -37,6 +37,31 @@
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng</p>
                 </div>
             </div>
+            <div class="col-12 col-md-3">
+                <div class="card-box widget-flat border-primary bg-primary text-white">
+                    <i class="fi-tag"></i>
+                    <h3 class="m-b-10"><?= $total_room_available ?></h3>
+                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng Trống</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <div class="card-box widget-flat border-primary bg-primary text-white">
+                    <i class="fi-tag"></i>
+                    <h3 class="m-b-10"><?= $total_room_ready ?></h3>
+                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng Sắp Trống</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <div class="card-box widget-flat border-primary bg-primary text-white">
+                    <i class="fi-tag"></i>
+                    <h3 class="m-b-10"><?= $total_room - $total_room_available - $total_room_ready ?></h3>
+                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng Full
+                        <br>
+                        <hr>
+                        Số lượng phòng Full = (Tổng - (Trống + Sắp Trống))
+                    </p>
+                </div>
+            </div>
         </div> <!-- end row -->
         <h3 class="page-title">Bộ Phận Chăm Sóc Khách Hàng</h3>
         <div class="row">
@@ -52,15 +77,28 @@
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10"><?= $total_contract ?></h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng hợp đồng</p>
+                    <hr>
+                    Nếu USD thì hệ số là x 23k VND
                 </div>
             </div>
             <?php 
                 $total_contract_this_month = 0; 
                 $total_contract_value_this_month = 0;
+                $total_contract_value = 0;
                 foreach($list_contract as $contract){
                     if($contract['time_check_in'] > strtotime(date('01-m-Y'))){
                         $total_contract_this_month += 1;
-                        $total_contract_value_this_month += $contract['room_price'];
+                        if($contract['room_price'] < 100000) {
+                            $total_contract_value_this_month += ($contract['room_price']*23000);
+                        } else {
+                            $total_contract_value_this_month += $contract['room_price'];
+                        }
+                    }
+
+                    if($contract['room_price'] < 100000) {
+                        $total_contract_value += ($contract['room_price']*23000);
+                    } else {
+                        $total_contract_value += $contract['room_price'];
                     }
                 }?>
             <div class="col-12 col-md-3">
@@ -68,6 +106,13 @@
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10"><?= $total_contract_this_month ?></h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng hợp đồng tháng <?= date('m/Y') ?></p>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <div class="card-box widget-flat border-custom bg-custom text-white">
+                    <i class="fi-tag"></i>
+                    <h3 class="m-b-10"><?= number_format($total_contract_value) ?> vnđ</h3>
+                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng giá trị hợp đồng </p>
                 </div>
             </div>
             <div class="col-12 col-md-3">
@@ -276,7 +321,7 @@
                 FlotChart.prototype.init = function () {
                     //Pie graph data
                     var d_trong = <?= $total_room_available ?>;
-                    var d_saptrong_full = <?=$total_room_ready ?>;
+                    var d_saptrong_full = <?= $total_room_ready ?>;
                     var d_full = <?= $total_room - $total_room_available - $total_room_ready?>;
                 
                     var pielabels = ["Trống - " + d_trong, "Full - " + d_full, "Full (sắp trống) - " + d_saptrong_full];
