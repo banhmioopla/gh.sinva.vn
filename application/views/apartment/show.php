@@ -35,6 +35,7 @@ function money_format11( $n, $precision = 1 ) {
 $check_contract = in_array($this->auth['role_code'], ['product-manager', 'ceo', 'customer-care']);
 $check_consultant_booking = in_array($this->auth['role_code'], ['customer-care','product-manager', 'ceo','consultant', 'human-resources']);
 $check_option = in_array($this->auth['role_code'], ['product-manager', 'ceo','consultant', 'human-resources', 'customer-care']);
+$check_commission_rate = in_array($this->auth['role_code'], ['customer-care', 'product-manager', 'ceo']);
 ?>
 
 <div class="wrapper">
@@ -242,7 +243,7 @@ $check_option = in_array($this->auth['role_code'], ['product-manager', 'ceo','co
                             <div class="tab-pane service-list show active" id="apm-service-<?= $apartment['id'] ?>">
                                 <div id="carouselButton-<?= $apartment['id'] ?>" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
-                                        <?php $this->load->view('apartment/service', ['apartment' => $apartment, 'label_apartment' => $label_apartment]) ?>
+                                        <?php $this->load->view('apartment/service', ['apartment' => $apartment, 'label_apartment' => $label_apartment, 'check_commission_rate' => $check_commission_rate]) ?>
                                     </div>
                                     <a class="carousel-control-prev" 
                                         href="#carouselButton-<?= $apartment['id'] ?>" 

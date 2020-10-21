@@ -1,5 +1,15 @@
 <div class="carousel-item active">
     <ul class="list-group">
+        <?php if($check_commission_rate): ?>
+        <li class="list-group-item">
+            <i class="text-danger"><?= $label_apartment['commission_rate'] ?></i>  
+            <div class="text-right font-weight-bold" 
+                data-name="commission_rate"
+                data-value="<?= $apartment['commission_rate'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['commission_rate'] ?>
+            </div>
+        </li>
+        <?php endif; ?>
         <li class="list-group-item">
             <i><?= $label_apartment['electricity'] ?></i>  
             <div class="text-right font-weight-bold" 

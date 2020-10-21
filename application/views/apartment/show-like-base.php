@@ -159,6 +159,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">Mức Hoa Hồng<span class="text-danger">*</span></label>
+                            <div class="col-7">
+                                <input type="number" required class="form-control"
+                                        id="commission_rate" name="commission_rate" placeholder="%">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="hori-pass1" class="col-4 col-form-label">Mở dự án này<span class="text-danger">*</span></label>
                             <div class="col-7">
                                 <div>
