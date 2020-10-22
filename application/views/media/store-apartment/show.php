@@ -87,29 +87,38 @@ $role_delete = ['product-manager'];
                 <?= !empty($img['room_id']) ? 'roomcode-'.$img['room_id']:'' ?> image-item">
                 <?php 
                     $imgStatus = $img['status'] == 'Pending' ? 'warning' : '';
+                    
+                    if(!in_array($img['file_type'], ['mp4', 'mov'])):
                 ?>
-                <div class="portfolio-masonry-box">
-                    <a href="<?= base_url() ?>media/apartment/<?= $img['name']?>" class="image-popup" >
-                        <div class="portfolio-masonry-img border border-<?= $imgStatus ?>" style="border-width:3px">
-                            <img src="<?= base_url() ?>media/apartment/<?= $img['name']?>" class="thumb-img img-fluid"
-                                alt="work-thumbnail">
-                        </div>
-                    </a>
-                    <div class="portfolio-masonry-detail">
-                        <h4 class="font-18"><?= date('d-m-Y', $img['time_insert']) ?></h4>
-                        <div class="d-flex justify-content-center">
-                            <?php if(in_array($this->auth['role_code'], $role_delete)): ?>
-                            <button data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-img">
-                                <i class="mdi mdi-delete"></i>
-                            </button>
-                            <?php endif; ?>
+                    <div class="portfolio-masonry-box">
+                        <a href="<?= base_url() ?>media/apartment/<?= $img['name']?>" class="image-popup" >
+                            <div class="portfolio-masonry-img border border-<?= $imgStatus ?>" style="border-width:3px">
+                                <img src="<?= base_url() ?>media/apartment/<?= $img['name']?>" class="thumb-img img-fluid"
+                                    alt="work-thumbnail">
+                            </div>
+                        </a>
+                        <div class="portfolio-masonry-detail">
+                            <h4 class="font-18"><?= date('d-m-Y', $img['time_insert']) ?></h4>
+                            <div class="d-flex justify-content-center">
+                                <?php if(in_array($this->auth['role_code'], $role_delete)): ?>
+                                <button data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-img">
+                                    <i class="mdi mdi-delete"></i>
+                                </button>
+                                <?php endif; ?>
 
-                            <a data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-warning btn-rounded waves-light waves-effect download-img" download="<?= $apartment_model['address_street'].'.'.$img['file_type']?>" href="<?= base_url() ?>media/apartment/<?= $img['name'] ?>">
-                                <i class="mdi mdi-cloud-download"></i>
-                            </a>
+                                <a data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-warning btn-rounded waves-light waves-effect download-img" download="<?= $apartment_model['address_street'].'.'.$img['file_type']?>" href="<?= base_url() ?>media/apartment/<?= $img['name'] ?>">
+                                    <i class="mdi mdi-cloud-download"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <?php else:?>
+                    <div class="portfolio-masonry-box">
+                        <video width="100%" height="80%" controls="controls">
+                            <source src="<?php echo base_url().'media/apartment/'.$img['name']?>" type="video/mp4" />
+                        </video>  
+                    </div>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
             <?php endif; ?>

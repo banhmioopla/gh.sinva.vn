@@ -36,7 +36,7 @@ class Image extends CustomBaseStep {
             // File upload configuration 
             $uploadPath = 'media/apartment/'; 
             $config['upload_path'] = $uploadPath; 
-            $config['allowed_types'] = 'jpg|jpeg|png|gif'; 
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|mp4|mov'; 
             //$config['max_size']    = '100'; 
             //$config['max_width'] = '1024'; 
             //$config['max_height'] = '768';
