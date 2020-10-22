@@ -42,8 +42,12 @@ class Apartment extends CustomBaseStep {
 		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
 
 		$data['cb_district'] = $this->libDistrict->cbActive();
-		$data['cb_base_apartment_type'] = $this->libBaseApartmentType->getCbByActive();
-
+		$data['apartment_today'] = [];
+		foreach($data['list_apartment'] as $item) {
+			if(date('d') == date('d', $item['time_update'])) {
+				$data['apartment_today'][] = $item;
+			}
+		}
 		$template = 'apartment/show';
 		if(in_array($district_code, $this->list_district_CRUD) and in_array($this->auth['role_code'], $this->permission_modify)) {
 			$this->auth['modifymode'] = 'edit';

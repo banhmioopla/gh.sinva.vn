@@ -60,10 +60,19 @@ $check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 
         </div>
         <div class="row">
             <div class="col-md-3 d-md-block d-none">
-                <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
-            </div>
-            <div class="card card-body pl-0 pr-0 col-12 col-md-8">
+                <?php if(count($apartment_today)):?>
+                    <div class="mt-1 text-center font-weight-bold">Dự án đã cập nhật trong ngày hôm nay</div>
+                    <?php foreach($apartment_today as $today):?>
+                    <div class="m-2 alert alert-primary alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <?= $today['address_street'] ?> - <?= date('d/m/Y H:i',$today['time_update']) ?>
+                    </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 <?php if(count($consultant_booking)):?>
+                    <div class="mt-3 text-center font-weight-bold">Đăng ký lịch dẫn khách</div>
                     <?php foreach($consultant_booking as $booking):?>
                     <div class=" m-2 alert alert-primary alert-dismissible fade show" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -72,8 +81,10 @@ $check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 
                         <?= '<strong>'.$this->libUser->getNameByAccountid($booking['booking_user_id']) . '</strong> đã đăng ký dẫn khách ngày </strong> <strong>'. date('d/m/Y', $booking['time_booking']). '</strong> tại '. $this->libRoom->getAddressById($booking['room_id']) . ' : <strong>' . $this->libRoom->getCodeById($booking['room_id']). '</strong>'  ?>
                     </div>
                     <?php endforeach; ?>
-                
                 <?php endif; ?>
+                <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
+            </div>
+            <div class="card card-body pl-0 pr-0 col-12 col-md-8">
                 <div class="m-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
                         <?php 
