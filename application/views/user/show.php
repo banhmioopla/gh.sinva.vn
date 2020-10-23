@@ -56,6 +56,7 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                             <?php if($check_authorised):?>
                             <th>Ủy quyền cho</th>
                             <?php endif;?>
+                            <th class="text-center">Trạng thái</th>
                             <th class="text-center">Mở</th>
                             <!-- <th class="text-center">Tùy Chọn</th> -->
                         </tr>
@@ -77,8 +78,8 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                                         <?= $row['name'] ?>
                                     </div>
                                 </td>
-                                <td>
                                 <?php if($check_role): ?>
+                                <td>
                                 <div class="user-role_code"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-value = "<?= $row['role_code'] ?>"
@@ -126,6 +127,20 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                                     </div>
                                 </td>
                                 <?php endif; ?>
+                                <td class="text-center">
+                                    <?php 
+                                        $classStatus = 'secondary';
+                                        $txtStatus = 'quá khứ';
+                                        if($row['active'] =='YES') {
+                                            $classStatus = 'success';
+                                            $txtStatus = 'hiện tại';
+                                        }
+                                    ?>
+                                    <div>
+                                        <span style="font-size:100%" class=" badge badge-<?= $classStatus ?> badge-pill"><?= $txtStatus ?></span>
+                                    </div>
+                                    
+                                </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-active-user">
@@ -138,13 +153,6 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                                         </div>
                                     </div>
                                 </td>
-                                <!-- <td>
-                                    <div class="d-flex justify-content-center">
-                                        <button id='user-del-<?//= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-user">
-                                            <i class="fa-check"></i>
-                                        </button>    
-                                    </div>
-                                </td> -->
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>

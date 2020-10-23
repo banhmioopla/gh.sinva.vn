@@ -159,7 +159,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 
                             
                             <button type="button" 
                                     data-apartment-id="<?= $apartment['id'] ?>" 
-                                    class="btn m-1 btn-sm apartment-delete btn-outline-danger btn-rounded waves-light waves-effect">
+                                    class="btn m-1 btn-sm apartment-delete btn-outline-primary btn-rounded waves-light waves-effect">
                                 <i class="mdi mdi-delete"></i>
                             </button>
                         </div>
@@ -393,37 +393,67 @@ $check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 
                     $('.room-delete').on('click', function() {
                         let this_btn = $(this);
                         let room_id = $(this).data('room-id');
-                        console.log('delete success room id = '+ room_id);
-                        $.ajax({
-                            type: 'POST',
-                            url:'<?= base_url()."admin/update-room-editable" ?>',
-                            data: {pk: room_id, name: 'active', value: 'NO'},
-                            success:function(response) {
-                                let data = JSON.parse(response);
-                                if(data.status > 0) {
-                                    this_btn.parents('tr').remove();
+                        let room_code = $(this).data('room-code');
+                        swal({
+                            title: 'Bạn Muốn Xóa Phòng ' + room_code,
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonClass: 'btn btn-confirm mt-2',
+                            cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                            confirmButtonText: 'Xóa',
+                        }).then(function () {
+                            $.ajax({
+                                type: 'POST',
+                                url:'<?= base_url()."admin/update-room-editable" ?>',
+                                data: {pk: room_id, name: 'active', value: 'NO'},
+                                success:function(response) {
+                                    let data = JSON.parse(response);
+                                    if(data.status > 0) {
+                                        this_btn.parents('tr').remove();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                            swal({
+                                title: 'Đã Xóa Thành Công!',
+                                type: 'success',
+                                confirmButtonClass: 'btn btn-confirm mt-2'
+                            });
+                        })
                     });
 
                     $('.apartment-delete').on('click', function() {
                         let apartment_id = $(this).data('apartment-id');
                         let this_btn = $(this);
-                        $.ajax({
+                        swal({
+                            title: 'Bạn Muốn Ẩn Dự Án Này',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonClass: 'btn btn-confirm mt-2',
+                            cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                            confirmButtonText: 'Ẩn',
+                        }).then(function () {
+                            $.ajax({
                             url: '<?= base_url() ?>admin/update-apartment-editable',
                             data: {pk: apartment_id, name: 'active', value: 'NO', mode: 'del'},
                             type: 'POST',
                             success: function(response) {
-                                let data = JSON.parse(response);
-                                if(data.status > 0) {
-                                    this_btn.parents('.apartment-block').fadeOut(1500, function(){
-                                        this_btn.parents('.apartment-block').remove();
-                                        $('#modal-apartment-detail-' + apartment_id).remove();
-                                    });
+                                    let data = JSON.parse(response);
+                                    if(data.status > 0) {
+                                        this_btn.parents('.apartment-block').fadeOut(1500, function(){
+                                            this_btn.parents('.apartment-block').remove();
+                                            $('#modal-apartment-detail-' + apartment_id).remove();
+                                        });
+                                    }
                                 }
-                            }
+                            });
+                            swal({
+                                title: 'Đã Ẩn Thành Công!',
+                                type: 'success',
+                                confirmButtonClass: 'btn btn-confirm mt-2'
+                            });
                         });
+
+                        
                     });
                     // End Draw
                     }
@@ -568,9 +598,9 @@ $check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 
             let thisBooking = $(this);
             let time = null;
             swal({
-                title: '',
+                title: 'Book Phòng Dẫn Khách',
                 text: "Chúc Bạn Chốt Khách Thành Công!",
-                type: 'warning',
+                type: 'info',
                 html: `
                     <label>Vui Lòng Chọn Ngày Dẫn Khách</label>
                     <input required class="datepicker form-control booking-time">`,
@@ -601,6 +631,10 @@ $check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 
                 );
 
             })
+        });
+
+        $('.carousel').carousel({
+            interval: false,
         });
         
         

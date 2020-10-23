@@ -62,13 +62,10 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= date('d-m-Y',$room['time_available']) ?>"
                             data-name="time_available"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'#' ?></div></td>
-                    <!-- <td><div class="room-consulting_user_id" 
-                            data-pk="<?= $room['id'] ?>"
-                            data-value="<?= $room['consulting_user_id'] ?>"
-                            data-name="consulting_user_id"><?= $room['consulting_user_id'] ? $libUser->getNameByAccountid($room['consulting_user_id']) :'#' ?></div></td> -->
+
                     <?php if($check_option):?>
                         <td class="d-flex flex-column flex-md-row justify-content-center">
-                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                            <button data-room-id="<?= $room['id'] ?>" data-room-code="<?= $room['code'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                                 <i class="mdi mdi-delete"></i>
                             </button>
                         <?php if($check_contract):?>
