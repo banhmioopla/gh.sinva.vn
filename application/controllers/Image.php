@@ -9,7 +9,9 @@ class Image extends CustomBaseStep {
 		$this->load->model('ghApartment');
 		$this->load->model('ghRoom');
 		$this->load->model('ghImage');
+		$this->load->model('ghDistrict');
 		$this->load->library('LibRoom', null, 'libRoom');
+		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
 		$this->load->library('LibBasePrice', null, 'libBasePrice');
     }
@@ -87,6 +89,39 @@ class Image extends CustomBaseStep {
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('media/store-apartment/show', $data);
         $this->load->view('components/footer');
+    }
+
+    public function showGalleryApartment(){
+        $data['list_apartment'] = $this->ghApartment->get(['active' => 'YES']);
+        $data['ghImage'] = $this->ghImage;
+        $data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
+        $data['libDistrict'] = $this->libDistrict;
+        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('media/store-apartment/show-gallery-apartment', $data);
+        $this->load->view('components/footer');
+    }
+
+    public function searchApartment(){
+        $q = $this->input->get('q');
+		$data = [['id' => 0, 'text' => 'Tìm dự án ... ']];
+		if(empty($q)) {
+			$apm = $this->ghApartment->get(['active' => 'YES']);
+			if($apm) {
+				foreach($apm as $a){
+					$data[] = ['id' => $a['id'], 'text' => $a['address_street'] .' - phường'. $a['address_ward']];
+				}
+			}
+			
+		} else {
+			$apm = $this->ghApartment->getLike(['address_street' => $q]);
+			if($apm) {
+				foreach($apm as $a){
+					$data[] = ['id' => $a['id'], 'text' => $a['address_street'] .' - phường'. $a['address_ward']];
+				}
+			}
+			
+		}
+		echo json_encode($data);
     }
 
     public function handleCb() {

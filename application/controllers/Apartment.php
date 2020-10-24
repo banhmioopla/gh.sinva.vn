@@ -99,6 +99,7 @@ class Apartment extends CustomBaseStep {
 
 	public function createConsultantBooking(){
 		$post  = $this->input->post();
+		
 		if($post['time']) {
 			if(empty($post['time'])) {
 				$post['time'] = null;

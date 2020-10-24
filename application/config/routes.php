@@ -16,6 +16,11 @@ $route['admin/list-dashboard'] = function($params = []) {
 	return $controller.$action;
 };
 // report - booking customer
+$route['admin/list-consultant-booking'] = function($params = []) {
+	$controller = 'ConsultantBooking';
+	$action = '/show';
+	return $controller.$action;
+};
 $route['admin/list-rp-booking-customer'] = function($params = []) {
 	$controller = 'Report';
 	$action = '/showBookingCustomer';
@@ -578,6 +583,18 @@ $route['admin/upload-image'] = function($params = []) {
 $route['admin/update-image'] = function($params = []) {
 	$controller = 'Image';
 	$action = '/update';
+	return $controller.$action;
+};
+
+$route['admin/show-image-apartment'] = function($params = []) {
+	$controller = 'Image';
+	$action = '/showGalleryApartment';
+	return $controller.$action;
+};
+
+$route['admin/search-apartment'] = function($params = []) {
+	$controller = 'Image';
+	$action = '/searchApartment';
 	return $controller.$action;
 };
 

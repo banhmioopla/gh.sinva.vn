@@ -85,6 +85,14 @@ $check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
             <div class="card card-body pl-0 pr-0 col-12 col-md-8">
+                <div class="m-md-2 m-1 button-list">
+                    <a href="<?= base_url() ?>admin/show-image-apartment">
+                        <button type="button" class="btn btn-info waves-effect waves-light"> <i class="fa fa-cloud"></i> <span>Kho Ảnh Dự Án</span> </button>
+                    </a>
+                    <a href="<?= base_url() ?>admin/list-consultant-booking">
+                        <button type="button" class="btn btn-info waves-effect waves-light"> <i class="fa fa-cloud"></i> <span>Thống kê dẫn khách</span> </button>
+                    </a>
+                </div>
                 <div class="m-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
                         <?php 
@@ -380,8 +388,10 @@ $check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 
                 cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
                 confirmButtonText: 'Book',
                 onOpen: function() {
-                    $('.datepicker').datepicker({
-                        format: "dd/mm/yyyy",
+                    $('.datepicker').datetimepicker({
+                        inline: true,
+                        sideBySide: true,
+                        format: 'DD/MM/YYYY hh:mm a',
                     });
                 },
             }).then(function () {

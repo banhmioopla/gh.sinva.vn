@@ -20,7 +20,7 @@ class GhImage extends CI_Model{
             $query = $this->db->get(); 
             $result = $query->result_array(); 
         } 
-        return !empty($result)?$result:false; 
+        return $result; 
     } 
      
     

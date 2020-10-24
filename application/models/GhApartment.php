@@ -9,6 +9,12 @@ class GhApartment extends CI_Model {
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
+    public function getLike($like = []) {
+        $this->db->from($this->table);
+        $this->db->or_like($like);
+        return $this->db->get()->result_array();
+    }
+
     public function getByActive() {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
 	}
