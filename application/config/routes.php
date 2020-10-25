@@ -89,6 +89,11 @@ $route['admin/delete-contract'] = function($params = []) {
 	$action = '/delete';
 	return $controller.$action;
 };
+$route['admin/update-contract-editable'] = function($params = []) {
+	$controller = 'Contract';
+	$action = '/updateEditable';
+	return $controller.$action;
+};
 
 $route['admin/update-customer-editable'] = function($params = []) {
 	$controller = 'Customer';

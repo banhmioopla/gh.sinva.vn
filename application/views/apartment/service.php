@@ -112,6 +112,13 @@
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['contract_short_term'] ?></div>
         </li>
         <li class="list-group-item">
+            <i><?= $label_apartment['security'] ?></i>
+            <div class="text-right font-weight-bold"
+                data-name="security"
+                data-value="<?= $apartment['security'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['security'] ?></div>
+        </li>
+        <li class="list-group-item">
             <i><?= $label_apartment['pet'] ?></i>
             <div class="text-right font-weight-bold"
                 data-name="pet"

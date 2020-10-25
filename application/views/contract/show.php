@@ -67,7 +67,10 @@
                                     </h6>
                                 </td>
                                 <td>
-                                    <div class="font-weight-bold">
+                                    <div class="contract-room_price font-weight-bold" 
+                                        data-pk="<?= $row['id'] ?>"
+                                        data-value="<?= $row['room_price'] ?>"
+                                        data-name="room_price">
                                         <?= number_format($row['room_price']) ?>
                                     </div>
                                 </td>
@@ -171,7 +174,7 @@
                         });
                     });
                     // x editable
-                    $('.contract-name').editable({
+                    $('.contract-room_price').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-contract-editable',
                         inputclass: '',

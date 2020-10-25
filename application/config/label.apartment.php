@@ -19,6 +19,7 @@ $apartment['contract_term'] = 'thời hạn HD';
 $apartment['television'] = 'TV';
 $apartment['makeup_table'] = 'Bàn Makeup';
 $apartment['sofa'] = 'Sofa';
+$apartment['security'] = 'Bảo vệ';
 $apartment['car_park'] = 'Bãi xe oto';
 $apartment['extra_fee'] = 'Phí khác <span class="text-success font-weight-bold">(* mới thêm từ gh)</span>';
 $apartment['east'] = 'Đông';

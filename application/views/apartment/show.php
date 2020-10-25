@@ -35,7 +35,7 @@ function money_format11( $n, $precision = 1 ) {
 $check_contract = in_array($this->auth['role_code'], ['product-manager', 'ceo', 'customer-care']);
 $check_consultant_booking = in_array($this->auth['role_code'], ['customer-care','product-manager', 'ceo','consultant', 'human-resources']);
 $check_option = in_array($this->auth['role_code'], ['product-manager', 'ceo','consultant', 'human-resources', 'customer-care']);
-$check_commission_rate = in_array($this->auth['role_code'], ['product-manager', 'ceo']);
+$check_commission_rate = in_array($this->auth['role_code'], ['customer-care', 'product-manager', 'ceo']);
 ?>
 
 <div class="wrapper">
