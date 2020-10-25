@@ -72,6 +72,7 @@
                 'pagingType': "full_numbers",
                 responsive: true,
                 "fnDrawCallback": function() {
+                <?php if(in_array($this->auth['role_code'], ['customer-care', 'product-manager'])): ?>
                     $('.comissionrate').editable({
                         type: "number",
                         url: '<?= base_url() ?>admin/update-apartment-editable',
@@ -85,6 +86,7 @@
                             }
                         }
                     });
+                <?php endif; ?>
                 } // end fnDrawCallback
             });
         });

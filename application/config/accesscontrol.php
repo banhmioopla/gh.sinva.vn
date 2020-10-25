@@ -237,8 +237,8 @@ $accesscontrol['ceo'] = [
         'submenu' => null
     ],
     [
-        'name' => 'Báo cáo dẫn khách',
-        'url' => '/admin/list-rp-booking-customer',
+        'name' => 'Danh Sách Hoa Hồng Ký Gửi',
+        'url' => '/admin/list-apartment-commission-rate',
         'submenu' => null
     ],
     [
