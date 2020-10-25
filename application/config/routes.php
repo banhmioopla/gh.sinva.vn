@@ -10,6 +10,17 @@ $route['admin/logout'] = function($params = []) {
 	$action = '/logout';
 	return $controller.$action;
 };
+// team
+$route['admin/list-team'] = function($params = []) {
+	$controller = 'Team';
+	$action = '/show';
+	return $controller.$action;
+};
+$route['admin/create-team'] = function($params = []) {
+	$controller = 'Team';
+	$action = '/create';
+	return $controller.$action;
+};
 $route['admin/list-dashboard'] = function($params = []) {
 	$controller = 'Dashboard';
 	$action = '/index';
