@@ -64,23 +64,27 @@
                             data-name="time_available"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'#' ?></div></td>
 
                     <?php if($check_option):?>
-                        <td class="d-flex flex-column flex-md-row justify-content-center">
-                            <button data-room-id="<?= $room['id'] ?>" data-room-code="<?= $room['code'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                        <td class="">
+                            <div
+                             class="d-flex flex-column flex-md-row justify-content-center">
+                             <button data-room-id="<?= $room['id'] ?>" data-room-code="<?= $room['code'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                                 <i class="mdi mdi-delete"></i>
                             </button>
-                        <?php if($check_contract):?>
-                        <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
-                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                <i class="mdi mdi-file-document"></i>
-                            </button>
-                        </a>
-                        <?php endif;?>
+                            <?php if($check_contract):?>
+                            <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
+                                <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                                    <i class="mdi mdi-file-document"></i>
+                                </button>
+                            </a>
+                            <?php endif;?>
 
-                        <?php if($check_consultant_booking):?>
-                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success consultant-booking btn-rounded waves-light waves-effect">
-                                <i class="mdi mdi-car-hatchback"></i>
-                            </button>
-                        <?php endif;?>
+                            <?php if($check_consultant_booking):?>
+                                <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success consultant-booking btn-rounded waves-light waves-effect">
+                                    <i class="mdi mdi-car-hatchback"></i>
+                                </button>
+                            <?php endif;?>
+                            </div>
+                            
                     </td>
                     <?php endif; ?>
                 </tr>

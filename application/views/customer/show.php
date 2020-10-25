@@ -116,7 +116,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-status text-center font-weight-bold">
+                                <?php 
+                                    $classStatus = 'warning';
+                                    if($row['status'] == 'sinva-rented') {
+                                        $classStatus = 'success';
+                                    }
+                                ?>
+                                    <div class="customer-status text-<?= $classStatus ?> text-center font-weight-bold">
                                         <?= $row['status'] ? $label_apartment[$row['status']] : '' ?>
                                     </div>
                                 </td>
@@ -246,6 +252,12 @@
                                     <input type="radio" name="source" id="DepSale" value="DepSale" checked>
                                     <label for="DepSale">
                                         Sale
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
+                                    <input type="radio" name="source" id="DepOldSale" value="DepOldSale">
+                                    <label for="DepOldSale">
+                                        Khách Hàng Cũ Của Sale
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">

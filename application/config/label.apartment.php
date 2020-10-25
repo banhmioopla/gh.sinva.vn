@@ -41,6 +41,7 @@ $apartment['sinva-info-form'] = 'đang theo dõi';
 $apartment['DepMarketing'] = 'bộ phận marketing';
 $apartment['DepCustomerCare'] = 'bộ phận chăm sóc khách hàng';
 $apartment['DepSale'] = 'sale';
+$apartment['DepOldSale'] = 'khách hàng cũ của sale';
 $apartment['DepReferral'] = 'khách được giới thiệu';
 $apartment['contract.Active'] = 'còn hạn';
 $apartment['contract.Pending'] = 'đợi ký';

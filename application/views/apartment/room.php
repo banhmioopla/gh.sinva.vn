@@ -54,7 +54,7 @@
                         <td class="d-flex flex-column flex-md-row justify-content-center">
                         <?php if($check_contract):?>
                         <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
-                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                            <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
                                 <i class="mdi mdi-file-document"></i>
                             </button>
                         </a>

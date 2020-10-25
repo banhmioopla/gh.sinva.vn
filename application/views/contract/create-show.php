@@ -214,6 +214,12 @@
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">
+                                    <input type="radio" name="source" id="DepOldSale" value="DepOldSale">
+                                    <label for="DepOldSale">
+                                        Khách Hàng Cũ Của Sale
+                                    </label>
+                                </div>
+                                <div class="radio radio-custom">
                                     <input type="radio" name="source_new" id="DepReferral" value="DepReferral">
                                     <label for="DepReferral">
                                         Khách được giới thiệu
