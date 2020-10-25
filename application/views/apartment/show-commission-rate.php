@@ -19,7 +19,6 @@
         <div class="row">
             <div class="col-12 col-md-8 offset-md-2">
                 <div class="card-box table-responsive">
-                <h4>Nhóm theo quận - tuần hiện tại từ <?= date('d/m/Y', strtotime('last monday')) ?></h4>
                 <table class=" table-data table table-bordered">
                     <thead>
                         <tr>
