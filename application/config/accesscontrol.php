@@ -148,7 +148,12 @@ $accesscontrol['product-manager'] = [
                 'name' => '<div class="text-danger"> DS Dự Án (bảng) </div>',
                 'url' => '/admin/list-apartment-like-base',
                 'class-icon' => ''
-            ]
+            ],
+            [
+                'name' => 'Danh Sách Hoa Hồng Ký Gửi',
+                'url' => '/admin/list-apartment-commission-rate',
+                'submenu' => null
+            ],
         ]
     ],
     [
@@ -277,7 +282,12 @@ $accesscontrol['customer-care'] = [
                 'name' => 'Hợp Đồng',
                 'url' => '/admin/list-contract',
                 'submenu' => null
-            ]
+            ],
+            [
+                'name' => 'Danh Sách Hoa Hồng Ký Gửi',
+                'url' => '/admin/list-apartment-commission-rate',
+                'submenu' => null
+            ],
         ]
     ]
 ];

@@ -171,6 +171,12 @@ $route['admin/list-apartment'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/list-apartment-commission-rate'] = function($params = []) {
+	$controller = 'Apartment';
+	$action = '/showCommmissionRate';
+	return $controller.$action;
+};
+
 $route['admin/create-consultant-booking'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/createConsultantBooking';
