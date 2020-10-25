@@ -261,7 +261,7 @@ $accesscontrol['customer-care'] = [
     ],
     [
         'name' => 'Khách Hàng',
-        'url' => '',
+        'url' => '#',
         'submenu' => [
             [
                 'name' => 'DS Khách Hàng',
