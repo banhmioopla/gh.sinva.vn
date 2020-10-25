@@ -95,7 +95,7 @@ $accesscontrol['admin'] = [
 $accesscontrol['product-manager'] = [
     [
         'name' => 'Dữ liệu nền (QLDA)',
-        'url' => '',
+        'url' => '#',
         'class-icon' => '',
         'submenu' => [
             [
@@ -132,7 +132,7 @@ $accesscontrol['product-manager'] = [
     ],
     [
         'name' => 'Dự Án',
-        'url' => '',
+        'url' => '#',
         'submenu' => [
             [
                 'name' => 'Phân quận',
