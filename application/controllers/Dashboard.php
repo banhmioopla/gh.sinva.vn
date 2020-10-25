@@ -54,17 +54,15 @@ class Dashboard extends CustomBaseStep {
         
         $iii = 0;
         foreach($data['list_district'] as $d) {
-
-            // $list_apartment = $this->ghApartment->get(['active' => 'YES', 'district_code' => $d['code']]);
             $chart_data[$iii] = [$iii,(int)$this->ghRoom->getNumberByDistrict($d['code'], 1)];
             $chart_data_trong[$iii] = [$iii, (int)$this->ghRoom->getNumberByDistrict($d['code'], 'gh_room.status = "Available"')];
             $chart_data_full[$iii] = [$iii, (int)$this->ghRoom->getNumberByDistrict($d['code'], 'gh_room.status = "Full"')];
             $iii ++;
         }
-        // echo "<pre>";
-        // var_dump($chart_data); 
-        // var_dump($chart_data_trong); 
-        // die;
+
+        // Contract
+
+        
         $data = [
             'total_customer' => $total_customer,
             'total_apartment' => $total_apartment,

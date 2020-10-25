@@ -330,7 +330,7 @@
                     var colors = ['#2d7bf4', '#dc3545', '#f3e97a'];
                     this.createPieGraph("#trong_full", pielabels, datas, colors);
 
-                    // Bar chart
+                    // Bar chart Room - District
                     
                     let chart_label = JSON.parse('<?= $chart_label ?>');
                     let d1 = JSON.parse('<?= $chart_data_trong ?>');
