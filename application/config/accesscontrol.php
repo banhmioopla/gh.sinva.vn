@@ -225,6 +225,7 @@ $accesscontrol['ceo'] = [
         'name' => 'Dự Án',
         'url' => '/admin/list-apartment',
         'submenu' => null
+        
     ],
     [
         'name' => 'Google Drive',
@@ -244,6 +245,11 @@ $accesscontrol['ceo'] = [
     [
         'name' => 'Bảng điều khiển',
         'url' => '/admin/list-dashboard',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Quản lý chi phí',
+        'url' => '/admin/list-service',
         'submenu' => null
     ]
 ];

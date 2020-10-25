@@ -323,6 +323,37 @@ $route['admin/update-room-type-editable'] = function($params = []) {
 	return $controller.$action;
 };
 
+// -- service
+$route['admin/list-service'] = function($params = []) {
+	$controller = 'Service';
+	$action = '/index';
+	return $controller.$action;
+};
+
+$route['admin/create-service'] = function($params = []) {
+	$controller = 'Service';
+	$action = '/create';
+	return $controller.$action;
+};
+
+$route['admin/update-service'] = function($params = []) {
+	$controller = 'Service';
+	$action = '/update';
+	return $controller.$action;
+};
+
+$route['admin/delete-service'] = function($params = []) {
+	$controller = 'Service';
+	$action = '/delete';
+	return $controller.$action;
+};
+
+$route['admin/update-service-editable'] = function($params = []) {
+	$controller = 'Service';
+	$action = '/updateEditable';
+	return $controller.$action;
+};
+
 // -- room
 $route['admin/list-room'] = function($params = []) {
 	$controller = 'Room';

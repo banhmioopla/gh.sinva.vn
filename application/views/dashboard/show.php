@@ -1,3 +1,8 @@
+<?php 
+
+$check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ceo', 'product-manager']);
+
+?>
 <div class="wrapper">
 <div class="sk-wandering-cubes" style="display:none" id="loader">
     <div class="sk-cube sk-cube1"></div>
@@ -77,8 +82,6 @@
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10"><?= $total_contract ?></h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng hợp đồng</p>
-                    <hr>
-                    Nếu USD thì hệ số là x 23k VND
                 </div>
             </div>
             <?php 
@@ -108,11 +111,14 @@
                     <p class="text-uppercase m-b-5 font-13 font-600">Số lượng hợp đồng tháng <?= date('m/Y') ?></p>
                 </div>
             </div>
+            <?php if($check_contract_value):?>
             <div class="col-12 col-md-3">
                 <div class="card-box widget-flat border-custom bg-custom text-white">
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10"><?= number_format($total_contract_value) ?> vnđ</h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Tổng giá trị hợp đồng </p>
+                    <hr>
+                    Nếu USD thì hệ số là x 23k VND
                 </div>
             </div>
             <div class="col-12 col-md-3">
@@ -120,8 +126,11 @@
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10"><?= number_format($total_contract_value_this_month) ?> vnđ</h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Tổng giá trị hợp đồng tháng <?= date('m/Y') ?></p>
+                    <hr>
+                    Nếu USD thì hệ số là x 23k VND
                 </div>
             </div>
+            <?php endif; ?>
         </div>
         <h3 class="page-title">Bộ Phận Huấn Luyện Đào Tạo</h3>
         <div class="row">

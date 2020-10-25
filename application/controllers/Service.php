@@ -15,11 +15,11 @@ class Service extends CustomBaseStep {
 
 	public function show(){
 		$this->load->model('ghService'); // load model ghUser
-		$data['list_district'] = $this->ghDistrict->getAll();
+		$data['list_service'] = $this->ghService->getAll();
 		
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
-		$this->load->view('district/show', $data);
+		$this->load->view('service/show', $data);
 		$this->load->view('components/footer');
 	}
 
@@ -31,25 +31,25 @@ class Service extends CustomBaseStep {
 		}
 
 		if(!empty($data['name'])) {
-			$result = $this->ghDistrict->insert($data);
+			$result = $this->ghService->insert($data);
 			$this->session->set_flashdata('fast_notify', [
-				'message' => 'Tạo quận '.$data['name'].' thành công ',
+				'message' => 'Tạo Danh Mục Phí '.$data['name'].' thành công ',
 				'status' => 'success'
 			]);
-			return redirect('admin/list-district');
+			return redirect('admin/list-service');
 		}
 	}
 
 	// Ajax
 	public function update() {
-		$district_id = $this->input->post('district_id');
+		$service_id = $this->input->post('service_id');
 		$field_value = $this->input->post('field_value');
 		$field_name = $this->input->post('field_name');
-		if(!empty($district_id) and !empty($field_value)) {
+		if(!empty($service_id) and !empty($field_value)) {
 			$data = [
 				$field_name => $field_value
 			];
-			$result = $this->ghDistrict->updateById($district_id, $data);
+			$result = $this->ghService->updateById($service_id, $data);
 			echo json_encode(['status' => $result]); die;
 		}
 		echo json_encode(['status' => false]); die;
@@ -65,16 +65,16 @@ class Service extends CustomBaseStep {
 				$field_name => $field_value
 			];
 
-			$old_district = $this->ghDistrict->getById($district_id);
+			$old_district = $this->ghService->getById($district_id);
 			$old_log = json_encode($old_district[0]);
 			
-			$result = $this->ghDistrict->updateById($district_id, $data);
+			$result = $this->ghService->updateById($district_id, $data);
 			
-			$modified_district = $this->ghDistrict->getById($district_id);
+			$modified_district = $this->ghService->getById($district_id);
 			$modified_log = json_encode($modified_district[0]);
 			
 			$log = [
-				'table_name' => 'gh_district',
+				'table_name' => 'gh_service',
 				'old_content' => $old_log,
 				'modified_content' => $modified_log,
 				'time_insert' => time(),
@@ -88,12 +88,12 @@ class Service extends CustomBaseStep {
 	}
 
 	public function delete(){
-		$district_id = $this->input->post('district_id');
+		$district_id = $this->input->post('service_id');
 		if(!empty($district_id)) {
 			$old_district = $this->ghDistrict->getById($district_id);
 
 			$log = [
-				'table_name' => 'gh_district',
+				'table_name' => 'gh_service',
 				'old_content' => null,
 				'modified_content' => json_encode($old_district[0]),
 				'time_insert' => time(),
