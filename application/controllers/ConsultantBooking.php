@@ -72,7 +72,6 @@ class ConsultantBooking extends CustomBaseStep {
 
 	public function create(){
 		$post = $this->input->post();
-		
 		if($post['time_booking']) {
 			if(empty($post['time_booking'])) {
 				$post['time_booking'] = null;
@@ -103,7 +102,7 @@ class ConsultantBooking extends CustomBaseStep {
 		$data['apartment_id'] = $post['apartment_id'];
 		$data['booking_user_id'] = $this->auth['account_id'];
 		$data['time_booking'] = $post['time_booking'];
-		$data['room_id'] = $post['room_id'];
+		$data['room_id'] = isset($post['room_id']) ? json_encode($post['room_id']):'[]';
 		$data['district_code'] = $post['district_code'];
 		$data['status'] = 'Pending';
 		$this->ghConsultantBooking->insert($data);

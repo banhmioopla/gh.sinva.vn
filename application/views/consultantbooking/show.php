@@ -58,16 +58,23 @@
                 <?php if(count($list_booking) >0):?>
                 <?php foreach($list_booking as $booking):
                     if($booking['booking_user_id'] != $this->auth['account_id']) continue;
-                    $roomModel = $ghRoom->get(['id' => $booking['room_id']]);
+
+                    $list_room_id = json_decode($booking['room_id'], true);
+                    $text_room_code = '';
                     $address = '';
-                    $roomCode = '';
-                    if($roomModel){
-                        $apmModel = $ghApartment->get(['id' => $roomModel[0]['apartment_id']]);
-                        $roomCode = $roomModel[0]['code'];
-                        if($apmModel) {
-                            $address = $apmModel[0]['address_street'];
+                    if($list_room_id && count($list_room_id) > 0) {
+                        foreach($list_room_id as $room_id){
+                            $roomModel = $ghRoom->get(['id' => $room_id]);
+                            $text_room_code .= $roomModel[0]['code'] . ' ';
+                            if($roomModel){
+                                $apmModel = $ghApartment->get(['id' => $roomModel[0]['apartment_id']]);
+                                if($apmModel) {
+                                    $address = $apmModel[0]['address_street'];
+                                }
+                            }
                         }
                     }
+                    
                     $status = 'danger';
                     if($booking['status'] == 'Success') {
                         $status = 'success';
@@ -79,9 +86,9 @@
                     <tr>
                         <td>#<?= 10000 + $booking['id'] ?></td>
                         <td><?= $address ?></td>
-                        <td><?= $roomCode ?></td>
+                        <td><i class="text-success"><?= $text_room_code ?></i></td>
                         <td><?= date('d/m/Y H:i',$booking['time_booking'])  ?></td>
-                        <td><?= $libCustomer->getNameById($booking['customer_id']) . ' - ' . $libCustomer->getPhoneById($booking['customer_id']) ?></td>
+                        <td><?= $libCustomer->getNameById($booking['customer_id']) . ' - ' .                    $libCustomer->getPhoneById($booking['customer_id']) ?></td>
                         <td>
                             <div class="booking-note"
                                 data-pk="<?= $booking['id'] ?>"
@@ -90,7 +97,6 @@
                             >
                             <?= $booking['note'] ?></td>
                             </div>
-                        
                         <td>
                             <div class="booking-status text-<?= $status ?>"
                             data-pk="<?= $booking['id'] ?>"
@@ -113,15 +119,34 @@
                     <div class="card-box">
                     <?php 
                         $apartment_model = $ghApartment->get(['id' => $this->input->get('apartment-id')]);
-                        $room_model = $ghRoom->get(['id' => $this->input->get('room-id')]);
+                        $room_model = $ghRoom->get(['apartment_id' => $this->input->get('apartment-id')]);
                     ?>
                     <h2 class="text-center text-success"><?= '<span class="text-secondary">'.$room_model[0]['code'] . '</span> - '.  $apartment_model[0]['address_street'] ?></h2>
                     <hr>
                         <form novalidate action="/admin/create-new-consultant-booking" method="post">
-                            <input type="hidden" name='room_id' value="<?= $this->input->get('room-id') ?>" >
                             <input type="hidden" name='district_code' value="<?= $this->input->get('district-code') ?>" >
                             <input type="hidden" name='apartment_id' value="<?= $this->input->get('apartment-id') ?>" >
                             <input type="hidden" name='customer_id' value="" >
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-3 offset-2 text-right col-form-label">Chọn mã phòng</label>
+                                    <div class="col-md-7">
+                                    <?php 
+                                        foreach($room_model as $item):
+                                        $status = '';
+                                        if($item['status'] == 'Available'){
+                                            $status = 'success';
+                                        }
+                                        ?>
+
+                                        <div class="checkbox checkbox-success form-check-inline mr-5 pb-2">
+                                            <input name="room_id[]" type="checkbox" id="room_<?= $item['id'] ?>" value="<?= $item['id'] ?>">
+                                            <label class=" font-weight-bold text-<?= $status ?>" for="room_<?= $item['id'] ?>"> <?= $item['code'] ?> </label>
+                                        </div>
+                                    <?php endforeach;?>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="time_booking" class="col-3 offset-2 text-right col-form-label">Chọn thời gian dẫn khách<span class="text-danger">*</span></label>

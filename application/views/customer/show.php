@@ -302,7 +302,6 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                 
                 "fnDrawCallback": function() {
                     // x editable
-                    <?php if($check_editable): ?>
                     $('.customer-data').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-customer-editable',
@@ -385,7 +384,6 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                             });
                         }
                     });
-                    <?php endif; ?>
                 } // end fnDrawCallback
             });
             
