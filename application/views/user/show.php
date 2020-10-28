@@ -23,7 +23,6 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3>Danh sách thành viên</h3>
                 </div>
             </div>
         </div>
@@ -36,9 +35,39 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
         ?>
         <div class="user-alert"></div>
         <div class="row">
+        <h3>Danh sách thành viên sinh tháng <?= date('m') ?></h3>
+            <div class="col-md-12 col-12">
+            <div class="card-box table-responsive">
+                <table class="table table-user table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Sinh Nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        foreach($list_user as $row ): 
+                            if($row['active'] == "NO") continue;
+                            if(date('m',$row['date_of_birth']) != date('m')) continue;
+                    ?>
+                    <tr>
+                        <td><?= $row['account_id'] ?></td>
+                        <td><?= $row['name'] ?></td>
+                        <td><?= date('d/m/Y', $row['date_of_birth']) ?></td>
+                    </tr>
+                    <?php endforeach;?>
+                </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+        <div class="row">
+        <h3>Tất cả thành viên</h3>
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
-                    <table id="table-user" class="table table-bordered">
+                    <table class="table table-user table-bordered">
                         <thead>
                         <tr>
                             <th class="text-center">ID</th>
@@ -245,7 +274,7 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
             $('.datepicker').datepicker({
                 format: "dd/mm/yyyy"
             });
-            $('#table-user').DataTable({
+            $('.table-user').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true,
