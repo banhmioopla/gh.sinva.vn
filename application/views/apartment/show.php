@@ -381,8 +381,19 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care', 'p
                 text: "Chúc Bạn Chốt Khách Thành Công!",
                 type: 'warning',
                 html: `
-                    <label>Vui Lòng Chọn Ngày Dẫn Khách</label>
-                    <input required class="datepicker form-control booking-time">`,
+                <form>
+                    <label>Ngày Dẫn Khách</label>
+                    <input name="bookingtime" class="datepicker form-control booking-time">
+
+                    <label>Số điện thoại</label>
+                    <input name="phonenumber" tpe="text" placeholder="0900..." class="form-control">
+                    <p class='msg-phonenumber text-danger'></p>
+                    <label>Giới tính</label>
+                    <input class="form-control">
+                    <label>Ghi Chú</label>
+                    <input required class="form-control">
+                </form>
+                `,
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-confirm mt-2',
                 cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
@@ -394,16 +405,23 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care', 'p
                         format: 'DD/MM/YYYY hh:mm a',
                     });
                 },
+                preConfirm: function () {
+                    let phone = $('input[name=phonenumber]').val();
+                    if(phone == '')
+                        return;
+                    else {
+                        $('.msg-phonenumber').text('hello');
+                    }
+                }
             }).then(function () {
                 roomId = thisBooking.data('room-id');
                 time = $('.booking-time').val();
                 console.log(time);
-                console.log
-                $.ajax({
-                    method: "post",
-                    url: "<?= base_url(). 'admin/create-consultant-booking' ?>",
-                    data: {roomId: roomId, time: time }
-                });
+                // $.ajax({
+                //     method: "post",
+                //     url: "<?//= base_url(). 'admin/create-consultant-booking' ?>",
+                //     data: {roomId: roomId, time: time }
+                // });
                 swal({
                     title: 'Đã Book Xong!',
                     type: 'success',

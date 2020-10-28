@@ -10,19 +10,25 @@ class Customer extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->access_role = ['customer-care', 'ceo', 'cpo', 'cfo', 'cco'];
+		$this->access_role = ['customer-care', 'ceo', 'cpo', 'cfo', 'cco', 'consultant', 'human-resources'];
 		$this->modify_role = ['customer-care'];
 		$this->is_modify = in_array($this->auth['role_code'], $this->modify_role) ? true:false;
 		$this->is_access = in_array($this->auth['role_code'], $this->access_role) ? true:false;
+
 		if(!$this->is_access) {
 			return redirect('admin/list-apartment');
 		}
 		$this->load->config('label.apartment');
 		$this->load->model('ghCustomer');
 		$this->load->model('ghCareCustomer');
+		$this->load->model('ghContract');
+		$this->load->model('ghApartment');
+		$this->load->model('ghRoom');
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->library('LibUser', null, 'libUser');
+		$this->load->library('LibRoom', null, 'libRoom');
+		$this->load->config('label.apartment');
 	}
 
 	public function show(){
@@ -39,8 +45,12 @@ class Customer extends CustomBaseStep {
 
 	public function care() {
 		$data['list_data'] = $this->ghCareCustomer->get(['user_id' => $this->auth['account_id']]);
+		$data['list_contract'] = $this->ghContract->getAll();
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;
+		$data['ghApartment'] = $this->ghApartment;
+		$data['libRoom'] = $this->libRoom;
+		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('customer/care', $data);

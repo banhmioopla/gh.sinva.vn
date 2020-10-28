@@ -113,6 +113,7 @@ class Apartment extends CustomBaseStep {
 			'booking_user_id' => $this->auth['account_id'],
 			'time_booking' => $post['time'],
 			'room_id' => $post['roomId'],
+			'status' => 'Pending'
 		];
 		$this->ghConsultantBooking->insert($data);
 		return json_encode([
@@ -283,14 +284,6 @@ class Apartment extends CustomBaseStep {
 	}
 
 	public function dashboard() {
-		/*
-			- tất cả DA
-			- tất cả P. Trống , theo quận
-			- tất cả P. Strong , theo quận
-			- tất cả P Full , theo quận
-			- tổng kết số lượng phòng nhóm theo giá
-			- tổng kết số lượng phòng theo loại phòng
-		*/
 		$data['product_total'] = count($this->ghApartment->get(['active' => 'YES'])); 
 		$data['available_room_total'] = count($this->ghRoom->get(['active' => 'YES', 'status' => 'Available']));
 		$data['full_room_total'] = count($this->ghRoom->get(['active' => 'YES', 'status' => 'Full']));

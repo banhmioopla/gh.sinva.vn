@@ -48,6 +48,9 @@ $apartment['contract.Active'] = 'còn hạn';
 $apartment['contract.Pending'] = 'đợi ký';
 $apartment['contract.Expired'] = 'hết hạn';
 $apartment['contract.Cancel'] = 'đã hủy';
+$apartment['booking.Cancel'] = 'booom';
+$apartment['booking.Success'] = 'thành công';
+$apartment['booking.Pending'] = 'đang chờ';
 
 $config['label.apartment'] = $apartment;
 ?>

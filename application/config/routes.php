@@ -32,6 +32,16 @@ $route['admin/list-consultant-booking'] = function($params = []) {
 	$action = '/show';
 	return $controller.$action;
 };
+$route['admin/create-new-consultant-booking'] = function($params = []) {
+	$controller = 'ConsultantBooking';
+	$action = '/create';
+	return $controller.$action;
+};
+$route['admin/update-consultant-booking-editable'] = function($params = []) {
+	$controller = 'ConsultantBooking';
+	$action = '/updateEditable';
+	return $controller.$action;
+};
 $route['admin/list-rp-booking-customer'] = function($params = []) {
 	$controller = 'Report';
 	$action = '/showBookingCustomer';

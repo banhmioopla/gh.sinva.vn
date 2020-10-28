@@ -3,6 +3,10 @@ $role_delete = ['product-manager'];
 
 ?>
 
+<?php 
+    include VIEWPATH.'functions.php';
+?>
+
 <div class="wrapper">
     <div class="container-fluid">
 
@@ -17,7 +21,7 @@ $role_delete = ['product-manager'];
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Upload ảnh dự án</h4>
+                    <h4 class="page-title text-primary"><?= $apartment_model['address_street'] ?></h4>
                 </div>
             </div>
         </div>
@@ -26,13 +30,12 @@ $role_delete = ['product-manager'];
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
-                    <span class="text-danger">Tính năng này đang thử nghiệm</span>
                     <blockquote class="blockquote">
                         <p>Có thể upload nhiều ảnh theo mã phòng. Ảnh có viền màu vàng sẽ là ảnh ở chế độ đợi duyệt. Hiện tại dù ảnh chưa duyệt hay đã duyệt thì cũng được hiển thị. <br> Bạn có quy ước nào về tính năng này ?... </p>
                         <footer class="blockquote-footer">vui lòng inbox <cite title="Source Title">Quốc Bình.</cite></footer>
                     </blockquote>
 
-                    <h4 class="text-warning font-weight-bold"><?= $apartment_model['address_street'] ?></h4>
+                    <h4 class=" font-weight-bold"></h4>
                     <div class="upload-section">
                     <form method="post" enctype="multipart/form-data" class='form-group row' action="/admin/upload-image?apartment-id=<?= $this->input->get('apartment-id') ?>">
                         <div class="col-md-4 col-12">
@@ -66,9 +69,24 @@ $role_delete = ['product-manager'];
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 ">
                 <div class="portfolioFilter text-center gallery-second">
-                    <a href="#" data-filter="*" class="current">Tất cả</a>
-                    <?php foreach($list_room_code as $room):?>
-                        <a href="#" data-filter=".roomcode-<?= $room['id'] ?>"><?= $room['code'] ?></a>
+                    <a href="#" data-filter="*" class="current bg-primary">Tất cả</a>
+                    <?php
+                        $i = 0;
+                        foreach($list_room_code as $room):
+                            $status = 'border ';
+                            $status_text = ' - <i class="text-secondary">'. view_money_format($room['price'],1) . '</i>';
+                            if($room['status'] == 'Available'){
+                                $status .= ' text-success';
+                            }
+                                
+                            if($room['time_available'] > 0){
+                                $status_text .= ' <span class="text-warning"> '.date('d/m/Y', $room['time_available']) . '</span>';
+                            }
+                            
+                    ?>
+                        <a href="#" class="font-weight-bold <?= $status ?>" data-filter=".roomcode-<?= $room['id'] ?>">
+                        <?= $room['code']. $status_text ?>
+                        </a>
                     <?php endforeach;?>
 
                 </div>

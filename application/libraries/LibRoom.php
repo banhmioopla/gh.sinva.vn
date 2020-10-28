@@ -24,7 +24,7 @@ class LibRoom {
         $room = $this->CI->ghRoom->get(['id' => $room_id, 'active' => 'YES']);
         $address = '[không có thông tin]';
         if($room) {
-            $address = '[không có thông tin] xx ';
+            $address = '[không có thông tin]';
             $apartment = $this->CI->ghApartment->get(['id' => $room[0]['apartment_id']]);
             if($apartment) {
                 $address = $apartment[0]['address_street'];
@@ -47,7 +47,18 @@ class LibRoom {
                 if($room['id'] == $room_id) {
                     $selected = 'selected';
                 }
-                $cb .= '<option '.$selected.' value='.$room['id'].'>'.$room['code']. ' - Giá: '.number_format($room['price']).'</option>';
+                $status = '';
+                $status_text = '';
+                if($room['status'] == 'Available') {
+                    $status = 'text-success';
+                    $status_text .= ' - trống';
+                }
+                if($room['time_available'] > 0) {
+                    $status = 'text-warning';
+                    $status_text .= ' - <span class="text-warning">'. date('d/m/Y', $room['time_available']) . '</span>';
+                }
+
+                $cb .= '<option class=" font-weight-bold '.$status.'" '.$selected.' value='.$room['id'].'>'.$room['code']. ' - Giá: '.number_format($room['price']).$status_text.'</option>';
             }
         }
         return $cb;

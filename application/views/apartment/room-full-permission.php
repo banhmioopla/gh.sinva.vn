@@ -79,9 +79,11 @@
                             <?php endif;?>
 
                             <?php if($check_consultant_booking):?>
-                                <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success consultant-booking btn-rounded waves-light waves-effect">
-                                    <i class="mdi mdi-car-hatchback"></i>
-                                </button>
+                                <a href="<?= base_url() ?>admin/list-consultant-booking?room-id=<?= $room['id'] ?>&apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
+                                    <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
+                                        <i class="mdi mdi-car-hatchback"></i>
+                                    </button>
+                                </a>
                             <?php endif;?>
                             </div>
                             
