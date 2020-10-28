@@ -70,8 +70,8 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                 </div>
             </div>
         </div> <!-- end row -->
-        <h3 class="page-title">Biểu đồ</h3>
-        <div class="row">
+        <h3>Biểu đồ</h3>
+        <div class="row" >
             <div class="col-lg-4">
                 <div class="card-box">
                     <div class="head-title font-600">Trống - Tổng Phòng</div>
@@ -93,50 +93,44 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
-                <div class="card-box">
-                    <div class="head-title font-600">Thống Kê Phòng Trống</div>
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                            <th scope="col">Quận</th>
-                            <th scope="col">Danh Sách Giá - Số Lượng</th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody>
-                        <?php foreach($list_district as $d):?>
-                        <?php 
-                        
-                        $list_room_price = $this->ghRoom->getPriceByDistrict($d['code'], 'gh_room.status = "Available" ');    
+            <div class="col-lg-12">
+                <h3 data-toggle="collapse" class="text-danger" href="#numberAvailable"><i class="mdi mdi-chevron-double-down"></i> Số lượng phòng trống tương ứng mức giá 
+                </h3>
+                <p>click vào tiêu đề để xổ xuống chi tiết</p>
+                
+                <div class="row collapse" id="numberAvailable">
+                    <?php foreach($list_district as $d):
+                            $list_room_price = $this->ghRoom->getPriceByDistrict($d['code'], 'gh_room.status = "Available" ', 'gh_room.price');    
                         ?>
-                            <tr>
-                                <td><?= $d['name'] ?></td>
-                                <td class="text-left">
-                                <div class="card-box tilebox-one">
-                                    <?php 
-                                        if($list_room_price):
-                                            $total = 0;
-                                        foreach($list_room_price as $room): 
-                                            $total += $room['object_counter'];
-                                    ?>
-                                        <span><?= number_format($room['room_price']) . '('.$room['object_counter'] .')' ?> </span>
-                                    <?php 
-                                        endforeach;
-                                        echo "<hr>
-                                        <div class='font-weight-bold'>Tổng Số lượng:  ".$total."</div>";
-                                    else: echo "<div class='text-danger'> Không có phòng trống<div>";
-                                    endif;
-                                    ?>
-                                    
+                        <div class="col-2">
+                            <div class="card m-b-30">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">Quận <?= $d['name'] ?></h5>
+                                    <p class="card-text"></p>
+                                    <a href="<?= base_url() ?>admin/list-apartment?district-code=<?= $d['code'] ?>" class="btn btn-custom waves-effect waves-light">Đi tới Quận <?= $d['name'] ?> </a>
                                 </div>
-                                </td>
-                            </tr>
-                        <?php endforeach;?>
-                        </tbody>
-                    </table>
-                    <div id="table">
-                    </div>
+                                <ul class="list-group list-group-flush">
+                                    <?php $total = 0;
+                                        if($list_room_price):
+                                        foreach($list_room_price as $room):
+                                            $total += $room['object_counter'];
+
+                                            if($room['room_price'] !==  null):
+                                        ?>
+                                        
+                                        <li class="list-group-item"><?= number_format($room['room_price']) . ' <i class="text-success font-weight-bold">('.$room['object_counter'] .')</i>' ?></li>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>
+                                        <li class="list-group-item font-weight-bold">Tổng Số Lượng: <?= $total ?></li>
+                                        <?php else: ?>
+                                            <li class="list-group-item text-danger">Không có phòng trống</li>
+                                    <?php endif; ?>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

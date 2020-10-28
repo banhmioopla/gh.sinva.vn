@@ -110,7 +110,7 @@ class GhRoom extends CI_Model {
         return $result->result_array() ? $result->result_array() : 0;
     }
 
-    public function getPriceByDistrict($district_code, $where_string) {
+    public function getPriceByDistrict($district_code, $where_string, $groupby = 'gh_room.type') {
         $sql = "SELECT gh_room.price as room_price, count(gh_room.id) as object_counter FROM  gh_room, gh_apartment 
                 WHERE gh_apartment.id = gh_room.apartment_id
                 AND gh_apartment.active = 'YES'
@@ -120,9 +120,8 @@ class GhRoom extends CI_Model {
         if(!empty($where_string)) {
             $sql .= " AND $where_string";
         }
-        $sql .= ' GROUP BY gh_room.type';
+        $sql .= ' GROUP BY '.$groupby . ' ORDER BY object_counter DESC, room_price DESC';
         $result = $this->db->query($sql);
-        // var_dump($result->result_array());die;
         return $result->result_array() ? $result->result_array() : 0;
     }
 }
