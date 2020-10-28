@@ -64,11 +64,6 @@
                                 <i class="mdi mdi-car-hatchback"></i>
                             </button>
                         </a>
-                        <?php // if($check_consultant_booking):?>
-                            <!-- <button data-room-id="<//?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success consultant-booking btn-rounded waves-light waves-effect">
-                                <i class="mdi mdi-car-hatchback"></i>
-                            </button> -->
-                        <?php// endif;?>
                     </td>
                     <?php endif; ?>
                 </tr>
