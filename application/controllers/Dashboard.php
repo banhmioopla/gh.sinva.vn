@@ -57,6 +57,7 @@ class Dashboard extends CustomBaseStep {
             $chart_data[$iii] = [$iii,(int)$this->ghRoom->getNumberByDistrict($d['code'], 1)];
             $chart_data_trong[$iii] = [$iii, (int)$this->ghRoom->getNumberByDistrict($d['code'], 'gh_room.status = "Available"')];
             $chart_data_full[$iii] = [$iii, (int)$this->ghRoom->getNumberByDistrict($d['code'], 'gh_room.status = "Full"')];
+            $chart_data_saptrong[$iii] = [$iii, (int)$this->ghRoom->getNumberByDistrict($d['code'], 'gh_room.time_available > 0')];
             $iii ++;
         }
 
@@ -78,6 +79,7 @@ class Dashboard extends CustomBaseStep {
             'chart_data_total' => json_encode($chart_data),
             'chart_data_trong' => json_encode($chart_data_trong),
             'chart_data_full' => json_encode($chart_data_full),
+            'chart_data_saptrong' => json_encode($chart_data_saptrong),
             'chart_label' =>json_encode($chart_label)
         ];
         $this->load->view('components/header', ['menu' => $this->menu]);

@@ -20,11 +20,13 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Bảng điều khiển</h3>
+                    
                 </div>
             </div>
         </div>
-        
+        <h3>Bảng điều khiển</h3>
+
+        <?php $this->load->view('components/list-navigation'); ?>
         <div class="district-alert"></div>
         <h3 class="page-title">Bộ Phận Dự Án</h3>
         <div class="row">
@@ -68,6 +70,76 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                 </div>
             </div>
         </div> <!-- end row -->
+        <h3 class="page-title">Biểu đồ</h3>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card-box">
+                    <div class="head-title font-600">Trống - Tổng Phòng</div>
+
+                    <div id="pie-chart">
+                        <div id="trong_full" class="flot-chart mt-5" style="height: 350px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8">
+                <div class="card-box">
+                    <div class="head-title font-600">Trống - Full</div>
+
+                    <div id="pie-chart">
+                        <div id="ordered-bars-chart" class="flot-chart mt-5" style="height: 350px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card-box">
+                    <div class="head-title font-600">Thống Kê Phòng Trống</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col">Quận</th>
+                            <th scope="col">Danh Sách Giá - Số Lượng</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                        <?php foreach($list_district as $d):?>
+                        <?php 
+                        
+                        $list_room_price = $this->ghRoom->getPriceByDistrict($d['code'], 'gh_room.status = "Available" ');    
+                        ?>
+                            <tr>
+                                <td><?= $d['name'] ?></td>
+                                <td class="text-left">
+                                <div class="card-box tilebox-one">
+                                    <?php 
+                                        if($list_room_price):
+                                            $total = 0;
+                                        foreach($list_room_price as $room): 
+                                            $total += $room['object_counter'];
+                                    ?>
+                                        <span><?= number_format($room['room_price']) . '('.$room['object_counter'] .')' ?> </span>
+                                    <?php 
+                                        endforeach;
+                                        echo "<hr>
+                                        <div class='font-weight-bold'>Tổng Số lượng:  ".$total."</div>";
+                                    else: echo "<div class='text-danger'> Không có phòng trống<div>";
+                                    endif;
+                                    ?>
+                                    
+                                </div>
+                                </td>
+                            </tr>
+                        <?php endforeach;?>
+                        </tbody>
+                    </table>
+                    <div id="table">
+                    </div>
+                </div>
+            </div>
+        </div>
         <h3 class="page-title">Bộ Phận Chăm Sóc Khách Hàng</h3>
         <div class="row">
             <div class="col-12 col-md-3">
@@ -196,79 +268,6 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                 </div>
             </div>
         </div>
-        <h3 class="page-title">Biểu đồ</h3>
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card-box">
-                    <div class="head-title font-600">Trống - Tổng Phòng</div>
-
-                    <div id="pie-chart">
-                        <div id="trong_full" class="flot-chart mt-5" style="height: 350px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-8">
-                <div class="card-box">
-                    <div class="head-title font-600">Trống - Full</div>
-
-                    <div id="pie-chart">
-                        <div id="ordered-bars-chart" class="flot-chart mt-5" style="height: 350px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="card-box">
-                    <div class="head-title font-600">Thống Kê Phòng Trống</div>
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                            <th scope="col">Quận</th>
-                            <th scope="col">Danh Sách Giá - Số Lượng</th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody>
-                        <?php foreach($list_district as $d):?>
-                        <?php 
-                        
-                        $list_room_price = $this->ghRoom->getPriceByDistrict($d['code'], 'gh_room.status = "Available" ');    
-                        ?>
-                            <tr>
-                                <td><?= $d['name'] ?></td>
-                                <td class="text-left">
-                                <div class="card-box tilebox-one">
-                                    <?php 
-                                        if($list_room_price):
-                                            $total = 0;
-                                        foreach($list_room_price as $room): 
-                                            $total += $room['object_counter'];
-                                    ?>
-                                    <li class="m-b-20 text-success" >
-                                    <span class=" badge badge-success badge-pill mr-2">  <?= $room['object_counter'] ?> P</span>
-                                            <?= strip_tags(number_format($room['room_price']))?> 
-                                    </li>
-                                    <?php 
-                                        endforeach;
-                                        echo "<hr>
-                                        <div class='font-weight-bold'>Tổng Số lượng:  ".$total."</div>";
-                                    else: echo "<div class='text-danger'> Không có phòng trống<div>";
-                                    endif;
-                                    ?>
-                                    
-                                </div>
-                                </td>
-                            </tr>
-                        <?php endforeach;?>
-                        </tbody>
-                    </table>
-                    <div id="table">
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div> <!-- end container -->
 </div>
@@ -302,7 +301,7 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                                     radius: 1,
                                     formatter: function (label, series) {
                                     return '<div class="font-weight-bold p-1 text-light">' + label + '<br/>' +   
-                                    Math.round(series.percent) + '%</div>';
+                                    parseFloat(series.percent).toFixed(2) + '%</div>';
                                 },
                                     background: {
                                         opacity: .8
@@ -344,10 +343,12 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                     let chart_label = JSON.parse('<?= $chart_label ?>');
                     let d1 = JSON.parse('<?= $chart_data_trong ?>');
                     let d2 = JSON.parse('<?= $chart_data_total ?>');
+                    let d3 = JSON.parse('<?= $chart_data_saptrong ?>');
 
                     var data = [
                                 {label: "Trống", data: d1, bars: {fillColor: '#2d7bf4'}, color: "#2d7bf4"},
-                                {label: "Tổng Phòng", data: d2, bars: {fillColor: "#f5a742"}, color: "#f5a742"}
+                                {label: "Sap Trong", data: d3, bars: {fillColor: '#e0e019'}, color: "#e0e019"},
+                                {label: "Tổng Phòng", data: d2, bars: {fillColor: "#969696"}, color: "#969696"}
                             ];
                     var options = {
                         xaxis: {

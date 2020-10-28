@@ -34,6 +34,9 @@ class Customer extends CustomBaseStep {
 	public function show(){
 		
 		$data['list_customer'] = $this->ghCustomer->getAll();
+		if(!in_array($this->auth['role_code'], ['customer-care'])) {
+			$data['list_customer'] = $this->ghCustomer->get(['user_insert_id' => $this->auth['account_id']]);
+		}
 		$data['libDistrict'] = $this->libDistrict;
 		$data['select_district'] = $this->libDistrict->cbActive();
 		$data['label_apartment'] =  $this->config->item('label.apartment');

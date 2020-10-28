@@ -18,7 +18,7 @@
                     <h3>Google drive</h3>
                 </div>
             </div>
-
+            <?php $this->load->view('components/list-navigation'); ?>
             <div class="col-md-12">
                 <div class="card-box">
                     <?php foreach($list_linkdrive['googledrive'] as $item => $container):?>

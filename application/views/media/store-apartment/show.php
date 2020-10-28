@@ -26,7 +26,7 @@ $role_delete = ['product-manager'];
             </div>
         </div>
         <!-- end page title end breadcrumb -->
-        
+        <?php $this->load->view('components/list-navigation'); ?>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">

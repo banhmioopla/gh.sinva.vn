@@ -15,6 +15,7 @@
                 </div>
             </div>
         </div>
+        <?php $this->load->view('components/list-navigation'); ?>
         <div class="row">            
             <div class="col-md-4">
                 <div class="card-box bg-primary widget-flat border-primary text-white">

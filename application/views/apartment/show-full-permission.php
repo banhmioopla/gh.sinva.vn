@@ -54,14 +54,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
             <div class="card card-body pl-0 pr-0 col-12 col-md-8">
-                <div class="m-md-2 m-1 button-list">
-                    <a href="<?= base_url() ?>admin/show-image-apartment">
-                        <button type="button" class="btn btn-info waves-effect waves-light"> <i class="fa fa-cloud"></i> <span>Kho Ảnh Dự Án</span> </button>
-                    </a>
-                    <a href="<?= base_url() ?>admin/list-consultant-booking">
-                        <button type="button" class="btn btn-info waves-effect waves-light"> <i class="fa fa-cloud"></i> <span>Thống kê dẫn khách</span> </button>
-                    </a>
-                </div>
+                <?php $this->load->view('components/list-navigation'); ?>
                 <div class="mt-2 mb-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap">
                     <?php foreach($list_district as $district): ?>

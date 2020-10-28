@@ -1,3 +1,9 @@
+<?php 
+$check_create = in_array($this->auth['role_code'], ['customer-care']);
+$check_editable  = in_array($this->auth['role_code'], ['customer-care']);
+
+?>
+
 <div class="wrapper">
 <div class="sk-wandering-cubes" style="display:none" id="loader">
     <div class="sk-cube sk-cube1"></div>
@@ -28,6 +34,7 @@
             }  
         ?>
         <div class="customer-alert"></div>
+        <?php $this->load->view('components/list-navigation'); ?>
         <div class="row">
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
@@ -139,6 +146,7 @@
                     </table>
                 </div>
             </div>
+            <?php if($check_create):?>
             <div class="col-12 col-md-6">
                 <div class="card-box">
                     <h4 class=" m-t-0">Khách Hàng Tiềm Năng</h4>
@@ -278,6 +286,7 @@
                     </form>
                 </div>
             </div>
+            <?php endif; ?>
         </div> <!-- end row -->
 
     </div> <!-- end container -->
@@ -290,8 +299,10 @@
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true,
+                
                 "fnDrawCallback": function() {
                     // x editable
+                    <?php if($check_editable): ?>
                     $('.customer-data').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-customer-editable',
@@ -374,6 +385,7 @@
                             });
                         }
                     });
+                    <?php endif; ?>
                 } // end fnDrawCallback
             });
             

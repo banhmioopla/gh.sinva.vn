@@ -92,6 +92,8 @@ class ConsultantBooking extends CustomBaseStep {
 			$customer['source'] = $post['source'];
 			$customer['phone'] = $post['phone_number'];
 			$customer['email'] = $post['email'];
+			$customer['user_insert_id'] = $this->auth['account_id'];
+			$customer['time_insert'] = time();
 			$customer['demand_price'] = $post['demand_price'];
 			$customer['demand_district_code'] = $post['demand_district_code'];
 			$customer['demand_time'] = $post['demand_time'] ? strtotime(str_replace('/', '-', $post['demand_time'])) : 0;
