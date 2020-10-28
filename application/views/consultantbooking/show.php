@@ -121,7 +121,7 @@
                         $apartment_model = $ghApartment->get(['id' => $this->input->get('apartment-id')]);
                         $room_model = $ghRoom->get(['apartment_id' => $this->input->get('apartment-id')]);
                     ?>
-                    <h2 class="text-center text-success"><?= '<span class="text-secondary">'.$room_model[0]['code'] . '</span> - '.  $apartment_model[0]['address_street'] ?></h2>
+                    <h2 class="text-center text-success"><?= $apartment_model[0]['address_street'] ?></h2>
                     <hr>
                         <form novalidate action="/admin/create-new-consultant-booking" method="post">
                             <input type="hidden" name='district_code' value="<?= $this->input->get('district-code') ?>" >
