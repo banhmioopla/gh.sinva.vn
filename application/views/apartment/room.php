@@ -59,11 +59,6 @@
                             </button>
                         </a>
                         <?php endif;?>
-                        <a href="<?= base_url() ?>admin/list-consultant-booking?room-id=<?= $room['id'] ?>&apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
-                            <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                <i class="mdi mdi-car-hatchback"></i>
-                            </button>
-                        </a>
                     </td>
                     <?php endif; ?>
                 </tr>
