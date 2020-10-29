@@ -362,20 +362,17 @@
                 <tbody>
                 <?php if(count($list_booking) >0):?>
                 <?php foreach($list_booking as $booking):
-                    $roomModel = $ghRoom->get(['id' => $booking['room_id']]);
-                    $address = '';
-                    $roomCode = '';
-                    if($roomModel){
-                        $apmModel = $ghApartment->get(['id' => $roomModel[0]['apartment_id']]);
-                        $roomCode = $roomModel[0]['code'];
-                        if($apmModel) {
-                            $address = $apmModel[0]['address_street'];
-                        }
+                    $arr_room_id = json_decode($booking['room_id'], true);
+                    $text_detail_room_code = '';
+                    foreach($arr_room_id as $r_id){
+                        $roomModel = $ghRoom->get(['id' => $r_id]);
+                        $text_detail_room_code .= $roomModel[0]['code']. ' ';
                     }
+                    $apmModel = $ghApartment->get(['id' => $booking['apartment_id']]);
                 ?>
                     <tr>
-                        <td><?= $address ?></td>
-                        <td><?= $roomCode ?></td>
+                        <td><?= $apmModel['0']['address_street'] ?></td>
+                        <td><?= $text_detail_room_code ?></td>
                         <td><?= $libUser->getNameByAccountid($booking['booking_user_id']) ?></td>
                         <td><?= date('d/m/Y H:i',$booking['time_booking'])  ?></td>
                     </tr>

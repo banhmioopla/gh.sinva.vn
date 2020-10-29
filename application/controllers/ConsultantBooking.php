@@ -36,21 +36,10 @@ class ConsultantBooking extends CustomBaseStep {
 			$district_counter_booking[$d['code']] = 0;
 		}
 		foreach($list_district as $d){
-			$list_apm = $this->ghApartment->get(['district_code' => $d['code']]);
-			if(count($list_apm) > 0) {
-				foreach($list_apm as $apm) {
-					$list_room = $this->ghRoom->get(['apartment_id' => $apm['id']]);
-					if(count($list_room) >0) {
-						foreach($list_room as $r) {
-							$district_counter_booking[$d['code']] += count(
-								$this->ghConsultantBooking->get(
-									['room_id' => $r['id'], 
-									'time_booking >= ' => strtotime('last monday')]));
-						}
-					}
-
-				}
-			} 
+			$district_counter_booking[$d['code']] += count(
+				$this->ghConsultantBooking->get(
+					['district_code' =>$d['code'],
+					'time_booking >= ' => strtotime('last monday')]));
 
 			if($district_counter_booking[$d['code']] > 0) {
 				$quantity['booking_district']++;
