@@ -337,11 +337,11 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         inputclass: 'form-control-sm',
                     });
                     
-                    $('.customer-note').editable({
-                        type: 'textarea',
-                        url: '<?= base_url() ?>admin/update-customer-editable',
-                        inputclass: '',
-                    });
+                    // $('.customer-note').editable({
+                    //     type: 'textarea',
+                    //     url: '<//?= base_url() ?>admin/update-customer-editable',
+                    //     inputclass: '',
+                    // });
                     $('.customer-demand_district_code').editable({
                         type: 'select',
                         url: '<?= base_url() ?>admin/customer-get-district',
