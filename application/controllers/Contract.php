@@ -33,7 +33,11 @@ class Contract extends CustomBaseStep {
 
 	public function show(){
 		$this->load->model('ghContract'); // load model ghUser
-		$data['list_contract'] = $this->ghContract->getAll();
+		$data['list_contract'] = $this->ghContract->get();
+		if(!in_array($this->auth['account_id'], ['customer-care'])) {
+			$data['list_contract'] = $this->ghContract->get(['user_create_id' => $this->auth['account_id']]);
+		} 
+		
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;
 		$data['ghApartment'] = $this->ghApartment;
@@ -100,6 +104,9 @@ class Contract extends CustomBaseStep {
 				'ID_card' => $post['ID_card_new'],
 				'status' => 'sinva-rented',
 				'source' => $post['source_new'],
+				'note' => 'TESTMODE',
+				'user_insert_id' => $this->auth['account_id'],
+				'time_insert' => time()
 			];
 		
 			$customer_id = $this->ghCustomer->insert($new_customer_data);
@@ -128,7 +135,10 @@ class Contract extends CustomBaseStep {
 			'service_set' => json_encode($service_set), // apartment data
 			'status' => $post['status'],
 			'note' => $post['note'],
-			'room_code' => $post['room_code']
+			'note' => 'TESTMODE',
+			'room_code' => $post['room_code'],
+			'user_create_id' => $this->auth['account_id'],
+			'time_insert' => time(),
 		];
 		
 		$result = $this->ghContract->insert($contract);

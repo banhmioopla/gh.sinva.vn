@@ -29,10 +29,11 @@
         ?>
         <div class="contract-alert"></div>
         <div class="row">
+        <?php $this->load->view('components/list-navigation'); ?>
             <div class="col-md-12">
                 <h3>Danh sách hợp đồng tháng hiện tại  </h3>
                 <div class="card-box table-responsive">
-                    <table id="table-contract" class="table table-bordered">
+                    <table class="table-contract table table-bordered">
                         <thead>
                         <tr>
                             <th># ID Hợp Đồng</th>
@@ -138,7 +139,7 @@
         <div class="row">
             <div class="col-12 col-md-12">
                 <div class="card-box table-responsive">
-                    <table id="table-contract" class="table table-bordered">
+                    <table class="table-contract table table-bordered">
                         <thead>
                         <tr>
                             <th># ID Hợp Đồng</th>
@@ -240,15 +241,23 @@
     </div> <!-- end container -->
 </div>
 <!-- end wrapper -->
+<?php 
+$check_edit = false;
+if(in_array($this->auth['role_code'], ['customer-care'])) {
+    $check_edit = true;
+}
+
+?>
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('#table-contract').DataTable({
+            $('.table-contract').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true,
                 "fnDrawCallback": function() {
                     // x editable
+                    <?php if($check_edit): ?>
                     $('.contract-room_price').editable({
                         type: "number",
                         url: '<?= base_url() ?>admin/update-contract-editable',
@@ -262,6 +271,7 @@
                             }
                         }
                     });
+                    <?php endif; ?>
                 } // end fnDrawCallback
             });
             

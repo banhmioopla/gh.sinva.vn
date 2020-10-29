@@ -1,3 +1,11 @@
+<?php 
+
+$check_consultant_id = false;
+if(in_array($this->auth['role_code'], ['customer-care'])){
+    $check_consultant_id = true;
+}
+?>
+
 
 <div class="wrapper">
     <div class="sk-wandering-cubes" style="display:none" id="loader">
@@ -104,13 +112,20 @@
                         <input type="hidden" name='room_code' value= '<?= $room['code']?>'>
                         <input type="hidden" name='apartment_id' value= '<?= $room['apartment_id']?>'>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger"> (bb)</span></label>
+                            <label for="consultant_id" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger"> (bb)</span></label>
+                            <?php if($check_consultant_id):?>
                             <div class="col-md-8 col-12">
                                 <select type="number" class="form-control"
                                         id="consultant_id" name="consultant_id" placeholder="171020xxx">
                                         <?= $select_user?>
                                 </select>
                             </div>
+                            <?php else: ?>
+                                <div class="col-md-8 col-12">
+                                    <input type="text" class="form-control"
+                                            id="consultant_id" readonly name="consultant_id" value="<?= $this->auth['account_id']?>">
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <hr>
                         <h5>Thông tin khách thuê</h5>
@@ -263,16 +278,16 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-12 col-md-4 col-form-label">Tình trạng</label>
+                            <label for="" class="col-12 col-md-4 col-form-label">Trạng thái Hợp đồng</label>
                             <div class="col-md-8 col-12">
                                 <div class="radio radio-custom">
                                     <input type="radio" name="status" checked id="sinva-Active" value="Active">
                                     <label for="sinva-Active">
-                                        Đang ở (đang có hiệu lực)
+                                        Đang có hiệu lực
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">
-                                    <input type="radio" name="status" id="sinva-Pending" value="Pending">
+                                    <input type="radio" name="status" disabled id="sinva-Pending" value="Pending">
                                     <label for="sinva-Pending">
                                         Đợi ký HĐ (đang cọc)
                                     </label>
@@ -289,7 +304,7 @@
                         <div class="form-group row">
                             <label class="col-12 col-md-4 col-form-label">Ghi chú</label>
                             <div class="col-md-8 col-12">
-                                <textarea class="form-control" rows="4" name="note"></textarea>
+                                <textarea class="form-control" disabled placeholder="sẽ mở khi áp dụng chính thức" rows="4" name="note"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">

@@ -15,7 +15,6 @@
             <th>Diện Tích</th>
             <th>Trạng Thái</th>
             <th>Ng.Trống</th>
-            <!-- <th>Dẫn khách</th> -->
             <?php if($check_option):?>
             <th>Tùy chọn</th>
             <?php endif; ?>
