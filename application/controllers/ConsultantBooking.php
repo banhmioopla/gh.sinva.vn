@@ -82,6 +82,10 @@ class ConsultantBooking extends CustomBaseStep {
 		}
 		if($post['customer_id'] > 0) {
 			$data['customer_id'] = $post['customer_id'];
+			if($this->auth['role_code'] !== 'customer-care') {
+				$update_customer = ['test_mode' => '[YES,'.$this->auth['name'].']'];
+				$customer_model = $this->ghCustomer->updateById($data['customer_id'], $update_customer);
+			}
 			
 		} else {
 			$customer['name'] = $post['customer_name'];
@@ -96,6 +100,7 @@ class ConsultantBooking extends CustomBaseStep {
 			$customer['demand_price'] = $post['demand_price'];
 			$customer['demand_district_code'] = $post['demand_district_code'];
 			$customer['demand_time'] = $post['demand_time'] ? strtotime(str_replace('/', '-', $post['demand_time'])) : 0;
+			$customer['test_mode'] = 'YES';
 			$data['customer_id'] = $this->ghCustomer->insert($customer);
 		}
 
