@@ -304,7 +304,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                         <div class="form-group row">
                             <label class="col-12 col-md-4 col-form-label">Ghi chú</label>
                             <div class="col-md-8 col-12">
-                                <textarea class="form-control" disabled placeholder="sẽ mở khi áp dụng chính thức" rows="4" name="note"></textarea>
+                                <textarea class="form-control" rows="4" name="note"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">

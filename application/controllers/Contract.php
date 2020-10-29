@@ -95,6 +95,7 @@ class Contract extends CustomBaseStep {
 
 		if(isset($post['customer_name_new']) and !empty($post['customer_name_new'])) {
 			$birth_date_new = $post['birthdate_new'] ? strtotime(str_replace('/', '-', $post['birthdate_new'])) : 0;
+			
 			$new_customer_data = [
 				'name' => $post['customer_name_new'],
 				'gender' => $post['gender_new'],
@@ -104,17 +105,21 @@ class Contract extends CustomBaseStep {
 				'ID_card' => $post['ID_card_new'],
 				'status' => 'sinva-rented',
 				'source' => $post['source_new'],
-				'note' => 'TESTMODE',
 				'user_insert_id' => $this->auth['account_id'],
 				'time_insert' => time()
 			];
+			if($this->auth['role_code'] !== 'customer-care') {
+				$new_customer_data['test_mode'] = 'YES';
+			}
 		
 			$customer_id = $this->ghCustomer->insert($new_customer_data);
 		} else {
 			$customer_id = $post['customer_name'];
-			$customer_model = $this->ghCustomer->updateById($customer_id, [
-				'status' => 'sinva-rented'
-			]);
+			$update_customer = ['status' => 'sinva-rented'];
+			if($this->auth['role_code'] !== 'customer-care') {
+				$update_customer = ['status' => 'sinva-rented', 'test_mode' => '[YES,'.$this->auth['name'].']'];
+			}
+			$customer_model = $this->ghCustomer->updateById($customer_id, $update_customer);
 		}
 		
 		$service_set = $this->ghApartment->get(['id' =>$post['apartment_id']])[0];
@@ -135,11 +140,13 @@ class Contract extends CustomBaseStep {
 			'service_set' => json_encode($service_set), // apartment data
 			'status' => $post['status'],
 			'note' => $post['note'],
-			'note' => 'TESTMODE',
 			'room_code' => $post['room_code'],
 			'user_create_id' => $this->auth['account_id'],
 			'time_insert' => time(),
 		];
+		if($this->auth['role_code'] !== 'customer-care') {
+			$contract['test_mode'] = 'YES';
+		}
 		
 		$result = $this->ghContract->insert($contract);
         $this->session->set_flashdata('fast_notify', [
