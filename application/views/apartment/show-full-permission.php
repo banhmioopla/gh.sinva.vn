@@ -524,7 +524,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
                                 data-pk="${room_id}"
                                 data-value=""
                                 data-name="code"
-                                >#</div></td>
+                                >000</div></td>
                         <td><div class="room-data" 
                                 data-pk="${room_id}"
                                 data-value=""

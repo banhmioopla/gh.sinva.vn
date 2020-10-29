@@ -40,7 +40,7 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['code'] ?>"
                             data-name="code"
-                            ><?= $room['code'] ? $room['code'] : '#' ?></div>
+                            ><?= $room['code'] ? $room['code'] : 'không có thông tin' ?></div>
                             </td>
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
