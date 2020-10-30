@@ -12,7 +12,7 @@
             <th>Mã Phòng</th>
             <th>Loại Phòng</th>
             <th>Giá</th>
-            <th>Diện Tích</th>
+            <th class="text-center">Diện Tích</th>
             <th>Trạng Thái</th>
             <th>Ng.Trống</th>
             <?php if($check_option):?>
@@ -50,7 +50,7 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['price'] ?>"
                             data-name="price"><?= $room['price'] ? view_money_format($room['price'],1): '-' ?></div></td>
-                    <td><div class="room-area" 
+                    <td><div class="room-area text-center" 
                             data-pk= "<?= $room['id'] ?>"
                             data-value= "<?= $room['area'] > 0 ? $room['area']:'' ?>"
                             data-name="area"><?= $room['area'] > 0 ? $room['area']: '-' ?></div></td>
@@ -85,7 +85,6 @@
                                 </a>
                             <?php endif;?>
                             </div>
-                            
                     </td>
                     <?php endif; ?>
                 </tr>
