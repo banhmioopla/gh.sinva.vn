@@ -45,22 +45,22 @@
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['type'] ?>"
                             data-name="type"
-                            ><?= $room['type'] ? $room['type']: '#' ?></div></td>
+                            ><?= $room['type'] ? $room['type']: '-' ?></div></td>
                     <td><div class="room-price font-weight-bold" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['price'] ?>"
-                            data-name="price"><?= $room['price'] ? view_money_format($room['price'],1): '#' ?></div></td>
+                            data-name="price"><?= $room['price'] ? view_money_format($room['price'],1): '-' ?></div></td>
                     <td><div class="room-area" 
                             data-pk= "<?= $room['id'] ?>"
-                            data-value= "<?= $room['area'] ?>"
-                            data-name="area"><?= $room['area'] > 0 ? $room['area']: '#' ?></div></td>
+                            data-value= "<?= $room['area'] > 0 ? $room['area']:'' ?>"
+                            data-name="area"><?= $room['area'] > 0 ? $room['area']: '-' ?></div></td>
                     <td><div class="room-status font-weight-bold text-primary <?= $color_for_available ?>" 
                             data-id="<?= $room['id'] ?>">
-                            <?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>
+                            <?= $room['status'] ? $label_apartment[$room['status']] : '-' ?></div></td>
                     <td><div class="room-time_available text-success" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= date('d-m-Y',$room['time_available']) ?>"
-                            data-name="time_available"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'#' ?></div></td>
+                            data-name="time_available"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'-' ?></div></td>
 
                     <?php if($check_option):?>
                         <td class="">
