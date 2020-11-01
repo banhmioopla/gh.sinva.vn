@@ -1,3 +1,11 @@
+<?php 
+$check_edit = false;
+if(isYourPermission($this->current_controller, 'updateEditable', $this->permission_set)){
+    $check_edit = true;
+}
+
+?>
+
 <div class="wrapper">
 <div class="sk-wandering-cubes" style="display:none" id="loader">
     <div class="sk-cube sk-cube1"></div>
@@ -87,7 +95,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div>
+                                    <div class="contract-time_expire"
+                                        data-pk="<?= $row['id'] ?>"
+                                        data-value="<?= date('d/m/Y',$row['time_expire']) ?>"
+                                        data-name="time_expire">
                                         <?=$row['time_expire'] ? date('d/m/Y',$row['time_expire']):'-' ?>
                                     </div>
                                 </td>
@@ -188,7 +199,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div>
+                                    <div class="contract-time_expire"
+                                        data-pk="<?= $row['id'] ?>"
+                                        data-value="<?= date('d/m/Y',$row['time_expire']) ?>"
+                                        data-name="time_expire">
                                         <?=$row['time_expire'] ? date('d/m/Y',$row['time_expire']):'-' ?>
                                     </div>
                                 </td>
@@ -241,13 +255,7 @@
     </div> <!-- end container -->
 </div>
 <!-- end wrapper -->
-<?php 
-$check_edit = false;
-if(in_array($this->auth['role_code'], ['customer-care'])) {
-    $check_edit = true;
-}
 
-?>
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
@@ -262,6 +270,29 @@ if(in_array($this->auth['role_code'], ['customer-care'])) {
                         type: "number",
                         url: '<?= base_url() ?>admin/update-contract-editable',
                         inputclass: '',
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            if(data.status == true) {
+                                $('.contract-alert').html(notify_html_success);
+                            } else {
+                                $('.contract-alert').html(notify_html_fail);
+                            }
+                        }
+                    });
+                    $('.contract-time_expire').editable({
+                        placement: 'right',
+                        type: 'combodate',
+                        template:"D / MM / YYYY",
+                        format:"DD-MM-YYYY",
+                        viewformat:"DD-MM-YYYY",
+                        mode: 'inline',
+                        combodate: {
+                            firstItem: 'name',
+                            maxYear: '2030',
+                            minYear: '2017'
+                        },
+                        inputclass: 'form-control-sm',
+                        url: '<?= base_url() ?>admin/update-contract-editable',
                         success: function(response) {
                             var data = JSON.parse(response);
                             if(data.status == true) {

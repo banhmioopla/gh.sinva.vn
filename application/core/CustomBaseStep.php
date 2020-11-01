@@ -69,6 +69,15 @@ class CustomBaseStep extends CI_Controller {
 		return false;
 	}
 
+	protected function isYourPermission($controller, $action){
+        $list_controller = array_keys($this->permission_set);
+        if(in_array($controller, $list_controller) && isset($this->permission_set[$controller]) && in_array($action, $this->permission_set[$controller])) {
+            return true;
+        }
+        return false;
+    
+    }
+
 	
 }
 

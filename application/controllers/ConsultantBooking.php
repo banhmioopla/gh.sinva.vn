@@ -17,8 +17,23 @@ class ConsultantBooking extends CustomBaseStep {
 		$this->load->config('label.apartment');
 	}
 
+	public function showAllTimeLine(){
+		return ;
+	}
+
+	public function showYour(){
+		return $this->ghConsultantBooking->get(['time_booking > ' => strtotime('last monday'), 'booking_user_id' =>$this->auth['account_id']]);
+	}
+
 	public function show(){
-		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking >= ' => strtotime('last monday')]);
+		
+		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => 0]);
+		$data['title_1'] = "Lượt dẫn của tất cả thành viên";
+		
+		if($this->isYourPermission($this->current_controller, 'showYour')) {
+			$data['list_booking'] = $this->showYour();
+			$data['title_1'] = "Lượt dẫn của tôi tuần hiện tại từ". date('d/m/Y', strtotime('last monday'));
+		} 
 		$data['list_booking_this_week'] = $this->ghConsultantBooking->getGroupByUserId(strtotime('last monday'));
 		$list_district = $this->ghDistrict->get(['active' => 'YES']);
 		$district_counter_booking = [];

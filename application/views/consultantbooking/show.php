@@ -41,7 +41,7 @@
         </div>
         <div class="col-12 col-md-12">
             <div class="card-box table-responsive">
-            <h4>Lượt dẫn của tôi tuần hiện tại từ <?= date('d/m/Y', strtotime('last monday')) ?></h4>
+            <h4><?= $title_1 ?></h4>
             <table class=" table-data table table-bordered">
                 <thead>
                     <tr>
@@ -57,8 +57,6 @@
             <tbody>
                 <?php if(count($list_booking) >0):?>
                 <?php foreach($list_booking as $booking):
-                    if($booking['booking_user_id'] != $this->auth['account_id']) continue;
-
                     $address = '';
                     $apmModel = $ghApartment->get(['id' => $booking['apartment_id']]);
                     if($apmModel) {

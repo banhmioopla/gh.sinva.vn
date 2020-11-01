@@ -27,11 +27,15 @@ class Contract extends CustomBaseStep {
 		$this->load->config('label.apartment');
 	}
 
+	public function showYour(){
+		return $this->ghContract->get(['user_create_id' => $this->auth['account_id']]);
+	}
+
 	public function show(){
 		$this->load->model('ghContract'); // load model ghUser
 		$data['list_contract'] = $this->ghContract->get();
-		if(!in_array($this->auth['role_code'], ['customer-care'])) {
-			$data['list_contract'] = $this->ghContract->get(['user_create_id' => $this->auth['account_id']]);
+		if($this->isYourPermission($this->current_controller, 'showYour')) {
+			$data['list_contract'] = $this->showYour();
 		} 
 		
 		$data['libCustomer'] = $this->libCustomer;
@@ -172,7 +176,15 @@ class Contract extends CustomBaseStep {
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
 
-		if(!empty($contract_id) and !empty($field_value)) {
+		if(!empty($contract_id) and !empty($field_name)) {
+			if($field_name == 'time_expire') {
+				if(empty($field_value)) {
+					$field_value = null;
+				} else {
+					$field_value = str_replace('/', '-', $field_value);
+					$field_value = strtotime((string)$field_value);
+				}
+			}
 			$data = [
 				$field_name => $field_value
 			];
