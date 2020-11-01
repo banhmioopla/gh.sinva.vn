@@ -55,6 +55,20 @@ class ConsultantBooking extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+	public function getRoomId() {
+		$apartment_id = $this->input->get('apartment_id');
+		$room = $this->ghRoom->get(['apartment_id' => $apartment_id, 'active' => 'YES']);
+		$result = [];
+		foreach($room as $item) {
+			$result[] = ["value" => $item['id'], "text" => $item["code"] . ' - '. $item["price"]];
+		}
+		$pk = $this->input->post('pk');
+		if(isset($pk)) {
+			return die($this->updateEditable()); 
+		}
+		echo json_encode($result); die;
+	}
+
 	public function create(){
 		$post = $this->input->post();
 		if($post['time_booking']) {
@@ -64,6 +78,12 @@ class ConsultantBooking extends CustomBaseStep {
 				$post['time_booking'] = str_replace('/', '-', $post['time_booking']);
 				$post['time_booking'] = strtotime((string)$post['time_booking']);
 			}
+		} else {
+			$this->session->set_flashdata('fast_notify', [
+				'message' => 'Vui lòng chọn ngày dẫn khách',
+				'status' => 'danger'
+			]);
+			return redirect('admin/list-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
 		}
 		if($post['customer_id'] > 0) {
 			$data['customer_id'] = $post['customer_id'];
@@ -73,6 +93,14 @@ class ConsultantBooking extends CustomBaseStep {
 			}
 			
 		} else {
+			if(empty($post['phone_number']) || empty($post['customer_name'])) {
+				$this->session->set_flashdata('fast_notify', [
+					'message' => 'Vui lòng nhập số điện thoại, Tên khách hàng nếu bạn dẫn khách mới',
+					'status' => 'danger'
+				]);
+				return redirect('admin/list-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
+			}
+
 			$customer['name'] = $post['customer_name'];
 			$customer['gender'] = $post['gender'];
 			$customer['birthdate'] = $post['birthdate'] ? strtotime(str_replace('/', '-', $post['birthdate'])) : 0;
@@ -104,11 +132,15 @@ class ConsultantBooking extends CustomBaseStep {
 		$customer_id = $this->input->post('pk');
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
+
 		if(!empty($customer_id) and !empty($field_name)) {
+
+			if($field_name == 'room_id') {
+				$field_value = json_encode($field_value);
+			}
 			$data = [
 				$field_name => $field_value
 			];
-			var_dump($data);
 			$old_customer = $this->ghConsultantBooking->get(['id' => $customer_id]);
 			$old_log = json_encode($old_customer[0]);
 

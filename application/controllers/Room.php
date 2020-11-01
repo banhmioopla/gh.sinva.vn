@@ -19,6 +19,8 @@ class Room extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+	
+
 	public function create() {
 	
 		$data = $this->input->post();

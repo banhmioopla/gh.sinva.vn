@@ -49,6 +49,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                             <th>NhC giá</th>
                             <th>NhC quận</th>
                             <th>NhC Tgian</th>
+                            <th>Ngày Nhập</th>
                             <th class="text-center">Nguồn</th>
                             <th class="text-center">Trạng thái</th>
                             <th class="text-center">Tùy Chọn</th>
@@ -115,6 +116,13 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="demand_time">
                                         <?= $row['demand_time'] > 0 ? date('d/m/Y', $row['demand_time']) : '#' ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="customer-demand_time"
+                                        data-pk="<?= $row['id'] ?>" 
+                                        data-name="time_insert">
+                                        <?= $row['time_insert'] > 0 ? date('d/m/Y', $row['time_insert']) : '#' ?>
                                     </div>
                                 </td>
                                 <td>

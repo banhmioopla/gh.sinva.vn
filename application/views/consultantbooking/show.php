@@ -59,19 +59,19 @@
                 <?php foreach($list_booking as $booking):
                     if($booking['booking_user_id'] != $this->auth['account_id']) continue;
 
+                    $address = '';
+                    $apmModel = $ghApartment->get(['id' => $booking['apartment_id']]);
+                    if($apmModel) {
+                        $address = $apmModel[0]['address_street'];
+                    }
                     $list_room_id = json_decode($booking['room_id'], true);
                     $text_room_code = '';
-                    $address = '';
+                    
+                    $js_list_room = implode(",",$list_room_id);
                     if($list_room_id && count($list_room_id) > 0) {
                         foreach($list_room_id as $room_id){
                             $roomModel = $ghRoom->get(['id' => $room_id]);
                             $text_room_code .= $roomModel[0]['code'] . ' ';
-                            if($roomModel){
-                                $apmModel = $ghApartment->get(['id' => $roomModel[0]['apartment_id']]);
-                                if($apmModel) {
-                                    $address = $apmModel[0]['address_street'];
-                                }
-                            }
                         }
                     }
                     
@@ -86,7 +86,12 @@
                     <tr>
                         <td>#<?= 10000 + $booking['id'] ?></td>
                         <td><?= $address ?></td>
-                        <td><i class="text-success"><?= $text_room_code ?></i></td>
+                        <td class="booking-room-code"
+                            data-pk="<?= $booking['id'] ?>"
+                            data-name="room_id"
+                            data-value="<?= $js_list_room ?>"
+                            data-apartment-id = "<?= $booking['apartment_id'] ?>"
+                        ><i class="text-success"><?= $text_room_code ?></i></td>
                         <td><?= date('d/m/Y H:i',$booking['time_booking'])  ?></td>
                         <td><?= $libCustomer->getNameById($booking['customer_id']) . ' - ' .                    $libCustomer->getPhoneById($booking['customer_id']) ?></td>
                         <td>
@@ -158,6 +163,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                            <?php if($this->session->has_userdata('fast_notify')):
+                                    $flash_mess = $this->session->flashdata('fast_notify')['message'];
+                                    $flash_status = $this->session->flashdata('fast_notify')['status'];
+                                    unset($_SESSION['fast_notify']);
+                            ?>
+                            <p class="text-center text-<?= $flash_status ?>"><?= $flash_mess ?></p>
+                            <?php endif; ?>
                                 <div class="row">
                                     <label for="phone_number" class="col-3 offset-2 text-right col-form-label">Số điện thoại khách hàng<span class="text-danger">*</span></label>
                                     <div class="col-5">
@@ -413,6 +425,26 @@ commands.push(function() {
                         return data;
                     }
                 });
+
+                $('.booking-room-code').editable({
+                    type: 'checklist',
+                    url: '<?= base_url() ?>admin/consultant-booking/get-room-id',
+                    inputclass: '',
+                    source: function() {
+                        let data = [];
+                        let apartment_id = $(this).data('apartment-id');
+                        $.ajax({
+                            url: '<?= base_url() ?>admin/consultant-booking/get-room-id?apartment_id='+apartment_id,
+                            dataType: 'json',
+                            async: false,
+                            success: function(res) {
+                                data = res;
+                                return res;
+                            }
+                        });
+                        return data;
+                    }
+                });
             }
             
         });
@@ -447,7 +479,7 @@ commands.push(function() {
             format: "dd/mm/yyyy",
         });
         $('.datetimepicker').datetimepicker({
-            inline: true,
+
             sideBySide: true,
             format: 'DD/MM/YYYY hh:mm a',
         });

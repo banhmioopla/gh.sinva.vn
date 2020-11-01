@@ -47,10 +47,6 @@ class CustomBaseStep extends CI_Controller {
 			$this->authorised_user = $authorised_user;
 			$this->authorised_mode = true;
 			$temp_menu = $this->menu;
-			foreach($this->config->item('accesscontrol')[$authorised_user[0]['role_code']] as $item) {
-				if(!in_array($item, $temp_menu)) 
-					$temp_menu[] = $item;
-			}
 			$this->menu = $temp_menu;
 		}
 		$this->permission_controller_set = array_keys($this->permission_set);

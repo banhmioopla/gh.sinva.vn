@@ -38,6 +38,12 @@ $route['admin/list-consultant-booking'] = function($params = []) {
 	$action = '/show';
 	return $controller.$action;
 };
+
+$route['admin/consultant-booking/get-room-id'] = function($params = []) {
+	$controller = 'ConsultantBooking';
+	$action = '/getRoomId';
+	return $controller.$action;
+};
 $route['admin/create-new-consultant-booking'] = function($params = []) {
 	$controller = 'ConsultantBooking';
 	$action = '/create';
