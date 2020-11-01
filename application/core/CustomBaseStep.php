@@ -31,7 +31,7 @@ class CustomBaseStep extends CI_Controller {
 		$usermode = $this->config->item('usermode');
 	
 		$this->auth['modifymode'] = 'view';
-		$this->menu = $this->config->item('accesscontrol')[$this->auth['role_code']];
+		$this->menu = null;;
 		
 		$ghUserDistrict = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
 		$this->list_district_CRUD = [];
