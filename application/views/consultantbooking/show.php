@@ -124,7 +124,7 @@
                     <div class="card-box">
                     <?php 
                         $apartment_model = $ghApartment->get(['id' => $this->input->get('apartment-id')]);
-                        $room_model = $ghRoom->get(['apartment_id' => $this->input->get('apartment-id')]);
+                        $room_model = $ghRoom->get(['active' => 'YES', 'apartment_id' => $this->input->get('apartment-id')]);
                     ?>
                     <h2 class="text-center text-success"><?= $apartment_model[0]['address_street'] ?></h2>
                     <hr>
