@@ -56,6 +56,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         </tr>
                         </thead>
                         <tbody>
+                        <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ): ?>
                             <tr>
                                 <td>
@@ -150,6 +151,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 </td>
                             </tr>      
                             <?php endforeach; ?>
+                                <?php endif;?>
                         </tbody>
                     </table>
                 </div>
@@ -300,6 +302,14 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
     </div> <!-- end container -->
 </div>
 <!-- end wrapper -->
+
+<?php 
+$check_edit = false;
+if(isYourPermission($this->current_controller, 'updateEditable', $this->permission_set)){
+    $check_edit = true;
+}
+
+?>
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
@@ -310,6 +320,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                 
                 "fnDrawCallback": function() {
                     // x editable
+                    <?php if($check_edit):?>
                     $('.customer-data').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-customer-editable',
@@ -347,7 +358,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                     
                     $('.customer-note').editable({
                         type: 'textarea',
-                        url: '<//?= base_url() ?>admin/update-customer-editable',
+                        url: '<?= base_url() ?>admin/update-customer-editable',
                         inputclass: '',
                     });
                     $('.customer-demand_district_code').editable({
@@ -392,6 +403,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                             });
                         }
                     });
+                    <?php endif;?>
                 } // end fnDrawCallback
             });
             

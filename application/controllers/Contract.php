@@ -6,15 +6,6 @@ class Contract extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct();
-		$permission_roles = [
-			'admin',
-			'customer-care',
-			'product-manager', 'ceo','consultant', 'human-resources'
-		];
-
-		if(!in_array($this->auth['role_code'], $permission_roles)) {
-			return redirect('admin/list-apartment');
-		}
 
 		$this->load->model('ghContract');
 		$this->load->model('ghRoom');
