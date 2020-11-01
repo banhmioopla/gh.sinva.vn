@@ -10,12 +10,8 @@ class User extends CustomBaseStep {
 		$this->load->model('ghRole');
 		$this->load->library('LibRole', null, 'libRole');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	private function show(){
+	public function show(){
 		$data['list_user'] = $this->ghUser->get(['account_id >' => 171020000]);
 		$data['max_account_id'] = $this->ghUser->getMaxAccountId()[0]['account_id'];
 		$data['libRole'] = $this->libRole;

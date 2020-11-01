@@ -31,6 +31,13 @@ class GhRole extends CI_Model {
         return $result;
     }
 
+    public function updateByRoleCode($role_code, $data) {
+        $this->db->where('code', $role_code);
+        $this->db->update($this->table, $data);
+        $result = $this->db->affected_rows();
+        return $result;
+    }
+
     public function delete($role_id) {
         $this->db->where('id' , $role_id);
         $this->db->delete($this->table);

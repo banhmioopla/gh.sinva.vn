@@ -1,5 +1,5 @@
 <?php 
-$role_delete = ['product-manager'];
+$role_delete = ['product-manager', 'customer-care'];
 
 ?>
 

@@ -1,3 +1,9 @@
+<?php 
+
+$this_controller =& get_instance();
+$role_function = json_decode($role_function, true);
+?>
+
 <div class="wrapper">
 <div class="sk-wandering-cubes" style="display:none" id="loader">
     <div class="sk-cube sk-cube1"></div>
@@ -29,164 +35,61 @@
         ?>
         <div class="permission-alert"></div>
         <div class="row">
-            <div class="col-12 col-md-12">
-                <div class="card-box">
-                    <button type="button" class="btn btn-info waves-effect waves-light"> <i class="mdi mdi-cloud-sync m-r-5"></i> <span>Cập nhật tất cả chức năng - DB</span> </button>
+            <div class="col-md-10 offset-md-1 mb-md-5">
+            <form action="/admin/update-permission-role?role-code=<?= $this->input->get('role-code') ?>" method='post'>
+                <div class="row">
+                    <div class="col-md-3 mb-md-5">
+                        <button type="submit" class="btn w-100 btn-primary waves-light waves-effect">Cập Nhật</button>
+                    </div>
+                    
+                    <div class="col-md-3 mb-md-5">
+                        <button type="button" id="selectAll" class="btn w-100 btn-warning waves-light waves-effect">Check Tất Cả</button>
+                    </div>
+
+                    <div class="col-md-3 mb-md-5">
+                        <button type="button" id="unselectAll" class="btn w-100 btn-danger waves-light waves-effect">Hủy Check Tất Cả</button>
+                    </div>
                 </div>
-            </div>
-            
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-7">
-                <div class="card-box table-responsive">
-                    <table id="table-permission" class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Controller</th>
-                            <th>SL.TV</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach($list_permission as $controller_name => $list_action ): ?>
-                                <?php foreach($list_action as $action_name):?>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                            <?= $controller_name.' <strong>'.$action_name.'</strong>' ?>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-center">
-                                                <div class="checkbox checkbox-success is-active-permission">
-                                                    <input id="permission" 
-                                                        
-                                                        type="checkbox" 
-                                                        >
-                                                    <label for="permission">
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>      
-                                <?php endforeach; ?>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-12 col-md-5">
-                <div class="card-box">
-                    <h4 class="header-title m-t-0">Thêm mới</h4>
-                    <form permission="form" method="post" action="<?= base_url()?>admin/create-permission">
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-12 col-form-label">Tên chức năng<span class="text-danger">*</span></label>
-                            <div class="col-md-8 col-12">
-                                <input type="text" required class="form-control"
-                                        id="name" name="name" placeholder="Tên chức năng">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="hori-pass1" class="col-4 col-form-label">Mở</label>
-                            <div class="col-8">
-                                <div>
-                                    <div class=" checkbox checkbox-success">
-                                        <input id="active" type="checkbox" value="YES" name="active">
-                                        <label for="active">
+                <div class="row">
+                    <?php foreach($list_permission as $controller => $list_action ):?>
+                        <div class="col-12 col-md-3">
+                            <div class="card-box shadow">
+                                <h5><?= $controller ?></h5>
+                                <?php 
+                                    foreach($list_action as $action ):
+                                        $checked = '';
+                                        if(isset($role_function[$controller]) && in_array($action, $role_function[$controller])) {
+                                            $checked = 'checked';
+                                        }
+                                ?>
+                                    <div class="checkbox checkbox-dark">
+                                        <input name='<?= $controller ?>[]' value="<?= $action ?>" id="<?= $controller.'_'.$action ?>" type="checkbox" <?= $checked ?>>
+                                        <label for="<?= $controller.'_'.$action ?>">
+                                            <?= $action ?>
                                         </label>
                                     </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-8 offset-4">
-                                <button type="submit" class="btn btn-custom waves-effect waves-light">
-                                    Thêm mới
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    <?php endforeach; ?>
                 </div>
+            </form>
+                
             </div>
         </div> <!-- end row -->
-
     </div> <!-- end container -->
 </div>
-<!-- end wrapper -->
-<script type="text/javascript">
-    commands.push(function() {
-        $(document).ready(function() {
-            $('#table-permission').DataTable({
-                "pageLength": 10,
-                'pagingType': "full_numbers",
-                responsive: true
-            });
-            
-            $('.is-active-permission input[type=checkbox]').click(function() {
-                var is_active = 'NO';
-                var this_id = $(this).attr('id');
-                var matches = this_id.match(/(\d+)/);
-                var permission_id = matches[0];
-                if($(this).is(':checked')) {
-                    is_active = 'YES';
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>admin/update-permission',
-                    data: {field_value: is_active, permission_id: permission_id, field_name : 'active'},
-                    async: false,
-                    success:function(response){
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.permission-alert').html(notify_html_success);
-                        } else {
-                            $('.permission-alert').html(notify_html_fail);
-                        }
-                    },
-                    beforeSend: function(){
-                        $('#loader').show();
-                    },
-                    complete: function(){
-                        $('#loader').hide();
-                    }
-                });
-            });
 
-            $('.permission-name').editable({
-                type: "text",
-                url: '<?= base_url() ?>admin/update-permission-editable',
-                inputclass: '',
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.permission-alert').html(notify_html_success);
-                    } else {
-                        $('.permission-alert').html(notify_html_fail);
-                    }
-                }
-            });
 
-            $('.delete-permission').click(function(){
-                var this_id = $(this).attr('id');
-                var this_click = $(this);
-                var matches = this_id.match(/(\d+)/);
-                var permission_id = matches[0];
-                if(permission_id > 0) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '<?= base_url() ?>admin/delete-permission',
-                        data: {permission_id: permission_id},
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.permission-alert').html(notify_html_success);
-                                this_click.parents('tr').remove();
-                            } else {
-                                $('.permission-alert').html(notify_html_fail);
-                            }
-                        }
-                    });
-                }
-            });
+<script>
+    commands.push(function(){
+        $("#selectAll").click(function(){
+            $('input:checkbox').prop('checked', true);
+        });
+
+        $("#unselectAll").click(function(){
+            $('input:checkbox').prop('checked', false);
         });
     });
+
 </script>

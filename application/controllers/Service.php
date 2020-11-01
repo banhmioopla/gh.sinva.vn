@@ -8,10 +8,6 @@ class Service extends CustomBaseStep {
 		parent::__construct();
 		$this->load->model('ghService');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
 	public function show(){
 		$this->load->model('ghService'); // load model ghUser

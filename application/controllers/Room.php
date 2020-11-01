@@ -10,12 +10,8 @@ class Room extends CustomBaseStep {
 		$this->load->model('ghBaseRoomType');
 		$this->load->model('ghApartment');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	private function show(){
+	public function show(){
         $data['list_room'] = $this->ghRoom->getAll();
 		/*--- Load View ---*/
 		$this->load->view('components/header');

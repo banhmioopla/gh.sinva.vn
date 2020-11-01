@@ -8,7 +8,7 @@ class CronCustomer extends CustomBaseStep {
 		parent::__construct();
 		
 	}
-	public function index()
+	public function show()
 	{
         // require models
         require APPPATH."/libraries/SimpleXLSX.php";

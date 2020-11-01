@@ -8,12 +8,8 @@ class Tag extends CustomBaseStep {
 		parent::__construct();
 		$this->load->model('ghTag');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	private function show(){
+	public function show(){
 		$data['list_tag'] = $this->ghTag->getAll();
 		
 		/*--- Load View ---*/

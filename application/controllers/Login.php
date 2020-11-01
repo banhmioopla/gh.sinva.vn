@@ -8,10 +8,6 @@ class Login extends CI_Controller {
 		$this->load->model('ghUser');
 		$this->load->helper('cookie');
 	}
-
-	public function index() {
-		$this->show();
-	}
 	public function show()
 	{
 		$data['account_id'] = $this->input->post('account_id');

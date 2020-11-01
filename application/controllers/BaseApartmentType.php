@@ -9,12 +9,8 @@ class BaseApartmentType extends CI_Controller {
 		$this->load->model('ghBaseApartmentType');
 		$this->load->model('ghActivityTrack');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	private function show(){
+	public function show(){
         $data['list_baseapartmenttype'] = $this->ghBaseApartmentType->getAll();
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);

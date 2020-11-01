@@ -8,10 +8,6 @@ class Team extends CustomBaseStep {
 		parent::__construct();
 		$this->load->model('ghTeam');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
 	public function show(){
 		

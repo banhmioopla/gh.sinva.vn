@@ -7,10 +7,6 @@ class TempGoogle extends CustomBaseStep {
 	{
 		parent::__construct();
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
 	public function show() {
         /*--- Load View ---*/

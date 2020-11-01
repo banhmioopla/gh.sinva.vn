@@ -96,7 +96,7 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
             <div class="col-lg-12">
                 <h3 data-toggle="collapse" class="text-danger" href="#numberAvailable"><i class="mdi mdi-chevron-double-down"></i> Số lượng phòng trống tương ứng mức giá 
                 </h3>
-                <p>click vào tiêu đề để xổ xuống chi tiết</p>
+                <p>click vào <span data-toggle="collapse" href="#numberAvailable" class="text-danger">tiêu đề</span>, tên quận để xổ xuống chi tiết</p>
                 
                 <div class="row collapse" id="numberAvailable">
                     <?php foreach($list_district as $d):
@@ -104,12 +104,14 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                         ?>
                         <div class="col-2">
                             <div class="card m-b-30">
-                                <div class="card-body">
-                                    <h5 class="card-title text-success">Quận <?= $d['name'] ?></h5>
+                                <div data-toggle="collapse" href="#numberAvailable<?= $d['code'] ?>" class="card-body">
+                                    <h5 class="card-title text-success btn btn-info w-100">Quận <?= $d['name'] ?></h5>
                                     <p class="card-text"></p>
-                                    <a href="<?= base_url() ?>admin/list-apartment?district-code=<?= $d['code'] ?>" class="btn btn-custom waves-effect waves-light">Đi tới Quận <?= $d['name'] ?> </a>
+                                    
                                 </div>
-                                <ul class="list-group list-group-flush">
+                                <ul id="numberAvailable<?= $d['code'] ?>" class="list-group list-group-flush collapse">
+                                <li class="list-group-item"><a href="<?= base_url() ?>admin/list-apartment?district-code=<?= $d['code'] ?>" class="btn btn-custom waves-effect waves-light w-100">Đi tới Quận <?= $d['name'] ?> </a></li>
+                                
                                     <?php $total = 0;
                                         if($list_room_price):
                                         foreach($list_room_price as $room):

@@ -10,6 +10,12 @@ $route['admin/logout'] = function($params = []) {
 	$action = '/logout';
 	return $controller.$action;
 };
+
+$route['admin/notfound'] = function($params = []) {
+	$controller = 'Role';
+	$action = '/notfound';
+	return $controller.$action;
+};
 // team
 $route['admin/list-team'] = function($params = []) {
 	$controller = 'Team';
@@ -23,7 +29,7 @@ $route['admin/create-team'] = function($params = []) {
 };
 $route['admin/list-dashboard'] = function($params = []) {
 	$controller = 'Dashboard';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 // report - booking customer
@@ -73,7 +79,7 @@ $route['admin/update-rp-booking-customer-editable'] = function($params = []) {
 // contract
 $route['admin/list-contract'] = function($params = []) {
 	$controller = 'Contract';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -113,7 +119,7 @@ $route['admin/update-customer-editable'] = function($params = []) {
 // Cron
 $route['admin/cron-customer'] = function($params = []) {
 	$controller = 'CronCustomer';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 $route['admin/cron-follow-customer'] = function($params = []) {
@@ -201,7 +207,7 @@ $route['normal/list-apartment'] = function($params = []) {
 
 $route['admin/list-district'] = function($params = []) {
 	$controller = 'District';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -231,13 +237,13 @@ $route['admin/update-district-editable'] = function($params = []) {
 // -- google drive
 $route['admin/list-google'] = function($params = []) {
 	$controller = 'TempGoogle';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 // -- apartment type
 $route['admin/list-apartment-type'] = function($params = []) {
 	$controller = 'BaseApartmentType';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -274,7 +280,7 @@ $route['admin/update-apartment-type-editable'] = function($params = []) {
 // -- tag
 $route['admin/list-tag'] = function($params = []) {
 	$controller = 'Tag';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -305,7 +311,7 @@ $route['admin/update-tag-editable'] = function($params = []) {
 // -- room type
 $route['admin/list-room-type'] = function($params = []) {
 	$controller = 'BaseRoomType';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -336,7 +342,7 @@ $route['admin/update-room-type-editable'] = function($params = []) {
 // -- service
 $route['admin/list-service'] = function($params = []) {
 	$controller = 'Service';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -367,7 +373,7 @@ $route['admin/update-service-editable'] = function($params = []) {
 // -- room
 $route['admin/list-room'] = function($params = []) {
 	$controller = 'Room';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -398,7 +404,7 @@ $route['admin/update-room-editable'] = function($params = []) {
 // -- partner
 $route['admin/list-partner'] = function($params = []) {
 	$controller = 'Partner';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -429,7 +435,7 @@ $route['admin/update-partner-editable'] = function($params = []) {
 // -- role
 $route['admin/list-role'] = function($params = []) {
 	$controller = 'Role';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -460,7 +466,7 @@ $route['admin/update-role-editable'] = function($params = []) {
 // -- user
 $route['admin/list-user'] = function($params = []) {
 	$controller = 'User';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 
@@ -502,15 +508,21 @@ $route['admin/update-user-editable'] = function($params = []) {
 
 // -- permission
 $route['admin/list-permission'] = function($params = []) {
-	$controller = 'permission';
-	$action = '/index';
+	$controller = 'PermissionRole';
+	$action = '/show';
+	return $controller.$action;
+};
+
+$route['admin/update-permission-role'] = function($params = []) {
+	$controller = 'PermissionRole';
+	$action = '/update';
 	return $controller.$action;
 };
 
 // -- role-rule
 $route['admin/list-role-rule'] = function($params = []) {
 	$controller = 'RolePermission';
-	$action = '/index';
+	$action = '/show';
 	return $controller.$action;
 };
 

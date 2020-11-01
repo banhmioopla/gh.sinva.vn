@@ -18,7 +18,7 @@ class Dashboard extends CustomBaseStep {
 
 		$this->permission_modify = [['customer-care' => 0], 'product-manager'];
 	}
-    public function index() {
+    public function show() {
         $list_customer = $this->ghCustomer->get();
         $total_customer = $list_customer ? count($list_customer) : 0;
 

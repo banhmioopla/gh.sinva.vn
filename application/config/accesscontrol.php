@@ -256,21 +256,6 @@ $accesscontrol['ceo'] = [
 
 $accesscontrol['customer-care'] = [
     [
-        'name' => 'Bảng điều khiển',
-        'url' => '/admin/list-dashboard',
-        'submenu' => null
-    ],
-    [
-        'name' => 'Dự Án',
-        'url' => '/admin/list-apartment',
-        'submenu' => null
-    ],
-    [
-        'name' => 'Google Drive',
-        'url' => '/admin/list-google',
-        'submenu' => null
-    ],
-    [
         'name' => 'Khách Hàng',
         'url' => '#',
         'submenu' => [
@@ -295,7 +280,23 @@ $accesscontrol['customer-care'] = [
                 'submenu' => null
             ],
         ]
-    ]
+    ],
+    [
+        'name' => 'Bảng điều khiển',
+        'url' => '/admin/list-dashboard',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Dự Án',
+        'url' => '/admin/list-apartment',
+        'submenu' => null
+    ],
+    [
+        'name' => 'Google Drive',
+        'url' => '/admin/list-google',
+        'submenu' => null
+    ],
+    
 ];
 
 

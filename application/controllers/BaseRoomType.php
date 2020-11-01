@@ -9,12 +9,8 @@ class BaseRoomType extends CustomBaseStep {
 		$this->load->model('ghBaseRoomType');
 		$this->load->model('ghActivityTrack');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	private function show(){
+	public function show(){
         $data['list_baseroomtype'] = $this->ghBaseRoomType->getAll();
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);

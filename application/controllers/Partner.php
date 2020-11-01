@@ -9,12 +9,8 @@ class Partner extends CustomBaseStep {
 		$this->load->model('ghPartner');
 		$this->load->model('ghActivityTrack');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	private function show(){
+	public function show(){
         $data['list_partner'] = $this->ghPartner->getAll();
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' =>$this->menu]);

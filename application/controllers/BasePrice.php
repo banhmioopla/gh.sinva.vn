@@ -8,10 +8,6 @@ class BasePrice extends CustomBaseStep {
 		parent::__construct();
 		$this->load->model('ghBasePrice');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
 	public function show(){
         $data['list_baseprice'] = $this->ghBasePrice->getAll();

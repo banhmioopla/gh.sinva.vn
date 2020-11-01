@@ -65,12 +65,9 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button id='role-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-role">
-                                            <i class="mdi mdi-delete"></i>
-                                        </button>
                                         <a class="btn m-1 btn-sm btn-outline-info btn-rounded waves-light waves-effect "
-                                    href="<?= base_url() ?>admin/detail-user-role-rule?role-id=<?= $row['id']?>">
-                                        <i class="mdi mdi-tooltip-edit"></i>
+                                    href="<?= base_url() ?>admin/list-permission?role-code=<?= $row['code']?>">
+                                        <i class="mdi mdi-chemical-weapon"></i> Quyền
                                     </a>
                                         
                                     </div>

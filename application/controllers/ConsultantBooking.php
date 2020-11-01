@@ -16,10 +16,6 @@ class ConsultantBooking extends CustomBaseStep {
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->config('label.apartment');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
 	public function show(){
 		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking >= ' => strtotime('last monday')]);

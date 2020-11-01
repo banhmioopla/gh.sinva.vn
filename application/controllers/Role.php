@@ -9,16 +9,18 @@ class Role extends CustomBaseStep {
 		$this->load->model('ghRole');
 		$this->load->model('ghActivityTrack');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
-	private function show(){
-        $data['list_role'] = $this->ghRole->getAll();
+	public function show(){
+		$data['list_role'] = $this->ghRole->get();
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view('role/show', $data);
+		$this->load->view('components/footer');
+	}
+
+	public function notfound() {
+		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('role/notfound');
 		$this->load->view('components/footer');
 	}
 

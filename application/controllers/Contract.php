@@ -26,15 +26,11 @@ class Contract extends CustomBaseStep {
 		$this->load->library('LibRoom', null, 'libRoom');
 		$this->load->config('label.apartment');
 	}
-	public function index()
-	{
-		$this->show();
-    }
 
 	public function show(){
 		$this->load->model('ghContract'); // load model ghUser
 		$data['list_contract'] = $this->ghContract->get();
-		if(!in_array($this->auth['account_id'], ['customer-care'])) {
+		if(!in_array($this->auth['role_code'], ['customer-care'])) {
 			$data['list_contract'] = $this->ghContract->get(['user_create_id' => $this->auth['account_id']]);
 		} 
 		
