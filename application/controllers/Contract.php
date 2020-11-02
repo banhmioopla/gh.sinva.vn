@@ -11,6 +11,7 @@ class Contract extends CustomBaseStep {
 		$this->load->model('ghRoom');
 		$this->load->model('ghApartment');
 		$this->load->model('ghCustomer');
+		$this->load->model('ghNotification');
 		$this->load->model('ghImage');
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -72,12 +73,19 @@ class Contract extends CustomBaseStep {
 		}
 	}
 
+	public function approved(){
+		$this->ghContract->approved($this->input->get('id'), $this->input->get('contract-id'));
+		return redirect('/admin/list-contract');
+	}
+
 	public function show(){
 		$this->load->model('ghContract'); // load model ghUser
 		$data['list_contract'] = $this->ghContract->get();
 		if($this->isYourPermission($this->current_controller, 'showYour')) {
 			$data['list_contract'] = $this->showYour();
 		} 
+
+		$data['list_notification'] = $this->ghNotification->get(['is_approve' => 'NO']);
 		
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;
@@ -191,9 +199,22 @@ class Contract extends CustomBaseStep {
 			'time_insert' => time(),
 		];
 		
-		
 		$result = $this->ghContract->insert($contract);
 		$this->uploadFile($result);
+		if($this->isYourPermission('Contract', 'pendingForApprove')) {
+			echo '123123';
+			$this->ghNotification->insert(
+				[
+					'message' => '['.$this->auth['name'].'] đang chờ duyệt hợp đồng ID = '.$result,
+					'create_user_id' => $this->auth['account_id'],
+					'time_insert' => time(),
+					'controller' => 'Contract',
+					'object_id' => $result
+				]
+			);
+		}
+		
+
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Tạo hợp đồng thành công ',
             'status' => 'success'

@@ -93,6 +93,11 @@ $route['admin/contract/sync-status-expire'] = function($params = []) {
 	$action = '/syncStatusExpire';
 	return $controller.$action;
 };
+$route['admin/contract/approved'] = function($params = []) {
+	$controller = 'Contract';
+	$action = '/approved';
+	return $controller.$action;
+};
 
 $route['admin/create-contract-show'] = function($params = []) {
 	$controller = 'Contract';

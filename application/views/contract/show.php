@@ -38,6 +38,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
         <div class="contract-alert"></div>
         <div class="row">
         <?php $this->load->view('components/list-navigation'); ?>
+            
             <div class="col-md-12">
                 <h3>Danh sách hợp đồng tháng hiện tại  </h3>
                 <div class="row">
@@ -46,6 +47,39 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                         <a href="/admin/contract/sync-status-expire" class="btn btn-info">Cập nhật trạng thái hợp đồng</a>
                     </div>
                     <?php endif; ?>
+                </div>
+                <div class="col-md-12">
+                    <h3>Chờ duyệt</h3>
+                    <div class="card-box table-responsive">
+                    <table class="table-contract table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Nội dung</th>
+                            <th width="350px">Duyệt</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                                if(count($list_notification) > 0 ):
+                                foreach($list_notification as $row ):
+                            ?>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <?= $row['message'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <a href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>"> Duyệt </a>
+                                    </div>
+                                </td>
+                            </tr>      
+                            <?php endforeach; ?>
+                                <?php endif; ?>
+                        </tbody>
+                    </table>
+                    </div>
                 </div>
                 <div class=" mt-md-2 card-box table-responsive">
                     <table class="table-contract table table-bordered">

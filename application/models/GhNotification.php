@@ -1,15 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class GhContract extends CI_Model {
-    private $table = 'gh_contract';
+class GhNotification extends CI_Model {
+    private $table = 'gh_notification';
 
 	public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();
-    }
-
-    public function getByActive() {
-        return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }
 
     public function getById($district_id) {
@@ -21,8 +17,7 @@ class GhContract extends CI_Model {
     }
 
     public function insert($data) {
-        $this->db->insert($this->table, $data);
-        return $this->db->insert_id();
+        return $this->db->insert($this->table, $data);
     }
 
     public function updateById($id, $data) {
@@ -30,23 +25,6 @@ class GhContract extends CI_Model {
         $this->db->update($this->table, $data);
         $result = $this->db->affected_rows();
         return $result;
-    }
-
-    public function syncStatusExpire() {
-        $sql = "UPDATE ". $this->table . " SET status = 'Expired' WHERE
-        time_expire < " . strtotime(date('d-m-Y'));
-        
-        $result = $this->db->query($sql);
-    }
-
-    public function approved($id, $object_id = null) {
-        $sql = "UPDATE ". $this->table . " SET status = 'Active' WHERE
-        id = " . $object_id;
-        
-        $result = $this->db->query($sql);
-        $sql = "UPDATE gh_notification SET is_approve = 'YES' WHERE
-        object_id = " . $object_id;
-        $result = $this->db->query($sql);
     }
 
     public function delete($district_id) {
