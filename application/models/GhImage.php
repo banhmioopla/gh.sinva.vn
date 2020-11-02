@@ -11,17 +11,33 @@ class GhImage extends CI_Model{
         $this->db->select('*'); 
         $this->db->from('gh_media'); 
         if($apm_id){ 
-            $this->db->where(['apartment_id' => $apm_id, 'active' => 'YES']); 
+            $this->db->where(['apartment_id' => $apm_id, 'active' => 'YES', 'controller' => 'Apartment']); 
             $query = $this->db->get(); 
             $result = $query->result_array(); 
         }else{ 
-            $this->db->where(['active' => 'YES']); 
+            $this->db->where(['active' => 'YES', 'controller' => 'Apartment']); 
             $this->db->order_by('time_insert','desc'); 
             $query = $this->db->get(); 
             $result = $query->result_array(); 
         } 
         return $result; 
-    } 
+    }
+
+    public function getContract($contract_id){ 
+        $this->db->select('*'); 
+        $this->db->from('gh_media'); 
+        if($contract_id){ 
+            $this->db->where(['contract_id' => $contract_id, 'active' => 'YES', 'controller' => 'Contract']); 
+            $query = $this->db->get(); 
+            $result = $query->result_array(); 
+        }else{ 
+            $this->db->where(['active' => 'YES', 'controller' => 'Contract']); 
+            $this->db->order_by('time_insert','desc'); 
+            $query = $this->db->get(); 
+            $result = $query->result_array(); 
+        } 
+        return $result; 
+    }
      
     
     public function insert($data = []){ 

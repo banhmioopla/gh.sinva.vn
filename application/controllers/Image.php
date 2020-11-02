@@ -68,6 +68,7 @@ class Image extends CustomBaseStep {
                     $uploadData[$i]['name'] = $file_name; 
                     $uploadData[$i]['file_type'] = $ext; 
                     $uploadData[$i]['time_insert'] = $time;
+                    $uploadData[$i]['controller'] = 'Apartment';
                     $uploadData[$i]['room_id'] = $room_id; 
                     $uploadData[$i]['apartment_id'] = $apartment_id; 
                     $uploadData[$i]['user_id'] = $this->auth['account_id']; 

@@ -11,6 +11,7 @@ class Contract extends CustomBaseStep {
 		$this->load->model('ghRoom');
 		$this->load->model('ghApartment');
 		$this->load->model('ghCustomer');
+		$this->load->model('ghImage');
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibUser', null, 'libUser');
@@ -20,6 +21,55 @@ class Contract extends CustomBaseStep {
 
 	public function showYour(){
 		return $this->ghContract->get(['user_create_id' => $this->auth['account_id']]);
+	}
+
+	public function syncStatusExpire() {
+		$this->ghContract->syncStatusExpire();
+		return redirect('/admin/list-contract');
+	}
+
+	public function uploadFile($contract_id){
+		$uploadPath = 'media/contract/'; 
+		$config['upload_path'] = $uploadPath; 
+		$config['allowed_types'] = 'jpg|jpeg|png|gif|mp4|mov'; 
+
+		$time = time();
+		$this->load->library('upload', $config); 
+		$this->upload->initialize($config); 
+		$filesCount = count($_FILES['files']['name']); 
+		$max_id = $this->ghImage->getMaxId()[0]['id'];
+		$uploadData = [];
+		if(empty($max_id)){
+			$max_id = 1;
+		}
+		for($i = 0; $i < $filesCount; $i++){ 
+			
+			$ext = explode(".",$_FILES['files']['name'][$i])[1];
+			$file_name = $max_id.'-contract-'.$time.'.'.$ext;
+
+			$_FILES['file']['name']  = $file_name; 
+			$_FILES['file']['type']  = $_FILES['files']['type'][$i]; 
+			$_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i]; 
+			$_FILES['file']['error']    = $_FILES['files']['error'][$i]; 
+			$_FILES['file']['size'] = $_FILES['files']['size'][$i]; 
+			
+			if($this->upload->do_upload('file')){ 
+				// Uploaded file data 
+				$fileData = $this->upload->data(); 
+				$uploadData[$i]['name'] = $file_name; 
+				$uploadData[$i]['file_type'] = $ext; 
+				$uploadData[$i]['time_insert'] = $time;
+				$uploadData[$i]['controller'] = 'Contract';
+				$uploadData[$i]['contract_id'] = $contract_id;
+				$uploadData[$i]['user_id'] = $this->auth['account_id']; 
+				$uploadData[$i]['status'] = 'Pending'; 
+				$max_id += 1;
+			}
+		} 
+
+		if(!empty($uploadData)){ 
+			$insert = $this->ghImage->insert($uploadData);
+		}
 	}
 
 	public function show(){
@@ -32,6 +82,7 @@ class Contract extends CustomBaseStep {
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;
 		$data['ghApartment'] = $this->ghApartment;
+		$data['ghImage'] = $this->ghImage;
 		$data['libRoom'] = $this->libRoom;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/
@@ -118,7 +169,6 @@ class Contract extends CustomBaseStep {
 		$contract_room_price = $post['room_price'] > 0 ? 
 		(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT) 
 			: $service_set['price'];
-
 		$contract = [
 			'customer_id' => $customer_id,
 			'room_id' => $post['room_id'],
@@ -135,11 +185,10 @@ class Contract extends CustomBaseStep {
 			'user_create_id' => $this->auth['account_id'],
 			'time_insert' => time(),
 		];
-		if($this->auth['role_code'] !== 'customer-care') {
-			$contract['test_mode'] = 'YES';
-		}
+		
 		
 		$result = $this->ghContract->insert($contract);
+		$this->uploadFile($result);
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Tạo hợp đồng thành công ',
             'status' => 'success'

@@ -107,7 +107,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                 <div class="card-box">
                     <h4 class="m-t-0">Thêm hợp đồng mới</h4>
                     <hr>
-                    <form role="form" method="post" action="<?= base_url()?>admin/create-contract">
+                    <form role="form" method="post" enctype="multipart/form-data" action="<?= base_url()?>admin/create-contract">
                         <input type="hidden" name='room_id' value= '<?= $_GET["room-id"]?>'>
                         <input type="hidden" name='room_code' value= '<?= $room['code']?>'>
                         <input type="hidden" name='apartment_id' value= '<?= $room['apartment_id']?>'>
@@ -300,6 +300,17 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                                 </div>
                             </div>
                         </div>
+
+                        
+                        <div class="form-group row">
+                            <p class="mb-2 mt-4 font-weight-bold text-muted">Upload Ảnh Hợp Đồng</p>
+                            <input type="file"
+                            required
+                            class="filestyle" 
+                            name="files[]"
+                            data-input="false" data-btnClass="btn-danger">
+                        </div>
+                            
                     
                         <div class="form-group row">
                             <label class="col-12 col-md-4 col-form-label">Ghi chú</label>

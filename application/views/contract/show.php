@@ -40,7 +40,14 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
         <?php $this->load->view('components/list-navigation'); ?>
             <div class="col-md-12">
                 <h3>Danh sách hợp đồng tháng hiện tại  </h3>
-                <div class="card-box table-responsive">
+                <div class="row">
+                    <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
+                    <div class="col-md-12">
+                        <a href="/admin/contract/sync-status-expire" class="btn btn-info">Cập nhật trạng thái hợp đồng</a>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <div class=" mt-md-2 card-box table-responsive">
                     <table class="table-contract table table-bordered">
                         <thead>
                         <tr>
@@ -52,7 +59,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                             <th class="text-center">Thời hạn</th>
                             <th width="200px">Ghi chú HD</th>
                             <th class="text-center" width="200px">Tình trạng</th>
-                            <th class="text-center">Tùy Chọn</th>
+                            <th class="text-center">Hình Ảnh</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -133,13 +140,18 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                                     </div>
                                 </td>
                                 
+                                <?php 
+                                    $image = $ghImage->getContract($row['id'])
+                                ?>
                                 <td>
+                                <?php  if($image): ?>
                                     <div class="d-flex justify-content-center">
-                                        <a href="#" class="btn m-1 btn-sm btn-outline-muted btn-rounded waves-light waves-effect delete-contract">
-                                            đang code
+                                        <a href="<?= '/media/contract/'.$image[0]['name'] ?>" target="_blank">
+                                            Hình Ảnh
                                         </a>
                                     </div>
                                 </td>
+                                <?php endif; ?>
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>
@@ -236,14 +248,19 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                                         
                                     </div>
                                 </td>
-                                
+                                <?php 
+                                    $image = $ghImage->getContract($row['id'])
+                                   
+                                ?>
                                 <td>
+                                <?php  if($image): ?>
                                     <div class="d-flex justify-content-center">
-                                        <a href="#" class="btn m-1 btn-sm btn-outline-muted btn-rounded waves-light waves-effect delete-contract">
-                                            đang code
+                                        <a href="<?= '/media/contract/'.$image[0]['name'] ?>" target="_blank">
+                                            Hình Ảnh
                                         </a>
                                     </div>
                                 </td>
+                                <?php endif; ?>
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>

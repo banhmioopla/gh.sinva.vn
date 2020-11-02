@@ -21,7 +21,8 @@ class GhContract extends CI_Model {
     }
 
     public function insert($data) {
-        return $this->db->insert($this->table, $data);
+        $this->db->insert($this->table, $data);
+        return $this->db->insert_id();
     }
 
     public function updateById($id, $data) {
@@ -29,6 +30,13 @@ class GhContract extends CI_Model {
         $this->db->update($this->table, $data);
         $result = $this->db->affected_rows();
         return $result;
+    }
+
+    public function syncStatusExpire() {
+        $sql = "UPDATE ". $this->table . " SET status = 'Expired' WHERE
+        time_expire < " . strtotime(date('d-m-Y'));
+        
+        $result = $this->db->query($sql);
     }
 
     public function delete($district_id) {
