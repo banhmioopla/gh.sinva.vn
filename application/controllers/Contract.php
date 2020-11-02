@@ -169,6 +169,11 @@ class Contract extends CustomBaseStep {
 		$contract_room_price = $post['room_price'] > 0 ? 
 		(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT) 
 			: $service_set['price'];
+
+		$status_contract = $post['status'];
+		if($this->isYourPermission('Contract', 'pendingForApprove')) {
+			$status_contract = 'Pending';
+		}
 		$contract = [
 			'customer_id' => $customer_id,
 			'room_id' => $post['room_id'],
@@ -179,7 +184,7 @@ class Contract extends CustomBaseStep {
 			'time_expire' => $post['time_expire'],
 			'number_of_month' => $post['number_of_month'],
 			'service_set' => json_encode($service_set), // apartment data
-			'status' => $post['status'],
+			'status' => $status_contract,
 			'note' => $post['note'],
 			'room_code' => $post['room_code'],
 			'user_create_id' => $this->auth['account_id'],
@@ -195,6 +200,8 @@ class Contract extends CustomBaseStep {
         ]);
         return redirect('admin/list-contract');
 	}
+
+	public function pendingForApprove() {}
 
 	// Ajax
 	public function update() {
