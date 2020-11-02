@@ -60,7 +60,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                         </thead>
                         <tbody>
                             <?php 
-                                if(count($list_notification) > 0 ):
+                                if(count($list_notification) > 0 && isYourPermission('Contract', 'approved', $this->permission_set) ):
                                 foreach($list_notification as $row ):
                             ?>
                             <tr>
