@@ -37,6 +37,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <?= $item['message'] . ' <br> Tạo lúc '. date('d/m/Y H:i', $item['time_insert']) ?>
+                        <br><a href="/admin/detail-contract?id=<?= $item['object_id'] ?>">>> thông tin hợp đồng</a>
                     </div>
                     <?php endforeach; ?>
                 <?php endif; ?>

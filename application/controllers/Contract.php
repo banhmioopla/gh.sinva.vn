@@ -122,6 +122,7 @@ class Contract extends CustomBaseStep {
 		$data['ghApartment'] = $this->ghApartment;
 		$data['ghCustomer'] = $this->ghCustomer;
 		$data['ghRoom'] = $this->ghRoom;
+		$data['ghImage'] = $this->ghImage;
 		$data['label'] =  $this->config->item('label.apartment');
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('contract/detail-show', $data);

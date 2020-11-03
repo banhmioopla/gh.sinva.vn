@@ -27,6 +27,8 @@
                         $service = json_decode($contract['service_set'], true);
 
                         $room = $ghRoom->get(['id' => $contract['room_id']])[0];
+
+                        $image = $ghImage->getContract($contract['id']);
                     
                     ?>
                         <tr class="d-none">
@@ -38,6 +40,10 @@
                         <tr>
                             <td class="text-right"><strong>Trạng Thái <strong></td>
                             <td><div class="customer-name w-100" data-name="name"><?= $contract['status'] ?></div></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Hình Ảnh <strong></td>
+                            <td><a target = '_blank' href="<?= $image ? '/media/contract/'.$image[0]['name'] : '#' ?>">Hình Ảnh</a></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Tên Khách Thuê <strong></td>
