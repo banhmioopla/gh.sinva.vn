@@ -5,6 +5,7 @@ class GhNotification extends CI_Model {
     private $table = 'gh_notification';
 
 	public function get($where = []) {
+        $this->db->order_by('id DESC');
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
