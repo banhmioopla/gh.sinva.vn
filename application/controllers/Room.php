@@ -67,14 +67,14 @@ class Room extends CustomBaseStep {
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
 
-		if(!empty($room_id) and !empty($field_value)) {
+		if(!empty($room_id) and !empty($field_name)) {
 			$data = [
 				$field_name => $field_value
 			];
 
 			if($field_name == 'time_available') {
 				$data = [
-					$field_name => strtotime($field_value)
+					$field_name => $field_value ? strtotime($field_value):null
 				];
 			}
 			if($field_name == 'type_id') {
