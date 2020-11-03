@@ -205,10 +205,9 @@ class Contract extends CustomBaseStep {
 		$result = $this->ghContract->insert($contract);
 		$this->uploadFile($result);
 		if($this->isYourPermission('Contract', 'pendingForApprove')) {
-			echo '123123';
 			$this->ghNotification->insert(
 				[
-					'message' => '['.$this->auth['name'].'] đang chờ duyệt hợp đồng ID = '.$result,
+					'message' => '['.$this->auth['name'].'] đã tạo hợp đồng ID = '.$result,
 					'create_user_id' => $this->auth['account_id'],
 					'time_insert' => time(),
 					'controller' => 'Contract',

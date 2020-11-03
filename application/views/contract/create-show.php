@@ -283,19 +283,13 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                                 <div class="radio radio-custom">
                                     <input type="radio" name="status" checked id="sinva-Active" value="Active">
                                     <label for="sinva-Active">
-                                        Đang có hiệu lực
+                                        Còn hạn (gh sẽ tự động chọn "đợi duyệt" nếu bạn không phải TV Chăm sóc khách hàng)
                                     </label>
                                 </div>
                                 <div class="radio radio-custom">
                                     <input type="radio" name="status" disabled id="sinva-Pending" value="Pending">
                                     <label for="sinva-Pending">
-                                        Đợi ký HĐ (đang cọc)
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="status" id="sinva-Cancel" value="Cancel">
-                                    <label for="sinva-Cancel">
-                                        Hủy cọc
+                                        Đợi duyệt
                                     </label>
                                 </div>
                             </div>
