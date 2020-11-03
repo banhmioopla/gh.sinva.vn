@@ -36,21 +36,22 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
             }  
         ?>
         <div class="contract-alert"></div>
-        <div class="row">
         <?php $this->load->view('components/list-navigation'); ?>
-            
-            <div class="col-md-12">
-                <div class="row">
-                    <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
-                    <div class="col-md-12">
-                        <a href="/admin/contract/sync-status-expire" class="btn btn-info">Cập nhật trạng thái hợp đồng</a>
-                    </div>
-                    <?php endif; ?>
-                </div>
+
+        <div class="row">
+            <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
                 <div class="col-md-12">
-                    <h3>Chờ duyệt</h3>
-                    <div class="card-box table-responsive">
-                    <table class="table-contract table table-bordered">
+                    <div class="card-box">
+                        <a href="/admin/contract/sync-status-expire" class="btn btn-warning">Cập nhật trạng thái hợp đồng</a>
+                    </div>
+                    
+                </div>
+            <?php endif; ?>
+            <div class="col-12 col-md-12 mt-md-2">
+                <div class="card-box table-responsive">
+                    <h4 class="text-danger" data-target="#listPending" data-toggle="collapse">Chờ duyệt</h4>
+                    
+                    <table id="listPending" class="table-contract table table-bordered collapse">
                         <thead>
                         <tr>
                             <th>Nội dung</th>
@@ -78,10 +79,11 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                                 <?php endif; ?>
                         </tbody>
                     </table>
-                    </div>
                 </div>
+                
                 <div class=" mt-md-2 card-box table-responsive">
-                    <table class="table-contract table table-bordered">
+                    <h4 class="text-danger" data-target="#listThisMonth" data-toggle="collapse">DS - Ký tháng này</h4>
+                    <table id="listThisMonth" class="table-contract table table-bordered collapse">
                         <thead>
                         <tr>
                             <th># ID Hợp Đồng</th>
@@ -204,8 +206,8 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
         <div class="row">
             <div class="col-12 col-md-12">
                 <div class="card-box table-responsive">
-                <h3>Danh sách hợp đồng tháng hiện tại</h3>
-                    <table class="table-contract table table-bordered">
+                <h4 data-target="#listAll" class="text-danger" data-toggle="collapse">Tất Cả</h4>
+                    <table id="listAll" class="table-contract collapse table table-bordered">
                         <thead>
                         <tr>
                             <th># ID Hợp Đồng</th>
