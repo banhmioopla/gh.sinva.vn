@@ -6,7 +6,7 @@ class Apartment extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag', 'ghApartmentComment', 'ghConsultantBooking']);
+		$this->load->model(['ghApartment','ghNotification', 'ghDistrict', 'ghTag', 'ghApartmentComment', 'ghConsultantBooking']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -20,6 +20,8 @@ class Apartment extends CustomBaseStep {
 		$this->permission_modify = ['product-manager'];
 	}
 
+	public function showNotificaton(){}
+
 	public function show(){
 		if($this->authorised_mode) {
 			$this->permission_modify[] = $this->auth['role_code'];
@@ -30,6 +32,8 @@ class Apartment extends CustomBaseStep {
 		
 		$data['district_code'] = $district_code;
 		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);
+
+		$data['contract_noti'] = $this->ghNotification->get();
 		
 		$data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
 		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);

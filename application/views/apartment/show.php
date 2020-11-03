@@ -69,14 +69,14 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care', 'p
         </div>
         <div class="row">
             <div class="col-md-3 d-md-block d-none">
-                <?php if(count($apartment_cur_week)):?>
-                    <div class="mt-1 text-center font-weight-bold">Dự án đã cập nhật trong tuần này</div>
-                    <?php foreach($apartment_cur_week as $week):?>
-                    <div class="m-2 alert alert-primary alert-dismissible fade show" role="alert">
+                <?php if(count($contract_noti) && isYourPermission('Apartment', 'showNotificaton', $this->permission_set)):?>
+                    <div class="mt-1 text-center font-weight-bold">Thông báo các lượt tạo hợp đồng</div>
+                    <?php foreach($contract_noti as $item):?>
+                    <div class="m-2 alert alert-<?= $item['is_approve'] =='YES' ?"success" :'warning' ?> alert-dismissible fade show" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <?= $week['address_street'] ?> - <?= date('d/m/Y H:i',$week['time_update']) ?>
+                        <?= $item['message'] . ' <br> Tạo lúc '. date('d/m/Y H:i', $item['time_insert']) ?>
                     </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
