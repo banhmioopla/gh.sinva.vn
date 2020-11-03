@@ -120,6 +120,9 @@ class Contract extends CustomBaseStep {
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;
 		$data['ghApartment'] = $this->ghApartment;
+		$data['ghCustomer'] = $this->ghCustomer;
+		$data['ghRoom'] = $this->ghRoom;
+		$data['label'] =  $this->config->item('label.apartment');
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('contract/detail-show', $data);
 		$this->load->view('components/footer');
