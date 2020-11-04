@@ -24,6 +24,8 @@ class Contract extends CustomBaseStep {
 		return $this->ghContract->get(['user_create_id' => $this->auth['account_id']]);
 	}
 
+	public function isCollapse(){}
+
 	public function syncStatusExpire() {
 		$this->ghContract->syncStatusExpire();
 		return redirect('/admin/list-contract');

@@ -3,6 +3,10 @@ $check_edit = false;
 if(isYourPermission($this->current_controller, 'updateEditable', $this->permission_set)){
     $check_edit = true;
 }
+$check_collapse = false;
+if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_set)){
+    $check_collapse = true;
+}
 
 ?>
 
@@ -49,9 +53,9 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
             <?php endif; ?>
             <div class="col-12 col-md-12 mt-md-2">
                 <div class="card-box table-responsive">
-                    <h4 class="text-danger" data-target="#listPending" data-toggle="collapse">Chờ duyệt</h4>
+                    <h4 class="text-danger" <?= $check_collapse ? 'data-target="#listPending" data-toggle="collapse"' : '' ?> >Chờ duyệt</h4>
                     
-                    <table id="listPending" class="table-contract table table-bordered collapse">
+                    <table id="listPending" class="table-contract table table-bordered <?= $check_collapse ? 'collapse' :'' ?> ">
                         <thead>
                         <tr>
                             <th>Nội dung</th>
@@ -82,8 +86,8 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                 </div>
                 
                 <div class=" mt-md-2 card-box table-responsive">
-                    <h4 class="text-danger" data-target="#listThisMonth" data-toggle="collapse">DS - Ký tháng này</h4>
-                    <table id="listThisMonth" class="table-contract table table-bordered collapse">
+                    <h4 class="text-danger" <?= $check_collapse ? 'data-target="#listThisMonth" data-toggle="collapse"' : '' ?>>DS - Ký tháng này</h4>
+                    <table id="listThisMonth" class="table-contract table table-bordered <?= $check_collapse ? 'collapse' :'' ?>">
                         <thead>
                         <tr>
                             <th># ID Hợp Đồng</th>
@@ -206,8 +210,8 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
         <div class="row">
             <div class="col-12 col-md-12">
                 <div class="card-box table-responsive">
-                <h4 data-target="#listAll" class="text-danger" data-toggle="collapse">Tất Cả</h4>
-                    <table id="listAll" class="table-contract collapse table table-bordered">
+                <h4 class="text-danger" <?= $check_collapse ? 'data-target="#listAll" data-toggle="collapse"' : '' ?>>Tất Cả</h4>
+                    <table id="listAll" class="table-contract <?= $check_collapse ? 'collapse' :'' ?> table table-bordered">
                         <thead>
                         <tr>
                             <th># ID Hợp Đồng</th>
