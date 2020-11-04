@@ -115,7 +115,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             <label for="consultant_id" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger"> (bb)</span></label>
                             <?php if($check_consultant_id):?>
                             <div class="col-md-8 col-12">
-                                <select type="number" class="form-control"
+                                <select class="form-control" required
                                         id="consultant_id" name="consultant_id" placeholder="171020xxx">
                                         <?= $select_user?>
                                 </select>
@@ -136,8 +136,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             </select>
                             </div>
                         </div>
-                        <p class="text-info">GH: thông tin về khách hàng mới được nhập vào bảng khách hàng trước để tạo ID Khách hàng (IDKH). Sau khi có IDKH, IDKH sẽ được nhập qua bảng hợp đồng. IDKH đóng vai trò làm cầu nối giữa bảng hợp đồng & bảng khách hàng - điều này cũng trả lời cho câu hỏi - Hợp đồng này là của khách hàng nào! </p>
-                        <p >Giải thích cơ chế của GH: <span class="text-info">Hãy hiểu rằng mỗi khách mới chỉ có 1 nguồn, nguồn khách sẽ được nhập vào Bảng Khách Hàng, hoàn toàn không nhập vào bảng hợp đồng. Ứng với mỗi hợp đồng sẽ có 1 ID khách hàng.</span>  </p>
+
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">** Họ Tên Khách Hàng Mới</label>
                             <div class="col-md-8 col-12">
@@ -186,22 +185,22 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="ID_card" class="col-4 col-form-label">** CMT hoặc passport</label>
-                            <div class="col-8">
+                            <label for="ID_card" class="col-md-4 col-12 col-form-label">** CMT hoặc passport</label>
+                            <div class="col-md-8 col-12">
                                 <input type="text" class="form-control"
                                         id="ID_card" name="ID_card_new" placeholder="Cmnd, passport">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-4 col-form-label">** Số điện thoại</label>
-                            <div class="col-8">
+                            <label for="phone" class="col-md-4 col-12 col-form-label">** Số điện thoại</label>
+                            <div class="col-md-8 col-12">
                                 <input type="number" class="form-control"
                                         id="phone" name="phone_new" placeholder="Số điện thoại">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-4 col-form-label">** Email</label>
-                            <div class="col-8">
+                            <label for="email" class="col-md-4 col-12 col-form-label">** Email</label>
+                            <div class="col-md-8 col-12">
                                 <input type="text" class="form-control"
                                         id="email" name="email_new" placeholder="Email">
                             </div>
@@ -314,7 +313,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                         </div>
                         <div class="form-group row">
                             <div class="col-8 offset-4">
-                                <button type="submit" class="btn btn-custom waves-effect waves-light">
+                                <button type="button" id="submitNewContract" class="btn btn-custom waves-effect waves-light">
                                     Thêm mới
                                 </button>
                             </div>
@@ -333,7 +332,7 @@ commands.push(function(){
     });
     $(".select2").select2({
         placeholder: "Search for an Item",
-        minimumInputLength: 2,
+        minimumInputLength: 1,
         ajax: {
             url: "<?= base_url().'admin/search-customer' ?>",
             dataType: 'json',
@@ -358,8 +357,19 @@ commands.push(function(){
         // 4
         $this.val( function() {
             return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
-        } );
+        });
     });
+
+    $('#submitNewContract').click(function(){
+        $customer_name = $('select[name=customer_name]').find(':selected').val(); // old customer
+
+        $customer_name_new = $('input[name=customer_name_new]').val();
+
+        if($customer_name == '' )
+
+    });
+
+
 
 });
 

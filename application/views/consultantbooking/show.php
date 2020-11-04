@@ -49,6 +49,7 @@
                         <th>Dự Án</th>
                         <th>Mã Phòng</th>
                         <th>Thời Gian Dẫn Khách</th>
+                        <th>Thành Viên</th>
                         <th>Khách Được Dẫn</th>
                         <th>Ghi chú</th>
                         <th>Trạng Thái</th>
@@ -91,6 +92,7 @@
                             data-apartment-id = "<?= $booking['apartment_id'] ?>"
                         ><i class="text-success"><?= $text_room_code ?></i></td>
                         <td><?= date('d/m/Y H:i',$booking['time_booking'])  ?></td>
+                        <td class="text-secondary"><?= $libUser->getNameByAccountid($booking['booking_user_id']) ?></td>
                         <td><?= $libCustomer->getNameById($booking['customer_id']) . ' - ' .                    $libCustomer->getPhoneById($booking['customer_id']) ?></td>
                         <td>
                             <div class="booking-note"

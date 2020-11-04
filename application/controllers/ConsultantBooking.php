@@ -17,9 +17,7 @@ class ConsultantBooking extends CustomBaseStep {
 		$this->load->config('label.apartment');
 	}
 
-	public function showAllTimeLine(){
-		return ;
-	}
+	public function showAllTimeLine(){}
 
 	public function showYour(){
 		return $this->ghConsultantBooking->get(['time_booking > ' => strtotime('last monday'), 'booking_user_id' =>$this->auth['account_id']]);
@@ -29,12 +27,16 @@ class ConsultantBooking extends CustomBaseStep {
 		
 		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => 0]);
 		$data['title_1'] = "Lượt dẫn của tất cả thành viên";
-		
+
+		$the_time = strtotime('last monday');
+		if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {
+			$the_time = 0;
+		}
 		if($this->isYourPermission($this->current_controller, 'showYour')) {
 			$data['list_booking'] = $this->showYour();
-			$data['title_1'] = "Lượt dẫn của tôi tuần hiện tại từ". date('d/m/Y', strtotime('last monday'));
+			$data['title_1'] = "Lượt dẫn của tôi tuần hiện tại từ". date('d/m/Y', $the_time);
 		} 
-		$data['list_booking_this_week'] = $this->ghConsultantBooking->getGroupByUserId(strtotime('last monday'));
+		$data['list_booking_this_week'] = $this->ghConsultantBooking->getGroupByUserId($the_time);
 		$list_district = $this->ghDistrict->get(['active' => 'YES']);
 		$district_counter_booking = [];
 
@@ -50,7 +52,7 @@ class ConsultantBooking extends CustomBaseStep {
 			$district_counter_booking[$d['code']] += count(
 				$this->ghConsultantBooking->get(
 					['district_code' =>$d['code'],
-					'time_booking >= ' => strtotime('last monday')]));
+					'time_booking >= ' => $the_time]));
 
 			if($district_counter_booking[$d['code']] > 0) {
 				$quantity['booking_district']++;
