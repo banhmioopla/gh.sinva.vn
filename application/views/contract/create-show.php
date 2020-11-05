@@ -30,7 +30,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
         </div>
         <div class="row">
             <div class="col-12 col-md-5">
-                <div class="card-box">
+                <div class="card-box shadow">
                     <h4 class="m-t-0">Thông tin dự án</h4>
                     <table class="table">
                         <tr>
@@ -104,8 +104,8 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                 </div>
             </div>
             <div class="col-12 col-md-7">
-                <div class="card-box">
-                    <h4 class="m-t-0">Thêm hợp đồng mới</h4>
+                <div class="card-box shadow">
+                    <h4 class="m-t-0">Hợp Đồng Mới</h4>
                     <hr>
                     <form role="form" method="post" enctype="multipart/form-data" action="<?= base_url()?>admin/create-contract">
                         <input type="hidden" name='room_id' value= '<?= $_GET["room-id"]?>'>
@@ -128,119 +128,119 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             <?php endif; ?>
                         </div>
                         <hr>
-                        <h5>Thông tin khách thuê</h5>
-                        <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Khách Tiềm Năng</label>
+                        <h5>Thông Tin Khách Thuê</h5>
+                        <div class="form-group row old-customer">
+                            <label for="name" class="col-12 col-md-4 col-form-label">Khách Tiềm Năng Đã Lưu</label>
                             <div class="col-md-8 col-12">
                             <select class="form-control select2" id="customer_name" name="customer_name">
                             </select>
+                            <p class="text-danger msg-customer_name"></p>
+                            </div>
+                        </div>
+                        <div class="new-customer">
+                            <div class="form-group row">
+                                <label for="phone_new" class="col-md-4 col-12 col-form-label">** Số điện thoại</label>
+                                <div class="col-md-8 col-12">
+                                    <input type="number" class="form-control"
+                                            id="phone_new" name="phone_new" placeholder="Số điện thoại">
+                                            <p class="text-danger msg-phone_new"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="name" class="col-12 col-md-4 col-form-label">** Họ & Tên Khách Thuê</label>
+                                <div class="col-md-8 col-12">
+                                    <input type="text" class="form-control"
+                                            id="customer_name_new" name="customer_name_new" placeholder="họ tên">
+                                    <p class="msg-customer_name_new text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="birthdate" class="col-4 col-form-label">** Ngày sinh<span class="text-danger">*</span></label>
+                                <div class="col-8">
+                                <input type="text" name="birthdate_new" class="form-control datepicker" placeholder="dd/mm/yyyy">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="ID_card" class="col-md-4 col-12 col-form-label">** CMND hoặc passport</label>
+                                <div class="col-md-8 col-12">
+                                    <input type="text" class="form-control"
+                                            id="ID_card" name="ID_card_new" placeholder="Cmnd, passport">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 col-12 col-form-label">** Email</label>
+                                <div class="col-md-8 col-12">
+                                    <input type="text" class="form-control"
+                                            id="email" name="email_new" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="name" class="col-12 col-md-4 col-form-label">** Giới Tính<span class="text-danger">*</span></label>
+                                <div class="col-md-8 col-12">
+                                    <div class="radio radio-custom">
+                                        <input type="radio" name="gender_new" checked id="male" value="male" checked>
+                                        <label for="male">
+                                            Nam
+                                        </label>
+                                    </div>
+                                    <div class="radio radio-custom">
+                                        <input type="radio" name="gender_new" id="sinva-rented" value="female">
+                                        <label for="sinva-rented">
+                                            Nữ
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="name" class="col-12 col-md-4 col-form-label">** Trạng thái (KH)<span class="text-danger">*</span></label>
+                                <div class="col-md-8 col-12">
+                                    <div class="radio radio-custom">
+                                        <input type="radio" name="status_new" checked id="status_rented" value="" checked>
+                                        <label for="status_rented">
+                                            Đã ký
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="name" class="col-12 col-md-4 col-form-label">** Nguồn<span class="text-danger">*</span></label>
+                                <div class="col-md-8 col-12">
+                                    <div class="radio radio-custom">
+                                        <input type="radio" name="source_new" id="DepMarketing" value="DepMarketing">
+                                        <label for="DepMarketing">
+                                            Bộ phận marketing
+                                        </label>
+                                    </div>
+                                    <div class="radio radio-custom">
+                                        <input type="radio" name="source_new" id="DepCustomerCare" value="DepCustomerCare">
+                                        <label for="DepCustomerCare">
+                                            Bộ phận chăm sóc khách hàng
+                                        </label>
+                                    </div>
+                                    <div class="radio radio-custom">
+                                        <input type="radio" name="source_new" id="DepSale" value="DepSale" checked>
+                                        <label for="DepSale">
+                                            Sale
+                                        </label>
+                                    </div>
+                                    <div class="radio radio-custom">
+                                        <input type="radio" name="source" id="DepOldSale" value="DepOldSale">
+                                        <label for="DepOldSale">
+                                            Khách Hàng Cũ Của Sale
+                                        </label>
+                                    </div>
+                                    <div class="radio radio-custom">
+                                        <input type="radio" name="source_new" id="DepReferral" value="DepReferral">
+                                        <label for="DepReferral">
+                                            Khách được giới thiệu
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">** Họ Tên Khách Hàng Mới</label>
-                            <div class="col-md-8 col-12">
-                                <input type="text" class="form-control"
-                                        id="customer_name_new" name="customer_name_new" placeholder="họ tên">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="birthdate" class="col-4 col-form-label">** Ngày sinh<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                            <input type="text" name="birthdate_new" class="form-control datepicker" placeholder="dd/mm/yyyy">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">** Giới Tính<span class="text-danger">*</span></label>
-                            <div class="col-md-8 col-12">
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="gender_new" checked id="male" value="male" checked>
-                                    <label for="male">
-                                        Nam
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="gender_new" id="sinva-rented" value="female">
-                                    <label for="sinva-rented">
-                                        Nữ
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">** Trạng thái (KH)<span class="text-danger">*</span></label>
-                            <div class="col-md-8 col-12">
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="status_new" checked id="status_rented" value="" checked>
-                                    <label for="status_rented">
-                                        Đã ký
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" disabled="" name="status_new" id="status_follow" value="">
-                                    <label for="status_follow">
-                                        Đang theo dõi
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="ID_card" class="col-md-4 col-12 col-form-label">** CMT hoặc passport</label>
-                            <div class="col-md-8 col-12">
-                                <input type="text" class="form-control"
-                                        id="ID_card" name="ID_card_new" placeholder="Cmnd, passport">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-12 col-form-label">** Số điện thoại</label>
-                            <div class="col-md-8 col-12">
-                                <input type="number" class="form-control"
-                                        id="phone" name="phone_new" placeholder="Số điện thoại">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-12 col-form-label">** Email</label>
-                            <div class="col-md-8 col-12">
-                                <input type="text" class="form-control"
-                                        id="email" name="email_new" placeholder="Email">
-                            </div>
-                        </div>
                         
-                        <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">** Nguồn<span class="text-danger">*</span></label>
-                            <div class="col-md-8 col-12">
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="source_new" id="DepMarketing" value="DepMarketing">
-                                    <label for="DepMarketing">
-                                        Bộ phận marketing
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="source_new" id="DepCustomerCare" value="DepCustomerCare">
-                                    <label for="DepCustomerCare">
-                                        Bộ phận chăm sóc khách hàng
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="source_new" id="DepSale" value="DepSale" checked>
-                                    <label for="DepSale">
-                                        Sale
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="source" id="DepOldSale" value="DepOldSale">
-                                    <label for="DepOldSale">
-                                        Khách Hàng Cũ Của Sale
-                                    </label>
-                                </div>
-                                <div class="radio radio-custom">
-                                    <input type="radio" name="source_new" id="DepReferral" value="DepReferral">
-                                    <label for="DepReferral">
-                                        Khách được giới thiệu
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
                         <hr>
                         <h5>Thông tin hợp đồng (hoặc cọc)</h5>
                         <div class="form-group row">
@@ -248,6 +248,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             <div class="col-md-8 col-12">
                                 <input type="text" required class="form-control contract-open"
                                         id="time_open" name="time_open">
+                                        <p class="text-danger msg-time_open"></p>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -257,7 +258,9 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                                         required class="form-control"
                                         id="number_of_month" 
                                         name="number_of_month">
+                                <p class="text-danger msg-number_of_month"></p>
                             </div>
+                            
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-12 col-md-4 col-form-label">Ngày hết hạn</label>
@@ -296,12 +299,18 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
 
                         
                         <div class="form-group row">
-                            <p class="mb-2 mt-4 font-weight-bold text-muted">Upload Ảnh Hợp Đồng</p>
-                            <input type="file"
-                            required
-                            class="filestyle" 
-                            name="files[]"
-                            data-input="false" data-btnClass="btn-danger">
+                            <label for="file" class="col-12 col-md-4 col-form-label">Upload Ảnh Hợp Đồng</label>
+                            <div class="col-md-8 col-12">
+                                <input type="file"
+                                    required
+                                    id="file"
+                                    multiple
+                                    class="filestyle" 
+                                    name="files[]"
+                                    data-input="false" data-btnClass="btn-info">
+                                <p class="number-file"></p>
+                                <p class="text-danger msg-file"></p>
+                            </div>
                         </div>
                             
                     
@@ -330,6 +339,12 @@ commands.push(function(){
     $('.contract-open, .datepicker, .contract-time_expire').datepicker({
         format: "dd/mm/yyyy"
     });
+
+    $(':file').change(function () {
+        $('.number-file').text(this.files.length + " ảnh được chọn");
+    });
+
+    $('.new-customer').hide();
     $(".select2").select2({
         placeholder: "Search for an Item",
         minimumInputLength: 1,
@@ -341,6 +356,20 @@ commands.push(function(){
                     results: data
                 };
             }
+        }
+    });
+    
+    $('.select2').on('select2:closing', function(){
+        console.log('closing');
+        console.log($(this).val());
+        let phone_number = $('.select2-search__field')[0].value;
+        if($(this).val() == null && phone_number.length > 5) {
+            $('.new-customer').show();
+            $('.old-customer').hide();
+            $('#phone_new').val(phone_number);
+        } else {
+            $('.old-customer').show();
+            $('.new-customer').hide();
         }
     });
     $( 'input[name=room_price]' ).on('keyup', function() {
@@ -361,9 +390,75 @@ commands.push(function(){
     });
 
     $('#submitNewContract').click(function(){
-        $customer_name = $('select[name=customer_name]').find(':selected').val(); // old customer
+        let customer_name = $('select[name=customer_name]').val(); // old customer
+        console.log(customer_name);
+        let customer_name_new = $('input[name=customer_name_new]').val();
+        let phone_new = $('input[name=phone_new]').val();
+        let check = true;
+        let number_of_month = $('input[name=number_of_month]').val();
+        let time_open = $('input[name=time_open]').val();
+        let room_price = $('input[name=room_price]').val();
+        if(customer_name == null) {
+            
+            if(customer_name_new == '') {
+                $('.msg-customer_name_new').text('vui lòng nhập họ tên khách thuê');
+                check = false;
+            } else {
+                $('.msg-customer_name_new').text('');
+            
+            }
 
-        $customer_name_new = $('input[name=customer_name_new]').val();
+            if(phone_new == '' || phone_new.length < 5) {
+                $('.msg-phone_new').text('vui lòng nhập số điện thoại khách thuê');
+                check = false;
+            } else {
+                $('.msg-phone_new').text('');
+            }
+            
+        }
+
+        if(customer_name == null && customer_name_new == '') {
+            check = false;
+            $('.msg-customer_name').text('vui lòng nhập SDT khách thuê');
+        } else {
+            $('.msg-customer_name').text('');
+        }
+        
+        if(number_of_month == '') {
+            $('.msg-number_of_month').text('vui lòng nhập thời hạn thuê (x tháng)');
+            check = false;
+        } else {
+            $('.msg-number_of_month').text('');
+        }
+        
+        if(time_open == '') {
+            $('.msg-time_open').text('vui lòng nhập ngày ký');
+            check = false;
+        } else {
+            $('.msg-time_open').text('');
+        }
+        
+        if(room_price == '') {
+            $('.msg-room_price').text('vui lòng nhập giá thuê');
+            check = false;
+        } else {
+            $('.msg-room_price').text('');
+        }
+
+        if($('#file')[0].files.length == 0){
+            $('.msg-file').text('vui lòng chọn ảnh hợp đồng');
+            check = false;
+        } else {
+            $('.msg-file').text('');
+        }
+
+
+        if(check) {
+            $('form').submit();
+        }
+
+
+        
 
 
     });
