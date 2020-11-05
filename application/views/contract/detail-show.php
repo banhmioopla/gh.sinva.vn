@@ -43,7 +43,13 @@
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Hình Ảnh <strong></td>
-                            <td><a target = '_blank' href="<?= $image ? '/media/contract/'.$image[0]['name'] : '#' ?>">Hình Ảnh</a></td>
+                            <td>
+                                <?php if(count($image) > 0):?>
+                            <?php foreach($image as $ii ):?>    
+                            <a target = '_blank' href="<?= $image ? '/media/contract/'.$ii['name'] : '#' ?>"><?= $ii['name'] ?></a> <br>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                        </td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Tên Khách Thuê <strong></td>
