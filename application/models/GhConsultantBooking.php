@@ -26,14 +26,20 @@ class GhConsultantBooking extends CI_Model {
         return $result;
     }
 
-    public function getGroupByUserId($time_booking = 0){
-        $sql = "SELECT gh_consultant_booking.*, count(id) AS counter FROM gh_consultant_booking WHERE time_booking >= $time_booking GROUP BY booking_user_id";
+    public function getGroupByUserId($from = 0, $to = null){
+	    if(empty($to)) {
+	        $to = time();
+        }
+        $sql = "SELECT gh_consultant_booking.*, count(id) AS counter FROM gh_consultant_booking WHERE time_booking >= $from AND time_booking <= $to GROUP BY booking_user_id";
         $result = $this->db->query($sql);
         return $result->result_array();
     }
 
-    public function getGroupByDistrict($time_booking = 0){
-        $sql = "SELECT gh_consultant_booking.*, count(id) AS counter FROM gh_consultant_booking WHERE time_booking >= $time_booking GROUP BY booking_user_id";
+    public function getGroupByDistrict($from = 0, $to = null){
+        if(empty($to)) {
+            $to = time();
+        }
+        $sql = "SELECT gh_consultant_booking.*, count(id) AS counter FROM gh_consultant_booking WHERE time_booking >= $from AND time_booking <= $to GROUP BY booking_user_id";
         $result = $this->db->query($sql);
         return $result->result_array();
     }

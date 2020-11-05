@@ -16,7 +16,7 @@
             </div>
         </div>
         <?php $this->load->view('components/list-navigation'); ?>
-        <div class="row">            
+        <div class="row">
             <div class="col-md-4">
                 <div class="card-box bg-primary widget-flat border-primary text-white">
                     <i class="fi-archive"></i>
@@ -39,6 +39,33 @@
                 </div>
             </div>
         </div>
+        <?php if(isYourPermission($this->current_controller,'showAllTimeLine', $this->permission_set)): ?>
+            <div class="col-md-6">
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-md-4">CHỌN KHUNG THỜI GIAN</div>
+                        <div class="col-md-8 form-group">
+                            <select name="filterTime" class="form-control">
+                                <option <?= $this->input->get('filterTime') == '' ? 'selected' :'' ?> value="">Tất cả</option>
+                                <option <?= $this->input->get('filterTime') == 'TODAY' ? 'selected' :'' ?> value="TODAY">Hôm nay</option>
+                                <option <?= $this->input->get('filterTime') == 'THIS_WEEK' ? 'selected' :'' ?> value="THIS_WEEK">Tuần Này</option>
+                                <option <?= $this->input->get('filterTime') == 'LAST_WEEK' ? 'selected' :'' ?> value="LAST_WEEK">Tuần Trước</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <script>
+                    commands.push(function(){
+                        $('select[name=filterTime]').on('change', function(){
+                            let filterTime = $(this).val();
+                            window.location = '/admin/list-consultant-booking?filterTime=' + filterTime;
+                        });
+                    });
+                </script>
+
+            </div>
+        <?php endif; ?>
         <div class="col-12 col-md-12">
             <div class="card-box table-responsive">
             <h4><?= $title_1 ?></h4>
