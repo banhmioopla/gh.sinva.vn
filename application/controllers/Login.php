@@ -18,6 +18,7 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if(!empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
+                return redirect('/admin/list-apartment');
 			} else {
 				return redirect('/admin/logout');
 			}

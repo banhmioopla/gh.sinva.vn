@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-$route['default_controller'] = 'Apartment/show';
+$route['default_controller'] = 'Login/show';
 $route['404_override'] = '';
 
 $route['admin/logout'] = function($params = []) {
