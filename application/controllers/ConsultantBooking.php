@@ -23,11 +23,15 @@ class ConsultantBooking extends CustomBaseStep {
 		return $this->ghConsultantBooking->get(['time_booking > ' => strtotime('last monday'), 'booking_user_id' =>$this->auth['account_id']]);
 	}
 
+	public function syncPendingToSuccess() {
+	    return $this->ghConsultantBooking->syncPendingToSuccess();
+    }
+
 	public function show(){
 		
 		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => 0]);
 		$data['title_1'] = "Lượt dẫn của tất cả thành viên";
-
+        $this->syncPendingToSuccess();
         $time_from = strtotime('last monday');
         $time_to = time();
 		if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {

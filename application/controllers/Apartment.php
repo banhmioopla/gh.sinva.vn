@@ -62,7 +62,7 @@ class Apartment extends CustomBaseStep {
 		$data['list_ready_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.time_available > 0 ');
 		$data['list_available_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.status = "Available" ');
 		$data['list_available_room_price'] = $this->ghRoom->getPriceByDistrict($district_code, 'gh_room.status = "Available" ');
-
+        $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
 		/*--- bring library to view ---*/
 		$data['libDistrict'] = $this->libDistrict;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
@@ -78,6 +78,17 @@ class Apartment extends CustomBaseStep {
 		$this->load->view($template, $data);
 		$this->load->view('components/footer');
 	}
+
+	public function showBySearch(){
+
+	    $keyword = $this->input->get('roomPrice');
+	    $data['ghApartment'] = $this->ghApartment;
+        $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
+	    $data['list_data'] = $this->ghRoom->get(['price' => $keyword, 'active' => 'YES', 'status' => 'Available']);
+        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('showbysearch/room', $data);
+        $this->load->view('components/footer');
+    }
 
 	public function createComment() {
 		$post  = $this->input->post();

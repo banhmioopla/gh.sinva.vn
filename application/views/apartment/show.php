@@ -96,6 +96,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care', 'p
             </div>
             <div class="card card-body pl-0 pr-0 col-12 col-md-8">
                 <?php $this->load->view('components/list-navigation'); ?>
+                <?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
                 <div class="m-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
                         <?php 

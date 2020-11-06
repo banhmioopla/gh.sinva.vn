@@ -209,6 +209,12 @@ $route['admin/list-apartment'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/apartment/show-by-search'] = function($params = []) {
+	$controller = 'Apartment';
+	$action = '/showBySearch';
+	return $controller.$action;
+};
+
 $route['admin/list-apartment-commission-rate'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/showCommmissionRate';
