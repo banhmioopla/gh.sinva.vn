@@ -41,6 +41,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                     <table id="table-customer" class="table table-bordered">
                         <thead>
                         <tr>
+                            <th>STT</th>
                             <th>Họ tên</th>
                             <th>Giới tính</th>
                             <th>Ngày sinh</th>
@@ -59,6 +60,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ): ?>
                             <tr>
+                                <td><?= $row['id'] ?></td>
                                 <td>
                                     <div class="customer-data" 
                                         data-pk="<?= $row['id'] ?>" 
