@@ -18,19 +18,29 @@
                     
                 </div>
             </div>
+            <?php
+            $customer = $ghCustomer->get(['id' => $contract['customer_id']])[0];
+            $service = json_decode($contract['service_set'], true);
+
+            $room = $ghRoom->get(['id' => $contract['room_id']])[0];
+
+            $image = $ghImage->getContract($contract['id']);
+            $status = 'warning';
+            if($contract['status'] == 'Success') {
+                $status = 'success';
+            }
+
+            ?>
             <div class="col-12 col-md-8 offset-md-2">
                 <div class="card-box shadow">
-                    <h3>Chi tiết hợp đồng</h3>
+                    <h3 class="text-center">Chi tiết hợp đồng</h3>
+                    <p class="text-center text-dark"><?= $service['address_street'] ?></p>
+                    <p class="text-center text-warning font-weight-bold">Mã Phòng: <?=
+                        $room['code'] ?></p>
+                    <p><a href="/admin/list-contract" class="text-danger">Quay Lại Danh
+                            Sách</a></p>
                     <table class="table table-bordered">
-                    <?php 
-                        $customer = $ghCustomer->get(['id' => $contract['customer_id']])[0];
-                        $service = json_decode($contract['service_set'], true);
 
-                        $room = $ghRoom->get(['id' => $contract['room_id']])[0];
-
-                        $image = $ghImage->getContract($contract['id']);
-                    
-                    ?>
                         <tr class="d-none">
                             <td colspan="2" class="text-right"><div class="customer-name w-100" data-name="name">
                             <a class="btn btn-warning" href="#">Hình Ảnh</a>
@@ -39,7 +49,17 @@
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Trạng Thái <strong></td>
-                            <td><div class="customer-name w-100" data-name="name"><?= $contract['status'] ?></div></td>
+                            <td><div class="customer-name w-100 "
+                                     data-name="name"><span class="badge
+                                     badge-<?= $status ?>"><?= $label['contract.'
+                                     .$contract['status']]
+                                        ?></span></div></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Thành Viên Chốt
+                                    Sale <strong></td>
+                            <td><div class="consultant_id w-100" data-name="name">
+                                    <?= $libUser->getNameByAccountid($contract['consultant_id']) ?></div></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Hình Ảnh <strong></td>
@@ -77,31 +97,51 @@
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Giá Thuê<strong></td>
-                            <td><div class="customer-name" data-name="name"><?= number_format($contract['room_price']) . ' VND' ?></div></td>
+                            <td><div class="contract-room_price"
+                                     data-name="room_price"
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-value="<?= $contract['room_price'] ?>"><?= number_format($contract['room_price']) . ' VND' ?></div></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Ngày Ký<strong></td>
-                            <td><div class="customer-name" data-name="name"><?= $contract['time_check_in'] > 0 ? date('d/m/Y', $contract['time_check_in']) : '' ?></div></td>
+                            <td><div class="contract-time_check_in"
+                                     data-name="time_check_in"
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-value="<?= date('d/m/Y',$contract['time_check_in']) ?>"><?= $contract['time_check_in'] > 0 ? date('d/m/Y', $contract['time_check_in']) : '' ?></div></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Thời Hạn<strong></td>
-                            <td><div class="customer-name" data-name="name"><?= $contract['number_of_month'] . ' tháng' ?></div></td>
+                            <td><div class="contract-number_of_month"
+                                     data-name="number_of_month"
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-value="<?= $contract['number_of_month'] ?>"><?= $contract['number_of_month'] . ' tháng' ?></div></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Ngày Hết Hạn<strong></td>
-                            <td><div class="customer-name" data-name="name"><?= $contract['time_expire'] > 0 ? date('d/m/Y', $contract['time_expire']) : '' ?></div></td>
+                            <td><div class="contract-time_expire"
+                                     data-name="time_expire"
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-value="<?= $contract['time_expire'] ?>"><?= $contract['time_expire'] > 0 ? date('d/m/Y', $contract['time_expire']) : '' ?></div></td>
                         </tr>
                         
                         <tr>
                             <td class="text-right"><strong>Ghi Chú Hợp Đồng <strong></td>
-                            <td><div class="customer-name" data-name="name"><?= $contract['note'] ?></div></td>
+                            <td><div class="contract-note"
+                                     data-name="note"
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-value="<?= $contract['note'] ?>"><?=
+                                    $contract['note'] ?></div></td>
                         </tr>
                         
                         <tr>
-                            <td class="text-right"><strong>Dịch Vụ, Ghi Chú Tòa Nhà (tại thời điểm tạo HD) <strong></td>
+                            <td class="text-right"><strong>Thông Tin Dịch Vụ, Ghi Chú Tòa
+                                    Nhà <br>
+                                    (tại thời điểm tạo HD) <strong></td>
                             <td><div class="customer-name" data-name="name">
                                 <?php foreach($service as $k => $v):?>
-                                    <?= isset($label[$k]) ? '<strong>'.$label[$k] .'</strong> : ('.$v.')<br>' :''  ?>
+                                    <?= isset($label[$k]) && $k != 'commission_rate' ? '<strong>'
+                                        .$label[$k]
+                                        .'</strong> : ('.$v.')<br>' :''  ?>
                                 <?php endforeach; ?>
                             </div></td>
                         </tr>
@@ -111,3 +151,67 @@
         </div>
     </div>
 </div>
+<?php
+$check_edit = false;
+if(isYourPermission($this->current_controller, 'updateEditable', $this->permission_set)){
+    $check_edit = true;
+}
+
+?>
+<script type="text/javascript">
+    commands.push(function() {
+        $(document).ready(function() {
+            <?php if($check_edit): ?>
+            $('.contract-room_price, .contract-number_of_month').editable({
+                type: "number",
+                url: '<?= base_url() ?>admin/update-contract-editable',
+                inputclass: '',
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.contract-alert').html(notify_html_success);
+                    } else {
+                        $('.contract-alert').html(notify_html_fail);
+                    }
+                }
+            });
+            $('.contract-note').editable({
+                type: "textarea",
+                url: '<?= base_url() ?>admin/update-contract-editable',
+                inputclass: '',
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.contract-alert').html(notify_html_success);
+                    } else {
+                        $('.contract-alert').html(notify_html_fail);
+                    }
+                }
+            });
+            $('.contract-time_expire, .contract-time_check_in').editable({
+                placement: 'right',
+                type: 'combodate',
+                template:"D / MM / YYYY",
+                format:"DD-MM-YYYY",
+                viewformat:"DD-MM-YYYY",
+                mode: 'inline',
+                combodate: {
+                    firstItem: 'name',
+                    maxYear: '2030',
+                    minYear: '2017'
+                },
+                inputclass: 'form-control-sm',
+                url: '<?= base_url() ?>admin/update-contract-editable',
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.contract-alert').html(notify_html_success);
+                    } else {
+                        $('.contract-alert').html(notify_html_fail);
+                    }
+                }
+            });
+            <?php endif; ?>
+        });
+    });
+</script>

@@ -44,61 +44,70 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
 
         <div class="row">
             <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
-                <div class="col-md-12">
+                <div class="col-md-8 offset-md-2">
                     <div class="card-box">
-                        <a href="/admin/contract/sync-status-expire" class="btn btn-warning">Cập nhật trạng thái hợp đồng</a>
+                        <a href="/admin/contract/sync-status-expire" class="btn
+                        btn-danger">Duyệt Tự Động Hợp Đồng Hết Hạn</a>
                     </div>
                     
                 </div>
             <?php endif; ?>
-            <div class="col-12 col-md-12 mt-md-2">
+            <div class="col-12 col-md-8 offset-md-2 mt-md-2">
+                <?php if(count($list_notification) > 0 && isYourPermission('Contract', 'approved', $this->permission_set) ):
+                ?>
                 <div class="card-box table-responsive">
-                    <h4 class="text-danger" <?= $check_collapse ? 'data-target="#listPending" data-toggle="collapse"' : '' ?> >Chờ duyệt</h4>
+                    <h4 class="text-danger" <?= $check_collapse ? 'data-target="#listPending" data-toggle="collapse"' : '' ?> >Hợp Đồng Đang Chờ duyệt</h4>
                     
                     <table id="listPending" class="table-contract table table-bordered <?= $check_collapse ? 'collapse' :'' ?> ">
                         <thead>
                         <tr>
+                            <th width="100px" class="text-center">ID Hợp Đồng</th>
                             <th>Nội dung</th>
-                            <th width="350px">Duyệt</th>
+                            <th class="text-center">Thời gian tạo</th>
+                            <th width="100px" class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
                             <?php 
-                                if(count($list_notification) > 0 && isYourPermission('Contract', 'approved', $this->permission_set) ):
                                 foreach($list_notification as $row ):
                             ?>
                             <tr>
+                                <td class="text-center"><a target = '_blank'
+                                       href="/admin/detail-contract?id=<?= $row['object_id']
+                                       ?>">#<?= 10000+ $row['object_id'] ?></a></td>
                                 <td>
                                     <div>
                                         <?= $row['message'] ?>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="text-center"><div><?= date('d/m/Y H:i', $row['time_insert'])
+                                        ?></div></td>
+                                <td class="text-center">
                                     <div>
-                                        <a href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>"> Duyệt </a>
+                                        <a class="btn btn-warning"
+                                                href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>"> Duyệt </a>
                                     </div>
                                 </td>
                             </tr>      
                             <?php endforeach; ?>
-                                <?php endif; ?>
+
                         </tbody>
                     </table>
                 </div>
+                <?php endif; ?>
                 
-                <div class=" mt-md-2 card-box table-responsive">
+                <div class=" mt-2 card-box table-responsive">
                     <h4 class="text-danger" <?= $check_collapse ? 'data-target="#listThisMonth" data-toggle="collapse"' : '' ?>>DS - Ký tháng này</h4>
                     <table id="listThisMonth" class="table-contract table table-bordered <?= $check_collapse ? 'collapse' :'' ?>">
                         <thead>
                         <tr>
-                            <th># ID Hợp Đồng</th>
+                            <th class="text-center" width="100px">ID Hợp Đồng</th>
                             <th width="350px">Khách thuê</th>
                             <th>Giá thuê</th>
                             <th>Ngày ký</th>
                             <th>Ngày hết hạn</th>
                             <th class="text-center">Thời hạn</th>
-                            <th width="200px">Ghi chú HD</th>
-                            <th class="text-center" width="200px">Tình trạng</th>
-                            <th class="text-center">Hình Ảnh</th>
+                            <th class="text-center" width="100px">Tình trạng</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -110,9 +119,9 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                             ?>
                             <?php $service = json_decode($row['service_set'], true) ?>
                             <tr>
-                                <td>
+                                <td class="text-center" width="100px">
                                     <div>
-                                       <a target = '_blank' href="/admin/detail-contract?id=<?= $row['id'] ?>">#<?= (10000 + $row['id']) ?></a> 
+                                       <a target = '_blank' href="/admin/detail-contract?id=<?= $row['id'] ?>">#<?= (10000 + $row['id']) ?></a>
                                     </div>
                                 </td>
                                 <td>
@@ -159,14 +168,6 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                         <?=$row['number_of_month'] ?>
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="contract-note"
-                                        data-pk="<?= $row['id'] ?>"
-                                        data-value="<?= $row['note'] ?>"
-                                        data-name="note">
-                                        <?=$row['note'] ?>
-                                    </div>
-                                </td>
                                 <td class="text-center">
                                     <div>
                                     <?php 
@@ -180,26 +181,17 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                         if($row['status'] == 'Cancel') {
                                             $statusClass = 'danger';
                                         }
+                                        if($row['status'] == 'Expired') {
+                                            $statusClass = 'secondary';
+                                        }
                                     ?>
-                                    <span class="badge badge-<?= $statusClass ?> badge-pill" style="font-size:100%">
+                                    <span class="badge badge-<?= $statusClass ?>
+                                    font-weight-bold" >
                                     <?= $label_apartment['contract.'.$row['status']] ?>
                                     </span>
                                         
                                     </div>
                                 </td>
-                                
-                                <?php 
-                                    $image = $ghImage->getContract($row['id'])
-                                ?>
-                                <td>
-                                <?php  if($image): ?>
-                                    <div class="d-flex justify-content-center">
-                                        <a href="<?= '/media/contract/'.$image[0]['name'] ?>" target="_blank">
-                                            Hình Ảnh
-                                        </a>
-                                    </div>
-                                </td>
-                                <?php endif; ?>
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>
@@ -208,7 +200,7 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-12">
+            <div class="col-12 col-md-8 offset-md-2">
                 <div class="card-box table-responsive">
                 <h4 class="text-danger" <?= $check_collapse ? 'data-target="#listAll" data-toggle="collapse"' : '' ?>>Tất Cả</h4>
                     <table id="listAll" class="table-contract <?= $check_collapse ? 'collapse' :'' ?> table table-bordered">
@@ -220,9 +212,7 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                             <th>Ngày ký</th>
                             <th>Ngày hết hạn</th>
                             <th class="text-center">Thời hạn</th>
-                            <th width="200px">Ghi chú HD</th>
-                            <th class="text-center" width="200px">Tình trạng</th>
-                            <th class="text-center">Tùy Chọn</th>
+                            <th class="text-center" width="100px">Trạng Thái</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -231,7 +221,10 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                             <tr>
                                 <td>
                                     <div>
-                                        #<?= (10000 + $row['id']) ?>
+                                        <a target = '_blank'
+                                           href="/admin/detail-contract?id=<?= $row['id']
+                                           ?>">#<?= (10000 + $row['id']) ?></a>
+
                                     </div>
                                 </td>
                                 <td>
@@ -278,14 +271,6 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                         <?=$row['number_of_month'] ?>
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="contract-note"
-                                        data-pk="<?= $row['id'] ?>"
-                                        data-value="<?= $row['note'] ?>"
-                                        data-name="note">
-                                        <?=$row['note'] ?>
-                                    </div>
-                                </td>
                                 <td class="text-center">
                                     <div>
                                     <?php 
@@ -299,26 +284,18 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                         if($row['status'] == 'Cancel') {
                                             $statusClass = 'danger';
                                         }
+
+                                        if($row['status'] == 'Expired') {
+                                            $statusClass = 'secondary';
+                                        }
                                     ?>
-                                    <span class="badge badge-<?= $statusClass ?> badge-pill" style="font-size:100%">
+                                    <span class="badge badge-<?= $statusClass ?>
+                                    font-weight-bold">
                                     <?= $label_apartment['contract.'.$row['status']] ?>
                                     </span>
                                         
                                     </div>
                                 </td>
-                                <?php 
-                                    $image = $ghImage->getContract($row['id'])
-                                   
-                                ?>
-                                <td>
-                                <?php  if($image): ?>
-                                    <div class="d-flex justify-content-center">
-                                        <a href="<?= '/media/contract/'.$image[0]['name'] ?>" target="_blank">
-                                            Hình Ảnh
-                                        </a>
-                                    </div>
-                                </td>
-                                <?php endif; ?>
                             </tr>      
                             <?php endforeach; ?>
                         </tbody>
