@@ -42,13 +42,15 @@
                     <table class="table table-bordered">
 
                         <tr class="d-none">
-                            <td colspan="2" class="text-right"><div class="customer-name w-100" data-name="name">
+                            <td colspan="2" class="text-right" width="250px"><div
+                                        class="customer-name w-100" data-name="name">
                             <a class="btn btn-warning" href="#">Hình Ảnh</a>
                             <a class="btn btn-warning" href="#">Duyệt</a>
                             </div></td>
                         </tr>
                         <tr>
-                            <td class="text-right"><strong>Trạng Thái <strong></td>
+                            <td class="text-right" width="200px"><strong>Trạng Thái
+                                    <strong></td>
                             <td><div class="customer-name w-100 "
                                      data-name="name"><span class="badge
                                      badge-<?= $status ?>"><?= $label['contract.'
