@@ -1,3 +1,9 @@
+<?php
+$check_delete = isYourPermission('Image', 'delete', $this->permission_set);
+
+?>
+
+
 <div class="wrapper">
     <div class="sk-wandering-cubes" style="display:none" id="loader">
         <div class="sk-cube sk-cube1"></div>
@@ -90,6 +96,11 @@
                                             <a target='_blank'
                                                href="<?= $image ? '/media/contract/'
                                                    . $ii['name'] : '#' ?>"><?= $ii['name'] ?></a>
+
+                                            <?php
+                                             if($check_delete):
+
+                                            ?>
                                             <button class="btn btn-danger
                                                 btn-sm delete-img float-md-right
                                                 ml-3"
@@ -99,6 +110,7 @@
                                                         class="dripicons-trash"
                                                         style="font-size: 10px;"
                                                 ></i></button>
+                                            <?php endif; ?>
                                             <br>
                                         </div>
                                     <?php endforeach; ?>
