@@ -35,7 +35,11 @@ class ConsultantBooking extends CustomBaseStep {
         $time_from = strtotime('last monday');
         $time_to = time();
 		if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {
+            if($this->input->get('filterTime') == 'ALL' || $this->input->get('filterTime') == ''){
+                $time_from = 0;
+                $time_to = time();
 
+            }
             if($this->input->get('filterTime') == 'TODAY'){
                 $time_from = strtotime(date('d-m-Y'));
                 $time_to = time();
@@ -180,6 +184,10 @@ class ConsultantBooking extends CustomBaseStep {
 			if($field_name == 'room_id') {
 				$field_value = json_encode($field_value);
 			}
+
+            if($field_name == 'time_booking') {
+                $field_value = $field_value ? strtotime($field_value) : null;
+            }
 			$data = [
 				$field_name => $field_value
 			];

@@ -18,7 +18,7 @@
         <link href="<?= $js_plugins_path ?>datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
         <!-- Custom box css -->
         <link href="<?= $js_plugins_path ?>custombox/css/custombox.min.css" rel="stylesheet" />
-        <link href="<?= $js_plugins_path ?>bootstrap-xeditable/css/bootstrap-editable.css" rel="stylesheet" />
+        <link href="<?= $js_plugins_path ?>bootstrap4-editable/css/bootstrap-editable.css" rel="stylesheet" />
         <link href="<?= $js_plugins_path ?>sweet-alert/sweetalert2.min.css" rel="stylesheet" type="text/css" />
         <!-- Spinkit css -->
         <link href="<?= $js_plugins_path ?>spinkit/spinkit.css" rel="stylesheet" />
@@ -35,7 +35,7 @@
         <link href="<?= $assets_path ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/icons.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/style.css" rel="stylesheet" type="text/css" />
-        <link href="<?= $assets_path ?>css/custom.css?v=20201107" rel="stylesheet"
+        <link href="<?= $assets_path ?>css/custom.css?v=20201108" rel="stylesheet"
               type="text/css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw==" crossorigin="anonymous" />
 		<script src="<?= $assets_path ?>js/modernizr.min.js"></script>

@@ -24,7 +24,7 @@
     <script src="<?= $js_plugins_path ?>datatables/jquery.dataTables.min.js"></script>
     <script src="<?= $js_plugins_path ?>datatables/dataTables.bootstrap4.min.js"></script>
     <!-- Bootstrap-editable -->
-    <script src="<?= $js_plugins_path ?>bootstrap-xeditable/js/bootstrap-editable.min.js"></script>
+    <script src="<?= $js_plugins_path ?>bootstrap4-editable/js/bootstrap-editable.min.js"></script>
     <script src="<?= $js_plugins_path ?>moment/moment.js" type="text/javascript"></script>
     <script src="<?= $js_plugins_path ?>bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 
@@ -53,7 +53,7 @@
     <script src="<?= $assets_path ?>js/jquery.core.js"></script>
     <script src="<?= $assets_path ?>js/jquery.app.js?v=20201011"></script>
     <script>
-        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editable.defaults.mode = 'popup';
         $.fn.editableform.buttons =
         '<div class="d-flex justify-content-center mt-2">' +
             '<button type="submit" class="btn btn-primary btn-sm editable-submit">'+

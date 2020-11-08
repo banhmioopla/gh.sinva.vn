@@ -33,7 +33,7 @@
 
 .editableform select.form-control {
     width: 12em;
-    display: block;
+    display: inline-block;
 }
 
 .editable-buttons {

@@ -22,7 +22,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3>Danh sách khách hàng</h3>
+
                 </div>
             </div>
         </div>
@@ -36,9 +36,10 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
         <div class="customer-alert"></div>
         <?php $this->load->view('components/list-navigation'); ?>
         <div class="row">
-            <div class="col-12 col-md-7">
-                <div class="card-box table-responsive">
-                    <table id="table-customer" class="table table-bordered">
+            <div class="col-12 col-md-10 offset-md-1">
+                <div class="card-box shadow" style="font-size: 13px">
+                    <h3>Danh sách khách hàng</h3>
+                    <table id="table-customer" class="table table-responsive table-bordered">
                         <thead>
                         <tr>
                             <th>STT</th>
@@ -53,7 +54,6 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                             <th>Ngày Nhập</th>
                             <th class="text-center">Nguồn</th>
                             <th class="text-center">Trạng thái</th>
-                            <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,7 +62,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                             <tr>
                                 <td><?= $row['id'] ?></td>
                                 <td>
-                                    <div class="customer-data" 
+                                    <div class="customer-data font-weight-bold"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-value ="<?= $row['name'] ?>"
                                         data-name="name">
@@ -73,14 +73,14 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     <div class="customer-gender" 
                                         data-pk="<?= $row['id'] ?>"
                                         data-name="gender">
-                                            <?= $row['gender'] ?>
+                                            <?= $row['gender'] ? $label_apartment[$row['gender']] : ''?>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-birthdate" 
+                                    <div class="customer-birthdate text-pink"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="birthdate">
-                                            <?= $row['birthdate'] > 0 ? date('d/m/Y',$row['birthdate']) : '#'  ?>
+                                            <?= $row['birthdate'] > 0 ? date('d/m/Y',$row['birthdate']) : ''  ?>
                                     </div>
                                 </td>
                                 <td>
@@ -134,21 +134,25 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     </div>
                                 </td>
                                 <td>
-                                <?php 
-                                    $classStatus = 'warning';
-                                    if($row['status'] == 'sinva-rented') {
-                                        $classStatus = 'success';
-                                    }
+                                <?php
+                                $status = 'warning';
+
+                                if($row['status'] == 'Active') {
+                                    $status = 'success';
+                                }
+                                if($row['status'] == 'Pending') {
+                                    $status = 'warning';
+                                }
+                                if($row['status'] == 'Cancel') {
+                                    $status = 'danger';
+                                }
+                                if($row['status'] == 'Expired') {
+                                    $status = 'secondary';
+                                }
                                 ?>
-                                    <div class="customer-status text-<?= $classStatus ?> text-center font-weight-bold">
-                                        <?= $row['status'] ? $label_apartment[$row['status']] : '' ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <button class="btn m-1 btn-sm btn-outline-muted btn-rounded waves-light waves-effect delete-customer">
-                                            đang code
-                                        </button>
+                                    <div class="customer-status text-center font-weight-bold">
+                                        <span class="badge badge-<?= $status ?>"><?=
+                                            $row['status'] ? $label_apartment[$row['status']] :'' ?></span>
                                     </div>
                                 </td>
                             </tr>      
@@ -159,8 +163,8 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                 </div>
             </div>
             <?php if($check_create):?>
-            <div class="col-12 col-md-6">
-                <div class="card-box">
+            <div class="col-12 col-md-6 offset-md-1">
+                <div class="card-box shadow">
                     <h4 class=" m-t-0">Khách Hàng Tiềm Năng</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-customer">
                         <div class="form-group row">
@@ -325,6 +329,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                     <?php if($check_edit):?>
                     $('.customer-data').editable({
                         type: "text",
+                        emptytext: '',
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         inputclass: '',
                         success: function(response) {
@@ -341,11 +346,12 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                     $('.customer-birthdate, .customer-demand_time').editable({
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         placement: 'right',
+                        emptytext: 'rỗng',
                         type: 'combodate',
-                        template:"D / MM / YYYY",
+                        template:"D MM YYYY",
                         format:"DD-MM-YYYY",
                         viewformat:"DD-MM-YYYY",
-                        mode: 'inline',
+                        mode: 'popup',
                         combodate: {
                             firstItem: 'name'
                         },

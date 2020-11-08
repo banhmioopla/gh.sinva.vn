@@ -26,8 +26,18 @@
 
             $image = $ghImage->getContract($contract['id']);
             $status = 'warning';
-            if($contract['status'] == 'Success') {
+
+            if($contract['status'] == 'Active') {
                 $status = 'success';
+            }
+            if($contract['status'] == 'Pending') {
+                $status = 'warning';
+            }
+            if($contract['status'] == 'Cancel') {
+                $status = 'danger';
+            }
+            if($contract['status'] == 'Expired') {
+                $status = 'secondary';
             }
 
             ?>
@@ -123,7 +133,8 @@
                             <td><div class="contract-time_expire"
                                      data-name="time_expire"
                                      data-pk="<?= $contract['id'] ?>"
-                                     data-value="<?= $contract['time_expire'] ?>"><?= $contract['time_expire'] > 0 ? date('d/m/Y', $contract['time_expire']) : '' ?></div></td>
+                                     data-value="<?= date('d/m/Y',$contract['time_expire'])
+                                     ?>"><?= $contract['time_expire'] > 0 ? date('d/m/Y', $contract['time_expire']) : '' ?></div></td>
                         </tr>
                         
                         <tr>
