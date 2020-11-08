@@ -92,6 +92,7 @@ class Contract extends CustomBaseStep {
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;
 		$data['ghApartment'] = $this->ghApartment;
+		$data['ghRoom'] = $this->ghRoom;
 		$data['ghImage'] = $this->ghImage;
 		$data['libRoom'] = $this->libRoom;
 		$data['label_apartment'] =  $this->config->item('label.apartment');

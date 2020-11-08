@@ -48,6 +48,7 @@ class Fee extends CustomBaseStep {
                 if(!empty($item['consultant_id']) && in_array($item['consultant_id'], $data['list_account_id'])) {
                     $data['list_income'][$item['consultant_id']]['income'] +=
                         $income_contract['income_final'] * $item['number_of_month'];
+
                     $data['list_income'][$item['consultant_id']]['contract_quantity'] ++;
                 }
 

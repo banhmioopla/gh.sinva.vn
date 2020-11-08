@@ -30,11 +30,14 @@
                     <div class="text-muted"><?= $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']) ?> </div>
                     <div class="font-weight-bold text-primary">
                         <?php
-                        $apartment = $ghApartment->get(['id' => $row['apartment_id']])
+                        $apartment = $ghApartment->get(['id' => $row['apartment_id']]);
+                        $room = $ghRoom->get(['id' => $row['room_id']]);
+                        $room = $room ? $room[0]:null;
                         ?>
                         <?= $apartment ? $apartment[0]['address_street']:'' ?>
                     </div>
                     <h6 class="text-danger">
+
                         <?= $row['room_code'] ? 'mã phòng: '.$row['room_code'] : null ?>
                     </h6>
                 </td>
