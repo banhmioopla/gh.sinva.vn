@@ -8,7 +8,6 @@ class CustomBaseStep extends CI_Controller {
 		date_default_timezone_set('Asia/Ho_Chi_Minh');
 		$this->current_controller =  $this->router->fetch_class();
 		$this->current_action =  $this->router->fetch_method();
-
 		// lay so Tuan trong Nam
 		// $date = '04/05/1997';
 		// $int_date = strtotime($date);

@@ -695,6 +695,12 @@ $route['admin/show-image-apartment'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/delete-image'] = function($params = []) {
+    $controller = 'Image';
+    $action = '/delete';
+    return $controller.$action;
+};
+
 $route['admin/search-apartment'] = function($params = []) {
 	$controller = 'Image';
 	$action = '/searchApartment';

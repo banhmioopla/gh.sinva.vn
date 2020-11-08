@@ -392,7 +392,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
                         template:"D / MM / YYYY",
                         format:"DD-MM-YYYY",
                         viewformat:"DD-MM-YYYY",
-                        mode: 'inline',
+                        mode: 'popup',
                         combodate: {
                             firstItem: 'name'
                         },

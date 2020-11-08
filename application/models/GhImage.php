@@ -43,7 +43,11 @@ class GhImage extends CI_Model{
     public function insert($data = []){ 
         $insert = $this->db->insert_batch('gh_media',$data); 
         return $insert?true:false; 
-    } 
+    }
+
+    public function delete($id){
+        return $this->db->delete('gh_media', array('id' => $id));
+    }
 
     public function getMaxId(){
         $this->db->select_max('id');

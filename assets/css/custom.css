@@ -107,7 +107,7 @@ html, body { height: 100%; }
         max-width: 1015px;
     }
     .editableform textarea.form-control {
-        width: 44em;
+        width: 25em;
     }
     
 }

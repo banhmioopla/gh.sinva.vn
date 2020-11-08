@@ -45,7 +45,7 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
         <div class="row">
             <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
                 <div class="col-md-8 offset-md-2">
-                    <div class="card-box">
+                    <div class="card-box shadow">
                         <a href="/admin/contract/sync-status-expire" class="btn
                         btn-danger">Duyệt Tự Động Hợp Đồng Hết Hạn</a>
                     </div>
@@ -55,10 +55,12 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
             <div class="col-12 col-md-8 offset-md-2 mt-md-2">
                 <?php if(count($list_notification) > 0 && isYourPermission('Contract', 'approved', $this->permission_set) ):
                 ?>
-                <div class="card-box table-responsive">
+                <div class="card-box shadow table-responsive">
                     <h4 class="text-danger" <?= $check_collapse ? 'data-target="#listPending" data-toggle="collapse"' : '' ?> >Hợp Đồng Đang Chờ duyệt</h4>
                     
-                    <table id="listPending" class="table-contract table table-bordered <?= $check_collapse ? 'collapse' :'' ?> ">
+                    <table style="font-size: 13px;" id="listPending" class="
+                    table-contract table <?=
+                    $check_collapse ? 'collapse' :'' ?> ">
                         <thead>
                         <tr>
                             <th width="100px" class="text-center">ID Hợp Đồng</th>
@@ -84,8 +86,8 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                         ?></div></td>
                                 <td class="text-center">
                                     <div>
-                                        <a class="btn btn-warning"
-                                                href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>"> Duyệt </a>
+                                        <a class="btn btn-warning btn-sm"
+                                                href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>">  Duyệt </a>
                                     </div>
                                 </td>
                             </tr>      
@@ -350,7 +352,7 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                         template:"D / MM / YYYY",
                         format:"DD-MM-YYYY",
                         viewformat:"DD-MM-YYYY",
-                        mode: 'inline',
+                        mode: 'popup',
                         combodate: {
                             firstItem: 'name',
                             maxYear: '2030',

@@ -39,7 +39,8 @@ class Contract extends CustomBaseStep {
 		$time = time();
 		$this->load->library('upload', $config); 
 		$this->upload->initialize($config); 
-		$filesCount = count($_FILES['files']['name']); 
+		$filesCount = count($_FILES['files']['name']);
+
 		$max_id = $this->ghImage->getMaxId()[0]['id'];
 		$uploadData = [];
 		if(empty($max_id)){
@@ -47,15 +48,15 @@ class Contract extends CustomBaseStep {
 		}
 		for($i = 0; $i < $filesCount; $i++){ 
 			
-			$ext = explode(".",$_FILES['files']['name'][$i])[1];
+			$ext = explode(".",$_FILES['files']['name'][$i]);
+			$ext = $ext[count($ext) -1];
 			$file_name = $max_id.'-contract-'.$time.'.'.$ext;
 
 			$_FILES['file']['name']  = $file_name; 
 			$_FILES['file']['type']  = $_FILES['files']['type'][$i]; 
 			$_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i]; 
 			$_FILES['file']['error']    = $_FILES['files']['error'][$i]; 
-			$_FILES['file']['size'] = $_FILES['files']['size'][$i]; 
-			
+			$_FILES['file']['size'] = $_FILES['files']['size'][$i];
 			if($this->upload->do_upload('file')){ 
 				// Uploaded file data 
 				$fileData = $this->upload->data(); 
@@ -68,8 +69,7 @@ class Contract extends CustomBaseStep {
 				$uploadData[$i]['status'] = 'Pending'; 
 				$max_id += 1;
 			}
-		} 
-
+		}
 		if(!empty($uploadData)){ 
 			$insert = $this->ghImage->insert($uploadData);
 		}
@@ -134,7 +134,10 @@ class Contract extends CustomBaseStep {
 	}
 
 	public function create() {
-	
+        if($this->input->get('controller-name') =='Contract') {
+            $this->uploadFile($this->input->get('contract-id'));
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
 		$post = $this->input->post();
 		
 		if($post['time_open']) {
