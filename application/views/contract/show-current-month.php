@@ -38,7 +38,7 @@
                     </div>
                     <h6 class="text-danger">
 
-                        <?= $row['room_code'] ? 'mã phòng: '.$row['room_code'] : null ?>
+                        <?= $room ? 'mã phòng: '.$room['code'] : '[không có thông tin]' ?>
                     </h6>
                 </td>
                 <td>
