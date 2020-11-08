@@ -11,20 +11,22 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h4>Thống kê Hoa hông ký gửi Dự Án đang mở</h4>
+
                 </div>
             </div>
         </div>
         
         <div class="row">
             <div class="col-12 col-md-8 offset-md-2">
-                <div class="card-box table-responsive">
+                <div class="card-box table-responsive shadow">
+                    <h3 class="text-danger text-center">Thống Kê Hoa Hồng Ký Gửi Các
+                        Dự Án Đang Mở</h3>
                 <table class=" table-data table table-bordered">
                     <thead>
-                        <tr>
-                            <th>Dự Án</th>
-                            <th>Hoa Hồng 12m</th>
-                            <th>Hoa Hồng 6m</th>
+                        <tr >
+                            <th class="font-weight-bold">Dự Án</th>
+                            <th class="text-center" width="80px">Hoa Hồng 12m</th>
+                            <th class="text-center" width="80px">Hoa Hồng 6m</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -32,8 +34,9 @@
                     <?php foreach($list_apartment as $row):
                     ?>
                         <tr>
-                            <td><?= $row['address_street'] ?></td>                        
-                            <td>
+                            <td class="text-danger font-weight-bold"><?= $row['address_street']
+                                ?></td>
+                            <td class="text-center">
                                 <div class="comissionrate"
                                     data-pk="<?= $row['id'] ?>" 
                                     data-value="<?= $row['commission_rate'] ?>"
@@ -42,7 +45,7 @@
                                 </div>
                             </td>
                             
-                            <td>
+                            <td class="text-center">
                                 <div class="comissionrate"
                                     data-pk="<?= $row['id'] ?>" 
                                     data-value="<?= $row['commission_rate_6m'] ?>"

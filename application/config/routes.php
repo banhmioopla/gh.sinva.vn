@@ -149,6 +149,12 @@ $route['admin/cron-follow-customer'] = function($params = []) {
 	$action = '/follow';
 	return $controller.$action;
 };
+
+$route['admin/cron-income-contract'] = function($params = []) {
+    $controller = 'CronCustomer';
+    $action = '/incomeV1';
+    return $controller.$action;
+};
 // customer
 $route['admin/search-customer'] = function($params = []) {
 	$controller = 'Customer';
@@ -231,6 +237,36 @@ $route['normal/list-apartment'] = function($params = []) {
 	$controller = 'role-sale/Apartment';
 	$action = '/showNormal';
 	return $controller.$action;
+};
+// Fee
+$route['admin/list-fee-contract-income'] = function($params = []) {
+    $controller = 'Fee';
+    $action = '/showContractIncome';
+    return $controller.$action;
+};
+
+$route['admin/create-district'] = function($params = []) {
+    $controller = 'District';
+    $action = '/create';
+    return $controller.$action;
+};
+
+$route['admin/update-district'] = function($params = []) {
+    $controller = 'District';
+    $action = '/update';
+    return $controller.$action;
+};
+
+$route['admin/delete-district'] = function($params = []) {
+    $controller = 'District';
+    $action = '/delete';
+    return $controller.$action;
+};
+
+$route['admin/update-district-editable'] = function($params = []) {
+    $controller = 'District';
+    $action = '/updateEditable';
+    return $controller.$action;
 };
 
 $route['admin/list-district'] = function($params = []) {

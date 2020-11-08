@@ -105,6 +105,35 @@ class CronCustomer extends CustomBaseStep {
             echo SimpleXLSX::parseError();
         }
     }
+
+
+    public function incomeV1(){
+        require APPPATH."/libraries/SimpleXLSX.php";
+        $this->load->model('ghIncomeContract');
+        // $this->load->model('ghApartment');
+        // $this->load->model('ghRoom');
+        $file_name = 'contract-rate.xlsx';
+        if ( $xlsx = SimpleXLSX::parse('./documents/'.$file_name) ) {
+            echo ' - Sheet Name = '.$xlsx->sheetName(0);
+            $customer = [];
+            foreach($xlsx->rows() as $index => $row) {
+                if($index < 6 or empty($row[1])) {
+                    continue;
+                }
+                // Customer
+                $customer['number_of_month'] = 1;
+                $customer['income_unit'] = filter_var($row[0],
+                    FILTER_SANITIZE_NUMBER_INT) * 1000;
+                $customer['income_final'] = filter_var($row[1],
+                        FILTER_SANITIZE_NUMBER_INT) * 1000;
+                $customer['active'] = 'YES';
+                $this->ghIncomeContract->insert($customer);
+            }
+
+        } else {
+            echo SimpleXLSX::parseError();
+        }
+    }
 }
 
 /* End of file Apartment.php */

@@ -38,7 +38,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
         <div class="row">
             <div class="col-12 col-md-10 offset-md-1">
                 <div class="card-box shadow" style="font-size: 13px">
-                    <h3>Danh sách khách hàng</h3>
+                    <h3 class="text-center">Danh sách khách hàng</h3>
                     <table id="table-customer" class="table table-responsive table-bordered">
                         <thead>
                         <tr>

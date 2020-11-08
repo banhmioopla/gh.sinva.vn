@@ -25,10 +25,13 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                 </div>
             </div>
             <?php
-            $customer = $ghCustomer->get(['id' => $contract['customer_id']])[0];
-            $service = json_decode($contract['service_set'], true);
-
-            $room = $ghRoom->get(['id' => $contract['room_id']])[0];
+            $customer = $ghCustomer->get(['id' => $contract['customer_id']]);
+            $customer  = $customer ? $customer[0] : null;
+            $room = $ghRoom->get(['id' => $contract['room_id']]);
+            $room = $room ? $room[0] : null;
+            $apartment = $ghApartment->get(['id' => $contract['apartment_id']]);
+            $apartment = $apartment ? $apartment[0] : null;
+            $service = $contract['service_set'] ? json_decode($contract['service_set'],true) : null;
 
             $image = $ghImage->getContract($contract['id']);
             $status = 'warning';
@@ -50,9 +53,10 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
             <div class="col-12 col-md-8 offset-md-2">
                 <div class="card-box shadow">
                     <h3 class="text-center">Chi tiết hợp đồng</h3>
-                    <p class="text-center text-dark"><?= $service['address_street'] ?></p>
+                    <p class="text-center text-dark"><?= $apartment ? $apartment['address_street'] : '[không có thông tin]'
+                        ?></p>
                     <p class="text-center text-warning font-weight-bold">Mã Phòng: <?=
-                        $room['code'] ?></p>
+                        $room ? $room['code'] : '[không có thông tin]' ?></p>
                     <p><a href="/admin/list-contract" class="text-danger"><i class="mdi
                      mdi-arrow-left-bold-circle"></i> Quay Lại Danh Sách</a></p>
                     <table class="table table-bordered">
@@ -83,7 +87,8 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                                     Sale <strong></td>
                             <td>
                                 <div class="consultant_id w-100" data-name="name">
-                                    <?= $libUser->getNameByAccountid($contract['consultant_id']) ?></div>
+                                    <?= $contract['consultant_id'] > 171020000 ?
+                                    $libUser->getNameByAccountid($contract['consultant_id']) : '[không có thông tin]' ?></div>
                             </td>
                         </tr>
                         <tr>
@@ -177,14 +182,16 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                             <td class="text-right"><strong>Dự Án Thuê <strong></td>
                             <td>
                                 <div class="customer-name"
-                                     data-name="name"> <?= $service['address_street'] ?></div>
+                                     data-name="name"> <?= $apartment ? $apartment['address_street'] : '[không có thông tin]'
+                                    ?></div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Mã Phòng <strong></td>
                             <td>
                                 <div class="customer-name"
-                                     data-name="name"> <?= $room['code'] ?></div>
+                                     data-name="name"> <?= $room ? $room['code'] : '[không có thông tin]'
+                                    ?></div>
                             </td>
                         </tr>
                         <tr>
@@ -242,12 +249,13 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                                     (tại thời điểm tạo HD) <strong></td>
                             <td>
                                 <div class="customer-name" data-name="name">
-                                    <?php if(count($service) > 0):?>
+                                    <?php if($service && count($service) > 0):?>
                                     <?php foreach ($service as $k => $v): ?>
                                         <?= isset($label[$k]) && $k != 'commission_rate' ? '<strong>'
                                             . $label[$k]
                                             . '</strong> : (' . $v . ')<br>' : '' ?>
                                     <?php endforeach; ?>
+                                    <?php else: echo '[không có thông tin]'?>
                                     <?php endif; ?>
                                 </div>
                             </td>

@@ -61,6 +61,21 @@
 #topnav .navbar-custom {
     background-color: #f9a50b;
 }
+#topnav .has-submenu.active a {
+    color: #f9a50b;
+}
+#topnav .has-submenu.active a i {
+    color: #f9a50b;
+}
+#topnav .navigation-menu > li.has-submenu.open > a {
+    color: #f9a50b;
+}
+#topnav .has-submenu.active .submenu li.active > a {
+    color: #f9a50b;
+}
+#topnav .navigation-menu > li .submenu li a:hover {
+    color: #cb000c;
+}
 html, body { height: 100%; }
 .card-header {
     background-color: #faf0ac;
@@ -118,5 +133,15 @@ html, body { height: 100%; }
     }
     .address-text{
         font-size: 25px;
+    }
+
+    #topnav .has-submenu.active a {
+        color: #fff;
+    }
+    #topnav .has-submenu.active a i {
+        color: #fff;
+    }
+    #topnav .navigation-menu > li.has-submenu.open > a {
+        color: #fff;
     }
 }

@@ -1,7 +1,6 @@
-<?php 
+<?php
 
-$is_form = $this->is_modify;
-$is_btn_delete = '';
+$is_btn_delete = $is_form = isYourPermission('Customer', 'care', $this->permission_set);
 ?>
 <div class="wrapper">
 <div class="sk-wandering-cubes" style="display:none" id="loader">
@@ -47,7 +46,6 @@ $is_btn_delete = '';
                             <th class="text-center">Thời hạn</th>
                             <th width="200px">Ghi chú HD</th>
                             <th class="text-center" width="200px">Tình trạng</th>
-                            <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -122,14 +120,6 @@ $is_btn_delete = '';
                                     <?= $label_apartment['contract.'.$row['status']] ?>
                                     </span>
                                         
-                                    </div>
-                                </td>
-                                
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <a href="#" class="btn m-1 btn-sm btn-outline-muted btn-rounded waves-light waves-effect delete-contract">
-                                            đang code
-                                        </a>
                                     </div>
                                 </td>
                             </tr>      

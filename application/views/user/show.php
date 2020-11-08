@@ -1,9 +1,3 @@
-<?php 
-$check_authorised = in_array($this->auth['role_code'], ['product-manager']);
-$check_role = in_array($this->auth['role_code'], ['product-manager', 'human-resources']);
-$check_birth = in_array($this->auth['role_code'], ['human-resources']);
-$check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
-?>
 
 <div class="wrapper">
 <div class="sk-wandering-cubes" style="display:none" id="loader">
@@ -72,19 +66,16 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                         <tr>
                             <th class="text-center">ID</th>
                             <th>Tên</th>
-                            <?php if($check_role): ?>
+
                             <th>Quyền</th>
-                            <?php endif; ?>
+
                             <th>SĐT</th>
-                            <?php if($check_birth): ?>
+
                             <th>Sinh nhật</th>
-                            <?php endif; ?>
-                            <?php if($check_time_joined):?>
+
+
                             <th>Ngày Vào Làm</th>
-                            <?php endif; ?>
-                            <?php if($check_authorised):?>
-                            <th>Ủy quyền cho</th>
-                            <?php endif;?>
+
                             <th class="text-center">Trạng thái</th>
                             <th class="text-center">Mở</th>
                             <!-- <th class="text-center">Tùy Chọn</th> -->
@@ -107,14 +98,14 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                                         <?= $row['name'] ?>
                                     </div>
                                 </td>
-                                <?php if($check_role): ?>
+
                                 <td>
                                 <div class="user-role_code"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-value = "<?= $row['role_code'] ?>"
                                         data-name="role_code">quyền <?= $libRole->getNameByCode($row['role_code']) ?></div>
                                 </td>
-                                <?php endif; ?>
+
                                 <td>
                                     <div class="user-phone_number user"
                                         data-pk="<?= $row['id'] ?>" 
@@ -122,7 +113,7 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                                         <?= $row['phone_number'] ?>
                                     </div>
                                 </td>
-                                <?php if($check_birth): ?>
+
                                 <td>
                                     <div class="user-date_of_birth user"
                                         data-pk="<?= $row['id'] ?>" 
@@ -131,8 +122,7 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                                         <?= $row['date_of_birth'] ? date('d/m/Y',$row['date_of_birth']) :'#' ?>
                                     </div>
                                 </td>
-                                <?php endif; ?>
-                                <?php if($check_time_joined): ?>
+
                                 <td>
                                     <div class="user-time_joined user"
                                         data-pk="<?= $row['id'] ?>" 
@@ -141,21 +131,8 @@ $check_time_joined = in_array($this->auth['role_code'], ['human-resources']);
                                         <?= $row['time_joined'] ? date('d/m/Y',$row['time_joined']) :'#' ?>
                                     </div>
                                 </td>
-                                <?php endif; ?>
-                                <?php if($check_authorised):?>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="checkbox checkbox-success is-authorised">
-                                            <input id="user-<?= $row['id'] ?>" 
-                                                value="<?= $row['id'] ?>"
-                                                type="checkbox" 
-                                                <?= !empty($row['authorised_user_id']) ? 'checked':'' ?>>
-                                            <label for="user-<?= $row['id'] ?>">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <?php endif; ?>
+                                
+
                                 <td class="text-center">
                                     <?php 
                                         $classStatus = 'secondary';
