@@ -27,25 +27,48 @@
         <div class="row">
             <div class="col-md-5 offset-md-1">
                 <div class="card-box shadow bg-white widget-flat border-white text-dark">
-                    <p class="text-uppercase m-b-5 font-600"> Tổng số lượt dẫn:
+                    <p class="text-uppercase m-b-5 text-center font-600"> Tổng số lượt dẫn:
                         <span style="font-size: 20px"><?= count($list_booking) ?></span>
                     </p>
-                    <p>Thành công: <span class="text-success"><?= $count_success ?></span>
+                    <p class="text-center">Thành công: <span class="text-success"><?=
+                            $count_success
+                            ?></span>
                         | Đang chờ: <span class="text-warning"><?= $count_pending
-                            ?></span> |
-                        Boom: <?= $count_cancel ?> </p>
+                            ?></span> | Boom: <span class="text-danger"> <?= $count_cancel ?></span> </p>
+                        <p class="text-center">SL Quận Có Khách: <strong><?= $quantity['booking_district']
+                            ?></strong> | SL Dự Án Có Khách: <strong><?= $quantity['booking_apm'] ?></strong>
+                        </p>
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="card-box shadow bg-white widget-flat border-white text-dark">
-                    <p class="text-uppercase m-b-5 font-600"> Hôm nay:
-                        <span style="font-size: 20px"><?= date('d/m/Y') ?></span>
-                    </p>
-                    <p>SL Quận Có Khách: <strong><?= $quantity['booking_district']
-                            ?></strong> |
-                        SL Dự Án Có Khách: <strong><?= $quantity['booking_apm']
-                            ?></strong>
-                    </p>
+                    <?php if($target === null): ?>
+                        <form action="/admin/create-user-target" method="POST">
+                        <div class="form-group row text-uppercase m-b-5 ">
+                            <label for="name" class="col-md-12 text-center col-12
+                            col-form-label font-600 ">
+                                Vui Lòng Đặt Mục Tiêu Dẫn Khách
+                                Tuần Này<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-4 offset-md-4 col-12">
+                                <input type="number" name="target" class="form-control
+                                border
+                                border-success">
+                                <div class="text-center mt-1">
+                                    <button type="submit" class="btn btn-warning">Xác Nhận</button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    <?php else: ?>
+                        <p class="text-uppercase m-b-5 text-center font-600"> Mục Tiêu
+                            Tuần Này Của Bạn:
+                            <span style="font-size: 20px"><?= $target['target'] ?>
+                                Lượt Dẫn</span>
+                        </p>
+                    <?php endif;?>
+
+
                 </div>
             </div>
         </div>
@@ -73,7 +96,6 @@
                             </select>
                         </div>
                     </div>
-
                 </div>
                 <script>
                     commands.push(function () {

@@ -10,6 +10,7 @@ class ConsultantBooking extends CustomBaseStep {
 		$this->load->model('ghApartment');
 		$this->load->model('ghDistrict');
 		$this->load->model('ghCustomer');
+		$this->load->model('ghUserTarget');
 		$this->load->model('ghRoom');
 		$this->load->library('LibUser', null, 'libUser');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -32,23 +33,26 @@ class ConsultantBooking extends CustomBaseStep {
 		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => 0]);
 		$data['title_1'] = "Lượt dẫn của tất cả thành viên";
         $this->syncPendingToSuccess();
+        $this_week = strtotime('this monday');
+
+        $target = $this->ghUserTarget->get(['user_id' => $this->auth['account_id'], 'time_insert' => $this_week]);
+        $data['target'] = $target ? $target[0] : null;
         $time_from = strtotime('last monday');
-        $time_to = time();
+        $time_to = strtotime('+1months');
 		if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {
             if($this->input->get('filterTime') == 'ALL' || $this->input->get('filterTime') == ''){
                 $time_from = 0;
-                $time_to = time();
+                $time_to = strtotime('+1months');
 
             }
             if($this->input->get('filterTime') == 'TODAY'){
                 $time_from = strtotime(date('d-m-Y'));
-                $time_to = time();
-
+                $time_to = strtotime('+1months');
             }
 
             if($this->input->get('filterTime') == 'THIS_WEEK'){
                 $time_from = strtotime('last monday');
-                $time_to = time();
+                $time_to = strtotime('+1months');
             }
 
             if($this->input->get('filterTime') == 'LAST_WEEK'){

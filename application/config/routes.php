@@ -82,6 +82,13 @@ $route['admin/update-rp-booking-customer-editable'] = function($params = []) {
 	$action = '/updateEditableBookingCustomer';
 	return $controller.$action;
 };
+// User Target
+$route['admin/create-user-target'] = function($params = []) {
+    $controller = 'UserTarget';
+    $action = '/create';
+    return $controller.$action;
+};
+
 // contract
 $route['admin/list-contract'] = function($params = []) {
 	$controller = 'Contract';
