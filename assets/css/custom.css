@@ -76,6 +76,9 @@
 #topnav .navigation-menu > li .submenu li a:hover {
     color: #cb000c;
 }
+#topnav .navigation-menu > li > a {
+    font-size: 14px;
+}
 html, body { height: 100%; }
 .card-header {
     background-color: #faf0ac;

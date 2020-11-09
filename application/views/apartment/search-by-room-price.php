@@ -1,15 +1,17 @@
-<div class="m-md-2 m-1 button-list">
+<div class="shadow button-list card-box">
     <?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
-            <h4 class="text-danger text-center" data-toggle="collapse" data-target="#listPrice">Tìm kiếm phòng đang trống</h4>
-            <p class="text-center">click vào tiêu đề màu đỏ để hiển thị danh sách giá phòng</p>
-            <span id="listPrice" class="collapse">
-                <?php foreach ($list_price as $item): ?>
+            <h4 class="text-danger text-center" >Tìm kiếm phòng đang trống</h4>
+            <span id="listPrice">
+                <span class="form-group row">
+                    <span class="col-md-6 offset-md-3 col-12 offset-0">
+                        <select name="roomPrice" id="roomPrice" class="form-control">
+                            <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPrice'))
+                            ?>
+                        </select>
+                    </span>
 
-                    <a href="<?= base_url() ?>admin/apartment/show-by-search?roomPrice=<?= $item['room_price'] ?>">
-                        <button type="button" class="btn btn-success waves-effect waves-light"> <span><?= number_format($item['room_price']) ?></span> </button>
-                    </a>
+                </span>
 
-                <?php endforeach;?>
             </span>
 
 
@@ -17,3 +19,12 @@
     <?php endif; ?>
 
 </div>
+
+<script>
+    commands.push(function(){
+        $('#roomPrice').on('change', function(){
+            window.location = '/admin/apartment/show-by-search?roomPrice=' + $(this)
+                .val();
+        })
+    });
+</script>

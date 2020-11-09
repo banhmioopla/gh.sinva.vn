@@ -85,6 +85,8 @@ class Apartment extends CustomBaseStep {
 	    $data['ghApartment'] = $this->ghApartment;
         $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
 	    $data['list_data'] = $this->ghRoom->get(['price' => $keyword, 'active' => 'YES', 'status' => 'Available']);
+
+	    $data['libRoom'] = $this->libRoom;
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('showbysearch/room', $data);
         $this->load->view('components/footer');

@@ -16,10 +16,6 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title text-center">Danh sách tìm kiếm phòng đang
-                        trống & giá =
-                        <?=
-                        number_format($this->input->get('roomPrice')) ?></h3>
                 </div>
             </div>
         </div>
@@ -30,6 +26,10 @@
             <div class="col-md-8 offset-md-2"><?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?></div>
             <div class="col-12 col-md-8 offset-2">
                 <div class="card-box table-responsive shadow">
+                    <h3 class="text-center text-danger">Danh sách tìm kiếm phòng đang
+                        trống & giá =
+                        <?=
+                        number_format($this->input->get('roomPrice')) ?></h3>
                     <table id="table-tag" class="table table-data table-bordered">
                         <thead>
                         <tr>

@@ -38,6 +38,32 @@ class LibRoom {
         return $room_list;
     }
 
+    public function cbAvailableRoomPrice($room_id = 0){
+        $list_room = $this->CI->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
+        $cb = '<option value=0>chọn giá phòng ...</option>';
+        if(!empty($list_room)) {
+            foreach ($list_room as $room) {
+                $selected = '';
+                if($room['price'] == $room_id) {
+                    $selected = 'selected';
+                }
+                $status = '';
+                $status_text = '';
+                if($room['status'] == 'Available') {
+                    $status = 'text-success';
+                    $status_text .= ' - trống';
+                }
+                if($room['time_available'] > 0) {
+                    $status = 'text-warning';
+                    $status_text .= ' - <span class="text-warning">'. date('d/m/Y', $room['time_available']) . '</span>';
+                }
+
+                $cb .= '<option class=" font-weight-bold '.$status.'" '.$selected.' value='.$room['price'].'> - Giá: '.number_format($room['price']).' ('.$room["object_counter"].')</option>';
+            }
+        }
+        return $cb;
+    }
+
     public function cbCodeByApartmentId($apartment_id, $room_id) {
         $list_room = $this->CI->ghRoom->get(['active' => 'YES', 'apartment_id'=> $apartment_id]);
         $cb = '<option value=0>chọn mã phòng ...</option>';

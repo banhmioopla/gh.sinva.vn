@@ -126,7 +126,8 @@ class GhRoom extends CI_Model {
     }
 
     public function getPriceList($where_string = null, $groupby = 'gh_room.type') {
-        $sql = "SELECT gh_room.price as room_price, count(gh_room.id) as object_counter FROM  gh_room, gh_apartment 
+        $sql = "SELECT gh_room.price as room_price, gh_room.*, count(gh_room.id) as object_counter FROM  
+gh_room, gh_apartment 
                 WHERE gh_apartment.id = gh_room.apartment_id
                 AND gh_apartment.active = 'YES'
                 AND gh_room.active = 'YES'
