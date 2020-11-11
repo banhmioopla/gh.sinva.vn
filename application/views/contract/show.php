@@ -51,6 +51,51 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                     </div>
                     
                 </div>
+            <?php if(isYourPermission($this->current_controller, 'showAllTimeLine', $this->permission_set)):?>
+                <div class="col-md-8 offset-md-2">
+                    <div class="card-box shadow">
+                        <div class="row">
+                            <div class="col-md-5 offset-md-1 text-right">NGÀY HẾT
+                                HẠN</div>
+                            <div class="col-md-4 form-group">
+                                <select name="filterTime" class="form-control">
+                                    <option <?= $this->input->get('filterTime') == '' ? 'selected' : '' ?>
+                                            value="ALL">Tất cả
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'TODAY' ? 'selected' : '' ?>
+                                            value="TODAY">Hôm nay
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_7D' ? 'selected' : '' ?>
+                                            value="NEXT_7D">7 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_15D' ? 'selected' : '' ?>
+                                            value="NEXT_15D">15 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_30D' ? 'selected' : '' ?>
+                                            value="NEXT_30D">30 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_60D' ? 'selected' : '' ?>
+                                            value="NEXT_60D">60 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_1Y' ? 'selected' : '' ?>
+                                            value="NEXT_1Y">1 Năm Nữa
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        commands.push(function () {
+                            $('select[name=filterTime]').on('change', function () {
+                                let filterTime = $(this).val();
+                                window.location = '/admin/list-contract?filterTime=' +
+                                    filterTime;
+                            });
+                        });
+                    </script>
+
+                </div>
+            <?php endif; ?>
             <?php endif; ?>
             <div class="col-12 col-md-8 offset-md-2 mt-md-2">
                 <?php if(count($list_notification) > 0 && isYourPermission('Contract', 'approved', $this->permission_set) ):

@@ -37,8 +37,7 @@ class Fee extends CustomBaseStep {
 
         $data['list_account_id'] = [];
         if(count($list_contract) > 0 && count($list_consultant) > 0) {
-            $data['list_account_id'] = $this->array_value_recursive('account_id',
-                $list_consultant);
+            $data['list_account_id'] = $this->array_value_recursive('account_id', $list_consultant);
 
             foreach ($list_contract as $item) {
                 $data['list_income'][$item['consultant_id']]['income'] = 0;

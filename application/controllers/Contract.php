@@ -80,12 +80,51 @@ class Contract extends CustomBaseStep {
 		return redirect('/admin/list-contract');
 	}
 
+	public function showAllTimeLine(){}
+
 	public function show(){
 		$this->load->model('ghContract'); // load model ghUser
 		$data['list_contract'] = $this->ghContract->get();
-		if($this->isYourPermission($this->current_controller, 'showYour')) {
-			$data['list_contract'] = $this->showYour();
-		} 
+
+
+        $time_from = 0;
+        $time_to = strtotime('+4years');
+        if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {
+            if($this->input->get('filterTime') == 'ALL'){
+                $time_from = 0;
+                $time_to = strtotime('+4years');
+
+            }
+            if($this->input->get('filterTime') == 'TODAY'){
+                $time_from = strtotime(date('d-m-Y'));
+                $time_to = $time_from + 86399;
+            }
+
+            if($this->input->get('filterTime') == 'NEXT_15D'){
+                $time_from = strtotime(date('d-m-Y'));
+                $time_to = strtotime('+15days');
+            }
+
+            if($this->input->get('filterTime') == 'NEXT_30D'){
+                $time_from = strtotime(date('d-m-Y'));
+                $time_to = strtotime('+30days');
+            }
+
+            if($this->input->get('filterTime') == 'NEXT_60D'){
+                $time_from = strtotime(date('d-m-Y'));
+                $time_to = strtotime('+60days');
+            }
+
+            if($this->input->get('filterTime') == 'NEXT_1Y'){
+                $time_from = strtotime(date('d-m-Y'));
+                $time_to = strtotime('+1years');
+            }
+
+            $data['list_contract'] = $this->ghContract->get(['time_expire <=' => $time_to, 'time_expire >= ' => $time_from]);
+            if($this->isYourPermission($this->current_controller, 'showYour')) {
+                $data['list_contract'] = $this->showYour();
+            }
+        }
 
 		$data['list_notification'] = $this->ghNotification->get(['is_approve' => 'NO']);
 		
