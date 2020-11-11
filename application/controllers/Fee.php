@@ -26,15 +26,12 @@ class Fee extends CustomBaseStep {
         $service_id = 4;
         $consultant_id = $this->input->get('consultant-id');
 
-
-        $list_contract = $this->ghContract->get(['time_check_in > ' => strtotime(date('m/Y'))]);
-        $list_consultant = $this->ghUser->get(['account_id >=' => 171020001, 'active'
-        => 'YES'
-        ]);
+        $list_contract = $this->ghContract->get(['time_check_in > ' => strtotime(date('01-m-Y')), 'consultant_id > ' => 171020001]);
+        $list_consultant = $this->ghUser->get(['account_id >=' => 171020001, 'active' => 'YES']);
         if($user_id && ($user_id > 171020001) && $list_consultant) {
-            $list_consultant = $this->ghUser->get(['account_id = ' => $user_id, 'active'
-            => 'YES'
-            ]);
+            $list_consultant = $this->ghUser->get(['account_id = ' => $user_id]);
+            $list_contract = $this->ghContract->get(['time_check_in > ' => strtotime
+            (date('01-m-Y')), 'consultant_id' => $user_id]);
         }
         $data['list_income'] = [];
 
@@ -43,9 +40,9 @@ class Fee extends CustomBaseStep {
             $data['list_account_id'] = $this->array_value_recursive('account_id',
                 $list_consultant);
 
-            foreach ($list_consultant as $item) {
-                $data['list_income'][$item['account_id']]['income'] = 0;
-                $data['list_income'][$item['account_id']]['contract_quantity'] = 0;
+            foreach ($list_contract as $item) {
+                $data['list_income'][$item['consultant_id']]['income'] = 0;
+                $data['list_income'][$item['consultant_id']]['contract_quantity'] = 0;
             }
 
             foreach ($list_contract as $item) {

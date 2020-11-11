@@ -32,10 +32,13 @@
                         đang trong quá
                         trình
                         hoàn thiện *</p>
-                    <p class="text-center text-primary font-weight-bold"> <?= number_format($personIncome["list_income"][$this->auth['account_id']]["contract_quantity"]) ?>
+                    <p class="text-center text-primary font-weight-bold"> <?=
+                        $personIncome["list_income"] ?
+                        number_format($personIncome["list_income"][$this->auth['account_id']]["contract_quantity"]) : 0 ?>
                      Hợp Đồng</p>
                     <p class="text-center text-success bg-dark font-weight-bold"
-                       style="font-size: 22px"> <?= number_format($personIncome["list_income"][$this->auth['account_id']]["income"]) ?>
+                       style="font-size: 22px"> <?= $personIncome["list_income"] ?
+                        number_format($personIncome["list_income"][$this->auth['account_id']]["income"]) : 0 ?>
                      VNĐ</p>
                 </div>
             </div>
