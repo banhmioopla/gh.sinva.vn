@@ -36,7 +36,9 @@
                         $personIncome["list_income"] ?
                         number_format($personIncome["list_income"][$this->auth['account_id']]["contract_quantity"]) : 0 ?>
                      Hợp Đồng</p>
-                    <p class="text-center text-success bg-dark font-weight-bold"
+                    <p class="font-weight-bold offset-md-4 offset-0"><?= $personIncome["list_income"]
+                            ?$personIncome["list_income"][$this->auth['account_id']]["detail"] : ''  ?></p>
+                    <p class="text-center  text-success bg-dark font-weight-bold"
                        style="font-size: 22px"> <?= $personIncome["list_income"] ?
                         number_format($personIncome["list_income"][$this->auth['account_id']]["income"]) : 0 ?>
                      VNĐ</p>

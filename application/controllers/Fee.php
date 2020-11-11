@@ -43,6 +43,7 @@ class Fee extends CustomBaseStep {
             foreach ($list_contract as $item) {
                 $data['list_income'][$item['consultant_id']]['income'] = 0;
                 $data['list_income'][$item['consultant_id']]['contract_quantity'] = 0;
+                $data['list_income'][$item['consultant_id']]['detail'] = '';
             }
 
             foreach ($list_contract as $item) {
@@ -52,6 +53,10 @@ class Fee extends CustomBaseStep {
                         $income_contract['income_final'] * $item['number_of_month'];
 
                     $data['list_income'][$item['consultant_id']]['contract_quantity'] ++;
+                    $data['list_income'][$item['consultant_id']]['detail'] .= '  - Giá thuê: '.number_format($item['room_price']).'  | ('
+                        .$item['number_of_month'].' tháng x '
+                        .number_format($income_contract['income_final']).
+ ') <br>';
                 }
 
             }
