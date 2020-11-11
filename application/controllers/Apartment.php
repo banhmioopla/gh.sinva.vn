@@ -80,11 +80,39 @@ class Apartment extends CustomBaseStep {
 	}
 
 	public function showBySearch(){
+        $roomPriceMin = 0;
+        $roomPriceMax = 7000000;
 
-	    $keyword = $this->input->get('roomPrice');
+        $params['price <='] = $roomPriceMax;
+        $params['price >='] = $roomPriceMin;
+        $params['active'] = 'YES';
+        $params['status'] = 'Available';
+
+        if($this->input->get('roomPriceMin')) {
+            $roomPriceMin = $this->input->get('roomPriceMin');
+            $params['price >='] = $roomPriceMin;
+        }
+
+        if($this->input->get('roomPriceMax')) {
+            $roomPriceMax = $this->input->get('roomPriceMax');
+            $params['price <='] = $roomPriceMax;
+        }
+
+        if($this->input->get('roomAreaMin') ) {
+            $params['area >='] = $this->input->get('roomAreaMin');
+        }
+
+
+
+        if($this->input->get('roomAreaMax')) {
+            $params['area <='] = $this->input->get('roomAreaMax');
+        }
+
+
 	    $data['ghApartment'] = $this->ghApartment;
         $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
-	    $data['list_data'] = $this->ghRoom->get(['price' => $keyword, 'active' => 'YES', 'status' => 'Available']);
+
+	    $data['list_data'] = $this->ghRoom->get($params);
 
 	    $data['libRoom'] = $this->libRoom;
         $this->load->view('components/header', ['menu' => $this->menu]);

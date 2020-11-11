@@ -26,10 +26,8 @@
             <div class="col-md-8 offset-md-2"><?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?></div>
             <div class="col-12 col-md-8 offset-2">
                 <div class="card-box table-responsive shadow">
-                    <h3 class="text-center text-danger">Danh sách tìm kiếm phòng đang
-                        trống & giá =
-                        <?=
-                        number_format($this->input->get('roomPrice')) ?></h3>
+                    <h4 class="text-center text-danger">Kết Quả Tìm Kiếm: <?= count
+                        ($list_data) ?> phòng</h4>
                     <table id="table-tag" class="table table-data table-bordered">
                         <thead>
                         <tr>

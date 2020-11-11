@@ -126,7 +126,7 @@ class GhRoom extends CI_Model {
     }
 
     public function getPriceList($where_string = null, $groupby = 'gh_room.type') {
-        $sql = "SELECT gh_room.price as room_price, gh_room.*, count(gh_room.id) as object_counter FROM  
+        $sql = "SELECT gh_room.price as room_price, gh_room.*, count(gh_room.price) as object_counter FROM  
 gh_room, gh_apartment 
                 WHERE gh_apartment.id = gh_room.apartment_id
                 AND gh_apartment.active = 'YES'
@@ -135,7 +135,22 @@ gh_room, gh_apartment
         if(!empty($where_string)) {
             $sql .= " AND $where_string";
         }
-        $sql .= ' GROUP BY '.$groupby . ' ORDER BY object_counter DESC, room_price DESC';
+        $sql .= ' GROUP BY '.$groupby . ' ORDER BY gh_room.price DESC, object_counter DESC';
+        $result = $this->db->query($sql);
+        return $result->result_array() ? $result->result_array() : 0;
+    }
+
+    public function getAreaList($where_string = null, $groupby = 'gh_room.type') {
+        $sql = "SELECT gh_room.area as room_area, gh_room.*, count(gh_room.area) as object_counter FROM  
+gh_room, gh_apartment 
+                WHERE gh_apartment.id = gh_room.apartment_id
+                AND gh_apartment.active = 'YES'
+                AND gh_room.active = 'YES'
+        ";
+        if(!empty($where_string)) {
+            $sql .= " AND $where_string";
+        }
+        $sql .= ' GROUP BY '.$groupby . ' ORDER BY gh_room.area DESC, object_counter DESC';
         $result = $this->db->query($sql);
         return $result->result_array() ? $result->result_array() : 0;
     }
