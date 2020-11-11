@@ -21,7 +21,7 @@ class Contract extends CustomBaseStep {
 	}
 
 	public function showYour(){
-		return $this->ghContract->get(['user_create_id' => $this->auth['account_id']]);
+		return $this->ghContract->get(['consultant_id' => $this->auth['account_id']]);
 	}
 
 	public function isCollapse(){}
@@ -121,9 +121,12 @@ class Contract extends CustomBaseStep {
             }
 
             $data['list_contract'] = $this->ghContract->get(['time_expire <=' => $time_to, 'time_expire >= ' => $time_from]);
-            if($this->isYourPermission($this->current_controller, 'showYour')) {
-                $data['list_contract'] = $this->showYour();
-            }
+
+
+        }
+
+        if($this->isYourPermission($this->current_controller, 'showYour')) {
+            $data['list_contract'] = $this->showYour();
         }
 
 		$data['list_notification'] = $this->ghNotification->get(['is_approve' => 'NO']);
