@@ -127,6 +127,9 @@ class CronCustomer extends CustomBaseStep {
                 $customer['income_final'] = filter_var($row[1],
                         FILTER_SANITIZE_NUMBER_INT) * 1000;
                 $customer['active'] = 'YES';
+                $customer['role_code'] = 'consultant';
+
+                $customer['role_code'] = 'collaborators';
                 $this->ghIncomeContract->insert($customer);
             }
 

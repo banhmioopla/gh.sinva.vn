@@ -258,6 +258,12 @@ $route['admin/list-fee-contract-income'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/list-fee-income-mechanism'] = function($params = []) {
+    $controller = 'Fee';
+    $action = '/showIncomeMechanism';
+    return $controller.$action;
+};
+
 $route['admin/create-district'] = function($params = []) {
     $controller = 'District';
     $action = '/create';

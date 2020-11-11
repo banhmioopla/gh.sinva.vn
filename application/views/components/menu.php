@@ -70,8 +70,18 @@
 
                 <?php if(isYourPermission('Dashboard', 'show',$this->permission_set)):?>
                     <li class="has-submenu">
-                        <a href="/admin/list-dashboard"><i class="icon-layers"></i>Bảng điều khiển</a>
+                        <a href="#"><i class="icon-layers"></i>Bảng điều khiển</a>
+                        <ul class="submenu">
+                            <li><a href="/admin/list-dashboard"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Bảng điều khiển</a></li>
+                            <?php if(isYourPermission('Fee', 'showIncomeMechanism',$this->permission_set)):?>
+                                <li><a href="/admin/list-fee-income-mechanism"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Cơ Chế
+                                        Thu Nhập Theo Hợp Đồng</a></li>
+                            <?php endif;?>
+                        </ul>
                     </li>
+
                 <?php endif;?>
 
                 <?php if(isYourPermission('User', 'show',$this->permission_set)):?>

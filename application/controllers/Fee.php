@@ -71,6 +71,14 @@ class Fee extends CustomBaseStep {
 
     }
 
+    public function showIncomeMechanism(){
+        $data['list_income_mechanism'] = $this->ghIncomeContract->get();
+
+        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('fee/show-income-mechanism', $data);
+        $this->load->view('components/footer');
+    }
+
 }
 
 /* End of file Apartment.php */
