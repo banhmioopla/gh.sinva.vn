@@ -19,10 +19,10 @@ class Fee extends CustomBaseStep {
         array_walk_recursive($arr, function($v, $k) use($key, &$val){
             if($k == $key) array_push($val, $v);
         });
-        return count($val) > 1 ? $val : array_pop($val);
+        return count($val) > 1 ? $val : [array_pop($val)];
     }
 
-    private function syncContractIncome(){
+    private function syncContractIncome($user_id = null, $role_code = null){
         $service_id = 4;
         $consultant_id = $this->input->get('consultant-id');
 
@@ -31,20 +31,25 @@ class Fee extends CustomBaseStep {
         $list_consultant = $this->ghUser->get(['account_id >=' => 171020001, 'active'
         => 'YES'
         ]);
+        if($user_id && ($user_id > 171020001) && $list_consultant) {
+            $list_consultant = $this->ghUser->get(['account_id = ' => $user_id, 'active'
+            => 'YES'
+            ]);
+        }
         $data['list_income'] = [];
 
         $data['list_account_id'] = [];
         if(count($list_contract) > 0 && count($list_consultant) > 0) {
             $data['list_account_id'] = $this->array_value_recursive('account_id',
                 $list_consultant);
+
             foreach ($list_consultant as $item) {
                 $data['list_income'][$item['account_id']]['income'] = 0;
                 $data['list_income'][$item['account_id']]['contract_quantity'] = 0;
             }
 
-
             foreach ($list_contract as $item) {
-                $income_contract = $this->ghIncomeContract->matchingIncome($item['room_price']);
+                $income_contract = $this->ghIncomeContract->matchingIncome($item['room_price'], 'consultant');
                 if(!empty($item['consultant_id']) && in_array($item['consultant_id'], $data['list_account_id'])) {
                     $data['list_income'][$item['consultant_id']]['income'] +=
                         $income_contract['income_final'] * $item['number_of_month'];
@@ -73,6 +78,9 @@ class Fee extends CustomBaseStep {
 
     public function showIncomeMechanism(){
         $data['list_income_mechanism'] = $this->ghIncomeContract->get();
+
+        $data['personIncome'] = $this->syncContractIncome($this->auth['account_id'],
+            $this->auth['role_code']);
 
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('fee/show-income-mechanism', $data);

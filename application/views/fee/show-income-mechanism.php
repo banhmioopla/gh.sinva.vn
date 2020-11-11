@@ -24,6 +24,21 @@
 
         <div class="district-alert"></div>
         <div class="row">
+            <div class="col-12 col-md-10 offset-md-1">
+                <div class="card-box shadow">
+                    <h3 class="text-danger text-center">Thu nhập hiện tại của bạn</h3>
+                    <p class="text-center">Hiện tại thu nhập của bạn đang
+                        tính theo cơ chế <strong>chuyên viên</strong>, tính năng này
+                        đang trong quá
+                        trình
+                        hoàn thiện *</p>
+                    <p class="text-center text-primary font-weight-bold"> <?= number_format($personIncome["list_income"][$this->auth['account_id']]["contract_quantity"]) ?>
+                     Hợp Đồng</p>
+                    <p class="text-center text-success bg-dark font-weight-bold"
+                       style="font-size: 22px"> <?= number_format($personIncome["list_income"][$this->auth['account_id']]["income"]) ?>
+                     VNĐ</p>
+                </div>
+            </div>
             <div class="col-12 col-md-5 offset-md-1 ">
                 <div class="card-box table-responsive shadow">
                     <h3 class="text-danger text-center">Bảng Cơ Chế Thu Nhập: Chuyên

@@ -12,8 +12,8 @@ class GhIncomeContract extends CI_Model {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }
 
-    public function matchingIncome($price){
-        $sql = 'SELECT * FROM ' . $this->table . ' WHERE income_unit <= '.$price .' AND active = "YES" ORDER BY income_unit DESC LIMIT 1';
+    public function matchingIncome($price, $role_code){
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE income_unit <= '.$price .' AND active = "YES" AND role_code = "'.$role_code.'" ORDER BY income_unit DESC LIMIT 1';
 
         $result = $this->db->query($sql);
         return $result->result_array() ? $result->result_array()[0] : null;
