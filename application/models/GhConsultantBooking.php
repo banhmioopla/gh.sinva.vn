@@ -28,16 +28,34 @@ class GhConsultantBooking extends CI_Model {
 
     public function getGroupByUserId($from = 0, $to = null){
 	    if(empty($to)) {
-	        $to = time();
+	        $to = strtotime('+1months');
         }
         $sql = "SELECT gh_consultant_booking.*, count(id) AS counter FROM gh_consultant_booking WHERE time_booking >= $from AND time_booking <= $to GROUP BY booking_user_id";
         $result = $this->db->query($sql);
         return $result->result_array();
     }
 
+    public function getGroupByStatus($from = 0, $to = null, $user_id, $status){
+        if(empty($to)) {
+            $to = strtotime('+1months');
+        }
+        $sql = "SELECT gh_consultant_booking.*, count(id) AS counter FROM 
+        gh_consultant_booking 
+        WHERE time_booking >= $from AND time_booking <= $to AND status= 
+        '$status' 
+        AND 
+        booking_user_id = $user_id";
+
+        $result = $this->db->query($sql);
+        return $result->result_array();
+    }
+
+
+
+
     public function getGroupByDistrict($from = 0, $to = null){
         if(empty($to)) {
-            $to = time();
+            $to = strtotime('+1months');
         }
         $sql = "SELECT gh_consultant_booking.*, count(id) AS counter FROM gh_consultant_booking WHERE time_booking >= $from AND time_booking <= $to GROUP BY booking_user_id";
         $result = $this->db->query($sql);
@@ -45,7 +63,7 @@ class GhConsultantBooking extends CI_Model {
     }
 
     public function syncPendingToSuccess(){
-	    $sql = "UPDATE " . $this->table . " SET status = 'Success' WHERE status = 'Pending' AND time_booking <= " . time();
+	    $sql = "UPDATE " . $this->table . " SET status = 'Success' WHERE status = 'Pending' AND time_booking <= " . strtotime('+1months');
         return $this->db->query($sql);
     }
 }

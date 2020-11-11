@@ -550,16 +550,34 @@
                     <thead>
                     <tr>
                         <th>Thành viên</th>
-                        <th>Số Lượt</th>
+                        <th class="text-center">Số Lượt</th>
+                        <th class="text-center text-success">Thành Công</th>
+                        <th class="text-center text-danger">Boom</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php if (count($list_booking_this_week) > 0): ?>
-                        <?php foreach ($list_booking_this_week as $booking):
+                    <?php if (count($list_booking_groupby_user) > 0): ?>
+                        <?php foreach ($list_booking_groupby_user as $booking):
                             ?>
                             <tr>
                                 <td><?= $libUser->getNameByAccountid($booking['booking_user_id']) ?></td>
-                                <td><?= $booking['counter'] ?></td>
+                                <td class="text-center"><?= $booking['counter'] ?></td>
+                                <td class="text-center text-success">
+                                    <?php
+                                     $turnSuccess =
+                                         $ghConsultantBooking->getGroupByStatus
+                                         ($time_from, $time_to, $booking['booking_user_id'], 'Success');
+                                    ?>
+                                    <?= $turnSuccess ? $turnSuccess[0]['counter'] : 0 ?>
+                                </td>
+                                <td class="text-center text-danger">
+                                    <?php
+                                    $turnSuccess =
+                                        $ghConsultantBooking->getGroupByStatus
+                                        ($time_from, $time_to, $booking['booking_user_id'], 'Cancel');
+                                    ?>
+                                    <?= $turnSuccess ? $turnSuccess[0]['counter'] : 0 ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>

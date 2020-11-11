@@ -12,6 +12,7 @@ templates/*
 js-plugins/*
 media/*
 application/config/database.php
+application/config/config.php
 composer.lock
 
 user_guide_src/build/*

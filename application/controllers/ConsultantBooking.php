@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 class ConsultantBooking extends CustomBaseStep {
 	private $access_control;
 	public function __construct()
@@ -65,26 +67,30 @@ class ConsultantBooking extends CustomBaseStep {
 			$data['list_booking'] = $this->showYour();
 			$data['title_1'] = "Lượt dẫn của tôi tuần hiện tại từ". date('d/m/Y', $time_from);
 		} 
-		$data['list_booking_this_week'] = $this->ghConsultantBooking->getGroupByUserId($time_from, $time_to);
-
+		$data['list_booking_groupby_user'] = $this->ghConsultantBooking->getGroupByUserId
+        ($time_from, $time_to);
+        $data['ghConsultantBooking'] = $this->ghConsultantBooking;
 		$list_district = $this->ghDistrict->get(['active' => 'YES']);
 		$district_counter_booking = [];
 
 		$quantity['booking_district'] = 0;
 		$quantity['booking_district_max'] = 0;
 		$quantity['booking_apm'] = 0;
+		$quantity['booking_success'] = 0;
+		$quantity['booking_cancel'] = 0;
 		$data['label_apartment'] = $this->config->item('label.apartment');
 		$data['select_district'] = $this->libDistrict->cbActive();
 		foreach($list_district as $d){
 			$district_counter_booking[$d['code']] = 0;
 		}
 		foreach($list_district as $d){
+		    $model = $this->ghConsultantBooking->get(
+                ['district_code' =>$d['code'],
+                    'time_booking >= ' => $time_from,
+                    'time_booking <= ' => $time_to]
+            );
 			$district_counter_booking[$d['code']] += count(
-				$this->ghConsultantBooking->get(
-					['district_code' =>$d['code'],
-					'time_booking >= ' => $time_from,
-					'time_booking <= ' => $time_to]
-                )
+                $model
             );
 
 			if($district_counter_booking[$d['code']] > 0) {
@@ -92,6 +98,8 @@ class ConsultantBooking extends CustomBaseStep {
 				$quantity['booking_apm']++;
 			}
 		}
+		$data['time_from'] = $time_from;
+		$data['time_to'] = $time_to;
 		$data['ghApartment'] = $this->ghApartment;
 		$data['ghRoom'] = $this->ghRoom;
 		$data['libDistrict'] = $this->libDistrict;
@@ -175,6 +183,9 @@ class ConsultantBooking extends CustomBaseStep {
 		$data['status'] = 'Pending';
 		$this->ghConsultantBooking->insert($data);
 
+		// send Email
+
+//        $this->sendEmailNotification($data);
 		redirect('/admin/list-consultant-booking');
 	}
 
@@ -216,6 +227,82 @@ class ConsultantBooking extends CustomBaseStep {
 		}
 		echo json_encode(['status' => false]); die;
 	}
+
+
+    private function sendEmailNotification($data){
+	    $subject = '[GH] '.$this->auth['name']. 'Đã Book Phòng '. date('d/m/Y H:i',
+                $data['time_booking']);
+
+	    $apartment = $this->ghApartment->get(['id' =>$data['apartment_id']])[0];
+        $data['room_id'] = json_decode($data['room_id']);
+
+        $room_code = '';
+        if(count($data['room_id']) > 0) {
+            foreach ($data['room_id'] as $item) {
+                $roomModel = $this->ghRoom->get(['id' => $item]);
+                $room_code .= $roomModel ? $roomModel[0]['code'] . '  ' : '';
+
+            }
+        }
+	    $content = '<strong>'.$this->auth['name'].'</strong> đã book ^&^';
+	    $content .= ' [TEST] THÔNG TIN BOOK: <br>';
+	    $content .= ' - DỰ ÁN: <strong style="color: orangered">'.$apartment['address_street'].'</strong> <br>';
+	    $content .= ' - Mã Phòng: <strong style="color: darkgreen">'.$room_code.'</strong> <br>';
+
+	    $content .= ' <p style="color: yellow">Simba Chúc Bạn & Team Bạn Nổ Bùm Bùm Hợp Đồng, Nổ Sập GH Luôn Ạ</p> ';
+
+
+	    $list_recipient = [
+	        [
+	            'email' => 'tramanh.sinvaland@gmail.com',
+                'name' => ' Chị TA'
+            ],
+            [
+                'email' => 'qbingking@gmail.com',
+                'name' => 'Quốc Bình'
+            ]
+        ];
+
+        foreach ($list_recipient as $item) {
+            $this->emailConfig($item['email'], $item['name'],$subject, $content );
+        }
+
+
+
+    }
+
+
+	private function emailConfig($mail_to = null, $name_to, $subject = null, $content)
+    {
+        $mail = new PHPMailer();
+        try {
+            //Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+            $mail->isSMTP();                                            // Send using SMTP
+            $mail->SMTPDebug = 0;
+            $mail->CharSet = "UTF-8";
+            $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+            $mail->Username   = 'mynameismrbinh@gmail.com';                     // SMTP username
+            $mail->Password   = 'xanhdotimvang';                               // SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+            //Recipients
+            $mail->setFrom('mynameismrbinh@gmail.com', 'I am Simba');
+            $mail->addAddress($mail_to, $name_to);     // Add a recipient
+
+            // Content
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = $subject;
+            $mail->Body    = $content;
+
+            $success = $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
 
 }
 

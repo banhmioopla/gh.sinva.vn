@@ -89,6 +89,12 @@ $route['admin/create-user-target'] = function($params = []) {
     return $controller.$action;
 };
 
+// Email
+$route['admin/send-email-notification'] = function($params = []) {
+    $controller = 'Email';
+    $action = '/sendMail';
+    return $controller.$action;
+};
 // contract
 $route['admin/list-contract'] = function($params = []) {
 	$controller = 'Contract';
