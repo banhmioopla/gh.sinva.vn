@@ -28,7 +28,7 @@ class Fee extends CustomBaseStep {
 
         $list_contract = $this->ghContract->get(['time_check_in > ' => strtotime(date('01-m-Y')), 'consultant_id > ' => 171020001]);
         $list_consultant = $this->ghUser->get(['account_id >=' => 171020001, 'active' => 'YES']);
-        if($user_id && ($user_id > 171020001) && $list_consultant) {
+        if($user_id && ($user_id > 171020000) && $list_consultant) {
             $list_consultant = $this->ghUser->get(['account_id = ' => $user_id]);
             $list_contract = $this->ghContract->get(['time_check_in > ' => strtotime
             (date('01-m-Y')), 'consultant_id' => $user_id]);
