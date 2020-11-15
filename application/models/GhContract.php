@@ -33,7 +33,7 @@ class GhContract extends CI_Model {
     }
 
     public function syncStatusExpire() {
-        $sql = "UPDATE ". $this->table . " SET status = 'Expired' WHERE
+        $sql = "UPDATE ". $this->table . " SET status = 'Expired' WHERE status <> 'Cancel' AND
         time_expire < " . strtotime(date('d-m-Y'));
         
         $result = $this->db->query($sql);
