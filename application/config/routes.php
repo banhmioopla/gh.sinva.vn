@@ -168,6 +168,33 @@ $route['admin/cron-income-contract'] = function($params = []) {
     $action = '/incomeV1';
     return $controller.$action;
 };
+
+//
+
+$route['admin/search-business-partner-apartment'] = function($params = []) {
+    $controller = 'BusinessPartner';
+    $action = '/searchApartment';
+    return $controller.$action;
+};
+$route['admin/list-business-partner'] = function($params = []) {
+    $controller = 'BusinessPartner';
+    $action = '/show';
+    return $controller.$action;
+};
+
+
+$route['admin/create-business-partner'] = function($params = []) {
+    $controller = 'BusinessPartner';
+    $action = '/create';
+    return $controller.$action;
+};
+
+$route['admin/update-business-partner-editable'] = function($params = []) {
+    $controller = 'BusinessPartner';
+    $action = '/updateEditable';
+    return $controller.$action;
+};
+
 // customer
 $route['admin/search-customer'] = function($params = []) {
 	$controller = 'Customer';

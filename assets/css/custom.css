@@ -78,6 +78,11 @@
 }
 #topnav .navigation-menu > li > a {
     font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+#topnav .navigation-menu{
+    max-height: 50px;
 }
 html, body { height: 100%; }
 .card-header {

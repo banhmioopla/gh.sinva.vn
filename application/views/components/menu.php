@@ -34,6 +34,14 @@
                                     Hiệu Hợp Tác</a></li>
                         <?php endif;?>
 
+                        <?php if(isYourPermission('BusinessPartner', 'show',
+                            $this->permission_set)
+                        ):?>
+                            <li><a href="/admin/list-business-partner"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Danh Sách
+                                    Đối Tác</a></li>
+                        <?php endif;?>
+
                         <?php if(isYourPermission('Tag', 'show',$this->permission_set)):?>
                             <li><a href="/admin/list-tag"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Danh Sách Tag</a></li>

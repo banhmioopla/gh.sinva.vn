@@ -61,22 +61,23 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                      mdi-arrow-left-bold-circle"></i> Quay Lại Danh Sách</a></p>
                     <table class="table table-bordered">
 
-                        <tr class="d-none">
+                        <tr class="text-right">
                             <td colspan="2" class="text-right" width="250px">
-                                <div
-                                        class="customer-name w-100" data-name="name">
-                                    <a class="btn btn-warning" href="#">Hình Ảnh</a>
-                                    <a class="btn btn-warning" href="#">Duyệt</a>
+                                <div class="customer-name w-100">
+                                    <button class="btn btn-danger contract-cancel"
+                                            data-contract-id="<?= $contract['id'] ?>">Hủy Hợp Đồng</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-right" width="200px"><strong>Trạng Thái
+                            <td class="text-right"
+                                width="200px"><strong>Trạng Thái
                                     <strong></td>
                             <td>
                                 <div class="customer-name w-100 "
                                      data-name="name"><span class="badge
-                                     badge-<?= $status ?> font-weight-bold"><?= $label['contract.'
+                                     badge-<?= $status ?> font-weight-bold contract-status"><?=
+                                        $label['contract.'
                                         . $contract['status']]
                                         ?></span>
                                 </div>
@@ -361,6 +362,22 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                         $('.contract-alert').html(notify_html_fail);
                     }
                 }
+            });
+
+            $('.contract-cancel').click(function(){
+                let contract_id = $(this).data('contract-id');
+                $.ajax({
+                    url: '<?= base_url() ?>admin/update-contract-editable',
+                    data: {value: 'Cancel', name: 'status', pk: contract_id},
+                    method: 'POST',
+                    success:function(){
+                        $('.contract-status').text('đã hủy');
+                        $('.contract-status').removeClass('badge-warning');
+                        $('.contract-status').removeClass('badge-success');
+                        $('.contract-status').removeClass('badge-secondary');
+                        $('.contract-status').addClass('badge-danger');
+                    }
+                });
             });
             <?php endif; ?>
         });

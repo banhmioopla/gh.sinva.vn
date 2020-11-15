@@ -287,6 +287,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
 <script>
     commands.push(function() {
         $(document).ready(function () {
+            $.fn.editable.defaults.mode = 'inline';
             $.fn.combodate.defaults.maxYear = 2022;
             $.fn.combodate.defaults.minYear = 2020;
             var t_room = $('.list-room').DataTable({
@@ -607,7 +608,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
         });
 
             //Warning Message
-            $('.consultant-booking').click(function () {
+            $('.consultant-booking').click(function () {t
             let thisBooking = $(this);
             let time = null;
             swal({
