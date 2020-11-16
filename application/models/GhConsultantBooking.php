@@ -5,6 +5,7 @@ class GhConsultantBooking extends CI_Model {
     private $table = 'gh_consultant_booking';
 
 	public function get($where = []) {
+        $this->db->order_by('id desc');
         return $this->db->get_where($this->table, $where)->result_array();
     }
 

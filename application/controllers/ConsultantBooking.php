@@ -53,12 +53,12 @@ class ConsultantBooking extends CustomBaseStep {
             }
 
             if($this->input->get('filterTime') == 'THIS_WEEK'){
-                $time_from = strtotime('last monday');
+                $time_from = strtotime('this monday');
                 $time_to = strtotime('+1months');
             }
 
             if($this->input->get('filterTime') == 'LAST_WEEK'){
-                $time_from = strtotime(date('d-m-Y', strtotime('last monday'. ' - 7days')));
+                $time_from = strtotime(date('d-m-Y', strtotime('this monday'. ' - 7days')));
                 $time_to = strtotime('last sunday');
             }
             $data['list_booking'] = $this->ghConsultantBooking->get(['time_booking >= ' => $time_from, 'time_booking <= ' => $time_to]);

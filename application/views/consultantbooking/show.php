@@ -126,9 +126,7 @@
                     </thead>
                     <tbody>
                     <?php if (count($list_booking) > 0): ?>
-                    <?php foreach ($list_booking
-
-                    as $booking):
+                    <?php foreach ($list_booking as $booking):
                     $address = '';
                     $apmModel = $ghApartment->get(['id' => $booking['apartment_id']]);
                     if ($apmModel) {
@@ -595,6 +593,7 @@
     commands.push(function () {
         $(document).ready(function () {
             $('.table-data').DataTable({
+                "order": [[ 0, "desc" ]],
                 "fnDrawCallback": function () {
                     $('.booking-note').editable({
                         type: "text",
