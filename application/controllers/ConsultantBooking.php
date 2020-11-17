@@ -35,7 +35,7 @@ class ConsultantBooking extends CustomBaseStep {
 		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => 0]);
 		$data['title_1'] = "Lượt dẫn của tất cả thành viên";
         $this->syncPendingToSuccess();
-        $this_week = strtotime('this monday');
+        $this_week = strtotime('last monday');
 
         $target = $this->ghUserTarget->get(['user_id' => $this->auth['account_id'], 'time_insert' => $this_week]);
         $data['target'] = $target ? $target[0] : null;
@@ -53,12 +53,12 @@ class ConsultantBooking extends CustomBaseStep {
             }
 
             if($this->input->get('filterTime') == 'THIS_WEEK'){
-                $time_from = strtotime('this monday');
+                $time_from = strtotime('last monday');
                 $time_to = strtotime('+1months');
             }
 
             if($this->input->get('filterTime') == 'LAST_WEEK'){
-                $time_from = strtotime(date('d-m-Y', strtotime('this monday'. ' - 7days')));
+                $time_from = strtotime(date('d-m-Y', strtotime('last monday'. ' - 7days')));
                 $time_to = strtotime('last sunday');
             }
             $data['list_booking'] = $this->ghConsultantBooking->get(['time_booking >= ' => $time_from, 'time_booking <= ' => $time_to]);
