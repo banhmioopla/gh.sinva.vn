@@ -64,7 +64,7 @@ class GhConsultantBooking extends CI_Model {
     }
 
     public function syncPendingToSuccess(){
-	    $sql = "UPDATE " . $this->table . " SET status = 'Success' WHERE status = 'Pending' AND time_booking <= " . strtotime('+1months');
+	    $sql = "UPDATE " . $this->table . " SET status = 'Success' WHERE status = 'Pending' AND time_booking <= " . time();
         return $this->db->query($sql);
     }
 }
