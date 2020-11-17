@@ -23,7 +23,7 @@ class UserTarget extends CustomBaseStep {
 
         $data = $this->input->post();
         $data['user_id'] = $this->auth['account_id'];
-        $data['time_insert'] = strtotime('this monday');
+        $data['time_insert'] = strtotime('last monday');
         $data['type'] = 'ConsultantBooking';
         $this->ghUserTarget->insert($data);
 
