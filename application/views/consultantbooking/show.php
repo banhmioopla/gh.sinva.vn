@@ -68,7 +68,21 @@
                         </p>
                     <?php endif;?>
 
+                    <table class="table-hover table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Thành Viên</th>
+                                <th class="text-right">Mục Tiêu</th>
+                            </tr>
+                        </thead>
 
+                        <?php foreach($list_target as $item): ?>
+                        <tr>
+                            <td><?= $libUser->getNameByAccountid($item['user_id']) ?></td>
+                            <td class="text-right"><?= $item['target'] ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
                 </div>
             </div>
         </div>

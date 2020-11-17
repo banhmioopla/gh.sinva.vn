@@ -38,6 +38,7 @@ class ConsultantBooking extends CustomBaseStep {
         $this_week = strtotime('last monday');
 
         $target = $this->ghUserTarget->get(['user_id' => $this->auth['account_id'], 'time_insert' => $this_week]);
+        $data['list_target'] = $this->ghUserTarget->get(['time_insert' => $this_week]);
         $data['target'] = $target ? $target[0] : null;
         $time_from = strtotime('last monday');
         $time_to = strtotime('+1months');
