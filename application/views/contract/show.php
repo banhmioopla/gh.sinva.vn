@@ -74,6 +74,9 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                     <option <?= $this->input->get('filterTime') == 'NEXT_30D' ? 'selected' : '' ?>
                                             value="NEXT_30D">30 Ngày Nữa
                                     </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_45D' ? 'selected' : '' ?>
+                                            value="NEXT_45D">30 Ngày Nữa
+                                    </option>
                                     <option <?= $this->input->get('filterTime') == 'NEXT_60D' ? 'selected' : '' ?>
                                             value="NEXT_60D">60 Ngày Nữa
                                     </option>

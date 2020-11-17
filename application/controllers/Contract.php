@@ -109,6 +109,10 @@ class Contract extends CustomBaseStep {
                 $time_from = strtotime(date('d-m-Y'));
                 $time_to = strtotime('+30days');
             }
+            if($this->input->get('filterTime') == 'NEXT_45D'){
+                $time_from = strtotime(date('d-m-Y'));
+                $time_to = strtotime('+45days');
+            }
 
             if($this->input->get('filterTime') == 'NEXT_60D'){
                 $time_from = strtotime(date('d-m-Y'));

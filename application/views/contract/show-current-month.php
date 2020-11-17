@@ -3,6 +3,7 @@
     <table id="listThisMonth" class="table-contract table table-bordered <?= $check_collapse ? 'collapse' :'' ?>">
         <thead>
         <tr>
+            <th class="text-center" width="90px">STT</th>
             <th class="text-center" width="100px">ID Hợp Đồng</th>
             <th width="350px">Khách thuê</th>
             <th>Giá thuê</th>
@@ -14,13 +15,17 @@
         </thead>
         <tbody>
         <?php
+        $i = 0;
         foreach($list_contract as $row ):
             if($row['time_check_in'] < strtotime(date('01-m-Y'))) {
                 continue;
+            } else {
+                $i++;
             }
             ?>
             <?php $service = json_decode($row['service_set'], true) ?>
             <tr>
+                <td class="text-center"><?= $i ?></td>
                 <td class="text-center" width="100px">
                     <div>
                         <a target = '_blank' href="/admin/detail-contract?id=<?= $row['id'] ?>">#<?= (10000 + $row['id']) ?></a>
