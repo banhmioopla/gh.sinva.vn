@@ -16,6 +16,13 @@ $route['admin/notfound'] = function($params = []) {
 	$action = '/notfound';
 	return $controller.$action;
 };
+
+// mapbox
+$route['admin/list-mapbox'] = function($params = []) {
+    $controller = 'Mapbox';
+    $action = '/show';
+    return $controller.$action;
+};
 // team
 $route['admin/list-team'] = function($params = []) {
 	$controller = 'Team';

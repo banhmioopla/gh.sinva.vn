@@ -44,47 +44,43 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
 
         <div class="row">
             <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
-                <div class="col-md-8 offset-md-2">
-                    <div class="card-box shadow">
+                <div class="col-md-4 offset-md-2">
+                    <div class="card-box shadow text-center">
                         <a href="/admin/contract/sync-status-expire" class="btn
                         btn-danger">Duyệt Tự Động Hợp Đồng Hết Hạn</a>
                     </div>
-                    
                 </div>
             <?php if(isYourPermission($this->current_controller, 'showAllTimeLine', $this->permission_set)):?>
-                <div class="col-md-8 offset-md-2">
+                <div class="col-md-4">
                     <div class="card-box shadow">
-                        <div class="row">
-                            <div class="col-md-5 offset-md-1 text-right">NGÀY HẾT
-                                HẠN</div>
-                            <div class="col-md-4 form-group">
-                                <select name="filterTime" class="form-control">
-                                    <option <?= $this->input->get('filterTime') == '' ? 'selected' : '' ?>
-                                            value="ALL">Tất cả
-                                    </option>
-                                    <option <?= $this->input->get('filterTime') == 'TODAY' ? 'selected' : '' ?>
-                                            value="TODAY">Hôm nay
-                                    </option>
-                                    <option <?= $this->input->get('filterTime') == 'NEXT_7D' ? 'selected' : '' ?>
-                                            value="NEXT_7D">7 Ngày Nữa
-                                    </option>
-                                    <option <?= $this->input->get('filterTime') == 'NEXT_15D' ? 'selected' : '' ?>
-                                            value="NEXT_15D">15 Ngày Nữa
-                                    </option>
-                                    <option <?= $this->input->get('filterTime') == 'NEXT_30D' ? 'selected' : '' ?>
-                                            value="NEXT_30D">30 Ngày Nữa
-                                    </option>
-                                    <option <?= $this->input->get('filterTime') == 'NEXT_45D' ? 'selected' : '' ?>
-                                            value="NEXT_45D">30 Ngày Nữa
-                                    </option>
-                                    <option <?= $this->input->get('filterTime') == 'NEXT_60D' ? 'selected' : '' ?>
-                                            value="NEXT_60D">60 Ngày Nữa
-                                    </option>
-                                    <option <?= $this->input->get('filterTime') == 'NEXT_1Y' ? 'selected' : '' ?>
-                                            value="NEXT_1Y">1 Năm Nữa
-                                    </option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <select name="filterTime" class="form-control">
+                                <option <?= $this->input->get('filterTime') == '' ? 'selected' : '' ?>
+                                        value="ALL">Tất cả (NGÀY HẾT
+                                    HẠN)
+                                </option>
+                                <option <?= $this->input->get('filterTime') == 'TODAY' ? 'selected' : '' ?>
+                                        value="TODAY">Hôm nay
+                                </option>
+                                <option <?= $this->input->get('filterTime') == 'NEXT_7D' ? 'selected' : '' ?>
+                                        value="NEXT_7D">7 Ngày Nữa
+                                </option>
+                                <option <?= $this->input->get('filterTime') == 'NEXT_15D' ? 'selected' : '' ?>
+                                        value="NEXT_15D">15 Ngày Nữa
+                                </option>
+                                <option <?= $this->input->get('filterTime') == 'NEXT_30D' ? 'selected' : '' ?>
+                                        value="NEXT_30D">30 Ngày Nữa
+                                </option>
+                                <option <?= $this->input->get('filterTime') == 'NEXT_45D' ? 'selected' : '' ?>
+                                        value="NEXT_45D">45 Ngày Nữa
+                                </option>
+                                <option <?= $this->input->get('filterTime') == 'NEXT_60D' ? 'selected' : '' ?>
+                                        value="NEXT_60D">60 Ngày Nữa
+                                </option>
+                                <option <?= $this->input->get('filterTime') == 'NEXT_1Y' ? 'selected' : '' ?>
+                                        value="NEXT_1Y">1 Năm Nữa
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <script>

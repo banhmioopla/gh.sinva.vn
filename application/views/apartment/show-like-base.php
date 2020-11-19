@@ -42,6 +42,8 @@
                             <th>Số Lầu</th>
                             <th>KT3</th>
                             <th>Hướng</th>
+                            <th>map_longitude</th>
+                            <th>map_latitude</th>
                             <th>Tag #</th>
                             <th class="text-center">Mở</th>
                         </tr>
@@ -99,6 +101,18 @@
                                 data-value="<?= $row['direction'] ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     <?= $row['direction'] ? $label_apartment[$row['direction']]:'#' ?>
+                                </td>
+                                <td class="apartment-data"
+                                    data-name="map_longitude"
+                                    data-value="<?= $row['map_longitude'] ?>"
+                                    data-pk="<?= $row['id'] ?>">
+                                    <?= $row['map_longitude'] ? $row['map_longitude']:'#' ?>
+                                </td>
+                                <td class="apartment-data"
+                                    data-name="map_latitude"
+                                    data-value="<?= $row['map_latitude'] ?>"
+                                    data-pk="<?= $row['id'] ?>">
+                                    <?= $row['map_latitude'] ? $row['map_latitude']:'#' ?>
                                 </td>
                                 <td class="apartment-select-tag"
                                 data-name="tag_id"

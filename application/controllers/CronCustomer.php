@@ -113,25 +113,34 @@ class CronCustomer extends CustomBaseStep {
         // $this->load->model('ghApartment');
         // $this->load->model('ghRoom');
         $file_name = 'contract-rate.xlsx';
+//        if ( $xlsx = SimpleXLSX::parse('./documents/'.$file_name) ) {
         if ( $xlsx = SimpleXLSX::parse('./documents/'.$file_name) ) {
             echo ' - Sheet Name = '.$xlsx->sheetName(0);
             $customer = [];
             foreach($xlsx->rows() as $index => $row) {
-                if($index < 6 or empty($row[1])) {
+                if($index < 4 or empty($row[1])) {
                     continue;
                 }
                 // Customer
                 $customer['number_of_month'] = 1;
-                $customer['income_unit'] = filter_var($row[0],
+                $customer['income_unit'] = filter_var($row[1],
                     FILTER_SANITIZE_NUMBER_INT) * 1000;
-                $customer['income_final'] = filter_var($row[1],
+                $customer['income_final'] = filter_var($row[2],
                         FILTER_SANITIZE_NUMBER_INT) * 1000;
-                $customer['active'] = 'YES';
-                $customer['role_code'] = 'consultant';
 
-                $customer['role_code'] = 'collaborators';
+//                $customer['average_unit'] = (float)$row[1] * 1000*1000;
+                $customer['average_unit'] = null;
+
+                $customer['is_average'] = "NO";
+                $customer['active'] = 'YES';
+                $customer['role_code'] = 'business-manager';
+//                $customer['role_code'] = 'collaborators';
                 $this->ghIncomeContract->insert($customer);
+//                echo "<pre>";
+//                var_dump($customer);
+
             }
+            die;
 
         } else {
             echo SimpleXLSX::parseError();
