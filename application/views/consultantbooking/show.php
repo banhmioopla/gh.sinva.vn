@@ -67,22 +67,6 @@
                                 Lượt Dẫn</span>
                         </p>
                     <?php endif;?>
-
-                    <table class="table-hover table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Thành Viên</th>
-                                <th class="text-right">Mục Tiêu</th>
-                            </tr>
-                        </thead>
-
-                        <?php foreach($list_target as $item): ?>
-                        <tr>
-                            <td><?= $libUser->getNameByAccountid($item['user_id']) ?></td>
-                            <td class="text-right"><?= $item['target'] ?></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
                 </div>
             </div>
         </div>
@@ -531,7 +515,7 @@
 
     <?php endif; ?>
     <div class="row">
-        <div class="col-12 col-md-5 offset-md-1">
+        <div class="col-12 col-md-10 offset-md-1">
             <div class="card-box table-responsive shadow">
                 <h4>Quận</h4>
                 <table class=" table-data table table-bordered">
@@ -555,7 +539,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-12 col-md-5">
+        <div class="col-12 col-md-5 offset-md-1">
             <div class="card-box table-responsive shadow">
                 <h4>Thành Viên</h4>
                 <table class=" table-data table table-bordered">
@@ -596,6 +580,27 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="col-md-5 col-12">
+            <div class="card-box table-responsive shadow">
+                <h4>Mục Tiêu</h4>
+                <table class="table-hover table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Thành Viên</th>
+                        <th class="text-right">Mục Tiêu</th>
+                    </tr>
+                    </thead>
+
+                    <?php foreach($list_target as $item): ?>
+                        <tr>
+                            <td><?= $libUser->getNameByAccountid($item['user_id']) ?></td>
+                            <td class="text-right"><?= $item['target'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+
         </div>
     </div>
 
