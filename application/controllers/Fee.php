@@ -22,47 +22,79 @@ class Fee extends CustomBaseStep {
         return count($val) > 1 ? $val : [array_pop($val)];
     }
 
+    private function getControlDepartment(){
+        return ['branch-ceo'];
+    }
+
     private function syncContractIncome($user_id = null, $role_code = null){
-        $service_id = 4;
-        $consultant_id = $this->input->get('consultant-id');
-
         $list_contract = $this->ghContract->get(['time_check_in > ' => strtotime(date('01-m-Y')), 'consultant_id > ' => 171020001]);
-        $list_consultant = $this->ghUser->get(['account_id >=' => 171020001, 'active' => 'YES']);
-        if($user_id && ($user_id > 171020000) && $list_consultant) {
-            $list_consultant = $this->ghUser->get(['account_id = ' => $user_id]);
+
+        if($user_id && ($user_id > 171020000)) {
             $list_contract = $this->ghContract->get(['time_check_in > ' => strtotime
-            (date('01-m-Y')), 'consultant_id' => $user_id]);
+            (date('01-m-Y')), 'consultant_id = ' => $user_id]);
+            if(!$list_contract) return ['list_income' => false];
         }
-        $data['list_income'] = [];
+        $list_user = array_unique($this->array_value_recursive('consultant_id',
+            $list_contract));
+        $income_user  = [];
 
-        $data['list_account_id'] = [];
-        if(count($list_contract) > 0 && count($list_consultant) > 0) {
-            $data['list_account_id'] = $this->array_value_recursive('account_id', $list_consultant);
+        if($list_user) {
+            foreach ($list_user as $user_consultant_id) {
+                $user_role_code = $role_code ? $role_code : $this->ghUser->get(['account_id' =>
+                    $user_consultant_id])[0]['role_code'];
 
-            foreach ($list_contract as $item) {
-                $data['list_income'][$item['consultant_id']]['income'] = 0;
-                $data['list_income'][$item['consultant_id']]['contract_quantity'] = 0;
-                $data['list_income'][$item['consultant_id']]['detail'] = '';
-            }
+                $list_contract =$this->ghContract->get(['time_check_in >= ' =>
+                    strtotime(date('01-m-Y')), 'consultant_id' => $user_consultant_id]);
 
-            foreach ($list_contract as $item) {
-                $income_contract = $this->ghIncomeContract->matchingIncome($item['room_price'], 'consultant');
-                if(!empty($item['consultant_id']) && in_array($item['consultant_id'], $data['list_account_id'])) {
-                    $data['list_income'][$item['consultant_id']]['income'] +=
-                        $income_contract['income_final'] * $item['number_of_month'];
+                $max_value_id = 0;
+                $max_value = 0;
+                if(in_array($user_role_code, $this->getControlDepartment())) {
+                    if($list_contract) {
+                        foreach ($list_contract as $contract) {
+                            if($contract['room_price'] * $contract['number_of_month'] >
+                                $max_value) {
+                                $max_value = $contract['room_price'] * $contract['number_of_month'];
+                                $max_value_id = $contract['id'];
+                            }
+                        }
+                    }
+                }
 
-                    $data['list_income'][$item['consultant_id']]['contract_quantity'] ++;
-                    $data['list_income'][$item['consultant_id']]['detail'] .= '  - Giá thuê: '.number_format($item['room_price']).'  | ('
-                        .$item['number_of_month'].' tháng x '
+                foreach ($list_contract as $contract) {
+                    if($contract['id'] == $max_value_id){
+                        $income_contract = $this->ghIncomeContract->matchingIncome
+                        ($contract['room_price'], $user_role_code, "YES");
+                    } else {
+
+                        $income_contract = $this->ghIncomeContract->matchingIncome
+                        ($contract['room_price'], $user_role_code);
+                    }
+
+
+                    $income_user[$user_consultant_id]['income'] = isset
+                    ($income_user[$user_consultant_id]['income']) ?
+                        $income_user[$user_consultant_id]['income'] + $income_contract['income_final']*$contract['number_of_month']:$income_contract['income_final']*$contract['number_of_month'];
+
+                    $income_user[$user_consultant_id]['contract_quantity'] =
+                        isset($income_user[$user_consultant_id]['contract_quantity']) ?
+                            $income_user[$user_consultant_id]['contract_quantity'] + 1
+                            : 1;
+
+                    $detail_string = '  - Giá thuê: '.number_format($contract['room_price']).'  | ('
+                        .$contract['number_of_month'].' tháng x '
                         .number_format($income_contract['income_final']).
- ') <br>';
+                        ') <br>';
+
+                    $income_user[$user_consultant_id]['detail'] =
+                        isset($income_user[$user_consultant_id]['detail']) ?
+                            $income_user[$user_consultant_id]['detail'].$detail_string
+                            : $detail_string ;
                 }
 
             }
-
         }
 
-        return $data;
+        return ['list_income' => $income_user];
 
     }
 
