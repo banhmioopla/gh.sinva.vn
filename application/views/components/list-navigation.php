@@ -35,9 +35,9 @@
 
             <?php if(isYourPermission('Mapbox', 'show',$this->permission_set)):?>
             <a href="<?= base_url() ?>admin/list-mapbox">
-                <button type="button" class="btn btn-danger waves-effect waves-light"> <i
+                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
                             class="mdi mdi-google-maps mr-1"></i> <span
-                            class="text-">Đường vào tim em...</span>
+                            class="text-">Bản Đồ</span>
                 </button>
             </a>
             <?php endif; ?>

@@ -163,7 +163,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
                             </a>
 
                             <?php if($check_consultant_booking): ?>
-                            <a href="<?= base_url() ?>admin/list-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
+                            <a href="<?= base_url() ?>admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
                                 <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
                                     <i class="mdi mdi-car-hatchback"></i>
                                 </button>

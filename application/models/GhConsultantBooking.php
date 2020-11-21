@@ -10,7 +10,8 @@ class GhConsultantBooking extends CI_Model {
     }
 
     public function insert($data) {
-        return $this->db->insert($this->table, $data);
+        $this->db->insert($this->table, $data);
+        return $this->db->insert_id();
     }
 
     public function updateById($id, $data) {

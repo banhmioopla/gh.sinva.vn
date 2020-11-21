@@ -130,64 +130,80 @@ class ConsultantBooking extends CustomBaseStep {
 
 	public function create(){
 		$post = $this->input->post();
-		if($post['time_booking']) {
-			if(empty($post['time_booking'])) {
-				$post['time_booking'] = null;
-			} else {
-				$post['time_booking'] = str_replace('/', '-', $post['time_booking']);
-				$post['time_booking'] = strtotime((string)$post['time_booking']);
-			}
-		} else {
-			$this->session->set_flashdata('fast_notify', [
-				'message' => 'Vui lòng chọn ngày dẫn khách',
-				'status' => 'danger'
-			]);
-			return redirect('admin/list-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
-		}
-		if($post['customer_id'] > 0) {
-			$data['customer_id'] = $post['customer_id'];
-			if($this->auth['role_code'] !== 'customer-care') {
-				$update_customer = ['test_mode' => '[YES,'.$this->auth['name'].']'];
-				$customer_model = $this->ghCustomer->updateById($data['customer_id'], $update_customer);
-			}
-			
-		} else {
-			if(empty($post['phone_number']) || empty($post['customer_name'])) {
-				$this->session->set_flashdata('fast_notify', [
-					'message' => 'Vui lòng nhập số điện thoại, Tên khách hàng nếu bạn dẫn khách mới',
-					'status' => 'danger'
-				]);
-				return redirect('admin/list-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
-			}
+        $data = [];
+        $data['ghApartment'] = $this->ghApartment;
+        $data['ghRoom'] = $this->ghRoom;
+        $data['libDistrict'] = $this->libDistrict;
+        $data['libUser'] = $this->libUser;
+        $data['libCustomer'] = $this->libCustomer;
+        $data['select_district'] = $this->libDistrict->cbActive();
+		if($post) {
+            if($post['time_booking']) {
+                if(empty($post['time_booking'])) {
+                    $post['time_booking'] = null;
+                } else {
+                    $post['time_booking'] = str_replace('/', '-', $post['time_booking']);
+                    $post['time_booking'] = strtotime((string)$post['time_booking']);
+                }
+            } else {
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Vui lòng chọn ngày dẫn khách',
+                    'status' => 'danger'
+                ]);
+			    return redirect('admin/create-new-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
+            }
 
-			$customer['name'] = $post['customer_name'];
-			$customer['gender'] = $post['gender'];
-			$customer['birthdate'] = $post['birthdate'] ? strtotime(str_replace('/', '-', $post['birthdate'])) : 0;
-			$customer['status'] = 'sinva-info-form';
-			$customer['source'] = $post['source'];
-			$customer['phone'] = $post['phone_number'];
-			$customer['email'] = $post['email'];
-			$customer['user_insert_id'] = $this->auth['account_id'];
-			$customer['time_insert'] = time();
-			$customer['demand_price'] = $post['demand_price'];
-			$customer['demand_district_code'] = $post['demand_district_code'];
-			$customer['demand_time'] = $post['demand_time'] ? strtotime(str_replace('/', '-', $post['demand_time'])) : 0;
-			$customer['test_mode'] = 'YES';
-			$data['customer_id'] = $this->ghCustomer->insert($customer);
-		}
+            if($post['customer_id'] > 0) {
+                $customer_id = $post['customer_id'];
+                if($this->auth['role_code'] !== 'customer-care') {
+                    $update_customer = ['test_mode' => '[YES,'.$this->auth['name'].']'];
+                    $customer_model = $this->ghCustomer->updateById($customer_id, $update_customer);
+                }
 
-		$data['apartment_id'] = $post['apartment_id'];
-		$data['booking_user_id'] = $this->auth['account_id'];
-		$data['time_booking'] = $post['time_booking'];
-		$data['room_id'] = isset($post['room_id']) ? json_encode($post['room_id']):'[]';
-		$data['district_code'] = $post['district_code'];
-		$data['status'] = 'Pending';
-		$this->ghConsultantBooking->insert($data);
+            } else {
+                if(empty($post['phone_number']) || empty($post['customer_name'])) {
+                    $this->session->set_flashdata('fast_notify', [
+                        'message' => 'Vui lòng nhập số điện thoại, Tên khách hàng nếu bạn dẫn khách mới',
+                        'status' => 'danger'
+                    ]);
+                return redirect('admin/create-new-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
+
+                }
+
+                $customer['name'] = $post['customer_name'];
+                $customer['gender'] = $post['gender'];
+                $customer['birthdate'] = $post['birthdate'] ? strtotime(str_replace('/', '-', $post['birthdate'])) : 0;
+                $customer['status'] = 'sinva-info-form';
+                $customer['source'] = $post['source'];
+                $customer['phone'] = $post['phone_number'];
+                $customer['email'] = $post['email'];
+                $customer['user_insert_id'] = $this->auth['account_id'];
+                $customer['time_insert'] = time();
+                $customer['demand_price'] = $post['demand_price'];
+                $customer['demand_district_code'] = $post['demand_district_code'];
+                $customer['demand_time'] = $post['demand_time'] ? strtotime(str_replace('/', '-', $post['demand_time'])) : 0;
+                $customer['test_mode'] = 'YES';
+                $customer_id = $this->ghCustomer->insert($customer);
+            }
+
+            $data_insert['customer_id'] = $customer_id;
+            $data_insert['apartment_id'] = $post['apartment_id'];
+            $data_insert['booking_user_id'] = $this->auth['account_id'];
+            $data_insert['time_booking'] = $post['time_booking'];
+            $data_insert['room_id'] = isset($post['room_id']) ? json_encode($post['room_id']):'[]';
+            $data_insert['district_code'] = $post['district_code'];
+            $data_insert['status'] = 'Pending';
+
+            if($this->ghConsultantBooking->insert($data_insert)){
+                return redirect('/admin/list-consultant-booking');
+            }
+        }
 
 		// send Email
-
+        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('consultantbooking/create', $data);
+        $this->load->view('components/footer');
 //        $this->sendEmailNotification($data);
-		redirect('/admin/list-consultant-booking');
 	}
 
 	public function updateEditable() {
@@ -207,6 +223,7 @@ class ConsultantBooking extends CustomBaseStep {
 			$data = [
 				$field_name => $field_value
 			];
+
 			$old_customer = $this->ghConsultantBooking->get(['id' => $customer_id]);
 			$old_log = json_encode($old_customer[0]);
 

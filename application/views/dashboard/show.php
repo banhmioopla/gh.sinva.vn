@@ -3,6 +3,7 @@
 $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ceo', 'product-manager']);
 
 ?>
+
 <div class="wrapper">
 <div class="sk-wandering-cubes" style="display:none" id="loader">
     <div class="sk-cube sk-cube1"></div>
@@ -10,70 +11,19 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
 </div>
     <div class="container-fluid">
 
-        <!-- Page-Title -->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="page-title-box">
-                    <div class="btn-group pull-right">
-                        <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">GioHang</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
-                        </ol>
-                    </div>
-                    
-                </div>
-            </div>
+        <h3 class="text-danger text-center">Bảng điều khiển</h3>
+        <div class="text-center">
+            <?php $this->load->view('components/list-navigation'); ?>
         </div>
-        <h3>Bảng điều khiển</h3>
 
-        <?php $this->load->view('components/list-navigation'); ?>
         <div class="district-alert"></div>
-        <h3 class="page-title">Bộ Phận Dự Án</h3>
-        <div class="row">
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_apartment ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng dự án</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_room ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_room_available ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng Trống</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_room_ready ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng Sắp Trống</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_room - $total_room_available - $total_room_ready ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng phòng Full
-                        <br>
-                        <hr>
-                        Số lượng phòng Full = (Tổng - (Trống + Sắp Trống))
-                    </p>
-                </div>
-            </div>
-        </div> <!-- end row -->
-        <h3>Biểu đồ</h3>
+        <hr>
         <div class="row" >
-            <div class="col-lg-4">
-                <div class="card-box">
+            <div class="col-md-12">
+                <h3 class="text-danger text-center">Biểu đồ</h3>
+            </div>
+            <div class="col-md-3 offset-md-1">
+                <div class="card-box shadow">
                     <div class="head-title font-600">Trống - Tổng Phòng</div>
 
                     <div id="pie-chart">
@@ -82,9 +32,9 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                     </div>
                 </div>
             </div>
-            
-            <div class="col-lg-8">
-                <div class="card-box">
+
+            <div class="col-lg-7">
+                <div class="card-box shadow">
                     <div class="head-title font-600">Trống - Full</div>
 
                     <div id="pie-chart">
@@ -93,174 +43,222 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">
-                <h3 data-toggle="collapse" class="text-danger" href="#numberAvailable"><i class="mdi mdi-chevron-double-down"></i> Số lượng phòng trống tương ứng mức giá 
+            <div class="col-md-10 offset-md-1">
+                <h3 data-toggle="collapse" class="text-danger text-center"
+                    href="#numberAvailable"><i class="mdi mdi-chevron-double-down"></i> Số lượng phòng trống tương ứng mức giá
                 </h3>
-                <p>click vào <span data-toggle="collapse" href="#numberAvailable" class="text-danger">tiêu đề</span>, tên quận để xổ xuống chi tiết</p>
-                
+                <p class="text-center">click vào <span data-toggle="collapse" href="#numberAvailable"
+                                                       class="text-danger">tiêu đề</span>, tên quận để xổ xuống chi tiết</p>
+
                 <div class="row collapse" id="numberAvailable">
                     <?php foreach($list_district as $d):
-                            $list_room_price = $this->ghRoom->getPriceByDistrict($d['code'], 'gh_room.status = "Available" ', 'gh_room.price');    
+                        $list_room_price = $this->ghRoom->getPriceByDistrict($d['code'], 'gh_room.status = "Available" ', 'gh_room.price');
                         ?>
                         <div class="col-2">
                             <div class="card m-b-30">
                                 <div data-toggle="collapse" href="#numberAvailable<?= $d['code'] ?>" class="card-body">
-                                    <h5 class="card-title text-success btn btn-info w-100">Quận <?= $d['name'] ?></h5>
+                                    <h5 class="card-title text-success btn btn-danger
+                                    w-100">Quận <?= $d['name'] ?></h5>
                                     <p class="card-text"></p>
-                                    
+
                                 </div>
                                 <ul id="numberAvailable<?= $d['code'] ?>" class="list-group list-group-flush collapse">
-                                <li class="list-group-item"><a href="<?= base_url() ?>admin/list-apartment?district-code=<?= $d['code'] ?>" class="btn btn-custom waves-effect waves-light w-100">Đi tới Quận <?= $d['name'] ?> </a></li>
-                                
+                                    <li class="list-group-item"><a href="<?= base_url() ?>admin/list-apartment?district-code=<?= $d['code'] ?>" class="btn btn-custom waves-effect waves-light w-100">Đi tới Quận <?= $d['name'] ?> </a></li>
+
                                     <?php $total = 0;
-                                        if($list_room_price):
+                                    if($list_room_price):
                                         foreach($list_room_price as $room):
                                             $total += $room['object_counter'];
 
                                             if($room['room_price'] !==  null):
-                                        ?>
-                                        
-                                        <li class="list-group-item"><?= number_format($room['room_price']) . ' <i class="text-success font-weight-bold">('.$room['object_counter'] .')</i>' ?></li>
-                                        <?php endif; ?>
+                                                ?>
+
+                                                <li class="list-group-item"><?= number_format($room['room_price']) . ' <i class="text-success font-weight-bold">('.$room['object_counter'] .')</i>' ?></li>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                         <li class="list-group-item font-weight-bold">Tổng Số Lượng: <?= $total ?></li>
-                                        <?php else: ?>
-                                            <li class="list-group-item text-danger">Không có phòng trống</li>
+                                    <?php else: ?>
+                                        <li class="list-group-item text-danger">Không có phòng trống</li>
                                     <?php endif; ?>
-                                    
+
                                 </ul>
                             </div>
                         </div>
-                        
+
                     <?php endforeach; ?>
                 </div>
             </div>
         </div>
-        <h3 class="page-title">Bộ Phận Chăm Sóc Khách Hàng</h3>
         <div class="row">
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-custom bg-custom text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_customer ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng khách hàng</p>
-                </div>
+            <div class="col-md-10 offset-md-1">
+                <h3 class="text-danger text-center">Bộ Phận Dự Án</h3>
             </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-custom bg-custom text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_contract ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng hợp đồng</p>
-                </div>
-            </div>
-            <?php 
-                $total_contract_this_month = 0; 
-                $total_contract_value_this_month = 0;
-                $total_contract_value = 0;
-                foreach($list_contract as $contract){
-                    if($contract['time_check_in'] > strtotime(date('01-m-Y'))){
-                        $total_contract_this_month += 1;
-                        if($contract['room_price'] < 100000) {
-                            $total_contract_value_this_month += ($contract['room_price']*23000);
-                        } else {
-                            $total_contract_value_this_month += $contract['room_price'];
-                        }
-                    }
 
+            <div class="col-12 col-md-6 offset-md-3">
+                <div class="card-box text-dark bg-white text-white shadow">
+                    <i class="fi-tag"></i>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="text-uppercase m-b-5 font-600">Số lượng
+                                dự án:
+                                <?= $total_apartment ?></p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-uppercase m-b-5 font-600">Số lượng phòng: <?= $total_room ?></p>
+                            <p>
+                                <i class="mdi mdi-checkerboard"> SL Trống:</i>
+
+                                <strong class="text-success">
+                                    <?= $total_room_available ?></strong> <br>
+
+                                <i class="mdi mdi-checkerboard"> SL Sắp Trống:</i>
+                                     <strong class="text-warning"><?=
+                                    $total_room_ready ?></strong> <br>
+
+                                <i class="mdi mdi-checkerboard"> SL Full:</i>
+                                 <strong class="text-danger"><?= $total_room - $total_room_available - $total_room_ready ?></strong>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- end row -->
+
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <h3 class="text-danger text-center">Bộ Phận Chăm Sóc Khách Hàng</h3>
+            </div>
+            <?php
+            $total_contract_this_month = 0;
+            $total_contract_value_this_month = 0;
+            $total_contract_value = 0;
+            foreach($list_contract as $contract){
+                if($contract['time_check_in'] > strtotime(date('01-m-Y'))){
+                    $total_contract_this_month += 1;
                     if($contract['room_price'] < 100000) {
-                        $total_contract_value += ($contract['room_price']*23000);
+                        $total_contract_value_this_month += ($contract['room_price']*23000);
                     } else {
-                        $total_contract_value += $contract['room_price'];
+                        $total_contract_value_this_month += $contract['room_price'];
                     }
-                }?>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-custom bg-custom text-white">
+                }
+
+                if($contract['room_price'] < 100000) {
+                    $total_contract_value += ($contract['room_price']*23000);
+                } else {
+                    $total_contract_value += $contract['room_price'];
+                }
+            }?>
+            <div class="col-12 col-md-6 offset-md-3">
+                <div class="card-box text-dark bg-white text-white shadow">
                     <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_contract_this_month ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng hợp đồng tháng <?= date('m/Y') ?></p>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="text-uppercase m-b-5 font-600">Số Lượng Khách Hàng:
+                                <?= $total_customer ?></p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-uppercase m-b-5 font-600">Số Lượng Hợp Đồng:
+                                <?= $total_contract ?></p>
+                        </div>
+                        <div class="col-12">
+                            <p>
+                                <div class="mt-1 border-bottom">
+                                    <i class="mdi mdi-checkerboard"> SLHD Tháng <?= date('m')
+                                        ?>:</i>
+
+                                    <strong class="float-right"><?= $total_contract_this_month ?></strong>
+                                </div>
+
+                                <div class="mt-2 border-bottom">
+                                    <i class="mdi mdi-checkerboard"> Tổng G.Trị HD:</i>
+                                    <strong class="text-success bg-dark pl-1 pr-1
+                                    float-right "><?=
+                                        number_format
+                                        ($total_contract_value) ?> vnđ</strong>
+                                </div>
+
+                                <div class="mt-2 border-bottom">
+                                    <i class="mdi mdi-checkerboard"> Tổng G.Trị HD Tháng
+                                        <?= date('m') ?>:</i>
+                                    <strong class="text-success bg-dark float-right pl-1 pr-1"><?=
+                                        number_format
+                                        ($total_contract_value_this_month) ?> vnđ</strong>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <?php if($check_contract_value):?>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-custom bg-custom text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= number_format($total_contract_value) ?> vnđ</h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng giá trị hợp đồng </p>
-                    <hr>
-                    Nếu USD thì hệ số là x 23k VND
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-custom bg-custom text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= number_format($total_contract_value_this_month) ?> vnđ</h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng giá trị hợp đồng tháng <?= date('m/Y') ?></p>
-                    <hr>
-                    Nếu USD thì hệ số là x 23k VND
-                </div>
-            </div>
-            <?php endif; ?>
         </div>
-        <h3 class="page-title">Bộ Phận Huấn Luyện Đào Tạo</h3>
+
         <div class="row">
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-warning bg-warning text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= count($list_user) ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng thành viên</p>
-                </div>
+            <div class="col-md-10 offset-md-1">
+                <h3 class="text-center text-danger">Bộ Phận Huấn Luyện Đào Tạo</h3>
             </div>
-            <?php 
-            $time3m_ago = strtotime(date('d-m-Y', strtotime("-90 days")));
-            $time6m_ago = strtotime(date('d-m-Y',strtotime("-180 days")));
-            $time12m_ago = strtotime(date('d-m-Y',strtotime("-365 days")));
 
-            // echo strtotime(date('d-m-Y', strtotime("-90 days"))); echo "<br>";
-            // echo strtotime(date('d-m-Y',strtotime("-180 days"))); die;
-            $total_user_3_month = 0; 
-            $total_user_6_month = 0; 
-            $total_user_12_month = 0;
-            $total_user_12plus_month = 0;
-                foreach($list_user as $user){
-                    if($user['time_joined'] >= $time3m_ago){
-                        $total_user_3_month += 1;
-                    }
-                    if($user['time_joined'] <= $time3m_ago && $user['time_joined'] >= $time6m_ago){
-                        $total_user_6_month += 1;
-                    }
-                    if($user['time_joined'] <= $time6m_ago && $user['time_joined'] >= $time12m_ago){
-                        $total_user_12_month += 1;
-                    }
+            <div class="col-12 col-md-6 offset-md-3 col-12">
+                <div class="card-box text-dark bg-white text-white shadow">
+                    <i class="fi-tag"></i>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <p class="text-uppercase m-b-5 font-600">Số Lượng Thành Viên:
+                                <?= count($list_user) ?></p>
+                        </div>
+                        <?php
+                        $time3m_ago = strtotime(date('d-m-Y', strtotime("-90 days")));
+                        $time6m_ago = strtotime(date('d-m-Y',strtotime("-180 days")));
+                        $time12m_ago = strtotime(date('d-m-Y',strtotime("-365 days")));
 
-                    if($user['time_joined'] <= $time12m_ago && $user['time_joined'] > 0 ){
-                        $total_user_12plus_month += 1;
-                    }
-                }?>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-warning bg-warning text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_user_3_month ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng thành viên dưới 3 tháng</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-warning bg-warning text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_user_6_month ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng thành viên từ 3-6 tháng</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-warning bg-warning text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_user_12_month ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng thành viên từ 6-12 tháng</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-3">
-                <div class="card-box widget-flat border-warning bg-warning text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $total_user_12plus_month ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Số lượng thành viên từ + 12 tháng</p>
+                        $total_user_3_month = 0;
+                        $total_user_6_month = 0;
+                        $total_user_12_month = 0;
+                        $total_user_12plus_month = 0;
+                        foreach($list_user as $user){
+                            if($user['time_joined'] >= $time3m_ago){
+                                $total_user_3_month += 1;
+                            }
+                            if($user['time_joined'] <= $time3m_ago && $user['time_joined'] >= $time6m_ago){
+                                $total_user_6_month += 1;
+                            }
+                            if($user['time_joined'] <= $time6m_ago && $user['time_joined'] >= $time12m_ago){
+                                $total_user_12_month += 1;
+                            }
+
+                            if($user['time_joined'] <= $time12m_ago && $user['time_joined'] > 0 ){
+                                $total_user_12plus_month += 1;
+                            }
+                        }?>
+
+                        <div class="col-12">
+                            <p>
+                            <div class="mt-1 border-bottom">
+                                <i class="mdi mdi-checkerboard"> Số lượng thành viên dưới 3 tháng:</i>
+
+                                <strong class="float-right">
+                                    <?= $total_user_3_month ?></strong>
+                            </div>
+
+                            <div class="mt-2 border-bottom">
+                                <i class="mdi mdi-checkerboard"> Số lượng thành viên từ 3-6 tháng:</i>
+                                <strong class="float-right"><?= $total_user_6_month ?></strong>
+                            </div>
+
+                            <div class="mt-2 border-bottom">
+                                <i class="mdi mdi-checkerboard"> Số lượng thành viên từ 6-12 tháng:</i>
+                                <strong class="float-right"><?= $total_user_12_month ?></strong>
+                            </div>
+
+                            <div class="mt-2 border-bottom">
+                                <i class="mdi mdi-checkerboard"> Số lượng thành viên từ
+                                    + 12 tháng: </i>
+                                <strong class=" float-right"><?= $total_user_12plus_month ?></strong>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
