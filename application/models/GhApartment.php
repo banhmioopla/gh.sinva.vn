@@ -4,8 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class GhApartment extends CI_Model {
     private $table = 'gh_apartment';
 
-	public function get($where = []) {
-        $this->db->order_by('id DESC, address_street ASC');
+	public function get($where = [], $orderByString = null) {
+	    if($orderByString) {
+            $this->db->order_by($orderByString);
+        } else {
+            $this->db->order_by('id DESC, address_street ASC');
+        }
+
         return $this->db->get_where($this->table, $where)->result_array();
     }
 

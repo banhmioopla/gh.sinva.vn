@@ -49,6 +49,7 @@
     <!-- datepicker -->
     <script src="<?= $js_plugins_path ?>bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg==" crossorigin="anonymous"></script>
+    <script src="<?= $assets_path ?>stories-board/zuck.js"></script>
     <!-- App js -->
     <script src="<?= $assets_path ?>js/jquery.core.js"></script>
     <script src="<?= $assets_path ?>js/jquery.app.js?v=20201011"></script>

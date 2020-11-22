@@ -174,7 +174,7 @@ class Apartment extends CustomBaseStep {
 	}
 
 	public function showCommmissionRate(){
-		$data['list_apartment'] = $this->ghApartment->get(['active' => 'YES']);
+		$data['list_apartment'] = $this->ghApartment->get(['active' => 'YES'], 'district_code ASC');
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		$data['libDistrict'] = $this->libDistrict;
 		/*--- Load View ---*/

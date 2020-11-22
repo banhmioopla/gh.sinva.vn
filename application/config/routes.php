@@ -23,6 +23,39 @@ $route['admin/list-mapbox'] = function($params = []) {
     $action = '/show';
     return $controller.$action;
 };
+
+// story
+$route['admin/list-story'] = function($params = []) {
+    $controller = 'Story';
+    $action = '/show';
+    return $controller.$action;
+};
+
+// Penalty
+$route['admin/list-penalty'] = function($params = []) {
+    $controller = 'Penalty';
+    $action = '/show';
+    return $controller.$action;
+};
+
+$route['admin/create-penalty'] = function($params = []) {
+    $controller = 'Penalty';
+    $action = '/create';
+    return $controller.$action;
+};
+
+$route['admin/update-penalty'] = function($params = []) {
+    $controller = 'Penalty';
+    $action = '/update';
+    return $controller.$action;
+};
+
+$route['admin/update-penalty-editable'] = function($params = []) {
+    $controller = 'Penalty';
+    $action = '/updateEditable';
+    return $controller.$action;
+};
+
 // team
 $route['admin/list-team'] = function($params = []) {
 	$controller = 'Team';

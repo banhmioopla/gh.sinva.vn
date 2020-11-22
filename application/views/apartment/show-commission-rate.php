@@ -24,16 +24,24 @@
                 <table class=" table-data table table-bordered">
                     <thead>
                         <tr >
+                            <th class="font-weight-bold">STT</th>
+                            <th class="font-weight-bold">Quận</th>
                             <th class="font-weight-bold">Dự Án</th>
                             <th class="text-center" width="80px">Hoa Hồng 12m</th>
                             <th class="text-center" width="80px">Hoa Hồng 6m</th>
                         </tr>
                     </thead>
                 <tbody>
-                    <?php if(count($list_apartment) >0):?>
+                    <?php if(count($list_apartment) >0): $i = 0;?>
                     <?php foreach($list_apartment as $row):
+                            $i ++;
                     ?>
                         <tr>
+                            <td class="text-danger font-weight-bold"><?= $i
+                                ?></td>
+                            <td class="text-danger font-weight-bold"><?= 'Quận ' .
+                                $libDistrict->getNameByCode($row['district_code'])
+                                ?></td>
                             <td class="text-danger font-weight-bold"><?= $row['address_street']
                                 ?></td>
                             <td class="text-center">
@@ -72,6 +80,8 @@
             $('.table-data').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
+                'bFilter': true,
+                "oSearch": {"bSmart": false},
                 responsive: true,
                 "fnDrawCallback": function() {
                 <?php if(in_array($this->auth['role_code'], ['customer-care', 'product-manager'])): ?>

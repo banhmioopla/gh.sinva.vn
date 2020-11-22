@@ -102,6 +102,14 @@
                             <li><a href="/admin/list-role"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Danh Sách Quyền</a></li>
                         <?php endif;?>
+
+                        <?php if(isYourPermission('Penalty', 'show',
+                            $this->permission_set)
+                        ):?>
+                            <li><a href="/admin/list-penalty"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Danh Sách
+                                    Danh Mục Vi Phạm</a></li>
+                        <?php endif;?>
                     </ul>
                 </li>
                 <?php endif;?>

@@ -66,7 +66,7 @@ class Penalty extends CustomBaseStep {
 
             $result = $this->ghPenalty->updateById($partner_id, $data);
 
-            $modified_partner = $this->ghPartner->getById($partner_id);
+            $modified_partner = $this->ghPenalty->getById($partner_id);
             $modified_log = json_encode($modified_partner[0]);
 
             $log = [
@@ -84,7 +84,7 @@ class Penalty extends CustomBaseStep {
     }
 
     public function delete(){
-        $partner_id = $this->input->post('penalty_id');
+        $penalty_id = $this->input->post('penalty_id');
         if(!empty($partner_id)) {
             $old_partner = $this->ghPenalty->getById($penalty_id);
 
