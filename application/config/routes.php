@@ -78,6 +78,12 @@ $route['admin/list-dashboard'] = function($params = []) {
 	$action = '/show';
 	return $controller.$action;
 };
+
+$route['admin/dashboard/list-chart'] = function($params = []) {
+    $controller = 'Dashboard';
+    $action = '/showTest';
+    return $controller.$action;
+};
 // report - booking customer
 $route['admin/list-consultant-booking'] = function($params = []) {
 	$controller = 'ConsultantBooking';

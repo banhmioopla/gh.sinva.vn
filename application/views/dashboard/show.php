@@ -44,6 +44,12 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                 </div>
             </div>
             <div class="col-md-10 offset-md-1">
+                <div id="chart-consultant-ColumnChart"></div>
+            </div>
+            <div class="col-md-10 offset-md-1">
+                <div id="chart-contract-ColumnChart"></div>
+            </div>
+            <div class="col-md-10 offset-md-1">
                 <h3 data-toggle="collapse" class="text-danger text-center"
                     href="#numberAvailable"><i class="mdi mdi-chevron-double-down"></i> Số lượng phòng trống tương ứng mức giá
                 </h3>
@@ -394,6 +400,111 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
                 "use strict";
                 $.FlotChart.init()
             }(window.jQuery);
+
+
+
+        // Google
+        !function ($) {
+            "use strict";
+
+            var GoogleChart = function () {
+                this.$body = $("body")
+            };
+
+
+            //creates bar graph
+            GoogleChart.prototype.createColumnChart = function (selector, data, colors,
+            title = '') {
+                var options = {
+                    fontName: 'Roboto',
+                    height: 400,
+                    fontSize: 12,
+                    chartArea: {
+                        left: '5%',
+                        width: '100%',
+                        height: '380px'
+                    },
+                    tooltip: {
+                        textStyle: {
+                            fontName: 'Roboto',
+                            fontSize: 12
+                        }
+                    },
+                    vAxis: {
+                        gridlines: {
+                            color: '#f5f5f5',
+
+                        },
+
+                    },
+                    legend: {
+                        position: 'bottom',
+                        alignment: 'center',
+                        textStyle: {
+                            fontSize: 13
+                        }
+                    },
+                    title: title,
+                    colors: colors
+                };
+
+                var google_chart_data = google.visualization.arrayToDataTable(data);
+                var bar_chart = new google.visualization.ColumnChart(selector);
+                bar_chart.draw(google_chart_data, options);
+                return bar_chart;
+            },
+
+
+                //init
+                GoogleChart.prototype.init = function () {
+                    var $this = this;
+
+                    //creating line chart
+
+                    //creating bar chart
+                    var data_set = [
+                        ['Ngày', "Số Lượt Dẫn Khách"]
+                    ];
+                    var data_consultant_booking = Object.entries(JSON.parse('<?= $chart_consultantbooking ?>'));
+                    for (let item of data_consultant_booking) {
+                        data_set.push(item);
+                    }
+                    $this.createColumnChart($('#chart-consultant-ColumnChart')[0], data_set,
+                        ['#48eb88',
+                        '#f2eb20'], 'Số lượt dẫn khách 30 ngày gần nhất');
+
+                    var data_set = [
+                        ['Ngày', "Số Lượng Hợp Đồng"]
+                    ];
+
+                    var data_contract = Object.entries(JSON.parse('<?=
+                        $chart_contract ?>'));
+                    for (let item of data_contract) {
+                        data_set.push(item);
+                    }
+                    $this.createColumnChart($('#chart-contract-ColumnChart')[0], data_set,
+                        ['#ebcb4d',
+                            '#f2eb20'], 'Số lượng hợp đồng 30 ngày gần nhất');
+
+
+                },
+                //init GoogleChart
+                $.GoogleChart = new GoogleChart, $.GoogleChart.Constructor = GoogleChart
+        }(window.jQuery),
+
+            //initializing GoogleChart
+            function ($) {
+                "use strict";
+                //loading visualization lib - don't forget to include this
+                google.load("visualization", "1", {packages: ["corechart"]});
+                //after finished load, calling init method
+                google.setOnLoadCallback(function () {
+                    $.GoogleChart.init();
+                });
+            }(window.jQuery);
+
     });
 
+
 </script>
+

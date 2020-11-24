@@ -44,6 +44,7 @@
     <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.crosshair.js"></script>
     <script src="<?= $js_plugins_path ?>flot-chart/curvedLines.js"></script>
     <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.axislabels.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <!-- sweetalert2 -->
     <script src="<?= $js_plugins_path ?>sweet-alert/sweetalert2.min.js"></script>
     <!-- datepicker -->

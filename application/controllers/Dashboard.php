@@ -5,7 +5,9 @@ class Dashboard extends CustomBaseStep {
     public function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model(['ghApartment', 'ghDistrict', 'ghTag', 'ghCustomer', 'ghRoom', 'ghContract']);
+		$this->load->model(['ghConsultantBooking','ghApartment', 'ghDistrict', 'ghTag',
+            'ghCustomer',
+            'ghRoom', 'ghContract']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -63,7 +65,17 @@ class Dashboard extends CustomBaseStep {
 
         // Contract
 
-        
+        // consutant booking
+        $data_setup = $this->setupData('LAST_30_DAY');
+        $chart_consultantbooking = $this->chartConsultantBooking
+        ($data_setup['data']['consultant_booking'], $data_setup['from'], $data_setup['to']);
+
+        $chart_contract = $this->chartContract
+        ($data_setup['data']['contract'], $data_setup['from'], $data_setup['to']);
+
+        $data['chart_consultantbooking'] = json_encode($chart_consultantbooking);
+        $data['chart_contract'] = json_encode($chart_contract);
+
         $data = [
             'total_customer' => $total_customer,
             'total_apartment' => $total_apartment,
@@ -80,10 +92,101 @@ class Dashboard extends CustomBaseStep {
             'chart_data_trong' => json_encode($chart_data_trong),
             'chart_data_full' => json_encode($chart_data_full),
             'chart_data_saptrong' => json_encode($chart_data_saptrong),
-            'chart_label' =>json_encode($chart_label)
+            'chart_label' =>json_encode($chart_label),
+
+            'chart_consultantbooking' => $data['chart_consultantbooking'],
+            'chart_contract' => $data['chart_contract']
         ];
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('dashboard/show', $data);
         $this->load->view('components/footer');
+    }
+
+    public function showTest(){
+        $data = [];
+        $data_setup = $this->setupData();
+
+        $chart_consultantbooking = $this->chartConsultantBooking
+        ($data_setup['data']['consultant_booking'], $data_setup['from'], $data_setup['to']);
+
+        $data['chart_consultantbooking'] = json_encode($chart_consultantbooking);
+        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('dashboard/show-test', $data);
+        $this->load->view('components/footer');
+    }
+
+
+    private function setupData($filter='LAST_15_DAY'){
+        $from = date('d-m-Y', strtotime('-15days'));
+        $to = date('d-m-Y');
+        if($filter === 'THIS_MONTH') {
+            $from = date('01-m-Y');
+            $to = date('d-m-Y');
+        }
+
+        if($filter === 'THIS_WEEK') {
+            $from = date('d-m-Y',strtotime('last monday'));
+            $to = date('d-m-Y');
+        }
+
+        if($filter === 'LAST_15_DAY') {
+            $from = date('d-m-Y',strtotime('-15days'));
+            $to = date('d-m-Y');
+        }
+
+        if($filter === 'LAST_30_DAY') {
+            $from = date('d-m-Y',strtotime('-30days'));
+            $to = date('d-m-Y');
+        }
+
+        $data = $this->initToZero($from, $to);
+
+
+        return ['data' =>$data, 'from' => $from, 'to' => $to];
+
+    }
+
+
+    private function chartConsultantBooking(&$data_init, $from, $to){
+
+        $int_from = strtotime($from);
+        $int_to = strtotime($to) +86399;
+        $list_model = $this->ghConsultantBooking->get(['time_booking >=' => $int_from, 'time_booking <=' => $int_to]);
+        foreach ($list_model as $item) {
+            $time_format = date('d-m-Y', $item['time_booking']);
+
+            $data_init[$time_format] ++;
+        }
+        return $data_init;
+
+    }
+
+    private function chartContract(&$data_init, $from, $to){
+
+        $int_from = strtotime($from);
+        $int_to = strtotime($to) +86399;
+        $list_model = $this->ghContract->get(['time_check_in >=' => $int_from, 'time_check_in <=' => $int_to]);
+        foreach ($list_model as $item) {
+            $time_format = date('d-m-Y', $item['time_check_in']);
+
+            $data_init[$time_format] ++;
+        }
+        return $data_init;
+
+    }
+
+    private function initToZero($from, $to){
+        $int_from = strtotime($from);
+        $int_to = strtotime($to) + 86399;
+        $data[] = $from;
+        $begin = $int_from;
+        while($begin <= $int_to) {
+            $begin_format = date('d-m-Y', $begin);
+            $data['consultant_booking'][$begin_format] = 0;
+            $data['contract'][$begin_format] = 0;
+            $begin += 86400;
+        }
+
+        return $data;
     }
 }
