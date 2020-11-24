@@ -12,6 +12,7 @@ class Penalty extends CustomBaseStep {
 
     public function show(){
         $data['list_penalty'] = $this->ghPenalty->getAll();
+        $data['ghPenalty'] = $this->ghPenalty;
         /*--- Load View ---*/
         $this->load->view('components/header', ['menu' =>$this->menu]);
         $this->load->view('penalty/show', $data);
@@ -106,6 +107,19 @@ class Penalty extends CustomBaseStep {
             echo json_encode(['status' => false]); die;
         }
         echo json_encode(['status' => false]); die;
+    }
+
+    public function getPenalty(){
+        $list_district = $this->ghPenalty->get();
+        $result[] = ["value" => null, "text" => "___"];
+        foreach($list_district as $d) {
+            $result[] = ["value" => $d['id'], "text" => $d["name"]];
+        }
+        $pk = $this->input->post('pk');
+        if(isset($pk)) {
+            return die($this->updateEditable());
+        }
+        echo json_encode($result); die;
     }
 
 }

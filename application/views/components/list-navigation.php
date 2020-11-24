@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-10 offset-md-1">
         <div class="m-md-2 m-1 button-list">
             <?php if(isYourPermission('Image', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/show-image-apartment">

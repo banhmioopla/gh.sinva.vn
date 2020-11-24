@@ -43,7 +43,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($list_penalty as $row ): ?>
+                        <?php foreach($list_penalty as $row ):
+                            $parent_name = '';
+                            if($row['parent_id'] > 0) {
+                                $parent_name =  '<span class = "text-danger">'
+                                    .$ghPenalty->get(['id' =>
+                                    $row['parent_id']])[0]['name'] . ' <i class="mdi mdi-menu-right"></i> </span>';
+                            }
+                            ?>
                             <tr>
                                 <td>
                                     <div class="penalty-id text-center font-weight-bold">
@@ -51,11 +58,15 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="penalty-name"
+                                    <span class="penalty-parent_id"
+                                          data-pk="<?= $row['id'] ?>"
+                                          data-name="parent_id"><?= $parent_name
+                                        ?></span>
+                                    <span class="penalty-name"
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="name">
                                         <?= $row['name'] ?>
-                                    </div>
+                                    </span>
                                 </td>
 
                                 <td>
@@ -101,6 +112,19 @@
                     <h3 class="text-center text-danger">Thêm danh mục mới</h3>
                     <form role="form" method="post" action="<?= base_url()
                     ?>admin/create-penalty">
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-12
+                            col-form-label">Danh Mục Cha</label>
+                            <div class="col-md-8 col-12">
+                                <select name="parent_id" class="form-control" >
+                                    <option value="">Vui lòng chọn Danh mục cha...
+                                        (nếu có)</option>
+                                    <?php foreach ($list_penalty as $item):?>
+                                        <option value="<?= $item['id'] ?>"><?= $item['name'] ?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-12
                             col-form-label">Tên Loại Vi Phạm<span
@@ -185,6 +209,36 @@
                 'pagingType': "full_numbers",
                 responsive: true,
                 "fnDrawCallback": function() {
+
+                    $('.penalty-parent_id').editable({
+                        emptytext: '___',
+                        type: 'select',
+                        url: '<?= base_url() ?>admin/get-penalty',
+                        inputclass: '',
+                        source: function() {
+                            data = [];
+                            $.ajax({
+                                url: '<?= base_url() ?>admin/get-penalty',
+                                dataType: 'json',
+                                async: false,
+                                success: function(res) {
+                                    data = res;
+                                    return res;
+                                }
+                            });
+                            return data;
+                        },
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            if(data.status == true) {
+                                $('.penalty-alert').html(notify_html_success);
+                            } else {
+                                $('.penalty-alert').html(notify_html_fail);
+                            }
+                            $('.penalty-alert').show();
+                            $('.penalty-alert').fadeOut(3000);
+                        }
+                    });
 
 
                     $('.is-active-penalty input[type=checkbox]').click(function() {

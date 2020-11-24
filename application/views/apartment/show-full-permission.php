@@ -54,13 +54,13 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
                 <?php endif; ?>
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
-            <div class="card card-body pl-0 pr-0 col-12 col-md-8">
+            <div class="pl-0 pr-0 col-12 col-md-8">
                 <?php $this->load->view('components/list-navigation'); ?>
-                <div>
+                <div class="shadow">
                     <?php $this->load->view('apartment/search-by-room-price'); ?>
                 </div>
 
-                <div class="mt-2 mb-2 list-action">
+                <div class="mt-2 mb-3 list-action card-box shadow">
                     <span class="d-flex justify-content-center flex-wrap">
                     <?php foreach($list_district as $district): ?>
                         <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>" 
@@ -71,16 +71,18 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
                             
                     <?php endforeach; ?>
                     </span>
-                </div>
-                <div class="card">
-                    <div class="form-group row">
-                        <div class="col-md-8 offset-md-2 col-10 offset-1">
-                            <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
+                    <div class="mt-3">
+                        <div class="form-group row">
+                            <div class="col-md-8 offset-md-2 col-10 offset-1">
+                                <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <?php foreach ($list_apartment as $apartment): ?>
-                <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
+                <div class="card-header apartment-block" role="tab"
+                     id="headingThree">
                     <?php if($apartment['short_message']) echo '<h5 class="col text-center notifier-apartment">'.$apartment["short_message"].'</h5>'; ?>
                     
                     <div class="row">
@@ -202,7 +204,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['customer-care','pr
                 </div>
 
                 <div id="modal-apartment-detail-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-detail-<?=$apartment['id'] ?>">
-                    <div class="card-body">
+                    <div class="card-box">
                         <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
                             <li class="nav-item">
                                 <a href="#apm-note-<?= $apartment['id'] ?>" 

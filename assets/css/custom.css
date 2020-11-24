@@ -81,7 +81,9 @@
     padding-top: 12px;
     padding-bottom: 12px;
 }
-
+.nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
+    background: #f1556c;
+}
 html, body { height: 100%; }
 .card-header {
     background-color: #faf0ac;

@@ -39,8 +39,14 @@ class LibUser {
         return $list_user ? $list_user[0]['name'] : '#';
     }
 
-    public function cb($account_id = 0) {
-        $list_user = $this->CI->ghUser->get(['role_code <>' => '']);
+    public function cb($account_id = 0, $is_active = null) {
+        $params['role_code <>'] = '';
+        $params['account_id >='] = '171020000';
+        if($is_active == 'YES') {
+            $params['active'] = 'YES';
+        }
+
+        $list_user = $this->CI->ghUser->get($params);
         $cb = '<option value=0>chọn thành viên ...</option>';
         if(!empty($list_user)) {
             foreach ($list_user as $user) {

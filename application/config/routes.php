@@ -50,6 +50,12 @@ $route['admin/update-penalty'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/get-penalty'] = function($params = []) {
+    $controller = 'Penalty';
+    $action = '/getPenalty';
+    return $controller.$action;
+};
+
 $route['admin/update-penalty-editable'] = function($params = []) {
     $controller = 'Penalty';
     $action = '/updateEditable';
