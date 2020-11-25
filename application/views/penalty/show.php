@@ -38,8 +38,10 @@
                             <th class="text-center">ID</th>
                             <th>Tên Loại Vi Phạm</th>
                             <th>Phí Phạt</th>
+                            <th>Trừ % Thu Nhập</th>
+                            <th class="text-center">Nghỉ Việc</th>
                             <th>Mô Tả</th>
-                            <th>Mở</th>
+                            <th class="text-center">Mở</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -68,7 +70,6 @@
                                         <?= $row['name'] ?>
                                     </span>
                                 </td>
-
                                 <td>
                                     <div class="penalty-fee"
                                          data-pk="<?= $row['id'] ?>"
@@ -76,10 +77,31 @@
                                          data-name="fee"><?= number_format($row['fee']) ?></div>
                                 </td>
 
+                                <td>
+                                    <div class="penalty-income_rate"
+                                         data-pk="<?= $row['id'] ?>"
+                                         data-value = "<?= $row['income_rate'] ?>"
+                                         data-name="income_rate"><?= number_format($row['income_rate']) . ' %' ?></div>
+                                </td>
+
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="checkbox checkbox-success
+                                        is-quit-job-penalty">
+                                            <input id="penalty-<?= $row['id'] ?>"
+                                                   value="<?= $row['is_quit_job'] ?>"
+                                                   type="checkbox"
+                                                <?= $row['is_quit_job'] =='YES' ? 'checked':'' ?>>
+                                            <label for="penalty-<?= $row['id'] ?>">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+
 
 
                                 <td>
-                                    <div class="penalty-description"
+                                    <div class="penalty-description "
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="description"
                                          data-value ="<?= $row['description'] > 0 ? $row['description'] :'' ?>">
@@ -119,7 +141,10 @@
                                 <select name="parent_id" class="form-control" >
                                     <option value="">Vui lòng chọn Danh mục cha...
                                         (nếu có)</option>
-                                    <?php foreach ($list_penalty as $item):?>
+                                    <?php foreach ($list_penalty as $item):
+                                        if($item['parent_id']) continue;
+
+                                        ?>
                                         <option value="<?= $item['id'] ?>"><?= $item['name'] ?></option>
                                     <?php endforeach;?>
                                 </select>
@@ -138,12 +163,33 @@
 
                         <div class="form-group row">
                             <label for="phone_number" class="col-md-4 col-12
-                            col-form-label">Phí Phạt<span
-                                        class="text-danger">*</span></label>
+                            col-form-label">Phí Phạt</label>
                             <div class="col-md-8 col-12">
-                                <input type="text" required class="form-control"
+                                <input type="text" class="form-control"
                                        id="fee" name="fee"
                                        placeholder="100000">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="income_rate" class="col-md-4 col-12
+                            col-form-label">Trừ % Thu Nhập</label>
+                            <div class="col-md-8 col-12">
+                                <input type="text" class="form-control"
+                                       id="income_rate" name="income_rate"
+                                       placeholder="0 - 100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="is_quit_job" class="col-4
+                            col-form-label">Nghỉ Việc</label>
+                            <div class="col-8">
+                                <div>
+                                    <div class=" checkbox checkbox-success ">
+                                        <input id="is_quit_job" type="checkbox" checked value="YES" name="is_quit_job">
+                                        <label for="is_quit_job">
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -271,7 +317,38 @@
                         });
                     });
 
-                    $('.penalty-name, .penalty-fee').editable({
+                    $('.is-quit-job-penalty input[type=checkbox]').click(function() {
+                        var is_active = 'NO';
+                        var this_id = $(this).attr('id');
+                        var matches = this_id.match(/(\d+)/);
+                        var user_id = matches[0];
+                        if($(this).is(':checked')) {
+                            is_active = 'YES';
+                        }
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>admin/update-penalty',
+                            data: {field_value: is_active, penalty_id: user_id,
+                                field_name : 'is_quit_job'},
+                            async: false,
+                            success:function(response){
+                                var data = JSON.parse(response);
+                                if(data.status == true) {
+                                    $('.penalty-alert').html(notify_html_success);
+                                } else {
+                                    $('.penalty-alert').html(notify_html_fail);
+                                }
+                            },
+                            beforeSend: function(){
+                                $('#loader').show();
+                            },
+                            complete: function(){
+                                $('#loader').hide();
+                            }
+                        });
+                    });
+
+                    $('.penalty-name, .penalty-fee, .penalty-income_rate').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-penalty-editable',
                         inputclass: '',
