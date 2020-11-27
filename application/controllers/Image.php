@@ -154,6 +154,47 @@ class Image extends CustomBaseStep
         die;
     }
 
+    public function downloadMedia() {
+        ini_set('memory_limit', '2024M');
+
+        $list_id = $this->input->post("list_id");
+        $this->load->library('zip');
+        foreach ($list_id as $id) {
+            $fileName = 'media/apartment/';
+
+            $model_img = $this->ghImage->getById($id);
+            $room_code = $this->ghRoom->get(['id' => $model_img[0]['room_id']]);
+
+            $room_path = '';
+            if( is_dir($fileName.'ds-phong/') === false )
+            {
+                mkdir($fileName.'ds-phong/');
+            }
+
+            if($room_code && $room_code[0]['code']) {
+                $room_path .= $fileName.'ds-phong/phong--'.$room_code[0]['code'].'/';
+
+                if( is_dir($room_path) === false )
+                {
+                    mkdir($room_path);
+                }
+            }
+            if($model_img) {
+                $room_path .= $model_img[0]['name'];
+                copy($fileName.$model_img[0]['name'], $room_path);
+                echo $room_path;
+                $this->zip->read_file($room_path, true);
+            }
+
+        }
+
+        $zipName = '[gh.sinva.vn] Du An - '.date('d-m-Y H:i') . '.zip';
+        $this->zip->download($zipName);
+        die;
+//        unlink($fileName.'dsphong');
+        echo json_encode(['status' => 'success']); die;
+    }
+
 
     public function delete()
     {

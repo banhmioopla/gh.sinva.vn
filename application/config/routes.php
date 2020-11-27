@@ -841,6 +841,12 @@ $route['admin/search-apartment'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/download-image-apartment'] = function($params = []) {
+    $controller = 'Image';
+    $action = '/downloadMedia';
+    return $controller.$action;
+};
+
 
 // admin/price
 $route['admin/list-price'] = function($params = []) {
