@@ -159,17 +159,19 @@ class Image extends CustomBaseStep
 
         $list_id = $this->input->post("list_id");
         $this->load->library('zip');
+        $fileName = 'media/apartment/';
+        unlink($fileName.'ds-phong/');
+
+        if( is_dir($fileName.'ds-phong/') === false )
+        {
+            mkdir($fileName.'ds-phong/');
+        }
         foreach ($list_id as $id) {
-            $fileName = 'media/apartment/';
 
             $model_img = $this->ghImage->getById($id);
             $room_code = $this->ghRoom->get(['id' => $model_img[0]['room_id']]);
 
             $room_path = '';
-            if( is_dir($fileName.'ds-phong/') === false )
-            {
-                mkdir($fileName.'ds-phong/');
-            }
 
             if($room_code && $room_code[0]['code']) {
                 $room_path .= $fileName.'ds-phong/phong--'.$room_code[0]['code'].'/';
@@ -190,8 +192,7 @@ class Image extends CustomBaseStep
 
         $zipName = '[gh.sinva.vn] Du An - '.date('d-m-Y H:i') . '.zip';
         $this->zip->download($zipName);
-        die;
-//        unlink($fileName.'dsphong');
+
         echo json_encode(['status' => 'success']); die;
     }
 
