@@ -154,27 +154,40 @@ class Image extends CustomBaseStep
         die;
     }
 
+    function my_folder_delete($path) {
+        if(!empty($path) && is_dir($path) ){
+            $dir  = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS); //upper dirs are not included,otherwise DISASTER HAPPENS :)
+            $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
+            foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} } if (!empty($empty_dirs)) {foreach ($empty_dirs as $eachDir) {rmdir($eachDir);}} rmdir($path);
+        }
+    }
+
     public function downloadMedia() {
-        ini_set('memory_limit', '2024M');
+        ini_set('memory_limit', '12024M');
 
         $list_id = $this->input->post("list_id");
-        $this->load->library('zip');
-        $fileName = 'media/apartment/';
-        unlink($fileName.'ds-phong/');
 
-        if( is_dir($fileName.'ds-phong/') === false )
-        {
-            mkdir($fileName.'ds-phong/');
+        $this->load->library('zip');
+        $rootPath = 'media/apartment/';
+        $download_path = 'ImFineThanks/';
+
+        if(is_dir($download_path)){
+            $this->my_folder_delete($download_path);
         }
+        mkdir($download_path);
+        $address = 'KoThongTin';
         foreach ($list_id as $id) {
 
             $model_img = $this->ghImage->getById($id);
             $room_code = $this->ghRoom->get(['id' => $model_img[0]['room_id']]);
 
+
+
             $room_path = '';
 
             if($room_code && $room_code[0]['code']) {
-                $room_path .= $fileName.'ds-phong/phong--'.$room_code[0]['code'].'/';
+                $address = $this->ghApartment->get(['id' => $room_code[0]['apartment_id']])[0]['address_street'];
+                $room_path .= $download_path.'['.$room_code[0]['price'].']--MP-' .$room_code[0]['code'].'/';
 
                 if( is_dir($room_path) === false )
                 {
@@ -183,14 +196,13 @@ class Image extends CustomBaseStep
             }
             if($model_img) {
                 $room_path .= $model_img[0]['name'];
-                copy($fileName.$model_img[0]['name'], $room_path);
-                echo $room_path;
+                copy($rootPath.$model_img[0]['name'], $room_path);
                 $this->zip->read_file($room_path, true);
             }
 
         }
 
-        $zipName = '[gh.sinva.vn] Du An - '.date('d-m-Y H:i') . '.zip';
+        $zipName = '[gh] DA - '.$address.' - Ng. '.date('d-m-Y H.i') . '.zip';
         $this->zip->download($zipName);
 
         echo json_encode(['status' => 'success']); die;
