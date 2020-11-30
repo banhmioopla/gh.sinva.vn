@@ -62,7 +62,9 @@
                                         <p class="timeline-date text-left
                                     text-muted"><small><?= date('d/m/Y H:i', $item['time_insert'])
                                                 ?> - <?= $libUser->getNameByAccountid($item['user_create_id']) ?></small></p>
-                                        <p class="text-left"><?= $item['content'] ?></p>
+                                        <p class="text-left" style="white-space: pre-wrap"><?=
+                                            $item['content']
+                                            ?></p>
                                     </div>
                                 </div>
                             </div>
