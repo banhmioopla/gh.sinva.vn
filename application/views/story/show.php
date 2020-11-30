@@ -5,15 +5,24 @@
                 <div id="stories" class="storiesWrapper"></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1 col-12">
+                <?php $this->load->view('components/list-navigation'); ?>
+            </div>
+        </div>
+
 
         <div class="row">
             <div class="col-md-10 offset-md-1 col-12">
                 <div>
 
                     <form action="/admin/create-story" method="post" class="">
-                        <button type="submit" class="btn btn-danger w-lg">
-                            <h5>Đăng Câu
-                                Chuyện Kinh Doanh Của Bạn</h5></button>
+                        <div>
+                            <button type="submit" class="btn btn-danger">
+                                <h5>Đăng Câu
+                                    Chuyện Kinh Doanh Của Bạn</h5></button>
+                        </div>
+
                         <div class="form-group row mt-2">
                             <div class="col-10">
                                 <input class="form-control" name="title"
@@ -49,11 +58,11 @@
                                         <span class="arrow-alt"></span>
                                         <span class="timeline-icon bg-danger"><i
                                                     class="mdi mdi-adjust"></i></span>
-                                        <h4 class="text-danger"><?= $item['title']?></h4>
-                                        <p class="timeline-date
+                                        <h4 class="text-danger text-left"><?= $item['title']?></h4>
+                                        <p class="timeline-date text-left
                                     text-muted"><small><?= date('d/m/Y H:i', $item['time_insert'])
                                                 ?> - <?= $libUser->getNameByAccountid($item['user_create_id']) ?></small></p>
-                                        <p><?= $item['content'] ?></p>
+                                        <p class="text-left"><?= $item['content'] ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -62,14 +71,14 @@
                     <article class="timeline-item alt">
                         <div class="timeline-desk">
                             <div class="panel">
-                                <div class="timeline-box">
+                                <div class="timeline-box ">
                                     <span class="arrow-alt"></span>
                                     <span class="timeline-icon bg-danger"><i class="mdi mdi-adjust"></i></span>
-                                    <h4 class="text-danger">Xin chào các bạn, đây là
+                                    <h4 class="text-danger text-left">Xin chào các bạn, đây là
                                         story đầu tiên</h4>
-                                    <p class="timeline-date
+                                    <p class="timeline-date text-left
                                     text-muted"><small>30/04/1975 11:30 am</small></p>
-                                    <p>Mỗi khi tôi tới sinva, công ty cứ như tăng thêm
+                                    <p class="text-left">Mỗi khi tôi tới sinva, công ty cứ như tăng thêm
                                         một người.
                                     </p>
                                 </div>

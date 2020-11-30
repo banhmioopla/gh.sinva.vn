@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-10 offset-md-1">
+    <div class="col-12">
         <div class="m-md-2 m-1 button-list">
             <?php if(isYourPermission('Image', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/show-image-apartment">
@@ -45,7 +45,8 @@
             <?php if(isYourPermission('Story', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-story">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-google-maps mr-1"></i> <span
+                                class="mdi mdi-google-wallet
+                                 mr-1"></i> <span
                                 class="text-">Story</span>
                     </button>
                 </a>
