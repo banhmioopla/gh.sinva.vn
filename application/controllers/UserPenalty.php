@@ -31,7 +31,6 @@ class UserPenalty extends CustomBaseStep {
         }
         $data['user_create_id'] = $this->auth['account_id'];
 
-        $data['libUser'] = $this->libUser;
         $this->ghUserPenalty->insert($data);
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Tạo Vi Phạm '.$data['name'].' thành công ',

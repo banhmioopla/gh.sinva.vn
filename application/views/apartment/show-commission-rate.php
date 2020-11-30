@@ -28,6 +28,7 @@
                             <th class="font-weight-bold">Quận</th>
                             <th class="font-weight-bold">Dự Án</th>
                             <th class="text-center" width="80px">Hoa Hồng 12m</th>
+                            <th class="text-center" width="80px">Hoa Hồng 9m</th>
                             <th class="text-center" width="80px">Hoa Hồng 6m</th>
                         </tr>
                     </thead>
@@ -47,16 +48,25 @@
                             <td class="text-center">
                                 <div class="comissionrate"
                                     data-pk="<?= $row['id'] ?>" 
-                                    data-value="<?= $row['commission_rate'] ?>"
+                                    data-value="<?= $row['commission_rate'] > 0 ? $row['commission_rate'] : '' ?>"
                                     data-name="commission_rate">
                                     <?= $row['commission_rate'] ?> %
                                 </div>
                             </td>
-                            
+                            <td class="text-center">
+                                <div class="comissionrate"
+                                     data-pk="<?= $row['id'] ?>"
+                                     data-value="<?= $row['commission_rate_9m'] > 0 ?
+                                         $row['commission_rate_9m'] : '' ?>"
+                                     data-name="commission_rate_9m">
+                                    <?= $row['commission_rate_9m'] ?> %
+                                </div>
+                            </td>
                             <td class="text-center">
                                 <div class="comissionrate"
                                     data-pk="<?= $row['id'] ?>" 
-                                    data-value="<?= $row['commission_rate_6m'] ?>"
+                                    data-value="<?= $row['commission_rate_6m'] > 0 ?
+                                        $row['commission_rate_6m'] : '' ?>"
                                     data-name="commission_rate_6m">
                                     <?= $row['commission_rate_6m'] ?> %
                                 </div>

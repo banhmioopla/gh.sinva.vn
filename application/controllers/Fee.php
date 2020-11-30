@@ -98,6 +98,10 @@ class Fee extends CustomBaseStep {
 
     }
 
+    private function syncRoundNumberContract($user_id = null, $role_code = null) {
+
+    }
+
     public function showContractIncome() {
 
         $data = $this->syncContractIncome();
