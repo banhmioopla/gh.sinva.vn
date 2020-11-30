@@ -110,6 +110,14 @@
                             mdi-chevron-double-right text-warning"></i> Danh Sách
                                     Danh Mục Vi Phạm</a></li>
                         <?php endif;?>
+
+                        <?php if(isYourPermission('UserPenalty', 'show',
+                            $this->permission_set)
+                        ):?>
+                            <li><a href="/admin/list-userpenalty"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Danh Sách
+                                    Thành Viên Vi Phạm</a></li>
+                        <?php endif;?>
                     </ul>
                 </li>
                 <?php endif;?>

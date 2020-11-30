@@ -62,6 +62,31 @@ $route['admin/update-penalty-editable'] = function($params = []) {
     return $controller.$action;
 };
 
+// UserPenalty
+$route['admin/list-userpenalty'] = function($params = []) {
+    $controller = 'UserPenalty';
+    $action = '/show';
+    return $controller.$action;
+};
+
+$route['admin/create-userpenalty'] = function($params = []) {
+    $controller = 'UserPenalty';
+    $action = '/create';
+    return $controller.$action;
+};
+
+$route['admin/update-userpenalty'] = function($params = []) {
+    $controller = 'UserPenalty';
+    $action = '/update';
+    return $controller.$action;
+};
+
+$route['admin/update-userpenalty-editable'] = function($params = []) {
+    $controller = 'UserPenalty';
+    $action = '/updateEditable';
+    return $controller.$action;
+};
+
 // team
 $route['admin/list-team'] = function($params = []) {
 	$controller = 'Team';
