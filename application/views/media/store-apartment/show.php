@@ -104,7 +104,7 @@ $role_delete = ['product-manager', 'customer-care'];
                     <?php if($list_img): ?>
 
                         <?php foreach($list_img as $img): ?>
-                            <div class="col-sm-6 col-md-3
+                            <div class="col-sm-6 col-md-2
                 <?= !empty($img['room_id']) ? 'roomcode-'.$img['room_id']:'' ?> image-item">
                                 <?php
                                 $imgStatus = $img['status'] == 'Pending' ? 'warning' : '';

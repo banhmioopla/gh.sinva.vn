@@ -31,6 +31,18 @@ $route['admin/list-story'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/create-story'] = function($params = []) {
+    $controller = 'Story';
+    $action = '/create';
+    return $controller.$action;
+};
+
+$route['admin/update-story-editable'] = function($params = []) {
+    $controller = 'Story';
+    $action = '/create';
+    return $controller.$action;
+};
+
 // Penalty
 $route['admin/list-penalty'] = function($params = []) {
     $controller = 'Penalty';
@@ -102,6 +114,12 @@ $route['admin/list-dashboard'] = function($params = []) {
 	$controller = 'Dashboard';
 	$action = '/show';
 	return $controller.$action;
+};
+
+$route['admin/list-department'] = function($params = []) {
+    $controller = 'Department';
+    $action = '/show';
+    return $controller.$action;
 };
 
 $route['admin/dashboard/list-chart'] = function($params = []) {

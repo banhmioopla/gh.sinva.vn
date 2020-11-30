@@ -41,6 +41,15 @@
                 </button>
             </a>
             <?php endif; ?>
+
+            <?php if(isYourPermission('Story', 'show',$this->permission_set)):?>
+                <a href="<?= base_url() ?>admin/list-story">
+                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
+                                class="mdi mdi-google-maps mr-1"></i> <span
+                                class="text-">Story</span>
+                    </button>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </div>
