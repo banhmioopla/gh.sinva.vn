@@ -198,6 +198,18 @@ class Customer extends CustomBaseStep {
 	}
 
 
+	public function detailShow(){
+	    $id = $this->input->get('id');
+        $data['label'] =  $this->config->item('label.apartment');
+	    $data['customer'] = $this->ghCustomer->getById($id)[0];
+        $data['ghCustomer'] = $this->ghCustomer;
+        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('customer/detail-show', $data);
+        $this->load->view('components/footer');
+
+    }
+
+
 }
 
 /* End of file Apartment.php */

@@ -307,6 +307,12 @@ $route['admin/list-care-customer'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/detail-customer'] = function($params = []) {
+    $controller = 'Customer';
+    $action = '/detailShow';
+    return $controller.$action;
+};
+
 $route['admin/create-care-customer'] = function($params = []) {
 	$controller = 'Customer';
 	$action = '/createCare';

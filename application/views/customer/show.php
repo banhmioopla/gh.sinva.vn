@@ -60,7 +60,10 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ): ?>
                             <tr>
-                                <td><?= $row['id'] ?></td>
+                                <td><a target="_blank"
+                                       href="/admin/detail-customer?id=<?= $row['id'] ?>"><?=
+                                        10000 +
+                                        $row['id'] ?></a></td>
                                 <td>
                                     <div class="customer-data font-weight-bold"
                                         data-pk="<?= $row['id'] ?>" 
