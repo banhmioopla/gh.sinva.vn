@@ -40,12 +40,22 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                                 width="200px"><strong>Trạng Thái
                                     <strong></td>
                             <td>
-                                <div class="customer-name w-100 "
-                                     data-name="name"><span class="badge
+                                <div class="w-100 "
+                                     data-name="status"><span class="badge
                                      badge-info font-weight-bold contract-status"><?=
                                         $label[$customer['status']]
                                         ?></span>
                                 </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right"><strong>Họ Tên <strong></td>
+                            <td>
+                                <div class="customer-name w-50"
+                                     data-pk="<?= $customer['id'] ?>"
+                                     data-value="<?= $customer['name'] ?>"
+                                     data-name="name"><?= $customer['name'] ?></div>
                             </td>
                         </tr>
 
@@ -139,6 +149,19 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                             </td>
                         </tr>
 
+                        <tr>
+                            <td class="text-right"><strong>Ngày Nhập<strong></td>
+                            <td>
+                                <div class="customer-time_insert w-50"
+                                     data-name="time_insert"
+                                     data-pk="<?= $customer['id'] ?>"
+                                     data-value="<?= $customer['time_insert'] > 0 ? date
+                                     ('d/m/Y',$customer['time_insert']) : '' ?>">
+                                    <?= $customer['time_insert'] > 0 ? date('d/m/Y',$customer['time_insert']) : ''
+                                    ?></div>
+                            </td>
+                        </tr>
+
                     </table>
                 </div>
             </div>
@@ -157,15 +180,15 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
         $(document).ready(function () {
             <?php if($check_edit): ?>
 
-            $('.customer-phone, .customer-email').editable({
+            $('.customer-phone, .customer-email, .customer-name').editable({
                 type: "text",
                 url: '<?= base_url() ?>admin/update-customer-editable',
                 inputclass: '',
             });
-            $('.contract-note').editable({
+            $('.customer-note').editable({
                 placement: 'top',
                 type: "textarea",
-                url: '<?= base_url() ?>admin/update-contract-editable',
+                url: '<?= base_url() ?>admin/update-customer-editable',
                 inputclass: '',
                 success: function (response) {
                     var data = JSON.parse(response);
@@ -176,7 +199,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                     }
                 }
             });
-            $('.contract-time_expire, .contract-time_check_in').editable({
+            $('.customer-time_insert').editable({
                 placement: 'top',
                 type: 'combodate',
                 template: "D / MM / YYYY",
@@ -189,7 +212,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                     minYear: '2017'
                 },
                 inputclass: 'form-control-sm',
-                url: '<?= base_url() ?>admin/update-contract-editable',
+                url: '<?= base_url() ?>admin/update-customer-editable',
                 success: function (response) {
                     var data = JSON.parse(response);
                     if (data.status == true) {

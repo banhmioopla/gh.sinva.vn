@@ -116,6 +116,10 @@ class Customer extends CustomBaseStep {
 				$data['demand_time'] = $data['demand_time'] ? strtotime($data['demand_time']): 0;
 			}
 
+            if($field_name == 'time_insert') {
+                $data['time_insert'] = $data['time_insert'] ? strtotime($data['time_insert']): 0;
+            }
+
 			$result = $this->ghCustomer->updateById($customer_id, $data);
 			
 			$modified_customer = $this->ghCustomer->getById($customer_id);

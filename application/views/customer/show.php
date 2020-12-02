@@ -48,9 +48,6 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                             <th>Ngày sinh</th>
                             <th>Số điện thoại</th>
                             <th>Ghi Chú</th>
-                            <th>NhC giá</th>
-                            <th>NhC quận</th>
-                            <th>NhC Tgian</th>
                             <th>Ngày Nhập</th>
                             <th class="text-center">Nguồn</th>
                             <th class="text-center">Trạng thái</th>
@@ -102,28 +99,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                             <?= $row['note'] ?>
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="customer-demand_price"
-                                        data-pk="<?= $row['id'] ?>"
-                                        data-value ="<?= $row['demand_price'] ?>"
-                                        data-name="demand_price">
-                                        <?= number_format($row['demand_price']) ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="customer-demand_district_code"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="demand_district_code">
-                                        <?= $libDistrict->getNameByCode($row['demand_district_code']) ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="customer-demand_time"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="demand_time">
-                                        <?= $row['demand_time'] > 0 ? date('d/m/Y', $row['demand_time']) : '#' ?>
-                                    </div>
-                                </td>
+
                                 <td>
                                     <div class="customer-demand_time"
                                         data-pk="<?= $row['id'] ?>" 
