@@ -100,7 +100,8 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                             <td class="text-right"><strong>Nguồn <strong></td>
                             <td>
                                 <div class="customer-source w-50"
-                                     data-name="source"><?= $label[$customer['source']]
+                                     data-name="source"><?= $customer['source'] ?
+                                    $label[$customer['source']] : '[không có thông tin]'
                                     ?></div>
                             </td>
                         </tr>

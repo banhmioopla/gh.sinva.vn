@@ -693,6 +693,12 @@ $route['admin/create-user'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/user/get-select'] = function($params = []) {
+	$controller = 'User';
+	$action = '/getSelectUser';
+	return $controller.$action;
+};
+
 $route['admin/update-user'] = function($params = []) {
 	$controller = 'User';
 	$action = '/update';

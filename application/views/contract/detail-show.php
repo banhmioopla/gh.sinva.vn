@@ -84,12 +84,25 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-right"><strong>Thành Viên Chốt
-                                    Sale <strong></td>
+                            <td class="text-right"><strong>Thành Viên Chốt Sale (70%)<strong></td>
                             <td>
-                                <div class="consultant_id w-100" data-name="name">
-                                    <?= $contract['consultant_id'] > 171020000 ?
+                                <div class="consultant_id "
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-placement="top"
+                                     data-name="consultant_id">
+                                    <?= $contract['consultant_id'] >= 171020000 ?
                                     $libUser->getNameByAccountid($contract['consultant_id']) : '[không có thông tin]' ?></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Thành Viên Hỗ Trợ (30%)<strong></td>
+                            <td>
+                                <div class="consultant_support_id w-50"
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-placement="top"
+                                     data-name="consultant_support_id">
+                                    <?= $contract['consultant_support_id'] >= 171020000 ?
+                                        $libUser->getNameByAccountid($contract['consultant_support_id']) : '[không có thông tin]' ?></div>
                             </td>
                         </tr>
                         <tr>
@@ -153,45 +166,39 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                         <tr>
                             <td class="text-right"><strong>Tên Khách Thuê <strong></td>
                             <td>
-                                <div class="customer-name w-100"
-                                     data-name="name"><?= $customer['name'] ?></div>
+                                <div><?= $customer['name'] ?></div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Ngày Sinh <strong></td>
                             <td>
-                                <div class="customer-name"
-                                     data-name="name"><?= $customer['birthdate'] > 0 ? date('d/m/Y', $customer['birthdate']) : '' ?></div>
+                                <div><?= $customer['birthdate'] > 0 ? date('d/m/Y', $customer['birthdate']) : '' ?></div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Số điện thoại <strong></td>
                             <td>
-                                <div class="customer-name"
-                                     data-name="name"><?= $customer['phone'] ?></div>
+                                <div><?= $customer['phone'] ?></div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Ghi Chú Khách Thuê <strong>
                             </td>
                             <td>
-                                <div class="customer-name"
-                                     data-name="name"><?= $customer['note'] ?></div>
+                                <div><?= $customer['note'] ?></div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Dự Án Thuê <strong></td>
                             <td>
-                                <div class="customer-name"
-                                     data-name="name"> <?= $apartment ? $apartment['address_street'] : '[không có thông tin]'
+                                <div> <?= $apartment ? $apartment['address_street'] : '[không có thông tin]'
                                     ?></div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Mã Phòng <strong></td>
                             <td>
-                                <div class="customer-name"
-                                     data-name="name"> <?= $room ? $room['code'] : '[không có thông tin]'
+                                <div> <?= $room ? $room['code'] : '[không có thông tin]'
                                     ?></div>
                             </td>
                         </tr>
@@ -310,7 +317,35 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                         confirmButtonClass: 'btn btn-confirm mt-2'
                     });
                 })
+            });
 
+            $('.consultant_support_id').editable({
+                type: 'select',
+                url: '<?= base_url() ?>admin/update-contract-editable',
+                inputclass: '',
+                source: function() {
+                    data = [];
+                    $.ajax({
+                        url: '<?= base_url() ?>admin/user/get-select',
+                        dataType: 'json',
+                        async: false,
+                        success: function(res) {
+                            data = res;
+                            return res;
+                        }
+                    });
+                    return data;
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.apartment-alert').html(notify_html_success);
+                    } else {
+                        $('.apartment-alert').html(notify_html_fail);
+                    }
+                    $('.apartment-alert').show();
+                    $('.apartment-alert').fadeOut(3000);
+                }
             });
 
             $('.contract-room_price, .contract-number_of_month').editable({

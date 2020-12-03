@@ -172,6 +172,16 @@ class User extends CustomBaseStep {
 		echo json_encode(['status' => false]); die;
 	}
 
+
+	public function getSelectUser(){
+        $list = $this->ghUser->get(['account_id >=' => 171020000, 'name <>' => ""]);
+        $result = [];
+        foreach($list as $item) {
+            $result[] = ["value" => $item['account_id'], "text" => $item["name"]];
+        }
+        echo json_encode($result); die;
+    }
+
 }
 
 /* End of file role.php */
