@@ -9,6 +9,22 @@
                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['commission_rate'] ?>
             </div>
         </li>
+        <li class="list-group-item">
+            <i class="text-danger"><?= $label_apartment['commission_rate_9m'] ?></i>
+            <div class="text-right font-weight-bold"
+                 data-name="commission_rate"
+                 data-value="<?= $apartment['commission_rate_9m'] ?>"
+                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['commission_rate_9m'] ?>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <i class="text-danger"><?= $label_apartment['commission_rate_6m'] ?></i>
+            <div class="text-right font-weight-bold"
+                 data-name="commission_rate"
+                 data-value="<?= $apartment['commission_rate'] ?>"
+                 data-pk="<?= $apartment['id'] ?>"><?= $apartment['commission_rate_6m'] ?>
+            </div>
+        </li>
         <?php endif; ?>
         <li class="list-group-item">
             <i><?= $label_apartment['electricity'] ?></i>  
