@@ -44,7 +44,8 @@ if(isYourPermission('Contract', 'createShow', $this->permission_set)){
 }
 
 $check_option = true;
-$check_commission_rate = in_array($this->auth['role_code'], ['customer-care', 'product-manager', 'ceo']);
+$check_commission_rate = in_array($this->auth['role_code'], ['consultant','customer-care',
+    'product-manager', 'ceo']);
 ?>
 
 <div class="wrapper">

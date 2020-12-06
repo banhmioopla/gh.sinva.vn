@@ -5,7 +5,7 @@
 $check_contract = in_array($this->auth['role_code'], ['consultant', 'customer-care', 'ceo', 'customer-care']);
 $check_consultant_booking = in_array($this->auth['role_code'], ['customer-care', 'product-manager', 'ceo','consultant', 'human-resources']);
 $check_option = in_array($this->auth['role_code'], ['customer-care', 'product-manager', 'ceo','consultant', 'human-resources']);
-$check_commission_rate = in_array($this->auth['role_code'], ['customer-care','product-manager', 'ceo']);
+$check_commission_rate = in_array($this->auth['role_code'], ['consultant','product-manager', 'ceo']);
 ?>
 
 <div class="wrapper">
