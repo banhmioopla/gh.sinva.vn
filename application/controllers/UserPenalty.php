@@ -8,6 +8,7 @@ class UserPenalty extends CustomBaseStep {
         parent::__construct();
         $this->load->model(['ghUserPenalty', 'ghPenalty']);
         $this->load->library('LibUser', null, 'libUser');
+        $this->load->library('LibPenalty', null, 'libPenalty');
     }
 
     public function show(){
@@ -15,6 +16,7 @@ class UserPenalty extends CustomBaseStep {
         $data['list_userpenalty'] = $this->ghUserPenalty->get();
         $data['list_penalty'] = $this->ghPenalty->get();
         $data['libUser'] = $this->libUser;
+        $data['libPenalty'] = $this->libPenalty;
         $data['ghPenalty'] = $this->ghPenalty;
 
         /*--- Load View ---*/

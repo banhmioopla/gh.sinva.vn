@@ -50,19 +50,33 @@
                                     <div class="userpenalty-user_penalty_id"
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="user_penalty_id">
-                                        <?= $libUser->getNameByAccountid($row['user_penalty_id']) ?>
+                                        <?= $row['user_penalty_id']. ' - '.
+                                        $libUser->getNameByAccountid($row['user_penalty_id']) ?>
                                     </div>
                                 </td>
                                 <td>
+                                    <?php
+                                        $parent = $ghPenalty->get(['id' => $row['id']]);
+                                        if(count($parent)) {
+                                            $parent = $parent[0]['parent_id'];
+                                        } else {
+                                            $parent = 0;
+                                        }
+
+
+                                    ?>
                                     <div class="userpenalty-penalty_id"
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="penalty_id">
-                                        <?= $row['penalty_id'] ?>
+                                        <?=  $libPenalty->getNameById
+                                        ($parent). ' <i class="mdi mdi-menu-right"></i>'.$libPenalty->getNameById
+                                        ($row['penalty_id']) ?>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="userpenalty-time_insert"
                                          data-pk="<?= $row['id'] ?>"
+                                         data-value="<?= date('d-m-Y',$row['time_insert']) ?>"
                                          data-name="time_insert">
                                         <?= date('d-m-Y',$row['time_insert']) ?>
                                     </div>
