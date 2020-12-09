@@ -56,7 +56,7 @@
                                 </td>
                                 <td>
                                     <?php
-                                        $parent = $ghPenalty->get(['id' => $row['id']]);
+                                        $parent = $ghPenalty->get(['id' => $row['penalty_id']]);
                                         if(count($parent)) {
                                             $parent = $parent[0]['parent_id'];
                                         } else {

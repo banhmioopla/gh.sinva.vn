@@ -26,7 +26,7 @@ class LibPenalty {
 
     public function getNameById($id) {
         $obj = $this->CI->ghPenalty->get(['id' => $id]);
-        return $obj ? $obj[0]['name'] :'';
+        return $obj ? $obj[0]['name'] :'xx';
     }
 }
 ?>
