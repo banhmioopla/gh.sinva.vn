@@ -247,6 +247,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             <label for="name" class="col-12 col-md-4 col-form-label">Ngày ký <span class="text-danger">(bb)</span></label>
                             <div class="col-md-8 col-12">
                                 <input type="text" required class="form-control contract-open"
+                                       autocomplete="off"
                                         id="time_open" name="time_open">
                                         <p class="text-danger msg-time_open"></p>
                             </div>
@@ -277,6 +278,19 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                                         id="room_price"
                                         value="<?= number_format($room['price']) ?>"
                                         name="room_price">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="room_price" class="col-12 col-md-4
+                            col-form-label">Hoa Hồng Ký Gửi <span class="text-danger">
+                                    (bb)
+                                </span></label>
+                            <div class="col-md-8 col-12">
+                                <input  type="number"
+                                        required class="form-control"
+                                        value=""
+                                        placeholder="vd: 80%"
+                                        name="commission_rate">
                             </div>
                         </div>
                         <div class="form-group row">

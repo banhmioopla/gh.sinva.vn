@@ -212,6 +212,16 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                             </td>
                         </tr>
                         <tr>
+                            <td class="text-right"><strong>Hoa Hồng Ký Gửi<strong></td>
+                            <td>
+                                <div class="contract-commission_rate w-50"
+                                     data-name="commission_rate"
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-value="<?= $contract['commission_rate']
+                                     ?>"><?= $contract['commission_rate'] ?>%</div>
+                            </td>
+                        </tr>
+                        <tr>
                             <td class="text-right"><strong>Ngày Ký<strong></td>
                             <td>
                                 <div class="contract-time_check_in w-50"
@@ -348,7 +358,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                 }
             });
 
-            $('.contract-room_price, .contract-number_of_month').editable({
+            $('.contract-room_price, .contract-number_of_month, .contract-commission_rate').editable({
                 type: "number",
                 url: '<?= base_url() ?>admin/update-contract-editable',
                 inputclass: '',

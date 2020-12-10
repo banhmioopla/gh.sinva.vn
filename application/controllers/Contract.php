@@ -253,6 +253,7 @@ class Contract extends CustomBaseStep {
 			'status' => $status_contract,
 			'note' => $post['note'],
 			'room_code' => $post['room_code'],
+			'commission_rate' => $post['commission_rate'],
 			'user_create_id' => $this->auth['account_id'],
 			'time_insert' => time(),
 		];

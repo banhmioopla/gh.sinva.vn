@@ -47,8 +47,7 @@ class User extends CustomBaseStep {
 			}
 		}
 		$data['time_joined'] = $post['time_joined'];
-		$data['date_of_birth'] = $post['time_joined'];
-		$data['date_of_birth'] = $post['time_joined'];
+		$data['date_of_birth'] = $post['date_of_birth'];
 		$data['time_insert'] = time();
 		$result = $this->ghUser->insert($data);
 		$this->session->set_flashdata('fast_notify', [

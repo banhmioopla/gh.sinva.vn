@@ -382,7 +382,7 @@ $route['normal/list-apartment'] = function($params = []) {
 // Fee
 $route['admin/list-fee-contract-income'] = function($params = []) {
     $controller = 'Fee';
-    $action = '/showContractIncome';
+    $action = '/showOverviewIncome';
     return $controller.$action;
 };
 

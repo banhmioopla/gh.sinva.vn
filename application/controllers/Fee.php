@@ -30,84 +30,180 @@ class Fee extends CustomBaseStep {
             'is_control_department' => 'YES'
         ]);
 
-        $list_contract = $this->ghContract->get([
-            'time_check_in > ' => strtotime(date('01-m-Y'))
-        ]);
-
-        $data['total_sale'] = 0;
-        $data['total_contract'] = 0;
-        foreach ($list_contract as $contract) {
-            $data['total_sale'] += $contract['room_price'] * $contract['commission_rate'] * $contract['number_of_month'] / (100*12);
-        }
-
-        $total_for_cd = $data['total_sale'] * (double)
-            $income_cd_config['total_sale_sinva']['basic_control_department'] / 100;
-
-        $total_for_sale =$data['total_sale'] * (double) $income_cd_config['total_sale_sinva']['basic_sale'] / 100;
-
+        $data = $this->getTotalContract();
 
         $arr_is_control_department = [];
         foreach ($list_role as $item) {
-            $arr_is_control_department = $item['code'];
+            $arr_is_control_department[] = $item['code'];
         }
 
         foreach ($list_user as $user) {
-            if(in_array($user['role_code'], $arr_is_control_department)) {
-
-            }
+            $view_data[$user['account_id']] = $this->syncRoundNumberContractPersonal
+            ($user['account_id'],
+                $data['quantity']);
         }
+
+
 
     }
 
-    private function syncRoundNumberContractPersonal($user_id = null,
-                                                     $contract_quantity = 0) {
+    private function getTotalContract() {
+        $list_user = $this->ghUser->get(['account_id >=' => 171020000]);
+        $list_role = $this->ghRole->get(['is_control_department' => 'NO']);
+        $arr_user = [];
+        $arr_role = [];
+
+        foreach ($list_role as $item) {
+            $arr_role[] = $item['code'];
+        }
+        foreach ($list_user as $item) {
+            if(in_array($item['role_code'], $arr_role)) {
+                $arr_user[] = $item['account_id'];
+            }
+        }
+
+        $last_date = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
+        $start_date = date('01-m-Y');
+        $end_date = date($last_date.'-m-Y');
+
+
+        $list_contract = $this->ghContract->get([
+            'time_check_in >=' => strtotime($start_date),
+            'time_check_in <=' => strtotime($end_date),
+        ]);
+        $result['quantity'] = 0;
+        $result['total_sale'] = 0;
+        foreach ($list_contract as $item) {
+            if(in_array($item['consultant_id'], $arr_user)) {
+                $result['quantity'] ++;
+                $result['total_sale'] += $item['room_price'] *
+                    (double)$item['commission_rate']/100;
+            }
+        }
+        return $result;
+    }
+
+    private function syncRoundNumberContractPersonal($user_id = null, $total_contract =
+    0, $total_sale = 0) {
+        $cd_config =  $this->config->item('internal_mechanism_income_rate_control_department');
+        $total_sale_for_cd = $total_sale * (double)
+            $cd_config['total_sale_sinva']['basic_control_department'] / 100;
+        $round_contract_to_compare = 0;
+        if($total_contract > 0) {
+            $round_contract_to_compare = $total_contract - ($total_contract%10);
+            // foreach $cd_config
+        }
 
         $last_date = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
         $start_date = date('01-m-Y');
         $end_date = date($last_date.'-m-Y');
 
         $cd_config = $this->config->item('internal_mechanism_income_rate_control_department');
+        $sale_config = $this->config->item('internal_mechanism_income_rate');
 
         $list_contract = $this->ghContract->get([
             'time_check_in >=' => strtotime($start_date),
             'time_check_in <=' => strtotime($end_date),
-            'consultant_user_id' => $user_id
+            'consultant_id' => $user_id
         ]);
 
+        $total_user_contract = count($list_contract);
+
         $user = $this->ghUser->get(['account_id' => $user_id])[0];
-        if($user['is_control_department'] == "YES") {
-            $cd_config['index_extra_' . $user['role_code']];
-        } else {
+        $user_role = $this->ghRole->get(['code' => $user['role_code']])[0];
+
+
+        $result['rate'] = 0;
+        $is_cd = false;
+        $mapping_cd = [];
+        $arr_general = [
+            171020010,
+            171020095,
+            171020036,
+            171020045
+        ];
+        $arr_role_general = ['customer-care', 'humman-resources'];
+        if($user_role['is_control_department'] == "YES") {
+            if(in_array($user_role['code'], $arr_role_general)) {
+                $mapping_cd = $cd_config['index_extra_general'];
+            } else {
+                $mapping_cd = $cd_config['index_extra_' . $user['role_code']];
+            }
 
         }
-        $number_contract = count($list_contract);
+        if(in_array($user['account_id'], $arr_general)) {
+            $is_cd = true;
+            $mapping_cd = $cd_config['index_extra_general'];
+        }
 
-        $total_room_price = 0;
         $total_sale_sinva = 0;
-        $quantity = 0;
         $max_room_price = 0;
         $max_number_of_month = 0;
         $temp1 = 0;
+        $total_b1 = 0;
+        $total_b2 = 0;
+        $total_personal_income = 0;
 
-        foreach ($list_contract as $item) {
-            if($item['room_price']*$item['number_of_month'] > $temp1) {
-                $temp1 = $item['room_price']*$item['number_of_month'];
-                $max_room_price = $item['room_price'];
-                $max_number_of_month = $item['number_of_month'];
+        if($is_cd) {
+            foreach($mapping_cd as $item) {
+                if($item['quantity'] == $round_contract_to_compare) {
+                    $result['income_contract_rate'] = $item['rate'];
+                }
+
+                if($item['quantity'] <= $round_contract_to_compare) {
+                    $result['income_contract_rate'] = $item['rate'];
+                }
             }
 
-            $total_room_price += $item['room_price'];
-            $quantity ++;
-            $total_sale_sinva += $item['room_price'] * $item['commission_rate']/(100);
+            foreach ($list_contract as $item) {
+                if($item['room_price']*$item['commission_rate'] > $temp1) {
+                    $temp1 = $item['room_price']*$item['commission_rate'];
+                    $max_room_price = $item['room_price'];
+                    $max_number_of_month = $item['number_of_month'];
+                }
+                foreach ($cd_config['index_master_b2'] as $b2) {
+                    if($item['room_price'] >= $b2['room_price_min'] && $item['room_price'] < $b2['room_price_max']) {
+                        $total_b2 += $b2['income_unit'] * $item['number_of_month'];
+                        break;
+                    }
+                }
+                $total_sale_sinva += $item['room_price'] * $item['commission_rate']/(100);
+            }
+
+            foreach ($cd_config['index_master_b2'] as $b1) {
+                if($max_room_price >= $b1['room_price_min'] && $max_room_price < $b1['room_price_max']) {
+                    $total_b1 += $b1['income_unit'] * $max_number_of_month;
+                    break;
+                }
+            }
+
+            $total_personal_income = $total_b1 + $total_b2;
+
+        } else {
+            $mapping_sale = $sale_config['index_' . $user['role_code']];
+            $rate = 0;
+            foreach($mapping_sale as $item) {
+                if($item['quantity_max'] > $total_user_contract &&
+                    $item['quantity_min'] <= $total_user_contract) {
+                    $rate = $item['rate'];
+                    break;
+                }
+            }
+
+            foreach ($list_contract as $item) {
+                $total_personal_income += $item['room_price'] * (double)
+                    ($item['commission_rate'] * $rate / 10000);
+
+                $total_sale_sinva += $item['room_price'] * (double)$item['commission_rate']/(100);
+            }
+
         }
 
+
         return [
-            'list_contract' => $list_contract,
-            'number_contract' => $number_contract,
-            'total_room_price' => $total_room_price,
-            'total_sale_sinva' => $total_sale_sinva,
-            'max_room_price' => $max_room_price,
-            'max_number_of_month' => $max_number_of_month
+            'quantity_contract' => count($list_contract),
+            'total_sale' => $total_sale_sinva,
+            'total_personal_income' => $total_personal_income
         ];
     }
 
