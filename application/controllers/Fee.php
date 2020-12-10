@@ -33,7 +33,8 @@ class Fee extends CustomBaseStep {
 
     public function showOverviewIncome(){
         $list_user = $this->ghUser->get([
-            'active' => 'YES'
+            'active' => 'YES',
+            'account_id >=' => 171020000
         ]);
         $list_role = $this->ghRole->get([
             'is_control_department' => 'YES'
