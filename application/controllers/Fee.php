@@ -27,7 +27,6 @@ class Fee extends CustomBaseStep {
             171020057, // thanh cong
         ];
 
-
     }
 
 
@@ -49,23 +48,29 @@ class Fee extends CustomBaseStep {
 
 
         $view_data_income = [];
+        $total_sale = 0;
+        $quantity_contract = 0;
         foreach ($list_user as $user) {
             $view_data_income[$user['account_id']] = $this->syncRoundNumberContractPersonal
             ($user['account_id'],
                 $data['quantity']);
+//            if($user['account_id'] == 171020057) {
+//                echo "<pre>";
+//                var_dump($view_data_income[$user['account_id']]);
+//                die;
+//            }
+            $total_sale += $view_data_income[$user['account_id']]['total_sale'];
+            $quantity_contract += $view_data_income[$user['account_id']]['quantity_contract'];
         }
 
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('fee/show-overview-income', [
             'list_user_income' => $view_data_income,
             'libUser' => $this->libUser,
+            'total_sale' => $total_sale,
+            'quantity_contract' => $quantity_contract,
         ]);
         $this->load->view('components/footer');
-
-
-
-
-
     }
 
     private function getTotalContract() {
@@ -164,12 +169,13 @@ class Fee extends CustomBaseStep {
                 }
             }
 
+
             $total_extra_personal_income = $extra_rate_cd * (double)$total_sale_for_cd
                 / count($this->arr_general);
 
             foreach ($list_contract as $item) {
-                if($item['room_price']*$item['commission_rate'] > $temp1) {
-                    $temp1 = $item['room_price']*$item['commission_rate'];
+                if($item['room_price'] > $temp1) {
+                    $temp1 = $item['room_price'];
                     $max_room_price = $item['room_price'];
                     $max_number_of_month = $item['number_of_month'];
                     $max_contract_id = $item['id'];

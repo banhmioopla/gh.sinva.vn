@@ -24,6 +24,45 @@
 
         <div class="district-alert"></div>
         <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <h3 class="text-center text-danger">Thống Kê Doanh Số</h3>
+            </div>
+
+            <div class="col-12 col-md-6 offset-md-3 col-12">
+                <div class="card-box text-dark bg-white text-white shadow">
+                    <i class="fi-tag"></i>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <p class="text-uppercase m-b-5 font-600">Số Lượng Thành Viên:
+
+                        </div>
+
+
+                        <div class="col-12">
+                            <p>
+                            <div class="mt-1 border-bottom">
+                                <i class="mdi mdi-checkerboard"> Tổng Doanh Số BPKD Tháng
+                                    <?= date('m/Y') ?>:</i>
+
+                                <strong class="float-right">
+                                    <?= number_format($total_sale) ?></strong>
+                            </div>
+
+                            <div class="mt-1 border-bottom">
+                                <i class="mdi mdi-checkerboard"> Tổng SLHĐ BPKD Tháng
+                                    <?= date('m/Y') ?>:</i>
+
+                                <strong class="float-right">
+                                    <?= $quantity_contract ?></strong>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 col-md-5 offset-md-1 ">
                 <div class="card-box table-responsive shadow">
                     <h3 class="text-danger text-center">Thống Kê Thu Nhập</h3>
