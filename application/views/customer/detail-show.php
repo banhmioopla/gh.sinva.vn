@@ -64,8 +64,8 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                             <td>
                                 <div class="customer-birthdate w-50"
                                      data-pk="<?= $customer['id'] ?>"
-                                     data-value="<?= $customer['birthdate'] > 0 ? date('d/m/Y', $customer['birthdate']) : '' ?>"
-                                     data-name="birthdate"><?= $customer['birthdate'] > 0 ? date('d/m/Y', $customer['birthdate']) : '' ?></div>
+                                     data-value="<?= $customer['birthdate'] ? date('d/m/Y', $customer['birthdate']) : '' ?>"
+                                     data-name="birthdate"><?= $customer['birthdate'] ? date('d/m/Y', $customer['birthdate']) : '' ?></div>
                             </td>
                         </tr>
 
@@ -251,6 +251,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                     return data;
                 },
             });
+
             $('.customer-birthdate, .customer-demand_time').editable({
                 url: '<?= base_url() ?>admin/update-customer-editable',
                 placement: 'right',
@@ -261,7 +262,9 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                 viewformat:"DD-MM-YYYY",
                 mode: 'popup',
                 combodate: {
-                    firstItem: 'name'
+                    firstItem: 'name',
+                    maxYear: '2030',
+                    minYear: '1940'
                 },
                 inputclass: 'form-control-sm',
             });
