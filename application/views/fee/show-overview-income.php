@@ -63,13 +63,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-5 offset-md-1 ">
+            <div class="col-12 col-md-12 ">
                 <div class="card-box table-responsive shadow">
                     <h3 class="text-danger text-center">Thống Kê Thu Nhập</h3>
                     <table id="table-district" class="table">
                         <thead>
                         <tr>
                             <th>Thành Viên</th>
+                            <th width="400px">Chi tiết</th>
                             <th class="text-center" width="80px">Số Lượng Hợp Đồng</th>
                             <th class="text-right">Tổng Doanh Số (x1000)</th>
                             <th class="text-right">Tổng Thu Nhập(x1000)</th>
@@ -80,6 +81,9 @@
                             <tr>
                                 <td >
                                     <div> <?= $libUser->getNameByAccountid($account_id) ?> </div>
+                                </td>
+                                <td >
+                                    <div> <?= $item['description_income'] ?> </div>
                                 </td>
                                 <td class="text-center"><?= number_format($item['quantity_contract']) ?></td>
 

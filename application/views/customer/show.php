@@ -80,7 +80,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     <div class="customer-birthdate text-pink"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="birthdate">
-                                            <?= $row['birthdate'] > 0 ? date('d/m/Y',$row['birthdate']) : ''  ?>
+                                            <?= $row['birthdate'] ? date('d/m/Y',$row['birthdate']) : ''  ?>
                                     </div>
                                 </td>
                                 <td>
@@ -321,7 +321,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                         }
                     });
                     $.fn.combodate.defaults.maxYear = 2025;
-                    $.fn.combodate.defaults.minYear = 1970;
+                    $.fn.combodate.defaults.minYear = 1940;
                     $('.customer-birthdate, .customer-demand_time').editable({
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         placement: 'right',

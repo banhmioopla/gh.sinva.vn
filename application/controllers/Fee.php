@@ -27,6 +27,10 @@ class Fee extends CustomBaseStep {
             171020057, // thanh cong
         ];
 
+        $this->rate_personal_consultant_support_id = 0.7;
+        $this->rate_personal_is_support_control = 0.9;
+
+
     }
 
 
@@ -117,6 +121,7 @@ class Fee extends CustomBaseStep {
             $cd_config['total_sale_sinva']['basic_control_department'] / 100;
 
         $round_contract_to_compare = $total_contract;
+        $description = "";
 
         $last_date = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
         $start_date = date('01-m-Y');
@@ -126,10 +131,9 @@ class Fee extends CustomBaseStep {
         $list_contract = $this->ghContract->get([
             'time_check_in >=' => strtotime($start_date),
             'time_check_in <=' => strtotime($end_date),
-            'consultant_id' => $user_id
         ]);
 
-        $total_user_contract = count($list_contract);
+        $total_user_contract = 0;
 
         $user = $this->ghUser->get(['account_id' => $user_id])[0];
         $user_role = $this->ghRole->get(['code' => $user['role_code']])[0];
@@ -139,8 +143,10 @@ class Fee extends CustomBaseStep {
         $mapping_cd = [];
         $arr_role_general = ['customer-care', 'human-resources', 'product-manager'];
         if($user_role['is_control_department'] == "YES") {
+            $description = "(1) Vận Hành <br>";
             $is_cd = true;
             if(in_array($user_role['code'], $arr_role_general)) {
+                $description = "(1) Vận Hành Chung <br>";
                 $mapping_cd = $cd_config['index_extra_general'];
             } else {
                 $mapping_cd = $cd_config['index_extra_' . $user['role_code']];
@@ -150,62 +156,110 @@ class Fee extends CustomBaseStep {
         if(in_array($user['account_id'], $this->arr_general)) {
             $is_cd = true;
             $mapping_cd = $cd_config['index_extra_general'];
+            $description = "(1) Vận Hành Chung <br>";
         }
 
         $total_sale_sinva = 0;
         $max_room_price = 0;
         $max_number_of_month = 0;
         $max_contract_id = 0;
+        $max_consultant_support_id = 0;
         $temp1 = 0;
         $total_b1 = 0;
         $total_b2 = 0;
         $total_personal_income = 0;
         $extra_rate_cd = 0;
         if($is_cd) {
+
             foreach($mapping_cd as $item) {
                 if($item['quantity_min'] <= $round_contract_to_compare && $round_contract_to_compare >= $item['quantity_max']) {
                     $extra_rate_cd = $item['rate'];
                     break;
                 }
             }
+            $sub_description = "(2) Tỉ lệ cơ bản: ".$extra_rate_cd."% <br>";
 
 
             $total_extra_personal_income = $extra_rate_cd * (double)$total_sale_for_cd
                 / count($this->arr_general);
+            $sub_description .= " {TLCB} x {DT} = " . $total_extra_personal_income . "<br>";
 
             foreach ($list_contract as $item) {
+                if(!$this->isValidPersonalContract($item, $user_id)) {
+                    continue;
+                }
+
                 if($item['room_price'] > $temp1 * $item['commission_rate']) {
                     $temp1 = $item['room_price'] * $item['commission_rate'];
                     $max_room_price = $item['room_price'];
                     $max_number_of_month = $item['number_of_month'];
                     $max_contract_id = $item['id'];
+                    $max_consultant_support_id = $item['consultant_support_id'];
+                    $max_is_support_control = $item['is_support_control'];
                 }
             }
-
+            $sub_description .= "(3) HĐ có {DS} cao nhất: $max_room_price - ($max_number_of_month) <br>";
 
             foreach ($cd_config['index_master_b1'] as $b1) {
                 if($max_room_price >= $b1['room_price_min'] && $max_room_price < $b1['room_price_max']) {
                     $total_b1 += $b1['income_unit'] * $max_number_of_month;
+                    if($max_consultant_support_id > 0) {
+                        $total_b1 = (double) $total_b1 * 0.7;
+                    }
+
+                    if($max_is_support_control == 'YES') {
+                        $total_b1 = (double) $total_b1 * 0.9;
+                    }
+                    $total_user_contract = 1;
+                    $sub_description .= "(4) B1: $max_number_of_month th x " .$b1['income_unit']." = ". $total_b1 .
+                        "<br>";
                     break;
                 }
             }
 
+
+
+            $sub_description .= " (5) B2: |Chi tiết hợp đồng nhỏ| <br>";
             foreach ($list_contract as $item) {
-                $total_sale_sinva =
-                    $item['commission_rate'] * (double)$item['room_price'] / 100;
-                if($item['id'] === $max_contract_id) {
+                if(!$this->isValidPersonalContract($item, $user_id)) {
                     continue;
                 }
 
+                $total_sale_sinva =
+                    $item['commission_rate'] * (double)$item['room_price'] / 100;
+
+                if($item['id'] === $max_contract_id) {
+                    continue;
+                }
+                $total_user_contract ++;
                 foreach ($cd_config['index_master_b2'] as $b2) {
                     if($item['room_price'] >= $b2['room_price_min'] && $item['room_price'] < $b2['room_price_max']) {
-                        $total_b2 += $b2['income_unit'] * $max_number_of_month;
+                        $temp_income =  $b2['income_unit'] * $item['number_of_month'];
+
+                        if($item['consultant_support_id'] > 0) {
+                            $temp_income = (double) $temp_income * 0.7;
+                        }
+
+                        if($item['is_support_control'] == 'YES') {
+                            $temp_income = (double) $temp_income * 0.9;
+                        }
+                        $total_b2 += $temp_income;
+
+                        $sub_description .= $b2['income_unit'] . " x " . $item['number_of_month'] . " = ". $b2['income_unit'] * $item['number_of_month'];
+
+                        break;
                     }
                 }
             }
+            $sub_description .= "<br>";
 
-            $total_personal_income = $total_b1 + $total_b2 + $total_extra_personal_income;
-
+            if(in_array($user['account_id'], $this->arr_general)) {
+                $total_personal_income = $total_b1 + $total_b2 + $total_extra_personal_income;
+            } else {
+                $total_personal_income = $total_extra_personal_income;
+            }
+            $sub_description .= " @@@ Tổng Thu Nhập Cá Nhân =" . $total_personal_income;
+            $description = $sub_description;
         } else {
             $mapping_sale = $sale_config['index_' . $user['role_code']];
             $rate = 0;
@@ -222,14 +276,17 @@ class Fee extends CustomBaseStep {
                     ($item['commission_rate'] * $rate / 10000);
 
                 $total_sale_sinva += $item['room_price'] * (double)$item['commission_rate']/(100);
+
+                $total_user_contract++;
             }
 
         }
 
         return [
-            'quantity_contract' => count($list_contract),
+            'quantity_contract' => $total_user_contract,
             'total_sale' => $total_sale_sinva,
             'total_personal_income' => $total_personal_income,
+            'description_income' => $description
         ];
     }
 
@@ -239,6 +296,18 @@ class Fee extends CustomBaseStep {
             if($k == $key) array_push($val, $v);
         });
         return count($val) > 1 ? $val : [array_pop($val)];
+    }
+
+    private function isValidPersonalContract($contract, $user_id) {
+        if(($contract['consultant_id'] != $user_id &&
+            $contract['consultant_support_id'] != $user_id) ||
+
+        ($contract['consultant_id'] != $user_id &&
+            $contract['is_support_control'] == "NO"))
+            return true;
+
+        return false;
+
     }
 
     private function syncContractIncome($user_id = null, $role_code = null){
