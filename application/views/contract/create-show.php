@@ -57,6 +57,27 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             <td style="white-space: pre-line;"><?= $apartment['note'] ?></td>
                         </tr>
                         <tr>
+                            <td><strong>12Th<strong></td>
+                            <td style="white-space: pre-line;"
+                                id="cr_12m"
+                                data-cr="<?= $apartment['commission_rate'] ?>">
+                                <?= $apartment['commission_rate'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>9Th<strong></td>
+                            <td style="white-space: pre-line;"
+                                id="cr_9m"
+                                data-cr="<?= $apartment['commission_rate_9m'] ?>">
+                                <?= $apartment['commission_rate_9m'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>6Th<strong></td>
+                            <td style="white-space: pre-line;"
+                            id="cr_6m"
+                            data-cr="<?= $apartment['commission_rate_6m'] ?>"><?= $apartment['commission_rate_6m']
+                                ?></td>
+                        </tr>
+                        <tr>
                             <td><strong>Điện</strong></td>
                             <td><?= $apartment['electricity'] ?></td>
                         </tr>
@@ -244,7 +265,8 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                         <hr>
                         <h5>Thông tin hợp đồng (hoặc cọc)</h5>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Ngày ký <span class="text-danger">(bb)</span></label>
+                            <label for="name" class="col-12 col-md-4
+                            col-form-label">Ngày ký <span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <input type="text" required class="form-control contract-open"
                                        autocomplete="off"
@@ -253,7 +275,8 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-12 col-md-4 col-form-label">Số tháng ở <span class="text-danger">(bb)</span></label>
+                            <label for="name" class="col-12 col-md-4 col-form-label">Số
+                                tháng thuê <span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <input  type="number" 
                                         required class="form-control"
@@ -271,7 +294,8 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="room_price" class="col-12 col-md-4 col-form-label">Giá Thuê <span class="text-danger"> (bb)</span></label>
+                            <label for="room_price" class="col-12 col-md-4
+                            col-form-label">Giá Thuê <span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <input  type="text" 
                                         required class="form-control"
@@ -282,19 +306,18 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                         </div>
                         <div class="form-group row">
                             <label for="room_price" class="col-12 col-md-4
-                            col-form-label">Hoa Hồng Ký Gửi <span class="text-danger">
-                                    (bb)
-                                </span></label>
+                            col-form-label">Hoa Hồng Ký Gửi</label>
                             <div class="col-md-8 col-12">
                                 <input  type="number"
-                                        required class="form-control"
+                                        class="form-control"
                                         value=""
                                         placeholder="vd: 80%"
                                         name="commission_rate">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-12 col-md-4 col-form-label">Trạng thái Hợp đồng</label>
+                            <label for="" class="col-12 col-md-4 col-form-label">Trạng
+                                thái Hợp đồng <span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <div class="radio radio-custom">
                                     <input type="radio" name="status" checked id="sinva-Active" value="Active">
@@ -313,7 +336,8 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
 
                         
                         <div class="form-group row">
-                            <label for="file" class="col-12 col-md-4 col-form-label">Upload Ảnh Hợp Đồng</label>
+                            <label for="file" class="col-12 col-md-4
+                            col-form-label">Ảnh Hợp Đồng <span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <input type="file"
                                     required
@@ -356,6 +380,31 @@ commands.push(function(){
 
     $(':file').change(function () {
         $('.number-file').text(this.files.length + " ảnh được chọn");
+    });
+
+    $('input[name=number_of_month]').change(function () {
+        let number_of_month = $(this).val();
+        let cr_6m = $('#cr_6m').data('cr');
+        let cr_9m = $('#cr_9m').data('cr');
+        let cr_12m = $('#cr_12m').data('cr');
+
+        let contract_cr = $('input[name=commission_rate]');
+        contract_cr.val(0);
+        if(number_of_month > 6 && cr_9m > 0) {
+            contract_cr.val(cr_9m);
+        }
+
+       if(number_of_month > 9 && cr_12m > 0) {
+           contract_cr.val(cr_12m);
+       }
+
+        if(number_of_month <= 6 && cr_6m > 0) {
+            contract_cr.val(cr_6m);
+        }
+
+        console.log(contract_cr.val());
+
+
     });
 
     $('.new-customer').hide();

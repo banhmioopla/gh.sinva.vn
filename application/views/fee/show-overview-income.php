@@ -66,24 +66,27 @@
             <div class="col-12 col-md-12 ">
                 <div class="card-box table-responsive shadow">
                     <h3 class="text-danger text-center">Thống Kê Thu Nhập</h3>
-                    <table id="table-district" class="table">
+                    <table id="table-district" class="table table-hover">
                         <thead>
                         <tr>
                             <th>Thành Viên</th>
-                            <th width="400px">Chi tiết</th>
+                            <th width="400px" class="d-none">Chi tiết</th>
                             <th class="text-center" width="80px">Số Lượng Hợp Đồng</th>
-                            <th class="text-right">Tổng Doanh Số (x1000)</th>
-                            <th class="text-right">Tổng Thu Nhập(x1000)</th>
+                            <th class="text-right">Tổng Doanh Số <br> (x1000)</th>
+                            <th class="text-right">Tổng Thu Nhập <br> (x1000)</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach($list_user_income as $account_id => $item ): ?>
                             <tr>
                                 <td >
-                                    <div> <?= $libUser->getNameByAccountid($account_id) ?> </div>
+                                    <div><i class="mdi
+                            mdi-chevron-double-right text-info"></i> <?=
+                                        $libUser->getNameByAccountid
+                                        ($account_id) ?> </div>
                                 </td>
-                                <td >
-                                    <div> <?= $item['description_income'] ?> </div>
+                                <td class="d-none">
+                                    <div> <?//= $item['description_income'] ?> </div>
                                 </td>
                                 <td class="text-center"><?= number_format($item['quantity_contract']) ?></td>
 
@@ -97,7 +100,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-12">
                 <div class="card-box table-responsive shadow">
                     <h3 class="text-danger text-center">Thu Nhập Từ Các Khoảng Thưởng</h3>
                 </div>

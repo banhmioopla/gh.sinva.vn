@@ -113,6 +113,7 @@ class Fee extends CustomBaseStep {
         return $result;
     }
 
+    /*Cơ chế mới*/
     private function syncRoundNumberContractPersonal($user_id = null, $total_contract =
     0, $total_sale = 0) {
         $cd_config = $this->config->item('internal_mechanism_income_rate_control_department');
@@ -164,6 +165,7 @@ class Fee extends CustomBaseStep {
         $max_number_of_month = 0;
         $max_contract_id = 0;
         $max_consultant_support_id = 0;
+        $max_is_support_control = "NO";
         $temp1 = 0;
         $total_b1 = 0;
         $total_b2 = 0;
@@ -189,7 +191,7 @@ class Fee extends CustomBaseStep {
                     continue;
                 }
 
-                if($item['room_price'] > $temp1 * $item['commission_rate']) {
+                if($item['room_price'] * $item['commission_rate'] > $temp1) {
                     $temp1 = $item['room_price'] * $item['commission_rate'];
                     $max_room_price = $item['room_price'];
                     $max_number_of_month = $item['number_of_month'];
@@ -272,6 +274,9 @@ class Fee extends CustomBaseStep {
             }
 
             foreach ($list_contract as $item) {
+                if(!$this->isValidPersonalContract($item, $user_id)) {
+                    continue;
+                }
                 $total_personal_income += $item['room_price'] * (double)
                     ($item['commission_rate'] * $rate / 10000);
 
@@ -299,15 +304,11 @@ class Fee extends CustomBaseStep {
     }
 
     private function isValidPersonalContract($contract, $user_id) {
-        if(($contract['consultant_id'] != $user_id &&
-            $contract['consultant_support_id'] != $user_id) ||
-
-        ($contract['consultant_id'] != $user_id &&
-            $contract['is_support_control'] == "NO"))
+        if(($contract['consultant_id'] == $user_id ||
+            $contract['consultant_support_id'] == $user_id))
             return true;
 
         return false;
-
     }
 
     private function syncContractIncome($user_id = null, $role_code = null){

@@ -95,7 +95,8 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-right"><strong>Thành Viên Hỗ Trợ (30%)<strong></td>
+                            <td class="text-right"><strong>Thành Viên Hỗ Trợ (-30%TN)
+                                    <strong></td>
                             <td>
                                 <div class="consultant_support_id w-50"
                                      data-pk="<?= $contract['id'] ?>"
@@ -103,6 +104,22 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                                      data-name="consultant_support_id">
                                     <?= $contract['consultant_support_id'] >= 171020000 ?
                                         $libUser->getNameByAccountid($contract['consultant_support_id']) : '[không có thông tin]' ?></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Sinva Hỗ Trợ (-10%TN)
+                                    <strong></td>
+                            <td>
+                                <div class="d-flex justify-content-start">
+                                    <div class="checkbox checkbox-success is_support_control">
+                                        <input id="contract-<?= $contract['id'] ?>"
+                                               value="<?= $contract['is_support_control'] ?>"
+                                               type="checkbox"
+                                            <?= $contract['is_support_control'] =='YES' ? 'checked':'' ?>>
+                                        <label for="contract-<?= $contract['id'] ?>">
+                                        </label>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -327,6 +344,23 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                         confirmButtonClass: 'btn btn-confirm mt-2'
                     });
                 })
+            });
+
+            $('.is_support_control input[type=checkbox]').click(function() {
+                var is_support_control = 'NO';
+                var this_id = $(this).attr('id');
+                var matches = this_id.match(/(\d+)/);
+                var contract_id = matches[0];
+                if($(this).is(':checked')) {
+                    is_support_control = 'YES';
+                }
+                console.log(contract_id);
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url() ?>admin/update-contract-editable',
+                    data: {name: 'is_support_control', pk: contract_id, value :is_support_control},
+                    async: false
+                });
             });
 
             $('.consultant_support_id').editable({
