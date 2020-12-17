@@ -1,7 +1,11 @@
 <?php 
-$role_delete = ['product-manager', 'customer-care'];
-
+$role_delete = ['product-manager', 'customer-care', 'business-manager'];
+$check_modify = false;
+if(isYourPermission($this->current_controller, 'update', $this->permission_set)){
+    $check_modify = true;
+}
 ?>
+
 
 <?php 
     include VIEWPATH.'functions.php';
@@ -122,8 +126,10 @@ $role_delete = ['product-manager', 'customer-care'];
                                         <div class="portfolio-masonry-detail">
                                             <h4 class="font-18"><?= date('d-m-Y', $img['time_insert']) ?></h4>
                                             <div class="d-flex justify-content-center">
-                                                <?php if(in_array($this->auth['role_code'], $role_delete)): ?>
-                                                    <button data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-img">
+                                                <?php if($check_modify): ?>
+                                                    <button type="button" data-img-id=<?=
+                                                    $img['id']
+                                                    ?> class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-img">
                                                     <i class="mdi mdi-delete"></i>
                                                     </button>
                                                 <?php endif; ?>
