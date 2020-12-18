@@ -391,15 +391,15 @@ commands.push(function(){
         let contract_cr = $('input[name=commission_rate]');
         contract_cr.val(0);
         if(number_of_month > 6 && cr_9m > 0) {
-            contract_cr.val(cr_9m);
+            contract_cr.val(cr_9m/9*number_of_month);
         }
 
        if(number_of_month > 9 && cr_12m > 0) {
-           contract_cr.val(cr_12m);
+           contract_cr.val(cr_12m/12*number_of_month);
        }
 
         if(number_of_month <= 6 && cr_6m > 0) {
-            contract_cr.val(cr_6m);
+            contract_cr.val(cr_6m/6*number_of_month);
         }
 
         console.log(contract_cr.val());

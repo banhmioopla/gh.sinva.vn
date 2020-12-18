@@ -224,9 +224,6 @@ class Contract extends CustomBaseStep {
 		} else {
 			$customer_id = $post['customer_name'];
 			$update_customer = ['status' => 'sinva-rented'];
-			if($this->auth['role_code'] !== 'customer-care') {
-				$update_customer = ['status' => 'sinva-rented', 'test_mode' => '[YES,'.$this->auth['name'].']'];
-			}
 			$customer_model = $this->ghCustomer->updateById($customer_id, $update_customer);
 		}
 		

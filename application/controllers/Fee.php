@@ -52,31 +52,22 @@ class Fee extends CustomBaseStep {
 
 
         $view_data_income = [];
-        $total_sale = 0;
-        $quantity_contract = 0;
         foreach ($list_user as $user) {
-            $view_data_income[$user['account_id']] = $this->syncRoundNumberContractPersonal
-            ($user['account_id'],
-                $data['quantity']);
-//            if($user['account_id'] == 171020057) {
-//                echo "<pre>";
-//                var_dump($view_data_income[$user['account_id']]);
-//                die;
-//            }
-            $total_sale += $view_data_income[$user['account_id']]['total_sale'];
-            $quantity_contract += $view_data_income[$user['account_id']]['quantity_contract'];
+            $view_data_income[$user['account_id']] =
+                $this->syncRoundNumberContractPersonal($user['account_id'], $data['quantity'], $data['total_sale']);
         }
 
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('fee/show-overview-income', [
             'list_user_income' => $view_data_income,
             'libUser' => $this->libUser,
-            'total_sale' => $total_sale,
-            'quantity_contract' => $quantity_contract,
+            'total_sale' => $data['total_sale'],
+            'quantity_contract' => $data['quantity'],
         ]);
         $this->load->view('components/footer');
     }
 
+    /*Tổng doanh số bpkd*/
     private function getTotalContract() {
         $list_user = $this->ghUser->get(['account_id >=' => 171020000]);
         $list_role = $this->ghRole->get(['is_control_department' => 'NO']);
@@ -87,7 +78,8 @@ class Fee extends CustomBaseStep {
             $arr_role[] = $item['code'];
         }
         foreach ($list_user as $item) {
-            if(in_array($item['role_code'], $arr_role)) {
+            if(in_array($item['role_code'], $arr_role) && !in_array
+                ($item['account_id'], $this->arr_general)) {
                 $arr_user[] = $item['account_id'];
             }
         }
@@ -99,28 +91,31 @@ class Fee extends CustomBaseStep {
 
         $list_contract = $this->ghContract->get([
             'time_check_in >=' => strtotime($start_date),
-            'time_check_in <=' => strtotime($end_date),
+            'time_check_in <=' => strtotime($end_date) + 86399,
         ]);
+
         $result['quantity'] = 0;
         $result['total_sale'] = 0;
         foreach ($list_contract as $item) {
             if(in_array($item['consultant_id'], $arr_user)) {
-                $result['quantity'] ++;
                 $result['total_sale'] += $item['room_price'] *
                     (double)$item['commission_rate']/100;
+                $result['quantity'] ++;
             }
         }
         return $result;
     }
 
-    /*Cơ chế mới*/
-    private function syncRoundNumberContractPersonal($user_id = null, $total_contract =
-    0, $total_sale = 0) {
+    /*Cơ chế mới cho mỗi thành viên*/
+    private function syncRoundNumberContractPersonal($user_id = null, $total_contract = 0, $total_sale = 0) {
         $cd_config = $this->config->item('internal_mechanism_income_rate_control_department');
         $sale_config = $this->config->item('internal_mechanism_income_rate');
+
+        /*Tổng doanh số cho vận hành*/
         $total_sale_for_cd = $total_sale * (double)
             $cd_config['total_sale_sinva']['basic_control_department'] / 100;
 
+        /*Tổng số lượng hợp đồng bpkd*/
         $round_contract_to_compare = $total_contract;
         $description = "";
 
@@ -134,7 +129,16 @@ class Fee extends CustomBaseStep {
             'time_check_in <=' => strtotime($end_date),
         ]);
 
+        /*Tính Doanh Số, Số lượng HD Của 1 TV*/
         $total_user_contract = 0;
+        $total_sale_sinva = 0;
+        foreach ($list_contract as $item) {
+            if($item['consultant_id'] === $user_id) {
+                $total_user_contract ++;
+                $total_sale_sinva += (double)$item['room_price'] *
+                $item['commission_rate'] / 100;
+            }
+        }
 
         $user = $this->ghUser->get(['account_id' => $user_id])[0];
         $user_role = $this->ghRole->get(['code' => $user['role_code']])[0];
@@ -142,14 +146,18 @@ class Fee extends CustomBaseStep {
         $result['rate'] = 0;
         $is_cd = false;
         $mapping_cd = [];
-        $arr_role_general = ['customer-care', 'human-resources', 'product-manager'];
+
+        /*Thuộc VH*/
         if($user_role['is_control_department'] == "YES") {
             $description = "(1) Vận Hành <br>";
             $is_cd = true;
-            if(in_array($user_role['code'], $arr_role_general)) {
+
+            /*Vận Hành Chung*/
+            if(in_array($user['account_id'], $this->arr_general)) {
                 $description = "(1) Vận Hành Chung <br>";
                 $mapping_cd = $cd_config['index_extra_general'];
             } else {
+                /*Không thuộc vận hành chung*/
                 $mapping_cd = $cd_config['index_extra_' . $user['role_code']];
             }
         }
@@ -160,7 +168,7 @@ class Fee extends CustomBaseStep {
             $description = "(1) Vận Hành Chung <br>";
         }
 
-        $total_sale_sinva = 0;
+
         $max_room_price = 0;
         $max_number_of_month = 0;
         $max_contract_id = 0;
@@ -173,6 +181,7 @@ class Fee extends CustomBaseStep {
         $extra_rate_cd = 0;
         if($is_cd) {
 
+            /*Cơ bản => Vận hành*/
             foreach($mapping_cd as $item) {
                 if($item['quantity_min'] <= $round_contract_to_compare && $round_contract_to_compare >= $item['quantity_max']) {
                     $extra_rate_cd = $item['rate'];
@@ -181,13 +190,14 @@ class Fee extends CustomBaseStep {
             }
             $sub_description = "(2) Tỉ lệ cơ bản: ".$extra_rate_cd."% <br>";
 
-
+            /*(1) - CƠ BẢN*/
             $total_extra_personal_income = $extra_rate_cd * (double)$total_sale_for_cd
                 / count($this->arr_general);
-            $sub_description .= " {TLCB} x {DT} = " . $total_extra_personal_income . "<br>";
+            $sub_description .= " Cơ Bản = " . $total_extra_personal_income . "<br>";
 
+            /*(2) - Hợp Đồng B1 -- HD có doanh số cao nhất*/
             foreach ($list_contract as $item) {
-                if(!$this->isValidPersonalContract($item, $user_id)) {
+                if($item['consultant_id'] !== $user_id) {
                     continue;
                 }
 
@@ -200,19 +210,19 @@ class Fee extends CustomBaseStep {
                     $max_is_support_control = $item['is_support_control'];
                 }
             }
-            $sub_description .= "(3) HĐ có {DS} cao nhất: $max_room_price - ($max_number_of_month) <br>";
+            $sub_description .= "(3) HĐ cao nhất: $max_room_price ($max_number_of_month tháng) <br>";
 
+            /*Kho khớp với bảng B1*/
             foreach ($cd_config['index_master_b1'] as $b1) {
                 if($max_room_price >= $b1['room_price_min'] && $max_room_price < $b1['room_price_max']) {
-                    $total_b1 += $b1['income_unit'] * $max_number_of_month;
-                    if($max_consultant_support_id > 0) {
+                    $total_b1 = $b1['income_unit'] * $max_number_of_month;
+                    if($max_consultant_support_id >= 171020000) {
                         $total_b1 = (double) $total_b1 * 0.7;
                     }
 
                     if($max_is_support_control == 'YES') {
                         $total_b1 = (double) $total_b1 * 0.9;
                     }
-                    $total_user_contract = 1;
                     $sub_description .= "(4) B1: $max_number_of_month th x " .$b1['income_unit']." = ". $total_b1 .
                         "<br>";
                     break;
@@ -220,34 +230,33 @@ class Fee extends CustomBaseStep {
             }
 
 
-
+            /*Bảng B2*/
             $sub_description .= " (5) B2: |Chi tiết hợp đồng nhỏ| <br>";
             foreach ($list_contract as $item) {
                 if(!$this->isValidPersonalContract($item, $user_id)) {
                     continue;
                 }
-
-                $total_sale_sinva =
-                    $item['commission_rate'] * (double)$item['room_price'] / 100;
-
                 if($item['id'] === $max_contract_id) {
                     continue;
                 }
-                $total_user_contract ++;
+
                 foreach ($cd_config['index_master_b2'] as $b2) {
                     if($item['room_price'] >= $b2['room_price_min'] && $item['room_price'] < $b2['room_price_max']) {
                         $temp_income =  $b2['income_unit'] * $item['number_of_month'];
+                        if($item['consultant_id'] == $user_id) {
+                            if($item['consultant_support_id'] > 0) {
+                                $temp_income -= (double) $temp_income * 0.3;
+                            }
 
-                        if($item['consultant_support_id'] > 0) {
-                            $temp_income = (double) $temp_income * 0.7;
+                            if($item['is_support_control'] == 'YES') {
+                                $temp_income -= (double) $temp_income * 0.1;
+                            }
+                            $total_b2 += $temp_income;
                         }
 
-                        if($item['is_support_control'] == 'YES') {
-                            $temp_income = (double) $temp_income * 0.9;
+                        if($item['consultant_support_id'] == $user_id) {
+                            $total_b2 += (double)$temp_income * 0.3;
                         }
-                        $total_b2 += $temp_income;
-
-                        $sub_description .= $b2['income_unit'] . " x " . $item['number_of_month'] . " = ". $b2['income_unit'] * $item['number_of_month'];
 
                         break;
                     }
@@ -263,6 +272,7 @@ class Fee extends CustomBaseStep {
             $sub_description .= " @@@ Tổng Thu Nhập Cá Nhân =" . $total_personal_income;
             $description = $sub_description;
         } else {
+            /*Thu nhập cho không phải BPVH */
             $mapping_sale = $sale_config['index_' . $user['role_code']];
             $rate = 0;
             foreach($mapping_sale as $item) {
@@ -277,12 +287,24 @@ class Fee extends CustomBaseStep {
                 if(!$this->isValidPersonalContract($item, $user_id)) {
                     continue;
                 }
-                $total_personal_income += $item['room_price'] * (double)
+                $temp_income = $item['room_price'] * (double)
                     ($item['commission_rate'] * $rate / 10000);
 
-                $total_sale_sinva += $item['room_price'] * (double)$item['commission_rate']/(100);
+                if($item['consultant_id'] == $user_id) {
+                    if($item['consultant_support_id'] >= 171020000) {
+                        $temp_income -= (double) $temp_income * 0.3;
+                    }
 
-                $total_user_contract++;
+                    if($item['is_support_control'] == 'YES') {
+                        $temp_income -= (double) $temp_income * 0.1;
+                    }
+                }
+
+                if($item['consultant_support_id'] == $user_id) {
+                    $temp_income += (double)$temp_income * 0.3;
+                }
+
+                $total_personal_income += $temp_income;
             }
 
         }
