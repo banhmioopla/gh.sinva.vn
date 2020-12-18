@@ -390,6 +390,72 @@ commands.push(function(){
 
         let contract_cr = $('input[name=commission_rate]');
         contract_cr.val(0);
+        if(cr_6m == '') {
+            cr_6m = 0;
+        }
+
+        if(cr_9m == '') {
+            cr_9m = 0;
+        }
+
+        if(cr_12m == '') {
+            cr_12m = 0;
+        }
+
+        if(cr_6m == 0 && cr_9m == 0) {
+            contract_cr.val(cr_12m/12*number_of_month);
+            return;
+        }
+
+        if(cr_6m == 0 && cr_12m == 0) {
+            contract_cr.val(cr_9m/9*number_of_month);
+            return;
+        }
+
+        if(cr_9m == 0 && cr_12m == 0) {
+            contract_cr.val(cr_6m/6*number_of_month);
+            return;
+        }
+
+        /*TH*/
+
+        if(cr_6m == 0) {
+            if(number_of_month <= 9 ) {
+                contract_cr.val(cr_9m/9*number_of_month);
+                return;
+            } else {
+                contract_cr.val(cr_12m/12*number_of_month);
+                return;
+            }
+
+        }
+
+        if(cr_9m == 0) {
+            if(number_of_month <= 6 ) {
+                contract_cr.val(cr_6m/6*number_of_month);
+                return;
+            } else {
+                contract_cr.val(cr_12m/12*number_of_month);
+                return;
+            }
+
+        }
+
+        if(cr_12m == 0) {
+            if(number_of_month <= 6 ) {
+                contract_cr.val(cr_6m/6*number_of_month);
+                return;
+            } else {
+                contract_cr.val(cr_9m/9*number_of_month);
+                return;
+            }
+
+        }
+
+        /*TH*/
+
+
+
         if(number_of_month > 6 && cr_9m > 0) {
             contract_cr.val(cr_9m/9*number_of_month);
         }
