@@ -52,6 +52,18 @@ class CustomBaseStep extends CI_Controller {
 		if(isset($this->permission_set[$this->current_controller])) {
 			$this->permission_action_set = $this->permission_set[$this->current_controller];
 		}
+
+        $this->arr_general = [
+            171020010, // quynh mai
+            171020095, // quocbinh
+            171020036, // pham tiem
+            171020045, // hoang phuong
+            171020053, // thu ngan
+            171020064, // thanh nhan
+            171020047, // bao trinh
+            171020067, // kha ai
+            171020057, // thanh cong
+        ];
 		
 		if(!$this->checkCurrentPermission($this->permission_set)) {
 			return redirect('/admin/notfound');

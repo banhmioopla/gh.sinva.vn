@@ -15,17 +15,6 @@ class Fee extends CustomBaseStep {
         $this->custom_execute_general = []; // list Account Id
         $this->load->config('internal_mechanism_income_rate_control_department.php');
         $this->load->config('internal_mechanism_income_rate.php');
-        $this->arr_general = [
-            171020010, // quynh mai
-            171020095, // quocbinh
-            171020036, // pham tiem
-            171020045, // hoang phuong
-            171020053, // thu ngan
-            171020064, // thanh nhan
-            171020047, // bao trinh
-            171020067, // kha ai
-            171020057, // thanh cong
-        ];
 
         $this->rate_personal_consultant_support_id = 0.7;
         $this->rate_personal_is_support_control = 0.9;
