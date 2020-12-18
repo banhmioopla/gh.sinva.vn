@@ -84,7 +84,7 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-right"><strong>Thành Viên Chốt Sale (70%)<strong></td>
+                            <td class="text-right"><strong>Thành Viên Chốt Sale<strong></td>
                             <td>
                                 <div class="consultant_id "
                                      data-pk="<?= $contract['id'] ?>"
