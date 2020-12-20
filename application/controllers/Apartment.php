@@ -17,7 +17,7 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibTag', null, 'libTag');
 		$this->load->library('LibUser', null, 'libUser');
 
-		$this->permission_modify = ['product-manager', 'customer-care', 'business-manager'];
+		$this->permission_modify = ['product-manager', 'business-manager'];
 	}
 
 	public function showNotificaton(){}
