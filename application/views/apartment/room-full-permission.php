@@ -34,7 +34,7 @@
                             $color_for_available = '';
                         }   
                     ?>
-                <tr class='<?= $bg_for_available ?>'>
+                <tr class='<?= $bg_for_available ?> font-weight-bold'>
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['code'] ?>"
@@ -60,7 +60,8 @@
                     <td><div class="room-time_available text-success" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= date('d-m-Y',$room['time_available']) ?>"
-                            data-name="time_available"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'-' ?></div></td>
+                            data-name="time_available"><?= $room['time_available'] > 0 ?
+                                date('d-m-Y',$room['time_available']) :'-' ?></div></td>
 
                     <?php if($check_option):?>
                         <td class="">

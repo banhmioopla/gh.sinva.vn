@@ -73,6 +73,7 @@ class Room extends CustomBaseStep {
 			];
 
 			if($field_name == 'time_available') {
+                $field_value = str_replace('/', '-', $field_value);
 				$data = [
 					$field_name => $field_value ? strtotime($field_value):null
 				];
