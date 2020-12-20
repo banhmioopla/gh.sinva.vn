@@ -17,7 +17,7 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibTag', null, 'libTag');
 		$this->load->library('LibUser', null, 'libUser');
 
-		$this->permission_modify = ['product-manager', 'customer-care'];
+		$this->permission_modify = ['product-manager', 'customer-care', 'business-manager'];
 	}
 
 	public function showNotificaton(){}
@@ -264,14 +264,14 @@ class Apartment extends CustomBaseStep {
 			$log = [
 				'table_name' => 'gh_apartment_type',
 				'old_content' => null,
-				'modified_content' => json_encode($old_apartmenttype[0]),
+				'modified_content' => json_encode($old_apartment[0]),
 				'time_insert' => time(),
 				'action' => 'delete'
 			];
 
 			// call model
 			$tracker = $this->ghActivityTrack->insert($log);
-			$result = $this->ghApartment->delete($apartment_type_id);
+			$result = $this->ghApartment->delete($old_apartment);
 			
 			if($result > 0) {
 				echo json_encode(['status' => true]); die;
