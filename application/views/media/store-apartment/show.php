@@ -141,11 +141,25 @@ if(isYourPermission($this->current_controller, 'update', $this->permission_set))
                                         </div>
                                     </div>
                                 <?php else:?>
-                                    <div class="portfolio-masonry-box">
+                                    <div class="card-box shadow" id="video-box-<?= $img['id'] ?>">
                                         <video width="100%" height="80%" controls="controls">
                                             <source src="<?php echo base_url().'media/apartment/'.$img['name']?>" type="video/mp4" />
                                         </video>
+                                        <div class="d-flex justify-content-center">
+                                            <?php if($check_modify): ?>
+                                                <button type="button" data-img-id=<?=
+                                                $img['id']
+                                                ?> class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-img">
+                                                <i class="mdi mdi-delete"></i>
+                                                </button>
+                                            <?php endif; ?>
+
+                                            <a data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-warning btn-rounded waves-light waves-effect download-img" download="<?= $apartment_model['address_street'].'.'.$img['file_type']?>" href="<?= base_url() ?>media/apartment/<?= $img['name'] ?>">
+                                            <i class="mdi mdi-cloud-download"></i>
+                                            </a>
+                                        </div>
                                     </div>
+
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
@@ -194,11 +208,9 @@ if(isYourPermission($this->current_controller, 'update', $this->permission_set))
         $(document).ready(function () {
             $('.choose-img, .btn-upload').hide();
             $('select[name=room_id]').on('change', function(){
-                console.log('change');
                 if($(this).val() == '0') {
                     $('.choose-img, .btn-upload').hide();
                 } else {
-                    console.log('changexxx');
                     $('.choose-img, .btn-upload').show();
                 }
             });
@@ -212,6 +224,7 @@ if(isYourPermission($this->current_controller, 'update', $this->permission_set))
                     data: {img_id: img_id, field_name: 'active', field_value: 'NO'},
                     success: function(response) {
                         this_btn.parents('.portfolio-masonry-box').remove();
+                        $('#video-box-'+img_id).remove();
                     }
                 });
             });

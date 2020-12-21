@@ -55,7 +55,7 @@ class Image extends CustomBaseStep
             }
             for ($i = 0; $i < $filesCount; $i++) {
 
-                $ext = explode(".", $_FILES['files']['name'][$i])[1];
+                $ext = pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION);
                 $file_name = $max_id . '-apartment-' . $apartment_id . '-' . $time . '.' . $ext;
 
                 $_FILES['file']['name'] = $file_name;
@@ -66,7 +66,7 @@ class Image extends CustomBaseStep
 
                 if ($this->upload->do_upload('file')) {
                     // Uploaded file data 
-                    $fileData = $this->upload->data();
+                    $this->upload->data();
                     $uploadData[$i]['name'] = $file_name;
                     $uploadData[$i]['file_type'] = $ext;
                     $uploadData[$i]['time_insert'] = $time;
@@ -80,8 +80,9 @@ class Image extends CustomBaseStep
             }
 
             if (!empty($uploadData)) {
-                $insert = $this->ghImage->insert($uploadData);
+                $this->ghImage->insert($uploadData);
             }
+            return redirect('/admin/upload-image?apartment-id='.$apartment_id);
         }
         $data['list_img'] = $this->ghImage->getRows($apartment_id);
 
@@ -92,6 +93,7 @@ class Image extends CustomBaseStep
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('media/store-apartment/show', $data);
         $this->load->view('components/footer');
+
     }
 
     public function showGalleryApartment()
