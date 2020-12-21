@@ -23,7 +23,19 @@ class GhActivityTrack extends CI_Model {
     public function getActionDelete() {
         return self::ACTION_DELETE;
     }
-	
+
+
+    public function get($where = []) {
+        return $this->db->get_where($this->table, $where)->result_array();
+    }
+
+    public function getById($district_id) {
+        return $this->db->get_where($this->table, ['id' => $district_id])->result_array();
+    }
+
+    public function getAll() {
+        return $this->db->get_where($this->table)->result_array();
+    }
 
 }
 

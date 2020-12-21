@@ -290,6 +290,13 @@ $route['admin/update-business-partner-editable'] = function($params = []) {
     return $controller.$action;
 };
 
+// track apartment
+$route['admin/list-apartment-track'] = function($params = []) {
+    $controller = 'ApartmentTrack';
+    $action = '/show';
+    return $controller.$action;
+};
+
 // customer
 $route['admin/search-customer'] = function($params = []) {
 	$controller = 'Customer';

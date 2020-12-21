@@ -87,7 +87,6 @@ class Room extends CustomBaseStep {
 
 			$old_room = $this->ghRoom->getById($room_id);
 			$old_log = json_encode($old_room[0]);
-			// $this->ghApartment->updateById($old_room[0]['apartment_id'], ['time_update' => time()]);
 			$result = $this->ghRoom->updateById($room_id, $data);
 			
 			$modified_room = $this->ghRoom->getById($room_id);
@@ -98,7 +97,8 @@ class Room extends CustomBaseStep {
 				'old_content' => $old_log,
 				'modified_content' => $modified_log,
 				'time_insert' => time(),
-				'action' => 'update'
+				'action' => 'update',
+                'user_id' => $this->auth['account_id']
 			];
 			$tracker = $this->ghActivityTrack->insert($log);
 
@@ -115,9 +115,10 @@ class Room extends CustomBaseStep {
 			$log = [
 				'table_name' => 'gh_room',
 				'old_content' => null,
-				'modified_content' => json_encode($old_roomtype[0]),
+				'modified_content' => json_encode($old_room[0]),
 				'time_insert' => time(),
-				'action' => 'delete'
+				'action' => 'delete',
+                'user_id' => $this->auth['account_id']
 			];
 
 			// call model

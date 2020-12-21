@@ -51,6 +51,16 @@
                     </button>
                 </a>
             <?php endif; ?>
+
+            <?php if(isYourPermission('ApartmentTrack', 'show',$this->permission_set)):?>
+                <a href="<?= base_url() ?>admin/list-apartment-track">
+                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
+                                class="mdi mdi-google-wallet
+                                 mr-1"></i> <span
+                                class="text-">Nhật Ký DA</span>
+                    </button>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </div>

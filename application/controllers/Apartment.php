@@ -247,7 +247,8 @@ class Apartment extends CustomBaseStep {
 				'old_content' => $old_log,
 				'modified_content' => $modified_log,
 				'time_insert' => time(),
-				'action' => 'update'
+				'action' => 'update',
+                'user_id' => $this->auth['account_id']
 			];
 			$tracker = $this->ghActivityTrack->insert($log);
 
