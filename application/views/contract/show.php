@@ -162,6 +162,7 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                             <th># ID Hợp Đồng</th>
                             <th width="350px">Khách thuê</th>
                             <th>Giá thuê</th>
+                            <th width="250px">Thành Viên Chốt</th>
                             <th>Ngày ký</th>
                             <th>Ngày hết hạn</th>
                             <th class="text-center">Thời hạn</th>
@@ -200,6 +201,15 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                         data-value="<?= $row['room_price'] ?>"
                                         data-name="room_price">
                                         <?= number_format($row['room_price']) ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="consultant_id font-weight-bold"
+                                         data-pk="<?= $row['id'] ?>"
+                                         data-value="<?= $row['consultant_id'] ?>"
+                                         data-name="consultant_id">
+                                        <?= $libUser->getNameByAccountid
+                                        ($row['consultant_id']) ?>
                                     </div>
                                 </td>
                                 <td>
@@ -320,6 +330,35 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                             } else {
                                 $('.contract-alert').html(notify_html_fail);
                             }
+                        }
+                    });
+
+                    $('.consultant_id').editable({
+                        type: 'select',
+                        url: '<?= base_url() ?>admin/update-contract-editable',
+                        inputclass: '',
+                        source: function() {
+                            data = [];
+                            $.ajax({
+                                url: '<?= base_url() ?>admin/user/get-select',
+                                dataType: 'json',
+                                async: false,
+                                success: function(res) {
+                                    data = res;
+                                    return res;
+                                }
+                            });
+                            return data;
+                        },
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            if(data.status == true) {
+                                $('.apartment-alert').html(notify_html_success);
+                            } else {
+                                $('.apartment-alert').html(notify_html_fail);
+                            }
+                            $('.apartment-alert').show();
+                            $('.apartment-alert').fadeOut(3000);
                         }
                     });
                     <?php endif; ?>
