@@ -1,3 +1,27 @@
+<?php
+
+$title_key = [
+    'address_street' => 'địa chỉ',
+    'address_ward'    => 'phường',
+    'tag_id'    => 'tag',
+    'description'    => 'mô tả',
+    'active'    => 'Mở',
+    'note'    => 'ghi chú: ',
+    'google_map'    => 'tọa độ',
+    'electricity'    => 'điện',
+    'water'    => 'nước',
+    'internet'    => 'internet',
+    'elevator'    => 'thang máy',
+    'washing_machine'    => 'máy giặt',
+    'room_cleaning'    => 'dọn phòng',
+    'parking'    => 'đỗ xe',
+    'commission'    => 'hoa hồng',
+    'deposit'    => 'cọc',
+    'number_of_people'    => 'số người ở',
+];
+
+?>
+
 <div class="wrapper">
     <div class="sk-wandering-cubes" style="display:none" id="loader">
         <div class="sk-cube sk-cube1"></div>
@@ -16,7 +40,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách quận</h3>
+                    <h3 class="page-title">Nhật Ký Dự Án</h3>
                 </div>
             </div>
         </div>
@@ -28,111 +52,94 @@
         }
         ?>
         <div class="district-alert"></div>
-        <div class="row">
-            <div class="col-12 col-md-7">
-                <div class="card-box table-responsive">
-                    <table id="table-district" class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Dự Án</th>
-                            <th>Cũ</th>
-                            <th class="text-center">Mới</th>
-                            <th class="text-center">Hành Động</th>
-                            <th class="text-center">Thời Gian</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach($list_track as $row ):
-                            $old_content = json_decode($row['old_content'], true);
-                            $new_content = json_decode($row['modified_content'], true);
-                            $diff = array_diff($old_content,$new_content);
-                            if(isset($diff['time_update'])) {
-                                unset($diff['time_update']);
-                            }
 
-                            ?>
-                            <tr>
-                                <td>
-                                    <div class="district-name"
-                                         data-pk="<?= $row['id'] ?>"
-                                         data-name="name">
-                                        <?= $row['name'] ?>
-                                    </div>
-                                </td>
-                                <td><i>-</i></td>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="checkbox checkbox-success is-active-district">
-                                            <input id="district-<?= $row['id'] ?>"
-                                                   value="<?= $row['active'] ?>"
-                                                   type="checkbox"
-                                                <?= $row['active'] =='YES' ? 'checked':'' ?>>
-                                            <label for="district-<?= $row['id'] ?>">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-secondary"><?= $row['note'] ?></td>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <button id='district-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-district">
-                                            <i class="mdi mdi-delete"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-12 col-md-5">
-                <div class="card-box">
-                    <h4 class="header-title m-t-0">Thêm mới</h4>
-                    <form role="form" method="post" action="<?= base_url()?>admin/create-district">
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">Tên quận<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <input type="text" required class="form-control"
-                                       id="name" name="name" placeholder="Tên quận">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-4 col-form-label">CODE<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <input type="text" required class="form-control"
-                                       id="code" name="code" placeholder="CODE">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="hori-pass1" class="col-4 col-form-label">Mở quận này<span class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <div>
-                                    <div class=" checkbox checkbox-success">
-                                        <input id="active" type="checkbox" value="YES" name="active">
-                                        <label for="active">
-                                        </label>
-                                    </div>
+        <div class="row">
+            <div class="timeline mt-md-2">
+
+                <?php $alt = ''; foreach ($list_track as $row):
+
+                    if($row['table_name'] != 'gh_apartment' && $row['table_name'] != 'gh_room') {
+                        continue;
+                    }
+
+                    if($alt == 'alt')
+                        $alt = '';
+                    else {
+                        $alt = 'alt';
+                    }
+
+                    $old_content = json_decode($row['old_content'], true);
+                    $new_content = json_decode($row['modified_content'], true);
+                    $diff = array_diff($old_content,$new_content);
+                    $col = "";
+                    $val = "";
+                    $title = "";
+                    foreach ($diff as $k => $v) {
+                        $col = $k;
+                        $val = $v;
+                    }
+
+                    if($row['table_name'] == 'gh_apartment') {
+                        $title = $old_content['address_street'];
+                    }
+
+                    if($row['table_name'] == 'gh_room') {
+                        $apartment_id = $old_content['apartment_id'];
+                        $apm = $ghApartment->get(['id' => $apartment_id])[0];
+                        $title = $apm['address_street'];
+
+                    }
+                    ?>
+                    <article class="timeline-item <?= $alt ?>">
+                        <div class="timeline-desk">
+                            <div class="panel">
+                                <div class="timeline-box">
+                                    <span class="arrow-alt"></span>
+                                    <span class="timeline-icon bg-danger"><i
+                                                class="mdi mdi-adjust"></i></span>
+                                    <h4 class="text-danger text-left">
+                                        <?= $title ?>
+                                    </h4>
+                                    <p class="timeline-date text-left
+                                    text-muted"><small><?= date('d/m/Y H:i', $row['time_insert'])
+                                            ?> - <?= $libUser->getNameByAccountid($row['user_id']) ?></small></p>
+                                    <hr>
+                                    <div class="text-left">
+                                        <?php foreach ($diff as $k => $v) {
+                                            $content = "";
+                                            if($k == 'status') {
+                                                $sub_content = "";
+                                                if($old_content[$k] === "Full") {
+                                                    $sub_content = "Full";
+                                                }
+
+                                                if($old_content[$k] === "Available") {
+                                                    $sub_content = "Trống";
+                                                }
+
+                                                if($new_content[$k] === "Full") {
+                                                    $sub_content .= " → Full";
+                                                }
+
+                                                if($new_content[$k] === "Available") {
+                                                    $sub_content .= " → Trống";
+                                                }
+                                                $content .= $sub_content;
+                                            } else {
+                                            }
+                                                echo $content;
+                                            ?>
+
+                                        <?php } ?></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Mô tả</label>
-                            <div class="col-8">
-                                <textarea class="form-control" rows="5" name="note" placeholder="Không bắt buộc"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-8 offset-4">
-                                <button type="submit" class="btn btn-custom waves-effect waves-light">
-                                    Thêm mới
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </article>
+
+                <?php endforeach; ?>
+
             </div>
-        </div> <!-- end row -->
+        </div>
 
     </div> <!-- end container -->
 </div>

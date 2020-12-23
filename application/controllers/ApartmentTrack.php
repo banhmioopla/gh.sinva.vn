@@ -7,10 +7,18 @@ class ApartmentTrack extends CustomBaseStep {
     {
         parent::__construct();
         $this->load->model('ghActivityTrack');
+        $this->load->model('ghApartment');
+        $this->load->library('LibUser', null, 'libUser');
+        $this->load->config('label.apartment');
+
     }
 
     public function show(){
         $data['list_track'] = $this->ghActivityTrack->get(['time_insert > '=> strtotime('22-12-2020')]);
+
+        $data['libUser'] = $this->libUser;
+        $data['ghApartment'] = $this->ghApartment;
+        $data['label'] =  $this->config->item('label.apartment');
         /*--- Load View ---*/
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('apartment-track/show', $data);
