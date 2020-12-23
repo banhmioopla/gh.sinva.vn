@@ -334,9 +334,10 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                     });
 
                     $('.consultant_id').editable({
-                        type: 'select',
                         url: '<?= base_url() ?>admin/update-contract-editable',
                         inputclass: '',
+                        type: 'select2',
+                        mode: 'inline',
                         source: function() {
                             data = [];
                             $.ajax({
@@ -350,16 +351,10 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                             });
                             return data;
                         },
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.apartment-alert').html(notify_html_success);
-                            } else {
-                                $('.apartment-alert').html(notify_html_fail);
-                            }
-                            $('.apartment-alert').show();
-                            $('.apartment-alert').fadeOut(3000);
-                        }
+                        select2:{
+                            placeholder: 'Chọn thành viên...',
+                            minimumInputLength: 1
+                        },
                     });
                     <?php endif; ?>
                 } // end fnDrawCallback
