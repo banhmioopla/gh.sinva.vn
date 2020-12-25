@@ -1,6 +1,6 @@
 <?php
 
-$title_key = [
+$title_map = [
     'address_street' => 'địa chỉ',
     'address_ward'    => 'phường',
     'tag_id'    => 'tag',
@@ -18,6 +18,9 @@ $title_key = [
     'commission'    => 'hoa hồng',
     'deposit'    => 'cọc',
     'number_of_people'    => 'số người ở',
+    'status' => 'trạng thái',
+    'time_update' => 'Tg. Cập nhật',
+    'type' => 'Loại P'
 ];
 
 ?>
@@ -93,7 +96,7 @@ $title_key = [
                     <article class="timeline-item <?= $alt ?>">
                         <div class="timeline-desk">
                             <div class="panel">
-                                <div class="timeline-box">
+                                <div class="timeline-box shadow">
                                     <span class="arrow-alt"></span>
                                     <span class="timeline-icon bg-danger"><i
                                                 class="mdi mdi-adjust"></i></span>
@@ -105,32 +108,24 @@ $title_key = [
                                             ?> - <?= $libUser->getNameByAccountid($row['user_id']) ?></small></p>
                                     <hr>
                                     <div class="text-left">
-                                        <?php foreach ($diff as $k => $v) {
-                                            $content = "";
-                                            if($k == 'status') {
-                                                $sub_content = "";
-                                                if($old_content[$k] === "Full") {
-                                                    $sub_content = "Full";
-                                                }
-
-                                                if($old_content[$k] === "Available") {
-                                                    $sub_content = "Trống";
-                                                }
-
-                                                if($new_content[$k] === "Full") {
-                                                    $sub_content .= " → Full";
-                                                }
-
-                                                if($new_content[$k] === "Available") {
-                                                    $sub_content .= " → Trống";
-                                                }
-                                                $content .= $sub_content;
-                                            } else {
+                                        <?php foreach ($diff as $k => $v):
+                                            $_old = $old_content[$k];
+                                            $_new = $new_content[$k];
+                                            if($k == 'time_update') {
+                                                $_old = date('d/m/Y H:i', $old_content[$k]);
+                                                $_new = date('d/m/Y H:i', $new_content[$k]);
                                             }
-                                                echo $content;
-                                            ?>
 
-                                        <?php } ?></div>
+                                            ?>
+                                            <strong><?= $title_map[$k] ?></strong><br>
+                                            <ul>
+                                                <li class="text-danger"><?=
+                                                    $_old
+                                                    ?></li>
+                                                <li class="text-primary"><?=
+                                                    $_new ?></li>
+                                            </ul>
+                                        <?php endforeach; ?></div>
                                 </div>
                             </div>
                         </div>
