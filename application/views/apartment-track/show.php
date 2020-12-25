@@ -6,7 +6,6 @@ $title_map = [
     'tag_id'    => 'tag',
     'description'    => 'mô tả',
     'active'    => 'Mở',
-    'note'    => 'ghi chú: ',
     'google_map'    => 'tọa độ',
     'electricity'    => 'điện',
     'water'    => 'nước',
@@ -18,9 +17,30 @@ $title_map = [
     'commission'    => 'hoa hồng',
     'deposit'    => 'cọc',
     'number_of_people'    => 'số người ở',
+    'kitchen'    => 'bếp',
+    'car_park'    => 'bãi ô tô',
+    'direction'    => 'hướng',
+    'kt3'    => 'KT3',
     'status' => 'trạng thái',
     'time_update' => 'Tg. Cập nhật',
-    'type' => 'Loại P'
+    'type' => 'loại phòng',
+    'price' => 'giá',
+    'Available' => "trống",
+    'Full' => "full",
+    'area' => 'diện tích',
+    'code' => 'mã phòng',
+    'pet' => 'pet',
+    'extra_fee' => 'phí phụ',
+    'security' => 'bảo vệ',
+    'contract_long_term' => 'HD dài hạn',
+    'contract_short_term' => 'HD ngắn hạn',
+    'number_of_floor' => 'Số Lầu',
+    'commission_rate' => 'HH 12th',
+    'commission_rate_6m' => 'HH 6th',
+    'commission_rate_9m' => 'HH 9th',
+    'map_longitude' => ' Tọa độ 1',
+    'map_latitude' => ' Tọa độ 2',
+    'note' => 'ghi chú',
 ];
 
 ?>
@@ -73,7 +93,7 @@ $title_map = [
 
                     $old_content = json_decode($row['old_content'], true);
                     $new_content = json_decode($row['modified_content'], true);
-                    $diff = array_diff($old_content,$new_content);
+                    $diff = array_diff($new_content,$old_content);
                     $col = "";
                     $val = "";
                     $title = "";
@@ -89,8 +109,13 @@ $title_map = [
                     if($row['table_name'] == 'gh_room') {
                         $apartment_id = $old_content['apartment_id'];
                         $apm = $ghApartment->get(['id' => $apartment_id])[0];
-                        $title = $apm['address_street'];
+                        $title = $apm['address_street']. ' | Mã ' . $old_content['code'];
 
+                    }
+
+                    $timeline_icon_bg = 'bg-danger';
+                    if($row['time_insert'] > strtotime('today')) {
+                        $timeline_icon_bg = 'bg-warning';
                     }
                     ?>
                     <article class="timeline-item <?= $alt ?>">
@@ -98,11 +123,12 @@ $title_map = [
                             <div class="panel">
                                 <div class="timeline-box shadow">
                                     <span class="arrow-alt"></span>
-                                    <span class="timeline-icon bg-danger"><i
+                                    <span class="timeline-icon <?= $timeline_icon_bg ?>"><i
                                                 class="mdi mdi-adjust"></i></span>
-                                    <h4 class="text-danger text-left">
-                                        <?= $title ?>
-                                    </h4>
+                                    <div class="text-danger font-weight-bold text-left">
+                                        <?= '<span class="text-muted">'.$row['id']. '</span> | '
+                                        .$title ?>
+                                    </div>
                                     <p class="timeline-date text-left
                                     text-muted"><small><?= date('d/m/Y H:i', $row['time_insert'])
                                             ?> - <?= $libUser->getNameByAccountid($row['user_id']) ?></small></p>
@@ -114,6 +140,16 @@ $title_map = [
                                             if($k == 'time_update') {
                                                 $_old = date('d/m/Y H:i', $old_content[$k]);
                                                 $_new = date('d/m/Y H:i', $new_content[$k]);
+                                            }
+
+                                            if($k == 'price') {
+                                                $_old = number_format($old_content[$k]);
+                                                $_new = number_format($new_content[$k]);
+                                            }
+
+                                            if($k == 'status') {
+                                                $_old = $title_map[$old_content[$k]];
+                                                $_new = $title_map[$new_content[$k]];
                                             }
 
                                             ?>

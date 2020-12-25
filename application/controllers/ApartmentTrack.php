@@ -14,7 +14,8 @@ class ApartmentTrack extends CustomBaseStep {
     }
 
     public function show(){
-        $data['list_track'] = $this->ghActivityTrack->get(['time_insert > '=> strtotime('22-12-2020')]);
+        $data['list_track'] = $this->ghActivityTrack->get(['time_insert > '=> strtotime
+        ('-30days'), 'user_id >=' => 171020000]);
 
         $data['libUser'] = $this->libUser;
         $data['ghApartment'] = $this->ghApartment;
