@@ -41,6 +41,7 @@ $title_map = [
     'map_longitude' => ' Tọa độ 1',
     'map_latitude' => ' Tọa độ 2',
     'note' => 'ghi chú',
+    'time_available' => 'ngày sắp trống'
 ];
 
 ?>
