@@ -138,7 +138,7 @@ $title_map = [
                                         <?php foreach ($diff as $k => $v):
                                             $_old = $old_content[$k];
                                             $_new = $new_content[$k];
-                                            if($k == 'time_update') {
+                                            if($k == 'time_update' || $k == 'time_available') {
                                                 $_old = date('d/m/Y H:i', $old_content[$k]);
                                                 $_new = date('d/m/Y H:i', $new_content[$k]);
                                             }
