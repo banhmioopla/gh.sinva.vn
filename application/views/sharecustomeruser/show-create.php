@@ -66,11 +66,11 @@
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-active-district">
-                                            <input id="share-<?= $row['id'] ?>"
+                                            <input id="u-<?= $row['id'] ?>"
                                                    value="<?= $row['account_id'] ?>"
                                                    name="user[]"
                                                    type="checkbox">
-                                            <label for="share-<?= $row['id'] ?>">
+                                            <label for="u-<?= $row['id'] ?>">
                                             </label>
                                         </div>
                                     </div>
@@ -101,11 +101,11 @@
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-active-district">
-                                            <input id="share-<?= $row['id'] ?>"
+                                            <input id="c-<?= $row['id'] ?>"
                                                    value="<?= $row['id'] ?>"
                                                    name="customer[]"
                                                    type="checkbox">
-                                            <label for="share-<?= $row['id'] ?>">
+                                            <label for="c-<?= $row['id'] ?>">
                                             </label>
                                         </div>
                                     </div>
