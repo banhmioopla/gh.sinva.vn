@@ -23,6 +23,40 @@ class Fee extends CustomBaseStep {
     }
 
 
+    public function showPersonalProfile(){
+        $list_user = $this->ghUser->get([
+            'active' => 'YES',
+            'account_id =' => $this->auth['account_id']
+        ]);
+        $list_role = $this->ghRole->get([
+            'is_control_department' => 'YES'
+        ]);
+
+        $data = $this->getTotalContract();
+
+        $arr_is_control_department = [];
+        foreach ($list_role as $item) {
+            $arr_is_control_department[] = $item['code'];
+        }
+
+
+        $view_data_income = [];
+        foreach ($list_user as $user) {
+            $view_data_income[$user['account_id']] =
+                $this->syncRoundNumberContractPersonal($user['account_id'], $data['quantity'], $data['total_sale']);
+        }
+
+        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('fee/show-personal-profile', [
+            'list_user_income' => $view_data_income,
+            'libUser' => $this->libUser,
+            'total_sale' => $data['total_sale'],
+            'quantity_contract' => $data['quantity'],
+        ]);
+        $this->load->view('components/footer');
+    }
+
+
     public function showOverviewIncome(){
         $list_user = $this->ghUser->get([
             'active' => 'YES',

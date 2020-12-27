@@ -36,51 +36,42 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
         <div class="customer-alert"></div>
         <?php $this->load->view('components/list-navigation'); ?>
         <div class="row">
-            <div class="col-12 col-md-10 offset-md-1">
+            <div class="col-12 col-md-6">
                 <div class="card-box shadow" style="font-size: 13px">
-                    <h3 class="text-center">Danh sách khách hàng</h3>
-                    <table id="table-customer" class="table table-responsive table-bordered">
+                    <h3 class="text-center text-danger">Khách Hàng Đã Ký</h3>
+                    <table class="table-data table table-hover table-bordered">
                         <thead>
                         <tr>
                             <th>STT</th>
                             <th>Họ tên</th>
                             <th>Giới tính</th>
-                            <th>Ngày sinh</th>
                             <th>Số điện thoại</th>
-                            <th>Ghi Chú</th>
-                            <th>Ngày Nhập</th>
                             <th class="text-center">Nguồn</th>
-                            <th class="text-center">Trạng thái</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php if(count($list_customer) > 0):?>
-                            <?php foreach($list_customer as $row ): ?>
+                            <?php foreach($list_customer as $row ):
+                                if($row['status'] !== "sinva-rented") continue;
+                                ?>
                             <tr>
                                 <td><a target="_blank"
                                        href="/admin/detail-customer?id=<?= $row['id'] ?>"><?=
                                         10000 +
                                         $row['id'] ?></a></td>
                                 <td>
-                                    <div class="customer-data font-weight-bold"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-value ="<?= $row['name'] ?>"
-                                        data-name="name">
+                                    <div class=" font-weight-bold">
                                             <?= $row['name'] ?>
+                                        <p class="mb-0 text-muted"> <small>Sinh Nhật: <?=
+                                                $row['birthdate'] !== null ? date('d/m/Y',$row['birthdate']) : ''  ?></small></p>
                                     </div>
+
                                 </td>
                                 <td>
                                     <div class="customer-gender" 
                                         data-pk="<?= $row['id'] ?>"
                                         data-name="gender">
                                             <?= $row['gender'] ? $label_apartment[$row['gender']] : ''?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="customer-birthdate text-pink"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="birthdate">
-                                            <?= $row['birthdate'] ? date('d/m/Y',$row['birthdate']) : ''  ?>
                                     </div>
                                 </td>
                                 <td>
@@ -92,46 +83,8 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-note" 
-                                        data-pk="<?= $row['id'] ?>"
-                                        data-value ="<?= $row['note'] ?>"
-                                        data-name="note">
-                                            <?= $row['note'] ?>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="customer-demand_time"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="time_insert">
-                                        <?= $row['time_insert'] > 0 ? date('d/m/Y', $row['time_insert']) : '#' ?>
-                                    </div>
-                                </td>
-                                <td>
                                     <div class="customer-source text-center text-warning font-weight-bold">
                                         <?= $row['source'] ? $label_apartment[$row['source']] : '' ?>
-                                    </div>
-                                </td>
-                                <td>
-                                <?php
-                                $status = 'warning';
-
-                                if($row['status'] == 'Active') {
-                                    $status = 'success';
-                                }
-                                if($row['status'] == 'Pending') {
-                                    $status = 'warning';
-                                }
-                                if($row['status'] == 'Cancel') {
-                                    $status = 'danger';
-                                }
-                                if($row['status'] == 'Expired') {
-                                    $status = 'secondary';
-                                }
-                                ?>
-                                    <div class="customer-status text-center font-weight-bold">
-                                        <span class="badge badge-<?= $status ?>"><?=
-                                            $row['status'] ? $label_apartment[$row['status']] :'' ?></span>
                                     </div>
                                 </td>
                             </tr>      
@@ -141,10 +94,68 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                     </table>
                 </div>
             </div>
+            <div class="col-12 col-md-6">
+                <div class="card-box shadow" style="font-size: 13px">
+                    <h3 class="text-center text-danger">Khách Hàng Theo Dõi</h3>
+                    <table class="table-data table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ tên</th>
+                            <th>Giới tính</th>
+                            <th>Số điện thoại</th>
+                            <th class="text-center">Nguồn</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php if(count($list_customer) > 0):?>
+                            <?php foreach($list_customer as $row ):
+                                if($row['status'] == "sinva-rented") continue;
+                                ?>
+                                <tr>
+                                    <td><a target="_blank"
+                                           href="/admin/detail-customer?id=<?= $row['id'] ?>"><?=
+                                            10000 +
+                                            $row['id'] ?></a></td>
+                                    <td>
+                                        <div class="font-weight-bold">
+                                            <?= $row['name'] ?>
+                                            <p class="mb-0 text-muted"> <small>Sinh Nhật: <?=
+                                                    $row['birthdate'] !== null ? date('d/m/Y',$row['birthdate']) : ''  ?></small></p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="customer-gender"
+                                             data-pk="<?= $row['id'] ?>"
+                                             data-name="gender">
+                                            <?= $row['gender'] ? $label_apartment[$row['gender']] : ''?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="customer-data"
+                                             data-pk="<?= $row['id'] ?>"
+                                             data-value ="<?= $row['phone'] ?>"
+                                             data-name="phone">
+                                            <?= $row['phone'] ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="customer-source text-center text-warning font-weight-bold">
+                                            <?= $row['source'] ? $label_apartment[$row['source']] : '' ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif;?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <?php if($check_create):?>
-            <div class="col-12 col-md-6 offset-md-1">
+            <div class="col-12 col-md-6 offset-md-3">
                 <div class="card-box shadow">
-                    <h4 class=" m-t-0">Khách Hàng Tiềm Năng</h4>
+                    <h4 class=" m-t-0 text-center text-danger">Thêm Mới Khách Hàng Tiềm
+                        Năng</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-customer">
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Họ tên<span class="text-danger">*</span></label>
@@ -298,7 +309,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('#table-customer').DataTable({
+            $('.table-data').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true,

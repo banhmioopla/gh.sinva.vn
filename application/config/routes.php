@@ -393,9 +393,31 @@ $route['admin/list-fee-contract-income'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/personal-profile'] = function($params = []) {
+    $controller = 'Fee';
+    $action = '/showPersonalProfile';
+    return $controller.$action;
+};
+
 $route['admin/list-fee-income-mechanism'] = function($params = []) {
     $controller = 'Fee';
     $action = '/showIncomeMechanism';
+    return $controller.$action;
+};
+
+$route['admin/list-share-customer-user'] = function($params = []) {
+    $controller = 'ShareCustomerUser';
+    $action = '/show';
+    return $controller.$action;
+};
+$route['admin/show-create-share-customer-user'] = function($params = []) {
+    $controller = 'ShareCustomerUser';
+    $action = '/showCreate';
+    return $controller.$action;
+};
+$route['admin/create-share-customer-user'] = function($params = []) {
+    $controller = 'ShareCustomerUser';
+    $action = '/create';
     return $controller.$action;
 };
 

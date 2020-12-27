@@ -8,6 +8,21 @@ class GhCustomer extends CI_Model {
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
+    public function getByUserAndShare($user_id) {
+        $sql = "
+        SELECT DISTINCT c.id, c.* FROM gh_customer c, 
+        gh_share_customer_user s
+        WHERE 
+          (c.user_insert_id = $user_id) 
+          OR (c.id = s.customer_id AND c.user_insert_id <> s.user_id 
+            AND s.user_id = $user_id
+          ) 
+        ";
+
+        $result = $this->db->query($sql);
+        return $result->result_array();
+    }
+
     public function getByActive() {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }

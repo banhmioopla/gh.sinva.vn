@@ -282,7 +282,7 @@
                                         <h6 class="text-overflow m-0">sinva.vn</h6>
                                     </div>
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <a href="<?= base_url().'admin/personal-profile'?>" class="dropdown-item notify-item">
                                         <i class="fi-head"></i>
                                         <span>Tài khoản</span>
                                     </a>

@@ -26,6 +26,16 @@
                 </a>
             <?php endif; ?>
 
+
+            <?php if(isYourPermission('ShareCustomerUser', 'showCreate',$this->permission_set)
+            ):?>
+                <a href="<?= base_url() ?>admin/show-create-share-customer-user">
+                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
+                                class="mdi mdi-human-greeting mr-1"></i> <span>+ Chia Sẻ KH</span>
+                    </button>
+                </a>
+            <?php endif; ?>
+
             <?php if(isYourPermission('Contract', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-contract">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i

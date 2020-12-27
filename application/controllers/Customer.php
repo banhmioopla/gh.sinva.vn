@@ -19,7 +19,8 @@ class Customer extends CustomBaseStep {
 	}
 
 	public function showYour(){
-		return $data['list_customer'] = $this->ghCustomer->get(['user_insert_id' => $this->auth['account_id']]);
+//		return $data['list_customer'] = $this->ghCustomer->get(['user_insert_id' => $this->auth['account_id']]);
+		return $data['list_customer'] = $this->ghCustomer->getByUserAndShare($this->auth['account_id']);
 	}
 
 	public function show(){
