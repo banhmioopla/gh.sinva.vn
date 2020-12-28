@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Fee extends CustomBaseStep {
-    private $access_control;
     public function __construct()
     {
         parent::__construct();

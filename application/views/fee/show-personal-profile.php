@@ -16,7 +16,10 @@
             </div>
         </div>
         <!-- end page title end breadcrumb -->
+<?php
+$data = array_values($list_user_income)[0];
 
+?>
 
         <div class="row">
             <div class="col-md-4">
@@ -69,130 +72,33 @@
 
             <div class="col-md-8">
 
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="card-box tilebox-one">
-                            <i class="icon-layers float-right text-muted"></i>
-                            <h5 class="text-muted mt-0">Tổng Hợp Đồng</h5>
-                            <h2 class="m-b-20" data-plugin="counterup">1,587</h2>
-                            <span class="badge badge-custom"> +11% </span> <span class="text-muted">From previous period</span>
-                        </div>
-                    </div><!-- end col -->
-
-                    <div class="col-sm-4">
-                        <div class="card-box tilebox-one">
-                            <i class="icon-paypal float-right text-muted"></i>
-                            <h5 class="text-muted mt-0">Tổng Khách
-                                Hàng</h5>
-                            <h2 class="m-b-20">$<span data-plugin="counterup">46,782</span></h2>
-                            <span class="badge badge-danger"> -29% </span> <span class="text-muted">From previous period</span>
-                        </div>
-                    </div><!-- end col -->
-
-                    <div class="col-sm-4">
-                        <div class="card-box tilebox-one">
-                            <i class="icon-rocket float-right text-muted"></i>
-                            <h5 class="text-muted mt-0">Thu Nhập Tháng
-                                <?= date('m/Y') ?>
-                            </h5>
-                            <h2 class="m-b-20" data-plugin="counterup">1,890</h2>
-                            <span class="badge badge-custom"> +89% </span> <span class="text-muted">Last year</span>
-                        </div>
-                    </div><!-- end col -->
-
-                </div>
-                <!-- end row -->
-
-
                 <div class="card-box">
-                    <h4 class="header-title mt-0 mb-3">Experience</h4>
-                    <div class="">
-                        <div class="">
-                            <h5 class="text-custom m-b-5">Lead designer / Developer</h5>
-                            <p class="m-b-0">websitename.com</p>
-                            <p><b>2010-2015</b></p>
-
-                            <p class="text-muted font-13 m-b-0">Lorem Ipsum is simply dummy text
-                                of the printing and typesetting industry. Lorem Ipsum has
-                                been the industry's standard dummy text ever since the
-                                1500s, when an unknown printer took a galley of type and
-                                scrambled it to make a type specimen book.
-                            </p>
-                        </div>
-
-                        <hr>
-
-                        <div class="">
-                            <h5 class="text-custom m-b-5">Senior Graphic Designer</h5>
-                            <p class="m-b-0">coderthemes.com</p>
-                            <p><b>2007-2009</b></p>
-
-                            <p class="text-muted font-13">Lorem Ipsum is simply dummy text
-                                of the printing and typesetting industry. Lorem Ipsum has
-                                been the industry's standard dummy text ever since the
-                                1500s, when an unknown printer took a galley of type and
-                                scrambled it to make a type specimen book.
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="card-box">
-                    <h4 class="header-title mb-3">My Projects</h4>
+                    <h5 class="mb-3">Tổng Quan Tháng <?= date('m/Y') ?></h5>
 
                     <div class="table-responsive">
-                        <table class="table m-b-0">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Project Name</th>
-                                <th>Start Date</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                                <th>Assign</th>
-                            </tr>
-                            </thead>
+                        <table class="table table-bordered m-b-0">
                             <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>Adminox Admin</td>
-                                <td>01/01/2015</td>
-                                <td>07/05/2015</td>
-                                <td><span class="label label-info">Work in Progress</span></td>
-                                <td>Coderthemes</td>
+                                <td>Số Lượng Hợp Đồng</td>
+                                <td class="text-right"><?= $data['quantity_contract']
+                                    ?></td>
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>Adminox Frontend</td>
-                                <td>01/01/2015</td>
-                                <td>07/05/2015</td>
-                                <td><span class="label label-success">Pending</span></td>
-                                <td>Coderthemes</td>
+                                <td>Tổng Doanh Số</td>
+                                <td class="text-right"><?= number_format($data['total_sale']) ?></td>
                             </tr>
                             <tr>
-                                <td>3</td>
-                                <td>Adminox Admin</td>
-                                <td>01/01/2015</td>
-                                <td>07/05/2015</td>
-                                <td><span class="label label-pink">Done</span></td>
-                                <td>Coderthemes</td>
+                                <td>Tổng Thu Nhập Theo Hợp Đồng</td>
+                                <td class="text-right"><?= number_format($data['total_personal_income']) ?></td>
                             </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Adminox Frontend</td>
-                                <td>01/01/2015</td>
-                                <td>07/05/2015</td>
-                                <td><span class="label label-purple">Work in Progress</span></td>
-                                <td>Coderthemes</td>
+                            <tr class="text-muted">
+                                <td>Các Danh Mục Trừ Tiền</td>
+                                <td class="text-right"><small class="text-muted">đang phát triển
+                                        ...</small></td>
                             </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Adminox Admin</td>
-                                <td>01/01/2015</td>
-                                <td>07/05/2015</td>
-                                <td><span class="label label-warning">Coming soon</span></td>
-                                <td>Coderthemes</td>
+                            <tr class="bg-dark text-success">
+                                <th class="font-weight-bold">Tổng Thu Nhập</th>
+                                <th class="text-right font-weight-bold"><?= number_format($data['total_personal_income']) ?></th>
                             </tr>
 
                             </tbody>
