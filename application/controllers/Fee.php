@@ -7,10 +7,12 @@ class Fee extends CustomBaseStep {
         parent::__construct();
         $this->load->model('ghService');
         $this->load->model('ghIncomeContract');
+        $this->load->model('ghUserPenalty');
         $this->load->model('ghContract');
         $this->load->model('ghUser');
         $this->load->model('ghRole');
         $this->load->library('LibUser', null, 'libUser');
+        $this->load->library('LibPenalty', null, 'libPenalty');
         $this->custom_execute_general = []; // list Account Id
         $this->load->config('internal_mechanism_income_rate_control_department.php');
         $this->load->config('internal_mechanism_income_rate.php');
@@ -45,12 +47,18 @@ class Fee extends CustomBaseStep {
                 $this->syncRoundNumberContractPersonal($user['account_id'], $data['quantity'], $data['total_sale']);
         }
 
+
+        $personal_penalty = $this->ghUserPenalty->get(['user_penalty_id' =>
+        $this->auth['account_id'], 'time_insert >= ' => strtotime(date('01-m-Y')) ]);
+
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('fee/show-personal-profile', [
             'list_user_income' => $view_data_income,
             'libUser' => $this->libUser,
             'total_sale' => $data['total_sale'],
             'quantity_contract' => $data['quantity'],
+            'personal_penalty' => $personal_penalty,
+            'libPenalty' => $this->libPenalty
         ]);
         $this->load->view('components/footer');
     }

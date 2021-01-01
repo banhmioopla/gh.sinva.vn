@@ -93,12 +93,50 @@ $data = array_values($list_user_income)[0];
                             </tr>
                             <tr class="text-muted">
                                 <td>Các Danh Mục Trừ Tiền</td>
-                                <td class="text-right"><small class="text-muted">đang phát triển
-                                        ...</small></td>
+                                <td class="text-right">
+                                <?php
+
+                                $pen_fee = 0;
+                                $pen_rate = 0;
+                                if(count($personal_penalty) > 0):?>
+                                    <?php foreach ($personal_penalty as $p):
+                                        $penalty_name = $libPenalty->getNameById($p['penalty_id']);
+
+                                        ?>
+                                        <p class="text-danger text-left font-weight-bold">
+                                            <?= $penalty_name ?></p>
+                                        <ul>
+
+                                            <?php  if($p['fee'] > 0):  $pen_fee += $p['fee']; ?>
+                                            <li>
+                                                <?= $p['fee'] > 0 ? number_format($p['fee']) : '' ?>
+                                            </li>
+                                            <?php endif; ?>
+                                            <?php  if($p['income_rate'] > 0): $pen_rate
+                                             += $p['income_rate']   ?>
+                                                <li>
+                                                    <?= $p['income_rate'] . '%' ?>
+                                                </li>
+                                            <?php endif; ?>
+                                        </ul>
+                                    <?php endforeach; ?>
+                                    <?php else: ?>
+                                    <small class="text-muted">không có khoản trừ tiền
+                                        <?= time() ?>
+                                    </small>
+                                <?php endif; ?>
+
+                                </td>
                             </tr>
                             <tr class="bg-dark text-success">
                                 <th class="font-weight-bold">Tổng Thu Nhập</th>
-                                <th class="text-right font-weight-bold"><?= number_format($data['total_personal_income']) ?></th>
+
+                                <?php
+                                $final = $data['total_personal_income'] - $pen_fee -
+                                ($pen_rate/100*$data['total_personal_income'])
+
+                                ?>
+                                <th class="text-right font-weight-bold"><?= number_format($final) ?></th>
                             </tr>
 
                             </tbody>
