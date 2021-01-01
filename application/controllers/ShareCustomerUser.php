@@ -67,7 +67,29 @@ class ShareCustomerUser extends CustomBaseStep {
     }
 
     public function delete(){
+        $room_id = $this->input->post('id');
+        if(!empty($room_id)) {
+            $old_room = $this->ghShareCustomerUser->getById($room_id);
 
+            $log = [
+                'table_name' => 'gh_share_customer_user',
+                'old_content' => null,
+                'modified_content' => json_encode($old_room[0]),
+                'time_insert' => time(),
+                'action' => 'delete',
+                'user_id' => $this->auth['account_id']
+            ];
+
+            // call model
+            $tracker = $this->ghActivityTrack->insert($log);
+            $result = $this->ghShareCustomerUser->delete($room_id);
+
+            if($result > 0) {
+                echo json_encode(['status' => true]); die;
+            }
+            echo json_encode(['status' => false]); die;
+        }
+        echo json_encode(['status' => false]); die;
     }
 
 

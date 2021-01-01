@@ -97,15 +97,14 @@
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-center">
-                                            <div class="checkbox checkbox-danger
-                                            is-active-district">
-                                                <input id="share-<?= $row['id'] ?>"
-                                                       value="<?= $row['id'] ?>"
-                                                       name="share[]"
-                                                       type="checkbox">
-                                                <label for="share-<?= $row['id'] ?>">
-                                                </label>
+
+                                            <div
+                                                    class="d-flex flex-column flex-md-row justify-content-center">
+                                                <button data-share-id="<?= $row['id'] ?>" type="button" class="btn m-1 share-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
                                             </div>
+
                                         </div>
                                     </td>
                                 </tr>
@@ -127,6 +126,37 @@
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true,
+                "fnDrawCallback": function(){
+                    $('.share-delete').on('click', function() {
+                        let this_btn = $(this);
+                        let share_id = $(this).data('share-id');
+                        swal({
+                            title: 'Bạn Muốn Xóa Chia Sẻ',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonClass: 'btn btn-confirm mt-2',
+                            cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                            confirmButtonText: 'Xóa',
+                        }).then(function () {
+                            $.ajax({
+                                type: 'POST',
+                                url:'<?= base_url()."admin/delete-share-customer-user" ?>',
+                                data: {id: share_id},
+                                success:function(response) {
+                                    let data = JSON.parse(response);
+                                    if(data.status > 0) {
+                                        this_btn.parents('tr').remove();
+                                    }
+                                }
+                            });
+                            swal({
+                                title: 'Đã Xóa Thành Công!',
+                                type: 'success',
+                                confirmButtonClass: 'btn btn-confirm mt-2'
+                            });
+                        })
+                    });
+                }
             });
             $('select').change(function(){
                 if($(this).attr('id') == 'user') {

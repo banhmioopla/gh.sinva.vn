@@ -421,6 +421,12 @@ $route['admin/create-share-customer-user'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/delete-share-customer-user'] = function($params = []) {
+    $controller = 'ShareCustomerUser';
+    $action = '/delete';
+    return $controller.$action;
+};
+
 $route['admin/create-district'] = function($params = []) {
     $controller = 'District';
     $action = '/create';
