@@ -11,12 +11,13 @@ class GhCustomer extends CI_Model {
     public function getByUserAndShare($user_id) {
         $sql = "
         SELECT DISTINCT c.id, c.* FROM gh_customer c, 
-        gh_share_customer_user s
+        gh_share_customer_user s, gh_contract con
         WHERE 
           (c.user_insert_id = $user_id) 
           OR (c.id = s.customer_id AND c.user_insert_id <> s.user_id 
             AND s.user_id = $user_id
           ) 
+          OR (c.id = con.customer_id AND con.consultant_id = $user_id)
         ";
 
         $result = $this->db->query($sql);
