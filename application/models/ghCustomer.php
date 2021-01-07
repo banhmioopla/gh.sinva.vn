@@ -53,6 +53,15 @@ class GhCustomer extends CI_Model {
         return $result;
     }
 
+    public function checkRentedContractByUser($id) {
+        $sql = "SELECT time_expire, count(id) as counter
+                FROM gh_contract 
+                WHERE customer_id = $id ORDER BY time_expire ";
+        $result = $this->db->query($sql);
+
+        return $result->result_array();
+    }
+
     public function delete($district_id) {
         $this->db->where('id' , $district_id);
         $this->db->delete($this->table);

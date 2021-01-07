@@ -21,6 +21,11 @@ class LibCustomer {
         return $phone;
     }
 
+    public function checkRentedContractByUser($id){
+        $customer = $this->CI->ghCustomer->checkRentedContractByUser($id);
+        return $customer;
+    }
+
     public function cb($price_id = 0) {
         $list_price = $this->CI->ghCustomer->get();
         $cb = '<option value=0>chọn khách hàng ...</option>';

@@ -53,6 +53,22 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ):
                                 if($row['status'] !== "sinva-rented") continue;
+                                $isRented = $libCustomer->checkRentedContractByUser
+                                ($row['id']);
+                                $contract_count = "";
+                                $isExpired = "success";
+                                if($isRented && $isRented[0]['time_expire'] < strtotime
+                                    (date('d-m-Y'))) {
+                                    $isExpired = 'danger';
+
+                                }
+
+                                if($isRented) {
+                                    $contract_count = $isRented[0]['counter'] > 0 ?
+                                        $isRented[0]['counter'] : '';
+                                }
+
+
                                 ?>
                             <tr>
                                 <td><a target="_blank"
@@ -61,7 +77,10 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                         $row['id'] ?></a></td>
                                 <td>
                                     <div class=" font-weight-bold">
-                                            <?= $row['name'] ?>
+                                            <span class="text-<?= $isExpired ?>"><?=
+                                                $row['name'] ?></span> <span
+                                                class="badge badge-<?= $isExpired ?>"><?=
+                                            $contract_count ?></span>
                                         <p class="mb-0 text-muted"> <small>Sinh Nhật: <?=
                                                 $row['birthdate'] !== null ? date('d/m/Y',$row['birthdate']) : ''  ?></small></p>
                                     </div>
@@ -310,7 +329,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
     commands.push(function() {
         $(document).ready(function() {
             $('.table-data').DataTable({
-                "pageLength": 10,
+                "pageLength": 5,
                 'pagingType': "full_numbers",
                 responsive: true,
                 
