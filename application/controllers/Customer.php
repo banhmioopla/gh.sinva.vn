@@ -31,6 +31,7 @@ class Customer extends CustomBaseStep {
 		}
 		$data['libDistrict'] = $this->libDistrict;
 		$data['libCustomer'] = $this->libCustomer;
+		$data['libUser'] = $this->libUser;
 		$data['select_district'] = $this->libDistrict->cbActive();
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/

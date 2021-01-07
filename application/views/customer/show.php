@@ -56,6 +56,8 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 $isRented = $libCustomer->checkRentedContractByUser
                                 ($row['id']);
                                 $contract_count = "";
+                                $consultant_name = '';
+
                                 $isExpired = "success";
                                 if($isRented && $isRented[0]['time_expire'] < strtotime
                                     (date('d-m-Y'))) {
@@ -66,6 +68,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 if($isRented) {
                                     $contract_count = $isRented[0]['counter'] > 0 ?
                                         $isRented[0]['counter'] : '';
+                                    $consultant_name = $libUser->getNameByAccountid($isRented[0]['consultant_id']);
                                 }
 
 
@@ -83,6 +86,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                             $contract_count ?></span>
                                         <p class="mb-0 text-muted"> <small>Sinh Nhật: <?=
                                                 $row['birthdate'] !== null ? date('d/m/Y',$row['birthdate']) : ''  ?></small></p>
+                                        <p><?= $consultant_name ?></p>
                                     </div>
 
                                 </td>
