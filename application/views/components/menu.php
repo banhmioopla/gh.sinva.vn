@@ -27,6 +27,15 @@
                         <?php endif;?>
 
 
+                        <?php if(isYourPermission('UserDistrict', 'show',
+                            $this->permission_set)):?>
+                            <li><a href="/admin/list-user-district?account-id=<?=
+                                $this->auth['account_id'] ?>"><i
+                                            class="mdi
+                            mdi-chevron-double-right text-warning"></i> Chia Quận</a></li>
+                        <?php endif;?>
+
+
                         <?php if(isYourPermission('Partner', 'show',$this->permission_set)
                         ):?>
                             <li><a href="/admin/list-partner"><i class="mdi

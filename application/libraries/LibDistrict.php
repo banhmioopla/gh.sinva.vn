@@ -24,6 +24,17 @@ class LibDistrict {
         return $cb;
     }
 
+    public function getListDistrictCode() {
+        $list_district = $this->CI->ghDistrict->getByActive();
+        $output = [];
+        if(!empty($list_district)) {
+            foreach ($list_district as $district) {
+                $output[] = $district['code'];
+            }
+        }
+        return $output;
+    }
+
     public function getNameById($district_id) {
         $district = $this->CI->ghDistrict->get(['id' => $district_id]);
         return $district ? $district[0]['name'] :'';

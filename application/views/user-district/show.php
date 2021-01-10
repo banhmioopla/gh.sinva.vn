@@ -7,22 +7,35 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">Highdmin</a></li>
+                            <li class="breadcrumb-item"><a href="#">giỏ hàng</a></li>
                             <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3> Phân Quận Cho Quản Lý Dự Án </h3>
                 </div>
             </div>
         </div>
         <!-- end page title end breadcrumb -->
 
         <div class="row">
-            <form method="post" class="col-md-6 col-12 card-box" name="form-user-district" action="<?= base_url().'/admin/list-user-district' ?>">
+            <form method="post" class="col-md-10 offset-md-1 col-12 card-box"
+                  name="form-user-district" action="<?= base_url().'/admin/create-user-district?account-id='.$this->auth['account_id'] ?>">
+                <h3 class="text-center text-danger">Chia Quận</h3>
+
+                <?php if($this->session->has_userdata('fast_notify')):
+                    $flash_mess = $this->session->flashdata('fast_notify')['message'];
+                    $flash_status = $this->session->flashdata('fast_notify')['status'];
+                    unset($_SESSION['fast_notify']); ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <?= $flash_mess ?>
+                    </div>
+                <?php endif; ?>
                 <div class="">
                     <select class="custom-select mt-3 form-control" name="account_id">
-                        <?= $cb_product_manager ?>
+                        <?= $libUser->cb($this->input->get('account-id'), 'YES') ?>
                     </select>
                 </div>
                 <div class="mt-3">
@@ -61,7 +74,8 @@
     commands.push(function() {
         $( document ).ready(function() {
             $('select[name=account_id]').on('change', function() {
-                $('form[name=form-user-district]').submit();
+                window.location = '/admin/list-user-district?account-id='+$('select')
+                    .val();
             });
         });
     });

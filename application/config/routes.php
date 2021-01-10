@@ -900,6 +900,12 @@ $route['admin/list-user-district'] = function($params = []) {
 	return $controller.$action;
 };
 
+
+$route['admin/create-user-district'] = function($params = []) {
+    $controller = 'UserDistrict';
+    $action = '/create';
+    return $controller.$action;
+};
 // admin/image
 $route['admin/upload-image'] = function($params = []) {
 	$controller = 'Image';
