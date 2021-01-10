@@ -83,7 +83,6 @@ class Contract extends CustomBaseStep {
 	public function showAllTimeLine(){}
 
 	public function show(){
-		$this->load->model('ghContract'); // load model ghUser
 		$data['list_contract'] = $this->ghContract->get();
 
 
