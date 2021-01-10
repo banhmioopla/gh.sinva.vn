@@ -96,7 +96,7 @@
                 "fnDrawCallback": function() {
                 <?php if(in_array($this->auth['role_code'], ['customer-care', 'product-manager'])): ?>
                     $('.comissionrate').editable({
-                        type: "number",
+                        type: "text",
                         url: '<?= base_url() ?>admin/update-apartment-editable',
                         inputclass: '',
                         success: function(response) {
