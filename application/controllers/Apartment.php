@@ -23,9 +23,6 @@ class Apartment extends CustomBaseStep {
 	public function showNotificaton(){}
 
 	public function show(){
-		if($this->authorised_mode) {
-			$this->permission_modify[] = $this->auth['role_code'];
-		}
 		$district_code = $this->input->get('district-code');
 		$data = [];
 		$district_code = !empty($district_code) ? $district_code: $this->district_default;
@@ -47,8 +44,7 @@ class Apartment extends CustomBaseStep {
 			}
 		}
 		$template = 'apartment/show';
-		if(in_array($district_code, $this->list_district_CRUD) and in_array($this->auth['role_code'], $this->permission_modify)) {
-			$this->auth['modifymode'] = 'edit';
+		if(in_array($district_code, $this->list_district_CRUD)) {
 			$template = 'apartment/show-full-permission';
 		}
 

@@ -1,5 +1,5 @@
+<?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
 <div class="card-box">
-    <?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
             <h4 class="text-danger text-center" >Tìm kiếm phòng đang trống</h4>
             <span id="listPrice">
                 <span class="form-group row">
@@ -39,7 +39,6 @@
                 </span>
 
             </span>
-    <?php endif; ?>
 
 </div>
 
@@ -55,3 +54,5 @@
         })
     });
 </script>
+
+<?php endif; ?>
