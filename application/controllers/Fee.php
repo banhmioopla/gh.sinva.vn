@@ -305,11 +305,13 @@ class Fee extends CustomBaseStep {
             /*Thu nhập cho không phải BPVH */
             $mapping_sale = $sale_config['index_' . $user['role_code']];
             $rate = 0;
-            foreach($mapping_sale as $item) {
-                if($item['quantity_max'] > $total_user_contract &&
-                    $item['quantity_min'] <= $total_user_contract) {
-                    $rate = $item['rate'];
-                    break;
+            if(is_array ($mapping_sale)) {
+                foreach($mapping_sale as $item) {
+                    if($item['quantity_max'] > $total_user_contract &&
+                        $item['quantity_min'] <= $total_user_contract) {
+                        $rate = $item['rate'];
+                        break;
+                    }
                 }
             }
 
