@@ -393,7 +393,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
             });
 
             $('.contract-room_price, .contract-number_of_month, .contract-commission_rate').editable({
-                type: "number",
+                type: "text",
                 url: '<?= base_url() ?>admin/update-contract-editable',
                 inputclass: '',
                 success: function (response) {
