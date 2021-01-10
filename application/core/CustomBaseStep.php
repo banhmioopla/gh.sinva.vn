@@ -20,12 +20,13 @@ class CustomBaseStep extends CI_Controller {
 			return redirect('/admin/logout');
 		}
 		
-		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghRole']);
+		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghRole', 'ghConfig']);
 		
 		$this->district_default = '7';
 		$this->auth = $this->session->userdata('auth');
 		$this->load->library('LibRole', null, 'libRole');
-		
+		$this->load->library('LibConfig', null, 'libConfig');
+
 		$this->load->config('usermode');
 		$usermode = $this->config->item('usermode');
 	
@@ -53,18 +54,8 @@ class CustomBaseStep extends CI_Controller {
 			$this->permission_action_set = $this->permission_set[$this->current_controller];
 		}
 
-        $this->arr_general = [
-            171020010, // quynh mai
-            171020095, // quocbinh
-            171020036, // pham tiem
-            171020045, // hoang phuong
-            171020053, // thu ngan
-            171020064, // thanh nhan
-            171020047, // bao trinh
-            171020067, // kha ai
-            171020057, // thanh cong
-        ];
-		
+
+        $this->arr_general = $this->libConfig->getListGeneralControlDepartment();
 		if(!$this->checkCurrentPermission($this->permission_set)) {
 			return redirect('/admin/notfound');
 		}
