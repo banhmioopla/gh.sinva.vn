@@ -303,7 +303,8 @@ class Fee extends CustomBaseStep {
             $description = $sub_description;
         } else {
             /*Thu nhập cho không phải BPVH */
-            $mapping_sale = $sale_config['index_' . $user['role_code']];
+            $mapping_sale = isset($sale_config['index_' . $user['role_code']]) ?
+                $sale_config['index_' . $user['role_code']] : null;
             $rate = 0;
             if(is_array ($mapping_sale)) {
                 foreach($mapping_sale as $item) {
