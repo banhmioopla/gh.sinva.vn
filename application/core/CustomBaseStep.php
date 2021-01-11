@@ -35,8 +35,12 @@ class CustomBaseStep extends CI_Controller {
 		
 		$ghUserDistrict = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
 		$this->list_district_CRUD = [];
+        $this->list_district_view_only = [];
 		foreach($ghUserDistrict as $ud) {
 			$this->list_district_CRUD[] = $ud['district_code'];
+			if($ud['is_view_only'] == 'YES') {
+                $this->list_district_view_only[] = $ud['district_code'];
+            }
 		}
 		
 		$this->permission_set = json_decode($this->ghRole->get(['code' =>$this->auth['role_code']])[0]['list_function'], true);

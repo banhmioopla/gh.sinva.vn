@@ -18,7 +18,7 @@
         <!-- end page title end breadcrumb -->
 
         <div class="row">
-            <form method="post" class="col-md-10 offset-md-1 col-12 card-box"
+            <form method="post" class="col-md-8 offset-md-2 col-12 card-box"
                   name="form-user-district" action="<?= base_url().'/admin/create-user-district?account-id='.$this->auth['account_id'] ?>">
                 <h3 class="text-center text-danger">Chia Quận</h3>
 
@@ -33,12 +33,30 @@
                         <?= $flash_mess ?>
                     </div>
                 <?php endif; ?>
-                <div class="">
+                <div class="w-50">
                     <select class="custom-select mt-3 form-control" name="account_id">
                         <?= $libUser->cb($this->input->get('account-id'), 'YES') ?>
                     </select>
                 </div>
+                <div class="form-group row mt-3">
+                    <label for="is_view_only" class="col-4 col-form-label font-weight-bold
+                    text-right">Chỉ xem (view only)</label>
+                    <div class="col-8">
+                        <div>
+                            <div class=" checkbox checkbox-success">
+                                <input id="is_view_only" type="checkbox"
+                                       value="YES"
+                                       <?= count($this->list_district_view_only) > 0
+                                           ? 'checked' :"" ?>
+                                       name="is_view_only">
+                                <label for="is_view_only">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="mt-3">
+
                     <?php foreach($list_district as $district):?>
 
                         <div class=" col-3 checkbox checkbox-custom form-check-inline">

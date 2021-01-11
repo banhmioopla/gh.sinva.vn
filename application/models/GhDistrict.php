@@ -31,6 +31,14 @@ class GhDistrict extends CI_Model {
         return $result;
     }
 
+
+    public function getListLimit($user_id){
+	    $sql = "SELECT * FROM gh_district d, gh_user_district ud WHERE d.code = ud.district_code AND ud.user_id = $user_id";
+        $result = $this->db->query($sql);
+
+        return $result->result_array();
+    }
+
     public function delete($district_id) {
         $this->db->where('id' , $district_id);
         $this->db->delete($this->table);

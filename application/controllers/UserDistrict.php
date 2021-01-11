@@ -33,11 +33,14 @@ class UserDistrict extends CustomBaseStep {
 
         $post = $this->input->post();
         $this->ghUserDistrict->delete(['user_id' => $post['account_id']]);
+
+        $is_view_only = $post['is_view_only'] == "YES" ? "YES":"NO";
         if(count($post['code'])>0) {
             foreach ($post['code'] as $code) {
                 $this->ghUserDistrict->insert([
                     'district_code' => $code,
-                    'user_id' => $post['account_id']
+                    'user_id' => $post['account_id'],
+                    'is_view_only' => $is_view_only
                 ]);
             }
         }

@@ -32,7 +32,7 @@ class Apartment extends CustomBaseStep {
 
 		$data['contract_noti'] = $this->ghNotification->get();
 		
-		$data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
+		$data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
 		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
 
 		$data['cb_district'] = $this->libDistrict->cbActive();
@@ -43,9 +43,9 @@ class Apartment extends CustomBaseStep {
 				$data['apartment_today'][] = $item;
 			}
 		}
-		$template = 'apartment/show';
-		if(in_array($district_code, $this->list_district_CRUD)) {
-			$template = 'apartment/show-full-permission';
+		$template = 'apartment/show-full-permission';
+		if(in_array($district_code, $this->list_district_view_only)) {
+			$template =  'apartment/show';
 		}
 
 		$data['product_total'] = count($this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']));
