@@ -26,6 +26,10 @@ class Apartment extends CustomBaseStep {
 		$district_code = $this->input->get('district-code');
 		$data = [];
 		$district_code = !empty($district_code) ? $district_code: $this->district_default;
+
+		if(count($this->list_district_CRUD) == 0) {
+		    echo  "<strong>Bạn cần được chia quận!</strong>"; return;
+        }
 		
 		$data['district_code'] = $district_code;
 		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);
