@@ -299,7 +299,7 @@ class Contract extends CustomBaseStep {
 		$field_value = $this->input->post('value');
 
 		if(!empty($contract_id) and !empty($field_name)) {
-			if($field_name == 'time_expire') {
+			if($field_name == 'time_expire' || $field_name == 'time_check_in') {
 				if(empty($field_value)) {
 					$field_value = null;
 				} else {
@@ -308,7 +308,9 @@ class Contract extends CustomBaseStep {
 				}
 			}
 			$data = [
-				$field_name => $field_value
+				$field_name => $field_value,
+                'time_update' => time(),
+                'user_update_id' => $this->auth['account_id']
 			];
 
 			$old_contract = $this->ghContract->getById($contract_id);
