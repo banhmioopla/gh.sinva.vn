@@ -54,7 +54,7 @@ $check_commission_rate = true;
                 <?php endif; ?>
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
-            <div class="pl-0 pr-0 col-12 col-md-8">
+            <div class="pl-0 pr-0 col-12 col-md-9">
                 <?php $this->load->view('components/list-navigation'); ?>
                 <div class="shadow">
                     <?php $this->load->view('apartment/search-by-room-price'); ?>

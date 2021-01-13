@@ -52,6 +52,25 @@ class GhRoom extends CI_Model {
         return $result;
     }
 
+    public function getBySearch($where){
+        $where_string = "";
+	    if(!empty($where)) {
+            $where_string = " AND ";
+	        foreach ($where as $k => $v) {
+                $where_string .= ' '.$k.$v . ' AND';
+            }
+            $where_string = substr($where_string, 0, -3);
+        }
+
+	    $sql = "SELECT gh_room.* 
+                FROM gh_room, gh_apartment
+                WHERE gh_room.apartment_id = gh_apartment.id ". $where_string;
+
+        $result = $this->db->query($sql);
+
+        return $result->result_array();
+    }
+
     public function getNumberByStatus($apartment_id, $status) {
         $result = $this->db->get_where(
             $this->table, 

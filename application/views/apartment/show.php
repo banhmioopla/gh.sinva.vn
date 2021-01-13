@@ -95,7 +95,7 @@ $check_commission_rate = in_array($this->auth['role_code'], ['business-manager',
                 <?php endif; ?>
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
-            <div class="card card-body pl-0 pr-0 col-12 col-md-8">
+            <div class="card card-body pl-0 pr-0 col-12 col-md-9">
                 <?php $this->load->view('components/list-navigation'); ?>
                 <?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
                 <div class="m-2 list-action">

@@ -40,7 +40,7 @@ class LibRoom {
 
     public function cbAvailableRoomPrice($room_id = 0){
         $list_room = $this->CI->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
-        $cb = '<option value=0>chọn giá phòng ...</option>';
+        $cb = '<option value=0>Giá Phòng</option>';
         if(!empty($list_room)) {
             foreach ($list_room as $room) {
                 $selected = '';
@@ -67,7 +67,7 @@ class LibRoom {
     public function cbAvailableRoomArea($room_id = 0){
         $list_room = $this->CI->ghRoom->getAreaList('gh_room.status = "Available" ', 'gh_room.area');
 
-        $cb = '<option value=0>chọn diện tích phòng ...</option>';
+        $cb = '<option value=0>Diện tích</option>';
         if(!empty($list_room)) {
             foreach ($list_room as $room) {
                 $selected = '';
@@ -93,7 +93,7 @@ class LibRoom {
 
     public function cbCodeByApartmentId($apartment_id, $room_id) {
         $list_room = $this->CI->ghRoom->get(['active' => 'YES', 'apartment_id'=> $apartment_id]);
-        $cb = '<option value=0>chọn mã phòng ...</option>';
+        $cb = '<option value=0>Mã Phòng</option>';
         if(!empty($list_room)) {
             foreach ($list_room as $room) {
                 $selected = '';
