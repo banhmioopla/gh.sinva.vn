@@ -15,7 +15,7 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
     <div class="sk-cube sk-cube1"></div>
     <div class="sk-cube sk-cube2"></div>
 </div>
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Page-Title -->
         <div class="row">
@@ -28,7 +28,6 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách Hợp đồng</h3>
                 </div>
             </div>
         </div>
@@ -43,73 +42,19 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
         <?php $this->load->view('components/list-navigation'); ?>
 
         <div class="row">
-            <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
-                <div class="col-md-4 offset-md-2">
-                    <div class="card-box shadow text-center">
-                        <a href="/admin/contract/sync-status-expire" class="btn
-                        btn-danger">Duyệt Tự Động Hợp Đồng Hết Hạn</a>
-                    </div>
-                </div>
-            <?php if(isYourPermission($this->current_controller, 'showAllTimeLine', $this->permission_set)):?>
-                <div class="col-md-4">
-                    <div class="card-box shadow">
-                        <div class="form-group">
-                            <select name="filterTime" class="form-control">
-                                <option <?= $this->input->get('filterTime') == '' ? 'selected' : '' ?>
-                                        value="ALL">Tất cả (NGÀY HẾT
-                                    HẠN)
-                                </option>
-                                <option <?= $this->input->get('filterTime') == 'TODAY' ? 'selected' : '' ?>
-                                        value="TODAY">Hôm nay
-                                </option>
-                                <option <?= $this->input->get('filterTime') == 'NEXT_7D' ? 'selected' : '' ?>
-                                        value="NEXT_7D">7 Ngày Nữa
-                                </option>
-                                <option <?= $this->input->get('filterTime') == 'NEXT_15D' ? 'selected' : '' ?>
-                                        value="NEXT_15D">15 Ngày Nữa
-                                </option>
-                                <option <?= $this->input->get('filterTime') == 'NEXT_30D' ? 'selected' : '' ?>
-                                        value="NEXT_30D">30 Ngày Nữa
-                                </option>
-                                <option <?= $this->input->get('filterTime') == 'NEXT_45D' ? 'selected' : '' ?>
-                                        value="NEXT_45D">45 Ngày Nữa
-                                </option>
-                                <option <?= $this->input->get('filterTime') == 'NEXT_60D' ? 'selected' : '' ?>
-                                        value="NEXT_60D">60 Ngày Nữa
-                                </option>
-                                <option <?= $this->input->get('filterTime') == 'NEXT_1Y' ? 'selected' : '' ?>
-                                        value="NEXT_1Y">1 Năm Nữa
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <script>
-                        commands.push(function () {
-                            $('select[name=filterTime]').on('change', function () {
-                                let filterTime = $(this).val();
-                                window.location = '/admin/list-contract?filterTime=' +
-                                    filterTime;
-                            });
-                        });
-                    </script>
 
-                </div>
-            <?php endif; ?>
-            <?php endif; ?>
-            <div class="col-12 col-md-8 offset-md-2 mt-md-2">
+            <div class="col-12 col-md-6">
                 <?php if(count($list_notification) > 0 && isYourPermission('Contract', 'approved', $this->permission_set) ):
                 ?>
                 <div class="card-box shadow table-responsive">
-                    <h4 class="text-danger text-center" <?= $check_collapse ? 'data-target="#listPending" data-toggle="collapse"' : '' ?> >Hợp Đồng Đang Chờ duyệt</h4>
+                    <h4 class="text-danger text-center" >Hợp Đồng Đang Chờ duyệt</h4>
                     
                     <table style="font-size: 13px;" id="listPending" class="
-                    table-contract table <?=
-                    $check_collapse ? 'collapse' :'' ?> ">
+                    table-contract table ">
                         <thead>
                         <tr>
                             <th width="100px" class="text-center">ID Hợp Đồng</th>
                             <th>Nội dung</th>
-                            <th class="text-center">Thời gian tạo</th>
                             <th width="100px" class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
@@ -122,15 +67,16 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                        href="/admin/detail-contract?id=<?= $row['object_id']
                                        ?>">#<?= 10000+ $row['object_id'] ?></a></td>
                                 <td>
-                                    <div>
+                                    <strong>
                                         <?= $row['message'] ?>
-                                    </div>
+                                    </strong>
+                                    <p><small><?= date('d/m/Y H:i', $row['time_insert'])
+                                            ?></small></p>
+
                                 </td>
-                                <td class="text-center"><div><?= date('d/m/Y H:i', $row['time_insert'])
-                                        ?></div></td>
                                 <td class="text-center">
                                     <div>
-                                        <a class="btn btn-warning btn-sm"
+                                        <a class="btn btn-danger btn-sm"
                                                 href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>">  Duyệt </a>
                                     </div>
                                 </td>
@@ -142,18 +88,92 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                 </div>
                 <?php endif; ?>
             </div>
-            <div class="col-12 col-md-8 offset-md-2 mt-md-2">
+
+            <div class="col-12 col-md-6">
+                <div class="card-box table-responsive shadow">
+                    <div>
+                        <p class="text-muted font-14 m-b-20">
+                            Do lường 1 chút <code class="highlighter-rouge">#</code>.
+                        </p>
+
+                        <table class="table table-dark">
+                            <tbody>
+                            <tr>
+                                <th scope="row">Tổng SL </th>
+                                <td><?= count($list_contract) ?></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
+                <div class="col-md-4 mt-md-5">
+                    <div class="card-box shadow text-center">
+                        <a href="/admin/contract/sync-status-expire" class="btn
+                        btn-danger"><i>Duyệt Tự Động Hợp Đồng Hết Hạn</i></a>
+                    </div>
+                </div>
+                <?php if(isYourPermission($this->current_controller, 'showAllTimeLine', $this->permission_set)):?>
+                    <div class="col-md-4 mt-md-5">
+                        <div class="card-box shadow">
+                            <div class="form-group">
+                                <select name="filterTime" class="form-control">
+                                    <option <?= $this->input->get('filterTime') == '' ? 'selected' : '' ?>
+                                            value="ALL">Tất cả (NGÀY HẾT
+                                        HẠN)
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'TODAY' ? 'selected' : '' ?>
+                                            value="TODAY">Hôm nay
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_7D' ? 'selected' : '' ?>
+                                            value="NEXT_7D">7 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_15D' ? 'selected' : '' ?>
+                                            value="NEXT_15D">15 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_30D' ? 'selected' : '' ?>
+                                            value="NEXT_30D">30 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_45D' ? 'selected' : '' ?>
+                                            value="NEXT_45D">45 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_60D' ? 'selected' : '' ?>
+                                            value="NEXT_60D">60 Ngày Nữa
+                                    </option>
+                                    <option <?= $this->input->get('filterTime') == 'NEXT_1Y' ? 'selected' : '' ?>
+                                            value="NEXT_1Y">1 Năm Nữa
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <script>
+                            commands.push(function () {
+                                $('select[name=filterTime]').on('change', function () {
+                                    let filterTime = $(this).val();
+                                    window.location = '/admin/list-contract?filterTime=' +
+                                        filterTime;
+                                });
+                            });
+                        </script>
+
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <div class="col-12 col-md-12 mt-md-2">
                 <?php $this->load->view('contract/show-current-month',
                         [
                             'check_collapse' => $check_collapse,
                             'list_contract' => $list_contract,
                             'label_apartment' => $label_apartment,
                             'ghRoom' => $ghRoom
-                                ]); ?>
+                        ]); ?>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-8 offset-md-2">
+            <div class="col-12 col-md-12">
                 <div class="card-box table-responsive shadow">
                 <h4 class="text-danger text-center" <?= $check_collapse ? 'data-target="#listAll" data-toggle="collapse"' : '' ?>>Tất Cả Hợp Đồng</h4>
                     <table id="listAll" class="table-contract <?= $check_collapse ? 'collapse' :'' ?> table table-bordered">
