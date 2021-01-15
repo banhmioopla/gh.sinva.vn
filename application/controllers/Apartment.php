@@ -87,6 +87,7 @@ class Apartment extends CustomBaseStep {
         $params['price >='] = $roomPriceMin;
         $params['gh_room.active = '] = '"YES"';
         $params['gh_room.status = '] = '"Available"';
+        $params['gh_apartment.active = '] = '"YES"';
 
         if($this->input->get('roomPriceMin')) {
             $roomPriceMin = $this->input->get('roomPriceMin');

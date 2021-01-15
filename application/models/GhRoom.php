@@ -64,9 +64,7 @@ class GhRoom extends CI_Model {
 
 	    $sql = "SELECT gh_room.* 
                 FROM gh_room, gh_apartment
-                WHERE gh_room.apartment_id = gh_apartment.id AND gh_room.active = 'YES' 
-                ".
-            $where_string;
+                WHERE gh_room.apartment_id = gh_apartment.id ". $where_string;
 
         $result = $this->db->query($sql);
 
