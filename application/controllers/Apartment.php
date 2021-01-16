@@ -86,7 +86,6 @@ class Apartment extends CustomBaseStep {
         $params['price <='] = $roomPriceMax;
         $params['price >='] = $roomPriceMin;
         $params['gh_room.active = '] = '"YES"';
-        $params['gh_room.status = '] = '"Available"';
         $params['gh_apartment.active = '] = '"YES"';
 
         if($this->input->get('roomPriceMin')) {
@@ -119,6 +118,7 @@ class Apartment extends CustomBaseStep {
 	    $data['list_data'] = $this->ghRoom->getBySearch($params);
         $data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
 	    $data['libRoom'] = $this->libRoom;
+        $data['label_apartment'] =  $this->config->item('label.apartment');
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('showbysearch/room', $data);
         $this->load->view('components/footer');
