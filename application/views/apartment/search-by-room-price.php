@@ -5,8 +5,14 @@
                     <span class="col-md-2 col-12 offset-0">
                         <div>Quận</div>
                         <select name="roomDistrict" id="roomDistrict" class="form-control">
-                            <?php foreach ($list_district as $d): ?>
-                                <option value="<?= $d['code'] ?>"><?= $d['name'] ?></option>
+                            <?php foreach ($list_district as $d):
+                                $selected = "";
+                                if($d['code'] == $this->input->get('roomDistrict')) {
+                                    $selected = "selected";
+                                }
+                                ?>
+                                <option value="<?= $d['code'] ?>" <?= $selected ?>><?= $d['name']
+                                    ?></option>
                             <?php endforeach; ?>
                         </select>
                     </span>
