@@ -114,7 +114,7 @@ class Apartment extends CustomBaseStep {
         }
 
         if($this->input->get('roomDistrict') ) {
-            $params['gh_apartment.district_code ='] = $this->input->get('roomDistrict');
+            $params['gh_apartment.district_code ='] = "'".$this->input->get('roomDistrict')."'";
         }
 
 
