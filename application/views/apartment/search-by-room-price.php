@@ -2,11 +2,28 @@
 <div class="card-box">
             <span id="listPrice">
                 <span class="form-group row">
-                    <span class="col-md-4 col-12 offset-0">
+                    <span class="col-md-2 col-12 offset-0">
                         <div>Quận</div>
                         <select name="roomDistrict" id="roomDistrict" class="form-control">
                             <?php foreach ($list_district as $d): ?>
                                 <option value="<?= $d['code'] ?>"><?= $d['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </span>
+
+                    <span class="col-md-2 col-12 offset-0">
+                        <div>Loại Phòng</div>
+                        <select name="roomType" id="roomType" class="form-control">
+                            <option value="">Loại Phòng</option>
+                            <?php foreach ($list_type as $d):
+                                $selected = "";
+                                if($this->input->get('roomType') == $d['room_type']) {
+                                    $selected = "selected";
+                                }
+
+
+                                ?>
+                                <option value="<?= $d['room_type'] ?>" <?= $selected ?>><?= $d['room_type'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </span>
@@ -58,6 +75,7 @@
                 + '&roomAreaMin=' + $('#roomAreaMin').val()
                 + '&roomAreaMax=' + $('#roomAreaMax').val()
                 + '&roomDistrict=' + $('#roomDistrict').val()
+                + '&roomType=' + $('#roomType').val()
             ;
         })
     });

@@ -113,13 +113,18 @@ class GhRoom extends CI_Model {
         return $result->result_array() ? $result->result_array()[0]['object_counter'] : 0;
     }
 
-    public function getTypeByDistrict($district_code, $where_string) {
+    public function getTypeByDistrict($district_code = null, $where_string = null) {
         $sql = "SELECT gh_room.type as room_type, count(gh_room.id) as object_counter FROM  gh_room, gh_apartment 
                 WHERE gh_apartment.id = gh_room.apartment_id
                 AND gh_apartment.active = 'YES'
                 AND gh_room.active = 'YES'
-                AND gh_apartment.district_code = '$district_code'
+                AND gh_room.type IS NOT NULL
+                AND gh_room.type <> ''
         ";
+        
+        if(!empty($district_code)) {
+            $sql .= "AND gh_apartment.district_code = '$district_code'";
+        }
         if(!empty($where_string)) {
             $sql .= " AND $where_string";
         }

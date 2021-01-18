@@ -63,6 +63,7 @@ class Apartment extends CustomBaseStep {
 		$data['list_available_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.status = "Available" ');
 		$data['list_available_room_price'] = $this->ghRoom->getPriceByDistrict($district_code, 'gh_room.status = "Available" ');
         $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
+        $data['list_type'] = $this->ghRoom->getTypeByDistrict();
 		/*--- bring library to view ---*/
 		$data['libDistrict'] = $this->libDistrict;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
@@ -102,6 +103,10 @@ class Apartment extends CustomBaseStep {
             $params['area >='] = $this->input->get('roomAreaMin');
         }
 
+        if($this->input->get('roomType') ) {
+            $params['type ='] = "'".$this->input->get('roomType')."'";
+        }
+
 
 
         if($this->input->get('roomAreaMax')) {
@@ -117,6 +122,7 @@ class Apartment extends CustomBaseStep {
         $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
 	    $data['list_data'] = $this->ghRoom->getBySearch($params);
         $data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
+        $data['list_type'] = $this->ghRoom->getTypeByDistrict();
 	    $data['libRoom'] = $this->libRoom;
         $data['label_apartment'] =  $this->config->item('label.apartment');
         $this->load->view('components/header', ['menu' => $this->menu]);
