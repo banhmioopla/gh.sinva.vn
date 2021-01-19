@@ -6,7 +6,8 @@ class Apartment extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model(['ghApartment','ghNotification', 'ghDistrict', 'ghTag', 'ghApartmentComment', 'ghConsultantBooking']);
+		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict',
+            'ghTag', 'ghApartmentComment', 'ghConsultantBooking']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -16,6 +17,7 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
 		$this->load->library('LibTag', null, 'libTag');
 		$this->load->library('LibUser', null, 'libUser');
+		$this->load->library('LibCustomer', null, 'libCustomer');
 
 		$this->permission_modify = ['product-manager', 'business-manager'];
 	}
@@ -183,10 +185,29 @@ class Apartment extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+
+	public function showProfile(){
+	    $id = $this->input->get('id');
+	    $profile = $this->ghApartment->get(['id' => $id])[0];
+	    $room = $this->ghRoom->get(['apartment_id' => $id] );
+	    $contract = $this->ghContract->get(['apartment_id' => $id]);
+        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('apartment/show-profile', [
+            'profile' => $profile,
+            'room' => $room,
+            'contract' => $contract,
+            'libUser' => $this->libUser,
+            'libCustomer' => $this->libCustomer,
+            'label_apartment' =>  $this->config->item('label.apartment')
+        ]);
+        $this->load->view('components/footer');
+    }
+
 	public function showCommmissionRate(){
 		$data['list_apartment'] = $this->ghApartment->get(['active' => 'YES'], 'district_code ASC');
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		$data['libDistrict'] = $this->libDistrict;
+
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view('apartment/show-commission-rate', $data);

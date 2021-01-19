@@ -2,10 +2,13 @@
     include VIEWPATH.'functions.php';
 ?>
 <?php
-$check_contract = in_array($this->auth['role_code'], ['consultant', 'customer-care', 'ceo', 'customer-care']);
-$check_consultant_booking = in_array($this->auth['role_code'], ['customer-care', 'business-manager', 'product-manager', 'ceo','consultant', 'human-resources']);
-$check_option = in_array($this->auth['role_code'], ['customer-care', 'product-manager', 'ceo','consultant', 'human-resources']);
-$check_commission_rate = true;
+$check_contract = true;
+$check_consultant_booking = true;
+$check_option = true;
+$check_commission_rate = false;
+if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
+    $check_commission_rate = true;
+}
 ?>
 
 <div class="wrapper">
@@ -106,8 +109,9 @@ $check_commission_rate = true;
                         <?php endif; ?>
                     </div>
                     <div class="col address-text text-center text-purple text-address font-weight-bold">
+                        <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>">
                         <?=$apartment['address_street'] ?>
-                        <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
+                        <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?></a>
                     </div>
                     <div class="row">
                         <div class="col-md-8">
