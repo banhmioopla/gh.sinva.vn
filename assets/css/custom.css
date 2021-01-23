@@ -125,6 +125,10 @@ html, body { height: 100%; }
     top: 0px;
     right: -5px;
 }
+
+.badge a.text-light:hover{
+    color: #000 !important;
+}
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;
