@@ -16,7 +16,8 @@
             </div>
         </div>
         <div class="d-flex justify-content-center flex-wrap">
-            <?php $this->load->view('components/list-navigation'); ?>
+            <?php $this->load->view('components/list-navigation');
+            ?>
         </div>
 
         <?php
@@ -88,12 +89,79 @@
                                     value="LAST_WEEK">Tuần Trước
                             </option>
                         </select>
+                        <div class="mt-5">
+                            <div class="font-weight-bold text-danger mb-2">BẢNG</div>
+                            <div class="checkbox checkbox-danger form-check-inline">
+                                <input type="checkbox" id="table-1"
+                                       <?= $this->input->get('tb1') == 1 ? 'checked':''?>
+                                       value="1">
+                                <label for="table-1"> Kinh Doanh </label>
+                            </div>
+                            <div class="checkbox checkbox-danger form-check-inline">
+                                <input type="checkbox" id="table-2"
+                                    <?= $this->input->get('tb2') == 2 ? 'checked':''?>
+                                       value="2">
+                                <label for="table-2"> Vận Hành </label>
+                            </div>
+                            <div class="checkbox checkbox-danger form-check-inline">
+                                <input type="checkbox" id="table-3"
+                                    <?= $this->input->get('tb3') == 3 ? 'checked':''?>
+                                       value="3">
+                                <label for="table-3"> Thành Công </label>
+                            </div>
+                            <div class="checkbox checkbox-danger form-check-inline">
+                                <input type="checkbox" id="table-4"
+                                    <?= $this->input->get('tb4') == 4 ? 'checked':''?>
+                                       value="4">
+                                <label for="table-4"> Boom </label>
+                            </div>
+                            <div class="checkbox checkbox-danger form-check-inline">
+                                <input type="checkbox" id="table-5"
+                                    <?= $this->input->get('tb5') == 5 ? 'checked':''?>
+                                       value="5">
+                                <label for="table-5"> Quận & Thành Viên </label>
+                            </div>
+                        </div>
+
+
                         <script>
                             commands.push(function () {
+                                let current_url = '<?= $_SERVER['REQUEST_URI'] ?>';
                                 $('select[name=filterTime]').on('change', function () {
                                     let filterTime = $(this).val();
                                     window.location = '/admin/list-consultant-booking?filterTime=' + filterTime;
                                 });
+
+
+                                for(let i = 1; i <= 6; i++) {
+                                    $('#table-'+i).click(function(){
+                                        if($('#table-'+i).is(':checked')) {
+                                            if(current_url.includes('?')) {
+                                                window.location = current_url+'&tb'+i+'='+i;
+                                            } else {
+                                                window.location = current_url+'?tb'+i+'='+i;
+                                            }
+                                        } else {
+                                            if(current_url.includes('tb'+i)) {
+                                                if(current_url.includes('?tb'+i)) {
+                                                    let final_url = current_url.replace('?tb'+i+'='+i,'');
+                                                    if(final_url.includes('booking&')) {
+                                                        final_url = final_url.replace('&', '?');
+                                                    }
+                                                    window.location = final_url;
+                                                } else {
+                                                    let final_url = current_url.replace('&tb'+i+'='+i,'');
+                                                    if(final_url.includes('booking&')) {
+                                                        final_url = final_url.replace('&', '?');
+                                                    }
+                                                    window.location = final_url;
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+
+
                             });
                         </script>
                     <?php endif; ?>
@@ -121,10 +189,8 @@
                 </div>
 
             </div>
-
-
         </div>
-
+        <?php if($this->input->get('tb1') == 1): ?>
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive shadow">
@@ -219,6 +285,9 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
+
+        <?php if($this->input->get('tb2') == 2): ?>
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive shadow">
@@ -313,6 +382,9 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
+
+        <?php if($this->input->get('tb3') == 3): ?>
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive shadow">
@@ -362,7 +434,10 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
+
+        <?php if($this->input->get('tb4') == 4): ?>
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive shadow">
@@ -403,7 +478,9 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
+        <?php if($this->input->get('tb5') == 5): ?>
         <div class="row">
             <div class="col-md-6 col-12">
                 <div class="card-box table-responsive shadow">
@@ -472,11 +549,8 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
     </div>
-
-
-
-
 
 </div>
 
