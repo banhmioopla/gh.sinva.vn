@@ -83,12 +83,6 @@ class Apartment extends CustomBaseStep {
 	}
 
 	public function showBySearch(){
-        $roomPriceMin = 0;
-        $roomPriceMax = 7000000;
-
-        $params['price <='] = $roomPriceMax;
-        $params['price >='] = $roomPriceMin;
-        $params['gh_room.active = '] = '"YES"';
         $params['gh_apartment.active = '] = '"YES"';
 
         if($this->input->get('roomPriceMin')) {

@@ -21,12 +21,13 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Giỏ Hàng</a></li>
+                            <li class="breadcrumb-item"><a href="#">Dự Án</a></li>
+                            <li class="breadcrumb-item active">Quận <?= $district_code?></li>
                         </ol>
+
                     </div>
-                    <h3 class="page-title">Danh sách dự án quận <?= $district_code?></h3>
+                    <h2 class="font-weight-bold text-danger">Dự Án Quận <?= $district_code?></h2>
                 </div>
             </div>
         </div>
