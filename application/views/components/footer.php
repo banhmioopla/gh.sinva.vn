@@ -3,15 +3,15 @@
 	$js_plugins_path = base_url().'js-plugins/';
 	$assets_path  = base_url().'assets/';
 ?>
-<!-- <footer class="footer">
+ <footer class="footer mt-5" style="position: unset;">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center footer-notifier">
-                <?//= date('Y') ?> © Giỏ hàng. - gh.sinva.vn
+                <?= date('Y') ?> © Giỏ hàng. - gh.sinva.vn
             </div>
         </div>
     </div>
-</footer> -->
+</footer>
     <!-- End Footer -->
     <!-- jQuery  -->
     <script src="<?= $assets_path ?>js/jquery.min.js"></script>

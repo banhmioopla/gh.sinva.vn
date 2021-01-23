@@ -5,10 +5,9 @@
             <div class="col-sm-12">
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
-                        <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">giohang</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                        <ol class="breadcrumb hide-phone p-0 m-0 ">
+                            <li class="breadcrumb-item text-danger"><a href="#" class="text-danger">Giỏ Hàng</a></li>
+                            <li class="breadcrumb-item active font-weight-bold text-danger">Dẫn Khách</li>
                         </ol>
                     </div>
                     <h2 class="font-weight-bold text-danger">Thống Kê Dẫn Khách</h2>
