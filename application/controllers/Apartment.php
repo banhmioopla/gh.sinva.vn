@@ -35,6 +35,9 @@ class Apartment extends CustomBaseStep {
             $this->load->view('components/footer');
 		    return;
         }
+        if(empty($district_code)) {
+            return redirect('/admin/list-apartment?district-code='.$this->list_district_CRUD[0]);
+        }
 		
 		$data['district_code'] = $district_code;
 		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);

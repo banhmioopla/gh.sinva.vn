@@ -16,8 +16,6 @@ class CustomBaseStep extends CI_Controller {
 		}
 		
 		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghRole', 'ghConfig']);
-		
-		$this->district_default = '7';
 		$this->auth = $this->session->userdata('auth');
 		$this->load->library('LibRole', null, 'libRole');
 		$this->load->library('LibConfig', null, 'libConfig');
