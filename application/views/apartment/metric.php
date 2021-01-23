@@ -35,7 +35,7 @@
         <?php
         foreach($list_available_room_type as $room):
             ?>
-            <span style="font-size:85%" class="m-1 badge badge-success badge-pill"> <?= strip_tags(($room['room_type']))?> | <?= $room['object_counter'] ?> P</span>
+            <span style="font-size:85%" class="m-1 badge badge-success badge-pill"><a class="text-light" href="/admin/apartment/show-by-search?&roomType=<?= strip_tags(($room['room_type']))?>&roomDistrict=<?= $this->input->get('district-code') ?>"><?= strip_tags(($room['room_type']))?> | <?= $room['object_counter'] ?> P</a> </span>
         <?php
         endforeach;
         ?>
