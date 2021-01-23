@@ -30,7 +30,10 @@ class Apartment extends CustomBaseStep {
 		$district_code = !empty($district_code) ? $district_code: $this->district_default;
 
 		if(count($this->list_district_CRUD) == 0) {
-		    echo  "<strong>Bạn cần được chia quận!</strong>"; return;
+            $this->load->view('components/header', ['menu' => $this->menu]);
+            $this->load->view('apartment/error');
+            $this->load->view('components/footer');
+		    return;
         }
 		
 		$data['district_code'] = $district_code;
