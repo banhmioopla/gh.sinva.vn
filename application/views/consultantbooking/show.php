@@ -11,7 +11,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h4>Thống kê dẫn khách Tuần hiện tại</h4>
+                    <h2 class="font-weight-bold text-danger">Thống Kê Dẫn Khách</h2>
                 </div>
             </div>
         </div>
@@ -29,18 +29,19 @@
         ?>
         <div class="row">
             <div class="col-md-6">
-                <div class="card-box shadow bg-white widget-flat border-white text-dark">
+                <div class="card-box shadow bg-white border-white text-dark">
                     <p class="text-uppercase m-b-5 font-600"> Tổng số lượt dẫn:
                         <span style="font-size: 20px"><?= count($list_booking) ?></span>
                     </p>
-                    <p class="">Thành công: <span class="text-success"><?=
+                    <div class="d-block"><i class="mdi mdi-chevron-double-right text-danger"></i> Thành công: <span class="text-success"><?=
                             $count_success
                             ?></span>
                         | Đang chờ: <span class="text-warning"><?= $count_pending
-                            ?></span> | Boom: <span class="text-danger"> <?= $count_cancel ?></span> </p>
-                        <p class="">SL Quận Có Khách: <strong><?= $quantity['booking_district']
-                            ?></strong> | SL Dự Án Có Khách: <strong><?= $quantity['booking_apm'] ?></strong>
-                        </p>
+                            ?></span> | Boom: <span class="text-danger"> <?= $count_cancel ?></span> </div>
+
+                    <div class="d-block"><i class="mdi mdi-chevron-double-right text-danger"></i> Đã có lượt dẫn tại : <strong><?= $quantity['booking_district']
+                            ?></strong> quận, <strong><?= $quantity['booking_apm'] ?></strong> dự án
+                        </div>
 
                     <?php if($target === null): ?>
                         <hr>
@@ -72,8 +73,8 @@
 
                     <?php if (isYourPermission($this->current_controller, 'showAllTimeLine', $this->permission_set)): ?>
                         <hr>
-                        <p class="text-uppercase m-b-5 font-600">Lọc Dữ Liệu</p>
-                        <select name="filterTime" class="form-control">
+                        <div class="text-uppercase font-weight-bold text-danger">Lọc Dữ Liệu</div>
+                        <select name="filterTime" class="form-control mt-2">
                             <option <?= $this->input->get('filterTime') == '' ? 'selected' : '' ?>
                                     value="ALL">Chọn khoảng thời gian (tất cả)
                             </option>
@@ -112,7 +113,7 @@
 
                         <?php foreach($list_target as $item): ?>
                             <tr>
-                                <td><?= $libUser->getNameByAccountid($item['user_id']) ?></td>
+                                <td><i class="mdi mdi-chevron-double-right text-danger"></i> <?= $libUser->getNameByAccountid($item['user_id']) ?></td>
                                 <td class="text-right"><?= $item['target'] ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -127,7 +128,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive shadow">
-                    <h4><?= $title_1 ?></h4>
+                    <h4>Lượt Dẫn: Bộ Phận Kinh Doanh</h4>
                     <table class=" table-data table table-bordered" style="font-size:12px">
                         <thead>
                         <tr>
@@ -144,6 +145,8 @@
                         <tbody>
                         <?php if (count($list_booking) > 0): ?>
                         <?php foreach ($list_booking as $booking):
+                                if(in_array($booking['booking_user_id'], $this->arr_general))
+                                    continue;
                         $address = '';
                         $apmModel = $ghApartment->get(['id' => $booking['apartment_id']]);
                         if ($apmModel) {
@@ -169,7 +172,9 @@
                         }
                         ?>
                         <tr>
-                            <td>#<?= 10000 + $booking['id'] ?></td>
+                            <td>#<?= 10000 + $booking['id'] ?>
+                                <div class="font-weight-bold"><?= $libUser->getNameByAccountid($booking['booking_user_id']) ?></div>
+                            </td>
                             <td><?= $address ?></td>
                             <td class="booking-room-code"
                                 data-pk="<?= $booking['id'] ?>"
@@ -214,7 +219,100 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card-box table-responsive shadow">
+                    <h4>Lượt Dẫn: Bộ Phận Vận Hành</h4>
+                    <table class=" table-data table table-bordered" style="font-size:12px">
+                        <thead>
+                        <tr>
+                            <th>ID Lượt Book</th>
+                            <th>Dự Án</th>
+                            <th>Mã Phòng</th>
+                            <th>Thời Gian Dẫn Khách</th>
+                            <th>Thành Viên</th>
+                            <th>Khách Được Dẫn</th>
+                            <th>Ghi chú</th>
+                            <th>Trạng Thái</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php if (count($list_booking) > 0): ?>
+                            <?php foreach ($list_booking as $booking):
+                                if(!in_array($booking['booking_user_id'], $this->arr_general))
+                                    continue;
+                                $address = '';
+                                $apmModel = $ghApartment->get(['id' => $booking['apartment_id']]);
+                                if ($apmModel) {
+                                    $address = $apmModel[0]['address_street'];
+                                }
+                                $list_room_id = json_decode($booking['room_id'], true);
+                                $text_room_code = '';
 
+                                $js_list_room = implode(",", $list_room_id);
+                                if ($list_room_id && count($list_room_id) > 0) {
+                                    foreach ($list_room_id as $room_id) {
+                                        $roomModel = $ghRoom->get(['id' => $room_id]);
+                                        $text_room_code .= $roomModel[0]['code'] . ' ';
+                                    }
+                                }
+
+                                $status = 'danger';
+                                if ($booking['status'] == 'Success') {
+                                    $status = 'success';
+                                }
+                                if ($booking['status'] == 'Pending') {
+                                    $status = 'warning';
+                                }
+                                ?>
+                                <tr>
+                                    <td># <?= 10000 + $booking['id'] ?>
+                                    <div class="font-weight-bold"><?= $libUser->getNameByAccountid($booking['booking_user_id']) ?></div>
+                                    </td>
+                                    <td><?= $address ?></td>
+                                    <td class="booking-room-code"
+                                        data-pk="<?= $booking['id'] ?>"
+                                        data-name="room_id"
+                                        data-value="<?= $js_list_room ?>"
+                                        data-apartment-id="<?= $booking['apartment_id'] ?>"
+                                    ><i class="text-success"><?= $text_room_code ?></i></td>
+                                    <td>
+                                        <div class="form-inline">
+                                            <div class="booking-time_booking input-group"
+                                                 data-pk="<?= $booking['id'] ?>"
+                                                 data-name="time_booking"
+                                                 data-value="<?= date('d/m/Y H:i', $booking['time_booking']) ?>">
+                                                <?= date('d/m/Y H:i', $booking['time_booking']) ?>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td class="text-secondary"><?= $libUser->getNameByAccountid($booking['booking_user_id']) ?></td>
+                                    <td><?= $libCustomer->getNameById($booking['customer_id']) . ' - ' . $libCustomer->getPhoneById($booking['customer_id']) ?></td>
+                                    <td>
+                                        <div class="booking-note"
+                                             data-pk="<?= $booking['id'] ?>"
+                                             data-name="note"
+                                             data-value="<?= $booking['note'] ?>"
+                                        >
+                                        <?= $booking['note'] ?></td>
+                                    <td>
+                                        <div class="booking-status text-<?= $status ?>"
+                                             data-pk="<?= $booking['id'] ?>"
+                                             data-name="status"
+                                             data-value="<?= $booking['status'] ?>"
+                                        >
+                                            <?= $label_apartment['booking.' . $booking['status']] ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive shadow">
