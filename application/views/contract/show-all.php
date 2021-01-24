@@ -1,7 +1,7 @@
-<table id="listAll" class="table-contract <?= $check_collapse ? 'collapse' :'' ?> table table-bordered">
+<table id="listAll" class="table-contract table table-bordered">
     <thead>
     <tr>
-        <th># ID Hợp Đồng</th>
+        <th>#</th>
         <th width="350px">Khách thuê</th>
         <th>Giá thuê</th>
         <th width="250px">Thành Viên Chốt</th>

@@ -36,10 +36,10 @@
                 </a>
             <?php endif; ?>
 
-            <?php if(isYourPermission('Contract', 'show',$this->permission_set)):?>
-                <a href="<?= base_url() ?>admin/list-contract">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-file-chart mr-1"></i> <span>Hợp Đồng</span> </button>
+            <?php if(isYourPermission('Contract', 'showYour',$this->permission_set)):?>
+                <a href="<?= base_url() ?>admin/list-personal-contract">
+                    <button type="button" class="btn btn-danger waves-effect waves-light"> <i
+                                class="mdi mdi-file-chart mr-1"></i> <span>Hợp Đồng Của Tôi</span> </button>
                 </a>
             <?php endif; ?>
 

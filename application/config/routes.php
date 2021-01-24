@@ -197,6 +197,12 @@ $route['admin/list-contract'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/list-personal-contract'] = function($params = []) {
+    $controller = 'Contract';
+    $action = '/showYour';
+    return $controller.$action;
+};
+
 $route['admin/detail-contract'] = function($params = []) {
 	$controller = 'Contract';
 	$action = '/detailShow';

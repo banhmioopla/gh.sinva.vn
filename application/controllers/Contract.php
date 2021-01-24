@@ -21,7 +21,20 @@ class Contract extends CustomBaseStep {
 	}
 
 	public function showYour(){
-		return $this->ghContract->get(['consultant_id' => $this->auth['account_id']]);
+	    $data['list_contract'] = $this->ghContract->get(['consultant_id' => $this->auth['account_id']]);
+
+        $data['libCustomer'] = $this->libCustomer;
+        $data['libUser'] = $this->libUser;
+        $data['ghApartment'] = $this->ghApartment;
+        $data['ghRoom'] = $this->ghRoom;
+        $data['ghImage'] = $this->ghImage;
+        $data['libRoom'] = $this->libRoom;
+        $data['label_apartment'] =  $this->config->item('label.apartment');
+
+        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('contract/show-your', $data);
+        $this->load->view('components/footer');
+
 	}
 
 	public function isCollapse(){}
@@ -77,6 +90,7 @@ class Contract extends CustomBaseStep {
 
 	public function approved(){
 		$this->ghContract->approved($this->input->get('id'), $this->input->get('contract-id'));
+
 		return redirect('/admin/list-contract');
 	}
 
@@ -126,10 +140,6 @@ class Contract extends CustomBaseStep {
             $data['list_contract'] = $this->ghContract->get(['time_expire <=' => $time_to, 'time_expire >= ' => $time_from]);
 
 
-        }
-
-        if($this->isYourPermission($this->current_controller, 'showYour')) {
-            $data['list_contract'] = $this->showYour();
         }
 
 		$data['list_notification'] = $this->ghNotification->get(['is_approve' => 'NO']);
