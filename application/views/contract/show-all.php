@@ -65,12 +65,12 @@ foreach ($list_contract as $row) {
                             <div class="col-6">
                                 <input type="text" class="form-control datepicker"
                                        id="time_check_in_from"
-                                       value="<?= date('d-m-Y', strtotime('-1month')) ?>">
+                                       value="<?= $this->input->get('timeCheckInFrom') ?>">
                             </div>
                             <div class="col-6">
                                 <input type="text" class="form-control datepicker"
                                        id="time_check_in_to"
-                                       value="<?= date('d-m-Y') ?>">
+                                       value="<?= $this->input->get('timeCheckInTo') ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -78,12 +78,14 @@ foreach ($list_contract as $row) {
                             <div class="col-6">
                                 <input type="text"
                                        id="time_expire_from"
-                                       class="form-control datepicker" value="<?= date('d-m-Y') ?>">
+                                       class="form-control datepicker"
+                                       value="<?= $this->input->get('timeExpireFrom') ?>">
                             </div>
                             <div class="col-6">
                                 <input type="text"
                                        id="time_expire_to"
-                                       class="form-control datepicker" value="<?= date('d-m-Y', strtotime('+1month')) ?>">
+                                       class="form-control datepicker"
+                                       value="<?= $this->input->get('timeExpireTo') ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -91,8 +93,8 @@ foreach ($list_contract as $row) {
                             <div class="col-12">
                                 <select id="department" class="form-control">
                                     <option value="">Tất cả</option>
-                                    <option value="sale">Bộ phận kinh doanh</option>
-                                    <option value="cd">Bộ phận vận hành</option>
+                                    <option value="sale" <?= $this->input->get('department') == 'sale' ? 'selected':'' ?>>Bộ phận kinh doanh</option>
+                                    <option value="cd" <?= $this->input->get('department') == 'cd' ? 'selected':'' ?>>Bộ phận vận hành</option>
                                 </select>
                             </div>
                         </div>
