@@ -32,6 +32,26 @@ class GhContract extends CI_Model {
         return $result;
     }
 
+    public function getBySearch($where) {
+        $where_string = "";
+        if(!empty($where)) {
+            $where_string = " AND ";
+            foreach ($where as $k => $v) {
+                $where_string .= ' '.$k.$v . ' AND';
+            }
+            $where_string = substr($where_string, 0, -3);
+        }
+        $sql = "SELECT *
+                FROM gh_user, gh_role, gh_contract
+                WHERE gh_user.account_id = gh_contract.consultant_id AND 
+                 gh_role.code = gh_user.role_code
+                 ". $where_string;
+
+        $result = $this->db->query($sql);
+
+        return $result->result_array();
+    }
+
     public function syncStatusExpire() {
         $sql = "UPDATE ". $this->table . " SET status = 'Expired' WHERE status <> 'Cancel' AND
         time_expire < " . strtotime(date('d-m-Y'));

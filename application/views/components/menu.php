@@ -145,7 +145,7 @@
                             mdi-chevron-double-right text-warning"></i> Danh Sách Khách Hàng</a></li>
                         <?php if(isYourPermission('Contract', 'show',$this->permission_set)):?>
                             <li><a href="/admin/list-contract"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Danh Sách Hợp Đồng</a></li>
+                            mdi-chevron-double-right text-warning"></i> Tất Cả Hợp Đồng</a></li>
                         <?php endif;?>
 
 

@@ -97,50 +97,29 @@ class Contract extends CustomBaseStep {
 	public function showAllTimeLine(){}
 
 	public function show(){
-		$data['list_contract'] = $this->ghContract->get();
-
-
-        $time_from = 0;
-        $time_to = strtotime('+4years');
-        if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {
-            if($this->input->get('filterTime') == 'ALL'){
-                $time_from = 0;
-                $time_to = strtotime('+4years');
-
-            }
-            if($this->input->get('filterTime') == 'TODAY'){
-                $time_from = strtotime(date('d-m-Y'));
-                $time_to = $time_from + 86399;
-            }
-
-            if($this->input->get('filterTime') == 'NEXT_15D'){
-                $time_from = strtotime(date('d-m-Y'));
-                $time_to = strtotime('+15days');
-            }
-
-            if($this->input->get('filterTime') == 'NEXT_30D'){
-                $time_from = strtotime(date('d-m-Y'));
-                $time_to = strtotime('+30days');
-            }
-            if($this->input->get('filterTime') == 'NEXT_45D'){
-                $time_from = strtotime(date('d-m-Y'));
-                $time_to = strtotime('+45days');
-            }
-
-            if($this->input->get('filterTime') == 'NEXT_60D'){
-                $time_from = strtotime(date('d-m-Y'));
-                $time_to = strtotime('+60days');
-            }
-
-            if($this->input->get('filterTime') == 'NEXT_1Y'){
-                $time_from = strtotime(date('d-m-Y'));
-                $time_to = strtotime('+1years');
-            }
-
-            $data['list_contract'] = $this->ghContract->get(['time_expire <=' => $time_to, 'time_expire >= ' => $time_from]);
-
-
+	    $params = [];
+        if($this->input->get('timeCheckInFrom')) {
+            $timeCheckInFrom = $this->input->get('timeCheckInFrom');
+            $params['time_check_in >='] = strtotime($timeCheckInFrom);
         }
+
+        if($this->input->get('timeCheckInTo')) {
+            $timeCheckInTo = $this->input->get('timeCheckInTo');
+            $params['time_check_in <='] = strtotime($timeCheckInTo)+86399;
+        }
+
+        if($this->input->get('timeCheckInFrom')) {
+            $timeCheckInFrom = $this->input->get('timeExpireFrom');
+            $params['time_expire >='] = strtotime($timeCheckInFrom);
+        }
+
+        if($this->input->get('timeCheckInTo')) {
+            $timeCheckInTo = $this->input->get('timeExpireTo');
+            $params['time_expire <='] = strtotime($timeCheckInTo)+86399;
+        }
+
+
+		$data['list_contract'] = $this->ghContract->getBySearch($params);
 
 		$data['list_notification'] = $this->ghNotification->get(['is_approve' => 'NO']);
 		
@@ -153,7 +132,7 @@ class Contract extends CustomBaseStep {
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
-		$this->load->view('contract/show', $data);
+		$this->load->view('contract/show-all', $data);
 		$this->load->view('components/footer');
 	}
 
