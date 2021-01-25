@@ -311,6 +311,6 @@
                 <!-- end container -->
             </div>
             <!-- end topbar-main -->
-            <?php $this->load->view('components/menu', ['menu' => $menu])?>
+            <?php $this->load->view('components/menu')?>
             <!-- end navbar-custom -->
         </header>

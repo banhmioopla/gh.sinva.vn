@@ -108,12 +108,12 @@ class Contract extends CustomBaseStep {
             $params['time_check_in <='] = strtotime($timeCheckInTo)+86399;
         }
 
-        if($this->input->get('timeCheckInFrom')) {
+        if($this->input->get('timeExpireFrom')) {
             $timeCheckInFrom = $this->input->get('timeExpireFrom');
             $params['time_expire >='] = strtotime($timeCheckInFrom);
         }
 
-        if($this->input->get('timeCheckInTo')) {
+        if($this->input->get('timeExpireTo')) {
             $timeCheckInTo = $this->input->get('timeExpireTo');
             $params['time_expire <='] = strtotime($timeCheckInTo)+86399;
         }
