@@ -1,18 +1,32 @@
 <?php
 
 $metric = [
-    'quantity' => 0
+    'quantity' => 0,
+    'cd_general' => 0,
+    'cd_high' => 0,
 ];
 $user_birth_this_month = [];
+$user_cd_high = [];
 foreach ($list_user as $row) {
     if($row['active'] == "YES") {
         $metric['quantity']++;
+
+        if(in_array($row['account_id'], $this->arr_general)) {
+            $metric['cd_general']++;
+        }
+
+
+        if($libRole->isControlDepartment($row['role_code']) === true) {
+            $metric['cd_high']++;
+            $user_cd_high[] = $row['account_id'];
+        }
 
         if($this->input->get('birthDay')) {
             $month = $this->input->get('birthDay');
             $user_month = date('m',$row['date_of_birth']);
             if($user_month == $month) {
                 $user_birth_this_month[] = $row;
+
             }
         }
     }
@@ -55,6 +69,33 @@ foreach ($list_user as $row) {
                         <tr>
                             <td><i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Thành Viên</td>
                             <td class="text-right"><?= $metric['quantity'] ?></td>
+                        </tr>
+                        <tr>
+                            <td><i class="mdi mdi-chevron-double-right text-warning"></i> VH. Chung</td>
+                            <td class="text-right" width="350px">
+                                <?= $metric['cd_general'] ?>
+                                <hr class="border border-light">
+                                <div class="text-left">
+                                    <?php foreach ($this->arr_general as $item): ?>
+                                        <strong><?= $libUser->getNameByAccountid($item) . ' | ' ?></strong>
+                                    <?php endforeach; ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <td><i class="mdi mdi-chevron-double-right text-warning"></i> VH. Cấp Cao</td>
+                            <td class="text-right" width="350px">
+                                <?= $metric['cd_high'] ?>
+                                <hr class="border border-light">
+                                <div class="text-left">
+                                    <?php foreach ($user_cd_high as $item): ?>
+                                        <strong><?= $libUser->getNameByAccountid($item) . ' | ' ?></strong>
+                                    <?php endforeach; ?>
+                                </div>
+
+                            </td>
+                        </tr>
                         </tr>
                     </table>
 

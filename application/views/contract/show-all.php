@@ -61,6 +61,15 @@ foreach ($list_contract as $row) {
                     <div>
                         <div><strong>TÙY CHỌN</strong></div>
                         <div class="row mt-2">
+                            <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
+                                <div class="col-6">
+                                    <a href="/admin/contract/sync-status-expire" class="btn
+                        btn-danger"><i>Quét Hợp Đồng Hết Hạn</i></a>
+                                </div>
+
+                            <?php endif; ?>
+                        </div>
+                        <div class="row mt-2">
                             <div class="col-12">Chọn khoảng <strong>ngày ký</strong></div>
                             <div class="col-6">
                                 <input type="text" class="form-control datepicker"

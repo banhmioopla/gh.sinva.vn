@@ -32,6 +32,12 @@ class LibRole{
         $tag = $this->CI->ghRole->get(['code' => $tag_id]);
         return $tag ? $tag[0]['name'] :'';
     }
+
+    public function isControlDepartment($role) {
+        $tag = $this->CI->ghRole->get(['code' => $role, 'is_control_department' => 'YES']);
+
+        return $tag ? true :false;
+    }
 }
 
 ?>
