@@ -1,22 +1,38 @@
+<?php
+
+$metric = [
+    'quantity' => 0
+];
+$user_birth_this_month = [];
+foreach ($list_user as $row) {
+    if($row['active'] == "YES") {
+        $metric['quantity']++;
+
+        if($this->input->get('birthDay')) {
+            $month = $this->input->get('birthDay');
+            $user_month = date('m',$row['date_of_birth']);
+            if($user_month == $month) {
+                $user_birth_this_month[] = $row;
+            }
+        }
+    }
+}
+?>
+
 
 <div class="wrapper">
-<div class="sk-wandering-cubes" style="display:none" id="loader">
-    <div class="sk-cube sk-cube1"></div>
-    <div class="sk-cube sk-cube2"></div>
-</div>
-    <div class="container-fluid">
-
+    <div class="container">
         <!-- Page-Title -->
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Giỏ Hàng</a></li>
+                            <li class="breadcrumb-item active">Thành Viên</li>
                         </ol>
                     </div>
+                    <h2 class="font-weight-bold text-danger">Thành Viên</h2>
                 </div>
             </div>
         </div>
@@ -27,40 +43,89 @@
                 unset($_SESSION['fast_notify']);
             }  
         ?>
-        <div class="user-alert"></div>
+
+
         <div class="row">
-        <h3>Danh sách thành viên sinh tháng <?= date('m') ?></h3>
-            <div class="col-md-12 col-12">
-            <div class="card-box table-responsive">
-                <table class="table table-user table-bordered">
-                    <thead>
+            <div class="col-md-6">
+                <div class="card-box">
+                    <table class="table table-dark">
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Sinh Nhật</th>
+                            <td colspan="2"><h4 class="text-center">TỔNG QUAN</h4></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                        foreach($list_user as $row ): 
-                            if($row['active'] == "NO") continue;
-                            if(date('m',$row['date_of_birth']) != date('m')) continue;
-                    ?>
-                    <tr>
-                        <td><?= $row['account_id'] ?></td>
-                        <td><?= $row['name'] ?></td>
-                        <td><?= date('d/m/Y', $row['date_of_birth']) ?></td>
-                    </tr>
-                    <?php endforeach;?>
-                </tbody>
-                </table>
+                        <tr>
+                            <td><i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Thành Viên</td>
+                            <td class="text-right"><?= $metric['quantity'] ?></td>
+                        </tr>
+                    </table>
+
+                    <div class="mt-3">
+                      <strong>Tìm Sinh Nhật</strong>
+                        <select name="" id="find-birthday" class="form-control mt-2">
+                            <option value="">Chọn Tháng</option>
+                            <?php for($i = 1; $i <= 12; $i++):?>
+                            <option value="<?= $i ?>" <?= $this->input->get('birthDay') == $i ? 'selected':'' ?>>Tháng <?= $i ?></option>
+                            <?php endfor;?>
+                        </select>
+                    </div>
+
+                    <script>
+                        commands.push(function () {
+                            $('#find-birthday').change(function(){
+                                window.location = '/admin/list-user?birthDay='+$(this).val();
+                            });
+                        });
+                    </script>
+                </div>
+
             </div>
+
+            <div class="col-md-6">
+                <div class="card-box">
+                    <?php if(count($user_birth_this_month)):
+                        ?>
+
+                        <table class="table table-dark">
+                            <thead>
+                            <tr class="font-weight-bold">
+                                <td><h5>THÀNH VIÊN</h5></td>
+                                <td class="text-center"><h5>SINH NHẬT</h5></td></tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            foreach ($user_birth_this_month as $row):
+                                ?>
+                                <tr>
+                                    <td>
+                                        <i class="mdi mdi-chevron-double-right text-warning"></i> <?= $row['name'] ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?= date('d/m/Y',$row['date_of_birth']) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach;?>
+                            </tbody>
+
+                        </table>
+                    <?php else: ?>
+                        <div class="alert alert-danger" role="alert">
+                            Không có sinh nhật nào!
+                        </div>
+                    <?php endif; ?>
+                </div>
+
             </div>
         </div>
+
         <div class="row">
-        <h3>Tất cả thành viên</h3>
-            <div class="col-12 col-md-7">
+            <div class="col-12">
+                <div class="user-alert"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
                 <div class="card-box table-responsive">
+                    <h3>Tất cả thành viên</h3>
                     <table class="table table-user table-bordered">
                         <thead>
                         <tr>
