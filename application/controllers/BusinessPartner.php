@@ -27,15 +27,11 @@ class BusinessPartner extends CustomBaseStep {
         if(empty($data['active'])) {
             $data['active'] = 'NO';
         }
-        $data['time_insert'] = time();
-        if($data['apartment_id']) {
-            $data['apartment_id'] = json_encode($data['apartment_id']);
-        }
 
         if(!empty($data['name'])) {
-            $result = $this->ghBusinessPartner->insert($data);
+            $this->ghBusinessPartner->insert($data);
             $this->session->set_flashdata('fast_notify', [
-                'message' => 'Tạo quận '.$data['name'].' thành công ',
+                'message' => 'thêm đối tác: '.$data['name'].' thành công ',
                 'status' => 'success'
             ]);
             return redirect('admin/list-business-partner');

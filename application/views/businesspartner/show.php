@@ -1,9 +1,5 @@
 <div class="wrapper">
-    <div class="sk-wandering-cubes" style="display:none" id="loader">
-        <div class="sk-cube sk-cube1"></div>
-        <div class="sk-cube sk-cube2"></div>
-    </div>
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Page-Title -->
         <div class="row">
@@ -16,7 +12,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách đối tác kinh doanh</h3>
+                    <h2 class="font-weight-bold text-danger">Đối tác kinh doanh (quản lý, chủ nhà)</h2>
                 </div>
             </div>
         </div>
@@ -37,7 +33,7 @@
                             <th>Họ Tên</th>
                             <th class="text-center">Số Điện Thoại</th>
                             <th>Email</th>
-                            <th>Dự Án</th>
+                            <th>Số Tài Khoản</th>
                             <th>Ghi Chú</th>
                             <th class="text-center">Mở</th>
                         </tr>
@@ -67,13 +63,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="businesspartner-apartment_id"
+                                    <div class="businesspartner-account_number"
                                          data-pk="<?= $row['id'] ?>"
-                                         data-name="apartment_id"
-                                         data-value="">
-                                        -
+                                         data-name="account_number">
+                                        <?= $row['account_number'] ?>
                                     </div>
                                 </td>
+
                                 <td>
                                     <div class="businesspartner-note"
                                          data-pk="<?= $row['id'] ?>"
@@ -101,7 +97,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-6 offset-md-3">
+            <div class="col-md-6">
                 <div class="card-box shadow">
                     <h4>Thêm Mới</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-business-partner">
@@ -131,6 +127,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">Số Tài Khoản<span
+                                        class="text-danger">*</span></label>
+                            <div class="col-8">
+                                <input type="text" required class="form-control"
+                                       id="code" name="account_number" placeholder="Số Tài Khoản">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Ghi Chú</label>
                             <div class="col-8">
                                 <textarea class="form-control"
@@ -150,20 +154,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="hori-pass1" class="col-4 col-form-label">Dự
-                                Án Đối Tác Này Quản Lý<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-8">
-                                <div>
-                                    <div class=" checkbox checkbox-success">
-                                        <select class="select2"
-                                                name="apartment_id[]"
-                                                multiple="multiple"></select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="form-group row">
                             <div class="col-8 offset-4">
                                 <button type="submit" class="btn btn-custom waves-effect waves-light">
@@ -195,8 +186,6 @@
                         if($(this).is(':checked')) {
                             is_active = 'YES';
                         }
-                        console.log('hello');
-                        console.log(is_active );
                         $.ajax({
                             type: 'POST',
                             url: '<?= base_url() ?>admin/update-businesspartner',
@@ -220,18 +209,10 @@
                         });
                     });
                     // x editable
-                    $('.businesspartner-name').editable({
+                    $('.businesspartner-name, .businesspartner-phone, .businesspartner-email, .businesspartner-account_number, .businesspartner-note').editable({
                         type: "text",
-                        url: '<?= base_url() ?>admin/update-businesspartner-editable',
-                        inputclass: '',
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.businesspartner-alert').html(notify_html_success);
-                            } else {
-                                $('.businesspartner-alert').html(notify_html_fail);
-                            }
-                        }
+                        url: '<?= base_url() ?>admin/update-business-partner-editable',
+                        inputclass: ''
                     });
                 } // end fnDrawCallback
             });
