@@ -48,7 +48,7 @@
                         ):?>
                             <li><a href="/admin/list-business-partner"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Danh Sách
-                                    Đối Tác</a></li>
+                                    Đối Tác Kinh Doanh</a></li>
                         <?php endif;?>
 
                         <?php if(isYourPermission('Tag', 'show',$this->permission_set)):?>
