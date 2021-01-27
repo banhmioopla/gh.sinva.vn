@@ -81,6 +81,11 @@
                             mdi-chevron-double-right text-warning"></i> Thu Nhập
                                 Thành Viên</a></li>
                         <?php endif;?>
+
+                        <?php if(isYourPermission('Fee', 'showUserCumulativeSale',$this->permission_set)):?>
+                            <li><a href="/admin/list-user-cumulative-sale"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Quản Lý Doanh Số Tích Lũy</a></li>
+                        <?php endif;?>
                     </ul>
                 </li>
                 <?php endif;?>

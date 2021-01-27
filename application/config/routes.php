@@ -24,6 +24,20 @@ $route['admin/list-mapbox'] = function($params = []) {
     return $controller.$action;
 };
 
+// UserCumulativeSale
+$route['admin/list-user-cumulative-sale'] = function($params = []) {
+    $controller = 'Fee';
+    $action = '/showUserCumulativeSale';
+    return $controller.$action;
+};
+
+
+$route['admin/update-user-cumulative-sale-editable'] = function($params = []) {
+    $controller = 'Fee';
+    $action = '/updateUserCumulativeSaleEditable';
+    return $controller.$action;
+};
+
 // story
 $route['admin/list-story'] = function($params = []) {
     $controller = 'Story';

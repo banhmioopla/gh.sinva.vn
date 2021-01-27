@@ -8,9 +8,11 @@ class Fee extends CustomBaseStep {
         $this->load->model('ghService');
         $this->load->model('ghIncomeContract');
         $this->load->model('ghUserPenalty');
+        $this->load->model('ghUserPenalty');
         $this->load->model('ghContract');
         $this->load->model('ghUser');
         $this->load->model('ghRole');
+        $this->load->model('ghUserCumulativeSale');
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibTime', null, 'libTime');
         $this->load->library('LibPenalty', null, 'libPenalty');
@@ -102,6 +104,59 @@ class Fee extends CustomBaseStep {
         ]);
         $this->load->view('components/footer');
     }
+
+
+
+    public function showUserCumulativeSale(){
+        $list_user = $this->ghUser->get(['active' => 'YES', 'account_id >=' => 171020000 ]);
+
+
+        $this->load->view('components/header');
+        $this->load->view('fee/show-user-cumulative-sale', [
+            'list_user' => $list_user,
+            'ghUserCumulativeSale' => $this->ghUserCumulativeSale
+        ]);
+        $this->load->view('components/footer');
+    }
+
+    public function updateUserCumulativeSaleEditable(){
+        $user_id = $this->input->post('pk');
+        $field_name = $this->input->post('name');
+        $field_value = $this->input->post('value');
+
+        if(!empty($user_id) and !empty($field_name)) {
+
+            $data = [
+                $field_name => $field_value
+            ];
+            $old_user = $this->ghUserCumulativeSale->getByUserId($user_id);
+            if($old_user) {
+                $result = $this->ghUserCumulativeSale->updateByUserId($user_id, $data);
+            } else {
+                $result = $this->ghUserCumulativeSale->insert([
+                    'user_id' => $user_id,
+                    $field_name => $field_value
+                ]);
+            }
+            $old_log = count($old_user) ? json_encode($old_user[0]): '';
+
+            $modified_user = $this->ghUserCumulativeSale->getByUserId($user_id);
+            $modified_log = json_encode($modified_user[0]);
+
+            $log = [
+                'table_name' => 'gh_user_cumulative_sale',
+                'old_content' => $old_log,
+                'modified_content' => $modified_log,
+                'time_insert' => time(),
+                'action' => 'update'
+            ];
+            $this->ghActivityTrack->insert($log);
+
+            echo json_encode(['status' => $result]); die;
+        }
+        echo json_encode(['status' => false]); die;
+    }
+
 
     /*Tổng doanh số bpkd*/
     private function getTotalContract() {
