@@ -3,7 +3,7 @@
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
     </div>
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Page-Title -->
         <div class="row">
@@ -24,19 +24,13 @@
 
         <div class="district-alert"></div>
         <div class="row">
-            <div class="col-md-10 offset-md-1">
-                <h3 class="text-center text-danger">Thống Kê Doanh Số</h3>
-            </div>
-
-            <div class="col-12 col-md-6 offset-md-3 col-12">
+            <div class="col-md-6">
                 <div class="card-box text-dark bg-white text-white shadow">
                     <i class="fi-tag"></i>
                     <div class="row">
                         <div class="col-md-6 col-12">
-                            <p class="text-uppercase m-b-5 font-600">Số Lượng Thành Viên:
-
+                            <p class="text-uppercase m-b-5 font-600">TỔNG QUAN
                         </div>
-
 
                         <div class="col-12">
                             <p>
@@ -65,12 +59,11 @@
         <div class="row">
             <div class="col-12 col-md-12 ">
                 <div class="card-box table-responsive shadow">
-                    <h3 class="text-danger text-center">Thống Kê Thu Nhập BPKD</h3>
+                    <h3 class="text-danger text-center">Thu Nhập Bộ Phận Kinh Doanh</h3>
                     <table class="table table-hover table-income">
                         <thead>
                         <tr>
                             <th>Thành Viên</th>
-                            <th width="400px" class="d-none">Chi tiết</th>
                             <th class="text-center" width="80px">Số Lượng Hợp Đồng</th>
                             <th class="text-right">Tổng Doanh Số <br> (x1000)</th>
                             <th class="text-right">Tổng Thu Nhập <br> (x1000)</th>
@@ -78,7 +71,7 @@
                         </thead>
                         <tbody>
                         <?php foreach($list_user_income as $account_id => $item ): 
-                            if(in_array($account_id, $this->arr_general)) {
+                            if(!in_array($account_id, $arr_account_id_sale) ) {
                                 continue;
                             }
                             
@@ -89,9 +82,6 @@
                             mdi-chevron-double-right text-info"></i> <?=
                                         $libUser->getNameByAccountid
                                         ($account_id) ?> </div>
-                                </td>
-                                <td class="d-none">
-                                    <div> <?//= $item['description_income'] ?> </div>
                                 </td>
                                 <td class="text-center"><?= number_format($item['quantity_contract']) ?></td>
 
@@ -107,7 +97,7 @@
             </div>
             <div class="col-12 col-md-12 ">
                 <div class="card-box table-responsive shadow">
-                    <h3 class="text-danger text-center">Thống Kê Thu Nhập BPVH</h3>
+                    <h3 class="text-danger text-center">Thu Nhập BPVH</h3>
                     <table class="table table-hover table-income">
                         <thead>
                         <tr>
@@ -120,7 +110,7 @@
                         </thead>
                         <tbody>
                         <?php foreach($list_user_income as $account_id => $item ):
-                            if(!in_array($account_id, $this->arr_general)) {
+                            if(!in_array($account_id, $arr_account_id_cd)) {
                                 continue;
                             }
 

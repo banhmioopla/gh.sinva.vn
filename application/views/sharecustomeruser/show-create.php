@@ -92,6 +92,14 @@
                             <th>Chọn</th>
                         </tr>
                         </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Khách Hàng</th>
+                            <th>Sở Hữu</th>
+                            <th>Trạng Thái</th>
+                            <th>Chọn</th>
+                        </tr>
+                        </tfoot>
                         <tbody>
                         <?php foreach($list_customer as $row ):
 
@@ -140,11 +148,26 @@
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('#table-user, #table-customer').DataTable({
-                "pageLength": 10,
-                'pagingType': "full_numbers",
-                responsive: true,
-            });
+            $('#table-user').DataTable();
+
+
+            $('#table-customer tfoot th').each( function () {
+                var title = $('#table-customer thead th').eq( $(this).index() ).text();
+                $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+            } );
+
+            // DataTable
+            var table = $('#table-customer').DataTable();
+
+            // Apply the search
+            table.columns().every( function () {
+                var that = this;
+                $( 'input', this.footer() ).on( 'keyup change', function () {
+                    that
+                        .search( this.value )
+                        .draw();
+                } );
+            } );
 
 
 

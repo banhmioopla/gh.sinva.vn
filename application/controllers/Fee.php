@@ -12,6 +12,7 @@ class Fee extends CustomBaseStep {
         $this->load->model('ghUser');
         $this->load->model('ghRole');
         $this->load->library('LibUser', null, 'libUser');
+        $this->load->library('LibTime', null, 'libTime');
         $this->load->library('LibPenalty', null, 'libPenalty');
         $this->custom_execute_general = []; // list Account Id
         $this->load->config('internal_mechanism_income_rate_control_department.php');
@@ -69,14 +70,14 @@ class Fee extends CustomBaseStep {
             'active' => 'YES',
             'account_id >=' => 171020000
         ]);
-        $list_role = $this->ghRole->get([
+        $list_role_cd = $this->ghRole->get([
             'is_control_department' => 'YES'
         ]);
 
-        $data = $this->getTotalContract();
+        $metric_contract = $this->getTotalContract();
 
         $arr_is_control_department = [];
-        foreach ($list_role as $item) {
+        foreach ($list_role_cd as $item) {
             $arr_is_control_department[] = $item['code'];
         }
 
@@ -84,37 +85,49 @@ class Fee extends CustomBaseStep {
         $view_data_income = [];
         foreach ($list_user as $user) {
             $view_data_income[$user['account_id']] =
-                $this->syncRoundNumberContractPersonal($user['account_id'], $data['quantity'], $data['total_sale']);
+                $this->syncRoundNumberContractPersonal($user['account_id'], $metric_contract['quantity'], $metric_contract['total_sale']);
         }
 
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('fee/show-overview-income', [
             'list_user_income' => $view_data_income,
             'libUser' => $this->libUser,
-            'total_sale' => $data['total_sale'],
-            'quantity_contract' => $data['quantity'],
+            'total_sale' => $metric_contract['total_sale'],
+            'quantity_contract' => $metric_contract['quantity'],
+            'list_user_sale' => $metric_contract['sale_department'],
+            'list_user_cd' => $metric_contract['control_department'],
+            'arr_account_id_sale' => $metric_contract['arr_account_id_sale'],
+            'arr_account_id_cd' => $metric_contract['arr_account_id_cd'],
+
         ]);
         $this->load->view('components/footer');
     }
 
     /*Tổng doanh số bpkd*/
     private function getTotalContract() {
-        $list_user = $this->ghUser->get(['account_id >=' => 171020000]);
-        $list_role = $this->ghRole->get(['is_control_department' => 'NO']);
+        $list_user = $this->ghUser->get(['account_id >=' => 171020000, 'active' => 'YES']);
+        $list_role_sale = $this->ghRole->get(['is_control_department' => 'NO']);
+        $arr_account_id = [];
+        $arr_account_id_cd = [];
         $arr_user = [];
+        $arr_user_cd = [];
         $arr_role = [];
 
-        foreach ($list_role as $item) {
+        foreach ($list_role_sale as $item) {
             $arr_role[] = $item['code'];
         }
         foreach ($list_user as $item) {
             if(in_array($item['role_code'], $arr_role) && !in_array
                 ($item['account_id'], $this->arr_general)) {
-                $arr_user[] = $item['account_id'];
+                $arr_account_id[] = $item['account_id'];
+                $arr_user[] = $item;
+            } else {
+                $arr_user_cd[] = $item;
+                $arr_account_id_cd[] = $item['account_id'];
             }
         }
 
-        $last_date = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
+        $last_date = $this->libTime->calDayInMonthThisYear(date('m'));
         $start_date = date('01-m-Y');
         $end_date = date($last_date.'-m-Y');
 
@@ -126,10 +139,17 @@ class Fee extends CustomBaseStep {
 
         $result['quantity'] = 0;
         $result['total_sale'] = 0;
+        $result = [
+            'quantity' => 0,
+            'total_sale' => 0,
+            'sale_department' => $arr_user,
+            'control_department' => $arr_user,
+            'arr_account_id_sale' => $arr_account_id,
+            'arr_account_id_cd' => $arr_account_id_cd
+         ];
         foreach ($list_contract as $item) {
-            if(in_array($item['consultant_id'], $arr_user)) {
-                $result['total_sale'] += $item['room_price'] *
-                    (double)$item['commission_rate']/100;
+            if(in_array($item['consultant_id'], $arr_account_id)) {
+                $result['total_sale'] += $item['room_price'] * (double)$item['commission_rate']/100;
                 $result['quantity'] ++;
             }
         }
