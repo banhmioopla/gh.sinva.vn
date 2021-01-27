@@ -9,6 +9,7 @@ class ShareCustomerUser extends CustomBaseStep {
         $this->load->model(['ghShareCustomerUser', 'ghUser', 'ghCustomer']);
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibCustomer', null, 'libCustomer');
+        $this->load->config('label.apartment');
     }
 
     public function show(){
@@ -43,6 +44,9 @@ class ShareCustomerUser extends CustomBaseStep {
             171020000]);
 
         $data['list_customer'] = $this->ghCustomer->get();
+        $data['libCustomer'] = $this->libCustomer;
+        $data['libUser'] = $this->libUser;
+        $data['label'] =  $this->config->item('label.apartment');
 
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('sharecustomeruser/show-create', $data);

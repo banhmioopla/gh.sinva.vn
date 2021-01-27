@@ -3,7 +3,7 @@
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
     </div>
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Page-Title -->
         <div class="row">
@@ -32,11 +32,11 @@
             <div class="col-md-4 mt-3 col-12 offset-0">
                 <div class="card-box shadow">
                     <button type="submit" id="search" class="btn btn-success w-100">
-                    Cập Nhật Chia Sẻ Khách Hàng <i class="mdi mdi-share"></i></button>
+                    Cập Nhật Chia Sẻ <i class="mdi mdi-share"></i></button>
                 </div>
             </div>
 
-            <div class="col-md-2 mt-3 col-12 offset-0">
+            <div class="col-md-3 mt-3 col-12 offset-0">
                 <div class="card-box shadow">
                     <a href="/admin/list-share-customer-user" class="btn btn-danger
                     w-100">
@@ -87,16 +87,31 @@
                         <thead>
                         <tr>
                             <th>Khách Hàng</th>
+                            <th>Sở Hữu</th>
+                            <th>Trạng Thái</th>
                             <th>Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($list_customer as $row ): ?>
+                        <?php foreach($list_customer as $row ):
+
+                            $isRented = $libCustomer->checkRentedContractByUser
+                            ($row['id']);
+
+                            ?>
                             <tr>
                                 <td>
                                     <div >
-                                        <?= $row['phone'].' - ' . $row['name'] ?>
+                                        <?= $row['name'] ? $row['name'] : '<strong>[không có tên]</strong>' ?>
                                     </div>
+                                    <small><?= $row['phone'] ?></small>
+                                </td>
+                                <td>
+                                    <small><?= $libUser->getNameByAccountid($row['user_insert_id']) ?></small>
+                                </td>
+
+                                <td>
+                                    <small><?= $label[$row['status']] ?></small>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
