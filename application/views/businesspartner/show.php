@@ -7,9 +7,8 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Giỏ Hàng</a></li>
+                            <li class="breadcrumb-item active">Đối Tác Kinh Doanh</li>
                         </ol>
                     </div>
                     <h2 class="font-weight-bold text-danger">Đối tác kinh doanh (quản lý, chủ nhà)</h2>
@@ -122,7 +121,7 @@
                             <label for="name" class="col-4 col-form-label">Email<span
                                     class="text-danger">*</span></label>
                             <div class="col-8">
-                                <input type="text" required class="form-control"
+                                <input type="text" class="form-control"
                                        id="code" name="email" placeholder="Email">
                             </div>
                         </div>
@@ -130,7 +129,7 @@
                             <label for="name" class="col-4 col-form-label">Số Tài Khoản<span
                                         class="text-danger">*</span></label>
                             <div class="col-8">
-                                <input type="text" required class="form-control"
+                                <input type="text" class="form-control"
                                        id="code" name="account_number" placeholder="Số Tài Khoản">
                             </div>
                         </div>
