@@ -364,6 +364,32 @@ class Apartment extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+    public function searchApartment(){
+        $q = $this->input->get('q');
+        $data = [['id' => 0, 'text' => 'Tìm dự án']];
+        if(empty($q)) {
+            $customer = $this->ghApartment->get(['active' => 'YES']);
+            if($customer) {
+                foreach($customer as $c){
+                    $data[] = ['id' => $c['id'], 'text' => 'Quận '.$c['district_code']
+                        .' | '.
+                        $c['address_street']];
+                }
+            }
+
+        } else {
+            $customer = $this->ghApartment->getLike(['address_street' => $q]);
+            if($customer) {
+                foreach($customer as $c){
+                    $data[] = ['id' => $c['id'], 'text' => 'Quận '.$c['district_code']
+                        .' | '. $c['address_street']];
+                }
+            }
+
+        }
+        echo json_encode($data);
+    }
+
 }
 
 /* End of file apartment.php */

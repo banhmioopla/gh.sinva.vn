@@ -129,6 +129,10 @@ html, body { height: 100%; }
 .badge a.text-light:hover{
     color: #000 !important;
 }
+
+.editable-click, a.editable-click, a.editable-click:hover {
+    border-bottom: none;
+}
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;

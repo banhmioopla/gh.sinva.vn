@@ -136,6 +136,13 @@ $route['admin/list-department'] = function($params = []) {
     return $controller.$action;
 };
 
+// Merge Business Apartment
+$route['admin/create-merge-apartment-business'] = function($params = []) {
+    $controller = 'BusinessPartner';
+    $action = '/createMergeApartment';
+    return $controller.$action;
+};
+
 $route['admin/dashboard/list-chart'] = function($params = []) {
     $controller = 'Dashboard';
     $action = '/showTest';
@@ -301,6 +308,12 @@ $route['admin/list-business-partner'] = function($params = []) {
 $route['admin/create-business-partner'] = function($params = []) {
     $controller = 'BusinessPartner';
     $action = '/create';
+    return $controller.$action;
+};
+
+$route['admin/business-partner/detail'] = function($params = []) {
+    $controller = 'BusinessPartner';
+    $action = '/showDetail';
     return $controller.$action;
 };
 
@@ -964,8 +977,8 @@ $route['admin/delete-image'] = function($params = []) {
     return $controller.$action;
 };
 
-$route['admin/search-apartment'] = function($params = []) {
-	$controller = 'Image';
+$route['admin/apartment/search'] = function($params = []) {
+	$controller = 'Apartment';
 	$action = '/searchApartment';
 	return $controller.$action;
 };

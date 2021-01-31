@@ -8,7 +8,9 @@ class BusinessPartner extends CustomBaseStep {
         parent::__construct();
         $this->load->model('ghBusinessPartner');
         $this->load->model('ghApartment');
-        $this->load->model('ghApartment');
+        $this->load->model('ghPartner');
+        $this->load->model('ghMergeBusinessApartment');
+
     }
 
     public function show(){
@@ -18,6 +20,31 @@ class BusinessPartner extends CustomBaseStep {
         /*--- Load View ---*/
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('businesspartner/show', $data);
+        $this->load->view('components/footer');
+    }
+
+    public function showDetail(){
+        $id = $this->input->get('id');
+        $partner = $this->ghBusinessPartner->getById($id)[0];
+        $list_business_apartment = $this->ghMergeBusinessApartment->getByBusinessId($id);
+        $list_apartment = [];
+        if(count($list_business_apartment) > 0) {
+            foreach ($list_business_apartment as $item) {
+                $apartment = $this->ghApartment->getById($item['apartment_id']);
+                if(count($apartment) > 0) {
+                    $list_apartment[] = $apartment[0];
+                }
+            }
+        }
+
+        $this->load->view('components/header');
+        $this->load->view('businesspartner/show-detail',
+            [
+                'partner' => $partner,
+                'ghApartment' => $this->ghApartment,
+                'ghPartner' => $this->ghPartner,
+                'list_apartment' => $list_apartment
+            ]);
         $this->load->view('components/footer');
     }
 
@@ -36,6 +63,19 @@ class BusinessPartner extends CustomBaseStep {
             ]);
             return redirect('admin/list-business-partner');
         }
+    }
+
+    public function createMergeApartment(){
+        $post = $this->input->post();
+        $business = $this->ghMergeBusinessApartment->get([
+            'business_id' => $post['business_id'],
+            'apartment_id' => $post['apartment_id'],
+        ]);
+        if(count($business) == 0) {
+            $this->ghMergeBusinessApartment->insert($post);
+        }
+
+        return redirect('/admin/business-partner/detail?id='.$post['business_id']);
     }
 
     // Ajax

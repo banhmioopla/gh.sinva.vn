@@ -35,6 +35,7 @@
                             <th>Số Tài Khoản</th>
                             <th>Ghi Chú</th>
                             <th class="text-center">Mở</th>
+                            <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -87,6 +88,15 @@
                                             <label for="businesspartner-<?= $row['id'] ?>">
                                             </label>
                                         </div>
+
+
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div class="text-center  font-weight-bold">
+                                        <a target="_blank" class="text-danger"
+                                           href="/admin/business-partner/detail?id=<?= $row['id'] ?>">Chi tiết</a>
                                     </div>
                                 </td>
 
@@ -237,20 +247,6 @@
                             }
                         }
                     });
-                }
-            });
-
-            $(".select2").select2({
-                placeholder: "Tìm Kiếm Dự Án",
-                minimumInputLength: 1,
-                ajax: {
-                    url: "<?= base_url().'admin/search-business-partner-apartment' ?>",
-                    dataType: 'json',
-                    processResults: function (data) {
-                        return {
-                            results: data
-                        };
-                    }
                 }
             });
         });
