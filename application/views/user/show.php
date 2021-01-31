@@ -28,6 +28,8 @@ foreach ($list_user as $row) {
                 $user_birth_this_month[] = $row;
 
             }
+        } else {
+            redirect('/admin/list-user?birthDay='.date('m'));
         }
     }
 }
