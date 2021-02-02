@@ -16,6 +16,11 @@
                         mdi-chevron-double-right text-warning"></i> Danh Sách Dự
                                 Án</a></li>
 
+                        <?php if(isYourPermission('Crawler', 'show',$this->permission_set)):?>
+                            <li><a href="/admin/list-crawler"><i class="mdi
+                             mdi-chevron-double-right text-warning"></i> Nghiên Cứu Thị Trường *</a></li>
+                        <?php endif;?>
+
                         <?php if(isYourPermission('Apartment', 'showLikeBase',$this->permission_set)):?>
                             <li><a href="/admin/list-apartment-like-base"><i class="mdi
                              mdi-chevron-double-right text-warning"></i> Danh Sách Dự Án (Bảng)</a></li>
