@@ -1,36 +1,4 @@
 <?php
-function money_format11( $n, $precision = 1 ) {
-    if ($n < 900) {
-        // 0 - 900
-        $n_format = number_format($n, $precision);
-        $suffix = '';
-    } else if ($n < 900000) {
-        // 0.9k-850k
-        $n_format = number_format($n / 1000, $precision);
-        $suffix = ' k';
-    } else if ($n < 900000000) {
-        // 0.9m-850m
-        $n_format = number_format($n / 1000000, $precision);
-        $suffix = ' mi';
-    } else if ($n < 900000000000) {
-        // 0.9b-850b
-        $n_format = number_format($n / 1000000000, $precision);
-        $suffix = 'bi';
-    } else {
-        // 0.9t+
-        $n_format = number_format($n / 1000000000000, $precision);
-        $suffix = 'T';
-    }
-
-  // Remove unecessary zeroes after decimal. "1.0" -> "1"; "1.00" -> "1"
-  // Intentionally does not affect partials, eg "1.50" -> "1.50"
-    if ( $precision > 0 ) {
-        $dotzero = '.' . str_repeat( '0', $precision );
-        $n_format = str_replace( $dotzero, '', $n_format );
-    }
-
-    return $n_format . $suffix;
-}
 
 $check_contract = in_array($this->auth['role_code'], ['human-resources','product-manager', 'ceo', 'customer-care']);
 $check_consultant_booking = false;
@@ -51,19 +19,15 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
 ?>
 
 <div class="wrapper">
-    
-    <div class="sk-wandering-cubes" style="display:none" id="loader">
-        <div class="sk-cube sk-cube1"></div>
-    </div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Giỏ Hàng</a></li>
+                            <li class="breadcrumb-item active">Dự Án</li>
                         </ol>
                     </div>
                     <h3 class="page-title">Danh sách dự án quận <?= $district_code?></h3>
@@ -153,20 +117,36 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                     </div>
                    
                     <div class="row">
-                        <div class="col-md-8">
-                            <h5 class="mb-md-2">Mô tả dự án</h5>
+                        <div class="col-md-4">
+                            <?php if($apartment['description']):?>
+                                <h5 class="mb-md-2 text-center text-danger"><u>Mô Tả</u></h5>
                             <div class="more apm-description">
                                 <?= $apartment['description'] ?>
                             </div>
+                            <?php else: ?>
+                             <div class="text-center"><i class="text-muted">[không có thông tin mô tả]</i></div>
+                            <?php endif;?>
                         </div>
                         <div class="col-md-4 font-weight-bold" id="time-update-<?= $apartment['id'] ?>">
-                            <div class="text-right text-md-left">
-                                <h5 class="mb-md-2">Số lượng phòng</h5>
-                                <span>
-                                    <span class="ml-4 text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?><i class="mdi mdi-checkerboard"></i></span>
-                                    <span class="ml-2 text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
-                                    <span class="ml-2 text-danger"><?= $ghRoom->getNumber($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
-                                </span>
+                            <div class="">
+                                <h5 class="mb-md-2 text-center text-danger">Tỉ Lệ Phòng</h5>
+                                <div class="text-center">
+                                    <span class="text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?><i class="mdi mdi-checkerboard"></i></span>
+                                    <span class="text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
+                                    <span class="text-danger"><?= $ghRoom->getNumber($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="">
+                                <h5 class="mb-md-2 text-center text-danger">Cọc / Dài / Ngắn</h5>
+                                <div class="text-md-left text-center">
+                                    <mark># <?= $apartment['deposit'] ?></mark>
+                                    <br>
+                                    <mark># <?= $apartment['contract_long_term'] ?></mark>
+                                    <br>
+                                    <mark># <?= $apartment['contract_short_term'] ?></mark>
+                                </div>
                             </div>
                         </div>
                     </div>
