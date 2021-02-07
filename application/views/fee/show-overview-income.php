@@ -11,12 +11,12 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
+                            <li class="breadcrumb-item"><a href="#">gio hang</a></li>
                             <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-
+                    <h2 class="font-weight-bold text-danger">Phòng Tài Chính</h2>
                 </div>
             </div>
         </div>
@@ -24,27 +24,88 @@
 
         <div class="district-alert"></div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card-box text-dark bg-white text-white shadow">
-                    <i class="fi-tag"></i>
+
                     <div class="row">
-                        <div class="col-md-6 col-12">
-                            <p class="text-uppercase m-b-5 font-600">TỔNG QUAN
+                        <div class="col-12 bg-warning text-light">
+                            <p class="text-uppercase font-600 text-center pt-3">Tùy Chọn </p>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <div class="font-weight-bold text-danger">Báo Cáo Tháng ... (2021) </div>
+                            <select name="" id="month" class="form-control">
+                                <?php for ($i = 1; $i <= 12; $i++ ):?>
+                                    <option value="<?= $i ?>"
+                                    <?= $this->input->get('month') == $i ? "selected":"" ?>
+                                    > Tháng <?= $i ?></option>
+                                <?php endfor;?>
+                            </select>
+                        </div>
+                        <script>
+                            commands.push(function(){
+                                $('#month').change(function(){
+                                    window.location = '/admin/list-fee-contract-income?month='+$('#month').val();
+                                });
+
+                            });
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-box text-dark bg-white text-white shadow">
+
+                    <div class="row">
+                        <div class="col-12 bg-dark text-light">
+                            <p class="text-uppercase font-600 text-center pt-3">BO PHAN KINH DOANH </p>
                         </div>
 
                         <div class="col-12">
                             <p>
                             <div class="mt-1 border-bottom">
-                                <i class="mdi mdi-checkerboard"> Tổng Doanh Số BPKD Tháng
-                                    <?= date('m/Y') ?>:</i>
+                                <i class="mdi mdi-checkerboard"> Tổng Doanh Số Tháng
+                                    <?= $this->input->get('month') ?>:</i>
 
                                 <strong class="float-right">
                                     <?= number_format($total_sale) ?></strong>
                             </div>
 
                             <div class="mt-1 border-bottom">
-                                <i class="mdi mdi-checkerboard"> Tổng SLHĐ BPKD Tháng
-                                    <?= date('m/Y') ?>:</i>
+                                <i class="mdi mdi-checkerboard"> Tổng So Luong Hop Dong Tháng
+                                    <?= $this->input->get('month') ?>:</i>
+
+                                <strong class="float-right">
+                                    <?= $quantity_contract ?></strong>
+                            </div>
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-box text-dark bg-white text-white shadow">
+
+                    <div class="row">
+                        <div class="col-12 bg-dark text-light">
+                            <p class="text-uppercase font-600 text-center pt-3">BỘ PHẬN VẬN HÀNH </p>
+                        </div>
+
+                        <div class="col-12">
+                            <p>
+                            <div class="mt-1 border-bottom">
+                                <i class="mdi mdi-checkerboard"> Tổng Doanh Số Tháng
+                                    <?= $this->input->get('month') ?>:</i>
+
+                                <strong class="float-right">
+                                    <?= number_format($total_sale) ?></strong>
+                            </div>
+
+                            <div class="mt-1 border-bottom">
+                                <i class="mdi mdi-checkerboard"> Tổng So Luong Hop Dong Tháng
+                                    <?= $this->input->get('month') ?>:</i>
 
                                 <strong class="float-right">
                                     <?= $quantity_contract ?></strong>
@@ -57,16 +118,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-12 ">
+            <div class="col-12 col-md-6">
                 <div class="card-box table-responsive shadow">
-                    <h3 class="text-danger text-center">Thu Nhập Bộ Phận Kinh Doanh</h3>
-                    <table class="table table-hover table-income">
+                    <h3 class="text-danger font-weight-bold text-center">Bộ Phận Kinh Doanh</h3>
+                    <table class="table table-hover table-income table-dark">
                         <thead>
                         <tr>
                             <th>Thành Viên</th>
-                            <th class="text-center" width="80px">Số Lượng Hợp Đồng</th>
-                            <th class="text-right">Tổng Doanh Số <br> (x1000)</th>
-                            <th class="text-right">Tổng Thu Nhập <br> (x1000)</th>
+                            <th class="text-center">Hợp Đồng</th>
+                            <th class="text-center" width="80px">Chi Tiết</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -74,7 +134,10 @@
                             if(!in_array($account_id, $arr_account_id_sale) ) {
                                 continue;
                             }
-                            
+
+                            if($item['quantity_contract'] == 0  && $item['total_sale'] == 0  && $item['total_personal_income'] == 0 ) {
+                                continue;
+                            }
                             ?>
                             <tr>
                                 <td >
@@ -83,29 +146,29 @@
                                         $libUser->getNameByAccountid
                                         ($account_id) ?> </div>
                                 </td>
-                                <td class="text-center"><?= number_format($item['quantity_contract']) ?></td>
+                                <td><div class="text-warning text-center"><?= number_format($item['quantity_contract']) ?></div></td>
+                                <td>
 
-
-                                <td class="text-right"><?= number_format($item['total_sale']/1000) ?></td>
-                                <td class="text-right"><?= number_format($item['total_personal_income']/1000) ?></td>
-
+                                    <div>
+                                        <span class="text-primary"><?= number_format($item['total_sale']/1000) ?></span> |
+                                        <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?></span>
+                                    </div>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-12 ">
+            <div class="col-12 col-md-6 ">
                 <div class="card-box table-responsive shadow">
-                    <h3 class="text-danger text-center">Thu Nhập BPVH</h3>
-                    <table class="table table-hover table-income">
+                    <h3 class="text-danger font-weight-bold text-center">Bộ Phận Vận Hành</h3>
+                    <table class="table table-hover table-income table-dark">
                         <thead>
-                        <tr>
+                        <tr class="font-weight-bold">
                             <th>Thành Viên</th>
-                            <th width="400px" class="d-none">Chi tiết</th>
-                            <th class="text-center" width="80px">Số Lượng Hợp Đồng</th>
-                            <th class="text-right">Tổng Doanh Số <br> (x1000)</th>
-                            <th class="text-right">Tổng Thu Nhập <br> (x1000)</th>
+                            <th class="text-center">Hợp Đồng</th>
+                            <th class="" width="80px">Chi Tiết</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -113,7 +176,9 @@
                             if(!in_array($account_id, $arr_account_id_cd)) {
                                 continue;
                             }
-
+                            if(!$item['quantity_contract'] &&  !$item['total_sale'] && !$item['total_personal_income']) {
+                                continue;
+                            }
                             ?>
                             <tr>
                                 <td >
@@ -122,15 +187,13 @@
                                         $libUser->getNameByAccountid
                                         ($account_id) ?> </div>
                                 </td>
-                                <td class="d-none">
-                                    <div> <?//= $item['description_income'] ?> </div>
+                                <td><div class="text-warning text-center"><?= number_format($item['quantity_contract']) ?></div></td>
+                                <td>
+                                    <div>
+                                        <span class="text-primary"><?= number_format($item['total_sale']/1000) ?></span> |
+                                        <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?></span>
+                                    </div>
                                 </td>
-                                <td class="text-center"><?= number_format($item['quantity_contract']) ?></td>
-
-
-                                <td class="text-right"><?= number_format($item['total_sale']/1000) ?></td>
-                                <td class="text-right"><?= number_format($item['total_personal_income']/1000) ?></td>
-
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

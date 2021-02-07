@@ -12,6 +12,7 @@ class Fee extends CustomBaseStep {
         $this->load->model('ghContract');
         $this->load->model('ghUser');
         $this->load->model('ghRole');
+        $this->load->model('ghUserIncomeDetail');
         $this->load->model('ghUserCumulativeSale');
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibTime', null, 'libTime');
@@ -47,7 +48,7 @@ class Fee extends CustomBaseStep {
         $view_data_income = [];
         foreach ($list_user as $user) {
             $view_data_income[$user['account_id']] =
-                $this->syncRoundNumberContractPersonal($user['account_id'], $data['quantity'], $data['total_sale']);
+                $this->syncRoundNumberContractPersonal($user['account_id'], $data['quantity'], $data['total_sale'], '', '');
         }
 
 
@@ -68,6 +69,9 @@ class Fee extends CustomBaseStep {
 
 
     public function showOverviewIncome(){
+        if(empty($this->input->get('month'))) {
+            return redirect('/admin/list-fee-contract-income?month='.date('m'));
+        }
         $list_user = $this->ghUser->get([
             'active' => 'YES',
             'account_id >=' => 171020000
@@ -82,12 +86,22 @@ class Fee extends CustomBaseStep {
         foreach ($list_role_cd as $item) {
             $arr_is_control_department[] = $item['code'];
         }
+        $this_month = $this->input->get('month');
+        $year = date('Y');
 
+        $last_date = cal_days_in_month(CAL_GREGORIAN, $this_month, $year);
+
+        $time_start = '01-'.$this_month.'-'.$year;
+        $time_end = $last_date.'-'.$this_month.'-'.$year;
 
         $view_data_income = [];
         foreach ($list_user as $user) {
             $view_data_income[$user['account_id']] =
-                $this->syncRoundNumberContractPersonal($user['account_id'], $metric_contract['quantity'], $metric_contract['total_sale']);
+                $this->syncRoundNumberContractPersonal($user['account_id'],
+                    $metric_contract['quantity'],
+                    $metric_contract['total_sale'],
+                    $time_start,
+                    $time_end);
         }
 
         $this->load->view('components/header');
@@ -212,7 +226,9 @@ class Fee extends CustomBaseStep {
     }
 
     /*Cơ chế mới cho mỗi thành viên*/
-    private function syncRoundNumberContractPersonal($user_id = null, $total_contract = 0, $total_sale = 0) {
+    private function syncRoundNumberContractPersonal($user_id = null, $total_contract = 0, $total_sale = 0,
+                                                     $start_time, $end_time
+    ) {
         $cd_config = $this->config->item('internal_mechanism_income_rate_control_department');
         $sale_config = $this->config->item('internal_mechanism_income_rate');
 
@@ -224,9 +240,8 @@ class Fee extends CustomBaseStep {
         $round_contract_to_compare = $total_contract;
         $description = "";
 
-        $last_date = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
-        $start_date = date('01-m-Y');
-        $end_date = date($last_date.'-m-Y');
+        $start_date = $start_time;
+        $end_date = $end_time;
 
 
         $list_contract = $this->ghContract->get([
@@ -330,6 +345,14 @@ class Fee extends CustomBaseStep {
                     }
                     $sub_description .= "(4) B1: $max_number_of_month th x " .$b1['income_unit']." = ". $total_b1 .
                         "<br>";
+                    if($max_contract_id > 0) {
+                        $this->updateToIncomeContract([
+                            'contract_id' => $max_contract_id,
+                            'contract_income_total' => $total_b1,
+                            'apply_time' => strtotime($end_date)
+                        ]);
+                    }
+
                     break;
                 }
             }
@@ -366,6 +389,12 @@ class Fee extends CustomBaseStep {
                         break;
                     }
                 }
+
+                $this->updateToIncomeContract([
+                    'contract_id' => $item['id'],
+                    'contract_income_total' => $total_b2,
+                    'apply_time' => strtotime($end_date)
+                ]);
             }
             $sub_description .= "<br>";
 
@@ -413,6 +442,12 @@ class Fee extends CustomBaseStep {
                 }
 
                 $total_personal_income += $temp_income;
+
+                $this->updateToIncomeContract([
+                    'contract_id' => $item['id'],
+                    'contract_income_total' => $temp_income,
+                    'apply_time' => strtotime($end_date)
+                ]);
             }
 
         }
@@ -423,6 +458,16 @@ class Fee extends CustomBaseStep {
             'total_personal_income' => $total_personal_income,
             'description_income' => $description
         ];
+    }
+
+    private function updateToIncomeContract($data){
+        $model = $this->ghUserIncomeDetail->getByContractIdAndApplyTime($data['contract_id'], $data['apply_time']);
+        if(count($model)) {
+            $this->ghUserIncomeDetail->updateById($model[0]['id'], $data);
+        }else {
+            $this->ghUserIncomeDetail->insert($data);
+        }
+
     }
 
     private function array_value_recursive($key, array $arr){

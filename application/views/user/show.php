@@ -183,6 +183,7 @@ foreach ($list_user as $row) {
 
 
                             <th>Ngày Vào Làm</th>
+                            <th>Người Tuyển</th>
 
                             <th class="text-center">Trạng thái</th>
                             <th class="text-center">Mở</th>
@@ -237,6 +238,15 @@ foreach ($list_user as $row) {
                                         data-name="time_joined"
                                         data-value ="<?= $row['time_joined'] > 0 ? date('d-m-Y',$row['time_joined']) :'' ?>">
                                         <?= $row['time_joined'] ? date('d/m/Y',$row['time_joined']) :'#' ?>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="user-user_refer_id user"
+                                         data-pk="<?= $row['id'] ?>"
+                                         data-name="user_refer_id"
+                                         data-value="<?= $row['user_refer_id'] ?>">
+                                        <?= $row['user_refer_id'] ?>
                                     </div>
                                 </td>
                                 
@@ -430,7 +440,7 @@ foreach ($list_user as $row) {
                         });
                     })
 
-                    $('.user-name, .user-phone_number').editable({
+                    $('.user-name, .user-phone_number, .user-user_refer_id').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-user-editable',
                         inputclass: '',
