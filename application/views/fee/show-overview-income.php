@@ -24,6 +24,21 @@
 
         <div class="district-alert"></div>
         <div class="row">
+            <div class="col-12">
+                <ul class="list-unstyled p-2 border border-danger card-box">
+                    <li>- Bất cứ thành viên nào khi tuyển dụng được người thì người tuyển dụng được 05% doanh thu từ người được tuyển.</li>
+                    <li>- Bất cứ ai cũng có quyền được lấy dự án về cho công ty. Người lấy dự án sẽ được nhận 03% tổng doanh thu từ các giao dịch đã được thực hiện từ toà nhà  nhận về trong tháng đầu tiên (không quan tâm người thực hiện giao dịch là ai).
+                        <ul>
+                            <li>Dự án được lấy về đã được đàm phán về các nội dung (hoa hồng, giá dịch vụ, cọc, thời gian giữ phòng,…)</li>
+                            <li>Dự án được được chọn sau khi công ty thẩm định và ký hợp đồng kí gửi với đối tác</li>
+                        </ul>
+                    </li>
+
+                    <li>- Trong trường hợp hai hoặc nhiều người cùng đi lấy dự án mới. Công ty sẽ chia hoa hồng cho người trực tiếp đàm phán để lấy dự án. Sau đó hai hoặc nhiều người tự thương lượng và chia hoa hồng với nhau nếu tất cả đều có công.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <div class="card-box text-dark bg-white text-white shadow">
 
@@ -58,7 +73,7 @@
 
                     <div class="row">
                         <div class="col-12 bg-dark text-light">
-                            <p class="text-uppercase font-600 text-center pt-3">BO PHAN KINH DOANH </p>
+                            <p class="text-uppercase font-600 text-center pt-3">BỘ PHẬN KINH DOANH</p>
                         </div>
 
                         <div class="col-12">
@@ -143,14 +158,13 @@
                                 <td >
                                     <div><i class="mdi
                             mdi-chevron-double-right text-info"></i> <?=
-                                        $libUser->getNameByAccountid
-                                        ($account_id) ?> </div>
+                                        $libUser->getNameByAccountid($account_id) ?> </div>
                                 </td>
                                 <td><div class="text-warning text-center"><?= number_format($item['quantity_contract']) ?></div></td>
                                 <td>
-
                                     <div>
                                         <span class="text-primary"><?= number_format($item['total_sale']/1000) ?></span> |
+                                        <span class="text-warning"><?= number_format($item['total_refer_income']/1000) ?></span> |
                                         <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?></span>
                                     </div>
                                 </td>
@@ -191,6 +205,7 @@
                                 <td>
                                     <div>
                                         <span class="text-primary"><?= number_format($item['total_sale']/1000) ?></span> |
+                                        <span class="text-warning"><?= number_format($item['total_refer_income']/1000) ?></span> |
                                         <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?></span>
                                     </div>
                                 </td>
@@ -198,11 +213,6 @@
                         <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="col-12 col-md-12">
-                <div class="card-box table-responsive shadow">
-                    <h3 class="text-danger text-center">Thu Nhập Từ Các Khoảng Thưởng</h3>
                 </div>
             </div>
         </div> <!-- end row -->

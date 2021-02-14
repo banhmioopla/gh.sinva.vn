@@ -83,8 +83,7 @@
                             mdi-chevron-double-right text-warning"></i> Danh Mục Chi Phí</a></li>
                         <?php if(isYourPermission('Fee', 'showContractIncome',$this->permission_set)):?>
                         <li><a href="/admin/list-fee-contract-income"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Thu Nhập
-                                Thành Viên</a></li>
+                            mdi-chevron-double-right text-warning"></i> Phòng Tài Chính</a></li>
                         <?php endif;?>
 
                         <?php if(isYourPermission('Fee', 'showUserCumulativeSale',$this->permission_set)):?>

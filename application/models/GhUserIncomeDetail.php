@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class GhUserIncomeDetail extends CI_Model {
     private $table = 'gh_user_income_detail';
+    const INCOME_TYPE_CONTRACT = 'Contract';
+    const INCOME_TYPE_CONTRACT_SUPPORTER = 'ContractSupporter';
+    const INCOME_TYPE_PENALTY = 'Penalty';
+    const INCOME_TYPE_REFER_USER = 'ReferUser';
+    const INCOME_TYPE_GET_NEW_APARTMENT = 'GetNewApartment';
 
     public function get($where = []) {
         $this->db->order_by('id DESC');
@@ -13,8 +18,17 @@ class GhUserIncomeDetail extends CI_Model {
         return $this->db->get_where($this->table, ['id' => $tag_id])->result_array();
     }
 
-    public function getByContractIdAndApplyTime($contract_id, $apply_time) {
-        return $this->db->get_where($this->table, ['contract_id' => $contract_id, 'apply_time' => $apply_time])->result_array();
+    public function getByContractId($contract_id) {
+        return $this->db->get_where($this->table, ['contract_id' => $contract_id])->result_array();
+    }
+
+    public function getByUserIdAndTimeApply($user_id, $apply_time) {
+        return $this->db->get_where($this->table,
+            [
+                'user_id' => $user_id,
+                'apply_time' => $apply_time,
+                'type' => self::INCOME_TYPE_REFER_USER
+            ])->result_array();
     }
 
     public function getAll() {

@@ -1,13 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 class Fee extends CustomBaseStep {
+
+    const INCOME_TYPE_CONTRACT = 'Contract';
+    const INCOME_TYPE_CONTRACT_SUPPORTER = 'ContractSupporter';
+    const INCOME_TYPE_PENALTY = 'Penalty';
+    const INCOME_TYPE_REFER_USER = 'ReferUser';
+    const INCOME_TYPE_GET_NEW_APARTMENT = 'GetNewApartment';
+
     public function __construct()
     {
         parent::__construct();
         $this->load->model('ghService');
         $this->load->model('ghIncomeContract');
-        $this->load->model('ghUserPenalty');
         $this->load->model('ghUserPenalty');
         $this->load->model('ghContract');
         $this->load->model('ghUser');
@@ -23,6 +30,7 @@ class Fee extends CustomBaseStep {
 
         $this->rate_personal_consultant_support_id = 0.7;
         $this->rate_personal_is_support_control = 0.9;
+        $this->refer_rate = 0.95;
 
 
     }
@@ -48,7 +56,7 @@ class Fee extends CustomBaseStep {
         $view_data_income = [];
         foreach ($list_user as $user) {
             $view_data_income[$user['account_id']] =
-                $this->syncRoundNumberContractPersonal($user['account_id'], $data['quantity'], $data['total_sale'], '', '');
+                $this->syncPersonalIncome($user['account_id'], $data['quantity'], $data['total_sale'], '', '');
         }
 
 
@@ -97,7 +105,7 @@ class Fee extends CustomBaseStep {
         $view_data_income = [];
         foreach ($list_user as $user) {
             $view_data_income[$user['account_id']] =
-                $this->syncRoundNumberContractPersonal($user['account_id'],
+                $this->syncPersonalIncome($user['account_id'],
                     $metric_contract['quantity'],
                     $metric_contract['total_sale'],
                     $time_start,
@@ -226,7 +234,7 @@ class Fee extends CustomBaseStep {
     }
 
     /*Cơ chế mới cho mỗi thành viên*/
-    private function syncRoundNumberContractPersonal($user_id = null, $total_contract = 0, $total_sale = 0,
+    private function syncPersonalIncome($user_id = null, $total_contract = 0, $total_sale = 0,
                                                      $start_time, $end_time
     ) {
         $cd_config = $this->config->item('internal_mechanism_income_rate_control_department');
@@ -255,8 +263,7 @@ class Fee extends CustomBaseStep {
         foreach ($list_contract as $item) {
             if($item['consultant_id'] === $user_id) {
                 $total_user_contract ++;
-                $total_sale_sinva += (double)$item['room_price'] *
-                $item['commission_rate'] / 100;
+                $total_sale_sinva += (double)$item['room_price'] * $item['commission_rate'] / 100;
             }
         }
 
@@ -294,6 +301,7 @@ class Fee extends CustomBaseStep {
         $max_contract_id = 0;
         $max_consultant_support_id = 0;
         $max_is_support_control = "NO";
+        $max_time_apply = null;
         $temp1 = 0;
         $total_b1 = 0;
         $total_b2 = 0;
@@ -328,11 +336,12 @@ class Fee extends CustomBaseStep {
                     $max_contract_id = $item['id'];
                     $max_consultant_support_id = $item['consultant_support_id'];
                     $max_is_support_control = $item['is_support_control'];
+                    $max_time_apply = $item['time_check_in'];
                 }
             }
             $sub_description .= "(3) HĐ cao nhất: $max_room_price ($max_number_of_month tháng) <br>";
 
-            /*Kho khớp với bảng B1*/
+            /*So khớp với bảng B1*/
             foreach ($cd_config['index_master_b1'] as $b1) {
                 if($max_room_price >= $b1['room_price_min'] && $max_room_price < $b1['room_price_max']) {
                     $total_b1 = $b1['income_unit'] * $max_number_of_month;
@@ -349,7 +358,8 @@ class Fee extends CustomBaseStep {
                         $this->updateToIncomeContract([
                             'contract_id' => $max_contract_id,
                             'contract_income_total' => $total_b1,
-                            'apply_time' => strtotime($end_date)
+                            'apply_time' => $max_time_apply,
+                            'type' => self::INCOME_TYPE_CONTRACT
                         ]);
                     }
 
@@ -372,7 +382,7 @@ class Fee extends CustomBaseStep {
                     if($item['room_price'] >= $b2['room_price_min'] && $item['room_price'] < $b2['room_price_max']) {
                         $temp_income =  $b2['income_unit'] * $item['number_of_month'];
                         if($item['consultant_id'] == $user_id) {
-                            if($item['consultant_support_id'] > 0) {
+                            if($item['consultant_support_id'] >= 171020000) {
                                 $temp_income -= (double) $temp_income * 0.3;
                             }
 
@@ -380,30 +390,39 @@ class Fee extends CustomBaseStep {
                                 $temp_income -= (double) $temp_income * 0.1;
                             }
                             $total_b2 += $temp_income;
+
+                            $this->updateToIncomeContract([
+                                'contract_id' => $item['id'],
+                                'contract_income_total' => (double)$temp_income,
+                                'apply_time' => strtotime($item['time_check_in']),
+                                'type' => self::INCOME_TYPE_CONTRACT
+                            ]);
                         }
 
                         if($item['consultant_support_id'] == $user_id) {
                             $total_b2 += (double)$temp_income * 0.3;
+
+                            $this->updateToIncomeContract([
+                                'contract_id' => $item['id'],
+                                'contract_income_total' => (double)$temp_income * 0.3,
+                                'apply_time' => strtotime($item['time_check_in']),
+                                'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER
+                            ]);
                         }
 
                         break;
                     }
                 }
-
-                $this->updateToIncomeContract([
-                    'contract_id' => $item['id'],
-                    'contract_income_total' => $total_b2,
-                    'apply_time' => strtotime($end_date)
-                ]);
             }
             $sub_description .= "<br>";
 
+            /*Kiểm tra - có phải vận hành chung hay ko ?*/
             if(in_array($user['account_id'], $this->arr_general)) {
                 $total_personal_income = $total_b1 + $total_b2 + $total_extra_personal_income;
             } else {
                 $total_personal_income = $total_extra_personal_income;
             }
-            $sub_description .= " @@@ Tổng Thu Nhập Cá Nhân =" . $total_personal_income;
+            $sub_description .= "Tổng Thu Nhập Cá Nhân = " . $total_personal_income;
             $description = $sub_description;
         } else {
             /*Thu nhập cho không phải BPVH */
@@ -438,30 +457,69 @@ class Fee extends CustomBaseStep {
                 }
 
                 if($item['consultant_support_id'] == $user_id) {
-                    $temp_income += (double)$temp_income * 0.3;
+                    $temp_support_income = (double)$temp_income * 0.3;
+                    $temp_income += $temp_support_income;
+                    $this->updateToIncomeContract([
+                        'contract_id' => $item['id'],
+                        'contract_income_total' => $temp_support_income,
+                        'apply_time' => strtotime($item['time_check_in']),
+                        'type' => self::INCOME_TYPE_CONTRACT
+                    ]);
                 }
 
                 $total_personal_income += $temp_income;
-
                 $this->updateToIncomeContract([
                     'contract_id' => $item['id'],
                     'contract_income_total' => $temp_income,
-                    'apply_time' => strtotime($end_date)
+                    'apply_time' => strtotime($item['time_check_in']),
+                    'type' => self::INCOME_TYPE_CONTRACT
                 ]);
             }
+        }
 
+        /*Thu Nhập từ việc tuyển dụng*/
+        $list_user = $this->ghUser->get(['account_id >=' => 171020000, 'user_refer_id' => $user_id]);
+        $this_ref_total_income = 0;
+        if(count($list_user)) {
+            foreach($list_user as $ref) {
+                $this_user_detail_income = $this->ghUserIncomeDetail->get('user_id = '. $ref['account_id']. ' AND (type = "' .  self::INCOME_TYPE_CONTRACT . '" OR  type = "' . self::INCOME_TYPE_CONTRACT_SUPPORTER . '")');
+
+                if(count($this_user_detail_income)) {
+                    foreach ($this_user_detail_income as $income) {
+                        $this_ref_total_income += (double)0.05 * $income['contract_income_total'];
+                    }
+                    $this->updateToReferIncomeContract([
+                        'user_id' => $user_id,
+                        'contract_income_total' => $this_ref_total_income,
+                        'type' => self::INCOME_TYPE_REFER_USER,
+                        'apply_time' => date('01-m-Y')
+                    ]);
+                    $total_personal_income += $this_ref_total_income;
+                }
+            }
         }
 
         return [
             'quantity_contract' => $total_user_contract,
             'total_sale' => $total_sale_sinva,
             'total_personal_income' => $total_personal_income,
+            'total_refer_income' => $this_ref_total_income,
             'description_income' => $description
         ];
     }
 
     private function updateToIncomeContract($data){
-        $model = $this->ghUserIncomeDetail->getByContractIdAndApplyTime($data['contract_id'], $data['apply_time']);
+        $model = $this->ghUserIncomeDetail->getByContractId($data['contract_id']);
+        if(count($model)) {
+            $this->ghUserIncomeDetail->updateById($model[0]['id'], $data);
+        }else {
+            $this->ghUserIncomeDetail->insert($data);
+        }
+
+    }
+
+    private function updateToReferIncomeContract($data){
+        $model = $this->ghUserIncomeDetail->getByUserIdAndTimeApply($data['user_id'], strtotime($data['apply_time']));
         if(count($model)) {
             $this->ghUserIncomeDetail->updateById($model[0]['id'], $data);
         }else {
@@ -471,7 +529,7 @@ class Fee extends CustomBaseStep {
     }
 
     private function array_value_recursive($key, array $arr){
-        $val = array();
+        $val = [];
         array_walk_recursive($arr, function($v, $k) use($key, &$val){
             if($k == $key) array_push($val, $v);
         });
@@ -555,15 +613,6 @@ class Fee extends CustomBaseStep {
         }
 
         return ['list_income' => $income_user];
-
-    }
-
-    private function syncRoundInternalMechanism($user_id, $data_number_contract){
-
-    }
-
-
-    private function syncRoundFinal() {
 
     }
 
