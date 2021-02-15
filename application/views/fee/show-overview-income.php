@@ -141,7 +141,7 @@
                         <tr>
                             <th>Thành Viên</th>
                             <th class="text-center">Hợp Đồng</th>
-                            <th class="text-center" width="80px">Chi Tiết</th>
+                            <th class="text-center" width="80px">Chi Tiết <br> <small>x1000vnđ</small></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -156,20 +156,20 @@
                             ?>
                             <tr>
                                 <td >
-                                    <div><i class="mdi
+                                    <u><i class="mdi
                             mdi-chevron-double-right text-info"></i>
                                         <a target="_blank"
                                            class="text-light"
                                             href="/admin/personal-profile?account_id=<?= $account_id ?>">
                                             <?= $libUser->getNameByAccountid($account_id) ?>
-                                        </a>  </div>
+                                        </a>  </u>
                                 </td>
                                 <td><div class="text-warning text-center"><?= number_format($item['quantity_contract']) ?></div></td>
                                 <td>
-                                    <div>
-                                        <span class="text-primary"><?= number_format($item['total_sale']/1000) ?></span> |
-                                        <span class="text-warning"><?= number_format($item['total_refer_income']/1000) ?></span> |
-                                        <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?></span>
+                                    <div class="text-right">
+                                        <span class="text-warning text-right"><?= number_format($item['total_sale']/1000) ?> <small class="text-center">(doanh số)</small></span>
+                                        <br>
+                                        <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?> <small class="text-center">(thu nhập)</small></span>
                                     </div>
                                 </td>
                             </tr>
@@ -186,7 +186,7 @@
                         <tr class="font-weight-bold">
                             <th>Thành Viên</th>
                             <th class="text-center">Hợp Đồng</th>
-                            <th class="" width="80px">Chi Tiết</th>
+                            <th class="text-center" width="80px">Chi Tiết <br> <small>x1000vnđ</small></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -200,17 +200,17 @@
                             ?>
                             <tr>
                                 <td >
-                                    <div><i class="mdi
+                                    <u><i class="mdi
                             mdi-chevron-double-right text-info"></i> <?=
                                         $libUser->getNameByAccountid
-                                        ($account_id) ?> </div>
+                                        ($account_id) ?> </u>
                                 </td>
                                 <td><div class="text-warning text-center"><?= number_format($item['quantity_contract']) ?></div></td>
                                 <td>
-                                    <div>
-                                        <span class="text-primary"><?= number_format($item['total_sale']/1000) ?></span> |
-                                        <span class="text-warning"><?= number_format($item['total_refer_income']/1000) ?></span> |
-                                        <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?></span>
+                                    <div class="text-right">
+                                        <span class="text-warning text-right"><?= number_format($item['total_sale']/1000) ?> <small class="text-center">(doanh số)</small></span>
+                                        <br>
+                                        <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?> <small class="text-center">(thu nhập)</small></span>
                                     </div>
                                 </td>
                             </tr>
