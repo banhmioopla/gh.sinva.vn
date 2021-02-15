@@ -21,6 +21,9 @@ class GhUserIncomeDetail extends CI_Model {
     public function getByContractId($contract_id) {
         return $this->db->get_where($this->table, ['contract_id' => $contract_id])->result_array();
     }
+    public function getByUserIdAndApartmentId($user_id, $apartment_id) {
+        return $this->db->get_where($this->table, ['user_id' => $user_id, 'apartment_id' => $apartment_id])->result_array();
+    }
 
     public function getByUserIdAndTimeApply($user_id, $apply_time) {
         return $this->db->get_where($this->table,

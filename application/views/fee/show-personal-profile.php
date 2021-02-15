@@ -73,10 +73,35 @@ $data = array_values($list_user_income)[0];
             <div class="col-md-8">
 
                 <div class="card-box">
-                    <h5 class="mb-3">Tổng Quan Tháng <?= date('m/Y') ?></h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select name="" id="month" class="form-control">
+                                <?php for ($i = 1; $i <= 12; $i++ ):?>
+                                    <option value="<?= $i ?>"
+                                        <?= $this->input->get('from-month') == $i ? "selected":"" ?>
+                                    > Đang Chọn Tháng <?= $i ?></option>
+                                <?php endfor;?>
+                            </select>
+                            <script>
+                                commands.push(function () {
+                                    $('#month').change(function () {
+                                        let current_url = window.location.href;
+                                        let current_month = 'from-month=<?= $this->input->get("from-month") ?>';
+                                        let select_month = 'from-month='+$('#month').val();
+                                        let new_url = current_url.replace(current_month, select_month);
+                                        console.log(new_url);
+                                        window.location = new_url;
+                                    });
 
+                                });
+                            </script>
+                        </div>
+                    </div>
+
+
+                    <hr>
                     <div class="table-responsive">
-                        <table class="table table-bordered m-b-0">
+                        <table class="table table-borderless m-b-0">
                             <tbody>
                             <tr>
                                 <td>Số Lượng Hợp Đồng</td>
@@ -88,10 +113,18 @@ $data = array_values($list_user_income)[0];
                                 <td class="text-right"><?= number_format($data['total_sale']) ?></td>
                             </tr>
                             <tr>
-                                <td>Tổng Thu Nhập Theo Hợp Đồng</td>
+                                <td>Tổng Thu Nhập Từ Hợp Đồng</td>
                                 <td class="text-right"><?= number_format($data['total_personal_income']) ?></td>
                             </tr>
-                            <tr class="text-muted">
+                            <tr>
+                                <td>Tổng Thu Nhập Từ Tuyển Thành Viên </td>
+                                <td class="text-right"><?= number_format($data['total_personal_income']) ?></td>
+                            </tr>
+                            <tr>
+                                <td>Tổng Thu Nhập Từ Lấy Dự Án</td>
+                                <td class="text-right"><?= number_format($data['total_personal_income']) ?></td>
+                            </tr>
+                            <tr>
                                 <td>Các Danh Mục Trừ Tiền</td>
                                 <td class="text-right">
                                 <?php
@@ -121,9 +154,7 @@ $data = array_values($list_user_income)[0];
                                         </ul>
                                     <?php endforeach; ?>
                                     <?php else: ?>
-                                    <small class="text-muted">không có khoản trừ tiền
-                                        <?= time() ?>
-                                    </small>
+                                    <small class="text-info">không có khoản trừ tiền</small>
                                 <?php endif; ?>
 
                                 </td>

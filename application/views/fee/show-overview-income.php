@@ -119,7 +119,7 @@
                             </div>
 
                             <div class="mt-1 border-bottom">
-                                <i class="mdi mdi-checkerboard"> Tổng So Luong Hop Dong Tháng
+                                <i class="mdi mdi-checkerboard"> Tổng Số Lượng Hợp Đồng Tháng
                                     <?= $this->input->get('month') ?>:</i>
 
                                 <strong class="float-right">
@@ -157,8 +157,12 @@
                             <tr>
                                 <td >
                                     <div><i class="mdi
-                            mdi-chevron-double-right text-info"></i> <?=
-                                        $libUser->getNameByAccountid($account_id) ?> </div>
+                            mdi-chevron-double-right text-info"></i>
+                                        <a target="_blank"
+                                           class="text-light"
+                                            href="/admin/personal-profile?account_id=<?= $account_id ?>">
+                                            <?= $libUser->getNameByAccountid($account_id) ?>
+                                        </a>  </div>
                                 </td>
                                 <td><div class="text-warning text-center"><?= number_format($item['quantity_contract']) ?></div></td>
                                 <td>

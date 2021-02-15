@@ -17,6 +17,7 @@ class Fee extends CustomBaseStep {
         $this->load->model('ghIncomeContract');
         $this->load->model('ghUserPenalty');
         $this->load->model('ghContract');
+        $this->load->model('ghApartment');
         $this->load->model('ghUser');
         $this->load->model('ghRole');
         $this->load->model('ghUserIncomeDetail');
@@ -24,23 +25,39 @@ class Fee extends CustomBaseStep {
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibTime', null, 'libTime');
         $this->load->library('LibPenalty', null, 'libPenalty');
-        $this->custom_execute_general = []; // list Account Id
         $this->load->config('internal_mechanism_income_rate_control_department.php');
         $this->load->config('internal_mechanism_income_rate.php');
 
         $this->rate_personal_consultant_support_id = 0.7;
         $this->rate_personal_is_support_control = 0.9;
-        $this->refer_rate = 0.95;
-
-
+        $this->refer_rate = 0.05;
+        $this->get_new_apartment_rate = 0.03;
     }
 
 
     public function showPersonalProfile(){
-        $list_user = $this->ghUser->get([
-            'active' => 'YES',
-            'account_id =' => $this->auth['account_id']
-        ]);
+        $current_url = $_SERVER["REQUEST_URI"];
+        $pos = strpos($current_url, '?');
+        if(!$this->input->get('from-month')) {
+            if($pos === false ) {
+                return redirect($current_url.'?from-month='.date('m'));
+            } else {
+                return redirect($current_url.'&from-month='.date('m'));
+            }
+        }
+
+        if(!$this->input->get('account_id')) {
+            $list_user = $this->ghUser->get([
+                'active' => 'YES',
+                'account_id =' => $this->auth['account_id']
+            ]);
+        } else {
+            $list_user = $this->ghUser->get([
+                'active' => 'YES',
+                'account_id =' => $this->input->get('account_id')
+            ]);
+        }
+
         $list_role = $this->ghRole->get([
             'is_control_department' => 'YES'
         ]);
@@ -51,13 +68,15 @@ class Fee extends CustomBaseStep {
         foreach ($list_role as $item) {
             $arr_is_control_department[] = $item['code'];
         }
+        $this_month = $this->input->get('from-month');
+        $year = date('Y');
 
+        $last_date = cal_days_in_month(CAL_GREGORIAN, $this_month, $year);
 
-        $view_data_income = [];
-        foreach ($list_user as $user) {
-            $view_data_income[$user['account_id']] =
-                $this->syncPersonalIncome($user['account_id'], $data['quantity'], $data['total_sale'], '', '');
-        }
+        $time_start = '01-'.$this_month.'-'.$year;
+        $time_end = $last_date.'-'.$this_month.'-'.$year;
+        $view_data_income[$list_user[0]['account_id']] =
+            $this->syncPersonalIncome($list_user[0]['account_id'], $data['quantity'], $data['total_sale'], $time_start, $time_end);
 
 
         $personal_penalty = $this->ghUserPenalty->get(['user_penalty_id' =>
@@ -478,38 +497,63 @@ class Fee extends CustomBaseStep {
         }
 
         /*Thu Nhập từ việc tuyển dụng*/
-        $list_user = $this->ghUser->get(['account_id >=' => 171020000, 'user_refer_id' => $user_id]);
-        $this_ref_total_income = 0;
-        if(count($list_user)) {
-            foreach($list_user as $ref) {
-                $this_user_detail_income = $this->ghUserIncomeDetail->get('user_id = '. $ref['account_id']. ' AND (type = "' .  self::INCOME_TYPE_CONTRACT . '" OR  type = "' . self::INCOME_TYPE_CONTRACT_SUPPORTER . '")');
+        $this_ref_total_income = (double) $this->getTotalSaleRefer($user_id, $start_time, $end_time);
+        $this->updateToReferIncomeContract([
+            'user_id' => $user_id,
+            'contract_income_total' => $this_ref_total_income,
+            'type' => self::INCOME_TYPE_REFER_USER,
+            'apply_time' => date('01-m-Y')
+        ]);
 
-                if(count($this_user_detail_income)) {
-                    foreach ($this_user_detail_income as $income) {
-                        $this_ref_total_income += (double)0.05 * $income['contract_income_total'];
-                    }
-                    $this->updateToReferIncomeContract([
-                        'user_id' => $user_id,
-                        'contract_income_total' => $this_ref_total_income,
-                        'type' => self::INCOME_TYPE_REFER_USER,
-                        'apply_time' => date('01-m-Y')
-                    ]);
-                    $total_personal_income += $this_ref_total_income;
-                }
-            }
-        }
-
+        $this_get_new_apartment_total = (double) $this->getTotalSaleGetNewApartment($user_id,$start_time, $end_time) * $this->get_new_apartment_rate;
+        $total_personal_income += $this_ref_total_income + $this_get_new_apartment_total;
         return [
             'quantity_contract' => $total_user_contract,
             'total_sale' => $total_sale_sinva,
             'total_personal_income' => $total_personal_income,
             'total_refer_income' => $this_ref_total_income,
-            'description_income' => $description
+            'total_get_new_apartment_total' => $this_get_new_apartment_total,
+            'description_income' => $description,
         ];
     }
 
+    private function getTotalSaleGetNewApartment($user_id, $start_time, $end_time){
+        $apartment = $this->ghApartment->get(['user_collected_id' => $user_id, 'time_insert >=' => $start_time]);
+        $total = 0;
+        if(count($apartment)) {
+            foreach ($apartment as $a) {
+                $contract = $this->ghContract->get(['apartment_id' => $a['id'], 'time_check_in >=' => strtotime($start_time), 'time_check_in <=' => strtotime($end_time)]);
+                $sale_of_apartment = 0;
+                if(count($contract)) {
+                    foreach ($contract as $c) {
+                        $temp_sale = (double)$c['room_price']*$c['commission_rate']*$this->get_new_apartment_rate;
+                        $total += $temp_sale;
+                        $sale_of_apartment+= $temp_sale;
+                    }
+                }
+                $this->updateToGetNewAartment([
+                    'user_id' => $user_id,
+                    'apartment_id' => $a['id'],
+                    'contract_income_total' => $sale_of_apartment,
+                    'type' => self::INCOME_TYPE_GET_NEW_APARTMENT,
+                    'apply_time' => strtotime($start_time)
+                ]);
+            }
+        }
+        return $total;
+
+    }
     private function updateToIncomeContract($data){
         $model = $this->ghUserIncomeDetail->getByContractId($data['contract_id']);
+        if(count($model)) {
+            $this->ghUserIncomeDetail->updateById($model[0]['id'], $data);
+        }else {
+            $this->ghUserIncomeDetail->insert($data);
+        }
+
+    }
+    private function updateToGetNewApartment($data){
+        $model = $this->ghUserIncomeDetail->getByUserIdAndApartmentId($data['user_id'], $data['apartment_id']);
         if(count($model)) {
             $this->ghUserIncomeDetail->updateById($model[0]['id'], $data);
         }else {
@@ -525,6 +569,30 @@ class Fee extends CustomBaseStep {
         }else {
             $this->ghUserIncomeDetail->insert($data);
         }
+
+    }
+
+    private function getTotalSaleRefer($user_id, $start_time, $end_time){
+        $list_user = $this->ghUser->get([
+            'account_id >=' => 171020000,
+            'user_refer_id' => $user_id
+        ]);
+        $total = 0;
+        foreach ($list_user as $item) {
+            $list_contract = $this->ghContract->get([
+                'consultant_id' => $item['account_id'],
+                'time_check_in >=' => strtotime($start_time),
+                'time_check_in <=' => strtotime($end_time),
+
+            ]);
+            if(count($list_contract)) {
+                foreach ($list_contract as $c) {
+                    $total += (double)$c['room_price']*$c['commission_rate']/100*$this->refer_rate;
+                }
+            }
+        }
+
+        return $total;
 
     }
 
