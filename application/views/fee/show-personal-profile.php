@@ -89,7 +89,6 @@ $data = array_values($list_user_income)[0];
                                         let current_month = 'from-month=<?= $this->input->get("from-month") ?>';
                                         let select_month = 'from-month='+$('#month').val();
                                         let new_url = current_url.replace(current_month, select_month);
-                                        console.log(new_url);
                                         window.location = new_url;
                                     });
 
@@ -118,11 +117,11 @@ $data = array_values($list_user_income)[0];
                             </tr>
                             <tr>
                                 <td>Tổng Thu Nhập Từ Tuyển Thành Viên </td>
-                                <td class="text-right"><?= number_format($data['total_personal_income']) ?></td>
+                                <td class="text-right"><?= number_format($data['total_refer_income']) ?></td>
                             </tr>
                             <tr>
                                 <td>Tổng Thu Nhập Từ Lấy Dự Án</td>
-                                <td class="text-right"><?= number_format($data['total_personal_income']) ?></td>
+                                <td class="text-right"><?= number_format($data['total_get_new_apartment_total']) ?></td>
                             </tr>
                             <tr>
                                 <td>Các Danh Mục Trừ Tiền</td>
