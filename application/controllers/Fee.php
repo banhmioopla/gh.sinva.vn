@@ -20,13 +20,18 @@ class Fee extends CustomBaseStep {
         $this->load->model('ghApartment');
         $this->load->model('ghUser');
         $this->load->model('ghRole');
+        $this->load->model('ghConsultantBooking');
+        $this->load->model('ghCustomer');
+        $this->load->model('ghRoom');
         $this->load->model('ghUserIncomeDetail');
         $this->load->model('ghUserCumulativeSale');
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibTime', null, 'libTime');
         $this->load->library('LibPenalty', null, 'libPenalty');
+        $this->load->library('LibCustomer', null, 'libCustomer');
         $this->load->config('internal_mechanism_income_rate_control_department.php');
         $this->load->config('internal_mechanism_income_rate.php');
+        $this->load->config('label.apartment');
 
         $this->rate_personal_consultant_support_id = 0.7;
         $this->rate_personal_is_support_control = 0.9;
@@ -82,6 +87,43 @@ class Fee extends CustomBaseStep {
         $personal_penalty = $this->ghUserPenalty->get(['user_penalty_id' =>
         $this->auth['account_id'], 'time_insert >= ' => strtotime(date('01-m-Y')) ]);
 
+
+        $list_contract = $this->ghContract->get(['consultant_id' => $this->auth['account_id']]);
+        $list_booking = $this->ghConsultantBooking->get(['booking_user_id' => $this->auth['account_id']]);
+        $list_customer = [];
+
+        $list_customer_id = [];
+        foreach ($list_contract as $c) {
+            $customer = $this->ghCustomer->get(['id' => $c['customer_id']]);
+            if(count($customer)) {
+                $list_customer [] = $customer[0];
+                $list_customer_id[] = $c['customer_id'];
+            }
+        }
+
+        foreach ($list_booking as $c) {
+            $customer = $this->ghCustomer->get(['id' => $c['customer_id']]);
+            if(count($customer)) {
+                if(!in_array($c['customer_id'], $list_customer_id)) {
+                    $list_customer [] = $customer[0];
+                }
+
+            }
+        }
+        usort($list_customer, function ($item1, $item2) {
+            return $item2['id'] <=> $item1['id'];
+        });
+
+        usort($list_booking, function ($item1, $item2) {
+            return $item2['time_booking'] <=> $item1['time_booking'];
+        });
+
+        usort($list_contract, function ($item1, $item2) {
+            return $item2['id'] <=> $item1['id'];
+        });
+
+
+
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('fee/show-personal-profile', [
             'list_user_income' => $view_data_income,
@@ -89,7 +131,17 @@ class Fee extends CustomBaseStep {
             'total_sale' => $data['total_sale'],
             'quantity_contract' => $data['quantity'],
             'personal_penalty' => $personal_penalty,
-            'libPenalty' => $this->libPenalty
+            'libPenalty' => $this->libPenalty,
+            'libCustomer' => $this->libCustomer,
+            'list_contract' => $list_contract,
+            'list_customer' => $list_customer,
+            'list_booking' => $list_booking,
+            'ghRoom' => $this->ghRoom,
+            'ghApartment' => $this->ghApartment,
+            'ghConsultantBooking' => $this->ghConsultantBooking,
+            'label_apartment' => $this->config->item('label.apartment'),
+            'user' => $list_user[0]
+
         ]);
         $this->load->view('components/footer');
     }

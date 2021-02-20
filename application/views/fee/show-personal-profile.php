@@ -1,21 +1,27 @@
 <div class="wrapper">
     <div class="container-fluid">
 
-        <!-- Page-Title -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="page-title-box">
-                    <div class="btn-group pull-right">
-                        <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">Highdmin</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Profile</li>
-                        </ol>
+                <!-- meta -->
+                <div class="profile-user-box card-box bg-warning">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span class="pull-left mr-3"><img src="https://media2.giphy.com/media/H4DjXQXamtTiIuCcRU/giphy.gif" alt="" class="thumb-lg rounded-circle"></span>
+                            <div class="media-body text-white">
+                                <h4 class="mt-1 font-18"><?= $user['name'] ?></h4>
+                                <div class="row pl-2">
+                                    <div class="col-12 p-1"><i class="mdi mdi-cellphone-android"></i> <?= $user['phone_number'] ?></div>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+                <!--/ meta -->
             </div>
         </div>
-        <!-- end page title end breadcrumb -->
 <?php
 $data = array_values($list_user_income)[0];
 
@@ -72,6 +78,34 @@ $data = array_values($list_user_income)[0];
 
             <div class="col-md-8">
 
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <div class="card-box tilebox-one">
+                            <i class="icon-layers float-right text-muted"></i>
+                            <h6 class="text-muted text-uppercase mt-0">Hợp Đồng</h6>
+                            <h2 class="m-b-20" ><?= count($list_contract) ?></h2>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-sm-4">
+                        <div class="card-box tilebox-one">
+                            <i class="icon-paypal float-right text-muted"></i>
+                            <h6 class="text-muted text-uppercase mt-0">Số Khách Hàng</h6>
+                            <h2 class="m-b-20"><span ><?= count($list_customer) ?></span></h2>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-sm-4">
+                        <div class="card-box tilebox-one">
+                            <i class="icon-paypal float-right text-muted"></i>
+                            <h6 class="text-muted text-uppercase mt-0">Số Lượt Book</h6>
+                            <h2 class="m-b-20"><span ><?= count($list_booking) ?></span></h2>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+
                 <div class="card-box">
                     <div class="row">
                         <div class="col-md-4">
@@ -96,8 +130,6 @@ $data = array_values($list_user_income)[0];
                             </script>
                         </div>
                     </div>
-
-
                     <hr>
                     <div class="table-responsive">
                         <table class="table table-borderless m-b-0">
@@ -169,6 +201,188 @@ $data = array_values($list_user_income)[0];
                                 <th class="text-right font-weight-bold"><?= number_format($final) ?></th>
                             </tr>
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-box">
+                    <h4 class="header-title mt-0 mb-3">Bảng Khách Hàng</h4>
+                    <table class="table table-dark">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Số Điện Thoại</th>
+                            <th>Email</th>
+                            <th>Ghi Chú</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($list_customer as $customer):
+
+                            ?>
+                            <tr>
+                                <th scope="row"><u><a target = '_blank'
+                                                      class="text-warning"
+                                                      href="/admin/detail-customer?id=<?= $customer['id'] ?>"
+                                                      ><?= $customer['id'] ?></a></u></th>
+                                <td><?= $customer["name"] ? $customer["name"] : '<i>không có thông tin</i>' ?></td>
+                                <td><?= $customer["phone"] ? $customer["phone"] : '<i>không có thông tin</i>' ?></td>
+                                <td><?= $customer["email"] ? $customer["email"] : '<i>không có thông tin</i>' ?></td>
+                                <td><?= $customer["note"] ? $customer["note"] : '<i>không có thông tin</i>' ?></td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-box">
+                    <h4 class="header-title mt-0 mb-3">Bảng Hợp Đồng</h4>
+                    <table class="table table-dark">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Địa Chỉ</th>
+                            <th>Mã Phòng</th>
+                            <th>Giá Thuê</th>
+                            <th>Ngày Ký</th>
+                            <th>Trạng Thái</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($list_contract as $contract):
+                            $service_set = $contract['service_set'] ? json_decode($contract['service_set'], true) : null;
+                            $room = $ghRoom->get(['id' => $contract['room_id']]);
+                            $room = count($room) ? $room[0] : null;
+                            if(!$service_set) {
+                                if($room) {
+                                    $apartment = $ghApartment->get(['id' => $room[0]['aparment_id']]);
+                                    if(count($apartment)) {
+                                        $service_set = $apartment[0];
+                                    }
+                                }
+                            }
+
+
+                            ?>
+                            <tr>
+                                <th scope="row"><u><a target = '_blank'
+                                                      class="text-warning"
+                                                      href="/admin/detail-contract?id=<?= $contract['id']
+                                                      ?>"><?= $contract['id'] ?></a></u></th>
+                                <td><?= $service_set ? $service_set['address_street'] : '<i>không có thông tin</i>' ?></td>
+                                <td><?= $room ? $room['code'] : '<i>không có thông tin</i>' ?></td>
+                                <td><?= number_format($contract['room_price']) ?></td>
+                                <td><?= date('d-m-Y',$contract['time_check_in']) ?></td>
+                                <td>
+                                    <div>
+                                        <?php
+                                        $statusClass = 'muted';
+                                        if($contract['status'] == 'Active') {
+                                            $statusClass = 'success';
+                                        }
+                                        if($contract['status'] == 'Pending') {
+                                            $statusClass = 'warning';
+                                        }
+                                        if($contract['status'] == 'Cancel') {
+                                            $statusClass = 'danger';
+                                        }
+
+                                        if($contract['status'] == 'Expired') {
+                                            $statusClass = 'secondary';
+                                        }
+                                        ?>
+                                        <span class="badge badge-<?= $statusClass ?>
+                                    font-weight-bold">
+                                    <?= $label_apartment['contract.'.$contract['status']] ?>
+                                    </span>
+
+                                    </div>
+
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-box">
+                    <h4 class="header-title mb-3">Bảng Dẫn Khách</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-dark">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Ngày</th>
+                                <th>Địa Chỉ</th>
+                                <th>Phòng</th>
+                                <th>Trạng Thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($list_booking as $booking):
+
+                                $address = '';
+                                $apmModel = $ghApartment->get(['id' => $booking['apartment_id']]);
+                                if ($apmModel) {
+                                    $address = $apmModel[0]['address_street'];
+                                }
+                                $list_room_id = json_decode($booking['room_id'], true);
+                                $text_room_code = '';
+
+                                $js_list_room = implode(",", $list_room_id);
+                                if ($list_room_id && count($list_room_id) > 0) {
+                                    foreach ($list_room_id as $room_id) {
+                                        $roomModel = $ghRoom->get(['id' => $room_id]);
+                                        $text_room_code .= $roomModel[0]['code'] . ' ';
+                                    }
+                                }
+
+                                $status = 'danger';
+                                if ($booking['status'] == 'Success') {
+                                    $status = 'success';
+                                }
+                                if ($booking['status'] == 'Pending') {
+                                    $status = 'warning';
+                                }
+                                ?>
+                                <tr>
+                                    <td>#<?= 10000 + $booking['id'] ?>
+                                        <div class="font-weight-bold"><?= $libCustomer->getNameById($booking['customer_id']) ?></div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            <div class="booking-time_booking input-group"
+                                                 data-pk="<?= $booking['id'] ?>"
+                                                 data-name="time_booking"
+                                                 data-value="<?= date('d/m/Y H:i', $booking['time_booking']) ?>">
+                                                <?= date('d/m/Y H:i', $booking['time_booking']) ?>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td><?= $address ?></td>
+                                    <td class="booking-room-code"
+                                        data-pk="<?= $booking['id'] ?>"
+                                        data-name="room_id"
+                                        data-value="<?= $js_list_room ?>"
+                                        data-apartment-id="<?= $booking['apartment_id'] ?>"
+                                    ><i class="text-success"><?= $text_room_code ?></i></td>
+
+                                    <td>
+                                        <u class="booking-status text-<?= $status ?>"
+                                           data-pk="<?= $booking['id'] ?>"
+                                           data-name="status"
+                                           data-value="<?= $booking['status'] ?>"
+                                        >
+                                            <?= $label_apartment['booking.' . $booking['status']] ?>
+                                        </u>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
