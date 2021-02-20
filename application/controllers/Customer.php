@@ -11,6 +11,7 @@ class Customer extends CustomBaseStep {
 		$this->load->model('ghContract');
 		$this->load->model('ghApartment');
 		$this->load->model('ghRoom');
+		$this->load->model('ghConsultantBooking');
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->library('LibUser', null, 'libUser');
@@ -230,8 +231,14 @@ class Customer extends CustomBaseStep {
         $data['label'] =  $this->config->item('label.apartment');
 	    $data['customer'] = $this->ghCustomer->getById($id)[0];
         $data['ghCustomer'] = $this->ghCustomer;
+        $data['list_contract'] = $this->ghContract->get(['customer_id' => $id]);
+        $data['list_booking'] = $this->ghConsultantBooking->get(['customer_id' => $id]);
+        $data['ghRoom'] = $this->ghRoom;
+        $data['ghApartment'] = $this->ghApartment;
+        $data['libUser'] = $this->libUser;
+        $data['label_apartment'] =  $this->config->item('label.apartment');
         $this->load->view('components/header',['menu' =>$this->menu]);
-        $this->load->view('customer/detail-show', $data);
+        $this->load->view('customer/detail-profile-show', $data);
         $this->load->view('components/footer');
 
     }

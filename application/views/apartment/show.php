@@ -30,7 +30,7 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                             <li class="breadcrumb-item active">Dự Án</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách dự án quận <?= $district_code?></h3>
+                    <h3 class="page-title">Danh sách dự án quận <?= $district_code?> <br><small class="text-secondary"> - quốc bình: 0945 172 814</small></h3>
                 </div>
             </div>
         </div>
