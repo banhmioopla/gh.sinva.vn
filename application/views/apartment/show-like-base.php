@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3>Dự Án (*)</h3>
+                    <h3 class="font-weight-bold text-danger">Dự Án Bảng</h3>
                 </div>
             </div>
         </div>
@@ -45,6 +45,7 @@
                             <th>map_longitude</th>
                             <th>map_latitude</th>
                             <th>Tag #</th>
+                            <th>TV Lấy Về</th>
                             <th class="text-center">Mở</th>
                         </tr>
                         </thead>
@@ -119,6 +120,12 @@
                                 data-value="<?= $row['tag_id'] ?>"
                                 data-pk="<?= $row['id'] ?>">
                                     # <?= $row['tag_id'] ? $libTag->getNameById($row['tag_id']):'chọn...' ?>
+                                </td>
+                                <td class="apartment-data"
+                                    data-name="user_collected_id"
+                                    data-value="<?= $row['user_collected_id'] ?>"
+                                    data-pk="<?= $row['id'] ?>">
+                                    <?= $row['user_collected_id'] > 0 ? $libUser->getNameByAccountid($row['user_collected_id']):'#' ?>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
