@@ -27,7 +27,7 @@ class Apartment extends CustomBaseStep {
 	public function show(){
 		$district_code = $this->input->get('district-code');
 		$data = [];
-		$district_code = !empty($district_code) ? $district_code: $this->district_default;
+		$district_code = !empty($district_code) ? $district_code: null;
 
 		if(count($this->list_district_CRUD) == 0) {
             $this->load->view('components/header', ['menu' => $this->menu]);

@@ -247,7 +247,7 @@ $route['admin/create-contract-show'] = function($params = []) {
 };
 $route['admin/create-contract'] = function($params = []) {
 	$controller = 'Contract';
-	$action = '/create';
+	$action = '/createV2';
 	return $controller.$action;
 };
 

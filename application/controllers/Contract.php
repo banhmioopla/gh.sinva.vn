@@ -146,7 +146,7 @@ class Contract extends CustomBaseStep {
 		
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
-		$this->load->view('contract/create-show', $data);
+		$this->load->view('contract/create-show-v2', $data);
 		$this->load->view('components/footer');
 	}
 
@@ -168,7 +168,7 @@ class Contract extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
-	public function create() {
+	public function createTemp() {
         if($this->input->get('controller-name') =='Contract') {
             $this->uploadFile($this->input->get('contract-id'));
             return redirect($_SERVER['HTTP_REFERER']);
@@ -260,6 +260,83 @@ class Contract extends CustomBaseStep {
 
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Tạo hợp đồng thành công ',
+            'status' => 'success'
+        ]);
+        return redirect('admin/list-contract');
+	}
+
+	public function create() {
+        if($this->input->get('controller-name') =='Contract') {
+            $this->uploadFile($this->input->get('contract-id'));
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+		$post = $this->input->post();
+
+        $saved_customer = $this->ghCustomer->get(['phone' => $post['phone']]);
+        if(count($saved_customer) > 0) {
+            $customer_id = $saved_customer[0]['id'];
+        } else {
+            $new_customer = [
+                'name' => $post['name'],
+                'gender' => $post['gender'],
+                'birthdate' => strtoime($post['birthdate']),
+                'phone' => $post['phone'],
+                'email' => $post['email'],
+                'ID_card' => $post['ID_card'],
+                'status' => 'sinva-rented',
+                'source' => $post['source'],
+                'user_insert_id' => $this->auth['account_id'],
+                'time_insert' => time()
+            ];
+            $customer_id = $this->ghCustomer->insert($new_customer_data);
+        }
+
+		$service_set = $this->ghApartment->get(['id' =>$post['apartment_id']])[0];
+
+		$contract_room_price = $post['room_price'] > 0 ?
+		(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT)
+			: $service_set['price'];
+
+		$status_contract = $post['status'];
+		if($this->isYourPermission('Contract', 'pendingForApprove')) {
+			$status_contract = 'Pending';
+		}
+
+		$contract = [
+			'customer_id' => $customer_id,
+			'room_id' => $post['room_id'],
+			'apartment_id' => $service_set['id'],
+			'consultant_id' => $post['consultant_id'],
+			'room_price' => $contract_room_price,
+			'time_check_in' => strtotime($post['time_check_in']),
+			'time_expire' => strtotime($post['time_expire']),
+			'number_of_month' => $post['number_of_month'],
+			'service_set' => json_encode($service_set), // apartment data
+			'status' => $status_contract,
+			'note' => $post['note'],
+			'room_code' => $post['room_code'],
+			'commission_rate' => $post['commission_rate'],
+			'user_create_id' => $this->auth['account_id'],
+			'time_insert' => time(),
+		];
+
+		$result = $this->ghContract->insert($contract);
+		$this->uploadFile($result);
+		if($this->isYourPermission('Contract', 'pendingForApprove')) {
+			$this->ghNotification->insert(
+				[
+					'message' => '['.$this->auth['name'].'] đã tạo hợp đồng ID = '.$result,
+					'create_user_id' => $this->auth['account_id'],
+					'time_insert' => time(),
+					'controller' => 'Contract',
+					'object_id' => $result
+				]
+			);
+		}
+
+
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Tạo Hợp Đồng Thành Công',
             'status' => 'success'
         ]);
         return redirect('admin/list-contract');

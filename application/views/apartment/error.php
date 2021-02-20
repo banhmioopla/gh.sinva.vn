@@ -4,6 +4,7 @@
             <div class="col-md-6 offset-md-3">
                 <div class="text-center mt-5">
                     <h4 class="text-error">BẠN CẦN ĐƯỢC CHIA QUẬN :(</h4>
+                    <h4 class="text-uppercase text-danger mt-3">Vui Lòng Liên Lạc Đội Dự Án</h4>
                     <h4 class="text-uppercase text-danger mt-3">Chúc Bạn Được Chia QUận</h4>
                 </div>
 

@@ -24,7 +24,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h2>Nhập hợp đồng - cọc</h2>
+                    <h2 class="text-danger font-weight-bold">Tạo Hợp Đồng</h2>
                 </div>
             </div>
         </div>

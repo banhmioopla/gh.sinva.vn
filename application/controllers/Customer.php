@@ -183,7 +183,7 @@ class Customer extends CustomBaseStep {
 
 	public function search(){
 		$q = $this->input->get('q');
-		$data = [['id' => 0, 'text' => 'tìm sdt']];
+		$data = [];
 		if(empty($q)) {
 			$customer = $this->ghCustomer->get();
 			if($customer) {
@@ -199,6 +199,26 @@ class Customer extends CustomBaseStep {
 					$data[] = ['id' => $c['id'], 'text' => $c['phone'] .' - '. $c['name']];
 				}
 			}
+			if($this->input->get('full') == 'true') {
+			    if(count($customer) > 0) {
+			        $profile = $customer[0];
+			        if($customer[0]['birthdate'] !== null) {
+                        $profile['birthdate'] = date('d-m-Y', $customer[0]['birthdate']);
+                    }
+
+                    echo json_encode([
+                        'status' => true,
+                        'profile' => $profile
+                    ]); die;
+
+                } else {
+                    echo  json_encode([
+                        'status' => false,
+                        'profile' => ""
+                    ]); die;
+                }
+
+            }
 			
 		}
 		echo json_encode($data);
