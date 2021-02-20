@@ -104,10 +104,10 @@ class Fee extends CustomBaseStep {
         foreach ($list_booking as $c) {
             $customer = $this->ghCustomer->get(['id' => $c['customer_id']]);
             if(count($customer)) {
-                if(!in_array($c['customer_id'], $list_customer_id)) {
+                if(!in_array((string)$c['customer_id'], $list_customer_id)) {
                     $list_customer [] = $customer[0];
+                    $list_customer_id[] = $c['customer_id'];
                 }
-
             }
         }
         usort($list_customer, function ($item1, $item2) {

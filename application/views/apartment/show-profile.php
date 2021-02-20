@@ -16,42 +16,27 @@ if(isYourPermission('Contract', 'createShow', $this->permission_set)){
 <div class="wrapper">
     <div class="container-fluid">
 
-        <!-- Page-Title -->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="page-title-box">
-                    <div class="btn-group pull-right">
-                        <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">Highdmin</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Profile</li>
-                        </ol>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- end page title end breadcrumb -->
-
         <div class="row">
             <div class="col-sm-12">
                 <!-- meta -->
-                <div class="profile-user-box card-box card-header">
+                <div class="profile-user-box card-box bg-warning">
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="media-body text-purple">
-                                <h4 class="mt-1 mb-1 font-18"><?= $profile['address_street'] ?></h4>
-                                <p class="font-13"> Quận <?= $profile['district_code'] ?></p>
-                                <p class="mb-0 text-danger"><span class="font-weight-bold
-                                ">Mô tả chung:</span> <?=$profile['description']?></p>
+                            <span class="pull-left mr-3"><img src="https://i.pinimg.com/originals/94/26/01/942601fcae9bb10c21b0537a3750d65e.gif" alt="" class="thumb-lg rounded-circle"></span>
+                            <div class="media-body text-white">
+                                <h4 class="mt-1 font-18"><?= $profile['address_street'] ?>, Quận <?= $profile['district_code'] ?></h4>
+                                <div class="row pl-2">
+                                    <div class="col-12 p-1"> <?= $profile['description'] ?></div>
+                                </div>
+
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <!--/ meta -->
             </div>
         </div>
-        <!-- end row -->
 
 
         <div class="row">

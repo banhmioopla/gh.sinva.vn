@@ -6,6 +6,11 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
     $check_consultant_booking = true;
 }
 
+$check_profile = false;
+if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
+    $check_profile = true;
+}
+
 $check_contract = false;
 if(isYourPermission('Contract', 'createShow', $this->permission_set)){
     $check_contract = true;
@@ -164,13 +169,14 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                                     <span class="badge badge-danger badge-pill mr-2 noti-icon-badge"><?= count($list_comment) ?></span>
                                 <?php endif; ?>
                             </a>
-                            
-                            <a class="m-1 collapsed btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect" 
-                                data-toggle="collapse" 
-                                data-parent="#accordion" 
-                                href="#modal-apartment-detail-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>">
-                                <i class="mdi mdi-eye"></i>
+
+                            <?php if($check_profile): ?>
+                            <a class="m-1 btn btn-sm btn-outline-info btn-rounded waves-light waves-effect"
+                               href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
+                                <i class="mdi mdi-information-outline"></i>
                             </a>
+                            <?php endif; ?>
+
                             <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
                                 <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                     <i class="mdi mdi-folder-multiple-image"></i>
