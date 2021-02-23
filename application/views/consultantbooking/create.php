@@ -268,11 +268,13 @@
                     method: 'GET',
                     success: function (res) {
                         res = JSON.parse(res);
-                        if (res.length > 1) {
+                        console.log(res);
+                        console.log(res.length);
+                        if (res.length > 0) {
                             $('.msg-phone').addClass('text-warning');
                             $('.msg-phone').removeClass('text-success');
-                            $('.msg-phone').text(' khách ' + res[1]['text'] + ' này đã sẵn sàng để bạn dẫn');
-                            $('input[name=customer_id]').val(res[1]['id']);
+                            $('.msg-phone').text(' khách ' + res[0]['text'] + ' này đã sẵn sàng để bạn dẫn');
+                            $('input[name=customer_id]').val(res[0]['id']);
                             $('.next-input').addClass('d-none');
                         } else {
                             $('input[name=customer_id]').val("");

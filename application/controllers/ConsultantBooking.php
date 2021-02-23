@@ -5,6 +5,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 class ConsultantBooking extends CustomBaseStep {
 	private $access_control;
+	public $url_show_default = '/admin/list-consultant-booking?tb1=1';
 	public function __construct()
 	{
 		parent::__construct();
@@ -31,7 +32,6 @@ class ConsultantBooking extends CustomBaseStep {
     }
 
 	public function show(){
-		
 		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => 0]);
 		$data['title_1'] = "Lượt dẫn của tất cả thành viên";
         $this->syncPendingToSuccess();
@@ -42,6 +42,13 @@ class ConsultantBooking extends CustomBaseStep {
         $data['target'] = $target ? $target[0] : null;
         $time_from = strtotime('last monday');
         $time_to = strtotime('+1months');
+        $data['flash_mess'] = "";
+        $data['flash_status'] = "";
+        if($this->session->has_userdata('fast_notify')) {
+            $data['flash_mess']= $this->session->flashdata('fast_notify')['message'];
+            $data['flash_status']= $this->session->flashdata('fast_notify')['status'];
+            unset($_SESSION['fast_notify']);
+        }
 		if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {
             if($this->input->get('filterTime') == 'ALL' || $this->input->get('filterTime') == ''){
                 $time_from = 0;
@@ -153,14 +160,7 @@ class ConsultantBooking extends CustomBaseStep {
 			    return redirect('admin/create-new-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
             }
 
-            if($post['customer_id'] > 0) {
-                $customer_id = $post['customer_id'];
-                if($this->auth['role_code'] !== 'customer-care') {
-                    $update_customer = ['test_mode' => '[YES,'.$this->auth['name'].']'];
-                    $customer_model = $this->ghCustomer->updateById($customer_id, $update_customer);
-                }
-
-            } else {
+            if(!($post['customer_id'] > 0)) {
                 if(empty($post['phone_number']) || empty($post['customer_name'])) {
                     $this->session->set_flashdata('fast_notify', [
                         'message' => 'Vui lòng nhập số điện thoại, Tên khách hàng nếu bạn dẫn khách mới',
@@ -195,7 +195,11 @@ class ConsultantBooking extends CustomBaseStep {
             $data_insert['status'] = 'Pending';
 
             if($this->ghConsultantBooking->insert($data_insert)){
-                return redirect('/admin/list-consultant-booking');
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Tạo lượt book '.$data['name'].' thành công ',
+                    'status' => 'success'
+                ]);
+                return redirect($this->url_show_default);
             }
         }
 

@@ -27,6 +27,16 @@
             if ($item['status'] == 'Cancel') $count_cancel++;
         }
         ?>
+        <?php if($flash_mess):?>
+        <div class="row">
+            <div class="col-md-6 offset-md-3"><div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <?= $flash_mess ?>
+                </div></div>
+        </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-md-6">
                 <div class="card-box shadow bg-white border-white text-dark">
@@ -235,8 +245,12 @@
                         if ($booking['status'] == 'Pending') {
                             $status = 'warning';
                         }
+                        $hightlight = "";
+                        if($booking['id'] == $list_booking[0]['id']) {
+                            $hightlight = $flash_status;
+                        }
                         ?>
-                        <tr>
+                        <tr class="bg-<?= $hightlight ?>">
                             <td>#<?= 10000 + $booking['id'] ?>
                                 <div class="font-weight-bold"><?= $libUser->getNameByAccountid($booking['booking_user_id']) ?></div>
                             </td>
