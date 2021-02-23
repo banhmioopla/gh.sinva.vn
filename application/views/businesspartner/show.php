@@ -40,13 +40,26 @@
                         </thead>
                         <tbody>
                         <?php foreach($list_businesspartner as $row ): ?>
+                            <?php
+                            $list_apm = $ghMergeBusinessApartment->getByBusinessId($row['id']);
+                            ?>
                             <tr>
                                 <td>
-                                    <div class="businesspartner-name"
+                                    <div class="businesspartner-name font-weight-bold pb-1"
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="name">
-                                        <?= $row['name'] ?>
+                                        <?= $row['name'] ?> <?= count($list_apm) ? "<small> - (".count($list_apm).")</small>" : "" ?>
                                     </div>
+                                    <?php if(count($list_apm)): ?>
+                                        <ul class="list-unstyled pt-1 border-top border-muted">
+                                            <?php foreach ($list_apm as $apm):
+                                                $this_apm = $ghApartment->getById($apm['apartment_id'])[0];
+
+                                                ?>
+                                                <li><small><?= $this_apm['address_street'] ?></small></li>
+                                            <?php endforeach;?>
+                                        </ul>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
                                     <div class="businesspartner-phone text-center"
@@ -54,6 +67,7 @@
                                          data-name="phone">
                                         <?= $row['phone'] ?>
                                     </div>
+
                                 </td>
                                 <td>
                                     <div class="businesspartner-email"

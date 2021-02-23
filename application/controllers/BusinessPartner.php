@@ -16,7 +16,8 @@ class BusinessPartner extends CustomBaseStep {
     public function show(){
         $this->load->model('ghBusinessPartner'); // load model ghUser
         $data['list_businesspartner'] = $this->ghBusinessPartner->get();
-
+        $data['ghMergeBusinessApartment'] = $this->ghMergeBusinessApartment;
+        $data['ghApartment'] = $this->ghApartment;
         /*--- Load View ---*/
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('businesspartner/show', $data);
