@@ -56,7 +56,7 @@
                                                 $this_apm = $ghApartment->getById($apm['apartment_id'])[0];
 
                                                 ?>
-                                                <li><small><?= $this_apm['address_street'] ?></small></li>
+                                                <li><i class="mdi mdi-tag-heart"></i> <small><?= $this_apm['address_street'] ?></small></li>
                                             <?php endforeach;?>
                                         </ul>
                                     <?php endif; ?>
