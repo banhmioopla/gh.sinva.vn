@@ -149,11 +149,11 @@ include VIEWPATH . 'functions.php';
                                                     </button>
                                                 <?php endif; ?>
 
-                                                <a data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-warning
+                                                <a data-img-id="<?= $img['id'] ?>" class="btn m-1 btn-sm btn-outline-warning
                                                    btn-rounded waves-light waves-effect
                                                    download-img"
-                                                download="<?= $apartment_model['address_street'] . '.' . $img['file_type'] ?>
-                                                " href="<?= base_url() ?>
+                                                download="<?= $apartment_model['address_street'] . '.' . $img['file_type'] ?>"
+                                                   href="<?= base_url() ?>
                                                 media/apartment/<?= $img['name'] ?>">
                                                 <i class="mdi mdi-cloud-download"></i>
                                                 </a>
