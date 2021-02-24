@@ -126,6 +126,7 @@ class Apartment extends CustomBaseStep {
         $data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
         $data['list_type'] = $this->ghRoom->getTypeByDistrict();
 	    $data['libRoom'] = $this->libRoom;
+	    $data['libDistrict'] = $this->libDistrict;
         $data['label_apartment'] =  $this->config->item('label.apartment');
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('showbysearch/room', $data);

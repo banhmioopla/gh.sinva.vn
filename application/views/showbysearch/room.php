@@ -67,7 +67,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                             <tr class='<?= $bg_for_available ?>'>
                                 <td>
                                     <div class="tag-name text-purple font-weight-bold">
-                                        <?= $apartment['address_street'] ?>
+                                        <?= $apartment['address_street'] . ' - quận ' . $libDistrict->getNameByCode($apartment['district_code']) ?>
                                     </div>
                                 </td>
                                 <td><?= $row['code'] ?></td>
