@@ -140,9 +140,8 @@ include VIEWPATH . 'functions.php';
                                             <h4 class="font-18"><?= date('d-m-Y', $img['time_insert']) ?></h4>
                                             <div class="d-flex justify-content-center">
                                                 <?php if ($check_modify): ?>
-                                                    <button type="button" data-img-id=<?=
-                                                    $img['id']
-                                                    ?> class="btn m-1 btn-sm
+                                                    <button type="button" data-img-id="<?= $img['id'] ?>"
+                                                            class="btn m-1 btn-sm
                                                             btn-outline-danger btn-rounded
                                                             waves-light waves-effect
                                                             delete-img">
@@ -150,8 +149,7 @@ include VIEWPATH . 'functions.php';
                                                     </button>
                                                 <?php endif; ?>
 
-                                                <a data-img-id=<?= $img['id'] ?> class="btn
-                                                   m-1 btn-sm btn-outline-warning
+                                                <a data-img-id=<?= $img['id'] ?> class="btn m-1 btn-sm btn-outline-warning
                                                    btn-rounded waves-light waves-effect
                                                    download-img"
                                                 download="<?= $apartment_model['address_street'] . '.' . $img['file_type'] ?>
