@@ -527,6 +527,21 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                         if(phone_search.length > 0) {
                             customer_short_info.show();
                             customer_short_info.html('<i class="mdi mdi-heart"></i> Chào mừng khách hàng mới, vui lòng nhập đầy đủ thông tin tiếp theo nhé!');
+                            form_name.val("");
+                            form_name.prop( "disabled", false );
+
+                            form_birthdate.val("");
+                            form_birthdate.prop( "disabled", false );
+
+                            form_email.val("");
+                            form_email.prop( "disabled", false );
+
+                            form_ID_card.val("");
+                            form_ID_card.prop( "disabled", false );
+
+                            form_gender.val("");
+                            form_gender.prop( "disabled", false );
+
                         } else {
                             customer_short_info.hide();
                             customer_short_info.html("");

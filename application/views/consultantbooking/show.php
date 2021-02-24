@@ -98,6 +98,11 @@
                                     value="LAST_WEEK">Tuần Trước
                             </option>
                         </select>
+                        <div class="text-center mt-2">
+                            <?php if($time_from && $time_to):?>
+                            <i class="text-info">Từ ngày (<?= date('d-m-Y', $time_from) ?> - <?= date('d-m-Y', $time_to) ?>)</i>
+                            <?php endif; ?>
+                        </div>
                         <div class="mt-5">
                             <div class="font-weight-bold text-danger mb-2">BẢNG</div>
                             <div class="checkbox checkbox-danger form-check-inline">
@@ -136,9 +141,19 @@
                         <script>
                             commands.push(function () {
                                 let current_url = '<?= $_SERVER['REQUEST_URI'] ?>';
+                                let current_filter_time = '<?= $this->input->get("filterTime") ?>';
                                 $('select[name=filterTime]').on('change', function () {
                                     let filterTime = $(this).val();
-                                    window.location = '/admin/list-consultant-booking?filterTime=' + filterTime;
+                                    let final_go_url = "";
+                                    if(current_url.includes('booking?filterTime='+current_filter_time)) {
+                                        final_go_url = current_url.replace('?filterTime='+current_filter_time, '?filterTime='+filterTime);
+                                        window.location = final_go_url;
+                                    } else {
+                                        final_go_url = current_url.replace('&filterTime='+current_filter_time, '&filterTime='+filterTime);
+                                        console.log(current_url);
+                                        console.log(final_go_url);
+                                        window.location = final_go_url;
+                                    }
                                 });
 
 

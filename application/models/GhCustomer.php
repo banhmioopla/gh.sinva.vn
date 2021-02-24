@@ -1,8 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class GhCustomer extends CI_Model { 
+class GhCustomer extends CI_Model {
     private $table = 'gh_customer';
+    const CUSTOMER_STATUS_SINVA_RENTED = 'sinva-rented';
 
 	public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();

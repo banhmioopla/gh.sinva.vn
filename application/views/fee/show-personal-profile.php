@@ -12,8 +12,8 @@
                                 <h4 class="mt-1 font-18"><?= $user['name'] ?></h4>
                                 <div class="row pl-2">
                                     <div class="col-12 p-1"><i class="mdi mdi-cellphone-android"></i> <?= $user['phone_number'] ?></div>
+                                    <div class="col-12 p-1"><i class="mdi mdi-account-box"></i> <?= $role['name'] ?></div>
                                 </div>
-
                             </div>
                         </div>
 

@@ -176,6 +176,12 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                                 <i class="mdi mdi-information-outline"></i>
                             </a>
                             <?php endif; ?>
+                            <button type="button" class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect"
+                                    data-toggle="collapse"
+                                    data-parent="#accordion"
+                                    aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>"
+                                    data-target="#modal-apartment-detail-<?=$apartment['id'] ?>">
+                                <i class="mdi mdi-eye"></i>
 
                             <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
                                 <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">

@@ -17,6 +17,7 @@ class CustomBaseStep extends CI_Controller {
 		
 		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghRole', 'ghConfig']);
 		$this->auth = $this->session->userdata('auth');
+		$this->role = $this->ghRole->get(['code' =>$this->auth['role_code']])[0];
 		$this->load->library('LibRole', null, 'libRole');
 		$this->load->library('LibConfig', null, 'libConfig');
 
@@ -36,7 +37,7 @@ class CustomBaseStep extends CI_Controller {
             }
 		}
 		
-		$this->permission_set = json_decode($this->ghRole->get(['code' =>$this->auth['role_code']])[0]['list_function'], true);
+		$this->permission_set = json_decode($this->role['list_function'], true);
 		$current_user = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
 		$authorised_user = $this->ghUser->get(['account_id' => $current_user[0]['authorised_user_id']]);
 		$this->authorised_mode = false;

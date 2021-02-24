@@ -14,12 +14,23 @@
                             <li class="breadcrumb-item active">Hợp đồng của tôi</li>
                         </ol>
                     </div>
+                    <h2 class="font-weight-bold text-danger">Hợp Đồng Của <?= $this->auth['name'] ?></h2>
                 </div>
             </div>
         </div>
         <div class="row">
             <?php $this->load->view('components/list-navigation')?>
         </div>
+        <?php if($flash_mess):?>
+        <div class="row">
+            <div class="col-md-8 offset-md-"><div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <?= $flash_mess ?>
+                </div></div>
+        </div>
+        <?php endif;?>
         <div class="row">
             <div class="col-12 card-box">
                 <table class="table-contract table">
@@ -128,6 +139,8 @@
 
 <script>
     commands.push(function(){
-        $('.table-contract').dataTable();
+        $('.table-contract').dataTable({
+            "order": []
+        });
     });
 </script>

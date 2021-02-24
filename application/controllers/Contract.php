@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Contract extends CustomBaseStep {
-	private $access_control;
 	public function __construct()
 	{
 		parent::__construct();
@@ -30,6 +29,13 @@ class Contract extends CustomBaseStep {
         $data['ghImage'] = $this->ghImage;
         $data['libRoom'] = $this->libRoom;
         $data['label_apartment'] =  $this->config->item('label.apartment');
+        $data['flash_mess'] = "";
+        $data['flash_status'] = "";
+        if($this->session->has_userdata('fast_notify')) {
+            $data['flash_mess']= $this->session->flashdata('fast_notify')['message'];
+            $data['flash_status']= $this->session->flashdata('fast_notify')['status'];
+            unset($_SESSION['fast_notify']);
+        }
 
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('contract/show-your', $data);
@@ -98,14 +104,23 @@ class Contract extends CustomBaseStep {
 
 	public function show(){
 	    $params = [];
+        $time_from = null;
+        $time_to = null;
         if($this->input->get('timeCheckInFrom')) {
             $timeCheckInFrom = $this->input->get('timeCheckInFrom');
             $params['time_check_in >='] = strtotime($timeCheckInFrom);
+        } else {
+            $time_from = strtotime(date('01-m-Y'));
+            $params['time_check_in >='] = $time_from;
         }
+
 
         if($this->input->get('timeCheckInTo')) {
             $timeCheckInTo = $this->input->get('timeCheckInTo');
             $params['time_check_in <='] = strtotime($timeCheckInTo)+86399;
+        } else {
+            $time_to = strtotime('+30days');
+            $params['time_check_in >='] = $time_to;
         }
 
         if($this->input->get('timeExpireFrom')) {
@@ -131,6 +146,8 @@ class Contract extends CustomBaseStep {
 		$data['libRoom'] = $this->libRoom;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/
+        $data['time_from'] = $time_from;
+        $data['time_to'] = $time_to;
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('contract/show-all', $data);
 		$this->load->view('components/footer');
@@ -199,7 +216,7 @@ class Contract extends CustomBaseStep {
 				'phone' => $post['phone_new'],
 				'email' => $post['email_new'],
 				'ID_card' => $post['ID_card_new'],
-				'status' => 'sinva-rented',
+				'status' => $this->ghCustomer::CUSTOMER_STATUS_SINVA_RENTED,
 				'source' => $post['source_new'],
 				'user_insert_id' => $this->auth['account_id'],
 				'time_insert' => time()
@@ -211,7 +228,7 @@ class Contract extends CustomBaseStep {
 			$customer_id = $this->ghCustomer->insert($new_customer_data);
 		} else {
 			$customer_id = $post['customer_name'];
-			$update_customer = ['status' => 'sinva-rented'];
+			$update_customer = ['status' => $this->ghCustomer::CUSTOMER_STATUS_SINVA_RENTED];
 			$customer_model = $this->ghCustomer->updateById($customer_id, $update_customer);
 		}
 		
@@ -279,16 +296,16 @@ class Contract extends CustomBaseStep {
             $new_customer = [
                 'name' => $post['name'],
                 'gender' => $post['gender'],
-                'birthdate' => strtoime($post['birthdate']),
+                'birthdate' => strtotime($post['birthdate']),
                 'phone' => $post['phone'],
                 'email' => $post['email'],
                 'ID_card' => $post['ID_card'],
-                'status' => 'sinva-rented',
+                'status' => $this->ghCustomer::CUSTOMER_STATUS_SINVA_RENTED,
                 'source' => $post['source'],
                 'user_insert_id' => $this->auth['account_id'],
                 'time_insert' => time()
             ];
-            $customer_id = $this->ghCustomer->insert($new_customer_data);
+            $customer_id = $this->ghCustomer->insert($new_customer);
         }
 
 		$service_set = $this->ghApartment->get(['id' =>$post['apartment_id']])[0];
@@ -339,7 +356,7 @@ class Contract extends CustomBaseStep {
             'message' => 'Tạo Hợp Đồng Thành Công',
             'status' => 'success'
         ]);
-        return redirect('admin/list-contract');
+        return redirect('admin/list-personal-contract');
 	}
 
 	public function pendingForApprove() {}

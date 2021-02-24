@@ -179,7 +179,7 @@
                 <li class="has-submenu">
                     <a href="#"><i class="icon-layers"></i>Lượt Dẫn Khách</a>
                     <ul class="submenu">
-                        <li><a href="/admin/list-consultant-booking"><i class="mdi
+                        <li><a href="/admin/list-consultant-booking?tb1=1&filterTime=THIS_WEEK"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Danh Sách Lượt
                                 Dẫn Khách</a></li>
                     </ul>

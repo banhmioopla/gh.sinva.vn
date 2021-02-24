@@ -140,7 +140,8 @@ class Fee extends CustomBaseStep {
             'ghApartment' => $this->ghApartment,
             'ghConsultantBooking' => $this->ghConsultantBooking,
             'label_apartment' => $this->config->item('label.apartment'),
-            'user' => $list_user[0]
+            'user' => $list_user[0],
+            'role' => $this->ghRole->get(['code' => $list_user[0]['role_code']])[0]
 
         ]);
         $this->load->view('components/footer');

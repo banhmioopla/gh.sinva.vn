@@ -11,7 +11,7 @@
             <?php endif; ?>
 
             <?php if(isYourPermission('ConsultantBooking', 'show',$this->permission_set)):?>
-                <a href="<?= base_url() ?>admin/list-consultant-booking">
+                <a href="<?= base_url() ?>admin/list-consultant-booking?tb1=1&filterTime=THIS_WEEK">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
                                 class="mdi mdi-car-hatchback mr-1"></i> <span>Dẫn Khách</span>
                     </button>

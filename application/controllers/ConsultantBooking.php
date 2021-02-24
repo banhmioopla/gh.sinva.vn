@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 class ConsultantBooking extends CustomBaseStep {
 	private $access_control;
-	public $url_show_default = '/admin/list-consultant-booking?tb1=1';
+	public $url_show_default = '/admin/list-consultant-booking?tb1=1&filterTime=THIS_WEEK';
 	public function __construct()
 	{
 		parent::__construct();
@@ -32,8 +32,7 @@ class ConsultantBooking extends CustomBaseStep {
     }
 
 	public function show(){
-		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => 0]);
-		$data['title_1'] = "Lượt dẫn của tất cả thành viên";
+		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('01-01-2020'))]);
         $this->syncPendingToSuccess();
         $this_week = strtotime('last monday');
 
@@ -42,6 +41,7 @@ class ConsultantBooking extends CustomBaseStep {
         $data['target'] = $target ? $target[0] : null;
         $time_from = strtotime('last monday');
         $time_to = strtotime('+1months');
+
         $data['flash_mess'] = "";
         $data['flash_status'] = "";
         if($this->session->has_userdata('fast_notify')) {
@@ -49,6 +49,7 @@ class ConsultantBooking extends CustomBaseStep {
             $data['flash_status']= $this->session->flashdata('fast_notify')['status'];
             unset($_SESSION['fast_notify']);
         }
+
 		if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {
             if($this->input->get('filterTime') == 'ALL' || $this->input->get('filterTime') == ''){
                 $time_from = 0;
@@ -73,7 +74,6 @@ class ConsultantBooking extends CustomBaseStep {
 		}
 		if($this->isYourPermission($this->current_controller, 'showYour')) {
 			$data['list_booking'] = $this->showYour();
-			$data['title_1'] = "Lượt dẫn của tôi tuần hiện tại từ". date('d/m/Y', $time_from);
 		} 
 		$data['list_booking_groupby_user'] = $this->ghConsultantBooking->getGroupByUserId
         ($time_from, $time_to);
@@ -115,6 +115,8 @@ class ConsultantBooking extends CustomBaseStep {
 		$data['libCustomer'] = $this->libCustomer;
 		$data['district_counter_booking'] = $district_counter_booking;
 		$data['quantity'] = $quantity;
+		$data['time_from'] = $time_from;
+		$data['time_to'] = $time_to;
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('consultantbooking/show', $data);
