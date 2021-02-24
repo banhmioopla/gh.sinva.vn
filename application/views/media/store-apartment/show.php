@@ -153,8 +153,7 @@ include VIEWPATH . 'functions.php';
                                                    btn-rounded waves-light waves-effect
                                                    download-img"
                                                 download="<?= $apartment_model['address_street'] . '.' . $img['file_type'] ?>"
-                                                   href="<?= base_url() ?>
-                                                media/apartment/<?= $img['name'] ?>">
+                                                   href="<?= base_url() ?>media/apartment/<?= $img['name'] ?>">
                                                 <i class="mdi mdi-cloud-download"></i>
                                                 </a>
                                             </div>
