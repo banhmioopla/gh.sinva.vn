@@ -11,7 +11,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Kho ảnh dự án</h4>
+                    <h2 class="font-weight-bold text-danger">Kho Ảnh Dự Án</h2>
                 </div>
             </div>
         </div>

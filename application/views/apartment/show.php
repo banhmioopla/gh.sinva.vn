@@ -116,10 +116,12 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                         </span>
                         <?php endif; ?>
                     </div>
+                    <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>">
                     <div class="col text-center address-text text-purple font-weight-bold">
                         <?=$apartment['address_street'] ?>
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
                     </div>
+                    </a>
                    
                     <div class="row">
                         <div class="col-md-4">

@@ -25,25 +25,22 @@ include VIEWPATH . 'functions.php';
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h4 class="page-title text-primary"><?= $apartment_model['address_street'] ?></h4>
+                    <h2 class="text-danger font-weight-bold"><?= $apartment_model['address_street'] ?></h2>
                 </div>
             </div>
         </div>
         <!-- end page title end breadcrumb -->
-        <?php $this->load->view('components/list-navigation'); ?>
+        <div class="row">
+            <div class="col-12">
+                <div class="justify-content-center">
+                    <?php $this->load->view('components/list-navigation'); ?>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
-                    <blockquote class="blockquote">
-                        <p>Có thể upload nhiều ảnh theo mã phòng. Ảnh có viền màu vàng sẽ
-                            là ảnh ở chế độ đợi duyệt. Hiện tại dù ảnh chưa duyệt hay đã
-                            duyệt thì cũng được hiển thị. <br> Bạn có quy ước nào về tính
-                            năng này ?... </p>
-                        <footer class="blockquote-footer">vui lòng inbox <cite
-                                    title="Source Title">Quốc Bình.</cite></footer>
-                    </blockquote>
-
-                    <h4 class=" font-weight-bold"></h4>
                     <div class="upload-section">
                         <form method="post" enctype="multipart/form-data"
                               class='form-group row'
@@ -71,7 +68,7 @@ include VIEWPATH . 'functions.php';
                             <div class="col-md-2 col-12 btn-upload">
                                 <button type="submit" name="fileSubmit" value="UPLOAD"
                                         class="w-100 btn btn-custom waves-effect waves-light">
-                                    Tải ảnh lên GH
+                                    Up Ảnh
                                 </button>
                             </div>
                         </form>
@@ -109,10 +106,10 @@ include VIEWPATH . 'functions.php';
         </div>
         <form action="/admin/download-image-apartment" method="post">
             <div class="port">
-                <div class="col-md-12">
+                <div class="col-md-12 mb-2">
                     <button type="submit" class="btn m-1 btn-sm btn-outline-warning
                             btn-rounded waves-light waves-effect download-all">
-                        <i class="mdi mdi-cloud-download"></i> Tải tất cả
+                        <i class="mdi mdi-cloud-download"></i> Tải Về Tất Cả
                     </button>
                 </div>
                 <div class="portfolioContainer">
@@ -120,7 +117,7 @@ include VIEWPATH . 'functions.php';
 
                         <?php foreach ($list_img as $img): ?>
                             <div class="col-sm-6 col-md-2
-                <?= !empty($img['room_id']) ? 'roomcode-' . $img['room_id'] : '' ?> image-item">
+                            <?= !empty($img['room_id']) ? 'roomcode-' . $img['room_id'] : '' ?> image-item">
                                 <?php
                                 $imgStatus = $img['status'] == 'Pending' ? 'warning' : '';
 
