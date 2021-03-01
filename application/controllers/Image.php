@@ -86,9 +86,10 @@ class Image extends CustomBaseStep
         }
         $data['list_img'] = $this->ghImage->getRows($apartment_id);
 
-        $data['list_price'] = $this->ghBasePrice->get(['active' => true]);
-        $data['list_room_type'] = $this->ghBaseRoomType->get(['active' => true]);
-        $data['list_room_code'] = $this->ghRoom->get(['active' => true, 'apartment_id' => $apartment_id]);
+        $data['list_price'] = $this->ghBasePrice->get(['active' => "YES"]);
+        $data['list_room_type'] = $this->ghBaseRoomType->get(['active' => "YES"]);
+        $data['list_room_code'] = $this->ghRoom->get(['active' => "YES", 'apartment_id' => $apartment_id]);
+
 
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('media/store-apartment/show', $data);
@@ -167,7 +168,9 @@ class Image extends CustomBaseStep
     public function downloadMedia() {
         ini_set('memory_limit', '12024M');
 
-        $list_id = $this->input->post("list_id");
+        $room_id = $this->input->post('room-id');
+
+        $list_id = $this->ghImage->getByRoomId($room_id);
 
         $this->load->library('zip');
         $rootPath = 'media/apartment/';
@@ -180,10 +183,8 @@ class Image extends CustomBaseStep
         $address = 'KoThongTin';
         foreach ($list_id as $id) {
 
-            $model_img = $this->ghImage->getById($id);
-            $room_code = $this->ghRoom->get(['id' => $model_img[0]['room_id']]);
-
-
+            $model_img = $id;
+            $room_code = $this->ghRoom->get(['id' => $model_img['room_id']]);
 
             $room_path = '';
 
@@ -197,8 +198,8 @@ class Image extends CustomBaseStep
                 }
             }
             if($model_img) {
-                $room_path .= $model_img[0]['name'];
-                copy($rootPath.$model_img[0]['name'], $room_path);
+                $room_path .= $model_img['name'];
+                copy($rootPath.$model_img['name'], $room_path);
                 $this->zip->read_file($room_path, true);
             }
 

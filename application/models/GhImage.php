@@ -63,6 +63,14 @@ class GhImage extends CI_Model{
         return $query->result_array();
     }
 
+    public function getByRoomId($id){
+        $this->db->from('gh_media');
+        $this->db->where(['room_id' => $id]);
+        $this->db->order_by('time_insert','desc');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 
     public function updateById($img_id, $data) {
         $this->db->where('id', $img_id);

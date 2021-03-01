@@ -80,14 +80,16 @@ include VIEWPATH . 'functions.php';
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 ">
                 <div class="portfolioFilter text-center gallery-second">
-                    <a href="#" data-filter="*" class="current bg-primary">Tất cả</a>
+                    <a href="#" data-filter="*" class="current bg-warning">Tất cả</a>
                     <?php
                     $i = 0;
                     foreach ($list_room_code as $room):
-                        $status = 'border ';
-                        $status_text = ' - <i class="text-secondary">' . view_money_format($room['price'], 1) . '</i>';
+                        $status = 'border';
+                        $status_text = ' - <i class="text-dark">' . view_money_format($room['price'], 1) . '</i>';
                         if ($room['status'] == 'Available') {
                             $status .= ' text-success';
+                        } else {
+                            $status .= ' text-dark';
                         }
 
                         if ($room['time_available'] > 0) {
@@ -96,7 +98,8 @@ include VIEWPATH . 'functions.php';
 
                         ?>
                         <a href="#" class="font-weight-bold <?= $status ?>"
-                           data-filter=".roomcode-<?= $room['id'] ?>">
+                           data-filter=".roomcode-<?= $room['id'] ?>"
+                           data-room-id="<?= $room['id'] ?>">
                             <?= $room['code'] . $status_text ?>
                         </a>
                     <?php endforeach; ?>
@@ -104,14 +107,17 @@ include VIEWPATH . 'functions.php';
                 </div>
             </div>
         </div>
-        <form action="/admin/download-image-apartment" method="post">
-            <div class="port">
-                <div class="col-md-12 mb-2">
-                    <button type="submit" class="btn m-1 btn-sm btn-outline-warning
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <button type="submit" class="btn m-1 btn-sm btn-outline-warning
                             btn-rounded waves-light waves-effect download-all">
-                        <i class="mdi mdi-cloud-download"></i> Tải Về Tất Cả
-                    </button>
-                </div>
+                    <i class="mdi mdi-cloud-download"></i> Tải Về Tất Cả
+                </button>
+            </div>
+        </div>
+        <form name="form-download" id="form-download" action="/admin/download-image-apartment" method="post">
+            <div class="port">
+
                 <div class="portfolioContainer">
                     <?php if ($list_img): ?>
 
@@ -267,6 +273,15 @@ include VIEWPATH . 'functions.php';
                     enabled: true,
                     navigateByImgClick: true,
                     preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                }
+            });
+            
+            $('.download-all').click(function (e) {
+                let room_id = $('.portfolioFilter a.current').data('room-id');
+                console.log(room_id);
+                if(room_id > 0) {
+                    $("#form-download").append('<input type="hidden" name="room-id" value="'+room_id+'"/>');
+                    $("#form-download").submit();
                 }
             });
 
