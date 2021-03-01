@@ -47,6 +47,7 @@
                                 <td>
                                     <div class="businesspartner-name font-weight-bold pb-1"
                                          data-pk="<?= $row['id'] ?>"
+                                         data-value="<?= $row['name'] ?>"
                                          data-name="name">
                                         <?= $row['name'] ?> <?= count($list_apm) ? "<small> - (".count($list_apm).")</small>" : "" ?>
                                     </div>
