@@ -66,9 +66,13 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                             ?>
                             <tr class='<?= $bg_for_available ?>'>
                                 <td>
-                                    <div class="tag-name text-purple font-weight-bold">
-                                        <?= $apartment['address_street'] . ' - quận ' . $libDistrict->getNameByCode($apartment['district_code']) ?>
-                                    </div>
+                                    <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>">
+                                        <u>
+                                        <div class="tag-name text-purple font-weight-bold">
+                                            <?= $apartment['address_street'] . ' - quận ' . $libDistrict->getNameByCode($apartment['district_code']) ?>
+                                        </div>
+                                        </u>
+                                    </a>
                                 </td>
                                 <td><?= $row['code'] ?></td>
                                 <td>

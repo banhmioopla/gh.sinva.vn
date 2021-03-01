@@ -108,7 +108,7 @@ include VIEWPATH . 'functions.php';
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 mb-2">
+            <div class="col-md-12 mb-2 text-center">
                 <button type="submit" class="btn m-1 btn-sm btn-outline-warning
                             btn-rounded waves-light waves-effect download-all">
                     <i class="mdi mdi-cloud-download"></i> Tải Về Tất Cả
@@ -283,6 +283,16 @@ include VIEWPATH . 'functions.php';
                     $("#form-download").append('<input type="hidden" name="room-id" value="'+room_id+'"/>');
                     $("#form-download").submit();
                 }
+            });
+            $(".download-all").hide();
+            $('.portfolioFilter a').click(function(){
+                if($(this).data('room-id') > 0) {
+                    $(".download-all").show();
+                    $(".download-all").html('<i class="mdi mdi-cloud-download"></i> Tải Mã '+ $(this).text());
+                } else {
+                    $(".download-all").hide();
+                }
+
             });
 
         });
