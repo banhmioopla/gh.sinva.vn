@@ -38,7 +38,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card-box shadow" style="font-size: 13px">
-                    <h3 class="text-center text-danger">Khách Hàng Đã Ký</h3>
+                    <h3 class="text-center text-danger">Đã Ký</h3>
                     <table class="table-data table table-hover table-bordered">
                         <thead>
                         <tr>
@@ -52,9 +52,8 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <tbody>
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ):
-                                if($row['status'] !== "sinva-rented") continue;
-                                $isRented = $libCustomer->checkRentedContractByUser
-                                ($row['id']);
+                                if(!count($ghContract->getByCustomerId($row['id']))) continue;
+                                $isRented = $libCustomer->checkRentedContractByUser($row['id']);
                                 $contract_count = "";
                                 $consultant_name = '';
 
@@ -119,7 +118,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
             </div>
             <div class="col-12 col-md-6">
                 <div class="card-box shadow" style="font-size: 13px">
-                    <h3 class="text-center text-danger">Khách Hàng Theo Dõi</h3>
+                    <h3 class="text-center text-danger">Đang Theo Dõi</h3>
                     <table class="table-data table table-hover table-bordered">
                         <thead>
                         <tr>
@@ -133,7 +132,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <tbody>
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ):
-                                if($row['status'] == "sinva-rented") continue;
+                                if(count($ghContract->getByCustomerId($row['id']))) continue;
                                 ?>
                                 <tr>
                                     <td><a target="_blank"
