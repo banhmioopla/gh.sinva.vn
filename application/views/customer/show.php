@@ -52,7 +52,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <tbody>
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ):
-                                if(!count($ghContract->getByCustomerId($row['id']))) continue;
+                                if(!count($ghContract->getByCustomerIdAndNotPending($row['id']))) continue;
                                 $isRented = $libCustomer->checkRentedContractByUser($row['id']);
                                 $contract_count = "";
                                 $consultant_name = '';
@@ -132,7 +132,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <tbody>
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ):
-                                if(count($ghContract->getByCustomerId($row['id']))) continue;
+                                if(count($ghContract->getByCustomerIdAndNotPending($row['id']))) continue;
                                 ?>
                                 <tr>
                                     <td><a target="_blank"
