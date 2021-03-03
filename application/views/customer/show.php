@@ -132,7 +132,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <tbody>
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ):
-                                if(!($row['status'] == "sinva-rented" || count($ghContract->getByCustomerIdAndNotPending($row['id'])))) continue;
+                                if(($row['status'] == "sinva-rented" && count($ghContract->getByCustomerIdAndNotPending($row['id'])))) continue;
                                 ?>
                                 <tr>
                                     <td><a target="_blank"
@@ -141,7 +141,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                             $row['id'] ?></a></td>
                                     <td>
                                         <div class="font-weight-bold">
-                                            <?= $row['name'] ?>
+                                            <?= $row['name']?>
                                             <p class="mb-0 text-muted"> <small>Sinh Nhật: <?=
                                                     $row['birthdate'] !== null ? date('d/m/Y',$row['birthdate']) : ''  ?></small></p>
                                         </div>
