@@ -150,8 +150,6 @@
                                         window.location = final_go_url;
                                     } else {
                                         final_go_url = current_url.replace('&filterTime='+current_filter_time, '&filterTime='+filterTime);
-                                        console.log(current_url);
-                                        console.log(final_go_url);
                                         window.location = final_go_url;
                                     }
                                 });
@@ -282,7 +280,7 @@
                                          data-pk="<?= $booking['id'] ?>"
                                          data-name="time_booking"
                                          data-value="<?= date('d/m/Y H:i', $booking['time_booking']) ?>">
-                                        <?= date('d/m/Y H:i', $booking['time_booking']) ?>
+                                        <?= date('d/m/Y H:i', $booking['time_booking']) . ' - ' .$booking['time_booking'] ?>
                                     </div>
                                 </div>
 
@@ -587,7 +585,7 @@
     commands.push(function () {
         $(document).ready(function () {
             $('.table-data').DataTable({
-                "order": [[ 0, "desc" ]],
+                "order": [],
                 "fnDrawCallback": function () {
                     $('.booking-note').editable({
                         type: "text",
