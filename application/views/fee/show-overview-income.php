@@ -11,9 +11,9 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">gio hang</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Gio Hang</a></li>
+                            <li class="breadcrumb-item"><a href="#">Chi Phi</a></li>
+                            <li class="breadcrumb-item active">Phòng Tài Chính</li>
                         </ol>
                     </div>
                     <h2 class="font-weight-bold text-danger">Phòng Tài Chính</h2>
@@ -221,10 +221,16 @@
             </div>
         </div> <!-- end row -->
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card-box"><div id="chart_div"></div></div>
+            </div>
+        </div>
+
     </div> <!-- end container -->
 </div>
 <!-- end wrapper -->
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
 
     commands.push(function(){
@@ -232,5 +238,39 @@
             "pageLength": 10,
             'pagingType': "full_numbers",
             responsive: true,});
+
+        google.charts.load('current', {'packages':['bar']});
+
+        $.ajax({
+            url: '/admin/fee/chart-user-income',
+            method: "POST",
+            success: function(data){
+                console.log(data);
+                data = JSON.parse(data);
+                let list = data.chart;
+                google.charts.setOnLoadCallback(function () {
+                    drawChart(list, data.from_date, data.to_date);
+                });
+            }
+        });
+
+        function drawChart(list, time_from, time_to) {
+            var data = google.visualization.arrayToDataTable(list);
+
+            var options = {
+                chart: {
+                    title: 'Doanh Thu / Thành Viên',
+                    subtitle: 'từ ngày '+time_from+' đến '+time_to,
+                },
+                bars: 'vertical',
+                vAxis: {format: 'decimal'},
+                height: 400,
+                colors: ['#4bd25a', '#d92e32']
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
     });
 </script>

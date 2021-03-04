@@ -199,6 +199,42 @@ class Fee extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
+    public function buildChart(){
+        $time_from = '01-01-2021';
+        $time_to = date('d-m-Y');
+        $chart_data = [['Tháng', 'Doanh Thu', 'Thành Viên']];
+
+        $int_time_from = strtotime($time_from);
+        $int_time_to = strtotime($time_to);
+
+        $temp = $int_time_from;
+
+        while($temp <= $int_time_to+86399) {
+            $last_date = cal_days_in_month(CAL_GREGORIAN, date('m', $temp), "2021");
+
+            $user = $this->ghUser->get(['time_joined <= ' => $temp]);
+            $contract = $this->ghContract->get(['time_check_in <=' => $temp+86400*$last_date, 'time_check_in >=' => $temp]);
+            $total_sale = 0;
+            foreach ($contract as $c) {
+                $total_sale += (int) ($c['room_price'] * $c['commission_rate'] / 100) / 1000000;
+            }
+
+            $chart_data[] = [ 'tháng '. date('m', $temp), $total_sale ,count($user)];
+
+            $temp += 86400*$last_date;
+        }
+        echo json_encode(['chart'=> $chart_data, 'from_date' => $time_from, 'to_date' => $time_to]); die;
+    }
+
+    private function getNumberOfMonth($date1, $date2) {
+        $date1 = '2000-01-25';
+        $date2 = '2010-02-20';
+        $d1=new DateTime($date2);
+        $d2=new DateTime($date1);
+        $Months = $d2->diff($d1);
+        $howeverManyMonths = (($Months->y) * 12) + ($Months->m);
+    }
+
 
 
     public function showUserCumulativeSale(){

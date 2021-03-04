@@ -439,6 +439,12 @@ $route['admin/list-fee-contract-income'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/fee/chart-user-income'] = function($params = []) {
+    $controller = 'Fee';
+    $action = '/buildChart';
+    return $controller.$action;
+};
+
 $route['admin/personal-profile'] = function($params = []) {
     $controller = 'Fee';
     $action = '/showPersonalProfile';
