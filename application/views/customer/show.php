@@ -17,12 +17,11 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Giỏ Hàng</a></li>
+                            <li class="breadcrumb-item active">Tất Cả Khách Hàng</li>
                         </ol>
                     </div>
-
+                    <h2 class="font-weight-bold text-danger">Tất Cả Khách Hàng</h2>
                 </div>
             </div>
         </div>
@@ -36,41 +35,33 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
         <div class="customer-alert"></div>
         <?php $this->load->view('components/list-navigation'); ?>
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-12">
                 <div class="card-box shadow" style="font-size: 13px">
-                    <h3 class="text-center text-danger font-weight-bold">Đã Ký</h3>
                     <table class="table-data table table-hover table-bordered">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th>ID</th>
                             <th>Họ tên</th>
+                            <th>Số Lượng Hợp Đồng</th>
+                            <th>Thành Viên</th>
                             <th>Giới tính</th>
                             <th>Số điện thoại</th>
+                            <th class="text-center">Trạng Thái</th>
                             <th class="text-center">Nguồn</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ):
-                                if($row['status'] !== "sinva-rented" || !count($ghContract->getByCustomerIdAndNotPending($row['id']))) continue;
                                 $isRented = $libCustomer->checkRentedContractByUser($row['id']);
                                 $contract_count = "";
                                 $consultant_name = '';
 
                                 $isExpired = "success";
-                                if($isRented && $isRented[0]['time_expire'] < strtotime
-                                    (date('d-m-Y'))) {
+                                if($isRented && $isRented[0]['time_expire'] < strtotime(date('d-m-Y'))) {
                                     $isExpired = 'danger';
-
+                                    $contract_count = $isRented[0]['counter'] > 0 ? $isRented[0]['counter']:"" ;
                                 }
-
-                                if($isRented) {
-                                    $contract_count = $isRented[0]['counter'] > 0 ?
-                                        $isRented[0]['counter'] : '';
-                                    $consultant_name = $libUser->getNameByAccountid($isRented[0]['consultant_id']);
-                                }
-
-
                                 ?>
                             <tr>
                                 <td><a target="_blank"
@@ -80,20 +71,24 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 <td>
                                     <div class=" font-weight-bold">
                                             <span class="text-<?= $isExpired ?>"><?=
-                                                $row['name'] ?></span> <span
-                                                class="badge badge-<?= $isExpired ?>"><?=
-                                            $contract_count ?></span>
+                                                $row['name'] ?></span>
                                         <p class="mb-0 text-muted"> <small>Sinh Nhật: <?=
-                                                $row['birthdate'] !== null ? date('d/m/Y',$row['birthdate']) : ''  ?></small></p>
-                                        <p><?= $consultant_name ?></p>
+                                                $row['birthdate'] !== null ? date('d/m/Y',$row['birthdate']) : '' ?></small></p>
                                     </div>
-
+                                </td>
+                                <td class="text-center font-weight-bold"><span class="text-<?= $isExpired ?>"><?= $contract_count ?></span></td>
+                                <td>
+                                    <?php
+                                    $list_contract = $ghContract->get(['customer_id' => $row['id']]);
+                                        foreach ($list_contract as $contract):?>
+                                            <?= $libUser->getNameByAccountid($contract['consultant_id']) ?><br>
+                                    <?php endforeach; ?>
                                 </td>
                                 <td>
                                     <div class="customer-gender" 
                                         data-pk="<?= $row['id'] ?>"
                                         data-name="gender">
-                                            <?= $row['gender'] ? $label_apartment[$row['gender']] : ''?>
+                                            <?= $row['gender'] ? $label_apartment[$row['gender']] : '[chưa cập nhật]'?>
                                     </div>
                                 </td>
                                 <td>
@@ -105,8 +100,25 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-source text-center text-warning font-weight-bold">
-                                        <?= $row['source'] ? $label_apartment[$row['source']] : '' ?>
+                                    <?php
+                                    $status = 'muted';
+                                    if($row['status'] == 'sinva-rented'){
+                                        $status = 'success';
+                                    }
+
+                                    if($row['status'] == 'sinva-info-form'){
+                                        $status = 'danger';
+                                    }
+
+                                    ?>
+                                    <div class="customer-source text-center text-<?= $status ?>">
+                                        <?= $row['status'] ? $label_apartment[$row['status']] : '[chưa cập nhật]' ?>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div class="customer-source text-center text-muted">
+                                        <?= $row['source'] ? $label_apartment[$row['source']] : '[chưa cập nhật]' ?>
                                     </div>
                                 </td>
                             </tr>      
@@ -116,68 +128,11 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
-                <div class="card-box shadow" style="font-size: 13px">
-                    <h3 class="text-center text-danger font-weight-bold">Đang Theo Dõi</h3>
-                    <table class="table-data table table-hover table-bordered">
-                        <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Họ tên</th>
-                            <th>Giới tính</th>
-                            <th>Số điện thoại</th>
-                            <th class="text-center">Nguồn</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php if(count($list_customer) > 0):?>
-                            <?php foreach($list_customer as $row ):
-                                if(($row['status'] == "sinva-rented" && count($ghContract->getByCustomerIdAndNotPending($row['id'])))) continue;
-                                ?>
-                                <tr>
-                                    <td><a target="_blank"
-                                           href="/admin/detail-customer?id=<?= $row['id'] ?>"><?=
-                                            10000 +
-                                            $row['id'] ?></a></td>
-                                    <td>
-                                        <div class="font-weight-bold">
-                                            <?= $row['name']?>
-                                            <p class="mb-0 text-muted"> <small>Sinh Nhật: <?=
-                                                    $row['birthdate'] !== null ? date('d/m/Y',$row['birthdate']) : ''  ?></small></p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-gender"
-                                             data-pk="<?= $row['id'] ?>"
-                                             data-name="gender">
-                                            <?= $row['gender'] ? $label_apartment[$row['gender']] : ''?>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-data"
-                                             data-pk="<?= $row['id'] ?>"
-                                             data-value ="<?= $row['phone'] ?>"
-                                             data-name="phone">
-                                            <?= $row['phone'] ?>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-source text-center text-warning font-weight-bold">
-                                            <?= $row['source'] ? $label_apartment[$row['source']] : '' ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php endif;?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
             <?php if($check_create):?>
             <div class="col-12 col-md-6 offset-md-3">
                 <div class="card-box shadow">
-                    <h4 class=" m-t-0 text-center text-danger">Thêm Mới Khách Hàng Tiềm
-                        Năng</h4>
+                    <h4 class=" m-t-0 text-center text-danger">Thêm Mới Khách Hàng Tiềm Năng</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-customer">
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Họ tên<span class="text-danger">*</span></label>
@@ -344,6 +299,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                         emptytext: '',
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         inputclass: '',
+                        mode:'inline',
                         success: function(response) {
                             var data = JSON.parse(response);
                             if(data.status == true) {
@@ -363,7 +319,6 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
                         template:"D MM YYYY",
                         format:"DD-MM-YYYY",
                         viewformat:"DD-MM-YYYY",
-                        mode: 'popup',
                         combodate: {
                             firstItem: 'name'
                         },

@@ -54,7 +54,7 @@
                                                                                          data-pk="<?= $customer['id'] ?>"
                                                                                          data-value="<?= $customer['email'] ?>"
                                                                                          data-name="email"><?= $customer['email'] ?></span></p>
-                            <p class="text-muted font-13"><strong>Nguồn :</strong> <span class="m-l-15"><?= $label_apartment[$customer['source']] ?></span></p>
+                            <p class="text-muted font-13"><strong>Nguồn :</strong> <span class="m-l-15"><?= $customer['source'] ?  $label_apartment[$customer['source']] : '[chưa cập nhật]' ?></span></p>
                             <p class="text-muted font-13"><strong>Trạng Thái :</strong> <span class="m-l-15"> <span class="badge
                                      badge-info font-weight-bold contract-status"><?= $label_apartment[$customer['status']] ?></span></span></p>
                             <p class="text-muted font-13"><strong>Nhu Cầu Giá :</strong> <span class="m-l-15 customer-update"

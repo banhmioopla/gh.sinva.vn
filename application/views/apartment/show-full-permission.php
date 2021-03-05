@@ -9,6 +9,10 @@ $check_commission_rate = false;
 if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
     $check_commission_rate = true;
 }
+$check_profile = false;
+if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
+    $check_profile = true;
+}
 ?>
 
 <div class="wrapper">
@@ -156,6 +160,12 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                                     class="btn m-1 btn-sm apartment-reload-time btn-outline-custom btn-rounded waves-light waves-effect">
                                 <i class="mdi mdi-update"></i>
                             </button>
+                            <?php if($check_profile): ?>
+                                <a class="m-1 btn btn-sm btn-outline-info btn-rounded waves-light waves-effect"
+                                   href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
+                                    <i class="mdi mdi-information-outline"></i>
+                                </a>
+                            <?php endif; ?>
                             <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect" 
                                 data-toggle="collapse" 
                                 data-parent="#accordion"
