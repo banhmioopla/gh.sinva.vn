@@ -119,8 +119,8 @@ class Contract extends CustomBaseStep {
             $timeCheckInTo = $this->input->get('timeCheckInTo');
             $params['time_check_in <='] = strtotime($timeCheckInTo)+86399;
         } else {
-            $time_to = strtotime('+30days');
-            $params['time_check_in >='] = $time_to;
+            $time_to = strtotime('+60days');
+            $params['time_check_in <='] = $time_to;
         }
 
         if($this->input->get('timeExpireFrom')) {
@@ -133,9 +133,7 @@ class Contract extends CustomBaseStep {
             $params['time_expire <='] = strtotime($timeCheckInTo)+86399;
         }
 
-
 		$data['list_contract'] = $this->ghContract->getBySearch($params);
-
 		$data['list_notification'] = $this->ghNotification->get(['is_approve' => 'NO']);
 		
 		$data['libCustomer'] = $this->libCustomer;
