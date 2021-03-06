@@ -42,7 +42,7 @@
                                                                                               data-value="<?= date('d-m-Y',$customer['birthdate']) ?>"
                                                                                               data-name="birthdate"
                                 ><?= date('d-m-Y', $customer['birthdate']) ?></span></p>
-                            <p class="text-muted font-13"><strong>Giới Tính : </strong> <span class="m-l-15"><?= $label_apartment[$customer['gender']] ?></span></p>
+                            <p class="text-muted font-13"><strong>Giới Tính : </strong> <span class="m-l-15"><?= $customer['gender'] ? $label_apartment[$customer['gender']]:'<i>không có thông tin</i>' ?></span></p>
 
                             <p class="text-muted font-13"><strong>Số Điện Thoại : </strong><span class="m-l-15 customer-update"
                                                                                                  data-pk="<?= $customer['id'] ?>"
