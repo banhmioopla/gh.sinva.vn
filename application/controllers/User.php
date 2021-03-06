@@ -175,7 +175,7 @@ class User extends CustomBaseStep {
 
 
 	public function getSelectUser(){
-        $list = $this->ghUser->get(['account_id >=' => 171020000, 'name <>' => ""]);
+        $list = $this->ghUser->get(['account_id >=' => 171020000, 'name <>' => "", "active" => "YES"]);
         $result = [];
         foreach($list as $item) {
             $result[] = ["value" => $item['account_id'], "text" => $item["name"]];

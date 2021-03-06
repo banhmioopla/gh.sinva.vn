@@ -136,7 +136,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             <label for="consultant_id" class="col-12 col-md-4 col-form-label">Thành viên tư vấn<span class="text-danger"> (bb)</span></label>
                             <?php if($check_consultant_id):?>
                             <div class="col-md-8 col-12">
-                                <select type="number" class="form-control" required
+                                <select type="number" class="form-control consultant-select" required
                                         id="consultant_id" name="consultant_id" placeholder="171020xxx">
                                         <?= $select_user?>
                                 </select>
@@ -377,6 +377,8 @@ commands.push(function(){
     $('.contract-open, .datepicker, .contract-time_expire').datepicker({
         format: "dd/mm/yyyy"
     });
+
+    $('.consultant-select').select2();
 
     $(':file').change(function () {
         $('.number-file').text(this.files.length + " ảnh được chọn");

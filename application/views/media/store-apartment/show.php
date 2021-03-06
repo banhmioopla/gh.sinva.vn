@@ -238,6 +238,8 @@ include VIEWPATH . 'functions.php';
                 });
                 return false;
             });
+
+            $('.custom-select').select2();
         });
         $(document).ready(function () {
             $('.choose-img, .btn-upload').hide();

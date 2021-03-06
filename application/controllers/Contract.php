@@ -156,7 +156,7 @@ class Contract extends CustomBaseStep {
 		$data['room'] = $this->ghRoom->get(['id' =>$room_id])[0];
 		$data['apartment'] = $this->ghApartment->get(['id' =>$data['room']['apartment_id']])[0];
 		$data['select_customer'] = $this->libCustomer->cb();
-		$data['select_user'] = $this->libUser->cb();
+		$data['select_user'] = $this->libUser->cb(0,'YES');
 		$data['libDistrict'] = $this->libDistrict;
 		
 		/*--- Load View ---*/
