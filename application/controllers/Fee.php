@@ -88,16 +88,18 @@ class Fee extends CustomBaseStep {
         $this->auth['account_id'], 'time_insert >= ' => strtotime(date('01-m-Y')) ]);
 
 
-        $list_contract = $this->ghContract->get(['consultant_id' => $this->auth['account_id']]);
-        $list_booking = $this->ghConsultantBooking->get(['booking_user_id' => $this->auth['account_id']]);
+        $list_contract = $this->ghContract->get(['consultant_id' => $list_user[0]['account_id']]);
+        $list_booking = $this->ghConsultantBooking->get(['booking_user_id' => $list_user[0]['account_id']]);
         $list_customer = [];
 
         $list_customer_id = [];
         foreach ($list_contract as $c) {
             $customer = $this->ghCustomer->get(['id' => $c['customer_id']]);
             if(count($customer)) {
-                $list_customer [] = $customer[0];
-                $list_customer_id[] = $c['customer_id'];
+                if(!in_array((string)$c['customer_id'], $list_customer_id)) {
+                    $list_customer_id[] = $c['customer_id'];
+                    $list_customer [] = $customer[0];
+                }
             }
         }
 
