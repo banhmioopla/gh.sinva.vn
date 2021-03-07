@@ -59,6 +59,10 @@ class GhApartment extends CI_Model {
         return $result->result_array();
     }
 
+    public function getFirstById($room_id) {
+        return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
+    }
+
     public function insert($data) {
         return $this->db->insert($this->table, $data);
     }

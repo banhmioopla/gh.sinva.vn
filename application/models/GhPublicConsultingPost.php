@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class GhRoom extends CI_Model {
-    private $table = 'gh_room';
+class GhPublicConsultingPost extends CI_Model {
+    private $table = 'gh_public_consulting_post';
 
 	public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();
@@ -11,6 +11,11 @@ class GhRoom extends CI_Model {
     public function getByActive() {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }
+
+    public function getByUserId($user_id) {
+        return $this->db->get_where($this->table, ['user_id' => $user_id])->result_array();
+    }
+
     public function getByApartmentIdAndActive($apartment_id) {
         return $this->db->get_where($this->table, ['active' => 'YES', 'apartment_id' => $apartment_id ])->result_array();
     }
@@ -18,12 +23,8 @@ class GhRoom extends CI_Model {
     public function getFirstById($room_id) {
         return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
     }
-
-    public function getById($room_id) {
-        return $this->db->get_where($this->table, ['id' => $room_id])->result_array();
-    }
     public function getByApartmentId($apartment_id) {
-        return $this->db->get_where($this->table, ['apartment_id' => $apartment_id])->result_array();
+        return $this->db->get_where($this->table, ['apartment_id' => $apartment_id])->row();
     }
 
     public function getAll() {

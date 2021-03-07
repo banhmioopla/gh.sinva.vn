@@ -23,6 +23,10 @@ class GhImage extends CI_Model{
         return $result; 
     }
 
+    public function getFirstById($room_id) {
+        return $this->db->get_where("gh_media", ['id' => $room_id])->row_array();
+    }
+
     public function getContract($contract_id){ 
         $this->db->select('*'); 
         $this->db->from('gh_media'); 

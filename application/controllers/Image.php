@@ -11,6 +11,7 @@ class Image extends CustomBaseStep
         $this->load->model('ghRoom');
         $this->load->model('ghImage');
         $this->load->model('ghDistrict');
+        $this->load->model('ghPublicConsultingPost');
         $this->load->library('LibRoom', null, 'libRoom');
         $this->load->library('LibDistrict', null, 'libDistrict');
         $this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
@@ -22,6 +23,8 @@ class Image extends CustomBaseStep
         $data = [];
         $apartment_id = $this->input->get('apartment-id');
         $room_id = $this->input->post('room_id');
+
+        $data['list_post'] = $this->ghPublicConsultingPost->get(['user_create_id' => $this->auth['account_id']]);
 
         if (!isset($apartment_id) and empty($apartment_id)) {
             redirect('notfound');
@@ -94,6 +97,31 @@ class Image extends CustomBaseStep
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('media/store-apartment/show', $data);
         $this->load->view('components/footer');
+
+    }
+
+    public function createConsultingPost() {
+        $post = $this->input->post();
+        $this->load->model('ghPublicConsultingPost');
+        $data_insert = [
+            'title' => $post["post_title"],
+            'content' => $post['post_content'],
+            'password' => $post['post_password'],
+            'time_create' => time(),
+            'time_expire' => strtotime('+7days'),
+            'active' => "YES",
+            'image_set' => json_encode($post['img_id']),
+            'user_create_id' => $this->auth['account_id'],
+            "room_id" => $post['post_room_id'],
+        ];
+
+        $post_id = $this->ghPublicConsultingPost->insert($data_insert);
+
+        echo json_encode([
+            'content' => 'Tạo Bài Tư Vấn Thành Công!',
+            'status' => true,
+            'post_id' => $post_id,
+        ]);die;
 
     }
 

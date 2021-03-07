@@ -1033,5 +1033,18 @@ $route['admin/update-price-editable'] = function($params = []) {
 	return $controller.$action;
 };
 
+// POST
+
+$route['admin/ajax/create-consulting-post'] = function($params = []) {
+    $controller = 'Image';
+    $action = '/createConsultingPost';
+    return $controller.$action;
+};
+
+$route['public/consulting-post-detail'] = function($params = []) {
+    $controller = '/public-world/PublicConsultingPost';
+    $action = '/detailShow';
+    return $controller.$action;
+};
 
 $route['translate_uri_dashes'] = FALSE;

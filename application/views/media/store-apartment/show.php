@@ -39,13 +39,13 @@ include VIEWPATH . 'functions.php';
         </div>
 
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-6">
                 <div class="card-box">
                     <div class="upload-section">
                         <form method="post" enctype="multipart/form-data"
                               class='form-group row'
                               action="/admin/upload-image?apartment-id=<?= $this->input->get('apartment-id') ?>">
-                            <div class="col-md-4 col-12">
+                            <div class="col-12">
                                 <select class="custom-select mt-3 form-control"
                                         name="room_id">
                                     <?= $cb_room_code ?>
@@ -75,6 +75,18 @@ include VIEWPATH . 'functions.php';
                     </div> <!-- end row -->
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="font-weight-bold text-danger">Danh Sách Bài Đăng Tư Vấn</h4>
+                    <ul class="list-post">
+                        <?php foreach ($list_post as $post):?>
+                        <li>
+                            <a href="/public/consulting-post-detail?id=<?= $post['id'] ?>" target="_blank"><?= $post['title'] ?></a> -  <small>Ngày <?= date('d/m/Y', $post['time_create']) ?></small>
+                        </li>
+                        <?php endforeach;?>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -113,6 +125,51 @@ include VIEWPATH . 'functions.php';
                             btn-rounded waves-light waves-effect download-all">
                     <i class="mdi mdi-cloud-download"></i> Tải Về Tất Cả
                 </button>
+            </div>
+        </div>
+        <div class="row" id="create-post">
+            <div class="col-md-12">
+                <div class="card-box">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label text-danger font-weight-bold text-right">Tiêu Đề</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="post_title"
+                                value="<?= $apartment_model['address_street'] ?>">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label text-danger font-weight-bold text-right">Nội Dung</label>
+                        <div class="col-8">
+                            <?php
+                            $post_content = $apartment_model['note'] . "\n";
+                            $post_content .= " ==== DỊCH VỤ === " . "\n";
+                            $post_content .= "- Điện: " .$apartment_model['electricity'] . "\n";
+                            $post_content .= "- Nước: " .$apartment_model['water'] . "\n";
+                            $post_content .= "- Internet: " .$apartment_model['internet'] . "\n";
+                            $post_content .= "- Thang máy: " .$apartment_model['elevator'] . "\n";
+                            $post_content .= "- Máy giặt: " .$apartment_model['washing_machine'] . "\n";
+
+                            ?>
+                            <textarea class="form-control" id="post_content" placeholder="Helping text"><?= $post_content ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label text-danger font-weight-bold text-right">Mật Khẩu Xem Bài</label>
+                        <div class="col-4">
+                            <input type="text" class="form-control" placeholder="Mật Khẩu Xem Bài" id="post_password">
+                            <input type="hidden" id="post_room_id">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12"><div id="notification"></div></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 text-center">
+                            <button type="button" id="submit_consultant_post" class="btn btn-danger waves-effect waves-light">Tạo Bài Tư Vấn</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <form name="form-download" id="form-download" action="/admin/download-image-apartment" method="post">
@@ -164,9 +221,20 @@ include VIEWPATH . 'functions.php';
                                                 </a>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-12 text-right border border-bottom">
+                                                <div class="checkbox checkbox-success p-2">
+                                                    <input id="checkbox-<?= $img['id'] ?>" value="<?= $img['id'] ?>" name="post_imgs" type="checkbox">
+                                                    <label for="checkbox-<?= $img['id'] ?>">
+                                                        Chọn Ảnh
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 <?php else: ?>
-                                    <div class="card-box shadow"
+                                    <div class="card-box m-1 shadow"
                                          id="video-box-<?= $img['id'] ?>">
                                         <video width="100%" height="80%"
                                                controls="controls">
@@ -242,6 +310,51 @@ include VIEWPATH . 'functions.php';
             $('.custom-select').select2();
         });
         $(document).ready(function () {
+            $('#submit_consultant_post').click(function () {
+                let img_id = [];
+                $('input[name=post_imgs]:checked').each(function(){
+                    img_id.push($(this).val())
+                });
+                let post_title = $('#post_title').val();
+                let post_content = $('#post_content').val();
+                let post_password = $('#post_password').val();
+                let post_room_id = $('#post_room_id').val();
+
+                $.ajax({
+                    url:"/admin/ajax/create-consulting-post",
+                    method: "POST",
+                    data: {
+                        img_id: img_id,
+                        post_title: post_title,
+                        post_content: post_content,
+                        post_room_id: post_room_id,
+                        post_password: post_password
+                    },
+                    success: function(res){
+                        res = JSON.parse(res);
+                        if(res.status === true) {
+                            setTimeout(function(){window.location = '/public/consulting-post-detail?id='+res.post_id;}, 3000);
+                            $("#notification").html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                ${res.content}
+                            </div>`);
+                            $('.list-post').append(`<li>
+                                    <a href="/public/consulting-post-detail?id=${post_id}" target="_blank">Bài Viết Mới Nhất</a>
+                                </li>`);
+                        } else {
+                            $("#notification").html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                Tạo Bài Viết Thất Bại
+                            </div>`);
+                        }
+                    }
+                });
+            });
+
             $('.choose-img, .btn-upload').hide();
             $('select[name=room_id]').on('change', function () {
                 if ($(this).val() == '0') {
@@ -287,12 +400,16 @@ include VIEWPATH . 'functions.php';
                 }
             });
             $(".download-all").hide();
+            $("#create-post").hide();
             $('.portfolioFilter a').click(function(){
                 if($(this).data('room-id') > 0) {
                     $(".download-all").show();
                     $(".download-all").html('<i class="mdi mdi-cloud-download"></i> Tải Mã '+ $(this).text());
+                    $("#create-post").show();
+                    $("#post_room_id").val($(this).data('room-id'));
                 } else {
                     $(".download-all").hide();
+                    $("#create-post").hide();
                 }
 
             });

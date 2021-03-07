@@ -20,6 +20,10 @@ class GhUser extends CI_Model {
         return $this->db->get_where($this->table, ['id' => $user_id])->result_array();
     }
 
+    public function getFirstByAccountId($user_id) {
+        return $this->db->get_where($this->table, ['account_id' => $user_id])->row_array();
+    }
+
     public function getAll() {
         return $this->db->get_where($this->table)->result_array();
     }
