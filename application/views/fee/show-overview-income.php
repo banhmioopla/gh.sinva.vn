@@ -200,10 +200,11 @@
                             ?>
                             <tr>
                                 <td >
-                                    <u><i class="mdi
-                            mdi-chevron-double-right text-info"></i> <?=
-                                        $libUser->getNameByAccountid
-                                        ($account_id) ?> </u>
+                                    <u><a target="_blank"
+                                          class="text-light"
+                                          href="/admin/personal-profile?account_id=<?= $account_id ?>">
+                                            <?= $libUser->getNameByAccountid($account_id) ?>
+                                        </a>  </u>
                                 </td>
                                 <td><div class="text-warning text-center"><?= number_format($item['quantity_contract']) ?></div></td>
                                 <td>

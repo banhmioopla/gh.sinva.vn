@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '9e83be96b81fe9810318f8147499a7d64bdfdb2c',
+    'reference' => '2c42be2e66df964f9b81a35cf63c7f09daf72657',
     'name' => '__root__',
   ),
   'versions' => 
@@ -31,7 +31,16 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '9e83be96b81fe9810318f8147499a7d64bdfdb2c',
+      'reference' => '2c42be2e66df964f9b81a35cf63c7f09daf72657',
+    ),
+    'chriskacerguis/codeigniter-restserver' => 
+    array (
+      'pretty_version' => '3.1.1',
+      'version' => '3.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6ced70d12c7e8d207eaded3f208a201330950b57',
     ),
     'phpmailer/phpmailer' => 
     array (

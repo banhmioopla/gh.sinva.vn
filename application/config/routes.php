@@ -1047,4 +1047,13 @@ $route['public/consulting-post-detail'] = function($params = []) {
     return $controller.$action;
 };
 
+
+/* :::API-INTERNAL:::*/
+
+$route['api-internal/apartment/show-active'] = function($params = []) {
+    $controller = '/api-internal/Apartment';
+    $action = '/users';
+    return $controller.$action;
+};
+
 $route['translate_uri_dashes'] = FALSE;
