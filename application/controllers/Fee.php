@@ -324,8 +324,6 @@ class Fee extends CustomBaseStep {
             'time_check_in <=' => strtotime($end_date) + 86399,
         ]);
 
-        $result['quantity'] = 0;
-        $result['total_sale'] = 0;
         $result = [
             'quantity' => 0,
             'total_sale' => 0,
@@ -451,9 +449,10 @@ class Fee extends CustomBaseStep {
             }
             $sub_description .= "(3) HĐ cao nhất: $max_room_price ($max_number_of_month tháng) <br>";
 
+
             /*So khớp với bảng B1*/
             foreach ($cd_config['index_master_b1'] as $b1) {
-                if($max_room_price >= $b1['room_price_min'] && $max_room_price < $b1['room_price_max']) {
+                if($max_room_price > $b1['room_price_min'] && $max_room_price <= $b1['room_price_max']) {
                     $total_b1 = $b1['income_unit'] * $max_number_of_month;
                     if($max_consultant_support_id >= 171020000) {
                         $total_b1 = (double) $total_b1 * 0.7;
