@@ -41,15 +41,14 @@ $data = array_values($list_user_income)[0];
 
                         <div class="text-left">
                             <p class="text-muted font-13"><strong>Họ Tên :</strong> <span
-                                        class="m-l-15"><?= $this->auth['name']
-                                    ?></span></p>
+                                        class="m-l-15"><?= $user['phone_number'] ?></span></p>
 
                             <p class="text-muted font-13"><strong>Số điện thoại:
                                 </strong><span
-                                        class="m-l-15"><?= $this->auth['phone_number'] ?></span></p>
+                                        class="m-l-15"><?= $user['phone_number'] ?></span></p>
 
                             <p class="text-muted font-13"><strong>Email: </strong>
-                                <span class="m-l-15"><?= $this->auth['email'] ?></span></p>
+                                <span class="m-l-15"><?= $user['email'] ?></span></p>
 
                         </div>
 
