@@ -280,7 +280,7 @@
                                          data-pk="<?= $booking['id'] ?>"
                                          data-name="time_booking"
                                          data-value="<?= date('d/m/Y H:i', $booking['time_booking']) ?>">
-                                        <?= date('d/m/Y H:i', $booking['time_booking']) . ' - ' .$booking['time_booking'] ?>
+                                        <?= date('d/m/Y H:i', $booking['time_booking']) ?>
                                     </div>
                                 </div>
 
