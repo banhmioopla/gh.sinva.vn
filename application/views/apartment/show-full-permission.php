@@ -63,7 +63,8 @@ if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
             <div class="pl-0 pr-0 col-12 col-md-9">
-                <?php $this->load->view('components/list-navigation'); ?>
+                <div class="text-center w-100"><?php $this->load->view('components/list-navigation'); ?></div>
+
                 <div class="shadow">
                     <?php $this->load->view('apartment/search-by-room-price'); ?>
                 </div>

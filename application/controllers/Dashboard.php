@@ -13,6 +13,7 @@ class Dashboard extends CustomBaseStep {
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibPartner', null, 'libPartner');
 		$this->load->library('LibRoom', null, 'libRoom');
+		$this->load->library('LibApartment', null, 'libApartment');
 		$this->load->library('LibBaseApartmentType', null, 'libBaseApartmentType');
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
 		$this->load->library('LibTag', null, 'libTag');
@@ -87,6 +88,7 @@ class Dashboard extends CustomBaseStep {
             'list_district' => $this->ghDistrict->get(['active' => 'YES']),
             'list_contract' => $list_contract,
             'list_user' => $list_user,
+            'libApartment' => $this->libApartment,
 
             'chart_data_total' => json_encode($chart_data),
             'chart_data_trong' => json_encode($chart_data_trong),

@@ -18,6 +18,17 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
 
         <div class="district-alert"></div>
         <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-box">
+                    <strong>Đánh Giá Hoàn Thiện Thông Tin Dự Án: (<?= count($libApartment->listInfoComplete()) ?> mục) </strong>
+                    <?php foreach ($libApartment->listInfoComplete() as $k => $v):?>
+                        <?= $v . ' / '?>
+                    <?php endforeach; ?>
+                </div>
+
+            </div>
+        </div>
         <div class="row" >
             <div class="col-md-12">
                 <h3 class="text-danger text-center">Biểu đồ</h3>
@@ -99,7 +110,6 @@ $check_contract_value = in_array($this->auth['role_code'], ['customer-care', 'ce
             <div class="col-md-10 offset-md-1">
                 <h3 class="text-danger text-center">Bộ Phận Dự Án</h3>
             </div>
-
             <div class="col-12 col-md-6 offset-md-3">
                 <div class="card-box text-dark bg-white text-white shadow">
                     <i class="fi-tag"></i>

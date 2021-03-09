@@ -17,6 +17,7 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
 		$this->load->library('LibTag', null, 'libTag');
 		$this->load->library('LibUser', null, 'libUser');
+		$this->load->library('LibApartment', null, 'libApartment');
 		$this->load->library('LibCustomer', null, 'libCustomer');
 
 		$this->permission_modify = ['product-manager', 'business-manager'];
@@ -82,6 +83,7 @@ class Apartment extends CustomBaseStep {
 		$data['libUser'] = $this->libUser;
 		$data['ghRoom'] = $this->ghRoom;
 		$data['ghApartmentComment'] = $this->ghApartmentComment;
+		$data['libApartment'] = $this->libApartment;
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view($template, $data);

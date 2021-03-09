@@ -67,7 +67,10 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
             <div class="card card-body pl-0 pr-0 col-12 col-md-9">
-                <?php $this->load->view('components/list-navigation'); ?>
+                <div class="text-center w-100">
+                    <?php $this->load->view('components/list-navigation'); ?>
+                </div>
+
                 <?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
                 <div class="m-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
@@ -124,6 +127,13 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                     </a>
                    
                     <div class="row">
+                        <a class="col-12 text-center text-muted"
+                           target="_blank"
+                           href="/admin/list-dashboard">Độ hoàn thiện thông tin dịch vụ (<strong><?= $libApartment->completeInfoRate($apartment['id'])['counter'] ?></strong>) <small class="text-danger">[?] click để xem tiêu chí </small></a>
+                        <div class=" offset-3 col-6 text-center">
+                            <div class="progress m-b-20">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: <?= $libApartment->completeInfoRate($apartment['id'])['rate'] ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?= $libApartment->completeInfoRate($apartment['id'])['rate'] ?></div>
+                            </div></div>
                         <div class="col-md-4">
                             <?php if($apartment['description']):?>
                                 <h5 class="mb-md-2 text-center text-danger"><u>Mô Tả</u></h5>
