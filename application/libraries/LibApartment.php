@@ -25,7 +25,7 @@ class LibApartment {
                 }
             }
         }
-        return ["rate" => round((double)($counter- $current)/$counter,3)*100, "counter" => $current . '/' . $counter];
+        return ["rate" => round((double)($counter- $current)/$counter,3)*100, "counter" => ($counter- $current) . '/' . $counter];
 
     }
 
