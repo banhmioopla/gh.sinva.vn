@@ -20,22 +20,99 @@ class Customer extends CustomBaseStep {
 	}
 
 	public function showYour(){
-//		return $data['list_customer'] = $this->ghCustomer->get(['user_insert_id' => $this->auth['account_id']]);
 		return $data['list_customer'] = $this->ghCustomer->getByUserAndShare($this->auth['account_id']);
 	}
 
 	public function show(){
-		
-		$data['list_customer'] = $this->ghCustomer->getAll();
+
 		if($this->isYourPermission($this->current_controller, 'showYour')) {
 			$data['list_customer'] = $this->showYour();
-		}
+		} else {
+            $data['list_customer'] = $this->ghCustomer->getAll();
+        }
+        $search_params = [
+            'month_check_in_contract' => "",
+            'is_expired' => ""
+        ];
+        if(isset($_POST['search'])) {
+
+            $list = [];
+            if($this->input->post("month_check_in_contract")){
+                $select_month = $this->input->post("month_check_in_contract");
+                $search_params['month_check_in_contract'] = $select_month;
+                $last_date = (string)cal_days_in_month(CAL_GREGORIAN, date('m', strtotime($select_month)) , '2021')
+                    .'-'
+                    .date('m', strtotime($select_month))
+                    .'-2021';
+                foreach ($data['list_customer'] as $customer) {
+                    $contract = $this->ghContract->get(['customer_id' => $customer['id'],
+                        'time_check_in>='=> strtotime($select_month),
+                        'time_check_in<='=> strtotime($last_date)+86399,
+                    ]);
+                    if(count($contract)) {
+                        $list[] = $customer;
+                    }
+                }
+            }
+
+            if($this->input->post("is_active") == "YES") {
+                $search_params['is_active'] = "YES";
+                $list_is_expired = [];
+                if(count($list)) {
+                    foreach ($list as $customer) {
+                        $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'status'=> $this->ghContract::STATUS_ACTIVE]);
+                        if(count($contract)) {
+                            $list_is_expired[] = $customer;
+                        }
+                    }
+                    $list = $list_is_expired;
+                } else {
+                    if(!$this->input->post("month_check_in_contract")){
+                        foreach ($data['list_customer'] as $customer) {
+                            $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'status'=> $this->ghContract::STATUS_ACTIVE]);
+                            if(count($contract)) {
+                                $list_is_expired[] = $customer;
+                            }
+                        }
+                        $list = $list_is_expired;
+                    }
+                }
+            }
+
+            if($this->input->post("is_active") == "NO") {
+                $search_params['is_active'] = "NO";
+                $list_is_expired = [];
+                if(count($list)) {
+                    foreach ($list as $customer) {
+                        $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'status'=> $this->ghContract::STATUS_ACTIVE]);
+                        if(!count($contract)) {
+                            $list_is_expired[] = $customer;
+                        }
+                    }
+                    $list = $list_is_expired;
+                } else {
+                    if(!$this->input->post("month_check_in_contract")){
+                        foreach ($data['list_customer'] as $customer) {
+                            $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'status'=> $this->ghContract::STATUS_ACTIVE]);
+                            if(!count($contract)) {
+                                $list_is_expired[] = $customer;
+                            }
+                        }
+                        $list = $list_is_expired;
+                    }
+
+                }
+            }
+
+            $data['list_customer'] = $list;
+        }
 		$data['libDistrict'] = $this->libDistrict;
 		$data['libCustomer'] = $this->libCustomer;
 		$data['ghContract'] = $this->ghContract;
 		$data['libUser'] = $this->libUser;
 		$data['select_district'] = $this->libDistrict->cbActive();
 		$data['label_apartment'] =  $this->config->item('label.apartment');
+		$data['search_params'] = $search_params;
 		/*--- Load View ---*/
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('customer/show', $data);

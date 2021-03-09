@@ -33,8 +33,70 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
             }  
         ?>
         <div class="customer-alert"></div>
-        <?php $this->load->view('components/list-navigation'); ?>
         <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <?php $this->load->view('components/list-navigation'); ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="font-weight-bold text-center pb-1 border-bottom">Tìm Kiếm</h4>
+                    <form action="/admin/list-customer" method="post">
+                        <div class="row">
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="month_check_in_contract" class="font-weight-bold">Tháng Ký Hợp Đồng</label>
+                                    <select class="custom-select mt-1" name="month_check_in_contract" id="month_check_in_contract">
+                                        <option value="">Thời Gian Ký Hợp Đồng (2021)</option>
+                                        <?php for($i = 1; $i <= 12; $i++): ?>
+                                            <option value="01-<?= $i ?>-2021"
+                                             <?= $search_params['month_check_in_contract'] == '01-'. $i.'-2021' ? 'selected':"" ?>>Tháng <?= $i ?> - 2021 </option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="month_check_in_contract" class="font-weight-bold">Trạng Thái</label>
+                                    <div class="radio radio-danger checkbox-circle">
+                                        <input id="is_expired-YES" type="radio"
+                                               <?= $search_params['is_expired'] == "YES" ? 'checked':'' ?>
+                                               name="is_active" value="YES">
+                                        <label for="is_expired-YES">
+                                            Đã Ký (Hợp Đồng Còn Hạn)
+                                        </label>
+                                    </div>
+                                    <div class="radio radio-danger checkbox-circle">
+                                        <input id="is_expired-NO" type="radio"
+                                            <?= $search_params['is_expired'] == "NO" ? 'checked':'' ?>
+                                               name="is_active" value="NO">
+                                        <label for="is_expired-NO">
+                                            Đang Theo Dõi (Chưa Ký <small>hoặc</small> Hết Hạn)
+                                        </label>
+                                    </div>
+                                    <div class="radio radio-danger checkbox-circle">
+                                        <input id="is_expired-NONE" type="radio" name="is_active" value=""
+                                            <?= $search_params['is_expired'] == "" ? 'checked':'' ?>
+                                        >
+                                        <label for="is_expired-NONE">
+                                            Bỏ Chọn Cả 2
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 offset-md-3 offset-0 col-12">
+                                <button type="submit" name="search" value="oke" class="btn w-75 btn-danger waves-light waves-effect">Tìm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="col-12 col-md-12">
                 <div class="card-box shadow" style="font-size: 13px">
                     <table class="table-data table table-hover table-bordered">

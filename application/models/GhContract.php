@@ -3,6 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class GhContract extends CI_Model {
     private $table = 'gh_contract';
+    const STATUS_ACTIVE = 'Active';
+    const STATUS_CANCEL = 'Cancel';
+    const STATUS_PENDING = 'Pending';
+    const STATUS_EXPIRED = 'Expired';
 
 	public function get($where = []) {
         $this->db->order_by('id','DESC');

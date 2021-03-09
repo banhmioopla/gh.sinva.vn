@@ -210,7 +210,7 @@
                             $room = $ghRoom->get(['id' => $contract['room_id']]);
                             $room = count($room) ? $room[0] : null;
                             if(!$service_set) {
-                                if(count($room)) {
+                                if($room) {
                                     $apartment = $ghApartment->get(['id' => $room[0]['aparment_id']]);
                                     if(count($apartment)) {
                                         $service_set = $apartment[0];
