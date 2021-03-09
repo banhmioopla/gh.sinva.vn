@@ -120,6 +120,13 @@ if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?></a>
                     </div>
                     <div class="row">
+                        <a class="col-12 text-center text-muted"
+                           target="_blank"
+                           href="/admin/list-dashboard">Độ hoàn thiện thông tin dịch vụ (<strong><?= $libApartment->completeInfoRate($apartment['id'])['counter'] ?></strong>) <small class="text-danger">[?] click để xem tiêu chí </small></a>
+                        <div class=" offset-3 col-6 text-center">
+                            <div class="progress m-b-20">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: <?= $libApartment->completeInfoRate($apartment['id'])['rate'] ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?= $libApartment->completeInfoRate($apartment['id'])['rate'] ?></div>
+                            </div></div>
                         <div class="col-md-8">
                             <h5 class="mb-md-2">Mô tả dự án</h5>
                             <div class="more apm-description" 
