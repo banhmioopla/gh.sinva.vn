@@ -39,6 +39,16 @@ class LibUser {
         return $list_user ? $list_user[0]['name'] : '#';
     }
 
+    public function getLastNameByAccountId($account_id){
+        $user = $this->CI->ghUser->getFirstByAccountId($account_id);
+
+        $output = "";
+        $user_name_arr = $user ? explode(" ",trim($user['name'])) : [];
+        $length = count($user_name_arr);
+        $output = $length>0 ? '<strong>'.$user_name_arr[$length-1].'</strong> ' : "";
+        return $output;
+    }
+
     public function cb($account_id = 0, $is_active = null) {
         $params['role_code <>'] = '';
         $params['account_id >='] = '171020000';

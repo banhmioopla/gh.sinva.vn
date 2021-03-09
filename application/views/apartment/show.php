@@ -208,17 +208,14 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                 <div id="modal-apartment-comment-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-comment-<?=$apartment['id'] ?>">
                 
                     <div class="card-body">
-                        <h4 class="mb-4">Bình luận gần đây</h4>
-
-                        <div class="comment-list slimscroll">
+                        <h5 class="mb-1 text-muted"><u>Bình luận gần đây</u></h5>
+                        <div class="comment-list border-bottom slimscroll">
                             <div id='newContentComment'></div>
                         <?php if(count($list_comment) > 0): ?>
-                            <?php foreach($list_comment as $comment):?>
-                                <div class="comment-box-item taskList">
+                            <?php foreach($list_comment as $comment): ?>
+                                <div class="comment-box-item taskList border-bottom">
                                     <p class="commnet-item-date"><?= date('d/m/Y, H:i') ?></p>
-                                    <p class="commnet-item-msg text-info"><?= $comment['content'] ?></p>
-
-                                    <small class="commnet-item-user text-right text-danger"><?= $libUser->getNameByAccountid($this->auth['account_id']) ?></small>
+                                    <p class="commnet-item-msg"><span class="text-danger" style="font-size:12px"> <u><?= $libUser->getLastNameByAccountId($comment['user_id']) ?></u>:</span> <i><?= $comment['content'] ?></i></p>
                                 </div>
                             <?php endforeach; ?>
                         <?php endif;?>

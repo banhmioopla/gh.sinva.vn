@@ -7,6 +7,8 @@ class Login extends CI_Controller {
 		parent::__construct();
 		$this->load->model('ghUser');
 		$this->load->helper('cookie');
+		$this->default_url = '/admin/list-apartment';
+		$this->logout_url = '/admin/logout';
 	}
 	public function show()
 	{
@@ -18,9 +20,9 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if(!empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
-                return redirect('/admin/list-apartment');
+                return redirect($this->default_url);
 			} else {
-				return redirect('/admin/logout');
+				return redirect($this->logout_url);
 			}
 		} 
 		
@@ -32,7 +34,7 @@ class Login extends CI_Controller {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
 				set_cookie('account_id', $user_profile[0]['account_id'],2592000);
 				set_cookie('password', $user_profile[0]['password'], 2592000);
-				return redirect('/admin/list-apartment');
+				return redirect($this->default_url);
 			}
 		}
 		// load_view
