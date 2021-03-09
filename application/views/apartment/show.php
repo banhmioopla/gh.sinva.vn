@@ -224,7 +224,7 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                         <?php if(count($list_comment) > 0): ?>
                             <?php foreach($list_comment as $comment): ?>
                                 <div class="comment-box-item taskList border-bottom">
-                                    <p class="commnet-item-date"><?= date('d/m/Y, H:i') ?></p>
+                                    <p class="commnet-item-date"><?= date('d/m/Y, H:i', $comment['time_insert']) ?></p>
                                     <p class="commnet-item-msg"><span class="text-danger" style="font-size:12px"> <u><?= $libUser->getLastNameByAccountId($comment['user_id']) ?></u>:</span> <i><?= $comment['content'] ?></i></p>
                                 </div>
                             <?php endforeach; ?>
