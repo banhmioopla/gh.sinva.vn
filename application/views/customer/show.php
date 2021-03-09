@@ -65,7 +65,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     <label for="month_check_in_contract" class="font-weight-bold">Trạng Thái</label>
                                     <div class="radio radio-danger checkbox-circle">
                                         <input id="is_expired-YES" type="radio"
-                                               <?= $search_params['is_expired'] == "YES" ? 'checked':'' ?>
+                                               <?= $search_params['is_active'] == "YES" ? 'checked':'' ?>
                                                name="is_active" value="YES">
                                         <label for="is_expired-YES">
                                             Đã Ký (Hợp Đồng Còn Hạn)
@@ -73,7 +73,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     </div>
                                     <div class="radio radio-danger checkbox-circle">
                                         <input id="is_expired-NO" type="radio"
-                                            <?= $search_params['is_expired'] == "NO" ? 'checked':'' ?>
+                                            <?= $search_params['is_active'] == "NO" ? 'checked':'' ?>
                                                name="is_active" value="NO">
                                         <label for="is_expired-NO">
                                             Đang Theo Dõi (Chưa Ký <small>hoặc</small> Hết Hạn)
@@ -81,7 +81,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     </div>
                                     <div class="radio radio-danger checkbox-circle">
                                         <input id="is_expired-NONE" type="radio" name="is_active" value=""
-                                            <?= $search_params['is_expired'] == "" ? 'checked':'' ?>
+                                            <?= $search_params['is_active'] == "" ? 'checked':'' ?>
                                         >
                                         <label for="is_expired-NONE">
                                             Bỏ Chọn Cả 2
@@ -163,18 +163,16 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 </td>
                                 <td>
                                     <?php
-                                    $status = 'muted';
-                                    if($row['status'] == 'sinva-rented'){
+                                    $status = 'đang theo dõi';
+                                    $status_text= "đang theo dõi";
+                                    if($isExpired == 'success'){
                                         $status = 'success';
-                                    }
-
-                                    if($row['status'] == 'sinva-info-form'){
-                                        $status = 'danger';
+                                        $status_text = "đã ký";
                                     }
 
                                     ?>
                                     <div class="customer-source text-center text-<?= $status ?>">
-                                        <?= $row['status'] ? $label_apartment[$row['status']] : '[chưa cập nhật]' ?>
+                                        <?= $status_text ?>
                                     </div>
 
                                 </td>

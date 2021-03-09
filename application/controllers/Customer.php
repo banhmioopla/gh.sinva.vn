@@ -32,7 +32,7 @@ class Customer extends CustomBaseStep {
         }
         $search_params = [
             'month_check_in_contract' => "",
-            'is_expired' => ""
+            'is_active' => ""
         ];
         if(isset($_POST['search'])) {
 
