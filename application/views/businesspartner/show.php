@@ -1,3 +1,6 @@
+<?php
+include VIEWPATH.'functions.php';
+?>
 <div class="wrapper">
     <div class="container">
 
@@ -113,6 +116,14 @@
                                         <a target="_blank" class="text-danger"
                                            href="/admin/business-partner/detail?id=<?= $row['id'] ?>">Chi tiết</a>
                                     </div>
+                                    <?php if(isYourPermission('BusinessPartner', 'delete', $this->permission_set)): ?>
+                                    <div class="text-center mt-1 font-weight-bold">
+                                        <button data-obj-id="<?= $row['id'] ?>" type="button"
+                                                class="btn m-1 obj-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                    </div>
+                                    <?php endif;?>
                                 </td>
 
                             </tr>
@@ -194,6 +205,7 @@
     </div> <!-- end container -->
 </div>
 <!-- end wrapper -->
+
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
@@ -241,29 +253,39 @@
                 } // end fnDrawCallback
             });
 
-            $('.delete-businesspartner').click(function(){
-                var this_id = $(this).attr('id');
-                var this_click = $(this);
-                var matches = this_id.match(/(\d+)/);
-                var businesspartner_id = matches[0];
-                if(businesspartner_id > 0) {
+
+            <?php if(isYourPermission('BusinessPartner', 'delete', $this->permission_set)): ?>
+            $('.obj-delete').on('click', function() {
+                let this_btn = $(this);
+                let id = $(this).data('obj-id');
+                swal({
+                    title: 'Xác Nhận Xóa Đối Tác Kinh Doanh',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-confirm mt-2',
+                    cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy',
+                }).then(function () {
                     $.ajax({
                         type: 'POST',
-                        url: '<?= base_url() ?>admin/delete-businesspartner',
-                        data: {businesspartner_id: businesspartner_id},
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.businesspartner-alert').html(notify_html_success);
-                                this_click.parents('tr').remove();
-
-                            } else {
-                                $('.businesspartner-alert').html(notify_html_fail);
+                        url:'<?= base_url()."admin/delete-business-partner" ?>',
+                        data: {id:id},
+                        success:function(response) {
+                            let data = JSON.parse(response);
+                            if(data.status > 0) {
+                                this_btn.parents('tr').remove();
                             }
                         }
                     });
-                }
+                    swal({
+                        title: 'Đã Xóa Thành Công!',
+                        type: 'success',
+                        confirmButtonClass: 'btn btn-confirm mt-2'
+                    });
+                })
             });
+            <?php endif; ?>
         });
     });
 </script>

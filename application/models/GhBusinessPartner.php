@@ -31,8 +31,8 @@ class GhBusinessPartner extends CI_Model {
         return $result;
     }
 
-    public function delete($district_id) {
-        $this->db->where('id' , $district_id);
+    public function delete($id) {
+        $this->db->where('id' , $id);
         $this->db->delete($this->table);
         $result = $this->db->affected_rows();
         return $result;

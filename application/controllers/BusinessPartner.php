@@ -81,14 +81,14 @@ class BusinessPartner extends CustomBaseStep {
 
     // Ajax
     public function update() {
-        $district_id = $this->input->post('district_id');
+        $id = $this->input->post('district_id');
         $field_value = $this->input->post('field_value');
         $field_name = $this->input->post('field_name');
-        if(!empty($district_id) and !empty($field_value)) {
+        if(!empty($id) and !empty($field_value)) {
             $data = [
                 $field_name => $field_value
             ];
-            $result = $this->ghBusinessPartner->updateById($district_id, $data);
+            $result = $this->ghBusinessPartner->updateById($id, $data);
             echo json_encode(['status' => $result]); die;
         }
         echo json_encode(['status' => false]); die;
@@ -154,12 +154,12 @@ class BusinessPartner extends CustomBaseStep {
     }
 
     public function delete(){
-        $district_id = $this->input->post('district_id');
-        if(!empty($district_id)) {
-            $old_district = $this->ghBusinessPartner->getById($district_id);
+        $id = $this->input->post('id');
+        if(!empty($id)) {
+            $old_district = $this->ghBusinessPartner->getById($id);
 
             $log = [
-                'table_name' => 'gh_district',
+                'table_name' => 'gh_business_partner',
                 'old_content' => null,
                 'modified_content' => json_encode($old_district[0]),
                 'time_insert' => time(),
@@ -168,7 +168,8 @@ class BusinessPartner extends CustomBaseStep {
 
             // call model
             $tracker = $this->ghActivityTrack->insert($log);
-            $result = $this->ghBusinessPartner->delete($district_id);
+            $result = $this->ghBusinessPartner->delete($id);
+            $this->ghMergeBusinessApartment->deleteByBusinessId($id);
 
             if($result > 0) {
                 echo json_encode(['status' => true]); die;

@@ -37,6 +37,12 @@ class GhMergeBusinessApartment extends CI_Model {
         $result = $this->db->affected_rows();
         return $result;
     }
+    public function deleteByBusinessId($bid) {
+        $this->db->where('business_id' , $bid);
+        $this->db->delete($this->table);
+        $result = $this->db->affected_rows();
+        return $result;
+    }
 }
 
 /* End of file mApartment.php */

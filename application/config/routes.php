@@ -322,6 +322,11 @@ $route['admin/update-business-partner-editable'] = function($params = []) {
     $action = '/updateEditable';
     return $controller.$action;
 };
+$route['admin/delete-business-partner'] = function($params = []) {
+    $controller = 'BusinessPartner';
+    $action = '/delete';
+    return $controller.$action;
+};
 
 // Crawler
 $route['admin/list-crawler'] = function($params = []) {
