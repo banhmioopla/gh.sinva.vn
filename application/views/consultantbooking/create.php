@@ -94,6 +94,7 @@
                                     ?>
                                     <p class="text-center text-<?= $flash_status ?>"><?= $flash_mess ?></p>
                                 <?php endif; ?>
+                                <p class="font-weight-bold">Nhập xong số điện thoại, vui lòng click (bấm) bên ngoài form này để gh check thông tin SDT tồn tại hay chưa!</p>
                             </div>
                         </div>
                     </div>
@@ -245,6 +246,7 @@
                                     class="btn btn-custom waves-effect waves-light">
                                 Thêm Mới
                             </button>
+                            <p class="text-danger noenter" style="display: none">Không được enter!</p>
                         </div>
                     </div>
                 </form>
@@ -260,6 +262,13 @@
 
 <script>
     commands.push(function(){
+        $(window).keydown(function(event){
+            if(event.keyCode === 13) {
+                event.preventDefault();
+                $('.noenter').show();
+                return false;
+            }
+        });
         $('input[name=phone_number]').focusout(function () {
             let phone = $(this).val();
             if (phone.length > 0) {
@@ -268,8 +277,6 @@
                     method: 'GET',
                     success: function (res) {
                         res = JSON.parse(res);
-                        console.log(res);
-                        console.log(res.length);
                         if (res.length > 0) {
                             $('.msg-phone').addClass('text-warning');
                             $('.msg-phone').removeClass('text-success');
