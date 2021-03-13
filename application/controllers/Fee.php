@@ -509,7 +509,12 @@ class Fee extends CustomBaseStep {
                         }
 
                         if($item['consultant_support_id'] == $user_id) {
-                            $total_b2 += (double)$temp_income * 0.3;
+                            $isB1 = $this->isB1($item, strtotime($start_date), strtotime($end_date)+86399);
+                            if($isB1['status'] === true){
+                                $total_b2 += $isB1['total_income'] * 0.3;
+                            } else {
+                                $total_b2 += (double)$temp_income * 0.3;
+                            }
 
                             $this->updateToIncomeContract([
                                 'contract_id' => $item['id'],
@@ -794,6 +799,47 @@ class Fee extends CustomBaseStep {
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('fee/show-income-mechanism', $data);
         $this->load->view('components/footer');
+    }
+
+    private function isB1($contract, $start, $end){
+        $list_contract = $this->ghContract->get([
+            'consultant_id' => $contract['consultant_id'],
+            'time_check_in >=' => $start,
+            'time_check_in <=' => $end,
+        ]);
+        $cd_config = $this->config->item('internal_mechanism_income_rate_control_department');
+        $sale_config = $this->config->item('internal_mechanism_income_rate');
+        if(count($list_contract) == 1) {
+            foreach ($cd_config['index_master_b1'] as $b1) {
+                if($contract['room_price'] > $b1['room_price_min'] && $contract['room_price'] <= $b1['room_price_max']) {
+                    $total_income = $b1['income_unit'] * $contract['number_of_month'];
+                    return ['status' => true, 'total_income' => $total_income];
+                }
+            }
+        }
+        if(count($list_contract) > 1){
+            $max_value = 0;
+            $max_value_id = 0;
+            $max_room_price=0;
+            $max_month = 0;
+            foreach ($list_contract as $item) {
+                if($item['room_price'] * $item['number_of_month'] > $max_value) {
+                    $max_value = $item['room_price'] * $item['number_of_month'];
+                    $max_value_id = $item['id'];
+                    $max_room_price = $item['room_price'];
+                    $max_month = $item['number_of_month'];
+                }
+            }
+            if($max_value_id ===$contract['id']){
+                foreach ($cd_config['index_master_b1'] as $b1) {
+                    if($max_room_price > $b1['room_price_min'] && $max_room_price <= $b1['room_price_max']) {
+                        $total_income = $b1['income_unit'] * $max_month;
+                        return ['status' => true, 'total_income' => $total_income];
+                    }
+                }
+            }
+        }
+        return ['status' => false];
     }
 
 }

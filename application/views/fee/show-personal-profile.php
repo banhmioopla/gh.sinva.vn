@@ -129,30 +129,29 @@ $data = array_values($list_user_income)[0];
                             </script>
                         </div>
                     </div>
-                    <hr>
                     <div class="table-responsive">
-                        <table class="table table-borderless m-b-0">
+                        <table class="table table-bordered m-b-0">
                             <tbody>
                             <tr>
-                                <td>Số Lượng Hợp Đồng</td>
+                                <td style="width: 30%">Số Lượng Hợp Đồng</td>
                                 <td class="text-right"><?= $data['quantity_contract']
                                     ?></td>
                             </tr>
                             <tr>
                                 <td>Tổng Doanh Số</td>
-                                <td class="text-right"><?= number_format($data['total_sale']) ?></td>
+                                <td class="text-right"><?= number_format($data['total_sale']) ?> vnđ</td>
                             </tr>
                             <tr>
                                 <td>Tổng Thu Nhập Từ Hợp Đồng</td>
-                                <td class="text-right"><?= number_format($data['total_personal_income']) ?></td>
+                                <td class="text-right"><?= number_format($data['total_personal_income']) ?> vnđ</td>
                             </tr>
                             <tr>
                                 <td>Tổng Thu Nhập Từ Tuyển Thành Viên </td>
-                                <td class="text-right"><?= number_format($data['total_refer_income']) ?></td>
+                                <td class="text-right"><?= number_format($data['total_refer_income']) ?> vnđ</td>
                             </tr>
                             <tr>
                                 <td>Tổng Thu Nhập Từ Lấy Dự Án</td>
-                                <td class="text-right"><?= number_format($data['total_get_new_apartment_total']) ?></td>
+                                <td class="text-right"><?= number_format($data['total_get_new_apartment_total']) ?> vnđ</td>
                             </tr>
                             <tr>
                                 <td>Các Danh Mục Trừ Tiền</td>
@@ -184,7 +183,7 @@ $data = array_values($list_user_income)[0];
                                         </ul>
                                     <?php endforeach; ?>
                                     <?php else: ?>
-                                    <small class="text-info">không có khoản trừ tiền</small>
+                                    <small class="text-info font-weight-bold">không có khoản trừ tiền</small>
                                 <?php endif; ?>
 
                                 </td>

@@ -22,13 +22,13 @@
         <div class="col-12 col-md-8 offset-md-2 offset-0">
             <div class="card-box">
                 <?php
-                $apartment_model = $ghApartment->get(['id' => $this->input->get('apartment-id')]);
+                $apartment_model = $ghApartment->getFirstById($this->input->get('apartment-id'));
                 $room_model = $ghRoom->get(['active' => 'YES', 'apartment_id' => $this->input->get('apartment-id')]);
                 ?>
                 <h3 class="text-center text-danger"><?=
-                    $apartment_model[0]['address_street'] ?></h3>
+                    $apartment_model['address_street'] ?></h3>
                 <hr>
-                <form novalidate action="/admin/create-new-consultant-booking?apartment-id=<?= $this->input->get('apartment-id')
+                <form action="/admin/create-new-consultant-booking?apartment-id=<?= $this->input->get('apartment-id')
                 ?>&district-code=<?= $this->input->get('district-code')?>&mode=create"
                       method="post">
                     <input type="hidden" name='district_code'
@@ -39,8 +39,7 @@
                     <div class="form-group">
                         <div class="row">
                             <label for=""
-                                   class="col-3 offset-2 text-right col-form-label">Chọn
-                                mã phòng</label>
+                                   class="col-3 offset-2 text-right col-form-label">Chọn mã phòng</label>
                             <div class="col-md-7">
                                 <?php
                                 foreach ($room_model as $item):
@@ -64,24 +63,20 @@
                     <div class="form-group">
                         <div class="row">
                             <label for="time_booking"
-                                   class="col-3 offset-2 text-right col-form-label">Chọn
-                                thời gian dẫn khách<span class="text-danger">*</span></label>
-                            <div class="col-12 col-md-7">
-                                <input type="text" required
-                                       class="form-control border-info datetimepicker"
+                                   class="col-3 offset-2 text-right col-form-label">Chọn thời gian dẫn khách<span class="text-danger">*</span></label>
+                            <div class="col-12 col-md-5">
+                                <input type="text" required class="form-control border-info datetimepicker"
                                        id="time_booking" name="time_booking">
                                 <p class="msg-time_booking"></p>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-
                         <div class="row">
                             <label for="phone_number"
-                                   class="col-3 offset-2 text-right col-form-label">Số
-                                điện thoại khách hàng<span
+                                   class="col-3 offset-2 text-right col-form-label">Số điện thoại khách hàng<span
                                     class="text-danger">*</span></label>
-                            <div class="col-md-7">
+                            <div class="col-md-5">
                                 <input type="text" required
                                        class="form-control border-info"
                                        id="phone_number" name="phone_number"
@@ -94,18 +89,17 @@
                                     ?>
                                     <p class="text-center text-<?= $flash_status ?>"><?= $flash_mess ?></p>
                                 <?php endif; ?>
-                                <p class="font-weight-bold">Nhập xong số điện thoại, vui lòng click (bấm) bên ngoài form này để gh check thông tin SDT tồn tại hay chưa!</p>
+                                <p class="font-weight-bold text-info">Nhập xong số điện thoại, vui lòng click (bấm) bên ngoài form này để gh check thông tin SDT tồn tại hay chưa!</p>
                             </div>
                         </div>
                     </div>
-                    <div class="next-input new-customer d-none">
+                    <div class="next-input new-customer">
                         <div class="form-group">
                             <div class="row">
                                 <label for="customer_name"
-                                       class="col-3 offset-2 text-right col-form-label">Họ
-                                    tên khách hàng<span
+                                       class="col-3 offset-2 text-right col-form-label">Họ tên khách hàng<span
                                         class="text-danger">*</span></label>
-                                <div class="col-md-7">
+                                <div class="col-md-5">
                                     <input type="text" required class="form-control"
                                            id="customer_name" name="customer_name">
                                 </div>
@@ -114,8 +108,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <label for="name"
-                                       class="col-3 offset-2 text-right col-form-label">Giới
-                                    tính<span class="text-danger">*</span></label>
+                                       class="col-3 offset-2 text-right col-form-label">Giới tính<span class="text-danger">*</span></label>
                                 <div class="col-5">
                                     <div class="radio radio-custom">
                                         <input type="radio" name="gender" checked
@@ -139,9 +132,10 @@
                             <div class="row">
                                 <label for="birthdate"
                                        class="col-3 offset-2 text-right col-form-label">Ngày
-                                    sinh<span class="text-danger">*</span></label>
+                                    sinh</label>
                                 <div class="col-5">
                                     <input type="text" name="birthdate"
+                                           id="birthdate"
                                            class="form-control datepicker"
                                            placeholder="mm/dd/yyyy">
                                 </div>
@@ -195,8 +189,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <label for="source"
-                                       class="col-3 offset-2 text-right col-form-label">**
-                                    Nguồn<span class="text-danger">*</span></label>
+                                       class="col-3 offset-2 text-right col-form-label">Nguồn<span class="text-danger">*</span></label>
                                 <div class="col-5">
                                     <div class="radio radio-custom">
                                         <input type="radio" name="source"
@@ -243,9 +236,8 @@
                     <div class="form-group row">
                         <div class="col-md-7 offset-md-5">
                             <button type="submit"
-                                    class="btn btn-custom waves-effect waves-light">
-                                Thêm Mới
-                            </button>
+                                    id="submit"
+                                    class="btn btn-custom waves-effect waves-light">Thêm Mới</button>
                             <p class="text-danger noenter" style="display: none">Không được enter!</p>
                         </div>
                     </div>
@@ -262,46 +254,110 @@
 
 <script>
     commands.push(function(){
-        $(window).keydown(function(event){
-            if(event.keyCode === 13) {
-                event.preventDefault();
+        $('form').on('keyup keypress',function(e) {
+            if(e.which == 13) {
                 $('.noenter').show();
+                e.preventDefault();
                 return false;
             }
         });
-        $('input[name=phone_number]').focusout(function () {
+
+        $('form').submit(function(){
+            $('button').attr('disabled', true);
+        });
+        $('input[name=phone_number]').on('focusout, change', function () {
             let phone = $(this).val();
             if (phone.length > 0) {
-                $.ajax({
-                    url: '<?= base_url()?>admin/search-customer?q=' + phone,
-                    method: 'GET',
-                    success: function (res) {
-                        res = JSON.parse(res);
-                        if (res.length > 0) {
-                            $('.msg-phone').addClass('text-warning');
-                            $('.msg-phone').removeClass('text-success');
-                            $('.msg-phone').text(' khách ' + res[0]['text'] + ' này đã sẵn sàng để bạn dẫn');
-                            $('input[name=customer_id]').val(res[0]['id']);
-                            $('.next-input').addClass('d-none');
-                        } else {
-                            $('input[name=customer_id]').val("");
-                            $('.msg-phone').addClass('text-success');
-                            $('.msg-phone').removeClass('text-warning');
-                            $('.msg-phone').text('Đây là khách mới <3');
-                            $('.next-input').removeClass('d-none');
-                        }
-
-                    }
-                });
+                loadCustomer(phone);
             }
         });
 
+        let __phone = $('input[name=phone_number]').val();
+        if(__phone) {
+            console.log(1);
+            loadCustomer(__phone);
+        }
+        
+        function loadCustomer(phone) {
+            $.ajax({
+                url: '<?= base_url()?>admin/search-customer?q=' + phone+'&full=true',
+                method: 'GET',
+                success: function (res) {
+                    let data = JSON.parse(res);
+                    if(data.status === true) {
+                        let profile = data.profile;
+                        $('#customer_name').val(profile.name);
+                        $('input[name=customer_id]').val(profile.id);
+                        $('#customer_name').attr('disabled', true);
+
+                        if(profile.gender.length > 0) {
+                            $('input[name=gender]').val(profile.gender);
+                            $('input[name=gender]').prop('checked', true);
+                        }
+                        $('input[name=gender]').attr('disabled', true);
+
+                        if(profile.source.length > 0) {
+                            $('input[name=source]').val(profile.source);
+                            $('input[name=source]').prop('checked', true);
+                        }
+                        $('input[name=source]').attr('disabled', true);
+
+                        $('#birthdate').val(profile.birthdate);
+                        $('#birthdate').attr('disabled', true);
+
+                        $('#email').val(profile.email);
+                        $('#email').attr('disabled', true);
+
+                        $('input[name=demand_price]').val(profile.demand_price);
+                        $('input[name=demand_price]').attr('disabled', true);
+
+                        $('input[name=demand_district_code]').val(profile.demand_district_code);
+                        $('input[name=demand_district_code]').attr('disabled', true);
+
+                        $('input[name=demand_time]').val(profile.demand_time);
+                        $('input[name=demand_time]').attr('disabled', true);
+                    } else {
+                        $('#customer_name').val("");
+                        $('#customer_id').val("");
+                        $('#customer_name').attr('disabled', false);
+
+                        $('input[name=gender]').val("");
+                        $('input[name=gender]').prop('checked', false);
+                        $('input[name=gender]').attr('disabled', false);
+
+                        $('input[name=source]').val("");
+                        $('input[name=source]').prop('checked', false);
+                        $('input[name=source]').attr('disabled', false);
+
+                        $('#birthdate').val("");
+                        $('#birthdate').attr('disabled', false);
+
+                        $('#email').val("");
+                        $('#email').attr('disabled', false);
+
+                        $('input[name=demand_price]').val("");
+                        $('input[name=demand_price]').attr('disabled', false);
+
+                        $('input[name=demand_district_code]').val("");
+                        $('input[name=demand_district_code]').attr('disabled', false);
+
+                        $('input[name=demand_time]').val("");
+                        $('input[name=demand_time]').attr('disabled', false);
+                    }
+
+                }
+            });
+        }
+        
+        
+
         $('.datepicker').datepicker({
-            format: "dd/mm/yyyy",
+            format: "dd-mm-yyyy",
+            autoclose:true
         });
         $('.datetimepicker').datetimepicker({
             sideBySide: true,
-            format: 'DD/MM/YYYY hh:mm a',
+            format: 'DD-MM-YYYY hh:mm a',
         });
     });
 

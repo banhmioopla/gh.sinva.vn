@@ -284,6 +284,9 @@ class Customer extends CustomBaseStep {
 			        if($customer[0]['birthdate'] !== null) {
                         $profile['birthdate'] = date('d-m-Y', $customer[0]['birthdate']);
                     }
+                    if($customer[0]['demand_time'] !== null) {
+                        $profile['demand_time'] = date('d-m-Y', $customer[0]['demand_time']);
+                    }
 
                     echo json_encode([
                         'status' => true,

@@ -168,7 +168,7 @@ class ConsultantBooking extends CustomBaseStep {
                         'message' => 'Vui lòng nhập số điện thoại, Tên khách hàng nếu bạn dẫn khách mới',
                         'status' => 'danger'
                     ]);
-                return redirect('admin/create-new-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
+                    return redirect('admin/create-new-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
 
                 }
 
