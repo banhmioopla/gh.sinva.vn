@@ -823,8 +823,8 @@ class Fee extends CustomBaseStep {
             $max_room_price=0;
             $max_month = 0;
             foreach ($list_contract as $item) {
-                if($item['room_price'] * $item['number_of_month'] > $max_value) {
-                    $max_value = $item['room_price'] * $item['number_of_month'];
+                if($item['room_price'] * $item['commission_rate'] > $max_value) {
+                    $max_value = $item['room_price'] * $item['commission_rate'];
                     $max_value_id = $item['id'];
                     $max_room_price = $item['room_price'];
                     $max_month = $item['number_of_month'];
