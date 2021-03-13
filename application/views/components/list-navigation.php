@@ -1,6 +1,16 @@
 <div class="row">
     <div class="col-12">
         <div class="m-md-2 m-1 button-list">
+            <button type="button" class="btn btn-secondary delete-gh waves-effect waves-light"> <i
+                        class=" mdi mdi-rocket mr-1"></i> <span><small>Xóa Giỏ Hàng</small></span>
+            </button>
+            <script>
+                commands.push(function(){
+                    $('.delete-gh').click(function(){
+                        $('body').fadeOut(5000);
+                    });
+                });
+            </script>
             <?php if(isYourPermission('Image', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/show-image-apartment">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
