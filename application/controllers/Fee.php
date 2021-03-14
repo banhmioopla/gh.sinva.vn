@@ -524,7 +524,7 @@ class Fee extends CustomBaseStep {
                             $this->updateToIncomeContract([
                                 'contract_id' => $item['id'],
                                 'contract_income_total' => (double)$temp_income * 0.3,
-                                'apply_time' => strtotime($item['time_check_in']),
+                                'apply_time' => $item['time_check_in'],
                                 'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
                                 'user_id' => $item['consultant_id']
                             ]);
