@@ -1052,6 +1052,12 @@ $route['public/consulting-post-detail'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/user-contract-order'] = function($params = []) {
+    $controller = 'UserContractOrder';
+    $action = '/showCreate';
+    return $controller.$action;
+};
+
 
 /* :::API-INTERNAL:::*/
 

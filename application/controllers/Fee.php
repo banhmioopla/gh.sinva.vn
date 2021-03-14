@@ -410,6 +410,7 @@ class Fee extends CustomBaseStep {
         $max_consultant_support_id = 0;
         $max_is_support_control = "NO";
         $max_time_apply = null;
+        $max_consultant_id = 0;
         $temp1 = 0;
         $total_b1 = 0;
         $total_b2 = 0;
@@ -445,6 +446,7 @@ class Fee extends CustomBaseStep {
                     $max_consultant_support_id = $item['consultant_support_id'];
                     $max_is_support_control = $item['is_support_control'];
                     $max_time_apply = $item['time_check_in'];
+                    $max_consultant_id  = $item['consultant_id'];
                 }
             }
             $sub_description .= "(3) HĐ cao nhất: $max_room_price ($max_number_of_month tháng) <br>";
@@ -463,12 +465,14 @@ class Fee extends CustomBaseStep {
                     }
                     $sub_description .= "(4) B1: $max_number_of_month th x " .$b1['income_unit']." = ". $total_b1 .
                         "<br>";
+
                     if($max_contract_id > 0) {
                         $this->updateToIncomeContract([
                             'contract_id' => $max_contract_id,
                             'contract_income_total' => $total_b1,
                             'apply_time' => $max_time_apply,
-                            'type' => self::INCOME_TYPE_CONTRACT
+                            'type' => self::INCOME_TYPE_CONTRACT,
+                            'user_id' => $max_consultant_id
                         ]);
                     }
 
@@ -504,7 +508,8 @@ class Fee extends CustomBaseStep {
                                 'contract_id' => $item['id'],
                                 'contract_income_total' => (double)$temp_income,
                                 'apply_time' => strtotime($item['time_check_in']),
-                                'type' => self::INCOME_TYPE_CONTRACT
+                                'type' => self::INCOME_TYPE_CONTRACT,
+                                'user_id' => $item['consultant_id']
                             ]);
                         }
 
@@ -520,7 +525,8 @@ class Fee extends CustomBaseStep {
                                 'contract_id' => $item['id'],
                                 'contract_income_total' => (double)$temp_income * 0.3,
                                 'apply_time' => strtotime($item['time_check_in']),
-                                'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER
+                                'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
+                                'user_id' => $item['consultant_id']
                             ]);
                         }
 
@@ -577,7 +583,8 @@ class Fee extends CustomBaseStep {
                         'contract_id' => $item['id'],
                         'contract_income_total' => $temp_support_income,
                         'apply_time' => strtotime($item['time_check_in']),
-                        'type' => self::INCOME_TYPE_CONTRACT
+                        'type' => self::INCOME_TYPE_CONTRACT,
+                        'user_id' => $item['consultant_support_id']
                     ]);
                 }
 
@@ -586,7 +593,8 @@ class Fee extends CustomBaseStep {
                     'contract_id' => $item['id'],
                     'contract_income_total' => $temp_income,
                     'apply_time' => strtotime($item['time_check_in']),
-                    'type' => self::INCOME_TYPE_CONTRACT
+                    'type' => self::INCOME_TYPE_CONTRACT,
+                    'user_id' => $item['consultant_id']
                 ]);
             }
         }
@@ -639,7 +647,7 @@ class Fee extends CustomBaseStep {
 
     }
     private function updateToIncomeContract($data){
-        $model = $this->ghUserIncomeDetail->getByContractId($data['contract_id']);
+        $model = $this->ghUserIncomeDetail->getByUserIdAndContractId($data['user_id'],$data['contract_id']);
         if(count($model)) {
             $this->ghUserIncomeDetail->updateById($model[0]['id'], $data);
         }else {

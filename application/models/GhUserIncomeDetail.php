@@ -25,6 +25,10 @@ class GhUserIncomeDetail extends CI_Model {
         return $this->db->get_where($this->table, ['user_id' => $user_id, 'apartment_id' => $apartment_id])->result_array();
     }
 
+    public function getByUserIdAndContractId($user_id, $contract_id) {
+        return $this->db->get_where($this->table, ['user_id' => $user_id, 'contract_id' => $contract_id])->result_array();
+    }
+
     public function getByUserIdAndTimeApply($user_id, $apply_time) {
         return $this->db->get_where($this->table,
             [
@@ -42,8 +46,8 @@ class GhUserIncomeDetail extends CI_Model {
         return $this->db->insert($this->table, $data);
     }
 
-    public function updateById($tag_id, $data) {
-        $this->db->where('id', $tag_id);
+    public function updateById($id, $data) {
+        $this->db->where('id', $id);
         $this->db->update($this->table, $data);
         $result = $this->db->affected_rows();
         return $result;

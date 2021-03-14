@@ -142,6 +142,7 @@
                             <th>Thành Viên</th>
                             <th class="text-center">Hợp Đồng</th>
                             <th class="text-center" width="80px">Chi Tiết <br> <small>x1000vnđ</small></th>
+                            <th>Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -172,6 +173,13 @@
                                         <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?> <small class="text-center">(thu nhập)</small></span>
                                     </div>
                                 </td>
+                                <td>
+                                    <a type="button"
+                                       target="_blank"
+                                       href="/admin/user-contract-order?uid=<?= $account_id ?>"
+                                        class="btn btn-info btn-rounded btn-sm waves-light waves-effect">
+                                        <i class="mdi mdi-call-split"></i><small>Đã Chi</small></a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -187,6 +195,7 @@
                             <th>Thành Viên</th>
                             <th class="text-center">Hợp Đồng</th>
                             <th class="text-center" width="80px">Chi Tiết <br> <small>x1000vnđ</small></th>
+                            <th class="text-center" width="80px">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -213,6 +222,13 @@
                                         <br>
                                         <span class="text-success"><?= number_format($item['total_personal_income']/1000) ?> <small class="text-center">(thu nhập)</small></span>
                                     </div>
+                                </td>
+                                <td>
+                                    <a type="button"
+                                       target="_blank"
+                                       href="/admin/user-contract-order?uid=<?= $account_id ?>"
+                                       class="btn btn-info btn-rounded btn-sm waves-light waves-effect">
+                                        <i class="mdi mdi-call-split"></i><small>Đã Chi</small></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
