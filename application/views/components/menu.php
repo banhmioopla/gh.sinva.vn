@@ -1,4 +1,4 @@
-<?php 
+<?php
     include VIEWPATH.'functions.php';
 ?>
 <div class="navbar-custom">
@@ -81,7 +81,7 @@
                     <ul class="submenu">
                         <li><a href="/admin/list-service"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Danh Mục Chi Phí</a></li>
-                        <?php if(isYourPermission('Fee', 'showContractIncome',$this->permission_set)):?>
+                        <?php if(isYourPermission('Fee', 'showOverviewIncome',$this->permission_set)):?>
                         <li><a href="/admin/list-fee-contract-income"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Phòng Tài Chính</a></li>
                         <?php endif;?>
