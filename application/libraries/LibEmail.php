@@ -54,7 +54,7 @@ class LibEmail {
 
         $serverConfig = [
             'Host' => 'mail.supremecluster.com',
-            'Host' => 'mail.supremecluster.com',
+//            'Host' => 'mail.supremecluster.com',
             'SMTPDebug' => 1,
             'Port' => 587,
             'SMTPAuth' => true,
