@@ -54,16 +54,26 @@ class CustomBaseStep extends CI_Controller {
 
 
         $this->arr_general = $this->libConfig->getListGeneralControlDepartment();
-		if(!$this->checkCurrentPermission($this->permission_set)) {
-			return redirect('/admin/notfound');
-		}
+		$open_modules = [
+		    /*Controller => [actions]*/
+		    'InternalContent' => ['show', 'pageIncomeRule', 'create', 'updateEditable'],
+        ];
+        if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
+
+            if(!$this->checkCurrentPermission($this->permission_set)) {
+                return redirect('/admin/notfound');
+            }
+        }
+
+
 	}
 
 	private function checkCurrentPermission($permission_set) {
 		$permission_controller_set = array_keys($permission_set);
-		$permission_action_set = $permission_set[$this->current_controller];
+		$permission_action_set = isset($permission_set[$this->current_controller]) ? $permission_set[$this->current_controller] : [];
 
-		if(in_array($this->current_controller, $permission_controller_set) && in_array($this->current_action, $permission_action_set)) {
+		if(in_array($this->current_controller, $permission_controller_set)
+            && in_array($this->current_action, $permission_action_set)) {
 			return true;
 		}
 		return false;

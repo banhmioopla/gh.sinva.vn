@@ -1063,6 +1063,23 @@ $route['admin/user-contract-order'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/list-internal-content'] = function($params = []) {
+    $controller = 'InternalContent';
+    $action = '/show';
+    return $controller.$action;
+};
+
+$route['admin/internal-content/create'] = function($params = []) {
+    $controller = 'InternalContent';
+    $action = '/create';
+    return $controller.$action;
+};
+
+$route['admin/internal-content/page/income-rule'] = function($params = []) {
+    $controller = 'InternalContent';
+    $action = '/pageIncomeRule';
+    return $controller.$action;
+};
 
 /* :::API-INTERNAL:::*/
 
