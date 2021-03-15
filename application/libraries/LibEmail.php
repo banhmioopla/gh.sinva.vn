@@ -53,7 +53,7 @@ class LibEmail {
 
         $serverConfig = [
             'Host' => 'mail.supremecluster.com',
-            'SMTPDebug' => 1,
+            'SMTPDebug' => 0,
             'Port' => "25/2525",
             'SMTPAuth' => true,
             'Username' => 'love@gh.sinva.vn',

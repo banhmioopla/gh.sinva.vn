@@ -38,6 +38,20 @@
                 </ul>
             </div>
         </div>
+        <!-- end page title end breadcrumb -->
+        <?php if($this->session->has_userdata('fast_notify')) {
+            $flash_mess = $this->session->flashdata('fast_notify')['message'];
+            $flash_status = $this->session->flashdata('fast_notify')['status'];
+            unset($_SESSION['fast_notify']);
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                '.$flash_mess.'
+                            </div>';
+        }
+        ?>
+
         <div class="row">
             <div class="col-md-4">
                 <div class="card-box text-dark bg-white text-white shadow">

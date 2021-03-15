@@ -780,7 +780,11 @@ class Fee extends CustomBaseStep {
         $contentEmail = str_replace('|||NOTIFICATION_CONTENT|||', $user_to['name'], $contentEmail);
         $contentEmail = str_replace('|||TOTAL_INCOME|||', $total, $contentEmail);
         if($user_to['email']) {
-            $this->libEmail->sendEmailFromServer('qbingking@gmail.com', $user_to['name'], 'Báo Cáo Thu Nhập, Sinva '.$user_to['name'], $contentEmail);
+            $this->libEmail->sendEmailFromServer($user_to['email'], $user_to['name'], 'Báo Cáo Thu Nhập, Sinva '.$user_to['name'], $contentEmail);
+            $this->session->set_flashdata('fast_notify', [
+                'message' => 'Gửi email đến <strong>'.$user_to['email'].'</strong> thành công',
+                'status' => 'success'
+            ]);
         }
 
         return redirect('/admin/list-fee-contract-income?month=03');
