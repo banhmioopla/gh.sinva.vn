@@ -12,7 +12,7 @@ class LibEmail {
     }
 
     public function contentNotificationPersonalIncome(){
-        $content = "<div>HELLO</div>";
+        $content = file_get_contents('emailtemplate/contentNotificationPersonalIncome.php');
         return $content;
     }
 
@@ -48,15 +48,13 @@ class LibEmail {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     }
-    public function sendEmailFromServer(){
+    public function sendEmailFromServer($mail_to,$name_to, $subject, $content){
         $mail = new PHPMailer();
-        $name_to = "TEST NAME TO";
 
         $serverConfig = [
             'Host' => 'mail.supremecluster.com',
-//            'Host' => 'mail.supremecluster.com',
             'SMTPDebug' => 1,
-            'Port' => 465,
+            'Port' => "25/2525",
             'SMTPAuth' => true,
             'Username' => 'love@gh.sinva.vn',
             'Password' => 'gioHang@134679@',
@@ -70,19 +68,17 @@ class LibEmail {
             $mail->Host       = $serverConfig['Host']; // SMTP server example
             $mail->SMTPDebug  = $serverConfig['SMTPDebug'];                     // enables SMTP debug information (for testing)
             $mail->SMTPAuth   = $serverConfig['SMTPAuth'];                  // enable SMTP authentication
-            $mail->Port       = $serverConfig['SMTPAuth'];                    // set the SMTP port for the GMAIL server
+            $mail->Port       = $serverConfig['Port'];                    // set the SMTP port for the GMAIL server
             $mail->Username   = $serverConfig['Username']; // SMTP account username example
             $mail->Password   = $serverConfig['Password'];        // SMTP account password example
             $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mail->Subject = $subject;
+            $mail->Body    = $content;
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
             //Recipients
             $mail->setFrom($serverConfig['Username'], 'GioHang');
-            $mail->addAddress('qbingking@gmail.com', "TEST USER NAME TO");     // Add a recipient
-            echo "<pre>";
-            var_dump($mail->send()); die;
+            $mail->addAddress($mail_to, $name_to);     // Add a recipient
             $mail->send();
             echo 'Message has been sent';
         } catch (Exception $e) {

@@ -765,11 +765,24 @@ class Fee extends CustomBaseStep {
 
     public function sendEmailNotificationPersonalIncome(){
         $user_to_account = $this->input->get('uid');
-        $user_to = $this->ghUser->get(['account_id' => $user_to_account]);
+        $user_to = $this->ghUser->getFirstByAccountId($user_to_account);
         $this->load->library('LibEmail', null, 'libEmail');
+        $data_income = $this->ghUserIncomeDetail->get(['user_id' => $user_to_account]);
+        $total = 0;
+        if(count($data_income)) {
+            foreach ($data_income as $income) {
+                $total += $income['contract_income_total'];
+            }
+        }
         $contentEmail = $this->libEmail->contentNotificationPersonalIncome();
-//        $this->libEmail->sendEmail(null, 'qbingking@gmail.com', $contentEmail);
-        $this->libEmail->sendEmailFromServer();
+//        echo $contentEmail; die;
+        $contentEmail = str_replace('|||NOTIFICATION_TITLE|||', 'THÔNG BÁO THU NHẬP HIỆN TẠI THÁNG '.date('m-Y'), $contentEmail);
+        $contentEmail = str_replace('|||NOTIFICATION_CONTENT|||', $user_to['name'], $contentEmail);
+        $contentEmail = str_replace('|||TOTAL_INCOME|||', $total, $contentEmail);
+        if($user_to['email']) {
+            $this->libEmail->sendEmailFromServer('qbingking@gmail.com', $user_to['name'], 'Sinva '.$user_to['name'], $contentEmail);
+        }
+
         return redirect('/admin/list-fee-contract-income?month=03');
     }
 
