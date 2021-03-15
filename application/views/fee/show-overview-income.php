@@ -193,6 +193,13 @@
                                        href="/admin/user-contract-order?uid=<?= $account_id ?>"
                                         class="btn btn-info btn-rounded btn-sm waves-light waves-effect">
                                         <i class="mdi mdi-call-split"></i><small>Đã Chi</small></a>
+                                    <?php if(isYourPermission('Fee', 'sendEmailNotificationPersonalIncome', $this->permission_set)): ?>
+                                        <a type="button"
+                                           target="_blank"
+                                           href="/admin/income/send-email-notification-personal-income?uid=<?= $account_id ?>"
+                                           class="btn btn-info btn-rounded btn-sm waves-light m-1 waves-effect">
+                                            <i class="mdi mdi-email"></i></a>
+                                    <?php endif;?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -248,7 +255,7 @@
                                        target="_blank"
                                        href="/admin/income/send-email-notification-personal-income?uid=<?= $account_id ?>"
                                        class="btn btn-info btn-rounded btn-sm waves-light m-1 waves-effect">
-                                        <i class="mdi mdi-call-split"></i><small>Gửi Email TB</small></a>
+                                        <i class="mdi mdi-email"></i></a>
                                     <?php endif;?>
                                 </td>
                             </tr>
