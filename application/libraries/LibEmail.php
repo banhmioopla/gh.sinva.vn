@@ -56,7 +56,7 @@ class LibEmail {
             'Host' => 'mail.supremecluster.com',
 //            'Host' => 'mail.supremecluster.com',
             'SMTPDebug' => 1,
-            'Port' => 587,
+            'Port' => 465,
             'SMTPAuth' => true,
             'Username' => 'love@gh.sinva.vn',
             'Password' => 'gioHang@134679@',
