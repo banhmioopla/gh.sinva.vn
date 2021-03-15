@@ -26,6 +26,7 @@ class Fee extends CustomBaseStep {
         $this->load->model('ghUserIncomeDetail');
         $this->load->model('ghUserCumulativeSale');
         $this->load->library('LibUser', null, 'libUser');
+        $this->load->library('LibPhone', null, 'libPhone');
         $this->load->library('LibTime', null, 'libTime');
         $this->load->library('LibPenalty', null, 'libPenalty');
         $this->load->library('LibCustomer', null, 'libCustomer');
@@ -135,6 +136,7 @@ class Fee extends CustomBaseStep {
             'personal_penalty' => $personal_penalty,
             'libPenalty' => $this->libPenalty,
             'libCustomer' => $this->libCustomer,
+            'libPhone' => $this->libPhone,
             'list_contract' => $list_contract,
             'list_customer' => $list_customer,
             'list_booking' => $list_booking,

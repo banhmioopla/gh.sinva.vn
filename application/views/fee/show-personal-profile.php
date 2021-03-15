@@ -1,23 +1,21 @@
 <div class="wrapper">
     <div class="container-fluid">
-
-        <div class="row">
+        <style>
+            .block-profile-header .bg-warning{
+                opacity: .8;
+            }
+            .block-profile-header .profile-header{
+                background-image: url(https://i.pinimg.com/originals/38/57/f2/3857f2282c6864671ff080348071189f.gif);
+                background-position: center center;
+                background-size: cover;
+                opacity: 1;
+                min-height: 265px;
+            }
+        </style>
+        <div class="row block-profile-header">
             <div class="col-sm-12">
                 <!-- meta -->
-                <div class="profile-user-box card-box bg-warning">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <span class="pull-left mr-3"><img src="https://media2.giphy.com/media/H4DjXQXamtTiIuCcRU/giphy.gif" alt="" class="thumb-lg rounded-circle"></span>
-                            <div class="media-body text-white">
-                                <h4 class="mt-1 font-18"><?= $user['name'] ?></h4>
-                                <div class="row pl-2">
-                                    <div class="col-12 p-1"><i class="mdi mdi-cellphone-android"></i> <?= $user['phone_number'] ?></div>
-                                    <div class="col-12 p-1"><i class="mdi mdi-account-box"></i> <?= $role['name'] ?></div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                <div class="profile-user-box card-box  profile-header">
                 </div>
                 <!--/ meta -->
             </div>
@@ -28,7 +26,32 @@ $data = array_values($list_user_income)[0];
 ?>
 
         <div class="row">
+
             <div class="col-md-4">
+                <div class="col-sm-12">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-layers float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Hợp Đồng</h6>
+                        <h2 class="m-b-20" ><?= count($list_contract) ?></h2>
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-sm-12">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-paypal float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Số Khách Hàng</h6>
+                        <h2 class="m-b-20"><span ><?= count($list_customer) ?></span></h2>
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-sm-12">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-paypal float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Số Lượt Book</h6>
+                        <h2 class="m-b-20"><span ><?= count($list_booking) ?></span></h2>
+                    </div>
+                </div><!-- end col -->
+
                 <!-- Personal-Information -->
                 <div class="card-box">
                     <h4 class="mt-0 m-b-20">Thông tin cá nhân</h4>
@@ -40,14 +63,14 @@ $data = array_values($list_user_income)[0];
                         <hr/>
 
                         <div class="text-left">
-                            <p class="text-muted font-13"><strong>Họ Tên :</strong> <span
-                                        class="m-l-15"><?= $user['phone_number'] ?></span></p>
+                            <p class="text-muted "><strong>Họ Tên :</strong> <span
+                                        class="m-l-15"><?= $user['name'] ?></span></p>
 
-                            <p class="text-muted font-13"><strong>Số điện thoại:
+                            <p class="text-muted "><strong>Số điện thoại:
                                 </strong><span
-                                        class="m-l-15"><?= $user['phone_number'] ?></span></p>
+                                        class="m-l-15"><?= $libPhone->formatPhone($user['phone_number']) ?></span></p>
 
-                            <p class="text-muted font-13"><strong>Email: </strong>
+                            <p class="text-muted"><strong>Email: </strong>
                                 <span class="m-l-15"><?= $user['email'] ?></span></p>
 
                         </div>
@@ -73,46 +96,38 @@ $data = array_values($list_user_income)[0];
                 </div>
 
             </div>
-
-
             <div class="col-md-8">
 
                 <div class="row">
+                    <div class="col-sm-12">
+                        <div class="bg-dark card-box">
+                            <span class="pull-left mr-3">
+                                <img src="https://media2.giphy.com/media/H4DjXQXamtTiIuCcRU/giphy.gif" alt=""
+                                                              class="thumb-lg rounded-circle img-thumbnail"></span>
+                            <div class="media-body text-white text-center">
+                                <h3 class="font-weight-bold text-warning"><?= $user['name'] ?></h3>
+                                <div class="row pl-2">
+                                    <div class="col-12 p-1"><i class="mdi mdi-account-box"></i> <?= $role['name'] ?></div>
+                                    <div class="col-12 p-1"><i class="mdi mdi-cellphone-android"></i> <?= $libPhone->formatPhone($user['phone_number']) ?></div>
 
-                    <div class="col-sm-4">
-                        <div class="card-box tilebox-one">
-                            <i class="icon-layers float-right text-muted"></i>
-                            <h6 class="text-muted text-uppercase mt-0">Hợp Đồng</h6>
-                            <h2 class="m-b-20" ><?= count($list_contract) ?></h2>
+                                </div>
+                            </div>
                         </div>
-                    </div><!-- end col -->
 
-                    <div class="col-sm-4">
-                        <div class="card-box tilebox-one">
-                            <i class="icon-paypal float-right text-muted"></i>
-                            <h6 class="text-muted text-uppercase mt-0">Số Khách Hàng</h6>
-                            <h2 class="m-b-20"><span ><?= count($list_customer) ?></span></h2>
-                        </div>
-                    </div><!-- end col -->
+                    </div>
 
-                    <div class="col-sm-4">
-                        <div class="card-box tilebox-one">
-                            <i class="icon-paypal float-right text-muted"></i>
-                            <h6 class="text-muted text-uppercase mt-0">Số Lượt Book</h6>
-                            <h2 class="m-b-20"><span ><?= count($list_booking) ?></span></h2>
-                        </div>
-                    </div><!-- end col -->
+
 
                 </div>
 
                 <div class="card-box">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-2">
                             <select name="" id="month" class="form-control">
                                 <?php for ($i = 1; $i <= 12; $i++ ):?>
                                     <option value="<?= $i ?>"
                                         <?= $this->input->get('from-month') == $i ? "selected":"" ?>
-                                    > Đang Chọn Tháng <?= $i ?></option>
+                                    > Tổng Kết Tháng <?= $i ?></option>
                                 <?php endfor;?>
                             </select>
                             <script>
@@ -130,31 +145,31 @@ $data = array_values($list_user_income)[0];
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered m-b-0">
+                        <table class="table table-dark table-bordered m-b-0">
                             <tbody>
                             <tr>
-                                <td style="width: 30%">Số Lượng Hợp Đồng</td>
-                                <td class="text-right"><?= $data['quantity_contract']
+                                <td style="width: 40%"><i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Hợp Đồng</td>
+                                <td class="text-right font-weight-bold"><?= $data['quantity_contract']
                                     ?></td>
                             </tr>
                             <tr>
-                                <td>Tổng Doanh Số</td>
-                                <td class="text-right"><?= number_format($data['total_sale']) ?> vnđ</td>
+                                <td><i class="mdi mdi-chevron-double-right text-warning"></i> Tổng Doanh Số</td>
+                                <td class="text-right font-weight-bold"><?= number_format($data['total_sale']) ?> vnđ</td>
                             </tr>
                             <tr>
-                                <td>Tổng Thu Nhập Từ Hợp Đồng</td>
-                                <td class="text-right"><?= number_format($data['total_personal_income']) ?> vnđ</td>
+                                <td><i class="mdi mdi-chevron-double-right text-warning"></i> Tổng Thu Nhập Từ Hợp Đồng</td>
+                                <td class="text-right font-weight-bold"><?= number_format($data['total_personal_income']) ?> vnđ</td>
                             </tr>
                             <tr>
-                                <td>Tổng Thu Nhập Từ Tuyển Thành Viên </td>
-                                <td class="text-right"><?= number_format($data['total_refer_income']) ?> vnđ</td>
+                                <td><i class="mdi mdi-chevron-double-right text-warning"></i> Tổng Thu Nhập Từ Tuyển Thành Viên </td>
+                                <td class="text-right font-weight-bold"><?= number_format($data['total_refer_income']) ?> vnđ</td>
                             </tr>
                             <tr>
-                                <td>Tổng Thu Nhập Từ Lấy Dự Án</td>
+                                <td><i class="mdi mdi-chevron-double-right text-warning"></i> Tổng Thu Nhập Từ Lấy Dự Án Mới</td>
                                 <td class="text-right"><?= number_format($data['total_get_new_apartment_total']) ?> vnđ</td>
                             </tr>
                             <tr>
-                                <td>Các Danh Mục Trừ Tiền</td>
+                                <td><i class="mdi mdi-chevron-double-right text-warning"></i> Các Danh Mục Trừ Tiền</td>
                                 <td class="text-right">
                                 <?php
 
@@ -206,7 +221,7 @@ $data = array_values($list_user_income)[0];
 
                 <div class="card-box">
                     <h4 class="header-title mt-0 mb-3">Bảng Khách Hàng</h4>
-                    <table class="table table-dark">
+                    <table class="table table-dark table-data">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -237,8 +252,8 @@ $data = array_values($list_user_income)[0];
                 </div>
 
                 <div class="card-box">
-                    <h4 class="header-title mt-0 mb-3">Bảng Hợp Đồng</h4>
-                    <table class="table table-dark">
+                    <h4 class="text-danger font-weight-bold">Bảng Hợp Đồng</h4>
+                    <table class="table table-dark table-data">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -266,10 +281,10 @@ $data = array_values($list_user_income)[0];
 
                             ?>
                             <tr>
-                                <th scope="row"><u><a target = '_blank'
+                                <th scope="row" style="width: 5%"><u><a target = '_blank'
                                                       class="text-warning"
                                                       href="/admin/detail-contract?id=<?= $contract['id']
-                                                      ?>"><?= $contract['id'] ?></a></u></th>
+                                                      ?>"><?= ($contract['id']) ?></a></u></th>
                                 <td><?= $service_set ? $service_set['address_street'] : '<i>không có thông tin</i>' ?></td>
                                 <td><?= $room ? $room['code'] : '<i>không có thông tin</i>' ?></td>
                                 <td><?= number_format($contract['room_price']) ?></td>
@@ -307,7 +322,7 @@ $data = array_values($list_user_income)[0];
                 </div>
 
                 <div class="card-box">
-                    <h4 class="header-title mb-3">Bảng Dẫn Khách</h4>
+                    <h4 class="text-danger font-weight-bold">Bảng Dẫn Khách</h4>
 
                     <div class="table-responsive">
                         <table class="table table-dark">
@@ -394,3 +409,9 @@ $data = array_values($list_user_income)[0];
 
     </div> <!-- end container -->
 </div>
+
+<script>
+    commands.push(function(){
+        $('.table-data').DataTable();
+    });
+</script>
