@@ -37,6 +37,11 @@ $route['admin/update-user-cumulative-sale-editable'] = function($params = []) {
     $action = '/updateUserCumulativeSaleEditable';
     return $controller.$action;
 };
+$route['admin/income/send-email-notification-personal-income'] = function($params = []) {
+    $controller = 'Fee';
+    $action = '/sendEmailNotificationPersonalIncome';
+    return $controller.$action;
+};
 
 // story
 $route['admin/list-story'] = function($params = []) {

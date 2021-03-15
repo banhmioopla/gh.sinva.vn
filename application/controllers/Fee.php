@@ -763,6 +763,16 @@ class Fee extends CustomBaseStep {
         return ['status' => false];
     }
 
+    public function sendEmailNotificationPersonalIncome(){
+        $user_to_account = $this->input->get('uid');
+        $user_to = $this->ghUser->get(['account_id' => $user_to_account]);
+        $this->load->library('LibEmail', null, 'libEmail');
+        $contentEmail = $this->libEmail->contentNotificationPersonalIncome();
+//        $this->libEmail->sendEmail(null, 'qbingking@gmail.com', $contentEmail);
+        $this->libEmail->sendEmailFromServer();
+        return redirect('/admin/list-fee-contract-income?month=03');
+    }
+
 }
 
 /* End of file Apartment.php */
