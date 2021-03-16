@@ -32,7 +32,12 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
 
         <div class="tag-alert"></div>
         <div class="row">
-            <div class="col-md-12"><?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?></div>
+            <div class="col-md-12">
+                <div class="text-center w-100 mb-2">
+                    <?php $this->load->view('components/list-navigation'); ?>
+                </div>
+            </div>
+            <div class="col-md-12 border-top"><?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?></div>
             <div class="col-12">
                 <div class="card-box table-responsive shadow">
                     <h4 class="text-center text-danger">Kết Quả Tìm Kiếm: <?= count
