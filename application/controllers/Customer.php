@@ -60,7 +60,7 @@ class Customer extends CustomBaseStep {
                 $list_is_expired = [];
                 if(count($list)) {
                     foreach ($list as $customer) {
-                        $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'status'=> $this->ghContract::STATUS_ACTIVE]);
+                        $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'time_expire >='=> strtotime(date('d-m-Y'))]);
                         if(count($contract)) {
                             $list_is_expired[] = $customer;
                         }
@@ -69,7 +69,7 @@ class Customer extends CustomBaseStep {
                 } else {
                     if(!$this->input->post("month_check_in_contract")){
                         foreach ($data['list_customer'] as $customer) {
-                            $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'status'=> $this->ghContract::STATUS_ACTIVE]);
+                            $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'time_expire >='=> strtotime(date('d-m-Y'))]);
                             if(count($contract)) {
                                 $list_is_expired[] = $customer;
                             }
@@ -84,7 +84,7 @@ class Customer extends CustomBaseStep {
                 $list_is_expired = [];
                 if(count($list)) {
                     foreach ($list as $customer) {
-                        $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'status'=> $this->ghContract::STATUS_ACTIVE]);
+                        $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'time_expire <'=> strtotime(date('d-m-Y'))]);
                         if(!count($contract)) {
                             $list_is_expired[] = $customer;
                         }
@@ -93,7 +93,7 @@ class Customer extends CustomBaseStep {
                 } else {
                     if(!$this->input->post("month_check_in_contract")){
                         foreach ($data['list_customer'] as $customer) {
-                            $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'status'=> $this->ghContract::STATUS_ACTIVE]);
+                            $contract = $this->ghContract->get(['customer_id' => $customer['id'], 'time_expire<'=> strtotime(date('d-m-Y'))]);
                             if(!count($contract)) {
                                 $list_is_expired[] = $customer;
                             }

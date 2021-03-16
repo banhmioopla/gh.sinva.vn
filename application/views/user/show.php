@@ -178,10 +178,8 @@ foreach ($list_user as $row) {
                             <th>Quyền</th>
 
                             <th>SĐT</th>
-
+                            <th>Email</th>
                             <th>Sinh nhật</th>
-
-
                             <th>Ngày Vào Làm</th>
                             <th>Người Tuyển</th>
 
@@ -220,6 +218,14 @@ foreach ($list_user as $row) {
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="phone_number">
                                         <?= $row['phone_number'] ?>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="user-email user"
+                                         data-pk="<?= $row['id'] ?>"
+                                         data-name="email">
+                                        <?= $row['email'] ?>
                                     </div>
                                 </td>
 
@@ -420,27 +426,8 @@ foreach ($list_user as $row) {
                             }
                         });
                     });
-                    $('.is-authorised input[type=checkbox]').click(function() {
-                        var this_id = $(this).attr('id');
-                        var val = $(this).val();
-                        var matches = this_id.match(/(\d+)/);
-                        var user_id = matches[0];
-                        var checked = '0';
-                        if($(this).is(':checked')) {
-                            checked = val;
-                        }
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?= base_url() ?>admin/update-user-editable',
-                            data: {pk: val, name: 'authorised_user_id', value: checked},
-                            async: false,
-                            success:function(response){
-                                var data = JSON.parse(response);
-                            }
-                        });
-                    })
 
-                    $('.user-name, .user-phone_number, .user-user_refer_id').editable({
+                    $('.user-name, .user-email, .user-phone_number, .user-user_refer_id').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-user-editable',
                         inputclass: '',

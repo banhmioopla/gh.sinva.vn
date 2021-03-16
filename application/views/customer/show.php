@@ -117,14 +117,12 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                             <?php foreach($list_customer as $row ):
                                 $NearestContract = $ghCustomer->getNearestContractByCustomerId($row['id']);
                                 $ContractCounter = $ghCustomer->getNumberContract($row['id']);
-                                $contract_count = "";
+                                $contract_count = $ContractCounter['counter'];
                                 $consultant_name = '';
 
                                 $isExpired = "success";
-
                                 if($NearestContract && $NearestContract['max_time_expire'] < strtotime(date('d-m-Y'))) {
                                     $isExpired = 'danger';
-                                    $contract_count = $ContractCounter['counter'] > 0 ? $ContractCounter['counter']:"" ;
                                 }
                                 ?>
                             <tr>
@@ -169,12 +167,12 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     $status_text= "đang theo dõi";
                                     if($isExpired == 'success'){
                                         $status = 'success';
-                                        $status_text = "đã ký";
+                                        $status_text = "đã ký còn hạn";
                                     }
 
                                     ?>
                                     <div class="customer-source text-center text-<?= $status ?>">
-                                        <?= $status_text ?>
+                                        <strong><?= $status_text ?></strong>
                                     </div>
 
                                 </td>
