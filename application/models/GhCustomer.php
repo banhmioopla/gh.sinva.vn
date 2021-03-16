@@ -64,6 +64,33 @@ class GhCustomer extends CI_Model {
         return $result->result_array();
     }
 
+    public function getNearestContractByCustomerId($id) {
+        $sql = "SELECT MAX(time_expire) as max_time_expire
+                FROM gh_contract 
+                WHERE customer_id = $id";
+        $result = $this->db->query($sql);
+
+        return $result->row_array();
+    }
+
+    public function getNumberContract($id) {
+        $sql = "SELECT COUNT(id) as counter
+                FROM gh_contract 
+                WHERE customer_id = $id";
+        $result = $this->db->query($sql);
+
+        return $result->row_array();
+    }
+
+    public function getAllConsultantByCustomerId($id) {
+        $sql = "SELECT consultant_id
+                FROM gh_contract 
+                WHERE customer_id = $id";
+        $result = $this->db->query($sql);
+
+        return $result->row_array();
+    }
+
     public function delete($district_id) {
         $this->db->where('id' , $district_id);
         $this->db->delete($this->table);

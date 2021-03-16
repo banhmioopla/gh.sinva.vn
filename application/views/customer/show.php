@@ -115,14 +115,16 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         <tbody>
                         <?php if(count($list_customer) > 0):?>
                             <?php foreach($list_customer as $row ):
-                                $isRented = $libCustomer->checkRentedContractByUser($row['id']);
+                                $NearestContract = $ghCustomer->getNearestContractByCustomerId($row['id']);
+                                $ContractCounter = $ghCustomer->getNumberContract($row['id']);
                                 $contract_count = "";
                                 $consultant_name = '';
 
                                 $isExpired = "success";
-                                if($isRented && $isRented[0]['time_expire'] < strtotime(date('d-m-Y'))) {
+
+                                if($NearestContract && $NearestContract['max_time_expire'] < strtotime(date('d-m-Y'))) {
                                     $isExpired = 'danger';
-                                    $contract_count = $isRented[0]['counter'] > 0 ? $isRented[0]['counter']:"" ;
+                                    $contract_count = $ContractCounter['counter'] > 0 ? $ContractCounter['counter']:"" ;
                                 }
                                 ?>
                             <tr>
@@ -163,7 +165,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 </td>
                                 <td>
                                     <?php
-                                    $status = 'đang theo dõi';
+                                    $status = 'danger';
                                     $status_text= "đang theo dõi";
                                     if($isExpired == 'success'){
                                         $status = 'success';

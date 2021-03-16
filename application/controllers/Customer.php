@@ -109,6 +109,7 @@ class Customer extends CustomBaseStep {
 		$data['libDistrict'] = $this->libDistrict;
 		$data['libCustomer'] = $this->libCustomer;
 		$data['ghContract'] = $this->ghContract;
+		$data['ghCustomer'] = $this->ghCustomer;
 		$data['libUser'] = $this->libUser;
 		$data['select_district'] = $this->libDistrict->cbActive();
 		$data['label_apartment'] =  $this->config->item('label.apartment');
