@@ -74,7 +74,8 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                         </u>
                                     </a>
                                 </td>
-                                <td><?= $row['code'] ?></td>
+                                <td class="text-center"><u><a class=" text-danger font-weight-bold"
+                                                              href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>&room-id=<?= $row['id'] ?>"><?= $row['code'] ?></a></u></td>
                                 <td>
                                     <?= $row['type'] ?>
                                 </td>

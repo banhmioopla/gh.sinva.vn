@@ -110,6 +110,7 @@ include VIEWPATH . 'functions.php';
 
                         ?>
                         <a href="#" class="font-weight-bold <?= $status ?>"
+                           id="roomcode-<?= $room['id'] ?>"
                            data-filter=".roomcode-<?= $room['id'] ?>"
                            data-room-id="<?= $room['id'] ?>">
                             <?= $room['code'] . $status_text ?>
@@ -127,7 +128,7 @@ include VIEWPATH . 'functions.php';
                 </button>
             </div>
         </div>
-        <div class="row" id="create-post">
+        <div class="row d-none" id="create-post">
             <div class="col-md-12">
                 <div class="card-box">
                     <div class="form-group row">
@@ -137,23 +138,16 @@ include VIEWPATH . 'functions.php';
                                 value="<?= $apartment_model['address_street'] ?>">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row ">
                         <label class="col-2 col-form-label text-danger font-weight-bold text-right">Nội Dung</label>
                         <div class="col-8">
                             <?php
-                            $post_content = $apartment_model['note'] . "\n";
-                            $post_content .= " ==== DỊCH VỤ === " . "\n";
-                            $post_content .= "- Điện: " .$apartment_model['electricity'] . "\n";
-                            $post_content .= "- Nước: " .$apartment_model['water'] . "\n";
-                            $post_content .= "- Internet: " .$apartment_model['internet'] . "\n";
-                            $post_content .= "- Thang máy: " .$apartment_model['elevator'] . "\n";
-                            $post_content .= "- Máy giặt: " .$apartment_model['washing_machine'] . "\n";
-
+                            $post_content = $apartment_model['note'];
                             ?>
                             <textarea class="form-control" id="post_content" placeholder="Helping text"><?= $post_content ?></textarea>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row d-none">
                         <label class="col-2 col-form-label text-danger font-weight-bold text-right">Mật Khẩu Xem Bài</label>
                         <div class="col-4">
                             <input type="text" class="form-control" placeholder="Mật Khẩu Xem Bài" id="post_password">
@@ -306,6 +300,10 @@ include VIEWPATH . 'functions.php';
                 });
                 return false;
             });
+            <?php if($this->input->get('room-id')): ?>
+                let get_room_id = '<?= $this->input->get('room-id') ?>';
+                $('#roomcode-'+get_room_id).trigger('click');
+            <?php endif; ?>
 
             $('.custom-select').select2();
         });
