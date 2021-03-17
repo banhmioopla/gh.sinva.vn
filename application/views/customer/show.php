@@ -121,7 +121,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 $consultant_name = '';
 
                                 $isExpired = "success";
-                                if($NearestContract && $NearestContract['max_time_expire'] < strtotime(date('d-m-Y'))) {
+                                if($NearestContract['max_time_expire'] < strtotime(date('d-m-Y'))) {
                                     $isExpired = 'danger';
                                 }
                                 ?>
