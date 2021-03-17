@@ -11,8 +11,7 @@ class InternalContent extends CustomBaseStep {
     }
 
     public function pageIncomeRule(){
-        $data['content'] = $this->ghInternalContent->getFirstByContentKey('page_income_rule');
-
+        $data = $this->ghInternalContent->getFirstByContentKey('page_income_rule');
         /*--- Load View ---*/
         $this->load->view('components/header');
         $this->load->view('internal-content/page-income-rule', $data);
