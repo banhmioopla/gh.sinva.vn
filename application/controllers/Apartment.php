@@ -7,7 +7,7 @@ class Apartment extends CustomBaseStep {
 	{
 		parent::__construct(); 
 		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict',
-            'ghTag', 'ghApartmentComment', 'ghConsultantBooking']);
+            'ghTag', 'ghApartmentComment', 'ghConsultantBooking', 'ghBaseRoomType']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -82,6 +82,7 @@ class Apartment extends CustomBaseStep {
 		$data['libPartner'] = $this->libPartner;
 		$data['libUser'] = $this->libUser;
 		$data['ghRoom'] = $this->ghRoom;
+		$data['ghBaseRoomType'] = $this->ghBaseRoomType;
 		$data['ghApartmentComment'] = $this->ghApartmentComment;
 		$data['libApartment'] = $this->libApartment;
 		/*--- Load View ---*/
@@ -129,6 +130,7 @@ class Apartment extends CustomBaseStep {
         $data['list_type'] = $this->ghRoom->getTypeByDistrict();
 	    $data['libRoom'] = $this->libRoom;
 	    $data['libDistrict'] = $this->libDistrict;
+	    $data['ghBaseRoomType'] = $this->ghBaseRoomType;
         $data['label_apartment'] =  $this->config->item('label.apartment');
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('showbysearch/room', $data);
@@ -333,6 +335,7 @@ class Apartment extends CustomBaseStep {
 	public function getPartner(){
 		$list_district = $this->ghPartner->getAll();
 		$result = [];
+		$result[] = ["value" => "", "text" => "Vui Lòng Chọn"];
 		foreach($list_district as $d) {
 			$result[] = ["value" => $d['id'], "text" => 'ĐT '.$d["name"]];
 		}

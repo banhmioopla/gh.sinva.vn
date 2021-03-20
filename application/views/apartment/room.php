@@ -7,6 +7,7 @@
         <?php endif; ?>
             <th>Mã Phòng</th>
             <th>Loại Phòng</th>
+            <th class="text-warning">LP (TN)</th>
             <th>Giá</th>
             <th>Diện Tích</th>
             <th>Trạng Thái</th>
@@ -45,6 +46,22 @@
                         </div>
                     </td>
                     <td><div><?= $room['type'] ?></div></td>
+                    <?php
+                    $list_type_id = json_decode($room['room_type_id'], true);
+                    $js_list_type = "";
+                    $text_type_name = "";
+                    if($list_type_id) {
+                        $js_list_type = implode(",", $list_type_id);
+                        if ($list_type_id && count($list_type_id) > 0) {
+                            foreach ($list_type_id as $type_id) {
+                                $typeModel = $ghBaseRoomType->get(['id' => $type_id]);
+                                $text_type_name .= $typeModel[0]['name'] . ', ';
+                            }
+                        }
+
+                    }
+                    ?>
+                    <td><div><?= $text_type_name ?></div></td>
                     <td><div class="font-weight-bold"><?= view_money_format($room['price'],1) ?></div></td>
                     <td><div><?= $room['area'] ?></div></td>
                     <td class="text-center font-weight-bold <?= $color_for_available ?>"><div><?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>

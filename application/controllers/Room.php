@@ -71,6 +71,11 @@ class Room extends CustomBaseStep {
 			$data = [
 				$field_name => $field_value
 			];
+            if($field_name == 'room_type_id') {
+                $data = [
+                    $field_name => json_encode($field_value)
+                ];
+            }
 
 			if($field_name == 'time_available') {
                 $field_value = str_replace('/', '-', $field_value);

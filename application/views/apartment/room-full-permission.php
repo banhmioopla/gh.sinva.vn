@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <th>Mã Phòng</th>
+            <th class="text-warning">LP (TN)</th>
             <th>Loại Phòng</th>
             <th>Giá</th>
             <th class="text-center">Diện Tích</th>
@@ -41,6 +42,26 @@
                             data-name="code"
                             ><?= $room['code'] ? $room['code'] : 'không có thông tin' ?></div>
                             </td>
+                    <?php
+                    $list_type_id = json_decode($room['room_type_id'], true);
+                    $js_list_type = "";
+                    $text_type_name = "";
+                    if($list_type_id) {
+                        $js_list_type = implode(",", $list_type_id);
+                        if ($list_type_id && count($list_type_id) > 0) {
+                            foreach ($list_type_id as $type_id) {
+                                $typeModel = $ghBaseRoomType->get(['id' => $type_id]);
+                                $text_type_name .= $typeModel[0]['name'] . ', ';
+                            }
+                        }
+
+                    }
+
+                    ?>
+                    <td><div class="room-type"
+                             data-pk="<?= $room['id'] ?>"
+                             data-value="<?= $js_list_type ?>"
+                             data-name="room_type_id"></div></td>
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['type'] ?>"

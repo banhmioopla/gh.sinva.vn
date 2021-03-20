@@ -618,9 +618,14 @@ $route['admin/update-tag-editable'] = function($params = []) {
 
 // -- room type
 $route['admin/list-room-type'] = function($params = []) {
-	$controller = 'BaseRoomType';
-	$action = '/show';
-	return $controller.$action;
+    $controller = 'BaseRoomType';
+    $action = '/show';
+    return $controller.$action;
+};
+$route['admin/room-type/get-list-editable'] = function($params = []) {
+    $controller = 'BaseRoomType';
+    $action = '/getEditableRoomTypeId';
+    return $controller.$action;
 };
 
 $route['admin/create-room-type'] = function($params = []) {

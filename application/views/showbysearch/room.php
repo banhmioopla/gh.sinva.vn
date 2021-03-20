@@ -48,6 +48,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                             <th>Dự Án</th>
                             <th>Mã Phòng</th>
                             <th>Loại Phòng</th>
+                            <th class="text-warning">LP (thử nghiệm) </th>
                             <th class="text-center">Giá</th>
                             <th class="text-center">Diện tích</th>
                             <th class="text-center">Trạng Thái</th>
@@ -68,6 +69,22 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                 $bg_for_available = '';
                                 $color_for_available = '';
                             }
+
+                            $list_type_id = json_decode($row['room_type_id'], true);
+                            $js_list_type = "";
+                            $text_type_name = "";
+                            if($list_type_id) {
+                                $js_list_type = implode(",", $list_type_id);
+                                if ($list_type_id && count($list_type_id) > 0) {
+                                    foreach ($list_type_id as $type_id) {
+                                        $typeModel = $ghBaseRoomType->get(['id' => $type_id]);
+                                        $text_type_name .= $typeModel[0]['name'] . ', ';
+                                    }
+                                }
+
+                            }
+
+
                             ?>
                             <tr class='<?= $bg_for_available ?>'>
                                 <td>
@@ -84,6 +101,14 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                 <td>
                                     <?= $row['type'] ?>
                                 </td>
+
+                                <td>
+                                    <div class="room-type"
+                                         data-pk="<?= $row['id'] ?>"
+                                         data-value="<?= $js_list_type ?>"
+                                         data-name="room_type_id"></div>
+                                </td>
+
                                 <td>
                                     <?= number_format($row['price']) ?>
                                 </td>
@@ -123,8 +148,31 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                 "pageLength": 20,
                 'pagingType': "full_numbers",
                 responsive: true,
-                "oSearch": {"bSmart": false}
+                "oSearch": {"bSmart": false},
+                "fnDrawCallback": function () {
+                    $('.room-type').editable({
+                        type: 'checklist',
+                        url: '<?= base_url() ?>admin/update-room-editable',
+                        inputclass: '',
+                        source: function () {
+                            let data = [];
+                            $.ajax({
+                                url: '<?= base_url() ?>admin/room-type/get-list-editable',
+                                dataType: 'json',
+                                async: false,
+                                success: function (res) {
+                                    data = res;
+                                    console.log(data);
+                                    return res;
+                                }
+                            });
+                            return data;
+                        }
+                    });
+                }
             });
+
+
         });
     });
 </script>

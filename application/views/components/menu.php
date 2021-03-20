@@ -60,6 +60,11 @@
                             <li><a href="/admin/list-tag"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Danh Sách Tag</a></li>
                         <?php endif;?>
+
+                        <?php if(isYourPermission('BaseRoomType', 'show',$this->permission_set)):?>
+                            <li><a href="/admin/list-room-type"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Danh Sách Loại Phòng</a></li>
+                        <?php endif;?>
                     </ul>
                 </li>
                 <?php endif;?>

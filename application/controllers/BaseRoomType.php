@@ -108,6 +108,15 @@ class BaseRoomType extends CustomBaseStep {
 		echo json_encode(['status' => false]); die;
 	}
 
+	public function getEditableRoomTypeId(){
+        $room = $this->ghBaseRoomType->get( ['active' => 'YES']);
+        $result = [];
+        foreach($room as $item) {
+            $result[] = ["value" => $item['id'], "text" => $item["name"]];
+        }
+        echo json_encode($result); die;
+    }
+
 }
 
 /* End of file BaseRoomType.php */
