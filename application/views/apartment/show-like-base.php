@@ -31,8 +31,8 @@
         <div class="row">
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
-                    <h4>Dự Án Đang Mở</h4>
-                    <table id="table-apartment" class="table table-bordered">
+                    <h4 class="text-danger font-weight-bold text-center">Dự Án Đang Mở</h4>
+                    <table id="table-apartment-active-yes" class="table table-bordered">
                         <thead>
                         <tr>
                             <th>Đối tác</th>
@@ -150,8 +150,8 @@
             </div>
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
-                    <h4>Dự Án Đã Đóng</h4>
-                    <table id="table-apartment" class="table table-bordered">
+                    <h4 class="text-danger font-weight-bold text-center">Dự Án Đã Đóng</h4>
+                    <table id="table-apartment-active-no" class="table table-bordered">
                         <thead>
                         <tr>
                             <th>Đối tác</th>
@@ -169,6 +169,23 @@
                             <th class="text-center">Mở</th>
                         </tr>
                         </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Đối tác</th>
+                            <th>Quận</th>
+                            <th>Đường</th>
+                            <th>Phường</th>
+                            <th>Thông báo ngắn</th>
+                            <th>Số Lầu</th>
+                            <th>KT3</th>
+                            <th>Hướng</th>
+                            <th>map_longitude</th>
+                            <th>map_latitude</th>
+                            <th>Tag #</th>
+                            <th>TV Lấy Về</th>
+                            <th class="text-center">Mở</th>
+                        </tr>
+                        </tfoot>
                         <tbody>
                         <?php foreach($list_apartment as $row ):
                             if($row['active'] !== 'NO') continue;
@@ -338,7 +355,7 @@
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('.table').DataTable({
+            var tableYes = $('#table-apartment-active-yes').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 "aaSorting": [],
@@ -384,6 +401,81 @@
                     });
                 }
             });
+            $('#table-apartment-active-yes thead th').each( function () {
+                var title = $('#table-apartment-active-yes thead th').eq( $(this).index() ).text();
+                $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+            } );
+
+            // Apply the search
+            tableYes.columns().every( function () {
+                var that = this;
+                $( 'input', this.header() ).on( 'keyup change', function () {
+                    that
+                        .search( this.value )
+                        .draw();
+                } );
+            } );
+
+            var tableNo = $('#table-apartment-active-no').DataTable({
+                "pageLength": 10,
+                'pagingType': "full_numbers",
+                "aaSorting": [],
+                responsive: true,
+                "fnDrawCallback": function() {
+                    $('.apartment-data').editable({
+                        type:'text',
+                        url: '<?= base_url()."admin/update-apartment-editable" ?>'
+                    });
+                    $('.apartment-short_message').editable({
+                        type:'text',
+                        placeholder: 'nhập tối đa 50 kí tự',
+                        url: '<?= base_url()."admin/update-apartment-editable" ?>'
+                    });
+                    $('.is-active-apartment input[type=checkbox]').click(function() {
+                        var is_active = 'NO';
+                        var this_id = $(this).attr('id');
+                        var matches = this_id.match(/(\d+)/);
+                        var apartment_id = matches[0];
+                        if($(this).is(':checked')) {
+                            is_active = 'YES';
+                        }
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>admin/update-apartment-editable',
+                            data: {value: is_active, pk: apartment_id, name : 'active'},
+                            async: false,
+                            success:function(response){
+                                var data = JSON.parse(response);
+                                if(data.status == true) {
+                                    $('.apartment-alert').html(notify_html_success);
+                                } else {
+                                    $('.apartment-alert').html(notify_html_fail);
+                                }
+                            },
+                            beforeSend: function(){
+                                $('#loader').show();
+                            },
+                            complete: function(){
+                                $('#loader').hide();
+                            }
+                        });
+                    });
+                }
+            });
+            $('#table-apartment-active-no thead th').each( function () {
+                var title = $('#table-apartment-active-no thead th').eq( $(this).index() ).text();
+                $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+            } );
+
+            // Apply the search
+            tableNo.columns().every( function () {
+                var that = this;
+                $( 'input', this.header() ).on( 'keyup change', function () {
+                    that
+                        .search( this.value )
+                        .draw();
+                } );
+            } );
             
 
             $('body').delegate('.apartment-select-district', 'click', function(){
