@@ -426,25 +426,6 @@ if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
                         inputclass: 'form-control-sm',
                         url: '<?= base_url()."admin/update-room-editable" ?>'
                     });
-                    $('.room-type').editable({
-                        type: 'checklist',
-                        url: '<?= base_url() ?>admin/update-room-editable',
-                        inputclass: '',
-                        source: function () {
-                            let data = [];
-                            $.ajax({
-                                url: '<?= base_url() ?>admin/room-type/get-list-editable',
-                                dataType: 'json',
-                                async: false,
-                                success: function (res) {
-                                    data = res;
-                                    console.log(data);
-                                    return res;
-                                }
-                            });
-                            return data;
-                        }
-                    });
 
                     $('.room-delete').on('click', function() {
                         let this_btn = $(this);
@@ -538,7 +519,7 @@ if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
                     var db_value = 'Available'
                 } else {
                     content ="#";
-                    var db_value = 'Full' 
+                    var db_value = 'Full'
                 }
                 console.log(room_id);
                 $(this).text(content);
@@ -548,6 +529,28 @@ if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
                     data: {pk: room_id, name: 'status', value: db_value},
                     success: function(){
                         console.log('>> room.status updated to: '+ content);
+                    }
+                });
+            });
+            $('body').delegate('.room-type', 'click', function(){
+                console.log("1");
+                $(this).editable({
+                    type: 'checklist',
+                    url: '<?= base_url() ?>admin/update-room-editable',
+                    inputclass: '',
+                    source: function () {
+                        let data = [];
+                        $.ajax({
+                            url: '<?= base_url() ?>admin/room-type/get-list-editable',
+                            dataType: 'json',
+                            async: false,
+                            success: function (res) {
+                                data = res;
+                                console.log(data);
+                                return res;
+                            }
+                        });
+                        return data;
                     }
                 });
             });

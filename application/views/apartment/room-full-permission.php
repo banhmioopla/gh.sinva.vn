@@ -58,10 +58,10 @@
                     }
 
                     ?>
-                    <td><div class="room-type"
-                             data-pk="<?= $room['id'] ?>"
-                             data-value="<?= $js_list_type ?>"
-                             data-name="room_type_id"></div></td>
+                    <td class="room-type"
+                        data-name="room_type_id"
+                        data-pk="<?= $room['id'] ?>"
+                        data-value="<?= $js_list_type ?>"><?= $text_type_name ? $text_type_name : "-" ?></td>
                     <td><div class="room-data" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['type'] ?>"
