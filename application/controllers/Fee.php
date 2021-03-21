@@ -775,18 +775,18 @@ class Fee extends CustomBaseStep {
         }
         $contentEmail = $this->libEmail->contentNotificationPersonalIncome();
 //        echo $contentEmail; die;
-        $contentEmail = str_replace('|||NOTIFICATION_TITLE|||', 'THÔNG BÁO THU NHẬP HIỆN TẠI THÁNG '.date('m-Y'), $contentEmail);
-        $contentEmail = str_replace('|||NOTIFICATION_CONTENT|||', $user_to['name'], $contentEmail);
-        $contentEmail = str_replace('|||TOTAL_INCOME|||', $total, $contentEmail);
+        $contentEmail = str_replace('|||NOTIFICATION_TITLE|||', 'Báo Cáo Thu Nhập Cá Nhân GH*SINVA*VN'.date('m/Y'), $contentEmail);
+        $contentEmail = str_replace('|||NOTIFICATION_CONTENT|||', 'GH*SINVA*VN Cám Ơn Nỗ Lực Hết Sức Mình Của *** '.$user_to['name'].' *** Trong Tháng'.date('m/Y') , $contentEmail);
+        $contentEmail = str_replace('|||TOTAL_INCOME|||', number_format($total), $contentEmail);
         if($user_to['email']) {
-            $this->libEmail->sendEmailFromServer($user_to['email'], $user_to['name'], 'Báo Cáo Thu Nhập, Sinva '.$user_to['name'], $contentEmail);
+            $this->libEmail->sendEmailFromServer($user_to['email'], $user_to['name'], 'GHSINVAVN - T.Báo TNCN '.$user_to['name'], $contentEmail);
             $this->session->set_flashdata('fast_notify', [
                 'message' => 'Gửi email đến <strong>'.$user_to['email'].'</strong> thành công',
                 'status' => 'success'
             ]);
         }
 
-        return redirect('/admin/list-fee-contract-income?month=03');
+        return redirect('/admin/list-fee-contract-income?month='.date('m'));
     }
 
 }
