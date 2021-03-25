@@ -137,11 +137,7 @@
                         async: false,
                         success:function(response){
                             var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.baseroomtype-alert').html(notify_html_success);
-                            } else {
-                                $('.baseroomtype-alert').html(notify_html_fail);
-                            }
+                            $('.baseroomtype-alert').html(notify_html_success);
                         },
                         beforeSend: function(){
                             $('#loader').show();
@@ -168,35 +164,7 @@
                 }
             });
             
-            $('.is-active-baseroomtype input[type=checkbox]').click(function() {
-                var is_active = 'NO';
-                var this_id = $(this).attr('id');
-                var matches = this_id.match(/(\d+)/);
-                var baseroomtype_id = matches[0];
-                if($(this).is(':checked')) {
-                    is_active = 'YES';
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>admin/update-room-type',
-                    data: {field_value: is_active, baseroomtype_id: baseroomtype_id, field_name : 'active'},
-                    async: false,
-                    success:function(response){
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.baseroomtype-alert').html(notify_html_success);
-                        } else {
-                            $('.baseroomtype-alert').html(notify_html_fail);
-                        }
-                    },
-                    beforeSend: function(){
-                        $('#loader').show();
-                    },
-                    complete: function(){
-                        $('#loader').hide();
-                    }
-                });
-            });
+
 
             $('.baseroomtype-name').editable({
                 type: "text",

@@ -37,14 +37,14 @@ class BaseRoomType extends CustomBaseStep {
 
 	// Ajax
 	public function update() {
-		$room_type_id = $this->input->post('room_type_id');
+		$room_type_id = $this->input->post('baseroomtype_id');
 		$field_value = $this->input->post('field_value');
 		$field_name = $this->input->post('field_name');
-
 		if(!empty($room_type_id) and !empty($field_value)) {
 			$data = [
 				$field_name => $field_value
 			];
+
 			$result = $this->ghBaseRoomType->updateById($room_type_id, $data);
 			echo json_encode(['status' => $result]); die;
 		}
