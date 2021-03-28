@@ -695,7 +695,11 @@ $route['admin/create-room'] = function($params = []) {
 	$action = '/create';
 	return $controller.$action;
 };
-
+$route['admin/room/show-create'] = function($params = []) {
+    $controller = 'Room';
+    $action = '/showCreate';
+    return $controller.$action;
+};
 $route['admin/update-room'] = function($params = []) {
 	$controller = 'Room';
 	$action = '/update';

@@ -148,28 +148,30 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                 "pageLength": 20,
                 'pagingType': "full_numbers",
                 responsive: true,
-                "oSearch": {"bSmart": false},
-                "fnDrawCallback": function () {
-                    $('.room-type').editable({
-                        type: 'checklist',
-                        url: '<?= base_url() ?>admin/update-room-editable',
-                        inputclass: '',
-                        source: function () {
-                            let data = [];
-                            $.ajax({
-                                url: '<?= base_url() ?>admin/room-type/get-list-editable',
-                                dataType: 'json',
-                                async: false,
-                                success: function (res) {
-                                    data = res;
-                                    console.log(data);
-                                    return res;
-                                }
-                            });
-                            return data;
-                        }
-                    });
-                }
+                "oSearch": {"bSmart": false}
+            });
+
+            $('body').delegate('.room-type', 'click', function(){
+                console.log("1");
+                $(this).editable({
+                    type: 'checklist',
+                    url: '<?= base_url() ?>admin/update-room-editable',
+                    inputclass: '',
+                    source: function () {
+                        let data = [];
+                        $.ajax({
+                            url: '<?= base_url() ?>admin/room-type/get-list-editable',
+                            dataType: 'json',
+                            async: false,
+                            success: function (res) {
+                                data = res;
+                                console.log(data);
+                                return res;
+                            }
+                        });
+                        return data;
+                    }
+                });
             });
 
 

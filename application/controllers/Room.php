@@ -9,6 +9,8 @@ class Room extends CustomBaseStep {
 		$this->load->model('ghRoom');
 		$this->load->model('ghBaseRoomType');
 		$this->load->model('ghApartment');
+		$this->load->library('LibRoom', null, 'libRoom');
+        $this->load->config('label.apartment');
 	}
 
 	public function show(){
@@ -35,6 +37,23 @@ class Room extends CustomBaseStep {
 			return redirect('admin/list-room');
 		}
 	}
+
+	public function showCreate() {
+        $apm_id = $this->input->get("id");
+        $list_room = $this->ghRoom->get(['apartment_id' => $apm_id, 'active' => 'YES']);
+        $apartment = $this->ghApartment->getFirstById($apm_id);
+
+        $data = [
+            'list_room' => $list_room,
+            'apartment' => $apartment,
+            'libRoom' => $this->libRoom,
+            'ghBaseRoomType' => $this->ghBaseRoomType,
+            'label_apartment' => $this->config->item('label.apartment'),
+        ];
+        $this->load->view('components/header');
+        $this->load->view('room/showCreate', $data);
+        $this->load->view('components/footer');
+    }
 
 	public function createDatatable(){
 		$data = $this->input->post();
