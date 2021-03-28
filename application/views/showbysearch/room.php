@@ -102,11 +102,10 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                     <?= $row['type'] ?>
                                 </td>
 
-                                <td>
-                                    <div class="room-type"
-                                         data-pk="<?= $row['id'] ?>"
-                                         data-value="<?= $js_list_type ?>"
-                                         data-name="room_type_id"></div>
+                                <td class="room-type"
+                                    data-pk="<?= $row['id'] ?>"
+                                    data-value="<?= $js_list_type ?>"
+                                    data-name="room_type_id"><?= $text_type_name ? $text_type_name: " # "?>
                                 </td>
 
                                 <td>
