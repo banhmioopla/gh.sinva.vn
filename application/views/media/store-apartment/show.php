@@ -4,6 +4,15 @@ $check_modify = false;
 if (isYourPermission($this->current_controller, 'update', $this->permission_set)) {
     $check_modify = true;
 }
+
+$check_commission_rate = false;
+if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
+    $check_commission_rate = true;
+}
+$view_service = [
+    'check_commission_rate' => $check_commission_rate,
+    'apartment' => $apartment_model
+];
 ?>
 
 
@@ -48,13 +57,14 @@ include VIEWPATH . 'functions.php';
         </div>
 
         <div class="row mt-2">
-            <div class="col-6">
+            <div class="col-6 col-md-3">
                 <div class="card-box">
                     <div class="upload-section">
                         <form method="post" enctype="multipart/form-data"
                               class='form-group row'
                               action="/admin/upload-image?apartment-id=<?= $this->input->get('apartment-id') ?>">
                             <div class="col-12">
+                                <h4 class="font-weight-bold text-danger">Upload</h4>
                                 <select class="custom-select mt-3 form-control"
                                         name="room_id">
                                     <?= $cb_room_code ?>
@@ -84,7 +94,7 @@ include VIEWPATH . 'functions.php';
                     </div> <!-- end row -->
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
-            <div class="col-6">
+            <div class="col-6 col-md-3">
                 <div class="card-box">
                     <h4 class="font-weight-bold text-danger">Danh Sách Bài Đăng Tư Vấn</h4>
                     <ul class="list-post">
@@ -94,6 +104,37 @@ include VIEWPATH . 'functions.php';
                         </li>
                         <?php endforeach;?>
                     </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card-box">
+                    <div class="card">
+                        <div class="card-header mt-0" role="tab" id="headingOne">
+                            <h5 class="mb-0 mt-0">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="font-weight-bold text-danger" aria-expanded="true" aria-controls="collapseOne">
+                                    Thông Tin Dịch Vụ
+                                </a>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="card-body service-list" style="background-color: #faf0ac;">
+                                <div id="carouselButton-<?= $apartment_model['id'] ?>" class="carousel slide" data-interval="false" data-ride="carousel">
+                                    <div class="carousel-inner" style="font-size: 11px; line-height: .9">
+                                        <?php $this->load->view('apartment/service', $view_service) ?>
+                                    </div>
+                                    <a class="carousel-control-prev"
+                                       href="#carouselButton-<?= $apartment_model['id'] ?>"
+                                       role="button"
+                                       data-slide="prev"><i class="dripicons-chevron-left text-danger"></i> </a>
+                                    <a class="carousel-control-next"
+                                       href="#carouselButton-<?= $apartment_model['id'] ?>"
+                                       role="button"
+                                       data-slide="next"><i class="dripicons-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,23 +178,24 @@ include VIEWPATH . 'functions.php';
                 </button>
             </div>
         </div>
-        <div class="row d-none" id="create-post">
-            <div class="col-md-12">
+        <div class="row" id="create-post">
+            <div class="col-md-6 offset-md-3">
                 <div class="card-box">
+                    <p>Bài đăng được tạo dành cho tư vấn khách hàng, để tạo bài đăng, vui lòng chọn hình bạn muốn gửi bằng cách check vào checkbox của hình đó, nhập tiêu đề, nội dung, và click  <small class="text-danger">Tạo Bài Tư Vấn</small></p>
                     <div class="form-group row">
-                        <label class="col-2 col-form-label text-danger font-weight-bold text-right">Tiêu Đề</label>
+                        <label class="col-4 col-form-label text-danger font-weight-bold text-right">Tiêu Đề Bài Tư Vấn</label>
                         <div class="col-8">
                             <input type="text" class="form-control" id="post_title"
-                                value="<?= $apartment_model['address_street'] ?>">
+                                value="">
                         </div>
                     </div>
                     <div class="form-group row ">
-                        <label class="col-2 col-form-label text-danger font-weight-bold text-right">Nội Dung</label>
+                        <label class="col-4 col-form-label text-danger font-weight-bold text-right">Mô Tả Thêm</label>
                         <div class="col-8">
                             <?php
-                            $post_content = $apartment_model['note'];
+                            $post_content = "";
                             ?>
-                            <textarea class="form-control" id="post_content" placeholder="Helping text"><?= $post_content ?></textarea>
+                            <textarea class="form-control" id="post_content" placeholder="Mô tả thêm"><?= $post_content ?></textarea>
                         </div>
                     </div>
                     <div class="form-group row d-none">

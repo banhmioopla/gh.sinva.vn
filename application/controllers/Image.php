@@ -16,6 +16,7 @@ class Image extends CustomBaseStep
         $this->load->library('LibDistrict', null, 'libDistrict');
         $this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
         $this->load->library('LibBasePrice', null, 'libBasePrice');
+        $this->load->config('label.apartment');
     }
 
     public function show()
@@ -92,6 +93,7 @@ class Image extends CustomBaseStep
         $data['list_price'] = $this->ghBasePrice->get(['active' => "YES"]);
         $data['list_room_type'] = $this->ghBaseRoomType->get(['active' => "YES"]);
         $data['list_room_code'] = $this->ghRoom->get(['active' => "YES", 'apartment_id' => $apartment_id]);
+        $data['label_apartment'] =  $this->config->item('label.apartment');
 
 
         $this->load->view('components/header', ['menu' => $this->menu]);
