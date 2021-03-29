@@ -4,24 +4,11 @@ $check_modify = false;
 if (isYourPermission($this->current_controller, 'update', $this->permission_set)) {
     $check_modify = true;
 }
-?>
-
-
-<?php
 include VIEWPATH . 'functions.php';
 ?>
-<style>
-    .portfolioFilter a.current{
-        background: #fccf51;
-        border-bottom: solid red 4px;
-    }
-    .portfolioFilter a:hover {
-        background-color: #fccf51;
-    }
-</style>
 
 <div class="wrapper mb-5">
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Page-Title -->
         <div class="row">
@@ -34,7 +21,7 @@ include VIEWPATH . 'functions.php';
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h2 class="text-danger font-weight-bold"><?= $apartment_model['address_street'] ?></h2>
+                    <h2 class="text-danger font-weight-bold">Hình Ảnh <?= $apartment_model['address_street'] ?></h2>
                 </div>
             </div>
         </div>
@@ -47,65 +34,14 @@ include VIEWPATH . 'functions.php';
             </div>
         </div>
 
-        <div class="row mt-2">
-            <div class="col-6">
-                <div class="card-box">
-                    <div class="upload-section">
-                        <form method="post" enctype="multipart/form-data"
-                              class='form-group row'
-                              action="/admin/upload-image?apartment-id=<?= $this->input->get('apartment-id') ?>">
-                            <div class="col-12">
-                                <select class="custom-select mt-3 form-control"
-                                        name="room_id">
-                                    <?= $cb_room_code ?>
-                                </select>
-                            </div>
-                            <div class="col-12 col-md-12 choose-img">
-                                <div class="demo-box">
-                                    <div class="form-group">
-                                        <p class="mb-2 mt-4 font-weight-bold text-muted">
-                                            Chọn Ảnh Từ Máy</p>
-                                        <input type="file"
-                                               required
-                                               class="filestyle"
-                                               name="files[]" multiple
-                                               data-input="false"
-                                               data-btnClass="btn-danger ">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-12 btn-upload">
-                                <button type="submit" name="fileSubmit" value="UPLOAD"
-                                        class="w-100 btn btn-custom waves-effect waves-light">
-                                    Up Ảnh
-                                </button>
-                            </div>
-                        </form>
-                    </div> <!-- end row -->
-                </div> <!-- end card-box -->
-            </div> <!-- end col -->
-            <div class="col-6">
-                <div class="card-box">
-                    <h4 class="font-weight-bold text-danger">Danh Sách Bài Đăng Tư Vấn</h4>
-                    <ul class="list-post">
-                        <?php foreach ($list_post as $post):?>
-                        <li>
-                            <a href="/public/consulting-post-detail?id=<?= $post['id'] ?>" target="_blank"><?= $post['title'] ?></a> -  <small>Ngày <?= date('d/m/Y', $post['time_create']) ?></small>
-                        </li>
-                        <?php endforeach;?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 ">
+            <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="portfolioFilter text-center gallery-second">
-                    <a href="#" data-filter="*" class="current bg-light">Tất cả</a>
+                    <a href="#" data-filter="*" class="current bg-warning">Tất cả</a>
                     <?php
                     $i = 0;
                     foreach ($list_room_code as $room):
-                        $status = '';
+                        $status = 'border';
                         $status_text = ' - <i class="text-dark">' . view_money_format($room['price'], 1) . '</i>';
                         if ($room['status'] == 'Available') {
                             $status .= ' text-success';
@@ -131,7 +67,7 @@ include VIEWPATH . 'functions.php';
         </div>
         <div class="row">
             <div class="col-md-12 mb-2 text-center">
-                <button type="submit" class="btn m-1 btn-sm btn-outline-warning
+                <button type="submit" class="btn m-1 btn-sm btn-outline-danger
                             btn-rounded waves-light waves-effect download-all">
                     <i class="mdi mdi-cloud-download"></i> Tải Về Tất Cả
                 </button>
@@ -144,7 +80,7 @@ include VIEWPATH . 'functions.php';
                         <label class="col-2 col-form-label text-danger font-weight-bold text-right">Tiêu Đề</label>
                         <div class="col-8">
                             <input type="text" class="form-control" id="post_title"
-                                value="<?= $apartment_model['address_street'] ?>">
+                                   value="<?= $apartment_model['address_street'] ?>">
                         </div>
                     </div>
                     <div class="form-group row ">
@@ -177,103 +113,7 @@ include VIEWPATH . 'functions.php';
         </div>
         <form name="form-download" id="form-download" action="/admin/download-image-apartment" method="post">
             <div class="port">
-
-                <div class="portfolioContainer">
-                    <?php if ($list_img): ?>
-
-                        <?php foreach ($list_img as $img): ?>
-                            <div class="col-sm-6 col-md-2
-                            <?= !empty($img['room_id']) ? 'roomcode-' . $img['room_id'] : '' ?> image-item">
-                                <?php
-                                $imgStatus = $img['status'] == 'Pending' ? 'warning' : '';
-
-                                if (!in_array($img['file_type'], ['mp4', 'mov'])):
-                                    ?>
-                                    <input type="hidden" name="list_id[]"
-                                           value="<?= $img['id'] ?>">
-                                    <div class="portfolio-masonry-box"
-                                         data-img-id="<?= $img['id'] ?>">
-                                        <a href="<?= base_url() ?>media/apartment/<?= $img['name'] ?>"
-                                           class="image-popup">
-                                            <div class="portfolio-masonry-img border border-<?= $imgStatus ?>"
-                                                 style="border-width:3px">
-                                                <img src="<?= base_url() ?>media/apartment/<?= $img['name'] ?>"
-                                                     class="thumb-img img-fluid"
-                                                     alt="work-thumbnail">
-                                            </div>
-                                        </a>
-                                        <div class="portfolio-masonry-detail">
-                                            <h4 class="font-18"><?= date('d-m-Y', $img['time_insert']) ?></h4>
-                                            <div class="d-flex justify-content-center">
-                                                <?php if ($check_modify): ?>
-                                                    <button type="button" data-img-id="<?= $img['id'] ?>"
-                                                            class="btn m-1 btn-sm
-                                                            btn-outline-danger btn-rounded
-                                                            waves-light waves-effect
-                                                            delete-img">
-                                                    <i class="mdi mdi-delete"></i>
-                                                    </button>
-                                                <?php endif; ?>
-
-                                                <a data-img-id="<?= $img['id'] ?>" class="btn m-1 btn-sm btn-outline-warning
-                                                   btn-rounded waves-light waves-effect
-                                                   download-img"
-                                                download="<?= $apartment_model['address_street'] . '.' . $img['file_type'] ?>"
-                                                   href="<?= base_url() ?>media/apartment/<?= $img['name'] ?>">
-                                                <i class="mdi mdi-cloud-download"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 text-right border border-bottom">
-                                                <div class="checkbox checkbox-success p-2">
-                                                    <input id="checkbox-<?= $img['id'] ?>" value="<?= $img['id'] ?>" name="post_imgs" type="checkbox">
-                                                    <label for="checkbox-<?= $img['id'] ?>">
-                                                        Chọn Ảnh
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                <?php else: ?>
-                                    <div class="card-box m-1 shadow"
-                                         id="video-box-<?= $img['id'] ?>">
-                                        <video width="100%" height="80%"
-                                               controls="controls">
-                                            <source src="<?php echo base_url() . 'media/apartment/' . $img['name'] ?>"
-                                                    type="video/mp4"/>
-                                        </video>
-                                        <div class="d-flex justify-content-center">
-                                            <?php if ($check_modify): ?>
-                                                <button type="button" data-img-id=<?=
-                                                $img['id']
-                                                ?> class="btn m-1 btn-sm
-                                                        btn-outline-danger btn-rounded
-                                                        waves-light waves-effect
-                                                        delete-img">
-                                                <i class="mdi mdi-delete"></i>
-                                                </button>
-                                            <?php endif; ?>
-
-                                            <a data-img-id=<?= $img['id'] ?> class="btn
-                                               m-1 btn-sm btn-outline-warning btn-rounded
-                                               waves-light waves-effect download-img"
-                                            download="<?= $apartment_model['address_street'] . '.' . $img['file_type'] ?>
-                                            " href="<?= base_url() ?>
-                                            media/apartment/<?= $img['name'] ?>">
-                                            <i class="mdi mdi-cloud-download"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                <?php endif; ?>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-
-
+                <div class="portfolioContainer" id="portfolioContainer"></div>
             </div> <!-- End row -->
         </form>
 
@@ -284,7 +124,7 @@ include VIEWPATH . 'functions.php';
 <script type="text/javascript">
     commands.push(function () {
         $(window).on('load', function () {
-            var $container = $('.portfolioContainer');
+            let $container = $('.portfolioContainer');
             $container.isotope({
                 filter: '*',
                 animationOptions: {
@@ -298,7 +138,7 @@ include VIEWPATH . 'functions.php';
                 $('.portfolioFilter .current').removeClass('current');
                 $(this).addClass('current');
 
-                var selector = $(this).attr('data-filter');
+                let selector = $(this).attr('data-filter');
                 $container.isotope({
                     filter: selector,
                     animationOptions: {
@@ -310,8 +150,8 @@ include VIEWPATH . 'functions.php';
                 return false;
             });
             <?php if($this->input->get('room-id')): ?>
-                let get_room_id = '<?= $this->input->get('room-id') ?>';
-                $('#roomcode-'+get_room_id).trigger('click');
+            let get_room_id = '<?= $this->input->get('room-id') ?>';
+            $('#roomcode-'+get_room_id).trigger('click');
             <?php endif; ?>
 
             $('.custom-select').select2();
@@ -397,7 +237,7 @@ include VIEWPATH . 'functions.php';
                     preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
                 }
             });
-            
+
             $('.download-all').click(function (e) {
                 let room_id = $('.portfolioFilter a.current').data('room-id');
                 console.log(room_id);
@@ -419,6 +259,36 @@ include VIEWPATH . 'functions.php';
                     $("#create-post").hide();
                 }
 
+            });
+
+            console.log("LOAD IMG AJAX");
+            let ajax_room_id = '<?= $this->input->get("room-id") ?>';
+            let ajax_apartment_id = '<?= $this->input->get("apartment-id") ?>';
+            $.ajax({
+                url: '/ajax/get-room-images',
+                data: {room_id : ajax_room_id, apartment_id: ajax_apartment_id},
+                success: function(data){
+                    let img_data = JSON.parse(data);
+                    let html = ``;
+                    for(let img of img_data.list) {
+                        let img_room_id = "roomcode-"+ajax_room_id;
+                        let img_name = "<?= base_url() ?>media/apartment/"+img.name;
+                        let img_id = img.id;
+                        html += `<div class="col-sm-6 col-md-2 ${img_room_id}
+                             image-item">
+                                 <input type="hidden" name="list_id[]"
+                                               value="${img_id}">
+                                 <a href="${img_name}" class="thumb-img img-fluid">
+                                     <div class="portfolio-masonry-box"
+                                             data-img-id="${img_id}">
+                                         <img src="${img_name}" class="thumb-img img-fluid" />
+                                     </div>
+                                 </a>
+                             </div>
+                        `;
+                    }
+                    $('#portfolioContainer').append(html);
+                }
             });
 
         });

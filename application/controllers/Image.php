@@ -100,6 +100,34 @@ class Image extends CustomBaseStep
 
     }
 
+    public function showRoom(){
+        $room_id = $this->input->get("room-id");
+        $apartment_id = $this->input->get("apartment-id");
+
+        $data = [
+            'list_price' => $this->ghBasePrice->get(['active' => "YES"]),
+            'list_room_type' => $this->ghBaseRoomType->get(['active' => "YES"]),
+            'list_room_code' => $this->ghRoom->get(['active' => "YES", 'apartment_id' => $apartment_id]),
+            'cb_room_code' => $this->libRoom->cbCodeByApartmentId($apartment_id, $room_id),
+            'apartment_model' => $this->ghApartment->getFirstById($apartment_id),
+            'list_post' => []
+        ];
+        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('image/show-room', $data);
+        $this->load->view('components/footer');
+
+    }
+
+    /*
+     * get all image of this room
+     * */
+    public function ajax_get_room_image(){
+        $room_id = $this->input->get("room_id");
+        $list = $this->ghImage->get(['active' => 'YES', 'room_id' => $room_id]);
+
+        echo json_encode(['status' => true, 'list' => $list, 'quantity' => count($list)]); die;
+    }
+
     public function createConsultingPost() {
         $post = $this->input->post();
         $this->load->model('ghPublicConsultingPost');

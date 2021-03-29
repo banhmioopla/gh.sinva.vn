@@ -40,14 +40,14 @@
                             ?>
                         </select>
                     </span>
-                    <span class="col-md-2 col-12 offset-0">
+                    <span class="col-md-2 d-none col-12 offset-0">
                         <div>Giá Max</div>
                         <select name="roomPriceMax" id="roomPriceMax" class="form-control">
                             <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMax'))
                             ?>
                         </select>
                     </span>
-                    <span class="col-md-2 col-12 offset-0">
+                    <span class="col-md-2 d-none col-12 offset-0">
                         <div>DT Min</div>
                         <select name="roomAreaMin" id="roomAreaMin" class="form-control">
                             <?php echo $libRoom->cbAvailableRoomArea($this->input->get('roomAreaMin'))
@@ -59,6 +59,29 @@
                         <select name="roomAreaMax" id="roomAreaMax" class="form-control">
                             <?php echo $libRoom->cbAvailableRoomArea($this->input->get('roomAreaMax'))
                             ?>
+                        </select>
+                    </span>
+                    <span class="col-md-2 col-12 offset-0">
+                        <div>Trạng Thái </div>
+                        <select name="roomStatus" id="roomStatus" class="form-control">
+                            <option value="">Vui Lòng Chọn</option>
+                            <option value="Available">Trống</option>
+                            <option value="Full">Full</option>
+                        </select>
+                    </span>
+
+                    <span class="col-md-2 col-12 offset-0">
+                        <div>Thời Gian Trống</div>
+                        <select name="roomTimeAvailable" id="roomTimeAvailable" class="form-control">
+                            <option value="">Trống từ ngày ...</option>
+                            <?php for($i = 1; $i <= 12; $i++):
+                                $selected = "";
+                                if($this->input->get('roomTimeAvailable') == "01-".$i."-2021") {
+                                    $selected = "selected";
+                                }
+                                ?>
+                                <option <?= $selected ?> value="01-<?= $i ?>-2021"> 1 - <?= $i?> - 2021</option>
+                            <?php endfor;?>
                         </select>
                     </span>
 
@@ -82,6 +105,8 @@
                 + '&roomAreaMax=' + $('#roomAreaMax').val()
                 + '&roomDistrict=' + $('#roomDistrict').val()
                 + '&roomType=' + $('#roomType').val()
+                + '&roomTimeAvailable=' + $('#roomTimeAvailable').val()
+                + '&roomStatus=' + $('#roomStatus').val()
             ;
         })
     });

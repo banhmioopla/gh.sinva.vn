@@ -4,8 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class GhImage extends CI_Model{ 
     function __construct() { 
         $this->tableName = 'gh_media'; 
-    } 
-     
+    }
+
+    public function get($where = []) {
+        return $this->db->get_where($this->tableName, $where)->result_array();
+    }
     
     public function getRows($apm_id = ''){ 
         $this->db->select('*'); 

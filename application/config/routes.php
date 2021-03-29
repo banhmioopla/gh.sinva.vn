@@ -1002,6 +1002,16 @@ $route['admin/delete-image'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['ajax/get-room-images'] = function($params = []) {
+    $controller = 'Image';
+    $action = '/ajax_get_room_image';
+    return $controller.$action;
+};
+$route['admin/image/show-room'] = function($params = []) {
+    $controller = 'Image';
+    $action = '/showRoom';
+    return $controller.$action;
+};
 $route['admin/apartment/search'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/searchApartment';

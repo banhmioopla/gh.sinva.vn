@@ -112,6 +112,14 @@ class Apartment extends CustomBaseStep {
             $params['type ='] = "'".$this->input->get('roomType')."'";
         }
 
+        if($this->input->get('roomStatus') ) {
+            $params['status ='] = "'".$this->input->get('roomStatus')."'";
+        }
+
+        if($this->input->get('roomTimeAvailable') ) {
+            $params['time_available >='] = strtotime($this->input->get('roomTimeAvailable'));
+        }
+
 
 
         if($this->input->get('roomAreaMax')) {
