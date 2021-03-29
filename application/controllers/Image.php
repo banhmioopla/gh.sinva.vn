@@ -88,7 +88,12 @@ class Image extends CustomBaseStep
             }
             return redirect('/admin/upload-image?apartment-id='.$apartment_id);
         }
-        $data['list_img'] = $this->ghImage->getRows($apartment_id);
+        if(empty($room_id)) {
+            $data['list_img'] = $this->ghImage->getRows($apartment_id);
+        } else {
+            $data['list_img'] = $this->ghImage->get(['room_id' => $room_id, 'active' => 'YES']);
+        }
+
 
         $data['list_price'] = $this->ghBasePrice->get(['active' => "YES"]);
         $data['list_room_type'] = $this->ghBaseRoomType->get(['active' => "YES"]);
