@@ -5,6 +5,9 @@
             class="btn m-1 btn-sm room-add btn-outline-success btn-rounded waves-light waves-effect">
             <i class="mdi mdi-credit-card-plus"></i>
         </button>
+        <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>" target="_blank"
+           class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+            <i class="mdi mdi-credit-card-plus"></i></a>
     </div>
     <table id="list-room-<?= $apartment['id'] ?>" class="table list-room table-bordered ">
         <thead>

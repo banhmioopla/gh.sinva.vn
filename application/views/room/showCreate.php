@@ -4,11 +4,6 @@ $check_contract = true;
 $check_consultant_booking = true;
 
 ?>
-<script>
-    commands.push(function () {
-        $('.list-room').DataTable();
-    });
-</script>
 
 <div class="wrapper">
     <div class="sk-wandering-cubes" style="display:none" id="loader">
@@ -157,30 +152,71 @@ $check_consultant_booking = true;
                 <div class="card-box">
                     <h4 class="header-title m-t-0">Thêm mới</h4>
                     <form role="form" method="post"
-                          action="<?= base_url()?>/admin/room/show-create?id=<?= $this->input->get('id') ?>">
+                          action="<?= base_url()?>/admin/create-room?apartment-id=<?= $this->input->get('apartment-id') ?>">
+                        <input type="hidden" name="apartment_id" value="<?= $this->input->get('apartment-id') ?>">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-12 col-form-label">Mã Phòng<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
                                 <input type="text" required class="form-control"
-                                       id="name" name="name" placeholder="Tên quyền (chức vụ)">
+                                       id="code" name="code" placeholder="Mã Phòng">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="hori-pass1" class="col-4 col-form-label">Mở</label>
-                            <div class="col-8">
-                                <div>
-                                    <div class=" checkbox checkbox-success">
-                                        <input id="active" type="checkbox" value="YES" name="active">
-                                        <label for="active">
-                                        </label>
-                                    </div>
-                                </div>
+                            <label for="name" class="col-md-4 col-12 col-form-label">Giá<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <input type="number" required class="form-control"
+                                       id="price" name="price" placeholder="Giá">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-12 col-form-label">Loại Phòng<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12 row">
+                                <?php
+                                $list_type = $ghBaseRoomType->get();
+                                foreach ($list_type as $type):
+                                ?>
+                                <div class="col-6">
+                                    <div>
+                                        <div class=" checkbox checkbox-success">
+                                            <input id="type-<?= $type['id'] ?>" type="checkbox" value="<?= $type['id'] ?>" name="room_type_id[]">
+                                            <label for="type-<?= $type['id'] ?>">
+                                                <?= $type['name'] ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach;?>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-12 col-form-label">Diện Tích<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <input type="number" required class="form-control"
+                                       id="area" name="area" placeholder="Diện Tích">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="hori-pass1" class="col-4 col-form-label">Trạng Thái</label>
+                            <div class="col-8">
+                                <select name="status" id="status" class="form-control">
+                                    <option value="Available">Trống</option>
+                                    <option value="Full">Full</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-12 col-form-label">Ngày Trống</label>
+                            <div class="col-md-8 col-12">
+                                <input type="text" class="form-control date-picker"
+                                       id="time_available" name="time_available" placeholder="Ngày Trống">
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <div class="col-8 offset-4">
                                 <button type="submit" class="btn btn-custom waves-effect waves-light">
-                                    Thêm mới
+                                    Thêm Mới
                                 </button>
                             </div>
                         </div>
@@ -195,10 +231,13 @@ $check_consultant_booking = true;
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('#table-role').DataTable({
-                "pageLength": 10,
+            $('.list-room').DataTable({
+                "pageLength": 5,
                 'pagingType': "full_numbers",
                 responsive: true
+            });
+            $('.date-picker').datepicker({
+                format: "dd-mm-yyyy"
             });
 
             $('.is-active-role input[type=checkbox]').click(function() {

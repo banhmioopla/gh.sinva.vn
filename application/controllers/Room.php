@@ -26,20 +26,28 @@ class Room extends CustomBaseStep {
 	public function create() {
 	
 		$data = $this->input->post();
-		if(!empty($data['name'])) {
-			$data['time_update'] = time();
-			$data['time_insert'] = time();
-			$result = $this->ghRoom->insert($data);
-			$this->session->set_flashdata('fast_notify', [
-				'message' => 'Tạo <strong>'.$data['name'].'<strong> thành công ',
-				'status' => 'success'
-			]);
-			return redirect('admin/list-room');
-		}
+
+        $data['time_update'] = time();
+        $data['time_insert'] = time();
+
+        if($data['time_available']) {
+            $data['time_available'] = strtotime( $data['time_available']);
+        }
+
+        if(isset($data['room_type_id'])) {
+            $data['room_type_id'] = json_encode($data['room_type_id']);
+        }
+
+        $result = $this->ghRoom->insert($data);
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Tạo <strong>'.$data['name'].'<strong> thành công ',
+            'status' => 'success'
+        ]);
+        return redirect('/admin/room/show-create?apartment-id='.$this->input->get('apartment-id'));
 	}
 
 	public function showCreate() {
-        $apm_id = $this->input->get("id");
+        $apm_id = $this->input->get("apartment-id");
         $list_room = $this->ghRoom->get(['apartment_id' => $apm_id, 'active' => 'YES']);
         $apartment = $this->ghApartment->getFirstById($apm_id);
 

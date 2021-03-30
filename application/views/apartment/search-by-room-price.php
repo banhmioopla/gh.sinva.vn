@@ -40,7 +40,7 @@
                             ?>
                         </select>
                     </span>
-                    <span class="col-md-2 d-none col-12 offset-0">
+                    <span class="col-md-2 col-12 offset-0">
                         <div>Giá Max</div>
                         <select name="roomPriceMax" id="roomPriceMax" class="form-control">
                             <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMax'))
@@ -54,7 +54,7 @@
                             ?>
                         </select>
                     </span>
-                    <span class="col-md-2 col-12 offset-0">
+                    <span class="col-md-2 d-none col-12 offset-0">
                         <div>DT Max</div>
                         <select name="roomAreaMax" id="roomAreaMax" class="form-control">
                             <?php echo $libRoom->cbAvailableRoomArea($this->input->get('roomAreaMax'))
