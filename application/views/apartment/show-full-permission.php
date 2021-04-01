@@ -120,6 +120,9 @@ if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?></a>
                     </div>
                     <div class="row">
+                        <div class="col-md-4 offset-md-4"><p class="text-center font-weight-bold text-muted">Đàm Phán Bởi: <?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id']):"Sinva" ?></p></div>
+                    </div>
+                    <div class="row">
                         <a class="col-12 text-center text-muted"
                            target="_blank"
                            href="/admin/list-dashboard">Độ hoàn thiện thông tin dịch vụ (<strong><?= $libApartment->completeInfoRate($apartment['id'])['counter'] ?></strong>) <small class="text-danger">[?] click để xem tiêu chí </small></a>

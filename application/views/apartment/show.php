@@ -125,7 +125,9 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
                     </div>
                     </a>
-                   
+                   <div class="row">
+                       <div class="col-md-4 offset-md-4"><p class="text-center font-weight-bold text-muted">Đàm Phán Bởi: <?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id']):"Sinva" ?></p></div>
+                   </div>
                     <div class="row">
                         <a class="col-12 text-center text-muted"
                            target="_blank"
@@ -144,7 +146,7 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                              <div class="text-center"><i class="text-muted">[không có thông tin mô tả]</i></div>
                             <?php endif;?>
                         </div>
-                        <div class="col-md-4 font-weight-bold" id="time-update-<?= $apartment['id'] ?>">
+                        <div class="col-md-4 offset-md-4 font-weight-bold" id="time-update-<?= $apartment['id'] ?>">
                             <div class="">
                                 <h5 class="mb-md-2 text-center text-danger">Tỉ Lệ Phòng</h5>
                                 <div class="text-center">
@@ -154,7 +156,7 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 d-none">
                             <div class="">
                                 <h5 class="mb-md-2 text-center text-danger">Cọc / Dài / Ngắn</h5>
                                 <div class="text-md-left text-center">
