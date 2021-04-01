@@ -74,12 +74,12 @@ foreach ($list_contract as $row) {
                             <div class="col-6">
                                 <input type="text" class="form-control datepicker"
                                        id="time_check_in_from"
-                                       value="<?= $this->input->get('timeCheckInFrom') ?>">
+                                       value="<?= $this->input->get('timeCheckInFrom')  ? $this->input->get('timeCheckInFrom') : date( 'd-m-Y', $time_from)?>">
                             </div>
                             <div class="col-6">
                                 <input type="text" class="form-control datepicker"
                                        id="time_check_in_to"
-                                       value="<?= $this->input->get('timeCheckInTo') ?>">
+                                       value="<?= $this->input->get('timeCheckInTo') ? $this->input->get('timeCheckInTo') : date( 'd-m-Y', $time_to)  ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -151,6 +151,23 @@ foreach ($list_contract as $row) {
                         ?>
                         <div class="col-md-12">
                             <div class="card-box">
+                                <!-- end page title end breadcrumb -->
+                                <?php
+                                if($this->session->has_userdata('fast_notify')) {
+                                    $flash_mess = $this->session->flashdata('fast_notify')['message'];
+                                    $flash_status = $this->session->flashdata('fast_notify')['status'];
+                                    unset($_SESSION['fast_notify']);
+                                    ?>
+
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <?= $flash_mess ?>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                                 <table style="font-size: 13px;" id="listPending" class="table table-dark">
                                     <thead>
                                     <tr class="">

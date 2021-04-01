@@ -96,7 +96,10 @@ class Contract extends CustomBaseStep {
 
 	public function approved(){
 		$this->ghContract->approved($this->input->get('id'), $this->input->get('contract-id'));
-
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Duyệt Hợp Đồng Thành Công!',
+            'status' => 'success'
+        ]);
 		return redirect('/admin/list-contract');
 	}
 
@@ -168,6 +171,12 @@ class Contract extends CustomBaseStep {
 	public function detailShow(){
 		$contract_id = $this->input->get('id');
 		$model = $this->ghContract->get(['id' => $contract_id])[0];
+        $notification = $this->ghNotification->get([
+            'is_approve' => 'NO',
+            'object_id' => $contract_id
+        ]);
+
+        $data['notification_object_id'] = count($notification) ? $notification[0]['object_id'] : "";
 		$data['contract'] = $model;
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;

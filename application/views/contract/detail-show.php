@@ -1,5 +1,6 @@
 <?php
 $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
+$check_approve = isYourPermission('Contract', 'approved', $this->permission_set);
 
 ?>
 
@@ -64,6 +65,11 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                         <tr class="text-right">
                             <td colspan="2" class="text-right" width="250px">
                                 <div class="customer-name w-100">
+                                    <?php if($notification_object_id): ?>
+                                    <a class="btn btn-danger mr-2 contract-cancel"
+                                       href="/admin/contract/approved?contract-id=<?= $notification_object_id ?>&id=<?= $contract['id'] ?>"
+                                        data-contract-id="<?= $contract['id'] ?>">Duyệt</a>
+                                    <?php endif; ?>
                                     <button class="btn btn-danger contract-cancel"
                                             data-contract-id="<?= $contract['id'] ?>">Hủy Hợp Đồng</button>
                                 </div>
