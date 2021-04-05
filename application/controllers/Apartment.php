@@ -279,6 +279,11 @@ class Apartment extends CustomBaseStep {
 					'time_update' => time()
 				];
 			}
+            if($field_name == 'time_insert' and !empty($field_value)){
+                $data = [
+                    'time_insert' => strtotime($field_value)
+                ];
+            }
 			$old_apartment = $this->ghApartment->getById($apartment_id);
 			$old_log = json_encode($old_apartment[0]);
 			
