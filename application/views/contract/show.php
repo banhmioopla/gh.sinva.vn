@@ -180,6 +180,7 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                             <th width="250px">Thành Viên Chốt</th>
                             <th>Ngày ký</th>
                             <th>Ngày hết hạn</th>
+                            <th>Ngày Nhập</th>
                             <th class="text-center">Thời hạn</th>
                             <th class="text-center" width="100px">Trạng Thái</th>
                         </tr>
@@ -241,6 +242,11 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
                                         data-value="<?= date('d/m/Y',$row['time_expire']) ?>"
                                         data-name="time_expire">
                                         <?=$row['time_expire'] ? date('d/m/Y',$row['time_expire']):'-' ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <?=$row['time_insert'] ? date('d/m/Y',$row['time_insert']):'-' ?>
                                     </div>
                                 </td>
                                 <td class="text-center">

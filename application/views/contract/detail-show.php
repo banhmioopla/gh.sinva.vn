@@ -273,6 +273,20 @@ $check_approve = isYourPermission('Contract', 'approved', $this->permission_set)
                         </tr>
 
                         <tr>
+                            <td class="text-right"><strong>Ngày Nhập<strong></td>
+                            <td>
+                                <div
+                                        class="contract-time_insert w-50"
+                                        data-name="time_insert"
+                                        data-pk="<?= $contract['id'] ?>"
+                                        data-value="<?= date('d/m/Y', $contract['time_insert'])?>"
+                                >
+                                <?= $contract['time_insert'] > 0 ? date('d/m/Y', $contract['time_insert']) : '#' ?>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td class="text-right"><strong>Ghi Chú Hợp Đồng <strong></td>
                             <td>
                                 <div class="contract-note w-50"
@@ -424,7 +438,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                     }
                 }
             });
-            $('.contract-time_expire, .contract-time_check_in').editable({
+            $('.contract-time_expire, .contract-time_check_in, .contract-time_insert').editable({
                 placement: 'top',
                 type: 'combodate',
                 template: "D / MM / YYYY",

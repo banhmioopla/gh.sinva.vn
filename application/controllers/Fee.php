@@ -322,8 +322,8 @@ class Fee extends CustomBaseStep {
 
 
         $list_contract = $this->ghContract->get([
-            'time_check_in >=' => strtotime($start_date),
-            'time_check_in <=' => strtotime($end_date) + 86399,
+            'time_insert >=' => strtotime($start_date),
+            'time_insert <=' => strtotime($end_date) + 86399,
         ]);
 
         $result = [
@@ -363,8 +363,8 @@ class Fee extends CustomBaseStep {
 
 
         $list_contract = $this->ghContract->get([
-            'time_check_in >=' => strtotime($start_date),
-            'time_check_in <=' => strtotime($end_date),
+            'time_insert >=' => strtotime($start_date),
+            'time_insert <=' => strtotime($end_date),
         ]);
 
         /*Tính Doanh Số, Số lượng HD Của 1 TV*/
@@ -447,7 +447,7 @@ class Fee extends CustomBaseStep {
                     $max_contract_id = $item['id'];
                     $max_consultant_support_id = $item['consultant_support_id'];
                     $max_is_support_control = $item['is_support_control'];
-                    $max_time_apply = $item['time_check_in'];
+                    $max_time_apply = $item['time_insert'];
                     $max_consultant_id  = $item['consultant_id'];
                 }
             }
@@ -509,7 +509,7 @@ class Fee extends CustomBaseStep {
                             $this->updateToIncomeContract([
                                 'contract_id' => $item['id'],
                                 'contract_income_total' => (double)$temp_income,
-                                'apply_time' => $item['time_check_in'],
+                                'apply_time' => $item['time_insert'],
                                 'type' => self::INCOME_TYPE_CONTRACT,
                                 'user_id' => $item['consultant_id']
                             ]);
@@ -529,7 +529,7 @@ class Fee extends CustomBaseStep {
                             $this->updateToIncomeContract([
                                 'contract_id' => $item['id'],
                                 'contract_income_total' => (double)$partner_support,
-                                'apply_time' => $item['time_check_in'],
+                                'apply_time' => $item['time_insert'],
                                 'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
                                 'user_id' => $item['consultant_support_id']
                             ]);
@@ -585,7 +585,7 @@ class Fee extends CustomBaseStep {
                     $this->updateToIncomeContract([
                         'contract_id' => $item['id'],
                         'contract_income_total' => $temp_support_income,
-                        'apply_time' => strtotime($item['time_check_in']),
+                        'apply_time' => $item['time_insert'],
                         'type' => self::INCOME_TYPE_CONTRACT,
                         'user_id' => $item['consultant_support_id']
                     ]);
@@ -595,7 +595,7 @@ class Fee extends CustomBaseStep {
                 $this->updateToIncomeContract([
                     'contract_id' => $item['id'],
                     'contract_income_total' => $temp_income,
-                    'apply_time' => $item['time_check_in'],
+                    'apply_time' => $item['time_insert'],
                     'type' => self::INCOME_TYPE_CONTRACT,
                     'user_id' => $item['consultant_id']
                 ]);
@@ -609,7 +609,7 @@ class Fee extends CustomBaseStep {
                 'user_id' => $user_id,
                 'contract_income_total' => $this_ref_total_income,
                 'type' => self::INCOME_TYPE_REFER_USER,
-                'apply_time' => date('01-m-Y')
+                'apply_time' => strtotime($start_time)
             ]);
         }
 
@@ -645,7 +645,7 @@ class Fee extends CustomBaseStep {
                     'apartment_id' => $a['id'],
                     'contract_income_total' => $sale_of_apartment,
                     'type' => self::INCOME_TYPE_GET_NEW_APARTMENT,
-                    'apply_time' => strtotime($start_time)
+                    'apply_time' => $a['time_insert']
                 ]);
             }
         }

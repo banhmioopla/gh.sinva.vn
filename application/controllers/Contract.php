@@ -389,7 +389,7 @@ class Contract extends CustomBaseStep {
 		$field_value = $this->input->post('value');
 
 		if(!empty($contract_id) and !empty($field_name)) {
-			if($field_name == 'time_expire' || $field_name == 'time_check_in') {
+			if($field_name == 'time_expire' || $field_name == 'time_check_in' || $field_name == 'time_insert') {
 				if(empty($field_value)) {
 					$field_value = null;
 				} else {
