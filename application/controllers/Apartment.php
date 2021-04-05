@@ -29,9 +29,8 @@ class Apartment extends CustomBaseStep {
 		$district_code = $this->input->get('district-code');
 		$data = [];
 		$district_code = !empty($district_code) ? $district_code: null;
-
 		if(count($this->list_district_CRUD) == 0) {
-            $this->load->view('components/header', ['menu' => $this->menu]);
+            $this->load->view('components/header');
             $this->load->view('apartment/error');
             $this->load->view('components/footer');
 		    return;
@@ -57,7 +56,8 @@ class Apartment extends CustomBaseStep {
 			}
 		}
 		$template = 'apartment/show-full-permission';
-		if(in_array($district_code, $this->list_district_view_only)) {
+
+		if(!$this->editable) {
 			$template =  'apartment/show';
 		}
 

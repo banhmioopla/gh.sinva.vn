@@ -70,6 +70,25 @@
                         </div>
                     <?php endforeach;?>
                 </div>
+
+                <div class="form-group row mt-3">
+                    <div class="col"><p class="text-info">Nếu chỉ chia theo dự án thì không cần chọn quận</p></div>
+                    <?php foreach($list_district as $district):
+                        ?><h4 class="col-12 mt-3">Dự Án Quận <?= $district['name'] ?> </h4><?php
+                        $list_apartment = $ghApartment->get(['district_code' => $district['code'], 'active' => 'YES']);
+                        foreach ($list_apartment as $apm):
+                        ?>
+
+                            <div class="pl-2 col-3 checkbox checkbox-custom form-check-inline">
+                                <input name="apm[]"
+                                       id="apm-<?= $apm['id'] ?>"
+                                       value="<?= $apm['id'] ?>"
+                                       type="checkbox" <?= in_array((string)$apm['id'], $list_apm)? 'checked':'' ?>>
+                                <label for="apm-<?= $apm['id'] ?>"><?= $apm['address_street'] ?></label>
+                            </div>
+                        <?php endforeach;?>
+                    <?php endforeach;?>
+                </div>
                 <div class="form-group row mt-3">
                     <div class="col-8 offset-4">
                         <button type="submit"

@@ -21,6 +21,9 @@ $check_commission_rate = false;
 if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
     $check_commission_rate = true;
 }
+
+$check_only_apartment = count($this->list_apartment_view_only) ? true : false;
+
 ?>
 
 <div class="wrapper">
@@ -75,15 +78,15 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                 <div class="m-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
                         <?php 
-                        foreach($list_district as $district):
+                        foreach($this->list_district_CRUD as $district):
                             $district_btn = 'btn-outline-success';
                         ?>
                             
-                            <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>" 
+                            <a href="<?= base_url().'admin/list-apartment?district-code='.$district ?>"
                                 class="btn m-1 btn-sm <?= $district_btn ?>
-                                <?= $district_code == $district['code'] ? 'active':'' ?>
+                                <?= $district_code == $district ? 'active':'' ?>
                                 btn-rounded waves-light waves-effect">
-                            Q. <?= $district['name'] ?> </a>
+                            Q. <?= $district ?> </a>
                             
                         <?php endforeach; ?>
                     </span>
@@ -95,7 +98,9 @@ if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
                         </div>
                     </div>
                 </div>
-                <?php foreach ($list_apartment as $apartment): ?>
+                <?php foreach ($list_apartment as $apartment):
+                    if($check_only_apartment && !in_array($apartment['id'], $this->list_apartment_view_only)) continue;
+                    ?>
                 <!-- item -->
                 <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
                     <?php if($apartment['short_message']) echo '<h5 class="col text-center notifier-apartment">'.$apartment["short_message"].'</h5>'; ?>

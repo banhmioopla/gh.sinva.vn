@@ -8,6 +8,7 @@ class UserDistrict extends CustomBaseStep {
         parent::__construct();
         $this->load->model('ghUserDistrict');
         $this->load->model('ghDistrict');
+        $this->load->model('ghApartment');
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibDistrict', null, 'libDistrict');
     }
@@ -17,12 +18,19 @@ class UserDistrict extends CustomBaseStep {
         $list_user_district = $this->ghUserDistrict->get(['user_id' => $current_user]);
         $data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
         $data['libUser'] = $this->libUser;
+        $data['ghApartment'] = $this->ghApartment;
 
         $list_ud = [];
+        $list_apm = [];
         foreach ($list_user_district as $item) {
             $list_ud[] = $item['district_code'];
+            $list_apm[] = $item['apartment_id'];
         }
         $data['list_ud'] = $list_ud;
+        $data['list_apm'] = $list_apm;
+
+
+
         /*--- Load View ---*/
         $this->load->view('components/header', ['menu' => $this->menu]);
         $this->load->view('user-district/show', $data);
@@ -35,13 +43,24 @@ class UserDistrict extends CustomBaseStep {
         $this->ghUserDistrict->delete(['user_id' => $post['account_id']]);
 
         $is_view_only = $post['is_view_only'] == "YES" ? "YES":"NO";
-        if(count($post['code'])>0) {
-            foreach ($post['code'] as $code) {
+
+        if(count($post['apm'])>0) {
+            foreach ($post['apm'] as $apm) {
                 $this->ghUserDistrict->insert([
-                    'district_code' => $code,
+                    'apartment_id' => $apm,
                     'user_id' => $post['account_id'],
                     'is_view_only' => $is_view_only
                 ]);
+            }
+        } else {
+            if(count($post['code'])>0) {
+                foreach ($post['code'] as $code) {
+                    $this->ghUserDistrict->insert([
+                        'district_code' => $code,
+                        'user_id' => $post['account_id'],
+                        'is_view_only' => $is_view_only
+                    ]);
+                }
             }
         }
 

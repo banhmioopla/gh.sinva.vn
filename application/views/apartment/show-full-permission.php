@@ -71,12 +71,12 @@ if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
 
                 <div class="mt-2 mb-3 list-action card-box shadow">
                     <span class="d-flex justify-content-center flex-wrap">
-                    <?php foreach($list_district as $district): ?>
-                        <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>" 
+                    <?php foreach($this->list_district_CRUD as $district): ?>
+                        <a href="<?= base_url().'admin/list-apartment?district-code='.$district ?>"
                             class="btn m-1 btn-sm btn-outline-success
-                            <?= $district_code == $district['code'] ? 'active':'' ?>
+                            <?= $district_code == $district ? 'active':'' ?>
                             btn-rounded waves-light waves-effect">
-                            <?= $district['name'] ?></a>
+                            <?= $district ?></a>
                             
                     <?php endforeach; ?>
                     </span>

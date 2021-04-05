@@ -15,7 +15,7 @@ class CustomBaseStep extends CI_Controller {
 			return redirect('/admin/logout');
 		}
 		
-		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghRole', 'ghConfig']);
+		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig']);
 		$this->auth = $this->session->userdata('auth');
 		$this->role = $this->ghRole->get(['code' =>$this->auth['role_code']])[0];
 		$this->load->library('LibRole', null, 'libRole');
@@ -29,11 +29,36 @@ class CustomBaseStep extends CI_Controller {
 		
 		$ghUserDistrict = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
 		$this->list_district_CRUD = [];
+		$this->list_apartment_CRUD = [];
+		$this->list_apartment_view_only = [];
         $this->list_district_view_only = [];
+        $temp_district_arr = [];
+        $this->editable = false;
+
 		foreach($ghUserDistrict as $ud) {
-			$this->list_district_CRUD[] = $ud['district_code'];
+
+            if($ud['apartment_id']){
+                $this->list_apartment_CRUD = $ud['apartment_id'];
+                $model_apm = $this->ghApartment->getFirstById($ud['apartment_id']);
+                if($model_apm && !in_array($model_apm['district_code'], $temp_district_arr)){
+                    $temp_district_arr[]= $model_apm['district_code'];
+                    $this->list_district_CRUD[] = $model_apm['district_code'];
+                }
+            } else {
+                if(!in_array($ud['district_code'], $temp_district_arr)) {
+                    $this->list_district_CRUD[] = $ud['district_code'];
+                    $temp_district_arr[]= $ud['district_code'];
+                }
+
+            }
+
 			if($ud['is_view_only'] == 'YES') {
                 $this->list_district_view_only[] = $ud['district_code'];
+                if($ud['apartment_id']){
+                    $this->list_apartment_view_only[] = $ud['apartment_id'];
+                }
+            } else {
+                $this->editable = true;
             }
 		}
 		
