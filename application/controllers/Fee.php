@@ -440,7 +440,7 @@ class Fee extends CustomBaseStep {
                     continue;
                 }
 
-                if($item['room_price'] * $item['commission_rate'] > $temp1) {
+                if($item['room_price'] * $item['commission_rate'] >= $temp1) {
                     $temp1 = $item['room_price'] * $item['commission_rate'];
                     $max_room_price = $item['room_price'];
                     $max_number_of_month = $item['number_of_month'];
@@ -452,8 +452,6 @@ class Fee extends CustomBaseStep {
                 }
             }
             $sub_description .= "(3) HĐ cao nhất: $max_room_price ($max_number_of_month tháng) <br>";
-
-
             /*So khớp với bảng B1*/
             foreach ($cd_config['index_master_b1'] as $b1) {
                 if($max_room_price > $b1['room_price_min'] && $max_room_price <= $b1['room_price_max']) {
