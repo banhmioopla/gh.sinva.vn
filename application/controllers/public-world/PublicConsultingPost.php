@@ -28,7 +28,7 @@ class PublicConsultingPost extends CI_Controller {
         }
 
         $list_img = [];
-        if(count($this_post_img)) {
+        if($this_post_img && count($this_post_img)) {
             foreach ($this_post_img as $img_id) {
                 $img_model = $this->ghImage->getFirstById($img_id);
                 if($img_model) {

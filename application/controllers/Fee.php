@@ -25,6 +25,7 @@ class Fee extends CustomBaseStep {
         $this->load->model('ghRoom');
         $this->load->model('ghUserIncomeDetail');
         $this->load->model('ghUserCumulativeSale');
+        $this->load->model('ghPublicConsultingPost');
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibPhone', null, 'libPhone');
         $this->load->library('LibTime', null, 'libTime');
@@ -53,15 +54,9 @@ class Fee extends CustomBaseStep {
         }
 
         if(!$this->input->get('account_id')) {
-            $list_user = $this->ghUser->get([
-                'active' => 'YES',
-                'account_id =' => $this->auth['account_id']
-            ]);
+            $user = $this->ghUser->getFirstByAccountId($this->auth['account_id']);
         } else {
-            $list_user = $this->ghUser->get([
-                'active' => 'YES',
-                'account_id =' => $this->input->get('account_id')
-            ]);
+            $user = $this->ghUser->getFirstByAccountId($this->input->get('account_id'));
         }
 
         $list_role = $this->ghRole->get([
@@ -81,16 +76,16 @@ class Fee extends CustomBaseStep {
 
         $time_start = '01-'.$this_month.'-'.$year;
         $time_end = $last_date.'-'.$this_month.'-'.$year;
-        $view_data_income[$list_user[0]['account_id']] =
-            $this->syncPersonalIncome($list_user[0]['account_id'], $data['quantity'], $data['total_sale'], $time_start, $time_end);
+        $view_data_income[$user['account_id']] =
+            $this->syncPersonalIncome($user['account_id'], $data['quantity'], $data['total_sale'], $time_start, $time_end);
 
 
         $personal_penalty = $this->ghUserPenalty->get(['user_penalty_id' =>
-        $this->auth['account_id'], 'time_insert >= ' => strtotime(date('01-m-Y')) ]);
+            $user['account_id'], 'time_insert >= ' => strtotime($time_start) ]);
 
 
-        $list_contract = $this->ghContract->get(['consultant_id' => $list_user[0]['account_id']]);
-        $list_booking = $this->ghConsultantBooking->get(['booking_user_id' => $list_user[0]['account_id']]);
+        $list_contract = $this->ghContract->get(['consultant_id' => $user['account_id']]);
+        $list_booking = $this->ghConsultantBooking->get(['booking_user_id' => $user['account_id']]);
         $list_customer = [];
 
         $list_customer_id = [];
@@ -125,12 +120,15 @@ class Fee extends CustomBaseStep {
             return $item2['id'] <=> $item1['id'];
         });
 
+        $list_consultant_post = $this->ghPublicConsultingPost->get(['user_create_id' => $user['account_id']]);
+
 
 
         $this->load->view('components/header',['menu' =>$this->menu]);
         $this->load->view('fee/show-personal-profile', [
             'list_user_income' => $view_data_income,
             'libUser' => $this->libUser,
+            'list_consultant_post' => $list_consultant_post,
             'total_sale' => $data['total_sale'],
             'quantity_contract' => $data['quantity'],
             'personal_penalty' => $personal_penalty,
@@ -144,8 +142,8 @@ class Fee extends CustomBaseStep {
             'ghApartment' => $this->ghApartment,
             'ghConsultantBooking' => $this->ghConsultantBooking,
             'label_apartment' => $this->config->item('label.apartment'),
-            'user' => $list_user[0],
-            'role' => $this->ghRole->get(['code' => $list_user[0]['role_code']])[0]
+            'user' => $user,
+            'role' => $this->ghRole->get(['code' => $user['role_code']])[0]
 
         ]);
         $this->load->view('components/footer');

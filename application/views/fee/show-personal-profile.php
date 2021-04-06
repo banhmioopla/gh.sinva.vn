@@ -220,6 +220,28 @@ $data = array_values($list_user_income)[0];
                 </div>
 
                 <div class="card-box">
+                    <h4 class="header-title mt-0 mb-3">Bài Đăng Tư Vấn</h4>
+                    <table class="table table-dark table-data">
+                        <thead>
+                        <tr>
+                            <th>Tiêu Đề</th>
+                            <th>Ngày Tạo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($list_consultant_post as $post):
+
+                            ?>
+                            <tr>
+                                <th scope="row"><u><a href="/public/consulting-post-detail?id=<?= $post['id'] ?>" target="_blank"><?= $post['title'] ? $post['title'] : "[không tiêu đề]" ?></a></u></th>
+                                <td><<?= date('d/m/Y', $post['time_create']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-box">
                     <h4 class="header-title mt-0 mb-3">Bảng Khách Hàng</h4>
                     <table class="table table-dark table-data">
                         <thead>

@@ -5,20 +5,41 @@
             <div class="col-sm-12">
                 <div class="page-title-box">
                     <h2 class="font-weight-bold text-danger"><?= $post['title'] ?></h2>
-                    <h4 class="m-t-0 header-title"><u>Địa Chỉ:</u> <?= $apartment['address_street'] ?></h4>
                 </div>
             </div>
         </div>
         <!-- end page title end breadcrumb -->
 
+        <div class="port">
+            <div class="portfolioContainer">
+                <?php foreach ($list_img as $img): ?>
+                    <div class="col-sm-6 col-md-4 webdesign illustrator">
+                        <a href="<?= base_url().'media/apartment/'.$img['name'] ?>" class="image-popup">
+                            <div class="portfolio-masonry-box">
+                                <div class="portfolio-masonry-img">
+                                    <img src="<?= base_url().'media/apartment/'.$img['name'] ?>" class="thumb-img img-fluid"
+                                         alt="work-thumbnail">
+                                </div>
+                                <div class="portfolio-masonry-detail d-none">
+                                    <h4 class="font-18">Street Photography</h4>
+                                    <p>Graphic Design</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach;?>
+
+            </div>
+        </div> <!-- End row -->
+
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="card-box">
                     <h4 class="text-danger font-weight-bold">Mô Tả Chung</h4>
                     <p class="m-b-20" style="white-space: pre-line"><?= $post['content'] ?></p>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="card-box">
                     <a href="#">
                         <img src="https://blog.advids.co/wp-content/uploads//2017/06/Real-Estate11.gif"
@@ -40,17 +61,17 @@
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="card-box">
                     <h4 class="text-danger font-weight-bold">Dịch Vụ</h4>
                     <ul>
                         <?php if($apartment['electricity']): ?>
-                        <li>
-                            <div class="row border-bottom mt-2">
-                                <div class="col-6"><strong>Điện:</strong></div>
-                                <div class="col-6 text-right"><?= $apartment['electricity'] ?></div>
-                            </div>
-                        </li>
+                            <li>
+                                <div class="row border-bottom mt-2">
+                                    <div class="col-6"><strong>Điện:</strong></div>
+                                    <div class="col-6 text-right"><?= $apartment['electricity'] ?></div>
+                                </div>
+                            </li>
                         <?php endif; ?>
 
                         <?php if($apartment['water']): ?>
@@ -93,7 +114,7 @@
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="card-box">
                     <h4 class="text-danger font-weight-bold">Thông Tin Phòng</h4>
                     <ul>
@@ -139,28 +160,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="port">
-            <div class="portfolioContainer">
-                <?php foreach ($list_img as $img): ?>
-                <div class="col-sm-6 col-md-4 webdesign illustrator">
-                    <a href="<?= base_url().'media/apartment/'.$img['name'] ?>" class="image-popup">
-                        <div class="portfolio-masonry-box">
-                            <div class="portfolio-masonry-img">
-                                <img src="<?= base_url().'media/apartment/'.$img['name'] ?>" class="thumb-img img-fluid"
-                                     alt="work-thumbnail">
-                            </div>
-                            <div class="portfolio-masonry-detail d-none">
-                                <h4 class="font-18">Street Photography</h4>
-                                <p>Graphic Design</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <?php endforeach;?>
-
-            </div>
-        </div> <!-- End row -->
 
     </div> <!-- end container -->
 </div>

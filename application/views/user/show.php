@@ -192,11 +192,12 @@ foreach ($list_user as $row) {
                         <?php foreach($list_user as $row ): ?>
                             <tr>
                                 <td>
-                                    <div class="user-account_id text-center font-weight-bold" 
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="account_id">
+                                    <u>
+                                        <a target="_blank"
+                                           class="text-danger"
+                                           href="/admin/personal-profile?account_id=<?= $row['account_id'] ?>">
                                             <?= $row['account_id'] ?>
-                                    </div>
+                                        </a>  </u>
                                 </td>
                                 <td>
                                     <div class="user-name user"
@@ -391,7 +392,7 @@ foreach ($list_user as $row) {
                         mode: 'inline',
                         combodate: {
                             firstItem: 'name',
-                            maxYear: '2020',
+                            maxYear: '2025',
                             minYear: '1990'
                         },
                         inputclass: 'form-control-sm',
