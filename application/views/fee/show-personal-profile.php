@@ -234,7 +234,7 @@ $data = array_values($list_user_income)[0];
                             ?>
                             <tr>
                                 <th scope="row"><u><a href="/public/consulting-post-detail?id=<?= $post['id'] ?>" target="_blank"><?= $post['title'] ? $post['title'] : "[không tiêu đề]" ?></a></u></th>
-                                <td><<?= date('d/m/Y', $post['time_create']) ?></td>
+                                <td><?= date('d/m/Y', $post['time_create']) ?></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

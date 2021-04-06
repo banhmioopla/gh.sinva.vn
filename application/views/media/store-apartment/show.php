@@ -100,7 +100,7 @@ include VIEWPATH . 'functions.php';
                     <ul class="list-post">
                         <?php foreach ($list_post as $post):?>
                         <li>
-                            <a href="/public/consulting-post-detail?id=<?= $post['id'] ?>" target="_blank"><?= $post['title'] ?></a> -  <small>Ngày <?= date('d/m/Y', $post['time_create']) ?></small>
+                            <a href="/public/consulting-post-detail?id=<?= $post['id'] ?>" target="_blank"><?= $post['title'] ? $post['title']:"[không tiêu đề]" ?></a> -  <small>Ngày <?= date('d/m/Y', $post['time_create']) ?></small>
                         </li>
                         <?php endforeach;?>
                     </ul>
