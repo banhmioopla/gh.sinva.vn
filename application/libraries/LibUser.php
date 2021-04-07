@@ -65,7 +65,7 @@ class LibUser {
                     $selected = 'selected';
                 }
 
-                $cb .= '<option '.$selected.' value='.$user['account_id'].'>'.$user['name'].'</option>';
+                $cb .= '<option '.$selected.' value='.$user['account_id'].'>'.$user['name'] . " - " . substr($user['account_id'], -3).'</option>';
             }
         }
         return $cb;

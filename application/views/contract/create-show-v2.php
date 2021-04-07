@@ -153,6 +153,15 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                                 </div>
                             <?php endif; ?>
                         </div>
+                        <div class="form-group row">
+                            <label for="consultant_support_id" class="col-12 col-md-4 col-form-label text-right">Thành Viên Hỗ Trợ (-30%)</span></label>
+                            <div class="col-md-6 col-12">
+                                <select type="number" class="form-control"
+                                        id="consultant_support_id" name="consultant_support_id">
+                                    <?= $select_user?>
+                                </select>
+                            </div>
+                        </div>
                         <hr>
                         <h5 class="font-weight-bold"><u>Thông Tin Khách Thuê</u></h5>
                         <div class="form-group row old-customer">

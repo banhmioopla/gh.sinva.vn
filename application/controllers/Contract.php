@@ -328,6 +328,7 @@ class Contract extends CustomBaseStep {
 
 		$contract = [
 			'customer_id' => $customer_id,
+			'consultant_support_id' => $post['consultant_support_id'],
 			'room_id' => $post['room_id'],
 			'apartment_id' => $service_set['id'],
 			'consultant_id' => $post['consultant_id'],
