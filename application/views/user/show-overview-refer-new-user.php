@@ -71,6 +71,7 @@
 <script type="text/javascript">
     commands.push(function() {
         $('.table').dataTable();
+        $('#select-user').select2();
         $('#select-user').change(function(){
             window.location = '/admin/overview-refer-new-user?account='+$(this).val();
         });
