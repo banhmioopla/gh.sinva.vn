@@ -183,6 +183,33 @@ class User extends CustomBaseStep {
         echo json_encode($result); die;
     }
 
+
+    public function showOverviewGetNewApartment(){
+	    $account_id = $this->input->get('account');
+	    $user = $this->ghUser->getFirstByAccountId($account_id);
+	    $list_apartment = $this->ghApartment->get(['user_collected_id' => $account_id]);
+
+        $this->load->view('components/header');
+        $this->load->view('user/show-overview-get-new-apartment', [
+            'list_apartment' => $list_apartment,
+            'cb_user' => $this->libUser->cb($account_id)
+        ]);
+        $this->load->view('components/footer');
+    }
+    public function showOverviewReferNewUser(){
+	    $account_id = $this->input->get('account');
+	    $user = $this->ghUser->getFirstByAccountId($account_id);
+
+	    $list_refer = $this->ghUser->get(['user_refer_id' => $account_id]);
+
+        $this->load->view('components/header');
+        $this->load->view('user/show-overview-refer-new-user', [
+            'list_refer' => $list_refer,
+            'cb_user' => $this->libUser->cb($account_id)
+        ]);
+        $this->load->view('components/footer');
+    }
+
 }
 
 /* End of file role.php */

@@ -548,6 +548,7 @@ class Fee extends CustomBaseStep {
             /*Thu nhập cho không phải BPVH */
             $mapping_sale = isset($sale_config['index_' . $user['role_code']]) ?
                 $sale_config['index_' . $user['role_code']] : null;
+            $rate = 0;
             if(is_array ($mapping_sale)) {
                 foreach($mapping_sale as $item) {
                     if($item['quantity_max'] > $total_user_contract &&
@@ -636,7 +637,7 @@ class Fee extends CustomBaseStep {
                         $sale_of_apartment+= $temp_sale;
                     }
                 }
-                $this->updateToGetNewAartment([
+                $this->updateToGetNewApartment([
                     'user_id' => $user_id,
                     'apartment_id' => $a['id'],
                     'contract_income_total' => $sale_of_apartment,
@@ -648,6 +649,7 @@ class Fee extends CustomBaseStep {
         return $total;
 
     }
+
     private function updateToIncomeContract($data){
         $model = $this->ghUserIncomeDetail->getByUserIdAndContractId($data['user_id'],$data['contract_id']);
         if(count($model)) {

@@ -35,6 +35,8 @@
                     </li>
 
                     <li>- Trong trường hợp hai hoặc nhiều người cùng đi lấy dự án mới. Công ty sẽ chia hoa hồng cho người trực tiếp đàm phán để lấy dự án. Sau đó hai hoặc nhiều người tự thương lượng và chia hoa hồng với nhau nếu tất cả đều có công.</li>
+                    <li class="mt-2"><a href="/admin/overview-refer-new-user?account=<?=$this->auth['account_id']?>">Thống Kê Lượt Tuyển Thành Viên Mới</a></li>
+                    <li><a href="/admin/overview-get-new-apartment?account=<?=$this->auth['account_id']?>">Thống Kê Đàm Phán Dự Án Mới</a></li>
                 </ul>
             </div>
         </div>

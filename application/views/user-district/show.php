@@ -46,8 +46,7 @@
                             <div class=" checkbox checkbox-success">
                                 <input id="is_view_only" type="checkbox"
                                        value="YES"
-                                       <?= count($this->list_district_view_only) > 0
-                                           ? 'checked' :"" ?>
+                                    <?= $is_view_only ? 'checked' :"" ?>
                                        name="is_view_only">
                                 <label for="is_view_only">
                                 </label>
@@ -60,10 +59,10 @@
                     <?php foreach($list_district as $district):?>
 
                         <div class=" col-3 checkbox checkbox-custom form-check-inline">
-                            <input name="code[]" 
-                                    id="<?= $district['code'] ?>" 
-                                    value=<?= $district['code'] ?>
-                                    type="checkbox" <?= in_array((string)$district['code'], $list_ud)? 'checked':'' ?>>
+                            <input name="code[]"
+                                   id="<?= $district['code'] ?>"
+                                   value="<?= $district['code'] ?>"
+                                   type="checkbox" <?= in_array((string)$district['code'], $list_ud)? 'checked':'' ?>>
                             <label for="<?= $district['code'] ?>">
                                 Q. <?= $district['name'] ?>
                             </label>
@@ -77,7 +76,7 @@
                         ?><h4 class="col-12 mt-3">Dự Án Quận <?= $district['name'] ?> </h4><?php
                         $list_apartment = $ghApartment->get(['district_code' => $district['code'], 'active' => 'YES']);
                         foreach ($list_apartment as $apm):
-                        ?>
+                            ?>
 
                             <div class="pl-2 col-3 checkbox checkbox-custom form-check-inline">
                                 <input name="apm[]"
@@ -92,15 +91,15 @@
                 <div class="form-group row mt-3">
                     <div class="col-8 offset-4">
                         <button type="submit"
-                            value="update"
-                            name="submitupdate"
-                             class="btn btn-custom waves-effect waves-light">
+                                value="update"
+                                name="submitupdate"
+                                class="btn btn-custom waves-effect waves-light">
                             Cập Nhật
                         </button>
                     </div>
                 </div>
             </form>
-            
+
         </div>
 
     </div> <!-- end container -->

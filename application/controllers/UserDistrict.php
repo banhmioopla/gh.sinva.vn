@@ -22,12 +22,17 @@ class UserDistrict extends CustomBaseStep {
 
         $list_ud = [];
         $list_apm = [];
+        $is_view_only = false;
         foreach ($list_user_district as $item) {
             $list_ud[] = $item['district_code'];
             $list_apm[] = $item['apartment_id'];
+            if(!$is_view_only && $item['is_view_only'] === 'YES') {
+                $is_view_only = true;
+            }
         }
         $data['list_ud'] = $list_ud;
         $data['list_apm'] = $list_apm;
+        $data['is_view_only'] = $is_view_only;
 
 
 

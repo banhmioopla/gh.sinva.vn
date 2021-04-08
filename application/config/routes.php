@@ -449,6 +449,18 @@ $route['admin/list-fee-contract-income'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/overview-get-new-apartment'] = function($params = []) {
+    $controller = 'User';
+    $action = '/showOverviewGetNewApartment';
+    return $controller.$action;
+};
+
+$route['admin/overview-refer-new-user'] = function($params = []) {
+    $controller = 'User';
+    $action = '/showOverviewReferNewUser';
+    return $controller.$action;
+};
+
 $route['admin/fee/chart-user-income'] = function($params = []) {
     $controller = 'Fee';
     $action = '/buildChart';
