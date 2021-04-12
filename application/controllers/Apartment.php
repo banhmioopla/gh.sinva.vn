@@ -193,6 +193,7 @@ class Apartment extends CustomBaseStep {
 		$data['libPartner'] = $this->libPartner;
 		$data['libTag'] = $this->libTag;
 		$data['libUser'] = $this->libUser;
+		$data['cb_user'] = $this->libUser->cb();
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view('apartment/show-like-base', $data);

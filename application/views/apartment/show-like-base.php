@@ -342,6 +342,18 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="user_collected_id" class="col-4 col-form-label">Thành viên đàm phán<span class="text-danger">*</span></label>
+                            <div class="col-7">
+                                <div>
+                                    <div class=" checkbox checkbox-success">
+                                        <select class="custom-select mt-3" name="user_collected_id" id="user_collected_id">
+                                            <?= $cb_user ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-8 offset-4">
                                 <button type="submit" class="btn btn-custom waves-effect waves-light">
                                     Thêm mới
@@ -359,6 +371,9 @@
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
+            $('#user_collected_id').select2();
+
+
             var tableYes = $('#table-apartment-active-yes').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
