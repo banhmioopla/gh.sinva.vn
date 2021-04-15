@@ -13,7 +13,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h4>Thống kê dẫn khách Tuần hiện tại</h4>
+                    <h2 class="font-weight-bold text-danger">Tạo Lượt Book</h2>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 $apartment_model = $ghApartment->getFirstById($this->input->get('apartment-id'));
                 $room_model = $ghRoom->get(['active' => 'YES', 'apartment_id' => $this->input->get('apartment-id')]);
                 ?>
-                <h3 class="text-center text-danger"><?=
+                <h3 class="text-center text-warning bg-dark"><?=
                     $apartment_model['address_street'] ?></h3>
                 <hr>
                 <form action="/admin/create-new-consultant-booking?apartment-id=<?= $this->input->get('apartment-id')
@@ -35,7 +35,7 @@
                            value="<?= $this->input->get('district-code') ?>">
                     <input type="hidden" name='apartment_id'
                            value="<?= $this->input->get('apartment-id') ?>">
-                    <input type="hidden" name='customer_id' value="">
+                    <input type="hidden" id="customer_id" name='customer_id' value="">
                     <div class="form-group">
                         <div class="row">
                             <label for=""
@@ -66,6 +66,7 @@
                                    class="col-3 offset-2 text-right col-form-label">Chọn thời gian dẫn khách<span class="text-danger">*</span></label>
                             <div class="col-12 col-md-5">
                                 <input type="text" required class="form-control border-info datetimepicker"
+                                       value="<?= date('d-m-Y h:i a') ?>"
                                        id="time_booking" name="time_booking">
                                 <p class="msg-time_booking"></p>
                             </div>
@@ -235,7 +236,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-7 offset-md-5">
-                            <button type="submit"
+                            <button type="button"
                                     id="submit"
                                     class="btn btn-custom waves-effect waves-light">Thêm Mới</button>
                             <p class="text-danger noenter" style="display: none">Không được enter!</p>
@@ -263,20 +264,30 @@
         });
 
         $('form').submit(function(){
+            console.log("button disabled when submit");
             $('button').attr('disabled', true);
         });
+        
+        $('#submit').click(function () {
+            console.log("click submit");
+            let valid = true;
+            if($('input[name=phone_number]').val().length === 0) {
+                valid = false;
+            } else {
+                valid = true;
+            }
+
+            if( valid) {
+                $('form').submit();
+            }
+        });
+
         $('input[name=phone_number]').on('focusout, change', function () {
             let phone = $(this).val();
             if (phone.length > 0) {
                 loadCustomer(phone);
             }
         });
-
-        let __phone = $('input[name=phone_number]').val();
-        if(__phone) {
-            console.log(1);
-            loadCustomer(__phone);
-        }
         
         function loadCustomer(phone) {
             $.ajax({
@@ -318,7 +329,7 @@
                         $('input[name=demand_time]').attr('disabled', true);
                     } else {
                         $('#customer_name').val("");
-                        $('#customer_id').val("");
+                        $('input[name=customer_id]').val("");
                         $('#customer_name').attr('disabled', false);
 
                         $('input[name=gender]').val("");

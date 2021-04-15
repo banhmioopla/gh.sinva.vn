@@ -161,8 +161,8 @@ class ConsultantBooking extends CustomBaseStep {
                 ]);
 			    return redirect('admin/create-new-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
             }
-
-            if(!($post['customer_id'] > 0)) {
+            $customer_id = $post['customer_id'];
+            if(!($customer_id > 0)) {
                 if(empty($post['phone_number']) || empty($post['customer_name'])) {
                     $this->session->set_flashdata('fast_notify', [
                         'message' => 'Vui lòng nhập số điện thoại, Tên khách hàng nếu bạn dẫn khách mới',
@@ -184,25 +184,32 @@ class ConsultantBooking extends CustomBaseStep {
                 $customer['demand_price'] = $post['demand_price'];
                 $customer['demand_district_code'] = $post['demand_district_code'];
                 $customer['demand_time'] = $post['demand_time'] ? strtotime(str_replace('/', '-', $post['demand_time'])) : 0;
-                $customer['test_mode'] = 'YES';
                 $customer_id = $this->ghCustomer->insert($customer);
             }
+            if($customer_id > 0) {
+                $data_insert['customer_id'] = $customer_id;
+                $data_insert['apartment_id'] = $post['apartment_id'];
+                $data_insert['booking_user_id'] = $this->auth['account_id'];
+                $data_insert['time_booking'] = $post['time_booking'];
+                $data_insert['room_id'] = isset($post['room_id']) ? json_encode($post['room_id']):'[]';
+                $data_insert['district_code'] = $post['district_code'];
+                $data_insert['status'] = 'Pending';
 
-            $data_insert['customer_id'] = $customer_id;
-            $data_insert['apartment_id'] = $post['apartment_id'];
-            $data_insert['booking_user_id'] = $this->auth['account_id'];
-            $data_insert['time_booking'] = $post['time_booking'];
-            $data_insert['room_id'] = isset($post['room_id']) ? json_encode($post['room_id']):'[]';
-            $data_insert['district_code'] = $post['district_code'];
-            $data_insert['status'] = 'Pending';
-
-            if($this->ghConsultantBooking->insert($data_insert)){
+                if($this->ghConsultantBooking->insert($data_insert)){
+                    $this->session->set_flashdata('fast_notify', [
+                        'message' => 'Tạo lượt book '.$data['name'].' thành công ',
+                        'status' => 'success'
+                    ]);
+                    return redirect($this->url_show_default);
+                }
+            } else {
                 $this->session->set_flashdata('fast_notify', [
-                    'message' => 'Tạo lượt book '.$data['name'].' thành công ',
-                    'status' => 'success'
+                    'message' => 'Không cập nhật được thông tin khách hàng',
+                    'status' => 'danger'
                 ]);
-                return redirect($this->url_show_default);
+                return redirect('admin/create-new-consultant-booking?apartment-id='.$post['apartment_id'].'&district-code='.$post['district_code'].'&mode=create');
             }
+
         }
 
 		// send Email
