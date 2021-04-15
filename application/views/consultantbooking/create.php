@@ -240,6 +240,7 @@
                                     id="submit"
                                     class="btn btn-custom waves-effect waves-light">Thêm Mới</button>
                             <p class="text-danger noenter" style="display: none">Không được enter!</p>
+                            <p class="text-danger" id="error-msg">Không được enter!</p>
                         </div>
                     </div>
                 </form>
@@ -273,9 +274,12 @@
             let valid = true;
             if($('input[name=phone_number]').val().length === 0) {
                 valid = false;
+                $('#error-msg').text("vui lòng nhập số điện thoại khách hàng");
             } else {
+                $('#error-msg').text("");
                 valid = true;
             }
+
 
             if( valid) {
                 $('form').submit();
