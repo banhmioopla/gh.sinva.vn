@@ -20,6 +20,7 @@
                     <span class="col-md-2 col-12 offset-0">
                         <div>Phường</div>
                         <select name="roomWard" id="roomWard" class="form-control">
+                            <option value="">Phường...</option>
                             <?php foreach ($list_ward as $d):
                                 $selected = "";
                                 if($d['code'] == $this->input->get('roomWard')) {
