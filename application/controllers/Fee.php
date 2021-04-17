@@ -425,12 +425,12 @@ class Fee extends CustomBaseStep {
                     break;
                 }
             }
-            $sub_description = "(2) Tỉ lệ cơ bản: ".$extra_rate_cd."% <br>";
+            $description .= "(2) Tỉ lệ cơ bản của VH: ".$extra_rate_cd."% <br>";
 
             /*(1) - CƠ BẢN*/
             $total_extra_personal_income = $extra_rate_cd * (double)$total_sale_for_cd
                 / count($this->arr_general);
-            $sub_description .= " Cơ Bản = " . $total_extra_personal_income . "<br>";
+            $description .= " TN từ tỉ lệ Cơ Bản = " . $total_extra_personal_income . "<br>";
 
             /*(2) - Hợp Đồng B1 -- HD có doanh số cao nhất*/
             foreach ($list_contract as $item) {
@@ -449,7 +449,7 @@ class Fee extends CustomBaseStep {
                     $max_consultant_id  = $item['consultant_id'];
                 }
             }
-            $sub_description .= "(3) HĐ cao nhất: $max_room_price ($max_number_of_month tháng) <br>";
+            $description .= "(3) HĐ Có DT Cao Nhất: ".$max_room_price." (".$max_number_of_month." tháng) <br>";
             /*So khớp với bảng B1*/
             foreach ($cd_config['index_master_b1'] as $b1) {
                 if($max_room_price > $b1['room_price_min'] && $max_room_price <= $b1['room_price_max']) {
@@ -461,7 +461,7 @@ class Fee extends CustomBaseStep {
                     if($max_is_support_control == 'YES') {
                         $total_b1 = (double) $total_b1 * 0.9;
                     }
-                    $sub_description .= "(4) B1: $max_number_of_month th x " .$b1['income_unit']." = ". $total_b1 .
+                    $description .= "(4) Bảng B1: ".$max_number_of_month." (th) x " .$b1['income_unit']." = ". $total_b1 .
                         "<br>";
 
                     if($max_contract_id > 0) {
@@ -480,7 +480,7 @@ class Fee extends CustomBaseStep {
 
 
             /*Bảng B2*/
-            $sub_description .= " (5) B2: |Chi tiết hợp đồng nhỏ| <br>";
+            $description .= " (5) Bảng B2: |Chi tiết hợp đồng nhỏ| <br>";
             foreach ($list_contract as $item) {
                 if(!$this->isValidPersonalContract($item, $user_id)) {
                     continue;
@@ -534,7 +534,7 @@ class Fee extends CustomBaseStep {
                     }
                 }
             }
-            $sub_description .= "<br>";
+            $description .= "<br>";
 
             /*Kiểm tra - có phải vận hành chung hay ko ?*/
             if(in_array($user['account_id'], $this->arr_general)) {
@@ -542,8 +542,7 @@ class Fee extends CustomBaseStep {
             } else {
                 $total_personal_income = $total_extra_personal_income;
             }
-            $sub_description .= "Tổng Thu Nhập Cá Nhân = " . $total_personal_income;
-            $description = $sub_description;
+            $description .= "Tổng Thu Nhập Cá Nhân = " . $total_personal_income;
         } else {
             /*Thu nhập cho không phải BPVH */
             $mapping_sale = isset($sale_config['index_' . $user['role_code']]) ?

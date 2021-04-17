@@ -203,6 +203,17 @@ $data = array_values($list_user_income)[0];
 
                                 </td>
                             </tr>
+                            <tr class="bg-dark text-warning">
+                                <th class="font-weight-bold">Mô Tả</th>
+
+
+                                <th class=" font-weight-bold"><?php
+
+                                    echo $data['description_income'];
+
+                                    ?></th>
+                            </tr>
+
                             <tr class="bg-dark text-success">
                                 <th class="font-weight-bold">Tổng Thu Nhập</th>
 
