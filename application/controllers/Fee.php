@@ -564,7 +564,10 @@ class Fee extends CustomBaseStep {
                 }
 
                 $temp_income = $item['room_price'] * (double) ($item['commission_rate'] * $rate / 10000);
-                $sub_des = "(".number_format($item['room_price']) . " x " . " ".$item['commission_rate']."%) x ".$rate."% ";
+
+                $room = $this->ghRoom->getFirstById($item['room_id']);
+                $apartment = $this->ghApartment->getFirstById($room['apartment_id']);
+                $sub_des = "<strong class='text-light'>".$apartment['address_street'] . " ⇢ MP: ".$room['code'] . "</strong></br> (".number_format($item['room_price']) . " x " . " ".$item['commission_rate']."%) x ".$rate."% ";
                 if($item['consultant_id'] == $user_id) {
                     if($item['consultant_support_id'] >= 171020000) {
                         $temp_income -= (double) $temp_income * 0.3;
