@@ -606,7 +606,9 @@ class Fee extends CustomBaseStep {
         /*Thu Nhập từ việc tuyển dụng*/
         $this_ref_total_income = (double) $this->getTotalSaleRefer($user_id, $start_time, $end_time);
         if($this_ref_total_income > 0) {
-            $description .= self::INCOME_TYPE_REFER_USER. " " . $this_ref_total_income;
+
+            $description .= "<br> ⛛ Thu Nhập Từ Tuyển Thành Viên<br>";;
+            $description .=   "<i class='mdi mdi-account-multiple-plus'></i> ".number_format($this_ref_total_income) . " vnđ <br>";
             $this->updateToReferIncomeContract([
                 'user_id' => $user_id,
                 'contract_income_total' => $this_ref_total_income,
@@ -650,7 +652,7 @@ class Fee extends CustomBaseStep {
                 $sale_of_apartment = 0;
                 if(count($contract)) {
                     foreach ($contract as $c) {
-                        $temp_sale = (double)$c['room_price']*$c['commission_rate']*$this->get_new_apartment_rate;
+                        $temp_sale = (double)$c['room_price']*$c['commission_rate']/100;
                         $total += $temp_sale;
                         $sale_of_apartment+= $temp_sale;
                     }
