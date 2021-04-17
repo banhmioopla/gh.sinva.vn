@@ -354,7 +354,8 @@ class Fee extends CustomBaseStep {
 
         /*Tổng số lượng hợp đồng bpkd*/
         $round_contract_to_compare = $total_contract;
-        $description = "";
+        $description = "<br>⛛ Thu Nhập Từ Hợp Đồng <br>";
+        $description .= "--------------------------------------------------------- <br>";
 
         $start_date = $start_time;
         $end_date = $end_time;
@@ -384,12 +385,12 @@ class Fee extends CustomBaseStep {
 
         /*Thuộc VH*/
         if($user_role['is_control_department'] == "YES") {
-            $description = "(1) Vận Hành <br>";
+            $description .= "(1) Vận Hành <br>";
             $is_cd = true;
 
             /*Vận Hành Chung*/
             if(in_array($user['account_id'], $this->arr_general)) {
-                $description = "(1) Vận Hành Chung <br>";
+                $description .= "(1) Vận Hành Chung <br>";
                 $mapping_cd = $cd_config['index_extra_general'];
             } else {
                 /*Không thuộc vận hành chung*/
@@ -400,7 +401,7 @@ class Fee extends CustomBaseStep {
         if(in_array($user['account_id'], $this->arr_general)) {
             $is_cd = true;
             $mapping_cd = $cd_config['index_extra_general'];
-            $description = "(1) Vận Hành Chung <br>";
+            $description .= "(1) Vận Hành Chung <br>";
         }
 
 
@@ -542,7 +543,6 @@ class Fee extends CustomBaseStep {
             } else {
                 $total_personal_income = $total_extra_personal_income;
             }
-            $description .= "Tổng Thu Nhập Cá Nhân = " . $total_personal_income;
         } else {
             /*Thu nhập cho không phải BPVH */
             $mapping_sale = isset($sale_config['index_' . $user['role_code']]) ?
@@ -562,9 +562,9 @@ class Fee extends CustomBaseStep {
                 if(!$this->isValidPersonalContract($item, $user_id)) {
                     continue;
                 }
-                $temp_income = $item['room_price'] * (double)
-                    ($item['commission_rate'] * $rate / 10000);
 
+                $temp_income = $item['room_price'] * (double) ($item['commission_rate'] * $rate / 10000);
+                $sub_des = "(".number_format($item['room_price']) . " x " . " ".$item['commission_rate']."%) x ".$rate."% ";
                 if($item['consultant_id'] == $user_id) {
                     if($item['consultant_support_id'] >= 171020000) {
                         $temp_income -= (double) $temp_income * 0.3;
@@ -578,6 +578,7 @@ class Fee extends CustomBaseStep {
                 if($item['consultant_support_id'] == $user_id) {
                     $temp_support_income = (double)$temp_income * 0.3;
                     $temp_income += $temp_support_income;
+                    $description .=self::INCOME_TYPE_CONTRACT . " " .$temp_income . "<br>";
                     $this->updateToIncomeContract([
                         'contract_id' => $item['id'],
                         'contract_income_total' => $temp_support_income,
@@ -588,6 +589,7 @@ class Fee extends CustomBaseStep {
                 }
 
                 $total_personal_income += $temp_income;
+                $description .= $sub_des . " = " .number_format($temp_income) . " vnđ<br>";
                 $this->updateToIncomeContract([
                     'contract_id' => $item['id'],
                     'contract_income_total' => $temp_income,
@@ -601,6 +603,7 @@ class Fee extends CustomBaseStep {
         /*Thu Nhập từ việc tuyển dụng*/
         $this_ref_total_income = (double) $this->getTotalSaleRefer($user_id, $start_time, $end_time);
         if($this_ref_total_income > 0) {
+            $description .= self::INCOME_TYPE_REFER_USER. " " . $this_ref_total_income;
             $this->updateToReferIncomeContract([
                 'user_id' => $user_id,
                 'contract_income_total' => $this_ref_total_income,
@@ -610,24 +613,37 @@ class Fee extends CustomBaseStep {
         }
 
 
-        $this_get_new_apartment_total = (double) $this->getTotalSaleGetNewApartment($user_id,$start_time, $end_time) * $this->get_new_apartment_rate;
+        $this_get_new_apartment = $this->getTotalSaleGetNewApartment($user_id,$start_time, $end_time);
+        $this_get_new_apartment_total = (double) $this_get_new_apartment['total'] * $this->get_new_apartment_rate;
+        $this_get_new_apartment_description = $this_get_new_apartment['description'];
+        $this_get_new_apartment_description .= " → " . number_format($this_get_new_apartment['total'])
+            . " x " . $this->get_new_apartment_rate . " = " . number_format($this_get_new_apartment_total) . " vnđ<br>";
+
+
         $total_personal_income += $this_ref_total_income + $this_get_new_apartment_total;
+        $description .= "--------------------------------------------------------------<br>";
+        $description .= "⇛ Tổng Thu Nhập Cá Nhân = " . number_format($total_personal_income) . ' vnđ';
+        $description .= "<br>--------------------------------------------------------------";
+
         return [
             'quantity_contract' => $total_user_contract,
             'total_sale' => $total_sale_sinva,
             'total_personal_income' => $total_personal_income,
             'total_refer_income' => $this_ref_total_income,
             'total_get_new_apartment_total' => $this_get_new_apartment_total,
-            'description_income' => $description,
+            'description_income' => $this_get_new_apartment_description . $description ,
         ];
     }
 
     private function getTotalSaleGetNewApartment($user_id, $start_time, $end_time){
         $apartment = $this->ghApartment->get(['user_collected_id' => $user_id, 'time_insert >=' => $start_time]);
         $total = 0;
+
+        $description = "<br> ⛛ Thu Nhập Từ Đàm Phán Dự Án Mới<br>";
+        $description .= "--------------------------------------------------------<br>";
         if(count($apartment)) {
             foreach ($apartment as $a) {
-                $contract = $this->ghContract->get(['apartment_id' => $a['id'], 'time_check_in >=' => strtotime($start_time), 'time_check_in <=' => strtotime($end_time)]);
+                $contract = $this->ghContract->get(['apartment_id' => $a['id'], 'time_insert >=' => strtotime($start_time), 'time_insert <=' => strtotime($end_time)]);
                 $sale_of_apartment = 0;
                 if(count($contract)) {
                     foreach ($contract as $c) {
@@ -636,6 +652,7 @@ class Fee extends CustomBaseStep {
                         $sale_of_apartment+= $temp_sale;
                     }
                 }
+                $description .= " ♦ ". $a['address_street'] . " (".date('d/m/Y', $a['time_insert']).") = ".number_format($sale_of_apartment)." vnđ <br>";
                 $this->updateToGetNewApartment([
                     'user_id' => $user_id,
                     'apartment_id' => $a['id'],
@@ -645,7 +662,10 @@ class Fee extends CustomBaseStep {
                 ]);
             }
         }
-        return $total;
+        return [
+            'total' => $total,
+            'description' => $description
+        ];
 
     }
 

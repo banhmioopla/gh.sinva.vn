@@ -207,7 +207,7 @@ $data = array_values($list_user_income)[0];
                                 <th class="font-weight-bold">Mô Tả</th>
 
 
-                                <th class=" font-weight-bold"><?php
+                                <th class=""><?php
 
                                     echo $data['description_income'];
 
@@ -222,7 +222,7 @@ $data = array_values($list_user_income)[0];
                                 ($pen_rate/100*$data['total_personal_income'])
 
                                 ?>
-                                <th class="text-right font-weight-bold"><?= number_format($final) ?></th>
+                                <th class="text-right font-weight-bold"><?= number_format($final) ?> vnđ</th>
                             </tr>
 
                             </tbody>
