@@ -6056,5 +6056,12 @@ File: Responsive
   .user-list .user-list-item .user-desc {
     margin-left: 0;
   }
+  .gh-success {
+    color: #14dd93;
+  }
+
+  .bg-gh-success {
+    background-color: rgb(20, 221, 147) !important;
+  }
 }
 /*# sourceMappingURL=style.css.map */

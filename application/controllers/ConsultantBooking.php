@@ -17,6 +17,7 @@ class ConsultantBooking extends CustomBaseStep {
 		$this->load->model('ghRoom');
 		$this->load->library('LibUser', null, 'libUser');
 		$this->load->library('LibDistrict', null, 'libDistrict');
+		$this->load->library('LibTime', null, 'libTime');
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->config('label.apartment');
 	}
@@ -174,7 +175,7 @@ class ConsultantBooking extends CustomBaseStep {
 
                 $customer['name'] = $post['customer_name'];
                 $customer['gender'] = $post['gender'];
-                $customer['birthdate'] = $post['birthdate'] ? strtotime(str_replace('/', '-', $post['birthdate'])) : 0;
+                $customer['birthdate'] = strlen($post['birthdate']) > 0 ? $this->libTime->unixTimeFormat($post['birthdate'])  : null;
                 $customer['status'] = 'sinva-info-form';
                 $customer['source'] = $post['source'];
                 $customer['phone'] = $post['phone_number'];
@@ -183,7 +184,7 @@ class ConsultantBooking extends CustomBaseStep {
                 $customer['time_insert'] = time();
                 $customer['demand_price'] = $post['demand_price'];
                 $customer['demand_district_code'] = $post['demand_district_code'];
-                $customer['demand_time'] = $post['demand_time'] ? strtotime(str_replace('/', '-', $post['demand_time'])) : 0;
+                $customer['demand_time'] = strlen($post['demand_time']) ? $this->libTime->unixTimeFormat($post['demand_time']) : null;
                 $customer_id = $this->ghCustomer->insert($customer);
             }
             if($customer_id > 0) {
@@ -197,8 +198,8 @@ class ConsultantBooking extends CustomBaseStep {
 
                 if($this->ghConsultantBooking->insert($data_insert)){
                     $this->session->set_flashdata('fast_notify', [
-                        'message' => 'Tạo lượt book '.$data['name'].' thành công ',
-                        'status' => 'success'
+                        'message' => 'Tạo lượt book '.$data['name'].' thành công, Chúc bạn chốt cọc ngon lành!!! ',
+                        'status' => 'gh-success'
                     ]);
                     return redirect($this->url_show_default);
                 }

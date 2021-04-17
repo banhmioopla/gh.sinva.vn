@@ -1,4 +1,6 @@
-
+<?php
+include VIEWPATH.'functions.php';
+?>
 
 <div class="wrapper">
     <div class="container-fluid">
@@ -25,22 +27,18 @@
                 $apartment_model = $ghApartment->getFirstById($this->input->get('apartment-id'));
                 $room_model = $ghRoom->get(['active' => 'YES', 'apartment_id' => $this->input->get('apartment-id')]);
                 ?>
-                <h3 class="text-center text-warning bg-dark"><?=
-                    $apartment_model['address_street'] ?></h3>
-                <hr>
                 <form action="/admin/create-new-consultant-booking?apartment-id=<?= $this->input->get('apartment-id')
                 ?>&district-code=<?= $this->input->get('district-code')?>&mode=create"
-                      method="post">
+                      method="post" id="form-submit">
                     <input type="hidden" name='district_code'
                            value="<?= $this->input->get('district-code') ?>">
                     <input type="hidden" name='apartment_id'
                            value="<?= $this->input->get('apartment-id') ?>">
                     <input type="hidden" id="customer_id" name='customer_id' value="">
                     <div class="form-group">
+                        <h5 class="text-center text-warning bg-dark p-2">Thông Tin Book Phòng <br> <strong><h4 class="text-white"><?= $apartment_model['address_street'] ?></h4></strong> </h5>
                         <div class="row">
-                            <label for=""
-                                   class="col-3 offset-2 text-right col-form-label">Chọn mã phòng</label>
-                            <div class="col-md-7">
+                            <div class="col-md-10 offset-md-2">
                                 <?php
                                 foreach ($room_model as $item):
                                     $status = '';
@@ -49,12 +47,12 @@
                                     }
                                     ?>
 
-                                    <div class="checkbox checkbox-success form-check-inline mr-5 pb-2">
+                                    <div class="checkbox checkbox-success form-check-inline mr-md-5 ml-3 ml-md-0 mr-0 w-md-25 w-25 pb-3">
                                         <input name="room_id[]" type="checkbox"
                                                id="room_<?= $item['id'] ?>"
                                                value="<?= $item['id'] ?>">
                                         <label class=" font-weight-bold text-<?= $status ?>"
-                                               for="room_<?= $item['id'] ?>"> <?= $item['code'] ?> </label>
+                                               for="room_<?= $item['id'] ?>"> MP: <?= $item['code'] ." (".($item['price'] ? view_money_format($item['price'],1): null).")" ?> </label>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -62,8 +60,8 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <label for="time_booking"
-                                   class="col-3 offset-2 text-right col-form-label">Chọn thời gian dẫn khách<span class="text-danger">*</span></label>
+                            <label
+                                   class="col-md-3 offset-md-2 text-md-right font-weight-bold col-form-label">Chọn thời gian dẫn khách<span class="text-danger">*</span></label>
                             <div class="col-12 col-md-5">
                                 <input type="text" required class="form-control border-info datetimepicker"
                                        value="<?= date('d-m-Y h:i a') ?>"
@@ -73,9 +71,10 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <h5 class="text-center text-warning bg-dark p-2">Thông Tin Khách Hàng</h5>
                         <div class="row">
                             <label for="phone_number"
-                                   class="col-3 offset-2 text-right col-form-label">Số điện thoại khách hàng<span
+                                   class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Số điện thoại khách hàng<span
                                     class="text-danger">*</span></label>
                             <div class="col-md-5">
                                 <input type="text" required
@@ -90,6 +89,7 @@
                                     ?>
                                     <p class="text-center text-<?= $flash_status ?>"><?= $flash_mess ?></p>
                                 <?php endif; ?>
+                                <p class="font-weight-bold text-warning" id="warning-msg"></p>
                                 <p class="font-weight-bold text-info">Nhập xong số điện thoại, vui lòng click (bấm) bên ngoài form này để gh check thông tin SDT tồn tại hay chưa!</p>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <label for="customer_name"
-                                       class="col-3 offset-2 text-right col-form-label">Họ tên khách hàng<span
+                                       class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Họ tên khách hàng<span
                                         class="text-danger">*</span></label>
                                 <div class="col-md-5">
                                     <input type="text" required class="form-control"
@@ -109,7 +109,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <label for="name"
-                                       class="col-3 offset-2 text-right col-form-label">Giới tính<span class="text-danger">*</span></label>
+                                       class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Giới tính<span class="text-danger">*</span></label>
                                 <div class="col-5">
                                     <div class="radio radio-custom">
                                         <input type="radio" name="gender" checked
@@ -132,21 +132,21 @@
                         <div class="form-group">
                             <div class="row">
                                 <label for="birthdate"
-                                       class="col-3 offset-2 text-right col-form-label">Ngày
+                                       class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Ngày
                                     sinh</label>
-                                <div class="col-5">
+                                <div class="col-md-5">
                                     <input type="text" name="birthdate"
                                            id="birthdate"
                                            class="form-control datepicker"
-                                           placeholder="mm/dd/yyyy">
+                                           placeholder="21/12/1987">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <label for="name"
-                                       class="col-3 offset-2 text-right col-form-label">Email</label>
-                                <div class="col-5">
+                                       class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Email</label>
+                                <div class="col-md-5">
                                     <input type="text" class="form-control"
                                            id="email" name="email"
                                            placeholder="Email">
@@ -156,9 +156,9 @@
 
                         <div class="form-group">
                             <div class="row">
-                                <label class="col-3 offset-2 text-right col-form-label">Nhu
+                                <label class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Nhu
                                     cầu giá</label>
-                                <div class="col-5">
+                                <div class="col-md-5">
                                     <input type="number" name='demand_price'
                                            class="form-control">
                                 </div>
@@ -166,9 +166,9 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <label class="col-3 offset-2 text-right col-form-label">Nhu
+                                <label class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Nhu
                                     cầu quận</label>
-                                <div class="col-5">
+                                <div class="col-md-5">
                                     <select name="demand_district_code"
                                             class='form-control'>
                                         <?= $select_district ?>
@@ -178,9 +178,9 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <label class="col-3 offset-2 text-right col-form-label">Nhu
+                                <label class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Nhu
                                     cầu thời gian</label>
-                                <div class="col-5">
+                                <div class="col-md-5">
                                     <input type="text" name='demand_time'
                                            class="form-control datepicker">
                                 </div>
@@ -190,8 +190,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <label for="source"
-                                       class="col-3 offset-2 text-right col-form-label">Nguồn<span class="text-danger">*</span></label>
-                                <div class="col-5">
+                                       class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Nguồn<span class="text-danger">*</span></label>
+                                <div class="col-md-5">
                                     <div class="radio radio-custom">
                                         <input type="radio" name="source"
                                                id="DepMarketing" value="DepMarketing">
@@ -230,20 +230,21 @@
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
-
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-7 offset-md-5">
-                            <button type="button"
-                                    id="submit"
-                                    class="btn btn-custom waves-effect waves-light">Thêm Mới</button>
-                            <p class="text-danger noenter" style="display: none">Không được enter!</p>
-                            <p class="text-danger" id="error-msg">Không được enter!</p>
                         </div>
                     </div>
                 </form>
+
+                <div class="form-group row">
+                    <div class="col-12 text-center">
+                        <p class="text-danger font-weight-bold noenter" style="display: none">Không được enter!</p>
+                        <p class="text-danger font-weight-bold" id="error-msg"></p>
+                    </div>
+
+                    <button type="button"
+                            id="submit"
+                            class="btn col-md-4 offset-md-4 btn-danger waves-effect waves-light">Thêm Mới</button>
+
+                </div>
             </div>
         </div>
 
@@ -264,10 +265,6 @@
             }
         });
 
-        $('form').submit(function(){
-            console.log("button disabled when submit");
-            $('button').attr('disabled', true);
-        });
         
         $('#submit').click(function () {
             console.log("click submit");
@@ -280,9 +277,18 @@
                 valid = true;
             }
 
+            if($('#customer_name').val().length === 0) {
+                valid = false;
+                $('#error-msg').text("vui lòng nhập tên khách hàng");
+            } else {
+                $('#error-msg').text("");
+                valid = true;
+            }
+            console.log("valid: ", valid);
 
             if( valid) {
-                $('form').submit();
+                $('button').attr('disabled', true);
+                $('#form-submit').submit();
             }
         });
 
@@ -299,19 +305,20 @@
                 method: 'GET',
                 success: function (res) {
                     let data = JSON.parse(res);
+                    console.log(data);
                     if(data.status === true) {
                         let profile = data.profile;
                         $('#customer_name').val(profile.name);
                         $('input[name=customer_id]').val(profile.id);
                         $('#customer_name').attr('disabled', true);
 
-                        if(profile.gender.length > 0) {
+                        if(profile.gender) {
                             $('input[name=gender]').val(profile.gender);
                             $('input[name=gender]').prop('checked', true);
                         }
                         $('input[name=gender]').attr('disabled', true);
 
-                        if(profile.source.length > 0) {
+                        if(profile.source) {
                             $('input[name=source]').val(profile.source);
                             $('input[name=source]').prop('checked', true);
                         }
@@ -331,8 +338,11 @@
 
                         $('input[name=demand_time]').val(profile.demand_time);
                         $('input[name=demand_time]').attr('disabled', true);
+
+                        $('#warning-msg').text("Khách đã có sẵn trên hệ thống, (không thể chỉnh sửa thông tin Khách khi bạn đang tạo lượt book!)");
                     } else {
                         $('#customer_name').val("");
+                        $('#warning-msg').text("Đây là khách hàng mới, chưa có trên hệ thống, vui lòng nhập đủ thông tin!");
                         $('input[name=customer_id]').val("");
                         $('#customer_name').attr('disabled', false);
 
@@ -359,12 +369,9 @@
                         $('input[name=demand_time]').val("");
                         $('input[name=demand_time]').attr('disabled', false);
                     }
-
                 }
             });
         }
-        
-        
 
         $('.datepicker').datepicker({
             format: "dd-mm-yyyy",
