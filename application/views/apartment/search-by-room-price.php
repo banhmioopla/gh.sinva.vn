@@ -18,6 +18,21 @@
                     </span>
 
                     <span class="col-md-2 col-12 offset-0">
+                        <div>Phường</div>
+                        <select name="roomWard" id="roomWard" class="form-control">
+                            <?php foreach ($list_ward as $d):
+                                $selected = "";
+                                if($d['code'] == $this->input->get('roomWard')) {
+                                    $selected = "selected";
+                                }
+                                ?>
+                                <option value="<?= $d['address_ward'] ?>" <?= $selected ?>>Ph. <?= $d['address_ward']
+                                    ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </span>
+
+                    <span class="col-md-2 col-12 offset-0">
                         <div>Loại Phòng</div>
                         <select name="roomType" id="roomType" class="form-control">
                             <option value="">Loại Phòng</option>
@@ -33,14 +48,14 @@
                             <?php endforeach; ?>
                         </select>
                     </span>
-                    <span class="col-md-2 col-12 offset-0">
+                    <span class="col-md-3 col-12 offset-0">
                         <div>Giá Min</div>
                         <select name="roomPriceMin" id="roomPriceMin" class="form-control">
                             <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMin'))
                             ?>
                         </select>
                     </span>
-                    <span class="col-md-2 col-12 offset-0">
+                    <span class="col-md-3 col-12 offset-0">
                         <div>Giá Max</div>
                         <select name="roomPriceMax" id="roomPriceMax" class="form-control">
                             <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMax'))
@@ -61,7 +76,10 @@
                             ?>
                         </select>
                     </span>
-                    <span class="col-md-2 col-12 offset-0">
+                </span>
+
+                <span class="form-group row">
+                    <span class="col-md-2 offset-md-4 col-12 offset-0">
                         <div>Trạng Thái </div>
                         <select name="roomStatus" id="roomStatus" class="form-control">
                             <option value="">Vui Lòng Chọn</option>
@@ -84,7 +102,8 @@
                             <?php endfor;?>
                         </select>
                     </span>
-
+                </span>
+                <span class="row">
                     <span class="col-md-4 offset-md-4 mt-3 col-12 offset-0">
                         <button id="search" class="btn btn-danger w-100">Tìm Dự
                             Án</button>
@@ -107,6 +126,7 @@
                 + '&roomType=' + $('#roomType').val()
                 + '&roomTimeAvailable=' + $('#roomTimeAvailable').val()
                 + '&roomStatus=' + $('#roomStatus').val()
+                + '&roomWard=' + $('#roomWard').val()
             ;
         })
     });

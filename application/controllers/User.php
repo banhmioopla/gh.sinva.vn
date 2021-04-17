@@ -17,6 +17,7 @@ class User extends CustomBaseStep {
 		$data['max_account_id'] = $this->ghUser->getMaxAccountId()[0]['account_id'];
 		$data['libRole'] = $this->libRole;
 		$data['libUser'] = $this->libUser;
+        $data['select_user'] = $this->libUser->cb(0,'YES');
 		/*--- Load View ---*/
 		$this->load->view('components/header', ['menu' => $this->menu]);
 		$this->load->view('user/show', $data);
@@ -51,6 +52,7 @@ class User extends CustomBaseStep {
 		$data['time_joined'] = $post['time_joined'];
 		$data['date_of_birth'] = $post['date_of_birth'];
 		$data['time_insert'] = time();
+		$data['user_refer_id'] = $post['user_refer_id'] > 0 ? $post['user_refer_id']:null;
 		$result = $this->ghUser->insert($data);
 		$this->session->set_flashdata('fast_notify', [
 			'message' => 'Tạo thành viên: <strong>'.$data['account_id'].'<strong> thành công ',

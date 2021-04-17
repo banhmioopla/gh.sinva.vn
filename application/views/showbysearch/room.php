@@ -45,7 +45,9 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                     <table id="table-tag" class="table table-data table-bordered">
                         <thead>
                         <tr>
-                            <th>Dự Án</th>
+                            <th>Quận</th>
+                            <th>Phường</th>
+                            <th>Địa Chỉ</th>
                             <th>Mã Phòng</th>
                             <th>Loại Phòng</th>
                             <th class="text-warning">LP (thử nghiệm) </th>
@@ -88,10 +90,17 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                             ?>
                             <tr class='<?= $bg_for_available ?>'>
                                 <td>
+                                    <?= $libDistrict->getNameByCode($apartment['district_code']) ?>
+                                </td>
+
+                                <td>
+                                    <?= $apartment['address_ward'] ? $apartment['address_ward'] : '-' ?>
+                                </td>
+                                <td>
                                     <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>">
                                         <u>
                                         <div class="tag-name text-purple font-weight-bold">
-                                            <?= $apartment['address_street'] . ' - quận ' . $libDistrict->getNameByCode($apartment['district_code']) ?>
+                                            <?= $apartment['address_street'] ?>
                                         </div>
                                         </u>
                                     </a>

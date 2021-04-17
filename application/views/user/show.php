@@ -253,7 +253,7 @@ foreach ($list_user as $row) {
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="user_refer_id"
                                          data-value="<?= $row['user_refer_id'] ?>">
-                                        <?= $row['user_refer_id'] ?>
+                                        <?= $libUser->getNameByAccountid($row['user_refer_id']) ?>
                                     </div>
                                 </td>
                                 
@@ -330,6 +330,15 @@ foreach ($list_user as $row) {
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="user_refer_id" class="col-md-4 col-12 col-form-label">Thành Viên Tuyển<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <select type="number" class="form-control"
+                                        id="user_refer_id" name="user_refer_id">
+                                    <?= $select_user?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="hori-pass1" class="col-4 col-form-label">Mở</label>
                             <div class="col-8">
                                 <div>
@@ -376,6 +385,7 @@ foreach ($list_user as $row) {
             $('.datepicker').datepicker({
                 format: "dd/mm/yyyy"
             });
+            $('#user_refer_id').select2();
             $('.table-user').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",

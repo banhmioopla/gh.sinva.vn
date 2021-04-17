@@ -130,12 +130,17 @@ class Apartment extends CustomBaseStep {
             $params['gh_apartment.district_code ='] = "'".$this->input->get('roomDistrict')."'";
         }
 
+        if($this->input->get('roomWard') ) {
+            $params['gh_apartment.address_ward ='] = "'".$this->input->get('roomWard')."'";
+        }
+
 
 	    $data['ghApartment'] = $this->ghApartment;
         $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
 	    $data['list_data'] = $this->ghRoom->getBySearch($params);
         $data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
         $data['list_type'] = $this->ghRoom->getTypeByDistrict();
+        $data['list_ward'] = $this->ghRoom->getWardByDistrict($this->input->get('roomDistrict'));
 	    $data['libRoom'] = $this->libRoom;
 	    $data['libDistrict'] = $this->libDistrict;
 	    $data['ghBaseRoomType'] = $this->ghBaseRoomType;

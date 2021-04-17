@@ -153,6 +153,16 @@ class GhRoom extends CI_Model {
         return $result->result_array() ? $result->result_array() : 0;
     }
 
+    public function getWardByDistrict($district_code = "") {
+        $sql = "SELECT DISTINCT gh_apartment.address_ward as address_ward FROM gh_apartment 
+                WHERE gh_apartment.active = 'YES'
+                AND gh_apartment.district_code = '$district_code'
+        ";
+
+        $result = $this->db->query($sql);
+        return $result->result_array() ? $result->result_array() : 0;
+    }
+
     public function getPriceList($where_string = null, $groupby = 'gh_room.type') {
         $sql = "SELECT gh_room.price as room_price, gh_room.*, count(gh_room.price) as object_counter FROM  
 gh_room, gh_apartment 
