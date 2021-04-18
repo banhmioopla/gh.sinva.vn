@@ -83,6 +83,7 @@ class CustomBaseStep extends CI_Controller {
 		    /*Controller => [actions]*/
 		    'InternalContent' => ['show', 'pageIncomeRule', 'create', 'updateEditable'],
             'Image' => ['ajax_get_room_image'],
+            'Apartment' => ['getWard'],
         ];
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 

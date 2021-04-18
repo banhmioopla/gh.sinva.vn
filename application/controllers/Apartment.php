@@ -352,6 +352,15 @@ class Apartment extends CustomBaseStep {
 		echo json_encode($result); die;
 	}
 
+    public function getWard(){
+        $list_ward = $this->ghRoom->getWardByDistrict($this->input->post('district'));
+        $result = [];
+        foreach($list_ward as $d) {
+            $result[] = ["value" => $d['address_ward'], "text" => 'Ph. '.$d["address_ward"]];
+        }
+        echo json_encode($result); die;
+    }
+
 	public function getPartner(){
 		$list_district = $this->ghPartner->getAll();
 		$result = [];

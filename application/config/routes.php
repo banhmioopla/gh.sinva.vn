@@ -941,6 +941,11 @@ $route['admin/apartment-get-district'] = function($params = []) {
 	$action = '/getDistrict';
 	return $controller.$action;
 };
+$route['admin/apartment-get-ward'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/getWard';
+    return $controller.$action;
+};
 $route['admin/apartment-get-partner'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/getPartner';

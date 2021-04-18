@@ -458,5 +458,25 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
             format: "dd/mm/yyyy"
         });
 
+        $('#roomDistrict').change(function () {
+            let district = $(this).val();
+            $.ajax({
+                url: '/admin/apartment-get-ward',
+                method: "POST",
+                data: {district:district},
+                success:function (response) {
+                    let html = "<option value=''>Chọn phường...</option>";
+                    if(response.length) {
+                        response = JSON.parse(response);
+                        for(let i of response) {
+                            html += "<option value='"+i.value+"'>"+i.text+"</option>";
+                        }
+                        $('#roomWard').html(html);
+                    }
+
+                }
+            });
+        });
+
     });
 </script>
