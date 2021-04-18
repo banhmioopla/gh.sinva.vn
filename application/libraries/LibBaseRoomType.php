@@ -10,9 +10,9 @@ class LibBaseRoomType {
     }
     
     public function getNameById($room_type_id){
-        $room_type = $this->CI->ghBaseRoomType->getById($room_type_id);
+        $room_type = $this->CI->ghBaseRoomType->getFirstById($room_type_id);
 
-        $name = $room_type ? $room_type[0]['name'] : '';
+        $name = $room_type ? $room_type['name'] : '';
         return $name;
     }
 

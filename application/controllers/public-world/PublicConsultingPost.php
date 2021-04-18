@@ -13,6 +13,7 @@ class PublicConsultingPost extends CI_Controller {
         $this->load->model('ghApartment');
         $this->load->model('ghRoom');
         $this->load->model('ghPublicConsultingPost');
+        $this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
         $this->public_dir = 'public-world/';
     }
 
@@ -47,7 +48,8 @@ class PublicConsultingPost extends CI_Controller {
             'room' => $room,
             'post' => $this_post,
             'user' => $user,
-            'list_img' => $list_img
+            'list_img' => $list_img,
+            'libBaseRoomType' => $this->libBaseRoomType
         ]);
         $this->load->view($this->public_dir.'components/footer');
 

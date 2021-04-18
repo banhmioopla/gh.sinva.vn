@@ -110,6 +110,55 @@
                             </li>
                         <?php endif; ?>
 
+
+                        <?php if($apartment['extra_fee']): ?>
+                            <li>
+                                <div class="row border-bottom mt-2">
+                                    <div class="col-6"><strong>Phí Khác:</strong></div>
+                                    <div class="col-6 text-right"><?= $apartment['extra_fee'] ?></div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
+
+                        <?php if($apartment['elevator']): ?>
+                            <li>
+                                <div class="row border-bottom mt-2">
+                                    <div class="col-6"><strong>Thang Máy:</strong></div>
+                                    <div class="col-6 text-right"><?= $apartment['elevator'] ?></div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
+
+                        <?php if($apartment['security']): ?>
+                            <li>
+                                <div class="row border-bottom mt-2">
+                                    <div class="col-6"><strong>Bảo Vệ:</strong></div>
+                                    <div class="col-6 text-right"><?= $apartment['security'] ?></div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
+
+                        <?php if($apartment['pet']): ?>
+                            <li>
+                                <div class="row border-bottom mt-2">
+                                    <div class="col-6"><strong>Thú Cưng:</strong></div>
+                                    <div class="col-6 text-right"><?= $apartment['pet'] ?></div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if($apartment['deposit']): ?>
+                            <li>
+                                <div class="row border-bottom mt-2">
+                                    <div class="col-6"><strong>Cọc:</strong></div>
+                                    <div class="col-6 text-right"><?= $apartment['deposit'] ?></div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+
                     </ul>
                 </div>
             </div>
@@ -127,26 +176,26 @@
                             </li>
                         <?php endif; ?>
 
-                        <?php if($room['type']): ?>
+                        <?php if(!empty($room['room_type_id'])):
+                            $room_type = "";
+                            foreach (json_decode($room['room_type_id'], true) as $item) {
+                                $room_type .= $libBaseRoomType->getNameById($item) . ', ';
+                            }
+                            $room_type = substr($room_type, 0, -2);
+                            ?>
                             <li>
                                 <div class="row border-bottom mt-2">
-                                    <div class="col-6"><strong>Loại:</strong></div>
-                                    <div class="col-6 text-right"><?= $room['type'] ?></div>
-                                </div>
-                            </li>
-                        <?php endif; ?>
-                        <?php if($room['area']): ?>
-                            <li>
-                                <div class="row border-bottom mt-2">
-                                    <div class="col-6"><strong>Diện Tích:</strong></div>
-                                    <div class="col-6 text-right"><?= $room['area'] ?></div>
+                                    <div class="col-6"><strong>Loại Phòng:</strong></div>
+                                    <div class="col-6 text-right"><?= $room_type ?></div>
                                 </div>
                             </li>
                         <?php endif; ?>
 
                     </ul>
+                    <?php /* ?>
                     <h4 class="text-danger font-weight-bold">Liên Hệ Tư Vấn Miễn Phí <i class="mdi mdi-phone-in-talk mr-2"></i></h4>
                     <h3 class="text-right font-weight-bold text-success p-2 bg-dark"><?= $user['phone_number'] ?> - <?= $user['name'] ?></h3>
+                    <?php */?>
                 </div>
             </div>
 
