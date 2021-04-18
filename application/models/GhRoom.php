@@ -153,9 +153,10 @@ class GhRoom extends CI_Model {
         return $result->result_array() ? $result->result_array() : 0;
     }
 
-    public function getWardByDistrict() {
+    public function getWardByDistrict($district_code) {
         $sql = "SELECT DISTINCT gh_apartment.address_ward as address_ward FROM gh_apartment 
                 WHERE gh_apartment.active = 'YES' AND LENGTH(gh_apartment.address_ward) > 0
+                AND gh_apartment.district_code = '$district_code'
                 ORDER BY cast(gh_apartment.address_ward as unsigned);
         ";
 

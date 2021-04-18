@@ -58,7 +58,7 @@ class LibRoom {
                     $status_text .= ' - <span class="text-warning">'. date('d/m/Y', $room['time_available']) . '</span>';
                 }
 
-                $cb .= '<option class=" font-weight-bold '.$status.'" '.$selected.' value='.$room['price'].'> - Giá: '.number_format($room['price']).' ('.$room["object_counter"].')</option>';
+                $cb .= '<option '.$selected.' value='.$room['price'].'> '.number_format($room['price']).' ('.$room["object_counter"].')</option>';
             }
         }
         return $cb;

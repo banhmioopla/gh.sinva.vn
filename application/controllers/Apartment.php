@@ -45,6 +45,7 @@ class Apartment extends CustomBaseStep {
 		$data['contract_noti'] = $this->ghNotification->get();
 		
 		$data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
+		$data['list_ward'] = $this->ghRoom->getWardByDistrict($district_code);
 		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
 
 		$data['cb_district'] = $this->libDistrict->cbActive();

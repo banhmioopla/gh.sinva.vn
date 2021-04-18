@@ -36,18 +36,33 @@
                         <thead>
                         <tr>
                             <th>Thời Gian</th>
-                            <th class="text-center">ID Hợp Đồng</th>
-                            <th class="text-center">Thu Nhập <small>x1000</small></th>
+                            <th class="text-center">Nguồn</th>
+                            <th class="text-right">Thu Nhập <small>x1000</small></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($list_income_detail as $row ): ?>
+                        <?php foreach($list_income_detail as $row ):
+                            if($row['type'] === 'ReferUser') {
+                                $obj_type = 'Tuyển Thành Viên';
+                            } else if($row['type'] === 'Contract'){
+                                $obj_type = 'Hợp Đồng';
+                            }
+                            else if($row['type'] === 'ContractSupporter'){
+                                $obj_type = 'Hỗ trợ Chốt sale';
+                            }
+                            else if($row['type'] === 'Penalty'){
+                                $obj_type = 'Phí Phạt';
+                            }
+                            else if($row['type'] === 'GetNewApartment'){
+                                $obj_type = 'Đàm phán DA mới';
+                            }
+                            ?>
                             <tr>
                                 <td><?= $row['apply_time'] ? date('d-m-Y',$row['apply_time']) :"-" ?></td>
                                 <td>
-                                    <?= $row['contract_id'] ?>
+                                    <?= $obj_type ?>
                                 </td>
-                                <td><?= number_format($row['contract_income_total']) ?> <small>vnđ</small></td>
+                                <td class="text-right"><?= number_format($row['contract_income_total']/1000) ?></td>
 
                             </tr>
                         <?php endforeach; ?>
@@ -62,7 +77,7 @@
                         <thead>
                         <tr>
                             <th>Thời Gian</th>
-                            <th class="text-center">Đã Chi</th>
+                            <th class="text-right">Đã Chi <small>x1000</small></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -77,7 +92,7 @@
                         <tr class="">
                             <td>Còn Lại</td>
                             <td class="text-right text-warning font-weight-bold">
-                                <?= number_format($remain) ?> <small>vnđ</small>
+                                <?= number_format($remain/1000) ?>
                             </td>
                         </tr>
                         </tbody>
