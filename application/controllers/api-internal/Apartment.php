@@ -9,15 +9,13 @@ class Apartment extends RestController {
         parent::__construct();
     }
 
-    public function users_get()
+    public function apartment_get()
     {
         // Users from a data store e.g. database
         $users = [
             ['id' => 0, 'name' => 'John', 'email' => 'john@example.com'],
             ['id' => 1, 'name' => 'Jim', 'email' => 'jim@example.com'],
         ];
-        echo "<pre>";
-        var_dump(1); die;
 
         $id = $this->get( 'id' );
 
@@ -52,6 +50,14 @@ class Apartment extends RestController {
                 ], 404 );
             }
         }
+    }
+
+    public function apartmentById_get() {
+        $users = [
+            ['id' => 0, 'name' => 'John', 'email' => 'john@example.com'],
+            ['id' => 1, 'name' => 'Jim', 'email' => 'jim@example.com'],
+        ];
+        $this->response( $users, 200 );
     }
 
 

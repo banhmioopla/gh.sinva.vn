@@ -9,15 +9,27 @@ class UserPenalty extends CustomBaseStep {
         $this->load->model(['ghUserPenalty', 'ghPenalty']);
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibPenalty', null, 'libPenalty');
+        $this->load->library('LibTime', null, 'libTime');
     }
 
     public function show(){
         $this->load->model('ghUserPenalty'); // load model ghUser
-        $data['list_userpenalty'] = $this->ghUserPenalty->get();
+
+        if(empty($this->input->get('month'))) {
+            $from_time = strtotime(date('01-m-Y'));
+            $to_time =  strtotime($this->libTime->calDayInMonthThisYear((int)date('m')) . '-'.date('m') . '-2021');
+        } else {
+            $from_time = strtotime($this->input->get('month'));
+            $month = date('m', $from_time);
+            $to_time =  strtotime($this->libTime->calDayInMonthThisYear((int)$month) . '-'.$month . '-2021');
+        }
+        $sql = "(time_insert >= ".$from_time." AND time_insert <= ".$to_time.")";
+        $data['list_userpenalty'] = $this->ghUserPenalty->get($sql);
         $data['list_penalty'] = $this->ghPenalty->get();
         $data['libUser'] = $this->libUser;
         $data['libPenalty'] = $this->libPenalty;
         $data['ghPenalty'] = $this->ghPenalty;
+        $data['month'] = $from_time;
 
         /*--- Load View ---*/
         $this->load->view('components/header',['menu' =>$this->menu]);

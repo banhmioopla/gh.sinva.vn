@@ -1119,9 +1119,15 @@ $route['admin/internal-content/page/income-rule'] = function($params = []) {
 
 /* :::API-INTERNAL:::*/
 
-$route['api-internal/apartment/show-active'] = function($params = []) {
+$route['api-internal/apartments'] = function($params = []) {
     $controller = '/api-internal/Apartment';
-    $action = '/users';
+    $action = '/apartment';
+    return $controller.$action;
+};
+
+$route['api-internal/apartment/:num'] = function($params = []) {
+    $controller = '/api-internal/Apartment';
+    $action = '/apartmentById';
     return $controller.$action;
 };
 

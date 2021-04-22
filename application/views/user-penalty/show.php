@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách thành viên vi phạm</h3>
+                    <h2 class="font-weight-bold text-danger">Danh sách thành viên vi phạm <?= date('m/Y', $month) ?></h2>
                 </div>
             </div>
         </div>
@@ -26,9 +26,38 @@
             $flash_status = $this->session->flashdata('fast_notify')['status'];
             unset($_SESSION['fast_notify']);
         }
+
         ?>
         <div class="userpenalty-alert"></div>
+        <div class="card-box">
+            <form action="">
+                <div class="row">
+                    <div class="col-md-4">
+                        <select name="month" class="form-control">
+                            <?php for($m = 1; $m <= 12; $m++):
+                                $select = "";
+
+
+                                if((int)date('m',$month) == $m) {
+                                    $select = "selected";
+                                }
+
+                                ?>
+                                <option <?= $select ?> value="<?= '01-'.$m.'-2021' ?>">Tháng <?= $m.'/2021' ?></option>
+                            <?php endfor;?>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-danger">Tìm Kiếm</button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
         <div class="row">
+
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
                     <table id="table-userpenalty" class="table table-bordered">

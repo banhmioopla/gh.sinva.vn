@@ -14,7 +14,7 @@ class Team extends CustomBaseStep {
 		$data['list_team'] = $this->ghTeam->getAll();
 		
 		/*--- Load View ---*/
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('team/show', $data);
 		$this->load->view('components/footer');
 	}
@@ -22,10 +22,6 @@ class Team extends CustomBaseStep {
 	public function create() {
 	
 		$data = $this->input->post();
-		if(empty($data['active'])) {
-			$data['active'] = 'NO';
-		}
-        $data ['time_insert']= time();
 		if(!empty($data['name'])) {
 			$result = $this->ghTeam->insert($data);
 			$this->session->set_flashdata('fast_notify', [
