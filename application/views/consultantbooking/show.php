@@ -10,7 +10,7 @@
                             <li class="breadcrumb-item active font-weight-bold text-danger">Dẫn Khách</li>
                         </ol>
                     </div>
-                    <h2 class="font-weight-bold text-danger">Thống Kê Dẫn Khách</h2>
+                    <h2 class="font-weight-bold text-danger">Thống Kê Dẫn Khách Từ Ngày <?= date('d/m/Y', $time_from) ?></h2>
                 </div>
             </div>
         </div>
