@@ -39,9 +39,9 @@
                                 ><?= $customer['name'] ?></span></p>
                             <p class="text-muted font-13"><strong>Sinh Nhật : </strong> <span class="m-l-15 customer-time"
                                                                                               data-pk="<?= $customer['id'] ?>"
-                                                                                              data-value="<?= date('d-m-Y',$customer['birthdate']) ?>"
+                                                                                              data-value="<?= strlen($customer['birthdate']) ? date('d-m-Y',$customer['birthdate']): '' ?>"
                                                                                               data-name="birthdate"
-                                ><?= date('d-m-Y', $customer['birthdate']) ?></span></p>
+                                ><?= strlen($customer['birthdate']) ? date('d-m-Y',$customer['birthdate']): '' ?></span></p>
                             <p class="text-muted font-13"><strong>Giới Tính : </strong> <span class="m-l-15"><?= $customer['gender'] ? $label_apartment[$customer['gender']]:'<i>không có thông tin</i>' ?></span></p>
 
                             <p class="text-muted font-13"><strong>Số Điện Thoại : </strong><span class="m-l-15 customer-update"
@@ -81,8 +81,12 @@
                                 > <?= $customer['note'] ? $customer['note'] : '<i>không có thông tin</i>'
                                     ?></span></p>
 
-                            <p class="text-muted font-13"><strong>Ngày Nhập :</strong> <span class="m-l-15"> <?= $customer['time_insert'] > 0 ? date('d/m/Y',$customer['time_insert']) : '<i>không có thông tin</i>'
-                                    ?></span></p>
+                            <p class="text-muted font-13"><strong>Ngày Nhập :</strong>
+                                <span class="m-l-15 customer-time"
+                                      data-pk="<?= $customer['id'] ?>"
+                                      data-value="<?= strlen($customer['time_insert']) ? date('d-m-Y',$customer['time_insert']): '' ?>"
+                                      data-name="time_insert"
+                                ><?= strlen($customer['time_insert']) ? date('d-m-Y',$customer['time_insert']): '' ?></span></p>
 
 
 

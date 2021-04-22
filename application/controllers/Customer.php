@@ -137,8 +137,8 @@ class Customer extends CustomBaseStep {
 	public function create() {
 	
 		$data = $this->input->post();
-		$data['birthdate'] = $data['birthdate'] ? strtotime(str_replace('/', '-', $data['birthdate'])) : 0;
-		$data['demand_time'] = $data['demand_time'] ? strtotime(str_replace('/', '-', $data['demand_time'])) : 0;
+		$data['birthdate'] = strlen($data['birthdate']) ? strtotime(str_replace('/', '-', $data['birthdate'])) : null;
+		$data['demand_time'] = strlen($data['demand_time']) ? strtotime(str_replace('/', '-', $data['demand_time'])) : null;
 
 		if(!empty($data['name'])) {
 			$data['status'] = 'sinva-info-form';
@@ -192,15 +192,15 @@ class Customer extends CustomBaseStep {
 			$old_customer = $this->ghCustomer->getById($customer_id);
 			$old_log = json_encode($old_customer[0]);
 			if($field_name == 'birthdate') {
-				$data['birthdate'] = $data['birthdate'] ? strtotime($data['birthdate']): 0;
+				$data['birthdate'] = strlen($data['birthdate']) ? strtotime($data['birthdate']): null;
 			}
 
 			if($field_name == 'demand_time') {
-				$data['demand_time'] = $data['demand_time'] ? strtotime($data['demand_time']): 0;
+				$data['demand_time'] = strlen($data['demand_time']) ? strtotime($data['demand_time']): null;
 			}
 
             if($field_name == 'time_insert') {
-                $data['time_insert'] = $data['time_insert'] ? strtotime($data['time_insert']): 0;
+                $data['time_insert'] = strlen($data['time_insert']) ? strtotime($data['time_insert']): null;
             }
 
 			$result = $this->ghCustomer->updateById($customer_id, $data);

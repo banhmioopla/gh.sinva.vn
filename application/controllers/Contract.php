@@ -303,7 +303,7 @@ class Contract extends CustomBaseStep {
             $new_customer = [
                 'name' => $post['name'],
                 'gender' => $post['gender'],
-                'birthdate' => strtotime($post['birthdate']),
+                'birthdate' => strlen($post['birthdate']) ? strtotime($post['birthdate']) : null,
                 'phone' => $post['phone'],
                 'email' => $post['email'],
                 'ID_card' => $post['ID_card'],
@@ -333,8 +333,8 @@ class Contract extends CustomBaseStep {
 			'apartment_id' => $service_set['id'],
 			'consultant_id' => $post['consultant_id'],
 			'room_price' => $contract_room_price,
-			'time_check_in' => strtotime($post['time_check_in']),
-			'time_expire' => strtotime($post['time_expire']),
+			'time_check_in' => strlen($post['time_check_in']) ? strtotime($post['time_check_in']) : null,
+			'time_expire' => strlen($post['time_expire']) ? strtotime($post['time_expire']) :null ,
 			'number_of_month' => $post['number_of_month'],
 			'service_set' => json_encode($service_set), // apartment data
 			'status' => $status_contract,
