@@ -6,7 +6,7 @@
                 <div class="profile-user-box card-box bg-dark text-warning">
                     <div class="row">
                         <div class="col-sm-6">
-                            <span class="pull-left mr-3"><img src="https://thumbs.dreamstime.com/b/lama-alpaca-strong-cool-serious-animal-smoking-cigar-emoji-be-lama-alpaca-strong-cool-serious-animal-smoking-cigar-emoji-beast-103595587.jpg" alt="" class="thumb-lg rounded-circle"></span>
+                            <span class="pull-left mr-3"><img src="https://ecommerce-platforms.com/wp-content/uploads/2018/05/mark-and-john-1549634879.gif" alt="" class="thumb-lg rounded-circle"></span>
                             <div class="media-body text-white">
                                 <h4 class="mt-1 font-18"><?= $customer['name'] ?></h4>
                                 <div class="row pl-2">
@@ -19,14 +19,14 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="card-box bg-dark tilebox-one">
+                                    <div class="card-box bg-dark border border-warning">
                                         <h6 class="text-uppercase mt-0">SL Hợp Đồng:</h6>
                                         <h2 class="m-b-20" ><?= count($list_contract) ?></h2>
                                     </div>
+
                                 </div>
                                 <div class="col-6">
-                                    <div class="card-box bg-dark tilebox-one">
-
+                                    <div class="card-box bg-dark border border-warning">
                                         <h6 class="text-uppercase mt-0">SL Lượt Book</h6>
                                         <h2 class="m-b-20"><span ><?= count($list_booking) ?></span></h2>
                                     </div>
@@ -47,12 +47,12 @@
             <div class="col-md-4">
                 <!-- Personal-Information -->
                 <div class="card-box">
-                    <h4 class="font-weight-bold text-danger m-b-20">Thông Tin Cá Nhân </h4>
+                    <h4 class="font-weight-bold text-danger m-b-20">Thông Tin Khách Hàng </h4>
                     <div class="panel-body">
                         <table class="table table-borderless table-hover font-13">
                             <tr>
                                 <td class="font-weight-bold">Họ & Tên </td>
-                                <td class="text-right"><span class=" customer-update"
+                                <td class="text-right"><span class="customer-update"
                                           data-pk="<?= $customer['id'] ?>"
                                           data-value="<?= $customer['name'] ?>"
                                           data-name="name"

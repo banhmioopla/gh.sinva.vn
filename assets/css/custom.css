@@ -129,9 +129,9 @@ html, body { height: 100%; }
 .badge a.text-light:hover{
     color: #000 !important;
 }
-
 .editable-click, a.editable-click, a.editable-click:hover {
-    border-bottom: none;
+    color: #7c120d;
+    font-weight: 500;
 }
 @media (min-width: 992px) {
     .modal-lg {
