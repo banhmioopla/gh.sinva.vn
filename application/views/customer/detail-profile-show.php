@@ -3,18 +3,36 @@
         <div class="row">
             <div class="col-sm-12">
                 <!-- meta -->
-                <div class="profile-user-box card-box bg-warning">
+                <div class="profile-user-box card-box bg-dark text-warning">
                     <div class="row">
                         <div class="col-sm-6">
                             <span class="pull-left mr-3"><img src="https://thumbs.dreamstime.com/b/lama-alpaca-strong-cool-serious-animal-smoking-cigar-emoji-be-lama-alpaca-strong-cool-serious-animal-smoking-cigar-emoji-beast-103595587.jpg" alt="" class="thumb-lg rounded-circle"></span>
                             <div class="media-body text-white">
                                 <h4 class="mt-1 font-18"><?= $customer['name'] ?></h4>
                                 <div class="row pl-2">
+                                    <div class="col-12 p-1"><i class="mdi mdi-cake-variant"></i> <?= strlen($customer['birthdate']) ? date('d/m/Y',$customer['birthdate']): '' ?></div>
                                     <div class="col-12 p-1"><i class="mdi mdi-cellphone-android"></i> <?= $customer['phone'] ?></div>
                                     <div class="col-12 p-1"><i class="mdi mdi-email-open-outline"></i> <?= $customer['email'] ?></div>
                                 </div>
-
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card-box bg-dark tilebox-one">
+                                        <h6 class="text-uppercase mt-0">SL Hợp Đồng:</h6>
+                                        <h2 class="m-b-20" ><?= count($list_contract) ?></h2>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card-box bg-dark tilebox-one">
+
+                                        <h6 class="text-uppercase mt-0">SL Lượt Book</h6>
+                                        <h2 class="m-b-20"><span ><?= count($list_booking) ?></span></h2>
+                                    </div>
+                                </div><!-- end col -->
+                            </div>
+
                         </div>
 
                     </div>
@@ -29,70 +47,114 @@
             <div class="col-md-4">
                 <!-- Personal-Information -->
                 <div class="card-box">
-                    <h4 class="font-weight-bold text-danger mt-0 m-b-20">Thông Tin Cá Nhân </h4>
+                    <h4 class="font-weight-bold text-danger m-b-20">Thông Tin Cá Nhân </h4>
                     <div class="panel-body">
-                        <div class="text-left">
-                            <p class="text-muted font-13"><strong>Họ & Tên : </strong> <span class="m-l-15 customer-update"
-                                                                                             data-pk="<?= $customer['id'] ?>"
-                                                                                             data-value="<?= $customer['name'] ?>"
-                                                                                             data-name="name"
-                                ><?= $customer['name'] ?></span></p>
-                            <p class="text-muted font-13"><strong>Sinh Nhật : </strong> <span class="m-l-15 customer-time"
-                                                                                              data-pk="<?= $customer['id'] ?>"
-                                                                                              data-value="<?= strlen($customer['birthdate']) ? date('d-m-Y',$customer['birthdate']): '' ?>"
-                                                                                              data-name="birthdate"
-                                ><?= strlen($customer['birthdate']) ? date('d-m-Y',$customer['birthdate']): '' ?></span></p>
-                            <p class="text-muted font-13"><strong>Giới Tính : </strong> <span class="m-l-15"><?= $customer['gender'] ? $label_apartment[$customer['gender']]:'<i>không có thông tin</i>' ?></span></p>
-
-                            <p class="text-muted font-13"><strong>Số Điện Thoại : </strong><span class="m-l-15 customer-update"
-                                                                                                 data-pk="<?= $customer['id'] ?>"
-                                                                                                 data-value="<?= $customer['phone'] ?>"
-                                                                                                 data-name="phone"
-                                ><?= $customer['phone'] ?></span></p>
-
-                            <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15 customer-update"
-                                                                                         data-pk="<?= $customer['id'] ?>"
-                                                                                         data-value="<?= $customer['email'] ?>"
-                                                                                         data-name="email"><?= $customer['email'] ?></span></p>
-                            <p class="text-muted font-13"><strong>Nguồn :</strong> <span class="m-l-15"><?= $customer['source'] ?  $label_apartment[$customer['source']] : '[chưa cập nhật]' ?></span></p>
-                            <p class="text-muted font-13"><strong>Trạng Thái :</strong> <span class="m-l-15"> <span class="badge
-                                     badge-info font-weight-bold contract-status"><?= $label_apartment[$customer['status']] ?></span></span></p>
-                            <p class="text-muted font-13"><strong>Nhu Cầu Giá :</strong> <span class="m-l-15 customer-update"
-                                                                                               data-pk="<?= $customer['id'] ?>"
-                                                                                               data-value="<?= $customer['demand_price'] ?>"
-                                                                                               data-name="demand_price"
-                                > <?= $customer['demand_price'] ?  number_format($customer['demand_price']) : '<i>không có thông tin</i>' ?></span></p>
-                            <p class="text-muted font-13"><strong>Nhu Cầu Quận :</strong> <span class="m-l-15 customer-demand_district_code"
-                                                                                                data-pk="<?= $customer['id'] ?>"
-                                                                                                data-value="<?= $customer['demand_district_code'] ?>"
-                                                                                                data-name="demand_district_code"
-                                > <?= $customer['demand_district_code'] ? "quận " . $customer['demand_district_code'] :'<i>không có thông tin</i>' ?></span></p>
-                            <p class="text-muted font-13"><strong>Nhu Cầu Thời Gian :</strong> <span class="m-l-15 customer-time"
-                                                                                                     data-pk="<?= $customer['id'] ?>"
-                                                                                                     data-value="<?= $customer['demand_time'] > 0 ? date('d-m-Y',$customer['demand_time']):'' ?>"
-                                                                                                     data-name="demand_time"
-                                > <?= $customer['demand_time'] > 0 ? date('d-m-Y',$customer['demand_time']) : '<i>không có thông tin</i>'
-                                    ?></span></p>
-
-                            <p class="text-muted font-13"><strong>Ghi Chú :</strong> <span class="m-l-15 customer-note"
-                                                                                                     data-pk="<?= $customer['id'] ?>"
-                                                                                                     data-value="<?= $customer['note'] ?>"
-                                                                                                     data-name="note"
-                                > <?= $customer['note'] ? $customer['note'] : '<i>không có thông tin</i>'
-                                    ?></span></p>
-
-                            <p class="text-muted font-13"><strong>Ngày Nhập :</strong>
-                                <span class="m-l-15 customer-time"
-                                      data-pk="<?= $customer['id'] ?>"
-                                      data-value="<?= strlen($customer['time_insert']) ? date('d-m-Y',$customer['time_insert']): '' ?>"
-                                      data-name="time_insert"
-                                ><?= strlen($customer['time_insert']) ? date('d-m-Y',$customer['time_insert']): '' ?></span></p>
-
-
-
-                        </div>
-
+                        <table class="table table-borderless table-hover font-13">
+                            <tr>
+                                <td class="font-weight-bold">Họ & Tên </td>
+                                <td class="text-right"><span class=" customer-update"
+                                          data-pk="<?= $customer['id'] ?>"
+                                          data-value="<?= $customer['name'] ?>"
+                                          data-name="name"
+                                    ><?= $customer['name'] ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Sinh Nhật </td>
+                                <td class="text-right"><span class="m-l-15 customer-time"
+                                                             data-pk="<?= $customer['id'] ?>"
+                                                             data-value="<?= strlen($customer['birthdate']) ? date('d-m-Y',$customer['birthdate']): '' ?>"
+                                                             data-name="birthdate"
+                                    ><?= strlen($customer['birthdate']) ? date('d-m-Y',$customer['birthdate']): '' ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Giới Tính </td>
+                                <td class="text-right"><span class="m-l-15"><?= $customer['gender'] ? $label_apartment[$customer['gender']]:'<i>không có thông tin</i>' ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Số Điện Thoại </td>
+                                <td class="text-right">
+                                    <div class="customer-update"
+                                         data-pk="<?= $customer['id'] ?>"
+                                         data-value="<?= $customer['phone'] ?>"
+                                         data-name="phone"><?= $customer['phone'] ?></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Email </td>
+                                <td class="text-right">
+                                    <div class="customer-update"
+                                          data-pk="<?= $customer['id'] ?>"
+                                          data-value="<?= $customer['email'] ?>"
+                                          data-name="email"><?= $customer['email'] ?></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Nguồn </td>
+                                <td class="text-right">
+                                    <?= $customer['source'] ?  $label_apartment[$customer['source']] : '[chưa cập nhật]' ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Trạng Thái </td>
+                                <td class="text-right">
+                                    <span class="badge badge-info font-weight-bold contract-status"><?= $label_apartment[$customer['status']] ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Nhu Cầu Giá </td>
+                                <td class="text-right">
+                                    <span class="customer-update"
+                                          data-pk="<?= $customer['id'] ?>"
+                                          data-value="<?= $customer['demand_price'] ?>"
+                                          data-name="demand_price"
+                                    > <?= $customer['demand_price'] ?  number_format($customer['demand_price']) : '<i>không có thông tin</i>' ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Nhu Cầu Quận </td>
+                                <td class="text-right">
+                                    <span class=" customer-demand_district_code"
+                                          data-pk="<?= $customer['id'] ?>"
+                                          data-value="<?= $customer['demand_district_code'] ?>"
+                                          data-name="demand_district_code"
+                                    > <?= $customer['demand_district_code'] ? "quận " . $customer['demand_district_code'] :'<i>không có thông tin</i>' ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Nhu Cầu Thời Gian </td>
+                                <td class="text-right">
+                                    <span class="customer-time"
+                                          data-pk="<?= $customer['id'] ?>"
+                                          data-value="<?= $customer['demand_time'] > 0 ? date('d-m-Y',$customer['demand_time']):'' ?>"
+                                          data-name="demand_time"
+                                    > <?= $customer['demand_time'] > 0 ? date('d/m/Y',$customer['demand_time']) : '<i>không có thông tin</i>' ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Ghi Chú </td>
+                                <td class="text-left border border-secondary">
+                                    <div class="customer-note"
+                                          data-pk="<?= $customer['id'] ?>"
+                                          data-value="<?= $customer['note'] ?>"
+                                          data-name="note"> <?= $customer['note'] ? $customer['note'] : '<i>không có thông tin</i>' ?></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Ngày Nhập Vào GH </td>
+                                <td class="text-right">
+                                    <span class="customer-time"
+                                          data-pk="<?= $customer['id'] ?>"
+                                          data-value="<?= strlen($customer['time_insert']) > 0 ? date('d-m-Y',$customer['time_insert']): '' ?>"
+                                          data-name="time_insert"
+                                    ><?= strlen($customer['time_insert']) ? date('d/m/Y',$customer['time_insert']): '' ?></span>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
+
                 </div>
             </div>
             <?php
@@ -121,6 +183,7 @@
                             maxYear: '2030',
                             minYear: '1940'
                         },
+                        mode:'inline',
                         inputclass: 'form-control-sm',
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         success: function (response) {
@@ -155,6 +218,7 @@
                     $('.customer-note').editable({
                         placement: 'top',
                         type: "textarea",
+                        mode:'inline',
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         inputclass: '',
                         success: function (response) {
@@ -173,31 +237,9 @@
 
             <div class="col-md-8">
 
-                <div class="row">
-
-                    <div class="col-sm-6">
-                        <div class="card-box tilebox-one">
-                            <i class="icon-layers float-right text-muted"></i>
-                            <h6 class="text-muted text-uppercase mt-0">Hợp Đồng</h6>
-                            <h2 class="m-b-20" ><?= count($list_contract) ?></h2>
-                        </div>
-                    </div><!-- end col -->
-
-                    <div class="col-sm-6">
-                        <div class="card-box tilebox-one">
-                            <i class="icon-paypal float-right text-muted"></i>
-                            <h6 class="text-muted text-uppercase mt-0">Số Lượt Book</h6>
-                            <h2 class="m-b-20"><span ><?= count($list_booking) ?></span></h2>
-                        </div>
-                    </div><!-- end col -->
-
-                </div>
-                <!-- end row -->
-
-
                 <div class="card-box">
                     <h4 class="header-title mt-0 mb-3">Bảng Hợp Đồng</h4>
-                    <table class="table table-dark">
+                    <table class="table table-dark table-hover">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -269,7 +311,7 @@
                     <h4 class="header-title mb-3">Bảng Dẫn Khách</h4>
 
                     <div class="table-responsive">
-                        <table class="table table-dark">
+                        <table class="table table-dark table-hover">
                             <thead>
                             <tr>
                                 <th>ID</th>
