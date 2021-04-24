@@ -8,6 +8,9 @@ class GhCustomer extends CI_Model {
 	public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();
     }
+    public function getFirstById($room_id) {
+        return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
+    }
 
     public function getByUserAndShare($user_id) {
         $sql = "

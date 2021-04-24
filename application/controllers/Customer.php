@@ -332,26 +332,60 @@ class Customer extends CustomBaseStep {
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'STT');
         $sheet->setCellValue('B1', 'Tên');
-        $sheet->setCellValue('C1', 'SDT');
-        $sheet->setCellValue('D1', 'Ngày Nhập');
+        $sheet->setCellValue('C1', 'SĐT');
+        $sheet->setCellValue('D1', 'Mã Phòng');
+        $sheet->setCellValue('E1', 'Giá Thuê');
+        $sheet->setCellValue('F1', 'Dự Án');
+        $sheet->setCellValue('G1', 'Ngày Ký');
+        $sheet->setCellValue('H1', 'Số Tháng Ở');
+        $sheet->setCellValue('I1', 'Ngày Hết Hạn');
 
         $start = 'A';
-        $list = $this->ghCustomer->get(['time_insert >=' => strtotime(date('01-m-Y'))]);
+        $list_contract = $this->ghContract->get(['time_check_in >=' => strtotime(date('01-m-Y'))]);
+        $arr_customer = [];
+        $list_customer = [];
+        foreach ($list_contract as $contract) {
+            if(!in_array($contract['customer_id'],$arr_customer)) {
+                $room = $this->ghRoom->getFirstById($contract['room_id']);
+                $apartment = $this->ghApartment->getFirstById($room['apartment_id']);
+                $customer = $this->ghCustomer->getFirstById($contract['customer_id']);
+                $list_customer[] = [
+                    'price' => $contract['room_price'],
+                    'time_check_in' => $contract['time_check_in'],
+                    'number_of_month' => $contract['number_of_month'],
+                    'room_code' => $room['code'],
+                    'address' => $apartment['address_street'],
+                    'customer_name' => $customer['name'],
+                    'customer_phone' => $customer['phone'],
+                    'time_expire' => $contract['time_expire'],
+                ];
+            }
+        }
         $i = 2;
-        foreach ($list as $item) {
+        foreach ($list_customer as $item) {
             $sheet->setCellValue($start . $i, $i-1);
             $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
-            $sheet->setCellValue(++$start . $i, $item['name']);
+            $sheet->setCellValue(++$start . $i, $item['customer_name']);
             $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
-            $sheet->setCellValue(++$start . $i, $item['phone']);
+            $sheet->setCellValue(++$start . $i, $item['customer_phone']);
             $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
-            $sheet->setCellValue(++$start . $i, date("d-m-Y",$item['time_insert']));
+            $sheet->setCellValue(++$start . $i, $item['room_code']);
             $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
-
+            $sheet->setCellValue(++$start . $i, $item['price']);
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+            $sheet->setCellValue(++$start . $i, $item['address']);
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+            $sheet->setCellValue(++$start . $i, date("d-m-Y",$item['time_check_in']));
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+            $sheet->setCellValue(++$start . $i, $item['number_of_month']);
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+            $sheet->setCellValue(++$start . $i, date("d-m-Y",$item['time_expire']));
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
             $start = 'A';
             $i++;
         }
-        $file_name =" Danh Sách KH Sinva Nhập Tháng ". date('m-Y') . '.xlsx';
+
+        $file_name =" Danh Sách KH Sinva Đã Ký Tháng ". date('m-Y') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$file_name.'"');
         header('Cache-Control: max-age=0');
