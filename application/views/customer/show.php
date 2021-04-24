@@ -102,7 +102,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                     <table class="table-data table table-hover table-bordered">
                         <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>STT</th>
                             <th>Họ tên</th>
                             <th>Số Lượng Hợp Đồng</th>
                             <th>Thành Viên</th>
@@ -113,7 +113,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if(count($list_customer) > 0):?>
+                        <?php if(count($list_customer) > 0): $i=1;?>
                             <?php foreach($list_customer as $row ):
                                 $NearestContract = $ghCustomer->getNearestContractByCustomerId($row['id']);
                                 $ContractCounter = $ghCustomer->getNumberContract($row['id']);
@@ -127,9 +127,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 ?>
                             <tr>
                                 <td><a target="_blank"
-                                       href="/admin/detail-customer?id=<?= $row['id'] ?>"><?=
-                                        10000 +
-                                        $row['id'] ?></a></td>
+                                       href="/admin/detail-customer?id=<?= $row['id'] ?>"><?= str_pad($i, 3, '0', STR_PAD_LEFT);  ?></a></td>
                                 <td>
                                     <div class=" font-weight-bold">
                                             <span class="text-<?= $isExpired ?>"><?=
@@ -182,7 +180,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     </div>
                                 </td>
                             </tr>      
-                            <?php endforeach; ?>
+                            <?php $i++; endforeach; ?>
                                 <?php endif;?>
                         </tbody>
                     </table>
