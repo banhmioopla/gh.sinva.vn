@@ -339,6 +339,7 @@ class Customer extends CustomBaseStep {
         $sheet->setCellValue('G1', 'Ngày Ký');
         $sheet->setCellValue('H1', 'Số Tháng Ở');
         $sheet->setCellValue('I1', 'Ngày Hết Hạn');
+        $sheet->setCellValue('J1', 'Thành Viên Chốt Sale');
 
         $start = 'A';
         $list_contract = $this->ghContract->get(['time_check_in >=' => strtotime(date('01-m-Y'))]);
@@ -358,6 +359,7 @@ class Customer extends CustomBaseStep {
                     'customer_name' => $customer['name'],
                     'customer_phone' => $customer['phone'],
                     'time_expire' => $contract['time_expire'],
+                    'consultant' => $this->libUser->getNameByAccountid($contract['consultant_id']),
                 ];
             }
         }
@@ -380,6 +382,8 @@ class Customer extends CustomBaseStep {
             $sheet->setCellValue(++$start . $i, $item['number_of_month']);
             $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
             $sheet->setCellValue(++$start . $i, date("d-m-Y",$item['time_expire']));
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+            $sheet->setCellValue(++$start . $i, $item['consultant']);
             $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
             $start = 'A';
             $i++;
