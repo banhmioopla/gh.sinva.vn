@@ -70,7 +70,10 @@
                             </tr>
                             <tr>
                                 <td class="font-weight-bold">Giới Tính </td>
-                                <td class="text-right"><span class="m-l-15"><?= $customer['gender'] ? $label_apartment[$customer['gender']]:'<i>không có thông tin</i>' ?></span>
+                                <td class="text-right"><span class="customer-gender"
+                                                             data-pk="<?= $customer['id'] ?>"
+                                                             data-value="<?= $customer['gender'] ?>"
+                                                             data-name="gender"><?= $customer['gender'] ? $label_apartment[$customer['gender']]:'<i>không có thông tin</i>' ?></span>
                                 </td>
                             </tr>
                             <tr>
@@ -172,6 +175,21 @@
                         url: '<?= base_url() ?>admin/update-customer-editable',
                         inputclass: '',
                     });
+                    $('.customer-gender').editable({
+                        type: 'select',
+                        url: '<?= base_url() ?>admin/update-customer-editable',
+                        inputclass: '',
+                        source: function() {
+                            data = [
+                                {value: '', text: "Vui lòng chọn"},
+                                {value: 'male', text: "Nam"},
+                                {value: 'female', text: "Nữ"}
+                            ];
+
+                            return data;
+                        }
+                    });
+
                     $('.customer-time').editable({
                         placement: 'top',
                         type: 'combodate',

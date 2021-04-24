@@ -50,6 +50,7 @@ class Apartment extends CustomBaseStep {
 
 		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['apartment_today'] = [];
+		$data['list_gadget_around'] = [];
 		$data['apartment_cur_week'] = $this->ghApartment->get(['time_update >' => strtotime('last Monday') ,'active' => 'YES']);
 		foreach($data['list_apartment'] as $item) {
 			if(date('d') == date('d', $item['time_update'])) {
