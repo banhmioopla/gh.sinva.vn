@@ -74,12 +74,12 @@ foreach ($list_contract as $row) {
                             <div class="col-6">
                                 <input type="text" class="form-control datepicker"
                                        id="time_check_in_from"
-                                       value="<?= $this->input->get('timeCheckInFrom')  ? $this->input->get('timeCheckInFrom') : date( 'd-m-Y', $time_from)?>">
+                                       value="<?= $this->input->get('timeCheckInFrom')  ? $this->input->get('timeCheckInFrom') : ''?>">
                             </div>
                             <div class="col-6">
                                 <input type="text" class="form-control datepicker"
                                        id="time_check_in_to"
-                                       value="<?= $this->input->get('timeCheckInTo') ? $this->input->get('timeCheckInTo') : date( 'd-m-Y', $time_to)  ?>">
+                                       value="<?= $this->input->get('timeCheckInTo') ? $this->input->get('timeCheckInTo') : ''  ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
