@@ -152,7 +152,26 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
+            function sortNumbersIgnoreText(a, b, high) {
+                var reg = /[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?/;
+                a = a.match(reg);
+                a = a !== null ? parseFloat(a[0]) : high;
+                b = b.match(reg);
+                b = b !== null ? parseFloat(b[0]) : high;
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            }
+            jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+                "sort-numbers-ignore-text-asc": function (a, b) {
+                    return sortNumbersIgnoreText(a, b, Number.POSITIVE_INFINITY);
+                },
+                "sort-numbers-ignore-text-desc": function (a, b) {
+                    return sortNumbersIgnoreText(a, b, Number.NEGATIVE_INFINITY) * -1;
+                }
+            });
             $('.table-data').DataTable({
+                columnDefs: [
+                    { type: 'sort-numbers-ignore-text', targets : 0 }
+                ],
                 "pageLength": 20,
                 'pagingType': "full_numbers",
                 responsive: true,
