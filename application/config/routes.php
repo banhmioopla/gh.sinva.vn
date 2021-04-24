@@ -412,6 +412,11 @@ $route['admin/list-apartment'] = function($params = []) {
 	$action = '/show';
 	return $controller.$action;
 };
+$route['gh/list-apartment/v2'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/showV2';
+    return $controller.$action;
+};
 
 $route['admin/profile-apartment'] = function($params = []) {
     $controller = 'Apartment';

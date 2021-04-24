@@ -24,6 +24,7 @@
         <link href="<?= $js_plugins_path ?>spinkit/spinkit.css" rel="stylesheet" />
         <!-- SELECT2 -->
         <link href="<?= $js_plugins_path ?>select2/css/select2.min.css" rel="stylesheet" />
+        <link href="<?= $js_plugins_path ?>switchery/switchery.min.css" rel="stylesheet" />
         <!-- datepicker -->
         <link href="<?= $js_plugins_path ?>bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
         

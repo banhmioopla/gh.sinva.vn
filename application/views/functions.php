@@ -14,7 +14,7 @@ if ( ! function_exists('view_money_format'))
         } else if ($n < 900000000) {
             // 0.9m-850m
             $n_format = number_format($n / 1000000, $precision);
-            $suffix = ' mi';
+            $suffix = '';
         } else if ($n < 900000000000) {
             // 0.9b-850b
             $n_format = number_format($n / 1000000000, $precision);

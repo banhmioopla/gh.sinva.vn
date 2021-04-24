@@ -71,6 +71,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
             </div>
             <div class="card card-body pl-0 pr-0 col-12 col-md-9">
                 <div class="text-center w-100">
+                    <a target="_blank" href="/gh/list-apartment/v2?district-code=<?= $district_code ?>" class="text-muted font-weight-bold">Phiên Bản Thử nghiệm V2</a>
                     <?php $this->load->view('components/list-navigation'); ?>
                 </div>
 
@@ -321,7 +322,27 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
 
     commands.push(function() {
         
-        var t_room = $('.list-room').DataTable();
+        var t_room = $('.list-room').DataTable({
+            columnDefs: [
+                { type: 'sort-numbers-ignore-text', targets : 0 }
+            ],
+        });
+        function sortNumbersIgnoreText(a, b, high) {
+            var reg = /[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?/;
+            a = a.match(reg);
+            a = a !== null ? parseFloat(a[0]) : high;
+            b = b.match(reg);
+            b = b !== null ? parseFloat(b[0]) : high;
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        }
+        jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+            "sort-numbers-ignore-text-asc": function (a, b) {
+                return sortNumbersIgnoreText(a, b, Number.POSITIVE_INFINITY);
+            },
+            "sort-numbers-ignore-text-desc": function (a, b) {
+                return sortNumbersIgnoreText(a, b, Number.NEGATIVE_INFINITY) * -1;
+            }
+        });
         $('.apartment-block').find('.list-action').show();
         // $('.apartment-block').mouseenter(function() {
         //     $(this).find('.list-action').show(600);

@@ -316,7 +316,26 @@ if(isYourPermission('Apartment', 'showProfile', $this->permission_set)){
             $.fn.editable.defaults.mode = 'inline';
             $.fn.combodate.defaults.maxYear = 2022;
             $.fn.combodate.defaults.minYear = 2020;
+            function sortNumbersIgnoreText(a, b, high) {
+                var reg = /[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?/;
+                a = a.match(reg);
+                a = a !== null ? parseFloat(a[0]) : high;
+                b = b.match(reg);
+                b = b !== null ? parseFloat(b[0]) : high;
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            }
+            jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+                "sort-numbers-ignore-text-asc": function (a, b) {
+                    return sortNumbersIgnoreText(a, b, Number.POSITIVE_INFINITY);
+                },
+                "sort-numbers-ignore-text-desc": function (a, b) {
+                    return sortNumbersIgnoreText(a, b, Number.NEGATIVE_INFINITY) * -1;
+                }
+            });
             var t_room = $('.list-room').DataTable({
+                columnDefs: [
+                    { type: 'sort-numbers-ignore-text', targets : 0 }
+                ],
                 "fnDrawCallback": function() {
                     if(modify_mode == 'false') return;
 
