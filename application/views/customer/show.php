@@ -92,6 +92,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
 
                             <div class="col-md-3 offset-md-3 offset-0 col-12">
                                 <button type="submit" name="search" value="oke" class="btn w-75 btn-danger waves-light waves-effect">Tìm</button>
+                                <a href="/admin/export-customer" name="search" value="oke" class="btn w-75 mt-1 btn-success waves-light waves-effect">Xuất Excel Khách Tháng Hiện Tại</a>
                             </div>
                         </div>
                     </form>

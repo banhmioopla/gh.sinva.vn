@@ -7,6 +7,8 @@ class Apartment extends RestController {
     {
         // Construct the parent class
         parent::__construct();
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, OPTIONS");
     }
 
     public function apartment_get()

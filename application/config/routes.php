@@ -370,6 +370,12 @@ $route['admin/detail-customer'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/export-customer'] = function($params = []) {
+    $controller = 'Customer';
+    $action = '/exportExcel';
+    return $controller.$action;
+};
+
 $route['admin/create-care-customer'] = function($params = []) {
 	$controller = 'Customer';
 	$action = '/createCare';

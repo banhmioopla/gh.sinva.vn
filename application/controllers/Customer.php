@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 class Customer extends CustomBaseStep {
 	public function __construct()
 	{
@@ -323,6 +325,40 @@ class Customer extends CustomBaseStep {
         $this->load->view('customer/detail-profile-show', $data);
         $this->load->view('components/footer');
 
+    }
+
+    public function exportExcel(){
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'STT');
+        $sheet->setCellValue('B1', 'Tên');
+        $sheet->setCellValue('C1', 'SDT');
+        $sheet->setCellValue('D1', 'Ngày Nhập');
+
+        $start = 'A';
+        $list = $this->ghCustomer->get(['time_insert >=' => strtotime(date('01-m-Y'))]);
+        $i = 2;
+        foreach ($list as $item) {
+            $sheet->setCellValue($start . $i, $i-1);
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+            $sheet->setCellValue(++$start . $i, $item['name']);
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+            $sheet->setCellValue(++$start . $i, $item['phone']);
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+            $sheet->setCellValue(++$start . $i, date("d-m-Y",$item['time_insert']));
+            $spreadsheet->getActiveSheet()->getColumnDimension($start)->setAutoSize(true);
+
+            $start = 'A';
+            $i++;
+        }
+        $file_name =" Danh Sách KH Sinva Nhập Tháng ". date('m-Y') . '.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$file_name.'"');
+        header('Cache-Control: max-age=0');
+        ob_end_clean();
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        return $writer->save('php://output');
+        die;
     }
 
 
