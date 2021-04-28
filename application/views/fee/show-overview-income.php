@@ -149,7 +149,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-12">
                 <div class="card-box table-responsive shadow">
                     <h3 class="text-danger font-weight-bold text-center">Bộ Phận Kinh Doanh</h3>
                     <table class="table table-hover table-income table-dark">
@@ -209,7 +209,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-6 ">
+            <div class="col-12 col-md-12">
                 <div class="card-box table-responsive shadow">
                     <h3 class="text-danger font-weight-bold text-center">Bộ Phận Vận Hành</h3>
                     <table class="table table-hover table-income table-dark">

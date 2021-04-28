@@ -25,7 +25,7 @@ class GhUser extends CI_Model {
     }
 
     public function getAll() {
-        return $this->db->get_where($this->table)->result_array();
+        return $this->db->get_where($this->table, ['account_id >= ' => 171020000])->result_array();
     }
 
     public function insert($data) {

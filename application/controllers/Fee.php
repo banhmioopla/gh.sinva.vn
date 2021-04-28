@@ -604,6 +604,7 @@ class Fee extends CustomBaseStep {
         }
 
         /*Thu Nhập từ việc tuyển dụng*/
+
         $this_ref_total_income = (double) $this->getTotalSaleRefer($user_id, $start_time, $end_time);
         if($this_ref_total_income > 0) {
 
@@ -694,7 +695,7 @@ class Fee extends CustomBaseStep {
     }
 
     private function updateToReferIncomeContract($data){
-        $model = $this->ghUserIncomeDetail->getByUserIdAndTimeApply($data['user_id'], strtotime($data['apply_time']));
+        $model = $this->ghUserIncomeDetail->getByUserIdAndTimeApply($data['user_id'], $data['apply_time']);
         if(count($model)) {
             $this->ghUserIncomeDetail->updateById($model[0]['id'], $data);
         }else {
