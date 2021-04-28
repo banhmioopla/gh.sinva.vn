@@ -14,8 +14,7 @@
             <?php if(isYourPermission('Image', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/show-image-apartment">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-folder-multiple-image mr-1"></i> <span>Kho Hình
-                Ảnh</span>
+                                class="mdi mdi-folder-multiple-image mr-1"></i> <span>Kho Ảnh</span>
                     </button>
                 </a>
             <?php endif; ?>
@@ -23,7 +22,7 @@
             <?php if(isYourPermission('ConsultantBooking', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-consultant-booking?tb1=1&filterTime=THIS_WEEK">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-car-hatchback mr-1"></i> <span>Dẫn Khách</span>
+                                class="mdi mdi-car-hatchback mr-1"></i> <span>Booking</span>
                     </button>
                 </a>
             <?php endif; ?>
@@ -46,12 +45,12 @@
                 </a>
             <?php endif; ?>
 
-            <?php if(isYourPermission('Contract', 'showYour',$this->permission_set)):?>
+            <?php /* if(isYourPermission('Contract', 'showYour',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-personal-contract">
                     <button type="button" class="btn btn-danger waves-effect waves-light"> <i
                                 class="mdi mdi-file-chart mr-1"></i> <span>Hợp Đồng Của Tôi</span> </button>
                 </a>
-            <?php endif; ?>
+            <?php endif; */ ?>
 
             <?php if(isYourPermission('Mapbox', 'show',$this->permission_set)):?>
             <a href="<?= base_url() ?>admin/list-mapbox">
@@ -62,7 +61,7 @@
             </a>
             <?php endif; ?>
 
-            <?php if(isYourPermission('Story', 'show',$this->permission_set)):?>
+            <?php /* if(isYourPermission('Story', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-story">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
                                 class="mdi mdi-google-wallet
@@ -70,7 +69,7 @@
                                 class="text-">Story</span>
                     </button>
                 </a>
-            <?php endif; ?>
+            <?php endif; */?>
 
             <?php if(isYourPermission('ApartmentTrack', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-apartment-track">
