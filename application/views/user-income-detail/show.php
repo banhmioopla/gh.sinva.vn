@@ -80,7 +80,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card-box">
-                    <table class="table table-dark">
+                    <table class="table table-dark table-hover">
                         <thead>
                         <tr>
                             <th>Thời gian Áp Dụng</th>
@@ -94,6 +94,7 @@
                         <?php foreach ($list as $item):
                             $obj_info = ' - ';
                             $obj_type = ' - ';
+
                             if($item['type'] == $ghUserIncomeDetail::INCOME_TYPE_CONTRACT) {
                                 $contract = $ghContract->getFirstById($item['contract_id']);
                                 if($contract) {
@@ -110,12 +111,26 @@
                                     }
 
                                 }
-                                $obj_info .= " <a class='badge badge-info font-weight-bold' href='/admin/detail-contract?id={$item['contract_id']}' target='_blank' > Đi đến {$item['contract_id']}</a>";
+                                $obj_info .= " <a class='badge badge-danger font-weight-bold' href='/admin/detail-contract?id={$item['contract_id']}' target='_blank' > Đi đến {$item['contract_id']}</a>";
                                 $obj_type = 'Hợp Đồng';
                             }
 
                             if($item['type'] == $ghUserIncomeDetail::INCOME_TYPE_CONTRACT_SUPPORTER) {
-                                $obj_info = "Hỗ Trợ Ký Mã Hợp Đồng #{$item['contract_id']}";
+                                $contract = $ghContract->getFirstById($item['contract_id']);
+                                if($contract) {
+                                    $room = $ghRoom->getFirstById($contract['room_id']);
+                                    if($room) {
+                                        $apartment = $ghApartment->getFirstById($room['apartment_id']);
+                                        if($apartment) {
+                                            $contract_room_price = number_format($contract['room_price']);
+                                            $obj_info =
+                                                "<strong class='text-light p-1 m-1 bg-muted'># {$apartment['address_street']}</strong> 
+                                                <strong class='text-light p-1 m-1 bg-muted'># {$room['code']}</strong> 
+                                                <strong class='text-light p-1 m-1 bg-muted'># {$contract_room_price}</strong> ";
+                                        }
+                                    }
+                                }
+                                $obj_info .= " <a class='badge badge-danger font-weight-bold' href='/admin/detail-contract?id={$item['contract_id']}' target='_blank' > Đi đến {$item['contract_id']}</a>";
                                 $obj_type = 'Hỗ Trợ Ký';
                             }
 
