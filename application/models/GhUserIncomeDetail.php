@@ -17,6 +17,9 @@ class GhUserIncomeDetail extends CI_Model {
     public function getById($tag_id) {
         return $this->db->get_where($this->table, ['id' => $tag_id])->result_array();
     }
+    public function getFirstById($id) {
+        return $this->db->get_where($this->table, ['id' => $id])->row_array();
+    }
 
     public function getByContractId($contract_id) {
         return $this->db->get_where($this->table, ['contract_id' => $contract_id])->result_array();

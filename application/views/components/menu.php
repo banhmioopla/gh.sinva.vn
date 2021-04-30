@@ -91,10 +91,15 @@
                             mdi-chevron-double-right text-warning"></i> Phòng Tài Chính</a></li>
                         <?php endif;?>
 
-                        <?php if(isYourPermission('Fee', 'showUserCumulativeSale',$this->permission_set)):?>
+                        <?php if(isYourPermission('UserIncomeDetail', 'show',$this->permission_set)):?>
+                            <li><a href="/admin/list-user-income-detail"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Tổng Hợp Chi Tiết Thu Nhập *</a></li>
+                        <?php endif;?>
+
+                        <?php /* if(isYourPermission('Fee', 'showUserCumulativeSale',$this->permission_set)):?>
                             <li><a href="/admin/list-user-cumulative-sale"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Quản Lý Doanh Số Tích Lũy</a></li>
-                        <?php endif;?>
+                        <?php endif; */?>
                     </ul>
                 </li>
                 <?php endif;?>

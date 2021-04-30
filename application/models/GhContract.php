@@ -21,6 +21,10 @@ class GhContract extends CI_Model {
         return $this->db->get_where($this->table, ['id' => $district_id])->result_array();
     }
 
+    public function getFirstById($id) {
+        return $this->db->get_where($this->table, ['id' => $id])->row_array();
+    }
+
     public function getByCustomerIdAndNotPending($id) {
         return $this->db->get_where($this->table, ['customer_id' => $id, 'status <> ' => "Pending"])->result_array();
     }

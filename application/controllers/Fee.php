@@ -39,6 +39,8 @@ class Fee extends CustomBaseStep {
         $this->rate_personal_is_support_control = 0.9;
         $this->refer_rate = 0.05;
         $this->get_new_apartment_rate = 0.03;
+
+        $this->goon = false;
     }
 
 
@@ -466,13 +468,14 @@ class Fee extends CustomBaseStep {
                         "<br>";
 
                     if($max_contract_id > 0) {
-                        $this->updateToIncomeContract([
-                            'contract_id' => $max_contract_id,
-                            'contract_income_total' => $total_b1,
-                            'apply_time' => $max_time_apply,
-                            'type' => self::INCOME_TYPE_CONTRACT,
-                            'user_id' => $max_consultant_id
-                        ]);
+                        if($this->goon)
+                            $this->updateToIncomeContract([
+                                'contract_id' => $max_contract_id,
+                                'contract_income_total' => $total_b1,
+                                'apply_time' => $max_time_apply,
+                                'type' => self::INCOME_TYPE_CONTRACT,
+                                'user_id' => $max_consultant_id
+                            ]);
                     }
 
                     break;
@@ -502,7 +505,7 @@ class Fee extends CustomBaseStep {
                                 $temp_income -= (double) $temp_income * 0.1;
                             }
                             $total_b2 += $temp_income;
-
+                            if($this->goon)
                             $this->updateToIncomeContract([
                                 'contract_id' => $item['id'],
                                 'contract_income_total' => (double)$temp_income,
@@ -522,14 +525,14 @@ class Fee extends CustomBaseStep {
                                 $partner_support  = $isB1['total_income'] * 0.3;
                                 $total_b2 += (double)$temp_income * 0.3;
                             }
-
-                            $this->updateToIncomeContract([
-                                'contract_id' => $item['id'],
-                                'contract_income_total' => (double)$partner_support,
-                                'apply_time' => $item['time_insert'],
-                                'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
-                                'user_id' => $item['consultant_support_id']
-                            ]);
+                            if($this->goon)
+                                $this->updateToIncomeContract([
+                                    'contract_id' => $item['id'],
+                                    'contract_income_total' => (double)$partner_support,
+                                    'apply_time' => $item['time_insert'],
+                                    'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
+                                    'user_id' => $item['consultant_support_id']
+                                ]);
                         }
                         break;
                     }
@@ -582,6 +585,7 @@ class Fee extends CustomBaseStep {
                     $temp_support_income = (double)$temp_income * 0.3;
                     $temp_income += $temp_support_income;
                     $description .=self::INCOME_TYPE_CONTRACT . " " .$temp_income . "<br>";
+                    if($this->goon)
                     $this->updateToIncomeContract([
                         'contract_id' => $item['id'],
                         'contract_income_total' => $temp_support_income,
@@ -593,6 +597,7 @@ class Fee extends CustomBaseStep {
 
                 $total_personal_income += $temp_income;
                 $description .= $sub_des . " = " .number_format($temp_income) . " vnđ<br>";
+                if($this->goon)
                 $this->updateToIncomeContract([
                     'contract_id' => $item['id'],
                     'contract_income_total' => $temp_income,
@@ -610,6 +615,7 @@ class Fee extends CustomBaseStep {
 
             $description .= "<br> ⛛ Thu Nhập Từ Tuyển Thành Viên<br>";;
             $description .=   "<i class='mdi mdi-account-multiple-plus'></i> ".number_format($this_ref_total_income) . " vnđ <br>";
+            if($this->goon)
             $this->updateToReferIncomeContract([
                 'user_id' => $user_id,
                 'contract_income_total' => $this_ref_total_income,
@@ -659,6 +665,7 @@ class Fee extends CustomBaseStep {
                     }
                 }
                 $description .= " ♦ ". $a['address_street'] . " (".date('d/m/Y', $a['time_insert']).") = ".number_format($sale_of_apartment)." vnđ <br>";
+                if($this->goon)
                 $this->updateToGetNewApartment([
                     'user_id' => $user_id,
                     'apartment_id' => $a['id'],

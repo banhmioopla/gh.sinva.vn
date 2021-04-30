@@ -16,6 +16,15 @@ class LibEmail {
         return $content;
     }
 
+    public function getAllTemplate(){
+        return [
+            [
+                "title" => "Thông báo thu nhập cá nhân",
+                "content" => $this->contentNotificationPersonalIncome(),
+            ]
+        ];
+    }
+
     public function sendEmail($mail_from, $mail_to, $subject, $content){
         $mail = new PHPMailer();
         $name_to = "TEST NAME TO";
