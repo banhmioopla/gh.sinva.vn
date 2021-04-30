@@ -104,14 +104,14 @@
                                         if($apartment) {
                                             $contract_room_price = number_format($contract['room_price']);
                                             $obj_info =
-                                                "<strong class='text-light p-1 m-1 bg-muted'># {$apartment['address_street']}</strong> 
-                                                <strong class='text-light p-1 m-1 bg-muted'># {$room['code']}</strong> 
-                                                <strong class='text-light p-1 m-1 bg-muted'># {$contract_room_price}</strong> ";
+                                                "<strong class='badge badge-secondary'># {$apartment['address_street']}</strong> 
+                                                <strong class='badge badge-secondary'># {$room['code']}</strong> 
+                                                <strong class='badge badge-secondary'># {$contract_room_price}</strong> ";
                                         }
                                     }
 
                                 }
-                                $obj_info .= " <a class='badge badge-danger font-weight-bold' href='/admin/detail-contract?id={$item['contract_id']}' target='_blank' > Đi đến {$item['contract_id']}</a>";
+                                $obj_info .= " <a class='pull-right badge badge-danger font-weight-bold' href='/admin/detail-contract?id={$item['contract_id']}' target='_blank' > <i class='mdi mdi-chevron-double-right'></i> Đi đến {$item['contract_id']}</a>";
                                 $obj_type = 'Hợp Đồng';
                             }
 
@@ -124,13 +124,13 @@
                                         if($apartment) {
                                             $contract_room_price = number_format($contract['room_price']);
                                             $obj_info =
-                                                "<strong class='text-light p-1 m-1 bg-muted'># {$apartment['address_street']}</strong> 
-                                                <strong class='text-light p-1 m-1 bg-muted'># {$room['code']}</strong> 
-                                                <strong class='text-light p-1 m-1 bg-muted'># {$contract_room_price}</strong> ";
+                                                "<strong class='badge badge-secondary'># {$apartment['address_street']}</strong> 
+                                                <strong class='badge badge-secondary'># {$room['code']}</strong> 
+                                                <strong class='badge badge-secondary'># {$contract_room_price}</strong> ";
                                         }
                                     }
                                 }
-                                $obj_info .= " <a class='badge badge-danger font-weight-bold' href='/admin/detail-contract?id={$item['contract_id']}' target='_blank' > Đi đến {$item['contract_id']}</a>";
+                                $obj_info .= " <a class='pull-right badge badge-danger font-weight-bold' href='/admin/detail-contract?id={$item['contract_id']}' target='_blank' > <i class='mdi mdi-chevron-double-right'></i> Đi đến {$item['contract_id']}</a>";
                                 $obj_type = 'Hỗ Trợ Ký';
                             }
 
