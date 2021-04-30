@@ -224,12 +224,13 @@ foreach ($list_contract as $row) {
         <div class="row">
             <div class="col-12">
                 <div class="card-box">
-                    <table class="table-contract table table-bordered">
+                    <table class="table-contract table table-dark table-bordered">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th width="350px">Khách thuê</th>
-                            <th>Giá thuê</th>
+                            <th class="text-right">Giá thuê <small>x1000</small></th>
+                            <th class="text-right">Đã Thu <small>x1000</small></th>
                             <th width="250px">Thành Viên Chốt</th>
                             <th>Ngày ký</th>
                             <th>Ngày hết hạn</th>
@@ -255,10 +256,24 @@ foreach ($list_contract as $row) {
                                 }
                             }
 
+                            $service = json_decode($row['service_set'], true);
+                            $apartment = $ghApartment->getFirstById($row['apartment_id']);
+                            $room = $ghRoom->getFirstById($row['room_id']);
+                            $customer_info = $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']);
+                            $apartment_info = "";
+                            if($apartment) {
+                                $apartment_info =
+                                    "<span class='badge badge-purple'># {$customer_info}</span> 
+                                                <span class='badge badge-secondary'># ĐC {$apartment['address_street']}</span> 
+                                                <span class='badge badge-secondary'># MP {$room['code']}</span> ";
+                            }
+                            $partial_amount = 0;
+                            $list_partial = $ghContractPartial->get(['contract_id' => $row['id']]);
+                            foreach ($list_partial as $item) {
+                                $partial_amount += $item['amount'];
+                            }
 
-
-
-                            $service = json_decode($row['service_set'], true) ?>
+                            ?>
                             <tr>
                                 <td>
                                     <div>
@@ -268,30 +283,29 @@ foreach ($list_contract as $row) {
 
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="text-muted"><?= $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']) ?> </div>
-                                    <div class="font-weight-bold text-primary">
+                                <td class="text-warning">
+                                    <div class="mt-1">
                                         <?php
-                                        $apartment = $ghApartment->get(['id' => $row['apartment_id']]);
-                                        $room = $ghRoom->get(['id' => $row['room_id']]);
-                                        $room = $room ? $room[0]:null;
+
+                                        echo $apartment_info;
                                         ?>
-                                        <?= $apartment ? $apartment[0]['address_street']:'' ?>
+
                                     </div>
-                                    <h6 class="text-danger">
-                                        <?= $room ? 'mã phòng: '.$room['code'] : '[không có thông tin]' ?>
-                                    </h6>
                                 </td>
-                                <td>
-                                    <div class="contract-room_price font-weight-bold"
+                                <td class="text-right">
+                                    <div class="contract-room_price text-warning font-weight-bold"
                                          data-pk="<?= $row['id'] ?>"
                                          data-value="<?= $row['room_price'] ?>"
                                          data-name="room_price">
-                                        <?= number_format($row['room_price']) ?>
+                                        <?= number_format($row['room_price']/1000) ?>
                                     </div>
                                 </td>
+
+                                <td class="text-right">
+                                    <?= number_format($partial_amount/1000) ?>
+                                </td>
                                 <td>
-                                    <div class="consultant_id font-weight-bold"
+                                    <div class="consultant_id text-warning font-weight-bold"
                                          data-pk="<?= $row['id'] ?>"
                                          data-value="<?= $row['consultant_id'] ?>"
                                          data-name="consultant_id">
@@ -300,7 +314,7 @@ foreach ($list_contract as $row) {
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="contract-time_check_in"
+                                    <div class="contract-time_check_in text-warning"
                                          data-pk="<?= $row['id'] ?>"
                                          data-value="<?= date('d/m/Y',$row['time_check_in']) ?>"
                                          data-name="time_check_in">
@@ -308,7 +322,7 @@ foreach ($list_contract as $row) {
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="contract-time_expire"
+                                    <div class="contract-time_expire text-warning"
                                          data-pk="<?= $row['id'] ?>"
                                          data-value="<?= date('d/m/Y',$row['time_expire']) ?>"
                                          data-name="time_expire">
@@ -316,7 +330,7 @@ foreach ($list_contract as $row) {
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <div class="contract-number_of_month"
+                                    <div class="contract-number_of_month text-warning"
                                          data-pk="<?= $row['id'] ?>"
                                          data-value="<?= $row['number_of_month'] ?>"
                                          data-name="number_of_month">
@@ -367,6 +381,7 @@ foreach ($list_contract as $row) {
         $('.table-contract').DataTable({
             "pageLength": 10,
             'pagingType': "full_numbers",
+            "aaSorting": [],
             responsive: true,
             "fnDrawCallback": function() {
                 // x editable

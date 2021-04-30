@@ -1,6 +1,7 @@
 <?php
 $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
 $check_approve = isYourPermission('Contract', 'approved', $this->permission_set);
+$checkPartial = isYourPermission('Contract', 'approved', $this->permission_set);
 ?>
 
 
@@ -9,20 +10,20 @@ $check_approve = isYourPermission('Contract', 'approved', $this->permission_set)
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
     </div>
-    <div class="container-fluid">
+    <div class="container">
         <!-- Page-Title -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Giỏ Hàng</a></li>
+                            <li class="breadcrumb-item"><a href="#">Hợp Đồng</a></li>
+                            <li class="breadcrumb-item active"># <?= $contract['id'] ?></li>
                         </ol>
                     </div>
-
                 </div>
+
             </div>
             <?php
             $customer = $ghCustomer->get(['id' => $contract['customer_id']]);
@@ -50,7 +51,7 @@ $check_approve = isYourPermission('Contract', 'approved', $this->permission_set)
             }
 
             ?>
-            <div class="col-12 col-md-8 offset-md-2">
+            <div class="col-12">
                 <div class="card-box shadow">
                     <h3 class="text-center">Chi tiết hợp đồng</h3>
                     <p class="text-center text-dark"><?= $apartment ? $apartment['address_street'] : '[không có thông tin]'
@@ -59,7 +60,7 @@ $check_approve = isYourPermission('Contract', 'approved', $this->permission_set)
                         $room ? $room['code'] : '[không có thông tin]' ?></p>
                     <p><a href="/admin/list-contract" class="text-danger"><i class="mdi
                      mdi-arrow-left-bold-circle"></i> Quay Lại Danh Sách</a></p>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover">
 
                         <tr class="text-right">
                             <td colspan="2" class="text-right" width="250px">
@@ -318,6 +319,68 @@ $check_approve = isYourPermission('Contract', 'approved', $this->permission_set)
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-box shadow">
+                    <form action="/admin/create-contract-partial" method="post">
+                        <input type="hidden" name="contract_id" value="<?= $contract['id'] ?>">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="text-danger font-weight-bold">Tạo Phiếu Thu</h4>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-12 col-form-label text-right" for="example-input-normal">Ngày Thu</label>
+                                    <div class="col-md-9 col-12">
+                                        <input type="text" name="apply_time" required class="form-control datepicker" value="<?= date('d-m-Y') ?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-12 col-form-label text-right" for="example-input-normal">Số Tiền</label>
+                                    <div class="col-md-9 col-12">
+                                        <input type="text" required name="amount" class="form-control" value="<?= $remaining_amount ?>">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn col-md-6 offset-md-3 btn-danger" type="submit">Thêm Mới</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="card-box shadow">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4 class="text-danger font-weight-bold">Các Đợt Thu Tiền</h4>
+                        </div>
+
+                        <table class="table table-hover table-dark">
+                            <thead>
+                            <tr>
+                                <th>Ngày Thu</th>
+                                <th class="text-right">Số Tiền</th>
+                            </tr>
+                            </thead>
+                            <?php foreach ($list_partial as $item):?>
+                                <tr>
+                                    <td><?= date("d/m/Y",$item['apply_time']) ?></td>
+                                    <td class="text-right"><?= number_format($item['amount']) ?></td>
+                                </tr>
+                            <?php endforeach;?>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </div>
 <?php
@@ -330,6 +393,9 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
 <script type="text/javascript">
     commands.push(function () {
         $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: "dd-mm-yyyy"
+            });
             <?php if($check_edit): ?>
             $('.delete-img').click(function () {
                 let this_btn = $(this);

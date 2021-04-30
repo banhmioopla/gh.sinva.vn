@@ -11,6 +11,7 @@ class Contract extends CustomBaseStep {
 		$this->load->model('ghApartment');
 		$this->load->model('ghCustomer');
 		$this->load->model('ghNotification');
+		$this->load->model('ghContractPartial');
 		$this->load->model('ghImage');
 		$this->load->library('LibCustomer', null, 'libCustomer');
 		$this->load->library('LibDistrict', null, 'libDistrict');
@@ -138,6 +139,7 @@ class Contract extends CustomBaseStep {
 		$data['ghApartment'] = $this->ghApartment;
 		$data['ghRoom'] = $this->ghRoom;
 		$data['ghImage'] = $this->ghImage;
+		$data['ghContractPartial'] = $this->ghContractPartial;
 		$data['libRoom'] = $this->libRoom;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/
@@ -164,7 +166,7 @@ class Contract extends CustomBaseStep {
 
 	public function detailShow(){
 		$contract_id = $this->input->get('id');
-		$model = $this->ghContract->get(['id' => $contract_id])[0];
+		$model = $this->ghContract->getFirstById($contract_id);
         $notification = $this->ghNotification->get([
             'is_approve' => 'NO',
             'object_id' => $contract_id
@@ -181,6 +183,12 @@ class Contract extends CustomBaseStep {
         $data['label'] =  $this->config->item('label.apartment');
 		$data['ghImage'] = $this->ghImage;
 		$data['label'] =  $this->config->item('label.apartment');
+		$data['list_partial'] = $this->ghContractPartial->get(['contract_id' => $contract_id]);
+        $current_partial_amount = 0;
+		foreach ($data['list_partial'] as $item) {
+            $current_partial_amount += $item['amount'];
+        }
+		$data['remaining_amount'] = $model['room_price'] - $current_partial_amount;
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('contract/detail-show', $data);
 		$this->load->view('components/footer');
@@ -282,6 +290,18 @@ class Contract extends CustomBaseStep {
         ]);
         return redirect('admin/list-contract');
 	}
+
+	public function createPartial(){
+        $post = $this->input->post();
+
+        $data_insert = [
+            'contract_id' => $post['contract_id'],
+            'amount' => $post['amount'],
+            'apply_time' => strlen($post['apply_time']) ? strtotime($post['apply_time']) : null ,
+        ];
+        $this->ghContractPartial->insert($data_insert);
+        return redirect($_SERVER['HTTP_REFERER']);
+    }
 
 	public function create() {
         if($this->input->get('controller-name') =='Contract') {

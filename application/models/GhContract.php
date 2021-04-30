@@ -58,7 +58,7 @@ class GhContract extends CI_Model {
                 FROM gh_user, gh_role, gh_contract
                 WHERE gh_user.account_id = gh_contract.consultant_id AND 
                  gh_role.code = gh_user.role_code
-                 ". $where_string;
+                 ". $where_string . "  ORDER BY gh_contract.id DESC" ;
 
         $result = $this->db->query($sql);
 
