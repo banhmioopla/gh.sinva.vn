@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UserIncomeDetail extends CustomBaseStep {
+class ApartmentPromotion extends CustomBaseStep {
 
     public function __construct()
     {
@@ -9,95 +9,41 @@ class UserIncomeDetail extends CustomBaseStep {
         $this->load->model('ghUser');
         $this->load->model('ghRole');
         $this->load->model('ghUserIncomeDetail');
+        $this->load->model('ghApartmentPromotion');
         $this->load->model('ghApartment');
         $this->load->model('ghRoom');
         $this->load->model('ghContract');
         $this->load->library('LibRole', null, 'libRole');
         $this->load->library('LibUser', null, 'libUser');
-        $this->load->library('LibFinance', null, 'libFinance');
     }
 
     public function show(){
-        $data['list'] = $this->ghUserIncomeDetail->get();
-        $data['libRole'] = $this->libRole;
-        $data['libUser'] = $this->libUser;
-        $data['ghContract'] = $this->ghContract;
-        $data['ghRoom'] = $this->ghRoom;
-        $data['ghApartment'] = $this->ghApartment;
+        $apartment_id = $this->input->get('apartment-id');
 
-        $contract_qtt = $apartment_qtt = 0;
-        foreach ($data['list'] as $item) {
-            if($item['type'] == $this->ghUserIncomeDetail::INCOME_TYPE_CONTRACT) {
-                $contract_qtt++;
-            }
-
-            if($item['type'] == $this->ghUserIncomeDetail::INCOME_TYPE_GET_NEW_APARTMENT) {
-                $apartment_qtt++;
-            }
-        }
-
-        $data['ghUserIncomeDetail'] = $this->ghUserIncomeDetail;
-
-        $data['contract_qtt'] = $contract_qtt;
-        $data['apartment_qtt'] = $apartment_qtt;
+        $data['apartment'] = $this->ghApartment->getFirstById($apartment_id);
+        $data['list_promotion'] = $this->ghApartmentPromotion->get(['apartment_id' =>$apartment_id]);
         /*--- Load View ---*/
         $this->load->view('components/header');
-        $this->load->view('user-income-detail/show', $data);
+        $this->load->view('apartment-promotion/show', $data);
         $this->load->view('components/footer');
-    }
-
-    public function syncIncome() {
-        $time_from = '01-04-2021';
-        $time_to = '30-04-2021';
-        $role = 'consultant';
-
-        $t = $this->libFinance->getTotalSale($time_from, $time_to);
-        $tt = $this->libFinance->getPartialBigSumSale($time_from, $time_to);
-        $xxx = $this->libFinance->getIncomeMechanismByRole($role);
-        echo "<pre>";
-        var_dump($xxx);
-        var_dump($tt);
-
-        die;
-
-
     }
 
     public function create() {
 
         $post = $this->input->post();
-        $data['time_insert'] = $data['time_update'] = time();
-        $data['password'] = $data['account_id'] = $post['account_id'];
-        $data['role_code'] = 'consultant';
-        $data['name'] = $post['name'];
-        $data['phone_number'] = $post['phone_number'];
-
-        if($post['date_of_birth']) {
-            if(empty($post['date_of_birth'])) {
-                $post['date_of_birth'] = null;
-            } else {
-                $post['date_of_birth'] = str_replace('/', '-', $post['date_of_birth']);
-                $post['date_of_birth'] = strtotime((string)$post['date_of_birth']);
-            }
-        }
-        if($post['time_joined']) {
-            if(empty($post['time_joined'])) {
-                $post['time_joined'] = null;
-            } else {
-                $post['time_joined'] = str_replace('/', '-', $post['time_joined']);
-                $post['time_joined'] = strtotime((string)$post['time_joined']);
-            }
-        }
-        $data['time_joined'] = $post['time_joined'];
-        $data['date_of_birth'] = $post['date_of_birth'];
-        $data['time_insert'] = time();
-        $data['user_refer_id'] = $post['user_refer_id'] > 0 ? $post['user_refer_id']:null;
-        $result = $this->ghUser->insert($data);
+        $data = [
+            'title' => $post['title'],
+            'description' => $post['description'],
+            'start_time' => strlen($post['start_time']) ?  strtotime($post['start_time']) : null,
+            'end_time' => strlen($post['end_time']) ?  strtotime($post['end_time']) : null,
+            'apartment_id' => $post['apartment_id'],
+        ];
+        $result = $this->ghApartmentPromotion->insert($data);
         $this->session->set_flashdata('fast_notify', [
-            'message' => 'Tạo thành viên: <strong>'.$data['account_id'].'<strong> thành công ',
+            'message' => 'Tạo Chương Trình : <strong>'.$post['title'].'<strong> thành công ',
             'status' => 'success'
         ]);
-        return redirect('admin/list-user');
+        return redirect('admin/list-apartment-promotion?apartment-id='.$post['apartment_id']);
     }
     public function updateEditable() {
         $id = $this->input->post('pk');

@@ -18,8 +18,13 @@ if(isYourPermission('Contract', 'createShow', $this->permission_set)){
 
 $check_option = true;
 $check_commission_rate = false;
+$check_create_promotion = false;
 if(isYourPermission('Apartment', 'showCommmissionRate', $this->permission_set)){
     $check_commission_rate = true;
+}
+
+if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
+    $check_create_promotion = true;
 }
 
 $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
@@ -251,6 +256,16 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                 <div id="modal-apartment-detail-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-detail-<?=$apartment['id'] ?>">
                     <div class="card-body">
                         <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
+
+                            <li class="nav-item">
+                                <a href="#apm-promotion-<?= $apartment['id'] ?>"
+                                   data-toggle="tab"
+                                   aria-expanded="false"
+                                   class="nav-link">
+                                    <i class="mdi mdi-gift mr-2"></i>
+                                </a>
+                            </li>
+
                             <li class="nav-item">
                                 <a href="#apm-note-<?= $apartment['id'] ?>" 
                                     data-toggle="tab" 
@@ -279,6 +294,22 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                             </li> -->
                         </ul>
                         <div class="tab-content">
+                            <div class="tab-pane apm-promotion" id="apm-promotion-<?= $apartment['id'] ?>">
+                                <h5 class="font-weight-bold text-danger">Chương Trình Khuyến Mãi
+                                    <?php if($check_create_promotion): ?>
+                                    <span class="pull-right"><a class="btn btn-success" href="/admin/list-apartment-promotion">Thêm Mới</a></span>
+                                    <?php endif; ?>
+                                </h5>
+                                <?php
+                                    $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id']]);
+                                    foreach ($list_promotion as $p):
+                                        ?>
+                                        <span class="badge badge-danger badge-pill"><?= $p['title'] ?></span>
+                                <?php endforeach;
+
+                                ?>
+                                <a href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>" class="badge badge-info badge-pill">Xem chi tiết</a>
+                            </div>
                             <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>">
                                 <p><?= $apartment['note'] ?></p>
                             </div>

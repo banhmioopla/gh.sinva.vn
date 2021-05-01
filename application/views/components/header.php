@@ -38,7 +38,7 @@
         <link href="<?= $assets_path ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/icons.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/style.css?v=1" rel="stylesheet" type="text/css" />
-        <link href="<?= $assets_path ?>css/custom.css?v=20201112" rel="stylesheet"
+        <link href="<?= $assets_path ?>css/custom.css?v=20201113" rel="stylesheet"
               type="text/css" />
 
         <link rel="stylesheet" href="<?= $assets_path ?>stories-board/zuck.css">

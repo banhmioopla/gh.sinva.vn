@@ -216,6 +216,25 @@ $route['admin/send-email-notification'] = function($params = []) {
     $action = '/sendMail';
     return $controller.$action;
 };
+// apartment promotion
+$route['admin/list-apartment-promotion'] = function($params = []) {
+    $controller = 'ApartmentPromotion';
+    $action = '/show';
+    return $controller.$action;
+};
+
+$route['admin/create-apartment-promotion'] = function($params = []) {
+    $controller = 'ApartmentPromotion';
+    $action = '/create';
+    return $controller.$action;
+};
+
+$route['admin/update-apartment-promotion-editable'] = function($params = []) {
+    $controller = 'ApartmentPromotion';
+    $action = '/updateEditable';
+    return $controller.$action;
+};
+
 // contract
 $route['admin/list-contract'] = function($params = []) {
 	$controller = 'Contract';
@@ -469,6 +488,12 @@ $route['admin/list-fee-contract-income'] = function($params = []) {
 $route['admin/list-user-income-detail'] = function($params = []) {
     $controller = 'UserIncomeDetail';
     $action = '/show';
+    return $controller.$action;
+}
+
+;$route['admin/sync-income'] = function($params = []) {
+    $controller = 'UserIncomeDetail';
+    $action = '/syncIncome';
     return $controller.$action;
 };
 

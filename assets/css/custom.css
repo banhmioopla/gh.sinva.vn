@@ -133,6 +133,11 @@ html, body { height: 100%; }
     color: #7c120d;
     font-weight: 500;
 }
+
+.badge {
+    font-size: 90%;
+    font-weight: 700;
+}
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;
