@@ -69,6 +69,10 @@
                 '<i class="fa fa-fw fa-times"></i>'+
             '</button>'+
         '</div>';
+
+        window.onload = function () {
+            setTimeout(function(){ $('#gh-loader').hide() }, 1500);
+        };
     </script>
     <script>
         for (var __i = 0; __i < commands.length; __i++) {

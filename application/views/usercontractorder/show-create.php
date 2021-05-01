@@ -1,8 +1,4 @@
 <div class="wrapper">
-    <div class="sk-wandering-cubes" style="display:none" id="loader">
-        <div class="sk-cube sk-cube1"></div>
-        <div class="sk-cube sk-cube2"></div>
-    </div>
     <div class="container">
 
         <!-- Page-Title -->

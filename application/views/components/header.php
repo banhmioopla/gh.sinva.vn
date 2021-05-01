@@ -38,7 +38,7 @@
         <link href="<?= $assets_path ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/icons.css" rel="stylesheet" type="text/css" />
         <link href="<?= $assets_path ?>css/style.css?v=1" rel="stylesheet" type="text/css" />
-        <link href="<?= $assets_path ?>css/custom.css?v=20201113" rel="stylesheet"
+        <link href="<?= $assets_path ?>css/custom.css?v=20201114" rel="stylesheet"
               type="text/css" />
 
         <link rel="stylesheet" href="<?= $assets_path ?>stories-board/zuck.css">
@@ -314,4 +314,15 @@
             <!-- end topbar-main -->
             <?php $this->load->view('components/menu')?>
             <!-- end navbar-custom -->
+            <div id="gh-loader">
+                <div class="sk-wave">
+                    <div class="sk-rect sk-rect1"></div>
+                    <div class="sk-rect sk-rect2"></div>
+                    <div class="sk-rect sk-rect3"></div>
+                    <div class="sk-rect sk-rect4"></div>
+                    <div class="sk-rect sk-rect5"></div>
+                </div>
+            </div>
         </header>
+
+

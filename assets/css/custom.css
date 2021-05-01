@@ -138,12 +138,33 @@ html, body { height: 100%; }
     font-size: 90%;
     font-weight: 700;
 }
+
+#gh-loader{
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(254, 255, 255, 0.95);
+    z-index: 1200;
+}
+.sk-wave{
+    margin: 90% auto;
+}
+.sk-wave .sk-rect{
+    background-color: #ffc122;
+}
+
 @media (min-width: 992px) {
     .modal-lg {
         max-width: 1015px;
     }
     .editableform textarea.form-control {
         width: 25em;
+    }
+
+    .sk-wave{
+        margin: 35% auto;
     }
     
 }
@@ -164,5 +185,8 @@ html, body { height: 100%; }
     }
     #topnav .navigation-menu > li.has-submenu.open > a {
         color: #fff;
+    }
+    .sk-wave{
+        margin: 25% auto;
     }
 }
