@@ -297,7 +297,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                             <div class="tab-pane apm-promotion" id="apm-promotion-<?= $apartment['id'] ?>">
                                 <h5 class="font-weight-bold text-danger">Chương Trình Khuyến Mãi
                                     <?php if($check_create_promotion): ?>
-                                    <span class="pull-right"><a class="btn btn-success" href="/admin/list-apartment-promotion">Thêm Mới</a></span>
+                                    <span class="pull-right"><a class="btn btn-success" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">Thêm Mới</a></span>
                                     <?php endif; ?>
                                 </h5>
                                 <?php
