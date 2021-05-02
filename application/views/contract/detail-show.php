@@ -67,8 +67,7 @@ $checkPartial = isYourPermission('Contract', 'approved', $this->permission_set);
                                 <div class="customer-name w-100">
                                     <?php if($notification_object_id && $check_approve): ?>
                                     <a class="btn btn-danger mr-2"
-                                       href="/admin/contract/approved?contract-id=<?= $notification_object_id ?>&id=<?= $contract['id'] ?>"
-                                        data-contract-id="<?= $contract['id'] ?>">Duyệt</a>
+                                       href="/admin/contract/approved?contract-id=<?= $notification_object_id ?>&id=<?= $contract['id'] ?>">Duyệt</a>
                                     <?php endif; ?>
                                     <button class="btn btn-danger contract-cancel"
                                             data-contract-id="<?= $contract['id'] ?>">Hủy Hợp Đồng</button>

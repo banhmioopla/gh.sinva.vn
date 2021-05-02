@@ -1147,6 +1147,12 @@ $route['public/consulting-post-detail'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['public/customer-feedback/show'] = function($params = []) {
+    $controller = '/public-world/PublicCustomerFeedback';
+    $action = '/show';
+    return $controller.$action;
+};
+
 $route['admin/user-contract-order'] = function($params = []) {
     $controller = 'UserContractOrder';
     $action = '/showCreate';

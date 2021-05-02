@@ -423,10 +423,10 @@ foreach ($list_user as $row) {
                             async: false,
                             success:function(response){
                                 var data = JSON.parse(response);
-                                if(data.status == true) {
-                                    $('.user-alert').html(notify_html_success);
-                                } else {
+                                if(data.status == false) {
                                     $('.user-alert').html(notify_html_fail);
+                                } else {
+                                    $('.user-alert').html(notify_html_success);
                                 }
                             },
                             beforeSend: function(){
