@@ -95,7 +95,7 @@ class PublicCustomerFeedback extends CI_Controller {
 
         $this->ghPublicCustomerFeedback->insert($data_insert);
         $this->session->set_flashdata('fast_notify', [
-            'message' => 'Tạo <strong>'.$data['name'].'<strong> thành công ',
+            'message' => 'Gửi phản hồi thành công / Sent Successfully ',
             'status' => 'success'
         ]);
         return redirect('/public/customer-feedback/show?account-id='.$post['user_id']);
