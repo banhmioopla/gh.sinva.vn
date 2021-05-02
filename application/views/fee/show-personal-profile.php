@@ -109,15 +109,12 @@ $data = array_values($list_user_income)[0];
                                 <div class="row pl-2">
                                     <div class="col-12 p-1"><i class="mdi mdi-account-box"></i> <?= $role['name'] ?></div>
                                     <div class="col-12 p-1"><i class="mdi mdi-cellphone-android"></i> <?= $libPhone->formatPhone($user['phone_number']) ?></div>
-
+                                    <input class="form-control  col-12" id="link-feedback" value="https://gh.sinva.vn/public/customer-feedback/show?account-id=<?= $user['account_id'] ?>" readonly>
+                                    <p class="text-success" id="link-feedback-msg"></p>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-
-
                 </div>
 
                 <div class="card-box">

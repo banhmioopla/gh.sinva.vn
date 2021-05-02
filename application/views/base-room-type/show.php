@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Page-Title -->
         <div class="row">
@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách Loại Phòng (LP)</h3>
+                    <h2 class="font-weight-bold text-danger">Danh sách Loại Phòng (LP)</h2>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
         ?>
         <div class="baseroomtype-alert"></div>
         <div class="row">
-            <div class="col-12 col-md-7">
+            <div class="col-12">
                 <div class="card-box table-responsive">
                     <table id="table-baseroomtype" class="table table-bordered">
                         <thead>
@@ -72,7 +72,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-6">
                 <div class="card-box">
                     <h4 class="header-title m-t-0">Thêm mới</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-room-type">

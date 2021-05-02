@@ -162,7 +162,12 @@
                     <ul class="submenu">
                         <li><a href="/admin/list-customer"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Danh Sách Khách Hàng</a></li>
-                        <?php if(isYourPermission('Contract', 'show',$this->permission_set)):?>
+
+                        <?php if(isYourPermission('CustomerFeedback', 'show',$this->permission_set)):?>
+                            <li><a href="/admin/list-customer-feedback"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Đánh Giá Từ Khách Hàng</a></li>
+
+                        <?php endif;?><?php if(isYourPermission('Contract', 'show',$this->permission_set)):?>
                             <li><a href="/admin/list-contract"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Tất Cả Hợp Đồng</a></li>
                         <?php endif;?>

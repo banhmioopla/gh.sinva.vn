@@ -383,6 +383,19 @@ $route['admin/list-customer'] = function($params = []) {
 	$action = '/show';
 	return $controller.$action;
 };
+
+$route['admin/list-customer-feedback'] = function($params = []) {
+    $controller = 'CustomerFeedback';
+    $action = '/show';
+    return $controller.$action;
+};
+
+$route['admin/customer-feedback/detail'] = function($params = []) {
+    $controller = 'CustomerFeedback';
+    $action = '/detail';
+    return $controller.$action;
+};
+
 $route['admin/list-care-customer'] = function($params = []) {
 	$controller = 'Customer';
 	$action = '/care';
@@ -1150,6 +1163,12 @@ $route['public/consulting-post-detail'] = function($params = []) {
 $route['public/customer-feedback/show'] = function($params = []) {
     $controller = '/public-world/PublicCustomerFeedback';
     $action = '/show';
+    return $controller.$action;
+};
+
+$route['public/customer-feedback/create'] = function($params = []) {
+    $controller = '/public-world/PublicCustomerFeedback';
+    $action = '/create';
     return $controller.$action;
 };
 

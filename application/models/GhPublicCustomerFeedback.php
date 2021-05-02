@@ -19,6 +19,10 @@ class GhPublicCustomerFeedback extends CI_Model {
         $result = $this->db->affected_rows();
         return $result;
     }
+
+    public function getFirstById($room_id) {
+        return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
+    }
 }
 
 /* End of file mApartment.php */

@@ -46,12 +46,7 @@
                         </thead>
                         <tbody>
                         <?php foreach($list_penalty as $row ):
-                            $parent_name = '';
-                            if($row['parent_id'] > 0) {
-                                $parent_name =  '<span class = "text-danger">'
-                                    .$ghPenalty->get(['id' =>
-                                    $row['parent_id']])[0]['name'] . ' <i class="mdi mdi-menu-right"></i> </span>';
-                            }
+
                             ?>
                             <tr>
                                 <td>
@@ -60,10 +55,6 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="penalty-parent_id"
-                                          data-pk="<?= $row['id'] ?>"
-                                          data-name="parent_id"><?= $parent_name
-                                        ?></span>
                                     <span class="penalty-name"
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="name">
@@ -134,7 +125,7 @@
                     <h3 class="text-center text-danger">Thêm danh mục mới</h3>
                     <form role="form" method="post" action="<?= base_url()
                     ?>admin/create-penalty">
-                        <div class="form-group row">
+                        <div class="form-group row d-none">
                             <label for="name" class="col-md-4 col-12
                             col-form-label">Danh Mục Cha</label>
                             <div class="col-md-8 col-12">

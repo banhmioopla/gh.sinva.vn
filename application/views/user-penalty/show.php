@@ -97,9 +97,7 @@
                                     <div class="userpenalty-penalty_id"
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="penalty_id">
-                                        <?=  $libPenalty->getNameById
-                                        ($parent). ' <i class="mdi mdi-menu-right"></i>'.$libPenalty->getNameById
-                                        ($row['penalty_id']) ?>
+                                        <?=  $libPenalty->getNameById($row['penalty_id']) ?>
                                     </div>
                                 </td>
                                 <td>
