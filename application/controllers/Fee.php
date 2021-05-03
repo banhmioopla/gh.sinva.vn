@@ -73,7 +73,9 @@ class Fee extends CustomBaseStep {
         }
         $this_month = $this->input->get('from-month');
         $year = date('Y');
-
+        if($this_month == date('m')) {
+            $this->goon = true;
+        }
         $last_date = cal_days_in_month(CAL_GREGORIAN, $this_month, $year);
 
         $time_start = '01-'.$this_month.'-'.$year;
@@ -177,6 +179,9 @@ class Fee extends CustomBaseStep {
 
         $time_start = '01-'.$this_month.'-'.$year;
         $time_end = $last_date.'-'.$this_month.'-'.$year;
+        if($this_month == date('m')) {
+            $this->goon = true;
+        }
 
         $view_data_income = [];
         foreach ($list_user as $user) {
@@ -347,6 +352,7 @@ class Fee extends CustomBaseStep {
     private function syncPersonalIncome($user_id = null, $total_contract = 0, $total_sale = 0,
                                                      $start_time, $end_time
     ) {
+
         $cd_config = $this->config->item('internal_mechanism_income_rate_control_department');
         $sale_config = $this->config->item('internal_mechanism_income_rate');
 
@@ -492,20 +498,68 @@ class Fee extends CustomBaseStep {
                 if($item['id'] === $max_contract_id) {
                     continue;
                 }
+                $flag_inner_collaborators = false;
+                if($item['consultant_support_id'] >= 171020000){
+                    $consultant_support = $this->ghUser->getFirstByAccountId($item['consultant_support_id']);
+                    if($consultant_support['role_code'] == 'collaborators') {
+                        $flag_inner_collaborators = true;
+                    }
+                }
+                if(!$flag_inner_collaborators) {
+                    foreach ($cd_config['index_master_b2'] as $b2) {
+                        if($item['room_price'] >= $b2['room_price_min'] && $item['room_price'] < $b2['room_price_max']) {
+                            $temp_income =  $b2['income_unit'] * $item['number_of_month'];
+                            if($item['consultant_id'] == $user_id) {
+                                if($item['consultant_support_id'] >= 171020000) {
+                                    $temp_income -= (double) $temp_income * 0.3;
+                                }
 
-                foreach ($cd_config['index_master_b2'] as $b2) {
-                    if($item['room_price'] >= $b2['room_price_min'] && $item['room_price'] < $b2['room_price_max']) {
-                        $temp_income =  $b2['income_unit'] * $item['number_of_month'];
-                        if($item['consultant_id'] == $user_id) {
-                            if($item['consultant_support_id'] >= 171020000) {
-                                $temp_income -= (double) $temp_income * 0.3;
+                                if($item['is_support_control'] == 'YES') {
+                                    $temp_income -= (double) $temp_income * 0.1;
+                                }
+                                $total_b2 += $temp_income;
+                                if($this->goon)
+                                    $this->updateToIncomeContract([
+                                        'contract_id' => $item['id'],
+                                        'contract_income_total' => (double)$temp_income,
+                                        'apply_time' => $item['time_insert'],
+                                        'type' => self::INCOME_TYPE_CONTRACT,
+                                        'user_id' => $item['consultant_id']
+                                    ]);
                             }
 
-                            if($item['is_support_control'] == 'YES') {
-                                $temp_income -= (double) $temp_income * 0.1;
+                            if($item['consultant_support_id'] == $user_id) {
+                                $isB1 = $this->isB1($item, strtotime($start_date), strtotime($end_date)+86399);
+
+                                if($isB1['status'] === true){
+                                    $partner_support  = $isB1['total_income'] * 0.3;
+                                    $total_b2 += $partner_support;
+                                } else {
+                                    $partner_support  = $isB1['total_income'] * 0.3;
+                                    $total_b2 += (double)$temp_income * 0.3;
+                                }
+                                if($this->goon)
+                                    $this->updateToIncomeContract([
+                                        'contract_id' => $item['id'],
+                                        'contract_income_total' => (double)$partner_support,
+                                        'apply_time' => $item['time_insert'],
+                                        'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
+                                        'user_id' => $item['consultant_support_id']
+                                    ]);
                             }
+                            break;
+                        }
+                    }
+                } else {
+
+                    if($item['consultant_id'] == $user_id) {
+                        $temp_income = (double) 0.3 * $item['commission_rate'] / 100 * $item['room_price'];
+                        $total_b2 += $temp_income;
+                        if($item['is_support_control'] == 'YES') {
+                            $temp_income -= (double) $temp_income * 0.1;
                             $total_b2 += $temp_income;
-                            if($this->goon)
+                        }
+                        if($this->goon)
                             $this->updateToIncomeContract([
                                 'contract_id' => $item['id'],
                                 'contract_income_total' => (double)$temp_income,
@@ -513,30 +567,25 @@ class Fee extends CustomBaseStep {
                                 'type' => self::INCOME_TYPE_CONTRACT,
                                 'user_id' => $item['consultant_id']
                             ]);
+                    } else {
+                        $temp_income = (double) 0.2 * $item['commission_rate'] / 100 * $item['room_price'];
+                        if($item['is_support_control'] == 'YES') {
+                            $temp_income -= (double) $temp_income * 0.1;
+                            $total_b2 += $temp_income;
                         }
-
-                        if($item['consultant_support_id'] == $user_id) {
-                            $isB1 = $this->isB1($item, strtotime($start_date), strtotime($end_date)+86399);
-
-                            if($isB1['status'] === true){
-                                $partner_support  = $isB1['total_income'] * 0.3;
-                                $total_b2 += $partner_support;
-                            } else {
-                                $partner_support  = $isB1['total_income'] * 0.3;
-                                $total_b2 += (double)$temp_income * 0.3;
-                            }
-                            if($this->goon)
-                                $this->updateToIncomeContract([
-                                    'contract_id' => $item['id'],
-                                    'contract_income_total' => (double)$partner_support,
-                                    'apply_time' => $item['time_insert'],
-                                    'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
-                                    'user_id' => $item['consultant_support_id']
-                                ]);
-                        }
-                        break;
+                        if($this->goon)
+                            $this->updateToIncomeContract([
+                                'contract_id' => $item['id'],
+                                'contract_income_total' => (double)$temp_income,
+                                'apply_time' => $item['time_insert'],
+                                'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
+                                'user_id' => $item['consultant_support_id']
+                            ]);
                     }
+
+                    $total_b2 += $temp_income;
                 }
+
             }
             $description .= "<br>";
 
@@ -546,67 +595,163 @@ class Fee extends CustomBaseStep {
             } else {
                 $total_personal_income = $total_extra_personal_income;
             }
-        } else {
-            /*Thu nhập cho không phải BPVH */
-            $mapping_sale = isset($sale_config['index_' . $user['role_code']]) ?
-                $sale_config['index_' . $user['role_code']] : null;
-            $rate = 0;
-            if(is_array ($mapping_sale)) {
-                foreach($mapping_sale as $item) {
-                    if($item['quantity_max'] > $total_user_contract &&
-                        $item['quantity_min'] <= $total_user_contract) {
-                        $rate = $item['rate'];
-                        break;
-                    }
-                }
+        } else { /*Thu nhập cho không phải BPVH */
+            $is_collaborator = false;
+            if($user['role_code'] === 'collaborators') {
+                $is_collaborator = true;
             }
 
-            foreach ($list_contract as $item) {
-                if(!$this->isValidPersonalContract($item, $user_id)) {
-                    continue;
-                }
 
-                $temp_income = $item['room_price'] * (double) ($item['commission_rate'] * $rate / 10000);
+            if(!$is_collaborator) {
 
-                $room = $this->ghRoom->getFirstById($item['room_id']);
-                $apartment = $this->ghApartment->getFirstById($room['apartment_id']);
-                $sub_des = "<strong class='text-light'>".$apartment['address_street'] . " ⇢ MP: ".$room['code'] . "</strong></br> (".number_format($item['room_price']) . " x " . " ".$item['commission_rate']."%) x ".$rate."% ";
-                if($item['consultant_id'] == $user_id) {
-                    if($item['consultant_support_id'] >= 171020000) {
-                        $temp_income -= (double) $temp_income * 0.3;
-                    }
-
-                    if($item['is_support_control'] == 'YES') {
-                        $temp_income -= (double) $temp_income * 0.1;
+                $mapping_sale = isset($sale_config['index_' . $user['role_code']]) ?
+                    $sale_config['index_' . $user['role_code']] : null;
+                $rate = 0;
+                if(is_array ($mapping_sale)) {
+                    foreach($mapping_sale as $item) {
+                        if($item['quantity_max'] > $total_user_contract &&
+                            $item['quantity_min'] <= $total_user_contract) {
+                            $rate = $item['rate'];
+                            break;
+                        }
                     }
                 }
 
-                if($item['consultant_support_id'] == $user_id) {
-                    $temp_support_income = (double)$temp_income * 0.3;
-                    $temp_income += $temp_support_income;
-                    $description .=self::INCOME_TYPE_CONTRACT . " " .$temp_income . "<br>";
+                foreach ($list_contract as $item) {
+                    if(!$this->isValidPersonalContract($item, $user_id)) {
+                        continue;
+                    }
+
+                    $flag_inner_collaborators = false;
+                    if($item['consultant_support_id'] >= 171020000){
+                        $consultant_support = $this->ghUser->getFirstByAccountId($item['consultant_support_id']);
+                        if($consultant_support['role_code'] == 'collaborators') {
+                            $flag_inner_collaborators = true;
+                        }
+                    }
+
+                    if(!$flag_inner_collaborators) {
+                        $temp_income = $item['room_price'] * (double) ($item['commission_rate'] * $rate / 10000);
+
+                        $room = $this->ghRoom->getFirstById($item['room_id']);
+                        $apartment = $this->ghApartment->getFirstById($room['apartment_id']);
+                        $sub_des = "<strong class='text-light'>".$apartment['address_street'] . " ⇢ MP: ".$room['code'] . "</strong></br> (".number_format($item['room_price']) . " x " . " ".$item['commission_rate']."%) x ".$rate."% ";
+                        if($item['consultant_id'] == $user_id) {
+                            if($item['consultant_support_id'] >= 171020000) {
+                                $temp_income -= (double) $temp_income * 0.3;
+                            }
+
+                            if($item['is_support_control'] == 'YES') {
+                                $temp_income -= (double) $temp_income * 0.1;
+                            }
+                        }
+
+                        if($item['consultant_support_id'] == $user_id) {
+                            $temp_support_income = (double)$temp_income * 0.3;
+                            $temp_income += $temp_support_income;
+                            $description .=self::INCOME_TYPE_CONTRACT . " " .$temp_income . "<br>";
+                            if($this->goon)
+                                $this->updateToIncomeContract([
+                                    'contract_id' => $item['id'],
+                                    'contract_income_total' => $temp_support_income,
+                                    'apply_time' => $item['time_insert'],
+                                    'type' => self::INCOME_TYPE_CONTRACT,
+                                    'user_id' => $item['consultant_support_id']
+                                ]);
+                        }
+                    } else {
+                        $sub_des = "";
+                        if($item['consultant_id'] == $user_id) {
+                            $temp_income = (double) 0.3 * $item['commission_rate'] / 100 * $item['room_price'];
+                            if($item['is_support_control'] == 'YES') {
+                                $temp_income -= (double) $temp_income * 0.1;
+                            }
+                            if($this->goon)
+                                $this->updateToIncomeContract([
+                                    'contract_id' => $item['id'],
+                                    'contract_income_total' => (double)$temp_income,
+                                    'apply_time' => $item['time_insert'],
+                                    'type' => self::INCOME_TYPE_CONTRACT,
+                                    'user_id' => $item['consultant_id']
+                                ]);
+                        } else {
+                            $temp_income = (double) 0.2 * $item['commission_rate'] / 100 * $item['room_price'];
+                            if($item['is_support_control'] == 'YES') {
+                                $temp_income -= ((double) $temp_income * 0.1);
+                            }
+                            if($this->goon)
+                                $this->updateToIncomeContract([
+                                    'contract_id' => $item['id'],
+                                    'contract_income_total' => (double)$temp_income,
+                                    'apply_time' => $item['time_insert'],
+                                    'type' => self::INCOME_TYPE_CONTRACT_SUPPORTER,
+                                    'user_id' => $item['consultant_support_id']
+                                ]);
+                        }
+                    }
+
+
+
+                    $total_personal_income += $temp_income;
+                    $description .= $sub_des . " = " .number_format($temp_income) . " vnđ<br>";
                     if($this->goon)
-                    $this->updateToIncomeContract([
-                        'contract_id' => $item['id'],
-                        'contract_income_total' => $temp_support_income,
-                        'apply_time' => $item['time_insert'],
-                        'type' => self::INCOME_TYPE_CONTRACT,
-                        'user_id' => $item['consultant_support_id']
-                    ]);
+                        $this->updateToIncomeContract([
+                            'contract_id' => $item['id'],
+                            'contract_income_total' => $temp_income,
+                            'apply_time' => $item['time_insert'],
+                            'type' => self::INCOME_TYPE_CONTRACT,
+                            'user_id' => $item['consultant_id']
+                        ]);
                 }
+            } else {
+                foreach ($list_contract as $item) {
+                    if(!$this->isValidPersonalContract($item, $user_id)) {
+                        continue;
+                    }
 
-                $total_personal_income += $temp_income;
-                $description .= $sub_des . " = " .number_format($temp_income) . " vnđ<br>";
-                if($this->goon)
-                $this->updateToIncomeContract([
-                    'contract_id' => $item['id'],
-                    'contract_income_total' => $temp_income,
-                    'apply_time' => $item['time_insert'],
-                    'type' => self::INCOME_TYPE_CONTRACT,
-                    'user_id' => $item['consultant_id']
-                ]);
+                    $temp_income = $item['room_price'] * (double) ($item['commission_rate'] * 0.4 / 100);
+
+                    $room = $this->ghRoom->getFirstById($item['room_id']);
+                    $apartment = $this->ghApartment->getFirstById($room['apartment_id']);
+                    $sub_des = "<strong class='text-light'>".$apartment['address_street'] . " ⇢ MP: ".$room['code'] . "</strong></br> (".number_format($item['room_price']) . " x " . " ".$item['commission_rate']."%) x ".$rate."% ";
+                    if($item['consultant_id'] == $user_id) {
+                        if($item['consultant_support_id'] >= 171020000) {
+                            $temp_income -= (double) $temp_income * 0.3;
+                        }
+
+                        if($item['is_support_control'] == 'YES') {
+                            $temp_income -= (double) $temp_income * 0.1;
+                        }
+                    }
+
+                    if($item['consultant_support_id'] == $user_id) {
+                        $temp_support_income = (double)$temp_income * 0.3;
+                        $temp_income += $temp_support_income;
+                        $description .=self::INCOME_TYPE_CONTRACT . " " .$temp_income . "<br>";
+                        if($this->goon)
+                            $this->updateToIncomeContract([
+                                'contract_id' => $item['id'],
+                                'contract_income_total' => $temp_support_income,
+                                'apply_time' => $item['time_insert'],
+                                'type' => self::INCOME_TYPE_CONTRACT,
+                                'user_id' => $item['consultant_support_id']
+                            ]);
+                    }
+
+                    $total_personal_income += $temp_income;
+                    $description .= $sub_des . " = " .number_format($temp_income) . " vnđ<br>";
+                    if($this->goon)
+                        $this->updateToIncomeContract([
+                            'contract_id' => $item['id'],
+                            'contract_income_total' => $temp_income,
+                            'apply_time' => $item['time_insert'],
+                            'type' => self::INCOME_TYPE_CONTRACT,
+                            'user_id' => $item['consultant_id']
+                        ]);
+                }
             }
         }
+
 
         /*Thu Nhập từ việc tuyển dụng*/
 
@@ -624,12 +769,14 @@ class Fee extends CustomBaseStep {
             ]);
         }
 
-
-        $this_get_new_apartment = $this->getTotalSaleGetNewApartment($user_id,$start_time, $end_time);
-        $this_get_new_apartment_total = (double) $this_get_new_apartment['total'] * $this->get_new_apartment_rate;
-        $this_get_new_apartment_description = $this_get_new_apartment['description'];
-        $this_get_new_apartment_description .= " → " . number_format($this_get_new_apartment['total'])
-            . " x " . $this->get_new_apartment_rate . " = " . number_format($this_get_new_apartment_total) . " vnđ<br>";
+        $this_get_new_apartment_total = 0;
+        if($user['role_code'] != 'collaborators') {
+            $this_get_new_apartment = $this->getTotalSaleGetNewApartment($user_id,$start_time, $end_time);
+            $this_get_new_apartment_total = (double) $this_get_new_apartment['total'] * $this->get_new_apartment_rate;
+            $this_get_new_apartment_description = $this_get_new_apartment['description'];
+            $this_get_new_apartment_description .= " → " . number_format($this_get_new_apartment['total'])
+                . " x " . $this->get_new_apartment_rate . " = " . number_format($this_get_new_apartment_total) . " vnđ<br>";
+        }
 
 
         $total_personal_income += $this_ref_total_income + $this_get_new_apartment_total;
@@ -716,6 +863,13 @@ class Fee extends CustomBaseStep {
             'account_id >=' => 171020000,
             'user_refer_id' => $user_id
         ]);
+        $user = $this->ghUser->getFirstByAccountId($user_id);
+        $refer_rate = $this->refer_rate;
+
+        if($user['role_code'] === 'collaborators') {
+            $refer_rate = 0.03;
+        }
+
         $total = 0;
         foreach ($list_user as $item) {
             $list_contract = $this->ghContract->get([
@@ -726,7 +880,7 @@ class Fee extends CustomBaseStep {
             ]);
             if(count($list_contract)) {
                 foreach ($list_contract as $c) {
-                    $total += (double)$c['room_price']*$c['commission_rate']/100*$this->refer_rate;
+                    $total += (double)$c['room_price']*$c['commission_rate']/100*$refer_rate;
                 }
             }
         }

@@ -68,6 +68,7 @@ class LibFinance {
                 'sale' => [
                     'business' => (double) $total * self::PARTIAL_BUSINESS_RATE,
                     'cd' => (double) $total * self::PARTIAL_CD_RATE,
+                    'total' => $total
                 ],
             ]
         ];
@@ -103,7 +104,7 @@ class LibFinance {
         ];
     }
 
-    public function getIncomeMetricCollaborator($time_from, $time_to, $account_id) {
+    public function getIncomeCollaborator($time_from, $time_to, $account_id) {
         $list_contract = $this->CI->ghContract->get([
             'time_insert >=' => strtotime($time_from),
             'time_insert <=' => strtotime($time_to) + 86399,
@@ -144,6 +145,16 @@ class LibFinance {
             'status' => true,
             'data' => $output
         ];
+    }
+
+    public function getPersonalIncome($account_id, $time_from, $time_to) {
+        $user = $this->CI->ghUser->getFirstByAccountid($account_id);
+        switch ($user['role_code']) {
+            case self::ROLE_CONSULTANT:
+
+                break;
+        }
+
     }
 }
 ?>
