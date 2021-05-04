@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h2 class="font-weight-bold text-danger">Danh Sach Chương Trình Ưu Đãi: <?= $apartment['address_street'] ?> </h2>
+                    <h2 class="font-weight-bold text-danger">Danh Sách Chương Trình Ưu Đãi: <?= $apartment['address_street'] ?> </h2>
                 </div>
             </div>
         </div>
@@ -41,15 +41,29 @@
                             <?php foreach($list_promotion as $row ): ?>
                             <tr>
                                 <td>
-                                    <div class="district-name" 
+                                    <div class="promotion-title"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="title">
                                             <?= $row['title'] ?>
                                     </div>
                                 </td>
-                                <td><?= $row['description'] ?></td>
-                                <td><?= date('d/m/Y',$row['start_time']) ?></td>
-                                <td><?= date('d/m/Y',$row['end_time']) ?></td>
+                                <td class="promotion-description" data-pk="<?= $row['id'] ?>" data-name="description"><?= $row['description'] ?></td>
+                                <td >
+                                    <div class="promotion-start_time"
+                                         data-pk="<?= $row['id'] ?>"
+                                         data-value="<?= date('d/m/Y',$row['start_time']) ?>"
+                                         data-name="start_time">
+                                        <?= date('d/m/Y',$row['start_time']) ?>
+                                    </div>
+                                    </td>
+                                <td>
+                                    <div class="promotion-end_time"
+                                         data-pk="<?= $row['id'] ?>"
+                                         data-value="<?= date('d/m/Y',$row['end_time']) ?>"
+                                         data-name="end_time">
+                                        <?= date('d/m/Y',$row['end_time']) ?>
+                                    </div>
+                                    </td>
                                 <td><i>-</i></td>
                             </tr>
                             <?php endforeach; ?>
@@ -116,6 +130,50 @@
     commands.push(function() {
         $(document).ready(function() {
             $('table').dataTable();
+            $('.promotion-title, .promotion-description').editable({
+                type: "text",
+                url: '<?= base_url() ?>admin/update-apartment-promotion-editable',
+                inputclass: '',
+                mode: 'inline',
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.user-alert').html(notify_html_success);
+                    } else {
+                        $('.user-alert').html(notify_html_fail);
+                    }
+                }
+            });
+
+            $('.promotion-title, .promotion-description').editable({
+                type: "text",
+                url: '<?= base_url() ?>admin/update-apartment-promotion-editable',
+                inputclass: '',
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if(data.status == true) {
+                        $('.user-alert').html(notify_html_success);
+                    } else {
+                        $('.user-alert').html(notify_html_fail);
+                    }
+                }
+            });
+
+            $('.promotion-start_time, .promotion-end_time').editable({
+                type: 'combodate',
+                template:"D / MM / YYYY",
+                format:"DD-MM-YYYY",
+                viewformat:"DD-MM-YYYY",
+                combodate: {
+                    firstItem: 'name',
+                    maxYear: '2023',
+                    minYear: '2021'
+                },
+                inputclass: 'form-control-sm',
+                url: '<?= base_url()."admin/update-apartment-promotion-editable" ?>'
+            });
+
+
             $('.datepicker').datepicker({
                 format: "dd-mm-yyyy"
             });

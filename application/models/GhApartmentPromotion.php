@@ -12,8 +12,8 @@ class GhApartmentPromotion extends CI_Model {
         return $this->db->get_where($this->table, ['apartment_id' => $apartment_id])->result_array();
     }
 
-    public function getByTagId($apartment_id) {
-        return $this->db->get_where($this->table, ['apartment_id' => $apartment_id])->result_array();
+    public function getFirstById($room_id) {
+        return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
     }
 
     public function getAll() {
@@ -22,6 +22,13 @@ class GhApartmentPromotion extends CI_Model {
 
     public function insert($data) {
         return $this->db->insert($this->table, $data);
+    }
+
+    public function updateById($room_id, $data) {
+        $this->db->where('id', $room_id);
+        $this->db->update($this->table, $data);
+        $result = $this->db->affected_rows();
+        return $result;
     }
 
     public function delete($data_set) {

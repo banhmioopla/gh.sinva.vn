@@ -52,19 +52,24 @@ class ApartmentPromotion extends CustomBaseStep {
 
         if(!empty($id) and !empty($field_name)) {
 
+            if($field_name === 'start_time' || $field_name === 'end_time') {
+                $field_value = str_replace('/', '-', $field_value);
+                $field_value = strtotime((string)$field_value);
+            }
             $data = [
                 $field_name => $field_value
             ];
-            $old_user = $this->ghUserIncomeDetail->getFirstById($id);
+
+            $old_user = $this->ghApartmentPromotion->getFirstById($id);
             $old_log = json_encode($old_user);
 
-            $result = $this->ghUserIncomeDetail->updateById($id, $data);
+            $result = $this->ghApartmentPromotion->updateById($id, $data);
 
-            $modified_user = $this->ghUserIncomeDetail->getFirstById($id);
+            $modified_user = $this->ghApartmentPromotion->getFirstById($id);
             $modified_log = json_encode($modified_user);
 
             $log = [
-                'table_name' => 'gh_user_income_detail',
+                'table_name' => 'gh_apartment_promotion',
                 'old_content' => $old_log,
                 'modified_content' => $modified_log,
                 'time_insert' => time(),
