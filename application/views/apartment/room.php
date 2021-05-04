@@ -6,7 +6,6 @@
             <th># ID</th>
         <?php endif; ?>
             <th>Mã Phòng</th>
-            <th>Loại Phòng</th>
             <th class="text-warning">LP (TN)</th>
             <th>Giá</th>
             <th>Diện Tích</th>
@@ -45,7 +44,6 @@
                             <?= $room['code'] ?>
                         </div>
                     </td>
-                    <td><div><?= $room['type'] ?></div></td>
                     <?php
                     $list_type_id = json_decode($room['room_type_id'], true);
                     $js_list_type = "";

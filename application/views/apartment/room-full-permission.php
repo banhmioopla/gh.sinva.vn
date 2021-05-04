@@ -14,7 +14,6 @@
         <tr>
             <th>Mã Phòng</th>
             <th class="text-warning">LP (TN)</th>
-            <th>Loại Phòng</th>
             <th>Giá</th>
             <th class="text-center">Diện Tích</th>
             <th>Trạng Thái</th>
@@ -65,11 +64,6 @@
                         data-name="room_type_id"
                         data-pk="<?= $room['id'] ?>"
                         data-value="<?= $js_list_type ?>"><?= $text_type_name ? $text_type_name : "-" ?></td>
-                    <td><div class="room-data" 
-                            data-pk="<?= $room['id'] ?>"
-                            data-value="<?= $room['type'] ?>"
-                            data-name="type"
-                            ><?= $room['type'] ? $room['type']: '-' ?></div></td>
                     <td><div class="room-price font-weight-bold" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['price'] ?>"
