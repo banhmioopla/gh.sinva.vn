@@ -137,6 +137,11 @@
                             mdi-chevron-double-right text-warning"></i> Danh Sách Quyền</a></li>
                         <?php endif;?>
 
+                        <?php if(isYourPermission('Team', 'show',$this->permission_set)):?>
+                            <li><a href="/admin/list-team"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Danh Sách Đội Nhóm Chi Nhánh</a></li>
+                        <?php endif;?>
+
                         <?php if(isYourPermission('Penalty', 'show',
                             $this->permission_set)
                         ):?>

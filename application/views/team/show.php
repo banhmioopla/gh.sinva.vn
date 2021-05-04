@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Page-Title -->
         <div class="row">
@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách team</h3>
+                    <h2 class="text-danger font-weight-bold">Danh Sách Đội Nhóm Chi Nhánh</h2>
                 </div>
             </div>
         </div>
@@ -30,10 +30,9 @@
                     <table id="table-district" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Tên team</th>
-                            
-                            <th class="text-center">Mở</th>
-                            <th class="text-center">thòi gian taạ</th>
+                            <th>Tên Nhóm</th>
+                            <th class="text-center">Leader</th>
+                            <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,24 +45,12 @@
                                             <?= $row['name'] ?>
                                     </div>
                                 </td>
-                               
                                 <td>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="checkbox checkbox-success is-active-district">
-                                            <input id="district-<?= $row['id'] ?>" 
-                                                value="<?= $row['active'] ?>"
-                                                type="checkbox" 
-                                                <?= $row['active'] =='YES' ? 'checked':'' ?>>
-                                            <label for="district-<?= $row['id'] ?>">
-                                            </label>
-                                        </div>
-                                    </div>
+                                    <?= $libUser->getNameByAccountid($row['leader_user_id']) ?>
                                 </td>
-                                <td>
-                                    <div class="team-time" >
-                                        <?php echo date("d/m/Y h:i",$row["time_insert"]) ?>
-                                    </div>
-                                </td>    
+                                <td class="text-center">
+                                    <a target="_blank" href="/admin/team/detail?id=<?= $row['id'] ?>" class="btn btn-danger">chi tiết</a>
+                                </td>
                                 
                             </tr>      
                             <?php endforeach; ?>
@@ -82,17 +69,14 @@
                                         id="name" name="name" placeholder="Tên team">
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
-                            <label for="hori-pass1" class="col-4 col-form-label">Mở team này<span class="text-danger">*</span></label>
+                            <label for="name" class="col-4 col-form-label">Leader<span class="text-danger">*</span></label>
                             <div class="col-8">
-                                <div>
-                                    <div class=" checkbox checkbox-success">
-                                        <input id="active" type="checkbox" value="YES" name="active">
-                                        <label for="active">
-                                        </label>
-                                    </div>
-                                </div>
+                                <select type="text" required class="form-control"
+                                        id="name" name="leader_user_id">
+                                    <?= $list_leader ?>
+                                </select>
                             </div>
                         </div>
                        
@@ -114,47 +98,16 @@
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
+            $('select').select2();
             $('#table-district').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true,
                 "fnDrawCallback": function() {
-                    $('.is-active-district input[type=checkbox]').click(function() {
-                        var is_active = 'NO';
-                        var this_id = $(this).attr('id');
-                        var matches = this_id.match(/(\d+)/);
-                        var district_id = matches[0];
-                        if($(this).is(':checked')) {
-                            is_active = 'YES';
-                        }
-                        console.log('hello');
-                        console.log(is_active );
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?= base_url() ?>admin/update-district',
-                            data: {field_value: is_active, district_id: district_id, field_name : 'active'},
-                            async: false,
-                            success:function(response){
-                                var data = JSON.parse(response);
-                                console.log(data);
-                                if(data.status == true) {
-                                    $('.district-alert').html(notify_html_success);
-                                } else {
-                                    $('.district-alert').html(notify_html_fail);
-                                }
-                            },
-                            beforeSend: function(){
-                                $('#loader').show();
-                            },
-                            complete: function(){
-                                $('#loader').hide();
-                            }
-                        });
-                    });
                     // x editable
-                    $('.district-name').editable({
+                    $('.team-name').editable({
                         type: "text",
-                        url: '<?= base_url() ?>admin/update-district-editable',
+                        url: '<?= base_url() ?>admin/update-team-editable',
                         inputclass: '',
                         success: function(response) {
                             var data = JSON.parse(response);
@@ -166,32 +119,6 @@
                         }
                     });
                 } // end fnDrawCallback
-            });
-            
-            
-
-            $('.delete-district').click(function(){
-                var this_id = $(this).attr('id');
-                var this_click = $(this);
-                var matches = this_id.match(/(\d+)/);
-                var district_id = matches[0];
-                if(district_id > 0) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '<?= base_url() ?>admin/delete-district',
-                        data: {district_id: district_id},
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.district-alert').html(notify_html_success);
-                                this_click.parents('tr').remove();
-
-                            } else {
-                                $('.district-alert').html(notify_html_fail);
-                            }
-                        }
-                    });
-                }
             });
         });
     });

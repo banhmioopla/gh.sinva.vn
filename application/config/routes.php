@@ -117,18 +117,6 @@ $route['admin/update-userpenalty-editable'] = function($params = []) {
     $action = '/updateEditable';
     return $controller.$action;
 };
-
-// team
-$route['admin/list-team'] = function($params = []) {
-	$controller = 'Team';
-	$action = '/show';
-	return $controller.$action;
-};
-$route['admin/create-team'] = function($params = []) {
-	$controller = 'Team';
-	$action = '/create';
-	return $controller.$action;
-};
 $route['admin/list-dashboard'] = function($params = []) {
 	$controller = 'Dashboard';
 	$action = '/show';
@@ -591,6 +579,37 @@ $route['admin/update-district-editable'] = function($params = []) {
     $action = '/updateEditable';
     return $controller.$action;
 };
+
+
+$route['admin/list-team'] = function($params = []) {
+    $controller = 'Team';
+    $action = '/show';
+    return $controller.$action;
+};
+
+$route['admin/team/detail'] = function($params = []) {
+    $controller = 'Team';
+    $action = '/detail';
+    return $controller.$action;
+};
+
+$route['admin/create-team'] = function($params = []) {
+    $controller = 'Team';
+    $action = '/create';
+    return $controller.$action;
+};
+$route['admin/update-team-editable'] = function($params = []) {
+    $controller = 'Team';
+    $action = '/updateEditable';
+    return $controller.$action;
+};
+
+$route['admin/create-team-user'] = function($params = []) {
+    $controller = 'Team';
+    $action = '/createMember';
+    return $controller.$action;
+};
+
 
 $route['admin/list-district'] = function($params = []) {
 	$controller = 'District';

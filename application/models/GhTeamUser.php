@@ -1,19 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class GhTeam extends CI_Model {
-    private $table = 'gh_team';
+class GhTeamUser extends CI_Model {
+    private $table = 'gh_team_user';
 
-	public function get($where = []) {
+    public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();
-    }
-
-    public function getByActive() {
-        return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
-    }
-
-    public function getFirstById($room_id) {
-        return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
     }
 
     public function getById($district_id) {

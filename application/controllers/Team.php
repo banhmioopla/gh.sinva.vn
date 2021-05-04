@@ -7,17 +7,36 @@ class Team extends CustomBaseStep {
 	{
 		parent::__construct();
 		$this->load->model('ghTeam');
+		$this->load->model('ghTeamUser');
+        $this->load->library('LibUser', null, 'libUser');
 	}
 
 	public function show(){
 		
 		$data['list_team'] = $this->ghTeam->getAll();
-		
+		$data['list_leader'] = $this->libUser->cb();
+		$data['libUser'] = $this->libUser;
 		/*--- Load View ---*/
 		$this->load->view('components/header');
 		$this->load->view('team/show', $data);
 		$this->load->view('components/footer');
 	}
+
+	public function detail(){
+	    $id = $this->input->get('id');
+	    $list_member = $this->ghTeamUser->get(['team_id' => $id]);
+        $team = $this->ghTeam->getFirstById($id);
+        /*--- Load View ---*/
+        $this->load->view('components/header');
+        $this->load->view('team/detail', [
+            'list_member' => $list_member,
+            'team' => $team,
+            'libUser' => $this->libUser,
+            'ghTeam' => $this->ghTeam,
+            'list_user' => $this->libUser->cb()
+        ]);
+        $this->load->view('components/footer');
+    }
 
 	public function create() {
 	
@@ -31,6 +50,17 @@ class Team extends CustomBaseStep {
 			return redirect('admin/list-team');
 		}
 	}
+
+	public function createMember() {
+	    $post = $this->input->post();
+        $result = $this->ghTeamUser->insert($post);
+
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Thêm thành viên '.$data['name'].' thành công ',
+            'status' => 'success'
+        ]);
+        return redirect('admin/team/detail?id='.$post['team_id']);
+    }
 
 	// Ajax
 	public function update() {
@@ -57,16 +87,16 @@ class Team extends CustomBaseStep {
 				$field_name => $field_value
 			];
 
-			$old_district = $this->ghDistrict->getById($district_id);
-			$old_log = json_encode($old_district[0]);
+			$old_district = $this->ghTeam->getFirstById($district_id);
+			$old_log = json_encode($old_district);
 			
-			$result = $this->ghDistrict->updateById($district_id, $data);
+			$result = $this->ghTeam->updateById($district_id, $data);
 			
-			$modified_district = $this->ghDistrict->getById($district_id);
-			$modified_log = json_encode($modified_district[0]);
+			$modified_district = $this->ghTeam->getFirstById($district_id);
+			$modified_log = json_encode($modified_district);
 			
 			$log = [
-				'table_name' => 'gh_district',
+				'table_name' => 'gh_team',
 				'old_content' => $old_log,
 				'modified_content' => $modified_log,
 				'time_insert' => time(),
