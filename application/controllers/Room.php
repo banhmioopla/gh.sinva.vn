@@ -46,6 +46,21 @@ class Room extends CustomBaseStep {
         return redirect('/admin/room/show-create?apartment-id='.$this->input->get('apartment-id'));
 	}
 
+    public function syncStatusRoom(){
+        $list_apartment = $this->ghApartment->get(['active' => 'YES']);
+        foreach ($list_apartment as $apartment) {
+            $list_room = $this->ghRoom->get(['active' => 'YES', 'time_available' => strtotime(date('d-m-Y'))]);
+            foreach ($list_room as $room) {
+                $this->ghRoom->updateById($room['id'], ['status' => 'Available']);
+            }
+        }
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Đồng Bộ Trạng Thái Phòng Thành Công',
+            'status' => 'success'
+        ]);
+        return redirect($_SERVER['HTTP_REFERER']);
+    }
+
 	public function showCreate() {
         $apm_id = $this->input->get("apartment-id");
         $list_room = $this->ghRoom->get(['apartment_id' => $apm_id, 'active' => 'YES']);

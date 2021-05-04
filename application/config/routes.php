@@ -816,6 +816,12 @@ $route['admin/update-room-editable'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/room/sync-status-room'] = function($params = []) {
+	$controller = 'Room';
+	$action = '/syncStatusRoom';
+	return $controller.$action;
+};
+
 // -- partner
 $route['admin/list-partner'] = function($params = []) {
 	$controller = 'Partner';

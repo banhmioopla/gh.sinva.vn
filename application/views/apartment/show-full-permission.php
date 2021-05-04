@@ -74,6 +74,18 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 </div>
 
                 <div class="mt-2 mb-3 list-action card-box shadow">
+                    <a href="/admin/room/sync-status-room" class="btn-danger btn" title="Đồng Bộ Trạng Thái Phòng Dựa Vào Ngày Trống">Đồng Bộ Trạng Thái Phòng</a>
+                    <!-- end page title end breadcrumb -->
+                    <?php if($this->session->has_userdata('fast_notify')) {
+                        echo '<div class="alert mt-2 alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                '.$this->session->flashdata('fast_notify')['message'].'
+                            </div>';
+                    }
+                    ?>
+
                     <span class="d-flex justify-content-center flex-wrap">
                     <?php foreach($this->list_district_CRUD as $district): ?>
                         <a href="<?= base_url().'admin/list-apartment?district-code='.$district ?>"
