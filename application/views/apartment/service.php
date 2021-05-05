@@ -68,6 +68,13 @@
 <div class="carousel-item">
     <ul class="list-group">
         <li class="list-group-item">
+            <i><?= $label_apartment['management_fee'] ?></i>
+            <div class="text-right font-weight-bold"
+                data-name="management_fee"
+                data-value="<?= $apartment['management_fee'] ?>"
+                data-pk="<?= $apartment['id'] ?>"><?= $apartment['management_fee'] ?></div>
+        </li>
+        <li class="list-group-item">
             <i><?= $label_apartment['room_cleaning'] ?></i>
             <div class="text-right font-weight-bold"
                 data-name="room_cleaning"

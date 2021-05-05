@@ -23,6 +23,7 @@ $apartment['makeup_table'] = 'Bàn Makeup';
 $apartment['sofa'] = 'Sofa';
 $apartment['security'] = 'Bảo vệ';
 $apartment['car_park'] = 'Bãi xe Ô tô';
+$apartment['management_fee'] = 'Phí Quản Lý';
 $apartment['extra_fee'] = 'Combo Phí';
 $apartment['east'] = 'Đông';
 $apartment['west'] = 'Tây';
