@@ -30,8 +30,8 @@
                     <table id="table-district" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Tên Nhóm</th>
-                            <th class="text-center">Leader</th>
+                            <th>Tên Chi Nhánh</th>
+                            <th class="text-center">Giám Đốc Chi Nhánh</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
