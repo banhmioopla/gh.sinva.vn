@@ -89,6 +89,8 @@ include VIEWPATH . 'functions.php';
                                         <strong class="text-danger">Mô Tả</strong>
                                         <textarea type="text" id="post_content" class="form-control" rows="2"></textarea>
                                         <div id="notification"></div>
+                                        <input type="hidden" id="post_password" value="">
+                                        <input type="hidden" id="post_room_id">
                                         <div class="text-center m-1">
                                             <button type="button" id="submit_consultant_post" class="btn btn-danger waves-effect waves-light">Tạo Bài Tư Vấn <i class="mdi mdi-library-plus"></i></button>
                                         </div>
@@ -150,9 +152,12 @@ include VIEWPATH . 'functions.php';
         $(document).ready(function () {
             $('#submit_consultant_post').click(function () {
                 let img_id = [];
+                let count_img = 0;
                 $('input[name=post_imgs]:checked').each(function(){
-                    img_id.push($(this).val())
+                    img_id.push($(this).val());
+                    count_img++;
                 });
+                console.log(count_img);
                 let post_title = $('#post_title').val();
                 let post_content = $('#post_content').val();
                 let post_password = $('#post_password').val();
@@ -265,6 +270,12 @@ include VIEWPATH . 'functions.php';
                 success:function (res) {
                     let data = JSON.parse(res);
                     let html = "";
+                    if(data.length > 0) {
+                        $('#submit_consultant_post').show();
+
+                    } else {
+                        $('#submit_consultant_post').hide();
+                    }
                     for(let i of data) {
                         if(!(i.url.includes(".mp4") || i.url.includes(".mov"))) {
                             html += `
@@ -288,7 +299,7 @@ include VIEWPATH . 'functions.php';
                                 </div>
                                 <div class="col">
                                     <div class="checkbox text-right checkbox-danger">
-                                        <input id="checkbox-${i.id}" type="checkbox" >
+                                        <input id="checkbox-${i.id}" type="checkbox" name="post_imgs" value="${i.id}" >
                                         <label for="checkbox-${i.id}"></label>
                                     </div>
                                 </div>
