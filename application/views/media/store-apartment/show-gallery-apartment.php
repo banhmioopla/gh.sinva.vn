@@ -35,7 +35,7 @@
                 ?>
                     <tr>
                         <td>Quận <?= $libDistrict->getNameByCode($apartment['district_code']) ?></td>
-                        <td><a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>" target="_blank"><?= $apartment['address_street'] ?></a></td>
+                        <td><a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>" target="_blank"><?= $apartment['address_street'] ?></a></td>
                         <td class="text-center"><?= count($ghImage->getRows($apartment['id'])) ?></td>
                     </tr>
                 <?php endforeach; ?>

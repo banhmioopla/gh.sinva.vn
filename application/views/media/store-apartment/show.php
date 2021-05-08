@@ -62,7 +62,7 @@ include VIEWPATH . 'functions.php';
                     <div class="upload-section">
                         <form method="post" enctype="multipart/form-data"
                               class='form-group row'
-                              action="/admin/upload-image?apartment-id=<?= $this->input->get('apartment-id') ?>">
+                              action="/admin/apartment/show-image?apartment-id=<?= $this->input->get('apartment-id') ?>">
                             <div class="col-12">
                                 <h4 class="font-weight-bold text-danger">Upload</h4>
                                 <select class="custom-select mt-3 form-control"

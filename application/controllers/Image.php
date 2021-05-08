@@ -86,7 +86,7 @@ class Image extends CustomBaseStep
             if (!empty($uploadData)) {
                 $this->ghImage->insert($uploadData);
             }
-            return redirect('/admin/upload-image?apartment-id='.$apartment_id);
+            return redirect('/admin/apartment/show-image?apartment-id='.$apartment_id);
         }
         if(empty($room_id)) {
             $data['list_img'] = $this->ghImage->getRows($apartment_id);

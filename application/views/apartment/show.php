@@ -130,7 +130,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                         </span>
                         <?php endif; ?>
                     </div>
-                    <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>">
+                    <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>">
                     <div class="col text-center address-text text-purple font-weight-bold">
                         <?=$apartment['address_street'] ?>
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
@@ -208,7 +208,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                     data-target="#modal-apartment-detail-<?=$apartment['id'] ?>">
                                 <i class="mdi mdi-eye"></i>
 
-                            <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
+                            <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
                                 <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                     <i class="mdi mdi-folder-multiple-image"></i>
                                 </button>

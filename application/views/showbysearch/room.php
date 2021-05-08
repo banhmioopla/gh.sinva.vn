@@ -97,7 +97,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                     <?= $apartment['address_ward'] ? $apartment['address_ward'] : '-' ?>
                                 </td>
                                 <td>
-                                    <a href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>">
+                                    <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>">
                                         <u>
                                         <div class="tag-name text-purple font-weight-bold">
                                             <?= $apartment['address_street'] ?>
@@ -106,7 +106,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                     </a>
                                 </td>
                                 <td class="text-center"><u><a class=" text-danger font-weight-bold"
-                                                              href="/admin/upload-image?apartment-id=<?= $apartment['id'] ?>&room-id=<?= $row['id'] ?>"><?= $row['code'] ?></a></u></td>
+                                                              href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>&room-id=<?= $row['id'] ?>"><?= $row['code'] ?></a></u></td>
                                 <td>
                                     <?= $row['type'] ?>
                                 </td>
