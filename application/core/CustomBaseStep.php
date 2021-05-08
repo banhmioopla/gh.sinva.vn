@@ -86,7 +86,8 @@ class CustomBaseStep extends CI_Controller {
             'Apartment' => ['getWard', 'showV2'],
             'Customer' => ['exportExcel'],
             'CustomerFeedback' => ['detail', 'show'],
-            'Room' => ['syncStatusRoom']
+            'Room' => ['syncStatusRoom'],
+            'Media' => ['showImgApartment', 'uploadImgApartment', 'ajaxApartmentShowImage']
         ];
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 

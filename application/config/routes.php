@@ -1121,6 +1121,26 @@ $route['admin/image/show-room'] = function($params = []) {
     $action = '/showRoom';
     return $controller.$action;
 };
+// MEDIA
+$route['admin/apartment/upload-img'] = function($params = []) {
+    $controller = 'Media';
+    $action = '/uploadImgApartment';
+    return $controller.$action;
+};
+
+$route['admin/apartment/show-image'] = function($params = []) {
+    $controller = 'Media';
+    $action = '/showImgApartment';
+    return $controller.$action;
+};
+
+$route['admin/ajax/apartment/show-img'] = function($params = []) {
+    $controller = 'Media';
+    $action = '/ajaxApartmentShowImage';
+    return $controller.$action;
+};
+
+
 $route['admin/apartment/search'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/searchApartment';
@@ -1220,7 +1240,17 @@ $route['admin/internal-content/page/income-rule'] = function($params = []) {
     $action = '/pageIncomeRule';
     return $controller.$action;
 };
-
+/* :::SHARE:::*/
+$route['share/user/create'] = function($params = []) {
+    $controller = '/share/User';
+    $action = '/create';
+    return $controller.$action;
+};
+$route['share/user/update-editable'] = function($params = []) {
+    $controller = '/share/User';
+    $action = '/updateEditable';
+    return $controller.$action;
+};
 /* :::API-INTERNAL:::*/
 
 $route['api-internal/apartments'] = function($params = []) {
