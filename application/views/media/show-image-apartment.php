@@ -266,7 +266,8 @@ include VIEWPATH . 'functions.php';
                     let data = JSON.parse(res);
                     let html = "";
                     for(let i of data) {
-                        html += `
+                        if(!(i.url.includes(".mp4") || i.url.includes(".mov"))) {
+                            html += `
                         <div class="col-6 mt-1 col-md-3" id="img-box-${i.id}">
                             <div class="pl-1 pr-1 pt-1 pb-2 bg-white rounded" >
                             <a href="${i.url}" class="image-popup">
@@ -276,7 +277,7 @@ include VIEWPATH . 'functions.php';
                                          class="thumb-img img-fluid"
                                          alt="work-thumbnail">
                                     </div>
-                                    
+
                                 </div>
                             </a>
                             <div class="row mt-2 pl-1 pr-1">
@@ -297,6 +298,17 @@ include VIEWPATH . 'functions.php';
 
                         </div>
                         `;
+                        } else {
+                            html += `
+                            <div class="col-6 mt-1 col-md-3" id="img-box-${i.id}">
+                                    <video width="100%" height="80%"
+                                               controls="controls">
+                                            <source src="${i.url}" type="video/mp4"/>
+                                        </video>
+                            </div>
+                            `;
+                        }
+
                     }
                     $('#list-img').html(html);
 
