@@ -88,7 +88,7 @@ include VIEWPATH . 'functions.php';
                                         <input type="text" required id="post_title" class="form-control">
                                         <strong class="text-danger">Mô Tả</strong>
                                         <textarea type="text" id="post_content" class="form-control" rows="2"></textarea>
-                                        <div id="notification"></div>
+                                        <div class="text-center" id="notification"></div>
                                         <input type="hidden" id="post_password" value="">
                                         <input type="hidden" id="post_room_id">
                                         <div class="text-center m-1">
@@ -157,7 +157,18 @@ include VIEWPATH . 'functions.php';
                     img_id.push($(this).val());
                     count_img++;
                 });
-                console.log(count_img);
+                if($('#post_title').val().length === 0) {
+                    $('#notification').text('Bắt Buộc Nhập Tiêu Đề');
+                    return;
+                } else {
+                    $('#notification').text('');
+                }
+                if(img_id.length === 0) {
+                    $('#notification').text('Bắt Buộc Chọn Hình Ảnh');
+                    return;
+                } else {
+                    $('#notification').text('');
+                }
                 let post_title = $('#post_title').val();
                 let post_content = $('#post_content').val();
                 let post_password = $('#post_password').val();

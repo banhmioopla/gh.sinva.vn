@@ -32,6 +32,7 @@
             </div>
         </div> <!-- End row -->
 
+        <?php if(strlen($post['content'])):?>
         <div class="row">
             <div class="col-md-6">
                 <div class="card-box">
@@ -42,13 +43,14 @@
             <div class="col-md-6">
                 <div class="card-box">
                     <a href="#">
-                        <img src="https://blog.advids.co/wp-content/uploads//2017/06/Real-Estate11.gif"
+                        <img src="https://i.pinimg.com/originals/d3/59/1c/d3591c63b81ba14696e290f74743e1de.gif"
                              class="w-100"
                              alt="realestatemanagementsoftware-CHOK" border="0" /></a>
                 </div>
 
             </div>
         </div>
+        <?php endif;?>
 
         <div class="row">
             <div class="col-md-6">
