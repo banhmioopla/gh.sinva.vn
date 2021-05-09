@@ -116,16 +116,20 @@ include VIEWPATH . 'functions.php';
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="portfolioFilter text-center gallery-second">
+                                <div class="row">
                                 <?php
                                 $i = 0;
                                 foreach ($chain_room as $room):
                                     ?>
-                                    <a href="#" class="font-weight-bold border border-warning border-3 room-code"
-                                       id="room-id-<?= $room['value'] ?>"
-                                       data-filter=".room-id-<?= $room['value'] ?>"
-                                       data-room-id="<?= $room['value'] ?>"><?= $room['display'] ?></a>
-                                <?php endforeach; ?>
+                                    <div class="col-6 col-md-3">
+                                        <a href="#" class="font-weight-bold border border-warning border-3 w-75 room-code"
+                                           id="room-id-<?= $room['value'] ?>"
+                                           data-filter=".room-id-<?= $room['value'] ?>"
+                                           data-room-id="<?= $room['value'] ?>"><?= $room['display'] ?></a>
+                                    </div>
 
+                                <?php endforeach; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
