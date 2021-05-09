@@ -37,9 +37,9 @@ class Media extends CustomBaseStep {
             }
 
             if(count($img_this_room)) {
-                $chain_room[] = ['value' => $room['id'], 'display' => 'MP: '.$room['code'] . ' <span class="badge '.$is_available.'">'.money_format($room['price']).'</span> '. ' <span class="badge badge-danger badge-pill">'.count($img_this_room).'</span>'];
+                $chain_room[] = ['value' => $room['id'], 'display' => 'MP: '.$room['code'] . ' <span class="badge '.$is_available.'">'.money_format($room['price'], 1).'</span> '. ' <span class="badge badge-danger badge-pill">'.count($img_this_room).'</span>'];
             } else {
-                $chain_room[] = ['value' => $room['id'], 'display' => 'MP: '.$room['code'] . ' <span class="badge '.$is_available.'">'.money_format($room['price']).'</span> '];
+                $chain_room[] = ['value' => $room['id'], 'display' => 'MP: '.$room['code'] . ' <span class="badge '.$is_available.'">'.money_format($room['price'], 1).'</span> '];
             }
 
         }
