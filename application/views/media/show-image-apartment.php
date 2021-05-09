@@ -29,6 +29,7 @@ include VIEWPATH . 'functions.php';
     }
     .room-code .badge-danger{
         font-size: 70%;
+        line-height: unset;
     }
 </style>
 
