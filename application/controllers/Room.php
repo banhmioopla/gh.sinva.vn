@@ -109,14 +109,15 @@ class Room extends CustomBaseStep {
 	    $list_room = $this->ghRoom->get(['apartment_id' => $post['apartment_id'], 'active' => 'YES']);
 
 	    $list_room_code = $post['room_code']; // [code => price]
+
         $counter = 0;
         $arr_room_id = [];
 	    foreach ($list_room as $item) {
-	        foreach ($list_room_code as $code => $price) {
-	            if(strtolower(trim($item['code'])) == strtolower(trim($code))) {
+	        foreach ($list_room_code as $index => $room) {
+	            if(strtolower(trim($item['code'])) == strtolower(trim($room['code']))) {
 	                if(!in_array($item['id'], $arr_room_id)) {
                         $result = $this->ghRoom->updateById($item['id'], [
-                            'price' => $price,
+                            'price' => $room['price'],
                             'time_update' => time()
                         ]);
                         if($result) {
@@ -127,7 +128,7 @@ class Room extends CustomBaseStep {
                 }
             }
         }
-        echo json_encode(['status' => true, 'msg' => 'Đã Cập Nhật Thành Công '.$counter . ' Phòng' ]); die;
+        echo json_encode(['status' => true, 'msg' => 'Đã Cập Nhật Thành Công '.$counter . ' Phòng, Vui lòng F5 để tận hưởng Kết Quả' ]); die;
     }
 
 	public function updateEditable() {

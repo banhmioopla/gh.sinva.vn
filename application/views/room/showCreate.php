@@ -222,11 +222,16 @@ $check_consultant_booking = true;
             <div class="col-md-6">
                 <div class="card-box">
                     <div class="row">
-                        <div class="col-12">
-                            <textarea name="" id="fast-update" class="form-control" cols="30" rows="10"></textarea>
+                        <div id="notification" style="display: none;">
+                            <div class="alert alert-success msg" role="alert">
+                            </div>
                         </div>
-                        <div class="col-12 ">
-                            <button class="btn btn-info" id="checker-update">Kiểm Tra</button>
+                        <div class="col-12">
+                            <textarea name="" id="fast-update" class="form-control"
+                                      placeholder="301=5000000, 302=5500000" cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="col-12 text-center mt-1">
+                            <button class="btn btn-info" id="checker-update">Cập Nhật</button>
                         </div>
                     </div>
                 </div>
@@ -241,21 +246,27 @@ $check_consultant_booking = true;
         $(document).ready(function() {
             $('#checker-update').click(function () {
                 let content = $('#fast-update').val();
-                console.log(content);
+
                 if(content.length) {
+                    content =  content.replace(/[\r\n]+/gm, "");
                     let arr_item =  content.split(",");
                     let result = [];
-                    for(let i of arr_item) {
-                        i = i.replace(/(\r\n|\n|\r)/gm, "");
-                        result.push(i);
+                    for(let xx of arr_item) {
+                        let ii = xx.split("=");
+                        if(ii.length === 2) {
+                            result.push({code:ii[0], price:ii[1]});
+                        }
                     }
 
                     $.ajax({
-                        url: '',
-                        data: {apartment_id: '', room_code: result },
+                        url: '/admin/room/fast-update',
+                        data: {apartment_id: '<?= $this->input->get("apartment-id") ?>', room_code: result},
                         method: 'POST',
                         success: function (res) {
-                            console.log();
+                            res = JSON.parse(res);
+                            $('#notification').show();
+                            $('#notification .msg').text(res.msg);
+
                         }
                     });
                     console.log(result);

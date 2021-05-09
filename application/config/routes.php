@@ -1067,6 +1067,12 @@ $route['admin/get-room-price'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/room/fast-update'] = function($params = []) {
+    $controller = 'Room';
+    $action = '/fastUpdate';
+    return $controller.$action;
+};
+
 $route['admin/create-room-datatable'] = function($params = []) {
 	$controller = 'Room';
 	$action = '/createDatatable';
