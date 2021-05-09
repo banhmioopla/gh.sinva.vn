@@ -67,7 +67,7 @@
                     <td><div class="room-price font-weight-bold" 
                             data-pk="<?= $room['id'] ?>"
                             data-value="<?= $room['price'] ?>"
-                            data-name="price"><?= $room['price'] ? view_money_format($room['price'],1): '-' ?></div></td>
+                            data-name="price"><?= $room['price'] ?  number_format($room['price']/1000): '-' ?></div></td>
                     <td><div class="room-area text-center" 
                             data-pk= "<?= $room['id'] ?>"
                             data-value= "<?= $room['area'] > 0 ? $room['area']:'' ?>"

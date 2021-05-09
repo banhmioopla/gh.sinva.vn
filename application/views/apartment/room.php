@@ -60,7 +60,7 @@
                     }
                     ?>
                     <td><div><?= $text_type_name ?></div></td>
-                    <td><div class="font-weight-bold"><?= view_money_format($room['price'],1) ?></div></td>
+                    <td><div class="font-weight-bold"><?= number_format($room['price']/1000) ?></div></td>
                     <td><div><?= $room['area'] ?></div></td>
                     <td class="text-center font-weight-bold <?= $color_for_available ?>"><div><?= $room['status'] ? $label_apartment[$room['status']] : '#' ?></div></td>
                     <td><div class="text-success"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?></div></td>
