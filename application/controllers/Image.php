@@ -245,7 +245,7 @@ class Image extends CustomBaseStep
         mkdir($download_path);
         $address = 'KoThongTin';
         foreach ($list_id as $id) {
-
+            if($id['active'] !== 'YES') continue;
             $model_img = $id;
             $room_code = $this->ghRoom->get(['id' => $model_img['room_id']]);
 

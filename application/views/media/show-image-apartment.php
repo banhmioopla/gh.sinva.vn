@@ -128,7 +128,15 @@ include VIEWPATH . 'functions.php';
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
+                            <form name="form-download" id="form-download" action="/admin/download-image-apartment" method="post">
                             <div class="portfolioFilter text-center gallery-second">
+                                <div class="row">
+                                    <div class="col-md-12 mb-2 text-center">
+                                        <button type="submit" class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect download-all">
+                                            <i class="mdi mdi-cloud-download"></i> Tải Về Tất Cả
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="row">
                                 <?php
                                 $i = 0;
@@ -144,6 +152,7 @@ include VIEWPATH . 'functions.php';
                                 <?php endforeach; ?>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
