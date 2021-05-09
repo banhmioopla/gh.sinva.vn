@@ -27,6 +27,9 @@ include VIEWPATH . 'functions.php';
     .portfolioFilter a:hover {
         background-color: #f9a50b;
     }
+    .room-code .badge-danger{
+        font-size: 70%;
+    }
 </style>
 
 
