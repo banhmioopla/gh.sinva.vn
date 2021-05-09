@@ -118,7 +118,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                 </td>
 
                                 <td>
-                                    <?= number_format($row['price']) ?>
+                                    <?= number_format($row['price']/1000) ?>
                                 </td>
                                 <td class="text-center">
                                     <?= $row['area'] ?>
