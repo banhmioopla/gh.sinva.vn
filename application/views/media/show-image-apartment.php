@@ -31,6 +31,15 @@ include VIEWPATH . 'functions.php';
         font-size: 70%;
         line-height: unset;
     }
+    .noti-icon-badge {
+        display: inline-block;
+        position: absolute;
+        top: 14px;
+        right: 8px;
+    }
+    .img-apartment{
+        max-height: 250px !important;
+    }
 </style>
 
 
@@ -304,7 +313,7 @@ include VIEWPATH . 'functions.php';
                                 <div class="portfolio-masonry-box pl-1 pr-1 mt-0 bg-white">
                                     <div class="portfolio-masonry-img">
                                         <img src="${i.url}"
-                                         class="thumb-img img-fluid"
+                                         class="thumb-img img-fluid img-apartment"
                                          alt="work-thumbnail">
                                     </div>
 
