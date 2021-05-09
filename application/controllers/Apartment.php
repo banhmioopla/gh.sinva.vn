@@ -310,6 +310,7 @@ class Apartment extends CustomBaseStep {
 
 		if(!empty($data['address_street']) and !empty($data['district_code'])) {
 			$data['time_update'] = time();
+			$data['time_insert'] = strlen($data['time_insert']) > 0 ? strtotime($data['time_insert']):null;
 			$result = $this->ghApartment->insert($data);
 			$this->session->set_flashdata('fast_notify', [
 				'message' => 'Tạo dự án '.$data['address_street'].' thành công ',

@@ -295,7 +295,7 @@
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Đối Tác<span class="text-danger">*</span></label>
                             <div class="col-7">
-                                <select class="custom-select mt-3" name="partner_id">
+                                <select class="custom-select mt-3 " id="slc-partner" name="partner_id">
                                     <?= $cb_partner ?>
                                 </select>
                             </div>
@@ -354,6 +354,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label">Ngày Nhận Dự Án<span class="text-danger">*</span></label>
+                            <div class="col-7">
+                                <input type="text" class="form-control"
+                                       id="time_insert" name="time_insert" value="<?= date('d-m-Y') ?>" >
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-8 offset-4">
                                 <button type="submit" class="btn btn-custom waves-effect waves-light">
                                     Thêm mới
@@ -372,7 +379,7 @@
     commands.push(function() {
         $(document).ready(function() {
             $('#user_collected_id').select2();
-
+            $('#slc-partner').select2();
 
             var tableYes = $('#table-apartment-active-yes').DataTable({
                 "pageLength": 10,
