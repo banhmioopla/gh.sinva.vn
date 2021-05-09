@@ -11,6 +11,7 @@ class Media extends CustomBaseStep {
         $this->load->model('ghRoom');
         $this->load->model('ghApartment');
         $this->load->model('ghActivityTrack');
+        $this->load->helper('money');
 
         $this->route_media_apm = '/';
         $this->route_media_contract = '/';
@@ -30,10 +31,15 @@ class Media extends CustomBaseStep {
         $chain_room = [];
         foreach ($list_room as $room) {
             $img_this_room = $this->ghImage->get(['room_id' => $room['id'], 'active' => 'YES']);
+            $is_available = 'badge-secondary';
+            if($room['status'] === 'Available'){
+                $is_available  = 'badge-success';
+            }
+
             if(count($img_this_room)) {
-                $chain_room[] = ['value' => $room['id'], 'display' => 'MP: '.$room['code'] . ' <span class="badge badge-danger badge-pill">'.count($img_this_room).'</span>'];
+                $chain_room[] = ['value' => $room['id'], 'display' => 'MP: '.$room['code'] . ' <span class="badge '.$is_available.'">'.money_format($room['price']).'</span> '. ' <span class="badge badge-danger badge-pill">'.count($img_this_room).'</span>'];
             } else {
-                $chain_room[] = ['value' => $room['id'], 'display' => 'MP: '.$room['code']];
+                $chain_room[] = ['value' => $room['id'], 'display' => 'MP: '.$room['code'] . ' <span class="badge '.$is_available.'">'.money_format($room['price']).'</span> '];
             }
 
         }

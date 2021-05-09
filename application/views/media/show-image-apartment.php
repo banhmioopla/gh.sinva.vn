@@ -120,7 +120,7 @@ include VIEWPATH . 'functions.php';
                                 $i = 0;
                                 foreach ($chain_room as $room):
                                     ?>
-                                    <a href="#" class="font-weight-bold border border-warning room-code"
+                                    <a href="#" class="font-weight-bold border border-warning border-3 room-code"
                                        id="room-id-<?= $room['value'] ?>"
                                        data-filter=".room-id-<?= $room['value'] ?>"
                                        data-room-id="<?= $room['value'] ?>"><?= $room['display'] ?></a>

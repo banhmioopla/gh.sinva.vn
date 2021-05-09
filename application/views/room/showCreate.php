@@ -98,7 +98,7 @@ $check_consultant_booking = true;
                                     <td><div class="room-price font-weight-bold"
                                              data-pk="<?= $room['id'] ?>"
                                              data-value="<?= $room['price'] ?>"
-                                             data-name="price"><?= $room['price'] ? view_money_format($room['price'],1): '-' ?></div></td>
+                                             data-name="price"><?= $room['price'] ? number_format($room['price']/1000): '-' ?></div></td>
                                     <td><div class="room-area text-center"
                                              data-pk= "<?= $room['id'] ?>"
                                              data-value= "<?= $room['area'] > 0 ? $room['area']:'' ?>"
@@ -144,7 +144,7 @@ $check_consultant_booking = true;
                     </table>
                 </div>
             </div>
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-6">
                 <div class="card-box">
                     <h4 class="header-title m-t-0">Thêm mới</h4>
                     <form role="form" method="post"
@@ -219,6 +219,18 @@ $check_consultant_booking = true;
                     </form>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-12">
+                            <textarea name="" id="fast-update" class="form-control" cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="col-12 ">
+                            <button class="btn btn-info" id="checker-update">Kiểm Tra</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div> <!-- end row -->
 
     </div> <!-- end container -->
@@ -227,6 +239,32 @@ $check_consultant_booking = true;
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
+            $('#checker-update').click(function () {
+                let content = $('#fast-update').val();
+                console.log(content);
+                if(content.length) {
+                    let arr_item =  content.split(",");
+                    let result = [];
+                    for(let i of arr_item) {
+                        i = i.replace(/(\r\n|\n|\r)/gm, "");
+                        result.push(i);
+                    }
+
+                    $.ajax({
+                        url: '',
+                        data: {apartment_id: '', room_code: result },
+                        method: 'POST',
+                        success: function (res) {
+                            console.log();
+                        }
+                    });
+                    console.log(result);
+
+                }
+            });
+
+
+
             $('.list-room').DataTable({
                 "pageLength": 5,
                 'pagingType': "full_numbers",

@@ -104,6 +104,32 @@ class Room extends CustomBaseStep {
 		echo json_encode(['status' => false]); die;
 	}
 
+	public function fastUpdate() {
+	    $post = $this->input->post();
+	    $list_room = $this->ghRoom->get(['apartment_id' => $post['apartment_id'], 'active' => 'YES']);
+
+	    $list_room_code = $post['room_code']; // [code => price]
+        $counter = 0;
+        $arr_room_id = [];
+	    foreach ($list_room as $item) {
+	        foreach ($list_room_code as $code => $price) {
+	            if(strtolower(trim($item['code'])) == strtolower(trim($code))) {
+	                if(!in_array($item['id'], $arr_room_id)) {
+                        $result = $this->ghRoom->updateById($item['id'], [
+                            'price' => $price,
+                            'time_update' => time()
+                        ]);
+                        if($result) {
+                            $counter++;
+                        }
+                        $arr_room_id[] = $item['id'];
+                    }
+                }
+            }
+        }
+        echo json_encode(['status' => true, 'msg' => 'Đã Cập Nhật Thành Công '.$counter . ' Phòng' ]); die;
+    }
+
 	public function updateEditable() {
 		$room_id = $this->input->post('pk');
 		$field_name = $this->input->post('name');
