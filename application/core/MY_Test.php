@@ -6,7 +6,6 @@ class MY_Test extends CI_Controller {
     public function __construct()
 	{
 		parent::__construct();
-        $this->access_control = $this->config->item('accesscontrol')['admin'];
         $this->load->model('ghActivityTrack');
 	}
 }

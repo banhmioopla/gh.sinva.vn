@@ -5,8 +5,6 @@ class LibBaseApartmentType {
     public $CI;
     public function __construct () {
         $this->CI =& get_instance();
-        $this->cf = $this->CI->config->load('accesscontrol');
-        
         $this->CI->load->model('ghBaseApartmentType');
 		$this->CI->load->model('ghDistrict');
     }
