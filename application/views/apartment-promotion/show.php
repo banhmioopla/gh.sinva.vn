@@ -1,3 +1,12 @@
+<?php
+$check_create_promotion = false;
+if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
+    $check_create_promotion = true;
+}
+
+
+?>
+
 <div class="wrapper">
     <div class="container">
 
@@ -73,6 +82,7 @@
             </div>
         </div> <!-- end row -->
 
+        <?php if($check_create_promotion): ?>
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card-box">
@@ -122,6 +132,7 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
     </div> <!-- end container -->
 </div>
