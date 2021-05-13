@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ShareUser extends CI_Model {
-    private $table = 'ShareUser';
+    private $table = 'share_user';
 
     public function get($where = []) {
         $this->db->order_by('id DESC');

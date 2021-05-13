@@ -116,10 +116,10 @@
                                         Thu Nhập Theo Hợp Đồng</a></li>
                             <?php endif;?>
 
-                            <?php if(isYourPermission('Department', 'show',
+                            <?php if(isYourPermission('ShUser', 'show',
                                 $this->permission_set)):?>
-                                <li><a href="/admin/list-department"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i>Phòng Ban</a></li>
+                                <li class="bg-dark"><a class="text-light" href="/share/user/show"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i>Share - User</a></li>
                             <?php endif;?>
                         </ul>
                     </li>

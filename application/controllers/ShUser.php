@@ -1,13 +1,23 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends CustomBaseStep {
+class ShUser extends CustomBaseStep {
     private $access_control;
     public function __construct()
     {
         parent::__construct();
         $this->load->model('shareUser');
         $this->load->library('encryption');
+    }
+
+    public function show(){
+        $list = $this->shareUser->get();
+        $this->load->view('components/header');
+
+        $this->load->view('sh-user/show', [
+
+        ]);
+        $this->load->view('components/footer');
     }
 
 

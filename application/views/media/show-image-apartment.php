@@ -313,6 +313,10 @@ include VIEWPATH . 'functions.php';
                     } else {
                         $('#submit_consultant_post').hide();
                     }
+                    let delete_btn = "d-none";
+                    <?php if($check_modify): ?>
+                        delete_btn = " ";
+                    <?php endif;?>
                     for(let i of data) {
                         if(!(i.url.includes(".mp4") || i.url.includes(".mov"))) {
                             html += `
@@ -332,7 +336,7 @@ include VIEWPATH . 'functions.php';
                                 <div class="col">
                                     <i type="button"
                                     data-img-id="${i.id}"
-                                    class="btn btn-icon fa fa-remove delete-img btn-sm waves-effect waves-light btn-danger"> </i>
+                                    class="btn btn-icon fa fa-remove delete-img ${delete_btn} btn-sm waves-effect waves-light btn-danger"> </i>
                                 </div>
                                 <div class="col">
                                     <div class="checkbox text-right checkbox-danger">
@@ -359,6 +363,8 @@ include VIEWPATH . 'functions.php';
 
                     }
                     $('#list-img').html(html);
+
+
 
 
                     $('.portfolioContainer').each(function() { // the containers for all your galleries

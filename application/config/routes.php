@@ -1248,12 +1248,17 @@ $route['admin/internal-content/page/income-rule'] = function($params = []) {
 };
 /* :::SHARE:::*/
 $route['share/user/create'] = function($params = []) {
-    $controller = '/share/User';
+    $controller = 'ShUser';
     $action = '/create';
     return $controller.$action;
 };
+$route['share/user/show'] = function($params = []) {
+    $controller = 'ShUser';
+    $action = '/show';
+    return $controller.$action;
+};
 $route['share/user/update-editable'] = function($params = []) {
-    $controller = '/share/User';
+    $controller = 'ShUser';
     $action = '/updateEditable';
     return $controller.$action;
 };

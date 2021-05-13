@@ -61,12 +61,13 @@ class LibEmail {
         $mail = new PHPMailer();
 
         $serverConfig = [
-            'Host' => 'mail.supremecluster.com',
-            'SMTPDebug' => 0,
-            'Port' => "25/2525",
+            'Host' => 'gh.sinva.vn',
+            'SMTPDebug' => 4,
+            'Port' => "26",
             'SMTPAuth' => true,
-            'Username' => 'love@gh.sinva.vn',
-            'Password' => 'gioHang@134679@',
+            'Username' => 'support@gh.sinva.vn',
+            'Password' => 'ifyoumiss@@thetrain',
+            'SMTPSecure' => 'tls',
         ];
 
         try {
