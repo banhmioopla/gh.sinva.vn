@@ -15,6 +15,7 @@ class Media extends CustomBaseStep {
 
         $this->route_media_apm = '/';
         $this->route_media_contract = '/';
+        $this->load->config('label.apartment');
     }
 
     public function showImgApartment(){
@@ -37,7 +38,7 @@ class Media extends CustomBaseStep {
             }
 
             if(count($img_this_room)) {
-                $chain_room[] = ['value' => $room['id'], 'display' => $room['code'] . ' <span class="float-right badge '.$is_available.'">'.number_format($room['price']/1000).'</span> '. ' <span class="badge badge-danger badge-pill">'.count($img_this_room).'</span>'];
+                $chain_room[] = ['value' => $room['id'], 'display' => $room['code'] . ' <span class="badge badge-danger badge-pill mr-1">'.count($img_this_room).'</span> ' . ' <span class="float-right badge '.$is_available.'">'.number_format($room['price']/1000).'</span> '];
             } else {
                 $chain_room[] = ['value' => $room['id'], 'display' => $room['code'] . ' <span class="float-right badge '.$is_available.'">'.number_format($room['price']/1000).'</span> '];
             }
@@ -46,7 +47,7 @@ class Media extends CustomBaseStep {
 
         $data['apartment'] = $apartment;
         $data['chain_room'] = $chain_room;
-
+        $data['label_apartment'] =  $this->config->item('label.apartment');
         $data['list_img'] = $this->ghImage->get(['room_id' => $room_id, 'active' => 'YES']);
 
         /*--- Load View ---*/

@@ -84,18 +84,18 @@ include VIEWPATH . 'functions.php';
 
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link active show">
-                                            <i class="mdi mdi-library-plus mr-2"></i> BVTV
+                                        <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link ">
+                                            <i class="mdi mdi-library-plus mr-2"></i> Bài Đăng
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link">
-                                            <i class="mdi mdi-paw mr-2"></i>TTDV
+                                        <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link active show">
+                                            <i class="mdi mdi-paw mr-2"></i>Dịch Vụ
                                         </a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active show" id="home">
+                                    <div class="tab-pane " id="home">
                                         <h3 class="font-weight-bold  p-1 text-warning text-center bg-dark">Tạo Bài Đăng Tư Vấn</h3>
                                         <strong class="text-danger">Tiêu Đề</strong>
                                         <input type="text" required id="post_title" class="form-control">
@@ -108,8 +108,20 @@ include VIEWPATH . 'functions.php';
                                             <button type="button" id="submit_consultant_post" class="btn btn-danger waves-effect waves-light">Tạo Bài Tư Vấn <i class="mdi mdi-library-plus"></i></button>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="profile">
-                                        [thong tin dich vu]
+                                    <div class="tab-pane service-list active show" id="profile">
+                                        <div id="carouselButton-<?= $apartment['id'] ?>" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <?php $this->load->view('apartment/service', ['apartment' => $apartment, 'label_apartment' => $label_apartment, 'check_commission_rate' => $check_commission_rate]) ?>
+                                            </div>
+                                            <a class="carousel-control-prev"
+                                               href="#carouselButton-<?= $apartment['id'] ?>"
+                                               role="button"
+                                               data-slide="prev"><i class="dripicons-chevron-left"></i> </a>
+                                            <a class="carousel-control-next"
+                                               href="#carouselButton-<?= $apartment['id'] ?>"
+                                               role="button"
+                                               data-slide="next"><i class="dripicons-chevron-right"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -142,8 +154,8 @@ include VIEWPATH . 'functions.php';
                                 $i = 0;
                                 foreach ($chain_room as $room):
                                     ?>
-                                    <div class="col-6 col-md-3">
-                                        <a href="#" class="text-left font-weight-bold border border-warning border-3 w-75 room-code"
+                                    <div class="col-6 col-md-3 pl-1 pr-1">
+                                        <a href="#" class="text-left w-100 font-weight-bold border border-warning border-3 room-code"
                                            id="room-id-<?= $room['value'] ?>"
                                            data-filter=".room-id-<?= $room['value'] ?>"
                                            data-room-id="<?= $room['value'] ?>"><?= $room['display'] ?></a>
