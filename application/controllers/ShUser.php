@@ -15,7 +15,7 @@ class ShUser extends CustomBaseStep {
         $this->load->view('components/header');
 
         $this->load->view('sh-user/show', [
-
+            'list' => $list
         ]);
         $this->load->view('components/footer');
     }
@@ -23,17 +23,25 @@ class ShUser extends CustomBaseStep {
 
     public function create() {
 
-        $data = $this->input->post();
+        $post = $this->input->post();
         $data['status'] = 'New';
-        $data['password'] = 'New';
-        if(!empty($data['user_name'])) {
-            $result = $this->ghTag->insert($data);
-            $this->session->set_flashdata('fast_notify', [
-                'message' => 'Tạo #'.$data['name'].' thành công ',
-                'status' => 'success'
-            ]);
-            return redirect($_SERVER["HTTP_REFERER"]);
-        }
+        $data['account'] = $post['phone_number'];
+        $data['phone_number'] = $post['phone_number'];
+        $data['password'] = $post['password'];
+        $data['name'] = $post['name'];
+        $data['email'] = $post['email'];
+        $data['type'] = 'Host';
+        $data['is_active'] = 'YES';
+        $data['time_create'] = time();
+        $data['time_update'] = time();
+
+        $result = $this->shareUser->insert($data);
+
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Tạo Share User '.$post['name'].' thành công ',
+            'status' => 'success'
+        ]);
+        return redirect($_SERVER["HTTP_REFERER"]);
     }
 
     // Ajax
