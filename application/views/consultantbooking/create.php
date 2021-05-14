@@ -112,14 +112,14 @@ include VIEWPATH.'functions.php';
                                        class="col-md-3 offset-md-2 font-weight-bold text-md-right col-form-label">Giới tính<span class="text-danger">*</span></label>
                                 <div class="col-5">
                                     <div class="radio radio-custom">
-                                        <input type="radio" name="gender" checked
+                                        <input type="radio" name="gender" required
                                                id="gender-male" value="male">
                                         <label for="gender-male">
                                             Nam
                                         </label>
                                     </div>
                                     <div class="radio radio-custom">
-                                        <input type="radio" name="gender"
+                                        <input type="radio" name="gender" required
                                                id="gender-female" value="female">
                                         <label for="gender-female">
                                             Nữ
@@ -272,21 +272,21 @@ include VIEWPATH.'functions.php';
             if($('input[name=phone_number]').val().length === 0) {
                 valid = false;
                 $('#error-msg').text("vui lòng nhập số điện thoại khách hàng");
-            } else {
-                $('#error-msg').text("");
-                valid = true;
+            }
+            console.log($('input[name=gender]').val().length);
+            if($('input[name=gender]').val().length === 0) {
+                valid = false;
+                $('#error-msg').text("vui lòng chọn giới tính");
             }
 
             if($('#customer_name').val().length === 0) {
                 valid = false;
                 $('#error-msg').text("vui lòng nhập tên khách hàng");
-            } else {
-                $('#error-msg').text("");
-                valid = true;
             }
             console.log("valid: ", valid);
 
             if( valid) {
+                $('#error-msg').text("");
                 $('button').attr('disabled', true);
                 $('#form-submit').submit();
             }
