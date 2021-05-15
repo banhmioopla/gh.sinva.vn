@@ -79,9 +79,34 @@ include VIEWPATH . 'functions.php';
                                 </p>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-md-4">
+
+                            <select id="search-apartment-id" class="form-control">
+                                <option value="" disabled>Chọn Dự Án Khác</option>
+                                <?php foreach ($list_apartment as $item):
+                                    $select = "";
+                                    if($this->input->get('apartment-id') == $item['id']) {
+                                        $select = 'selected';
+                                    }
+
+                                    ?>
+                                    <option
+                                            <?= $select ?>
+                                            value="<?= $item['id'] ?>"><?= $item['address_street'] . ' Ph.'.$item['address_ward'] ?></option>
+                                <?php endforeach;?>
+                            </select>
+                            <script>
+                                commands.push(function () {
+                                    $('#search-apartment-id').select2();
+                                    $('#search-apartment-id').change(function () {
+                                        window.location = ('/admin/apartment/show-image?apartment-id='+$(this).val());
+                                    });
+                                })
+                            </script>
+                        </div>
+                        <div class="col text-center">
                             <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id']?>"
-                               class="btn-danger float-right btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
+                               class="btn-danger float-md-right mt-1 mt-md-0 btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
                         </div>
                     </div>
                     <div class="row">

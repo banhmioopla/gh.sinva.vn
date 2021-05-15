@@ -48,6 +48,7 @@ class Media extends CustomBaseStep {
         }
 
         $data['apartment'] = $apartment;
+        $data['list_apartment'] = $this->ghApartment->get(['active' => 'YES']);
         $data['chain_room'] = $chain_room;
         $data['counter'] = $counter;
         $data['label_apartment'] =  $this->config->item('label.apartment');
