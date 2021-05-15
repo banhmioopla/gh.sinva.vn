@@ -40,6 +40,9 @@ include VIEWPATH . 'functions.php';
     .img-apartment{
         max-height: 250px !important;
     }
+    h5,h4 {
+        white-space: normal!important;
+    }
 </style>
 
 
@@ -70,59 +73,130 @@ include VIEWPATH . 'functions.php';
                         <div class="col-md-4">
                             <div class="card-box bg-danger widget-flat border-danger text-white">
                                 <i class="mdi mdi-folder-multiple-image"></i>
-                                <h3 class="m-b-10">250</h3>
-                                <p class="text-uppercase m-b-5 font-13 font-600">
+                                <h3 class="m-b-10"><?= $counter ?></h3>
+                                <p class="text-uppercase mb-2 font-13 font-600">
                                     Số Lượng Hình Ảnh
                                 </p>
                             </div>
-                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id']?>" class="w-100 btn-danger btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
-
                         </div>
-                        <div class="col-md-7 offset-md-1">
+                        <div class="col">
+                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id']?>"
+                               class="btn-danger float-right btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="card-box">
-                                <h4 class="header-title m-t-0 m-b-30">Bài Viết Tư Vấn / Thông tin Dịch Vụ</h4>
+                                <h3 class="text-danger font-weight-bold">Thông Tin Dịch Vụ</h3>
+                                <div class="row">
+                                    <div class="col-md-6 col-12 shadow-sm">
+                                        <p class="mb-0 text-muted">Ghi Chú Dự Án</p>
+                                        <h5 class="mb-2 text-wrap"><?= $apartment['note'] ?></h5>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Điện</p>
+                                            <h4 class="mb-2 text-wrap"><?= $apartment['electricity'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Nước</p>
+                                            <h4 class="mb-2 text-wrap"><?= $apartment['water'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Internet</p>
+                                            <h4 class="mb-2"><?= $apartment['internet'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Giữ xe</p>
+                                            <h4 class="mb-2"><?= $apartment['parking'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted ">Phí Quản Lý</p>
+                                            <h4 class="mb-2"><?= $apartment['management_fee'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Combo Phí</p>
+                                            <h4 class="mb-2"><?= $apartment['extra_fee'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Cọc Phòng</p>
+                                            <h4 class="mb-2"><?= $apartment['deposit'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Thang máy</p>
+                                            <h4 class="mb-2"><?= $apartment['deposit'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Máy Giặt</p>
+                                            <h4 class="mb-2"><?= $apartment['washing_machine'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Dọn Phòng</p>
+                                            <h4 class="mb-2"><?= $apartment['room_cleaning'] ?></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Số Người Ở</p>
+                                            <h4 class="mb-2"><?= $apartment['number_of_people'] ?></h4>
+                                        </div>
+                                    </div>
 
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link ">
-                                            <i class="mdi mdi-library-plus mr-2"></i> Bài Đăng
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link active show">
-                                            <i class="mdi mdi-paw mr-2"></i>Dịch Vụ
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane " id="home">
-                                        <h3 class="font-weight-bold  p-1 text-warning text-center bg-dark">Tạo Bài Đăng Tư Vấn</h3>
-                                        <strong class="text-danger">Tiêu Đề</strong>
-                                        <input type="text" required id="post_title" class="form-control">
-                                        <strong class="text-danger">Mô Tả</strong>
-                                        <textarea type="text" id="post_content" class="form-control" rows="2"></textarea>
-                                        <div class="text-center" id="notification"></div>
-                                        <input type="hidden" id="post_password" value="">
-                                        <input type="hidden" id="post_room_id">
-                                        <div class="text-center m-1">
-                                            <button type="button" id="submit_consultant_post" class="btn btn-danger waves-effect waves-light">Tạo Bài Tư Vấn <i class="mdi mdi-library-plus"></i></button>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Bếp</p>
+                                            <h4 class="mb-2"><?= $apartment['kitchen'] ?></h4>
                                         </div>
                                     </div>
-                                    <div class="tab-pane service-list active show" id="profile">
-                                        <div id="carouselButton-<?= $apartment['id'] ?>" class="carousel slide" data-ride="carousel">
-                                            <div class="carousel-inner">
-                                                <?php $this->load->view('apartment/service', ['apartment' => $apartment, 'label_apartment' => $label_apartment, 'check_commission_rate' => $check_commission_rate]) ?>
-                                            </div>
-                                            <a class="carousel-control-prev"
-                                               href="#carouselButton-<?= $apartment['id'] ?>"
-                                               role="button"
-                                               data-slide="prev"><i class="dripicons-chevron-left"></i> </a>
-                                            <a class="carousel-control-next"
-                                               href="#carouselButton-<?= $apartment['id'] ?>"
-                                               role="button"
-                                               data-slide="next"><i class="dripicons-chevron-right"></i></a>
+
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Bảo vệ</p>
+                                            <h4 class="mb-2"><?= $apartment['security'] ?></h4>
                                         </div>
                                     </div>
+                                    <div class="col-6 col-md-3 shadow-sm">
+                                        <div class="mt-3">
+                                            <p class="mb-0 text-muted">Thú cưng</p>
+                                            <h4 class="mb-2"><?= $apartment['pet'] ?></h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="card-box">
+                                <h3 class="text-danger font-weight-bold">Tạo Bài Đăng Tư Vấn <i class="mdi mdi-arrow-down-drop-circle"></i></h3>
+                                <strong class="text-danger">Tiêu Đề Bài Đăng</strong>
+                                <input type="text" required id="post_title" class="form-control">
+                                <strong class="text-danger">Mô Tả </strong>
+                                <textarea type="text" id="post_content" class="form-control" rows="2"></textarea>
+                                <div class="text-center" id="notification"></div>
+                                <input type="hidden" id="post_password" value="">
+                                <input type="hidden" id="post_room_id">
+                                <div class="text-center m-1">
+                                    <button type="button" id="submit_consultant_post" class="btn btn-danger waves-effect waves-light">Tạo Bài Tư Vấn <i class="mdi mdi-library-plus"></i></button>
                                 </div>
                             </div>
 

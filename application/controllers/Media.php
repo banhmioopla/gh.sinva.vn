@@ -30,8 +30,10 @@ class Media extends CustomBaseStep {
         $apartment = $this->ghApartment->getFirstById($apartment_id);
         $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apartment_id]);
         $chain_room = [];
+        $counter = 0;
         foreach ($list_room as $room) {
             $img_this_room = $this->ghImage->get(['room_id' => $room['id'], 'active' => 'YES']);
+            $counter += count($img_this_room);
             $is_available = 'badge-secondary';
             if($room['status'] === 'Available'){
                 $is_available  = 'badge-success';
@@ -47,6 +49,7 @@ class Media extends CustomBaseStep {
 
         $data['apartment'] = $apartment;
         $data['chain_room'] = $chain_room;
+        $data['counter'] = $counter;
         $data['label_apartment'] =  $this->config->item('label.apartment');
         $data['list_img'] = $this->ghImage->get(['room_id' => $room_id, 'active' => 'YES']);
 
