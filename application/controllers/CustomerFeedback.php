@@ -21,6 +21,16 @@ class CustomerFeedback extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
+    public function showYour(){
+        $data['list_feedback'] = $this->ghPublicCustomerFeedback->get(['user_id' => $this->auth['account_id']]);
+        $data['libUser'] = $this->libUser;
+
+        /*--- Load View ---*/
+        $this->load->view('components/header');
+        $this->load->view('customer-feedback/show-your', $data);
+        $this->load->view('components/footer');
+    }
+
     public function detail(){
         /*--- Load View ---*/
         $id = $this->input->get('id');

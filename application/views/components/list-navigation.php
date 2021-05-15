@@ -19,22 +19,6 @@
                 </a>
             <?php endif; ?>
 
-            <?php if(isYourPermission('ConsultantBooking', 'show',$this->permission_set)):?>
-                <a href="<?= base_url() ?>admin/list-consultant-booking?tb1=1&filterTime=THIS_WEEK">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-car-hatchback mr-1"></i> <span>Booking</span>
-                    </button>
-                </a>
-            <?php endif; ?>
-
-            <?php if(isYourPermission('Customer', 'show',$this->permission_set)):?>
-                <a href="<?= base_url() ?>admin/list-customer">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-human-greeting mr-1"></i> <span>Khách Thuê</span>
-                    </button>
-                </a>
-            <?php endif; ?>
-
 
             <?php if(isYourPermission('ShareCustomerUser', 'showCreate',$this->permission_set)
             ):?>
@@ -60,6 +44,13 @@
                 </button>
             </a>
             <?php endif; ?>
+
+            <a href="<?= base_url() ?>personal/customer-feedback/list">
+                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
+                            class="mdi mdi-comment-check-outline"></i> <span
+                            class="text-">Đánh Giá KH</span>
+                </button>
+            </a>
 
             <?php /* if(isYourPermission('Story', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-story">

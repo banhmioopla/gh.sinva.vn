@@ -377,6 +377,11 @@ $route['admin/list-customer-feedback'] = function($params = []) {
     $action = '/show';
     return $controller.$action;
 };
+$route['personal/customer-feedback/list'] = function($params = []) {
+    $controller = 'CustomerFeedback';
+    $action = '/showYour';
+    return $controller.$action;
+};
 
 $route['admin/customer-feedback/detail'] = function($params = []) {
     $controller = 'CustomerFeedback';
