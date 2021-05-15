@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h2 class="font-weight-bold text-danger">FeedBack Từ Khách Hàng</h2>
+                    <h2 class="font-weight-bold text-danger">FeedBack Từ Khách Hàng - <?= $this->auth['name'] ?></h2>
                 </div>
             </div>
         </div>
