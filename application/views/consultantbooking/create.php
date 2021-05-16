@@ -114,16 +114,12 @@ include VIEWPATH.'functions.php';
                                     <div class="radio radio-custom">
                                         <input type="radio" name="gender" required
                                                id="gender-male" value="male">
-                                        <label for="gender-male">
-                                            Nam
-                                        </label>
+                                        <label for="gender-male">Nam</label>
                                     </div>
                                     <div class="radio radio-custom">
                                         <input type="radio" name="gender" required
                                                id="gender-female" value="female">
-                                        <label for="gender-female">
-                                            Nữ
-                                        </label>
+                                        <label for="gender-female">Nữ</label>
                                     </div>
                                 </div>
                             </div>
@@ -346,7 +342,6 @@ include VIEWPATH.'functions.php';
                         $('input[name=customer_id]').val("");
                         $('#customer_name').attr('disabled', false);
 
-                        $('input[name=gender]').val("");
                         $('input[name=gender]').prop('checked', false);
                         $('input[name=gender]').attr('disabled', false);
 
