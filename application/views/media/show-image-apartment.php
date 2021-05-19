@@ -163,7 +163,7 @@ include VIEWPATH . 'functions.php';
                                     <div class="col-6 col-md-3 shadow-sm">
                                         <div class="mt-3">
                                             <p class="mb-0 text-muted">Thang máy</p>
-                                            <h4 class="mb-2"><?= $apartment['deposit'] ?></h4>
+                                            <h4 class="mb-2"><?= $apartment['elevator'] ?></h4>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-3 shadow-sm">
