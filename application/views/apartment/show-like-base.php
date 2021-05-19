@@ -552,7 +552,7 @@
 
             $('body').delegate('.apartment-select-partner', 'click', function(){
                 $(this).editable({
-                    type: 'select',
+                    type: 'select2',
                     url: '<?= base_url() ?>admin/apartment-get-partner',
                     inputclass: '',
                     source: function() {

@@ -113,6 +113,7 @@
                 window.location = '/admin/list-user-district?account-id='+$('select')
                     .val();
             });
+            $('select[name=account_id]').select2();
         });
     });
 </script>
