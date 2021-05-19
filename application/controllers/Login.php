@@ -12,11 +12,13 @@ class Login extends CI_Controller {
 	}
 	public function show()
 	{
+
 		$data['account_id'] = $this->input->post('account_id');
 		$data['password'] = $this->input->post('password');
-		if(!empty(get_cookie('account_id')) AND !empty(get_cookie('password'))){
-			$data['account_id'] = get_cookie('account_id');
-			$data['password'] = get_cookie('password');
+
+		if(!empty($_COOKIE['account_id']) AND !empty($_COOKIE['password'])){
+			$data['account_id'] = $_COOKIE['account_id'];
+			$data['password'] = $_COOKIE['password'];
 			$user_profile = $this->ghUser->login($data);
 			if(!empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
