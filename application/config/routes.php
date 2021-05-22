@@ -147,6 +147,11 @@ $route['admin/list-consultant-booking'] = function($params = []) {
 	$action = '/show';
 	return $controller.$action;
 };
+$route['admin/consultant-booking/chart'] = function($params = []) {
+    $controller = 'ConsultantBooking';
+    $action = '/chart';
+    return $controller.$action;
+};
 
 $route['admin/consultant-booking/get-room-id'] = function($params = []) {
 	$controller = 'ConsultantBooking';
@@ -448,6 +453,11 @@ $route['admin/list-apartment'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/show';
 	return $controller.$action;
+};
+$route['admin/apartment/show-edit'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/showEdit';
+    return $controller.$action;
 };
 $route['gh/list-apartment/v2'] = function($params = []) {
     $controller = 'Apartment';

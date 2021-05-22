@@ -47,6 +47,7 @@
     <script src="<?= $js_plugins_path ?>switchery/switchery.min.js"></script>
     <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.axislabels.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- sweetalert2 -->
     <script src="<?= $js_plugins_path ?>sweet-alert/sweetalert2.min.js"></script>
     <!-- rating -->

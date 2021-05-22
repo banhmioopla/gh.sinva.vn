@@ -163,6 +163,37 @@ class Apartment extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+
+	public function showEdit(){
+	    $apm_id = $this->input->get('id');
+	    $apartment = $this->ghApartment->getFirstById($apm_id);
+	    $list_room = $this->ghRoom->get(['active' => 'YES']);
+        $cb_district = $this->libDistrict->cbActive();
+        $data['cb_partner'] = $this->libPartner->cbActive();
+        $data['cb_tag'] = $this->libPartner->cbActive();
+        $this->load->view('components/header');
+        $this->load->view('apartment/show-edit', [
+            'apartment' => $apartment,
+            'list_room' => $list_room,
+            'cb_district' => $cb_district,
+            ''
+        ]);
+        $this->load->view('components/footer');
+    }
+
+    public function showDetail(){
+        $apm_id = $this->input->get('id');
+        $apartment = $this->ghApartment->getFirstById($apm_id);
+        $list_room = $this->ghRoom->get(['active' => 'YES']);
+        $this->load->view('components/header');
+        $this->load->view('apartment/show-edit', [
+            'apartment' => $apartment,
+            'list_room' => $list_room,
+            'cb_partner' => $this->libPartner->cbActive(),
+        ]);
+        $this->load->view('components/footer');
+    }
+
 	public function showBySearch(){
         $params['gh_apartment.active = '] = '"YES"';
 

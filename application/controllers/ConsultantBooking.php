@@ -33,96 +33,125 @@ class ConsultantBooking extends CustomBaseStep {
     }
 
 	public function show(){
-		$data['list_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('01-01-2020'))]);
         $this->syncPendingToSuccess();
-        $this_week = strtotime('last monday');
+        $searching = $this->input->get();
 
-        $target = $this->ghUserTarget->get(['user_id' => $this->auth['account_id'], 'time_insert' => $this_week]);
-        $data['list_target'] = $this->ghUserTarget->get(['time_insert' => $this_week]);
-        $data['target'] = $target ? $target[0] : null;
-        $time_from = strtotime('last monday');
-        $time_to = strtotime('+1months');
+        $time_from = date('d-m-Y', strtotime('last monday'));
+        $time_to = date('d-m-Y', strtotime('sunday this week'));
 
-        $data['flash_mess'] = "";
-        $data['flash_status'] = "";
-        if($this->session->has_userdata('fast_notify')) {
-            $data['flash_mess']= $this->session->flashdata('fast_notify')['message'];
-            $data['flash_status']= $this->session->flashdata('fast_notify')['status'];
-            unset($_SESSION['fast_notify']);
+        if($this->input->get('timeFrom')){
+            $time_from = $searching['timeFrom'];
         }
 
-		if($this->isYourPermission($this->current_controller, 'showAllTimeLine')) {
-            if($this->input->get('filterTime') == 'ALL' || $this->input->get('filterTime') == ''){
-                $time_from = 0;
-                $time_to = strtotime('+1months');
+        if($this->input->get('timeTo')){
+            $time_to = $searching['timeTo'];
+        }
 
+		$list_booking = $this->ghConsultantBooking->get([
+		    'time_booking >= ' => strtotime($time_from),
+		    'time_booking <= ' => strtotime($time_to) + 86399,
+        ]);
+        $list = [];
+
+        foreach ($list_booking as $booking) {
+            if(strlen($this->input->get('status'))){
+                if(!($searching['status'] == $booking['status'])) {
+                    continue;
+                }
             }
-            if($this->input->get('filterTime') == 'TODAY'){
-                $time_from = strtotime(date('d-m-Y'));
-                $time_to = strtotime('+1months');
+
+            if(strlen($this->input->get('district'))){
+
+                if(!($searching['district'] == $booking['district_code'])) {
+                    continue;
+                }
             }
 
-            if($this->input->get('filterTime') == 'THIS_WEEK'){
-                $time_from = strtotime('last monday');
-                $time_to = strtotime('+1months');
+            if(strlen($this->input->get('department'))){
+                if($searching['department'] == 'VH'){
+                    if(!in_array($booking['booking_user_id'], $this->arr_general))
+                    continue;
+                }
+
+                if($searching['department'] == 'KD'){
+                    if(in_array($booking['booking_user_id'], $this->arr_general))
+                    continue;
+                }
             }
 
-            if($this->input->get('filterTime') == 'LAST_WEEK'){
-                $time_from = strtotime(date('d-m-Y', strtotime('last monday'. ' - 7days')));
-                $time_to = strtotime('last sunday');
-            }
-            $data['list_booking'] = $this->ghConsultantBooking->get(['time_booking >= ' => $time_from, 'time_booking <= ' => $time_to]);
-		}
-		if($this->isYourPermission($this->current_controller, 'showYour')) {
-			$data['list_booking'] = $this->showYour();
-		} 
-		$data['list_booking_groupby_user'] = $this->ghConsultantBooking->getGroupByUserId
-        ($time_from, $time_to);
-        $data['ghConsultantBooking'] = $this->ghConsultantBooking;
-		$list_district = $this->ghDistrict->get(['active' => 'YES']);
-		$district_counter_booking = [];
 
-		$quantity['booking_district'] = 0;
-		$quantity['booking_district_max'] = 0;
-		$quantity['booking_apm'] = 0;
-		$quantity['booking_success'] = 0;
-		$quantity['booking_cancel'] = 0;
-		$data['label_apartment'] = $this->config->item('label.apartment');
-		$data['select_district'] = $this->libDistrict->cbActive();
-		foreach($list_district as $d){
-			$district_counter_booking[$d['code']] = 0;
-		}
-		foreach($list_district as $d){
-		    $model = $this->ghConsultantBooking->get(
-                ['district_code' =>$d['code'],
-                    'time_booking >= ' => $time_from,
-                    'time_booking <= ' => $time_to]
-            );
-			$district_counter_booking[$d['code']] += count(
-                $model
-            );
+            $list[] = $booking;
+        }
 
-			if($district_counter_booking[$d['code']] > 0) {
-				$quantity['booking_district']++;
-				$quantity['booking_apm']++;
-			}
-		}
-		$data['time_from'] = $time_from;
-		$data['time_to'] = $time_to;
-		$data['ghApartment'] = $this->ghApartment;
-		$data['ghRoom'] = $this->ghRoom;
-		$data['libDistrict'] = $this->libDistrict;
-		$data['libUser'] = $this->libUser;
-		$data['libCustomer'] = $this->libCustomer;
-		$data['district_counter_booking'] = $district_counter_booking;
-		$data['quantity'] = $quantity;
-		$data['time_from'] = $time_from;
-		$data['time_to'] = $time_to;
 		/*--- Load View ---*/
-		$this->load->view('components/header',['menu' =>$this->menu]);
-		$this->load->view('consultantbooking/show', $data);
+		$this->load->view('components/header');
+		$this->load->view('consultantbooking/showV2', [
+            'list_booking' => $list,
+            'time_from' => $time_from,
+            'time_to' => $time_to,
+            'label_apartment' => $this->config->item('label.apartment'),
+            'cb_district' => $this->libDistrict->cbActive(),
+            'ghApartment' => $this->ghApartment,
+            'ghRoom' => $this->ghRoom,
+            'libDistrict' => $this->libDistrict,
+            'libUser' => $this->libUser,
+            'libCustomer' => $this->libCustomer,
+        ]);
 		$this->load->view('components/footer');
 	}
+
+	public function chart(){
+	    $data_post = $this->input->post();
+        $time_from = date('d-m-Y', strtotime('last monday'));
+        $time_to = date('d-m-Y', strtotime('sunday this week'));
+	    if(strlen($this->input->post('timeFrom'))){
+            $time_from = $data_post['timeFrom'];
+        }
+
+        if(strlen($this->input->post('timeTo'))){
+            $time_to = $data_post['timeTo'];
+        }
+
+        $limit_point = 15;
+        $list_booking = $this->ghConsultantBooking->get([
+            'time_booking >=' => strtotime($time_from),
+            'time_booking <=' => strtotime($time_to) + 86399,
+        ]);
+
+        $start = strtotime($time_from);
+        $chart_data = [];
+        $chart_data_boom = [];
+        $chart_data_success = [];
+        while(true) {
+            $chart_data[date('d/m/Y', $start)] =[
+                'book' => 0,
+                'boom' => 0,
+                'success' => 0,
+            ];
+            $start+= 86400;
+            if($start > strtotime($time_to)) {
+                break;
+            }
+        }
+
+
+        foreach ($list_booking as $booking) {
+            $date = date('d/m/Y', $booking['time_booking']);
+
+            $chart_data[$date]['book']++;
+
+            if($booking['status'] == 'Success') {
+                $chart_data[$date]['success']++;
+            }
+
+            if($booking['status'] == 'Cancel') {
+                $chart_data[$date]['boom']++;
+            }
+        }
+
+        echo json_encode(['data' => $chart_data, 'counter' => count($list_booking)]);die;
+
+    }
 
 	public function getRoomId() {
 		$apartment_id = $this->input->get('apartment_id');
