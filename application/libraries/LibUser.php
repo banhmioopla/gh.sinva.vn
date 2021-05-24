@@ -36,7 +36,7 @@ class LibUser {
 
     public function getNameByAccountid($account_id){
         $list_user = $this->CI->ghUser->get(['account_id' => $account_id]);
-        return $list_user ? $list_user[0]['name'] : '#';
+        return $list_user ? $list_user[0]['name'] : $account_id;
     }
 
     public function getLastNameByAccountId($account_id){

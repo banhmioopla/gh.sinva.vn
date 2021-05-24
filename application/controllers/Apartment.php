@@ -90,7 +90,7 @@ class Apartment extends CustomBaseStep {
 		$data['ghApartmentPromotion'] = $this->ghApartmentPromotion;
 		$data['libApartment'] = $this->libApartment;
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view($template, $data);
 		$this->load->view('components/footer');
 	}

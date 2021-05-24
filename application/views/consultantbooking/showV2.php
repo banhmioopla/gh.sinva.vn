@@ -25,6 +25,53 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-box">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <strong>Từ Ngày</strong>
+                                        <input type="text" name="timeFrom" class="form-control datepicker" value="<?= $time_from ?>">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Đến Ngày</strong>
+                                        <input type="text" name="timeTo" class="form-control datepicker" value="<?= $time_to ?>">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Trạng Thái</strong>
+                                        <select name="status" id="" class="form-control">
+                                            <option value="">Tất Cả Trạng Thái</option>
+                                            <option value="Success">Thành Công</option>
+                                            <option value="Cancel">Boom</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Bộ Phận</strong>
+                                        <select name="department" id="" class="form-control">
+                                            <option value="">SINVA</option>
+                                            <option value="VH">Bộ Phận Vận Hành</option>
+                                            <option value="KD">Bộ Phận Kinh Doanh</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Quận</strong>
+                                        <select name="district" id="" class="form-control">
+                                            <?php echo $cb_district?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Thống Kê Dẫn Khách</strong>
+                                        <button type="submit" class="btn btn-danger form-control">Áp Dụng</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div class="card-box">
                     <div class="row mb-2">
                         <div class="col-md-2 offset-md-3 offset-0">
                             <strong>Từ Ngày</strong>
@@ -43,6 +90,28 @@
                         </div>
                     </div>
                     <div id="chart-overview"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-box">
+                    <h4 class="font-weight-bold text-danger">Bảng Xếp Hạng (<?= $time_from . ' đến '.$time_to ?>)</h4>
+                    <div class="table-responsive">
+                        <table class="table table-dark">
+                            <tr>
+                                <th class="text-center">Số Lượt Book</th>
+                                <th>Thành Viên</th>
+                            </tr>
+                            <?php
+                            $yellow = 'warning';
+                            foreach($ranker as $user => $counter):
+                                ?>
+                                <tr>
+                                    <th class="text-center text-<?= $yellow ?>"><?= $counter ?></th>
+                                    <th class="text-<?= $yellow ?>"><?= $libUser->getNameByAccountid($user) ?></th>
+                                </tr>
+                            <?php $yellow = ''; endforeach;?>
+                        </table>
+                    </div>
 
                 </div>
             </div>
@@ -50,51 +119,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-box">
-                    <form action="">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <strong>Từ Ngày</strong>
-                            <input type="text" name="timeFrom" class="form-control datepicker" value="<?= $time_from ?>">
-                        </div>
-                        <div class="col-md-2">
-                            <strong>Đến Ngày</strong>
-                            <input type="text" name="timeTo" class="form-control datepicker" value="<?= $time_to ?>">
-                        </div>
-                        <div class="col-md-2">
-                            <strong>Trạng Thái</strong>
-                            <select name="status" id="" class="form-control">
-                                <option value="">Tất Cả Trạng Thái</option>
-                                <option value="Success">Thành Công</option>
-                                <option value="Cancel">Boom</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <strong>Bộ Phận</strong>
-                            <select name="department" id="" class="form-control">
-                                <option value="">SINVA</option>
-                                <option value="VH">Bộ Phận Vận Hành</option>
-                                <option value="KD">Bộ Phận Kinh Doanh</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <strong>Quận</strong>
-                            <select name="district" id="" class="form-control">
-                                <?php echo $cb_district?>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <strong>Thống Kê Dẫn Khách</strong>
-                            <button type="submit" class="btn btn-danger form-control">Áp Dụng</button>
-                        </div>
-                    </div>
-                    </form>
+
                     <div class="row mt-4">
                         <div class="col-12">
                             <h4 class="font-weight-bold text-danger">Thống Kê Dẫn Khách</h4>
                         </div>
                         <div class="col-12">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="booking-table">
                                     <thead>
                                     <th>Ngày</th>
                                     <th>Thành Viên</th>
@@ -196,7 +228,7 @@
         $('.datepicker').datepicker({
             format: "dd-mm-yyyy"
         });
-        $('table').DataTable({
+        $('table#booking-table').DataTable({
             "order": [],
             "fnDrawCallback": function () {
                 $('.booking-note').editable({
@@ -269,7 +301,8 @@
                 0: { color: '#3ae743', lineWidth: 4 },
                 1: { color: '#e2431e', lineWidth: 4  },
                 2: { color: '#949595', lineDashStyle: [14, 2, 2, 7] },
-            }
+            },
+            is3D: true
         };
         $('#submitChart').click(function () {
             let timeFrom = $('#timeFrom').val();

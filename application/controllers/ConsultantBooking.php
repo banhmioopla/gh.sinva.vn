@@ -51,9 +51,17 @@ class ConsultantBooking extends CustomBaseStep {
 		    'time_booking >= ' => strtotime($time_from),
 		    'time_booking <= ' => strtotime($time_to) + 86399,
         ]);
-        $list = [];
+        $list = $ranker = [];
 
         foreach ($list_booking as $booking) {
+            if(!isset($top_1[$booking['booking_user_id']])) {
+                $ranker[$booking['booking_user_id']] = 1;
+            } else {
+                $ranker[$booking['booking_user_id']] ++;
+            }
+
+
+
             if(strlen($this->input->get('status'))){
                 if(!($searching['status'] == $booking['status'])) {
                     continue;
@@ -83,6 +91,8 @@ class ConsultantBooking extends CustomBaseStep {
             $list[] = $booking;
         }
 
+        arsort($ranker);
+
 		/*--- Load View ---*/
 		$this->load->view('components/header');
 		$this->load->view('consultantbooking/showV2', [
@@ -96,6 +106,7 @@ class ConsultantBooking extends CustomBaseStep {
             'libDistrict' => $this->libDistrict,
             'libUser' => $this->libUser,
             'libCustomer' => $this->libCustomer,
+            'ranker' => $ranker
         ]);
 		$this->load->view('components/footer');
 	}
@@ -118,12 +129,17 @@ class ConsultantBooking extends CustomBaseStep {
             'time_booking <=' => strtotime($time_to) + 86399,
         ]);
 
+
+
         $start = strtotime($time_from);
         $chart_data = [];
         $chart_data_boom = [];
         $chart_data_success = [];
         while(true) {
-            $chart_data[date('d/m/Y', $start)] =[
+            $week_number = $this->libTime->weekOfMonth(date('d-m-Y', $start));
+            $month_number = date('m', $start);
+            $key_time = 'Tuần '.$week_number . " / Tháng {$month_number}";
+            $chart_data[$key_time] =[
                 'book' => 0,
                 'boom' => 0,
                 'success' => 0,
@@ -134,18 +150,19 @@ class ConsultantBooking extends CustomBaseStep {
             }
         }
 
-
         foreach ($list_booking as $booking) {
-            $date = date('d/m/Y', $booking['time_booking']);
 
-            $chart_data[$date]['book']++;
+            $week_number = $this->libTime->weekOfMonth(date('d-m-Y', $booking['time_booking']));
+            $month_number = date('m', $booking['time_booking']);
+            $key_time = 'Tuần '.$week_number . " / Tháng {$month_number}";
+            $chart_data[$key_time]['book']++;
 
             if($booking['status'] == 'Success') {
-                $chart_data[$date]['success']++;
+                $chart_data[$key_time]['success']++;
             }
 
             if($booking['status'] == 'Cancel') {
-                $chart_data[$date]['boom']++;
+                $chart_data[$key_time]['boom']++;
             }
         }
 
