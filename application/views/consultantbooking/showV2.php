@@ -96,7 +96,7 @@
                 <div class="card-box">
                     <h4 class="font-weight-bold text-danger">Bảng Xếp Hạng (<?= $time_from . ' đến '.$time_to ?>)</h4>
                     <div class="table-responsive">
-                        <table class="table table-dark">
+                        <table class="table table-dark" id="ranker">
                             <tr>
                                 <th class="text-center">Số Lượt Book</th>
                                 <th>Thành Viên</th>
@@ -289,6 +289,8 @@
                 });
             }
         });
+
+        $('#ranker').DataTable();
 
 
 
