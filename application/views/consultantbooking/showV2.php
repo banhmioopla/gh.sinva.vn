@@ -311,7 +311,7 @@
                 1: { color: '#e2431e', lineWidth: 4  },
                 2: { color: '#11144b'},
             },
-            is3D: true
+            pointSize: 5
         };
         $('#submitChart').click(function () {
             let timeFrom = $('#timeFrom').val();
