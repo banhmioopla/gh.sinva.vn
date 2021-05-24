@@ -309,7 +309,7 @@
             series: {
                 0: { color: '#3ae743', lineWidth: 4 },
                 1: { color: '#e2431e', lineWidth: 4  },
-                2: { color: '#949595', lineDashStyle: [14, 2, 2, 7] },
+                2: { color: '#11144b'},
             },
             is3D: true
         };
