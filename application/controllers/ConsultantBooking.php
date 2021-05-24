@@ -138,7 +138,7 @@ class ConsultantBooking extends CustomBaseStep {
         while(true) {
             $week_number = $this->libTime->weekOfMonth(date('d-m-Y', $start));
             $month_number = date('m', $start);
-            $key_time = 'Tuần '.$week_number . " / Tháng {$month_number}";
+            $key_time = 'Tu.'.$week_number . " (Th.{$month_number})";
             $chart_data[$key_time] =[
                 'book' => 0,
                 'boom' => 0,
@@ -154,7 +154,7 @@ class ConsultantBooking extends CustomBaseStep {
 
             $week_number = $this->libTime->weekOfMonth(date('d-m-Y', $booking['time_booking']));
             $month_number = date('m', $booking['time_booking']);
-            $key_time = 'Tuần '.$week_number . " / Tháng {$month_number}";
+            $key_time = 'Tu.'.$week_number . " (Th.{$month_number})";
             $chart_data[$key_time]['book']++;
 
             if($booking['status'] == 'Success') {
