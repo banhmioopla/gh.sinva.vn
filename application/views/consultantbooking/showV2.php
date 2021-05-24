@@ -290,7 +290,9 @@
             }
         });
 
-        $('#ranker').DataTable();
+        $('#ranker').DataTable({
+            "pageLength": 5,
+        });
 
 
 
