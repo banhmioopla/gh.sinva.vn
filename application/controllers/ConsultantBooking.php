@@ -54,7 +54,7 @@ class ConsultantBooking extends CustomBaseStep {
         $list = $ranker = [];
 
         foreach ($list_booking as $booking) {
-            if(!isset($top_1[$booking['booking_user_id']])) {
+            if(!isset($ranker[$booking['booking_user_id']])) {
                 $ranker[$booking['booking_user_id']] = 1;
             } else {
                 $ranker[$booking['booking_user_id']] ++;
