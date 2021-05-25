@@ -301,8 +301,8 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                     <?php endif; ?>
                                 </h5>
                                 <?php
-                                    $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id']]);
-                                    foreach ($list_promotion as $p):
+                                $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
+                                foreach ($list_promotion as $p):
                                         ?>
                                         <span class="badge badge-danger badge-pill"><?= $p['title'] ?></span>
                                 <?php endforeach;

@@ -21,7 +21,7 @@ class ApartmentPromotion extends CustomBaseStep {
         $apartment_id = $this->input->get('apartment-id');
 
         $data['apartment'] = $this->ghApartment->getFirstById($apartment_id);
-        $data['list_promotion'] = $this->ghApartmentPromotion->get(['apartment_id' =>$apartment_id]);
+        $data['list_promotion'] = $this->ghApartmentPromotion->get(['apartment_id' =>$apartment_id, 'end_time >=' => strtotime(date('d-m-Y'))]);
         /*--- Load View ---*/
         $this->load->view('components/header');
         $this->load->view('apartment-promotion/show', $data);

@@ -15,7 +15,6 @@ class Login extends CI_Controller {
 
 		$data['account_id'] = $this->input->post('account_id');
 		$data['password'] = $this->input->post('password');
-
 		if(!empty($_COOKIE['account_id']) AND !empty($_COOKIE['password'])){
 			$data['account_id'] = $_COOKIE['account_id'];
 			$data['password'] = $_COOKIE['password'];
@@ -34,8 +33,8 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if( !empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile[0]]);
-				set_cookie('account_id', $user_profile[0]['account_id'],2592000);
-				set_cookie('password', $user_profile[0]['password'], 2592000);
+				set_cookie('account_id', $user_profile[0]['account_id'],time()+2592000);
+				set_cookie('password', $user_profile[0]['password'], time()+2592000);
 				return redirect($this->default_url);
 			}
 		}

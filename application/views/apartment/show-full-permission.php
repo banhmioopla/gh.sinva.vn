@@ -290,7 +290,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                     <?php endif; ?>
                                 </h5>
                                 <?php
-                                $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id']]);
+                                $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
                                 foreach ($list_promotion as $p):
                                     ?>
                                     <span class="badge badge-danger badge-pill"><?= $p['title'] ?></span>
