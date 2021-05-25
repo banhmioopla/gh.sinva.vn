@@ -44,6 +44,11 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                         </ol>
                     </div>
                     <h3 class="page-title">Danh sách dự án quận <?= $district_code?> <br><small class="text-secondary"> - quốc bình: 0945 172 814</small></h3>
+                <h5>
+                    <?php
+                    var_dump($_COOKIE);
+                    ?>
+                </h5>
                 </div>
             </div>
         </div>
