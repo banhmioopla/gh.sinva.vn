@@ -43,6 +43,12 @@
                                     <span><img src="<?= $assets_path ?>images/logo-gh.png" alt="" height="26"></span>
                                 </a>
                             </h2>
+                            <h6>
+                                COOKIE của GH
+                                <?php
+                                var_dump($_COOKIE);
+                                ?>
+                            </h6>
 
                             <form class="" method="post" action="<?= base_url().'admin/login' ?>">
 
