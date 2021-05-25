@@ -12,8 +12,6 @@ class Login extends CI_Controller {
 	}
 	public function show()
 	{
-	    echo "<pre>";
-	    var_dump(); die;
 		$data['account_id'] = $this->input->post('account_id');
 		$data['password'] = $this->input->post('password');
 		if(!empty($_COOKIE['gh_account_id']) AND !empty($_COOKIE['gh_account_id'])){
