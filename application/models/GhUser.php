@@ -56,7 +56,7 @@ class GhUser extends CI_Model {
         $account_id = $data['account_id'];
         $password = $data['password'];
         $result = $this->db->get_where($this->table, ['account_id' => $account_id, 'password' => $password, 'active' => 'YES']);
-        return $result->result_array() ;
+        return $result->row_array() ;
     }
 }
 
