@@ -12,6 +12,8 @@ class Login extends CI_Controller {
 	}
 	public function show()
 	{
+	    echo "<pre>";
+	    var_dump(); die;
 		$data['account_id'] = $this->input->post('account_id');
 		$data['password'] = $this->input->post('password');
 		if(!empty($_COOKIE['gh_account_id']) AND !empty($_COOKIE['gh_account_id'])){
@@ -24,12 +26,14 @@ class Login extends CI_Controller {
                     'name'   => 'gh_account_id',
                     'value'  => "{$user_profile['account_id']}",
                     'expire' => time()+86400*30,
+                    'domain' => $_SERVER['SERVER_NAME']
                 );
                 set_cookie($cookie);
                 $cookie = array(
                     'name'   => 'gh_password',
                     'value'  => "{$user_profile['password']}",
                     'expire' => time()+86400*30,
+                    'domain' => $_SERVER['SERVER_NAME']
                 );
                 set_cookie($cookie);
                 return redirect($this->default_url);
@@ -53,12 +57,14 @@ class Login extends CI_Controller {
                     'name'   => 'gh_account_id',
                     'value'  => "{$user_profile['account_id']}",
                     'expire' => time()+86400*30,
+                    'domain' => $_SERVER['SERVER_NAME']
                 );
                 set_cookie($cookie);
                 $cookie = array(
                     'name'   => 'gh_password',
                     'value'  => "{$user_profile['password']}",
                     'expire' => time()+86400*30,
+                    'domain' => $_SERVER['SERVER_NAME']
                 );
                 set_cookie($cookie);
 				return redirect($this->default_url);
