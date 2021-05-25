@@ -61,7 +61,7 @@ class Apartment extends CustomBaseStep {
 		$template = 'apartment/show-full-permission';
 
 		if(!$this->editable) {
-			$template =  'apartment/show';
+			$template =  'apartment/show-version-2';
 		}
 
 		$data['product_total'] = count($this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']));
