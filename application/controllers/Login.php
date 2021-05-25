@@ -23,14 +23,14 @@ class Login extends CI_Controller {
                 $cookie = array(
                     'name'   => 'gh_account_id',
                     'value'  => "{$user_profile['account_id']}",
-                    'expire' => time()+86400*30,
+                    'expire' => 86400*30,
                     'domain' => $_SERVER['SERVER_NAME']
                 );
                 set_cookie($cookie);
                 $cookie = array(
                     'name'   => 'gh_password',
                     'value'  => "{$user_profile['password']}",
-                    'expire' => time()+86400*30,
+                    'expire' =>86400*30,
                     'domain' => $_SERVER['SERVER_NAME']
                 );
                 set_cookie($cookie);
@@ -51,14 +51,14 @@ class Login extends CI_Controller {
                 $cookie = array(
                     'name'   => 'gh_account_id',
                     'value'  => "{$user_profile['account_id']}",
-                    'expire' => time()+86400*30,
+                    'expire' => 86400*30,
                     'domain' => $_SERVER['SERVER_NAME']
                 );
                 set_cookie($cookie);
                 $cookie = array(
                     'name'   => 'gh_password',
                     'value'  => "{$user_profile['password']}",
-                    'expire' => time()+86400*30,
+                    'expire' => 86400*30,
                     'domain' => $_SERVER['SERVER_NAME']
                 );
                 set_cookie($cookie);
