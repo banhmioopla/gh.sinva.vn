@@ -11,7 +11,7 @@ class CustomBaseStep extends CI_Controller {
 
 		if(!$this->session->has_userdata('auth'))
 		{
-			$this->session->sess_destroy();
+//			$this->session->sess_destroy();
 			return redirect('/');
 		}
 		
