@@ -120,9 +120,9 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                             <div class="col-md-12 col-12 mt-md-2">
                                 <div class="row">
                                     <div class="col-md-4 col-12 text-center text-md">
-                                        <span class="text-success">Trống: <strong><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></strong></span>
-                                        <span class="text-warning ml-2">Có Ngày Trống: <strong><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></strong></span>
-                                        <span class="text-danger ml-2">Tổng P: <strong><?= $ghRoom->getNumber($apartment['id']) ?></strong></span>
+                                        <span class="text-success"><i class="mdi mdi-calendar-multiple-check d-inline d-md-none"></i> <span class="d-md-inline d-none">Trống: </span><strong><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></strong></span>
+                                        <span class="text-warning ml-2"><i class="mdi mdi-calendar-multiple d-inline d-md-none"></i> <span class="d-md-inline d-none">Có Ngày Trống: </span> <strong><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></strong></span>
+                                        <span class="text-danger ml-2"> <i class="mdi mdi-sigma d-inline d-md-none"> <span class="d-md-inline d-none"> Tổng P: </span><strong><?= $ghRoom->getNumber($apartment['id']) ?></strong></span>
                                     </div>
                                     <div class="col-md col-12">
                                         <div class="text-primary text-md-right text-center "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i',
@@ -170,7 +170,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                data-parent="#accordion"
                                href="#modal-apartment-comment-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-comment-<?=$apartment['id'] ?>">
                                 <button class="btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect ">
-                                <i class="mdi mdi-comment-outline"></i> Bình Luận
+                                <i class="mdi mdi-comment-outline"></i> <span class="d-none d-md-inline">Bình Luận</span>
                                 <?php if(count($list_comment) > 0):?>
                                     <span class="badge badge-danger badge-pill mr-2 noti-icon-badge"><?= count($list_comment) ?></span>
                                 <?php endif; ?>
