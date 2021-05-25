@@ -127,7 +127,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                     <div class="col-md col-6">
                                         <div class="text-primary text-md-right text-center "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i',
                                                     max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></div>
-                                        <div class="text-md-right text-center">
+                                        <div class="text-md-right d-none d-md-block text-center">
                                             <a class="text-muted"
                                                target="_blank"
                                                href="/admin/list-dashboard">Thông tin dịch vụ (<strong><?= $libApartment->completeInfoRate($apartment['id'])['counter'] ?></strong>) <small class="text-danger">[?] click để xem tiêu chí </small></a>
