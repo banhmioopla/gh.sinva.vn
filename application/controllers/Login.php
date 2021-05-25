@@ -18,10 +18,20 @@ class Login extends CI_Controller {
 			$data['account_id'] = $_COOKIE['gh_account_id'];
 			$data['password'] = $_COOKIE['gh_password'];
 			$user_profile = $this->ghUser->login($data);
-
 			if(!empty($user_profile)) {
-
-				$this->session->set_userdata(['auth' => $user_profile]);
+                $this->session->set_userdata(['auth' => $user_profile]);
+                $cookie = array(
+                    'name'   => 'gh_account_id',
+                    'value'  => "{$user_profile['account_id']}",
+                    'expire' => time()+86400*30,
+                );
+                set_cookie($cookie);
+                $cookie = array(
+                    'name'   => 'gh_password',
+                    'value'  => "{$user_profile['password']}",
+                    'expire' => time()+86400*30,
+                );
+                set_cookie($cookie);
                 return redirect($this->default_url);
 			} else {
                 echo "<pre>";
