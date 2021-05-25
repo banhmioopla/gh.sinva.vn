@@ -119,12 +119,12 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                             </div>
                             <div class="col-md-12 col-12 mt-md-2">
                                 <div class="row">
-                                    <div class="col-md-4 col-12 text-center text-md">
+                                    <div class="col-md-4 col-6 text-center text-md">
                                         <span class="text-success"><i class="mdi mdi-calendar-multiple-check d-inline d-md-none"></i> <span class="d-md-inline d-none">Trống: </span><strong><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></strong></span>
                                         <span class="text-warning ml-2"><i class="mdi mdi-calendar-multiple d-inline d-md-none"></i> <span class="d-md-inline d-none">Có Ngày Trống: </span> <strong><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></strong></span>
                                         <span class="text-danger ml-2"> <i class="mdi mdi-sigma d-inline d-md-none"></i> <span class="d-md-inline d-none"> Tổng P: </span><strong><?= $ghRoom->getNumber($apartment['id']) ?></strong></span>
                                     </div>
-                                    <div class="col-md col-12">
+                                    <div class="col-md col-6">
                                         <div class="text-primary text-md-right text-center "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i',
                                                     max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></div>
                                         <div class="text-md-right text-center">
