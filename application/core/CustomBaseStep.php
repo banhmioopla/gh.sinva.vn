@@ -12,7 +12,7 @@ class CustomBaseStep extends CI_Controller {
 		if(!$this->session->has_userdata('auth'))
 		{
 			$this->session->sess_destroy();
-			return redirect('/');
+			return redirect('/admin/logout');
 		}
 		
 		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig']);
