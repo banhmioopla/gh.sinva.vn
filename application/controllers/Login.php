@@ -17,26 +17,12 @@ class Login extends CI_Controller {
 			$data['account_id'] = get_cookie('gh_account_id');
 			$data['password'] = get_cookie('gh_password');
 			$user_profile = $this->ghUser->login($data);
-			if(!empty($user_profile)) {
+			if($user_profile) {
                 $this->session->set_userdata(['auth' => $user_profile]);
-//                $cookie = array(
-//                    'name'   => 'gh_account_id',
-//                    'value'  => "{$user_profile['account_id']}",
-//                    'expire' => 86400*30,
-//                    'domain' => $_SERVER['SERVER_NAME']
-//                );
                 setcookie('gh_account_id',$user_profile['account_id'],time()+60*60*24*365, '/');
-//                $cookie = array(
-//                    'name'   => 'gh_password',
-//                    'value'  => "{$user_profile['password']}",
-//                    'expire' =>86400*30,
-//                    'domain' => $_SERVER['SERVER_NAME']
-//                );
                 setcookie('gh_password',$user_profile['password'],time()+60*60*24*365, '/');
                 return redirect($this->default_url);
 			} else {
-                echo "<pre>";
-                var_dump($user_profile); die;
 				return redirect($this->logout_url);
 			}
 		}
@@ -45,15 +31,8 @@ class Login extends CI_Controller {
 		$submit = $this->input->post('submit');
 		if(isset($submit) or !empty($data['account_id'])) {
 			$user_profile = $this->ghUser->login($data);
-			if( !empty($user_profile)) {
+			if($user_profile) {
 				$this->session->set_userdata(['auth' => $user_profile]);
-//                $cookie = array(
-//                    'name'   => 'gh_account_id',
-//                    'value'  => "{$user_profile['account_id']}",
-//                    'expire' => 86400*30,
-//                    'domain' => $_SERVER['SERVER_NAME']
-//                );
-//                set_cookie($cookie);
                 setcookie('gh_account_id',$user_profile['account_id'],time()+60*60*24*365, '/');
                 $cookie = array(
                     'name'   => 'gh_password',
@@ -61,7 +40,6 @@ class Login extends CI_Controller {
                     'expire' => 86400*30,
                     'domain' => $_SERVER['SERVER_NAME']
                 );
-//                set_cookie($cookie);
                 setcookie('gh_password',$user_profile['password'],time()+60*60*24*365, '/');
 				return redirect($this->default_url);
 			}
