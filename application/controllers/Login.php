@@ -6,7 +6,6 @@ class Login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('ghUser');
-		$this->load->helper('cookie');
 		$this->default_url = '/admin/list-apartment';
 		$this->logout_url = '/admin/logout';
 	}
@@ -20,20 +19,20 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if(!empty($user_profile)) {
                 $this->session->set_userdata(['auth' => $user_profile]);
-                $cookie = array(
-                    'name'   => 'gh_account_id',
-                    'value'  => "{$user_profile['account_id']}",
-                    'expire' => 86400*30,
-                    'domain' => $_SERVER['SERVER_NAME']
-                );
-                set_cookie($cookie);
-                $cookie = array(
-                    'name'   => 'gh_password',
-                    'value'  => "{$user_profile['password']}",
-                    'expire' =>86400*30,
-                    'domain' => $_SERVER['SERVER_NAME']
-                );
-                set_cookie($cookie);
+//                $cookie = array(
+//                    'name'   => 'gh_account_id',
+//                    'value'  => "{$user_profile['account_id']}",
+//                    'expire' => 86400*30,
+//                    'domain' => $_SERVER['SERVER_NAME']
+//                );
+                setcookie('gh_account_id',$user_profile['account_id'],time()+60*60*24*365, '/');
+//                $cookie = array(
+//                    'name'   => 'gh_password',
+//                    'value'  => "{$user_profile['password']}",
+//                    'expire' =>86400*30,
+//                    'domain' => $_SERVER['SERVER_NAME']
+//                );
+                setcookie('gh_password',$user_profile['password'],time()+60*60*24*365, '/');
                 return redirect($this->default_url);
 			} else {
                 echo "<pre>";
@@ -48,20 +47,22 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if( !empty($user_profile)) {
 				$this->session->set_userdata(['auth' => $user_profile]);
-                $cookie = array(
-                    'name'   => 'gh_account_id',
-                    'value'  => "{$user_profile['account_id']}",
-                    'expire' => 86400*30,
-                    'domain' => $_SERVER['SERVER_NAME']
-                );
-                set_cookie($cookie);
+//                $cookie = array(
+//                    'name'   => 'gh_account_id',
+//                    'value'  => "{$user_profile['account_id']}",
+//                    'expire' => 86400*30,
+//                    'domain' => $_SERVER['SERVER_NAME']
+//                );
+//                set_cookie($cookie);
+                setcookie('gh_account_id',$user_profile['account_id'],time()+60*60*24*365, '/');
                 $cookie = array(
                     'name'   => 'gh_password',
                     'value'  => "{$user_profile['password']}",
                     'expire' => 86400*30,
                     'domain' => $_SERVER['SERVER_NAME']
                 );
-                set_cookie($cookie);
+//                set_cookie($cookie);
+                setcookie('gh_password',$user_profile['password'],time()+60*60*24*365, '/');
 				return redirect($this->default_url);
 			}
 		}
