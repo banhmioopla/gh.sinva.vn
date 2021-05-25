@@ -180,7 +180,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                             <?php if($check_profile): ?>
                                 <a class="m-1"
                                    href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
-                                    <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect"><i class="mdi mdi-information-outline"></i> Cập Nhật</button>
+                                    <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect"><i class="mdi mdi-information-outline"></i> <span class="d-none d-md-inline">Cập Nhật</span></button>
 
                             </a>
                             <?php endif; ?>
@@ -189,18 +189,18 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                     data-parent="#accordion"
                                     aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>"
                                     data-target="#modal-apartment-detail-<?=$apartment['id'] ?>">
-                                <i class="mdi mdi-eye"></i> Chi Tiết</button>
+                                <i class="mdi mdi-eye"></i> <span class="d-none d-md-inline">Chi Tiết</span></button>
 
                             <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
                                 <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
-                                    <i class="mdi mdi-folder-multiple-image"></i> Ảnh D/A
+                                    <i class="mdi mdi-folder-multiple-image"></i> <span class="d-none d-md-inline">Ảnh D/A</span>
                                 </button>
                             </a>
 
                             <?php if($check_consultant_booking): ?>
                                 <a href="<?= base_url() ?>admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
                             <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                <i class="mdi mdi-car-hatchback"></i> Book Phòng
+                                <i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span>
                             </button>
                             </a>
                             <?php endif; ?>
