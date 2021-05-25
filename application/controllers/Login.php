@@ -42,7 +42,6 @@ class Login extends CI_Controller {
 	}
 
 	public function logout(){
-	    var_dump("xong phim"); die;
 		unset($_COOKIE['account_id']);
 		unset($_COOKIE['password']);
 		unset($_SESSION['auth']);
