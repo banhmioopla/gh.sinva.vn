@@ -311,15 +311,18 @@ class Apartment extends CustomBaseStep {
 
 	public function showProfile(){
 	    $id = $this->input->get('id');
-	    $profile = $this->ghApartment->get(['id' => $id])[0];
-	    $room = $this->ghRoom->get(['apartment_id' => $id] );
+	    $apartment = $this->ghApartment->getFirstById($id);
+
+	    $list_room = $this->ghRoom->get(['apartment_id' => $id, 'active' => 'YES']);
 	    $contract = $this->ghContract->get(['apartment_id' => $id]);
-        $this->load->view('components/header', ['menu' => $this->menu]);
+
+        $this->load->view('components/header');
         $this->load->view('apartment/show-profile', [
-            'profile' => $profile,
-            'room' => $room,
+            'apartment' => $apartment,
+            'list_room' => $list_room,
             'contract' => $contract,
             'libUser' => $this->libUser,
+            'cbDistrictActive' => $this->libDistrict->cbActive(),
             'libCustomer' => $this->libCustomer,
             'label_apartment' =>  $this->config->item('label.apartment')
         ]);

@@ -190,7 +190,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             <?php if($check_profile): ?>
                                 <a class="m-1 btn btn-sm btn-outline-info btn-rounded waves-light waves-effect"
                                    href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
-                                    <i class="mdi mdi-information-outline"></i>
+                                    <i class="mdi mdi-pencil"></i>
                                 </a>
                             <?php endif; ?>
                             <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect" 

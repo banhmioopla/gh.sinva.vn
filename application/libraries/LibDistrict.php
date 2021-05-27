@@ -11,14 +11,14 @@ class LibDistrict {
     
     public function cbActive($district_code = ''){
         $list_district = $this->CI->ghDistrict->getByActive();
-        $cb = '<option value="">chọn quận ...</option>';
+        $cb = '<option value="">Chọn Quận ...</option>';
         if(!empty($list_district)) {
             foreach ($list_district as $district) {
                 $selected = '';
                 if($district['code'] == $district_code) {
                     $selected = 'selected';
                 }
-                $cb .= '<option '.$selected.' value='.$district['code'].'>Q. '.$district['name'].'</option>';
+                $cb .= '<option '.$selected.' value='.$district['code'].'>Quận '.$district['name'].'</option>';
             }
         }
         return $cb;

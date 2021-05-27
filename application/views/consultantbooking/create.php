@@ -308,9 +308,12 @@ include VIEWPATH.'functions.php';
                         $('input[name=customer_id]').val(profile.id);
                         $('#customer_name').attr('disabled', true);
 
-                        if(profile.gender) {
-                            $('input[name=gender]').val(profile.gender);
-                            $('input[name=gender]').prop('checked', true);
+                        if(profile.gender === 'male') {
+                            $('#gender-male').prop('checked', true);
+                        }
+
+                        if(profile.gender === 'female') {
+                            $('#gender-female').prop('checked', true);
                         }
                         $('input[name=gender]').attr('disabled', true);
 
