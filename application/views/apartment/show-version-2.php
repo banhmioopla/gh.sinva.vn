@@ -106,6 +106,9 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                 </div>
                 <?php foreach ($list_apartment as $apartment):
                     if($check_only_apartment && !in_array($apartment['id'], $this->list_apartment_view_only)) continue;
+
+
+                    $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
                     ?>
                     <!-- item -->
                     <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
@@ -147,6 +150,13 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
 
                             <div class="col-md-3 col-4 border-right border-danger">
                                 <i class="mdi mdi-tag-faces"></i> <span class="d-none d-md-inline">TAG: </span><?= $apartment['tag_id'] ? ' <span class="badge badge-pink">'.$libTag->getNameById($apartment['tag_id']).'</span>':'...' ?>
+                                <?php if((time() - $apartment['time_insert']) < (86400 * 14)): ?>
+                                    <span class="badge badge-dark">DỰ ÁN MỚI </span>
+                                <?php endif; ?>
+
+                                <?php if($ghRoom->getNumberByStatus($apartment['id'], 'Available') == 0): ?>
+                                    <span class="badge badge-danger">FULL </span>
+                                <?php endif; ?>
                             </div>
                             <div class="col-md-3 col-12 text-md text-center">
                                 <i class="mdi mdi-pistol"></i> <span class="d-none d-md-inline">Đàm Phán Bởi: </span><strong><?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id']):"SINVA" ?></strong>
@@ -162,9 +172,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                         </div>
                         <div class="mt-2 list-action row pull-right pl-3 pr-3" >
                             <span class="notification-list">
-                            <?php
-                            $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
-                            ?>
+
                             <a class="m-1 collapsed"
                                data-toggle="collapse"
                                data-parent="#accordion"
