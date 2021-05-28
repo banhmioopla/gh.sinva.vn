@@ -150,7 +150,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
 
                             <div class="col-md-3 col-4 border-right border-danger">
                                 <i class="mdi mdi-tag-faces"></i> <span class="d-none d-md-inline">TAG: </span><?= $apartment['tag_id'] ? ' <span class="badge badge-pink">'.$libTag->getNameById($apartment['tag_id']).'</span>':'...' ?>
-                                <?php if((strtotime(date('d-m-Y')) - $apartment['time_insert']) < (86400 * 14)): ?>
+                                <?php if((strtotime(date('d-m-Y')) - $apartment['time_insert']) < (86400 * 30)): ?>
                                     <span class="badge badge-dark">DỰ ÁN MỚI </span>
                                 <?php endif; ?>
 
