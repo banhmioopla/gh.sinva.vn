@@ -138,6 +138,10 @@ html, body { height: 100%; }
     font-size: 90%;
     font-weight: 700;
 }
+.apartment-block .badge {
+    font-size: 70%;
+    font-weight: 700;
+}
 
 #gh-loader{
     left: 0;
