@@ -165,7 +165,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                         <div class="row mt-2">
                             <div class="ml-2 col-12">
                                 <h5 class="text-danger"><u>Mô Tả Dự Án</u></h5>
-                                <div class="more apm-description">
+                                <div class="more apm-description" style="white-space: pre-line">
                                     <?= $apartment['description'] ? $apartment['description'] : ':<' ?>
                                 </div>
                             </div>
