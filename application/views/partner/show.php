@@ -11,12 +11,12 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">GH</a></li>
+                            <li class="breadcrumb-item"><a href="#">Dự Án</a></li>
+                            <li class="breadcrumb-item active">Danh Sách Thương Hiệu Hợp Tác</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách đối tác</h3>
+                    <h2 class="font-weight-bold text-danger">Danh Sách Thương Hiệu Hợp Tác</h2>
                 </div>
             </div>
         </div>
@@ -35,9 +35,9 @@
                         <thead>
                         <tr>
                             <th>Tên</th>
-                            <th>SL.DA</th>
-                            <th class="text-center">Mở</th>
                             <th>Mô tả</th>
+                            <th class="text-center">Số Dự Án Đang Mở</th>
+                            <th class="text-center">Mở</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
@@ -54,23 +54,25 @@
                                             <?= $row['name'] ?>
                                     </div>
                                 </td>
-                                <td><?= $apm_counter ?></td>
+
+                                <td class="text-secondary"
+                                    data-pk="<?= $row['id'] ?>"
+                                    data-name="note"
+                                    ><?= $row['note'] ?>
+                                </td>
+
+                                <td class="text-center" style="width:80px"><?= $apm_counter ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-active-partner">
-                                            <input id="partner-<?= $row['id'] ?>" 
-                                                value="<?= $row['active'] ?>"
-                                                type="checkbox" 
+                                            <input id="partner-<?= $row['id'] ?>"
+                                                   value="<?= $row['active'] ?>"
+                                                   type="checkbox"
                                                 <?= $row['active'] =='YES' ? 'checked':'' ?>>
                                             <label for="partner-<?= $row['id'] ?>">
                                             </label>
                                         </div>
                                     </div>
-                                </td>
-                                <td class="text-secondary"
-                                    data-pk="<?= $row['id'] ?>"
-                                    data-name="note"
-                                    ><?= $row['note'] ?>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
