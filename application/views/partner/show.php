@@ -133,75 +133,78 @@
             $('#table-partner').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
-                responsive: true
-            });
-            
-            $('.is-active-partner input[type=checkbox]').click(function() {
-                var is_active = 'NO';
-                var this_id = $(this).attr('id');
-                var matches = this_id.match(/(\d+)/);
-                var partner_id = matches[0];
-                if($(this).is(':checked')) {
-                    is_active = 'YES';
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>admin/update-partner',
-                    data: {field_value: is_active, partner_id: partner_id, field_name : 'active'},
-                    async: false,
-                    success:function(response){
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.partner-alert').html(notify_html_success);
-                        } else {
-                            $('.partner-alert').html(notify_html_fail);
+                responsive: true,
+                "fnDrawCallback": function() {
+                    $('.is-active-partner input[type=checkbox]').click(function() {
+                        var is_active = 'NO';
+                        var this_id = $(this).attr('id');
+                        var matches = this_id.match(/(\d+)/);
+                        var partner_id = matches[0];
+                        if($(this).is(':checked')) {
+                            is_active = 'YES';
                         }
-                    },
-                    beforeSend: function(){
-                        $('#loader').show();
-                    },
-                    complete: function(){
-                        $('#loader').hide();
-                    }
-                });
-            });
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>admin/update-partner',
+                            data: {field_value: is_active, partner_id: partner_id, field_name : 'active'},
+                            async: false,
+                            success:function(response){
+                                var data = JSON.parse(response);
+                                if(data.status == true) {
+                                    $('.partner-alert').html(notify_html_success);
+                                } else {
+                                    $('.partner-alert').html(notify_html_fail);
+                                }
+                            },
+                            beforeSend: function(){
+                                $('#loader').show();
+                            },
+                            complete: function(){
+                                $('#loader').hide();
+                            }
+                        });
+                    });
 
-            $('.partner-name').editable({
-                type: "text",
-                url: '<?= base_url() ?>admin/update-partner-editable',
-                inputclass: '',
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.partner-alert').html(notify_html_success);
-                    } else {
-                        $('.partner-alert').html(notify_html_fail);
-                    }
-                }
-            });
-
-            $('.delete-partner').click(function(){
-                var this_id = $(this).attr('id');
-                var this_click = $(this);
-                var matches = this_id.match(/(\d+)/);
-                var partner_id = matches[0];
-                if(partner_id > 0) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '<?= base_url() ?>admin/delete-partner',
-                        data: {partner_id: partner_id},
+                    $('.partner-name').editable({
+                        type: "text",
+                        url: '<?= base_url() ?>admin/update-partner-editable',
+                        inputclass: '',
                         success: function(response) {
                             var data = JSON.parse(response);
                             if(data.status == true) {
                                 $('.partner-alert').html(notify_html_success);
-                                this_click.parents('tr').remove();
                             } else {
                                 $('.partner-alert').html(notify_html_fail);
                             }
                         }
                     });
+
+                    $('.delete-partner').click(function(){
+                        var this_id = $(this).attr('id');
+                        var this_click = $(this);
+                        var matches = this_id.match(/(\d+)/);
+                        var partner_id = matches[0];
+                        if(partner_id > 0) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>admin/delete-partner',
+                                data: {partner_id: partner_id},
+                                success: function(response) {
+                                    var data = JSON.parse(response);
+                                    if(data.status == true) {
+                                        $('.partner-alert').html(notify_html_success);
+                                        this_click.parents('tr').remove();
+                                    } else {
+                                        $('.partner-alert').html(notify_html_fail);
+                                    }
+                                }
+                            });
+                        }
+                    });
                 }
             });
+            
+
         });
     });
 </script>
