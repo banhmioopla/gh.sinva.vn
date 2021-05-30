@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                             <?php foreach($list_partner as $row ):
-                                $apm_counter = count($ghApartment->get(['partner_id' => $row['id']]));
+                                $apm_counter = count($ghApartment->get(['partner_id' => $row['id'], 'active' => 'YES']));
 
                                 ?>
                             <tr>
