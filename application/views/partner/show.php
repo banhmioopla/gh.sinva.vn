@@ -42,7 +42,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($list_partner as $row ): ?>
+                            <?php foreach($list_partner as $row ):
+                                $apm_counter = count($ghApartment->get(['partner_id' => $row['id']]));
+
+                                ?>
                             <tr>
                                 <td>
                                     <div class="partner-name" 
@@ -51,7 +54,7 @@
                                             <?= $row['name'] ?>
                                     </div>
                                 </td>
-                                <td><i>-</i></td>
+                                <td><?= $apm_counter ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-active-partner">

@@ -3,7 +3,7 @@
     <div class="sk-cube sk-cube1"></div>
     <div class="sk-cube sk-cube2"></div>
 </div>
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Page-Title -->
         <div class="row">
@@ -11,12 +11,12 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">GH</a></li>
+                            <li class="breadcrumb-item"><a href="#">Dự Án</a></li>
+                            <li class="breadcrumb-item active">Quận</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách quận</h3>
+                    <h2 class="font-weight-bold text-danger">Danh Sách Quận</h2>
                 </div>
             </div>
         </div>
@@ -34,37 +34,41 @@
                     <table id="table-district" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Tên Quận</th>
-                            <th>Số Căn Hộ</th>
-                            <th class="text-center">Mở</th>
+                            <th class="text-center">Tên Quận</th>
                             <th class="text-center">Mô tả</th>
+                            <th class="text-center">Số Dự Án Đang Mở</th>
+                            <th class="text-center">Mở</th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($list_district as $row ): ?>
+                            <?php
+                            foreach($list_district as $row ):
+                                $room_counter = count($ghApartment->get(['district_code' => $row['code'], 'active' => 'YES']));
+
+                                ?>
                             <tr>
-                                <td>
+                                <td class="text-center">
                                     <div class="district-name" 
                                         data-pk="<?= $row['id'] ?>" 
                                         data-name="name">
                                             <?= $row['name'] ?>
                                     </div>
                                 </td>
-                                <td><i>-</i></td>
+                                <td class="text-secondary"><?= $row['note'] ?></td>
+                                <td class="text-center" style="width:80px"><?= $room_counter ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <div class="checkbox checkbox-success is-active-district">
-                                            <input id="district-<?= $row['id'] ?>" 
-                                                value="<?= $row['active'] ?>"
-                                                type="checkbox" 
+                                            <input id="district-<?= $row['id'] ?>"
+                                                   value="<?= $row['active'] ?>"
+                                                   type="checkbox"
                                                 <?= $row['active'] =='YES' ? 'checked':'' ?>>
                                             <label for="district-<?= $row['id'] ?>">
                                             </label>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-secondary"><?= $row['note'] ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <button id='district-del-<?= $row['id'] ?>' class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect delete-district">

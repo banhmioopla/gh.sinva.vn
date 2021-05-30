@@ -7,13 +7,15 @@ class Partner extends CustomBaseStep {
 	{
 		parent::__construct();
 		$this->load->model('ghPartner');
+		$this->load->model('ghApartment');
 		$this->load->model('ghActivityTrack');
 	}
 
 	public function show(){
         $data['list_partner'] = $this->ghPartner->getAll();
+        $data['ghApartment'] = $this->ghApartment;
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('partner/show', $data);
 		$this->load->view('components/footer');
 	}

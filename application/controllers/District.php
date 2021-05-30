@@ -7,14 +7,16 @@ class District extends CustomBaseStep {
 	{
 		parent::__construct();
 		$this->load->model('ghDistrict');
+		$this->load->model('ghApartment');
 	}
 
 	public function show(){
 		$this->load->model('ghDistrict'); // load model ghUser
 		$data['list_district'] = $this->ghDistrict->getAll();
-		
+		$data['ghApartment'] = $this->ghApartment;
+
 		/*--- Load View ---*/
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('district/show', $data);
 		$this->load->view('components/footer');
 	}
