@@ -128,11 +128,15 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         <h5 class="col text-center notifier-apartment d-none">Tiêu đề Shock</h5>
                     </div>
                     <div class="mt-1 apm-tag-list">
-                        <span>
+
                         <?php if($apartment['tag_id']): ?>
                             <span class="badge badge-pink"><?= $libTag->getNameById($apartment['tag_id']) ?></span>
-                        </span>
                         <?php endif; ?>
+                        <span class="pull-right">
+                                    <span class="ml-4 text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?><i class="mdi mdi-checkerboard"></i></span>
+                                    <span class="ml-2 text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
+                                    <span class="ml-2 text-danger"><?= $ghRoom->getNumber($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
+                                </span>
                     </div>
                     <div class="col address-text text-center  text-address font-weight-bold">
                         <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" class="<?= $covidColor ?>">
@@ -140,7 +144,8 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?></a>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 offset-md-4"><p class="text-center font-weight-bold text-muted">Đàm Phán Bởi: <?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id']):"Sinva" ?></p></div>
+                        <div class="col-md-4 offset-md-4">
+                            <p class="text-center font-weight-bold text-muted">Đàm Phán Bởi: <?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id']):"Sinva" ?></p></div>
                     </div>
                     <div class="row">
                         <a class="col-12 text-center text-muted"
@@ -149,24 +154,12 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         <div class=" offset-3 col-6 text-center">
                             <div class="progress m-b-20">
                                 <div class="progress-bar bg-info" role="progressbar" style="width: <?= $libApartment->completeInfoRate($apartment['id'])['rate'] ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?= $libApartment->completeInfoRate($apartment['id'])['rate'] ?></div>
-                            </div></div>
-                        <div class="col-md-8">
-                            <h5 class="mb-md-2">Mô tả dự án</h5>
-                            <div class="more apm-description" 
-                                data-pk="<?= $apartment['id'] ?>"
-                                data-name= "description"
-                                data-value="<?= $apartment['description'] ?>">
-                                <?= $apartment['description'] ?>
                             </div>
                         </div>
-                        <div class="col-md-4 font-weight-bold" >
-                            <div class="text-right text-md-left">
-                                <h5 class="mb-md-2">Số lượng phòng</h5>
-                                <span>
-                                    <span class="ml-4 text-success"><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?><i class="mdi mdi-checkerboard"></i></span>
-                                    <span class="ml-2 text-warning"><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
-                                    <span class="ml-2 text-danger"><?= $ghRoom->getNumber($apartment['id']) ?><i class="mdi mdi-checkerboard"></i></span>
-                                </span>
+                        <div class="col-md-12">
+                            <h4 class="mb-md-2 text-danger"><u>Mô tả dự án</u> <small class="font-weight-bold"><a target="_blank" href="/admin/apartment/edit-description?id=<?= $apartment['id'] ?>"> <i class="mdi mdi-lead-pencil"></i> Chỉnh Sửa</a></small></h4>
+                            <div>
+                                <?= $apartment['description'] ?>
                             </div>
                         </div>
                     </div>

@@ -15,6 +15,8 @@
     <!-- End Footer -->
     <!-- jQuery  -->
     <script src="<?= $assets_path ?>js/jquery.min.js"></script>
+
+
     <script src="<?= $assets_path ?>js/popper.min.js"></script>
     <script src="<?= $assets_path ?>js/bootstrap.min.js"></script>
     <script src="<?= $assets_path ?>js/waves.js"></script>
@@ -59,6 +61,8 @@
     <!-- App js -->
     <script src="<?= $assets_path ?>js/jquery.core.js"></script>
     <script src="<?= $assets_path ?>js/jquery.app.js?v=20201011"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script>
         $.fn.editable.defaults.mode = 'popup';
         $.fn.editableform.buttons =

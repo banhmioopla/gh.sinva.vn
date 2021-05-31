@@ -1013,6 +1013,12 @@ $route['admin/list-apartment'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/apartment/edit-description'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/editDescription';
+    return $controller.$action;
+};
+
 $route['admin/create-apartment'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/create';

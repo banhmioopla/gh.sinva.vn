@@ -105,6 +105,31 @@ class Apartment extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+
+	public function editDescription(){
+	    $apm_id = $this->input->get('id');
+	    $apm = $this->ghApartment->getFirstById($apm_id);
+	    if(isset($_POST['submit'])){
+            $description = $this->input->post('description');
+            $test = $this->ghApartment->updateById($apm_id, [
+                'description' => $description,
+                'time_update' => time()
+            ]);
+            $apm = $this->ghApartment->getFirstById($apm_id);
+            $this->session->set_flashdata('fast_notify', [
+                'message' => 'Cập Nhật Mô Tả Thành Công',
+                'status' => 'success'
+            ]);
+        }
+
+
+        $this->load->view('components/header');
+        $this->load->view('apartment/edit-description', [
+            'apartment' => $apm,
+        ]);
+        $this->load->view('components/footer');
+    }
+
 	public function showV2(){
 		$district_code = $this->input->get('district-code');
 		$data = [];
