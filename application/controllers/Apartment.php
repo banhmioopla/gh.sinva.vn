@@ -20,26 +20,32 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibUser', null, 'libUser');
 		$this->load->library('LibApartment', null, 'libApartment');
 		$this->load->library('LibCustomer', null, 'libCustomer');
-
-		$this->permission_modify = ['product-manager', 'business-manager'];
 	}
 
 	public function showNotificaton(){}
 
 	public function show(){
-		$district_code = $this->input->get('district-code');
+
 		$data = [];
-		$district_code = !empty($district_code) ? $district_code: null;
-		if(count($this->list_district_CRUD) == 0) {
+        if(count($this->list_district_CRUD) == 0) {
             $this->load->view('components/header');
             $this->load->view('apartment/error');
             $this->load->view('components/footer');
-		    return;
+            return;
         }
-        if(empty($district_code)) {
-            return redirect('/admin/list-apartment?district-code='.$this->list_district_CRUD[0]);
+
+        $district_code = $this->input->get('district-code');
+		$district_code = !empty($district_code) ? $district_code: $this->list_district_CRUD[0];
+		$params = [
+            'district_code' => $district_code,
+            'active' => 'YES'
+        ];
+		if($this->input->get('apmTag')) {
+            $params = [
+                'tag_id' => $this->input->get('apmTag'),
+                'active' => 'YES'
+            ];
         }
-		
 		$data['district_code'] = $district_code;
 		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);
 
@@ -47,17 +53,21 @@ class Apartment extends CustomBaseStep {
 		
 		$data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
 		$data['list_ward'] = $this->ghRoom->getWardByDistrict($district_code);
-		$data['list_apartment'] = $this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']);
+		$list_apartment = $this->ghApartment->get($params);
 
 		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['apartment_today'] = [];
 		$data['list_gadget_around'] = [];
 		$data['apartment_cur_week'] = $this->ghApartment->get(['time_update >' => strtotime('last Monday') ,'active' => 'YES']);
-		foreach($data['list_apartment'] as $item) {
-			if(date('d') == date('d', $item['time_update'])) {
-				$data['apartment_today'][] = $item;
-			}
+
+		$data['list_apartment'] = [];
+		foreach($list_apartment as $item) {
+			if(!$this->input->get('apmTag') == $item['tag_id']) {
+                continue;
+            }
+            $data['list_apartment'][] = $item;
 		}
+
 		$template = 'apartment/show-full-permission';
 
 		if(!$this->editable) {

@@ -115,6 +115,10 @@ include VIEWPATH . 'functions.php';
                                 <h3 class="text-danger font-weight-bold">Thông Tin Dịch Vụ</h3>
                                 <div class="row">
                                     <div class="col-md-6 col-12 shadow-sm">
+                                        <p class="mb-0 text-muted">Mô Tả</p>
+                                        <h5 class="mb-2 text-wrap"><?= $apartment['description'] ?></h5>
+                                    </div>
+                                    <div class="col-md-6 col-12 shadow-sm">
                                         <p class="mb-0 text-muted">Ghi Chú Dự Án</p>
                                         <h5 class="mb-2 text-wrap"><?= $apartment['note'] ?></h5>
                                     </div>

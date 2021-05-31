@@ -46,10 +46,11 @@ class UserDistrict extends CustomBaseStep {
 
         $post = $this->input->post();
         $this->ghUserDistrict->delete(['user_id' => $post['account_id']]);
-
-        $is_view_only = $post['is_view_only'] == "YES" ? "YES":"NO";
-
-        if(count($post['apm'])>0) {
+        $is_view_only = 'NO';
+        if($this->input->post('is_view_only')){
+            $is_view_only = 'YES';
+        }
+        if(is_array($this->input->post('apm')) && count($this->input->post('apm'))>0) {
             foreach ($post['apm'] as $apm) {
                 $this->ghUserDistrict->insert([
                     'apartment_id' => $apm,

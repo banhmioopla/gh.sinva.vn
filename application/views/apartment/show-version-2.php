@@ -80,9 +80,15 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                     <?php $this->load->view('components/list-navigation'); ?>
                 </div>
 
-                <?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
+                <?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]);
+
+                $covidColor = $this->input->get('apmTag') ? 'text-danger' :'text-purple';
+
+                ?>
                 <div class="m-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
+                        <a href="<?= base_url().'admin/list-apartment?apmTag=5' ?>"
+                           class="btn m-1 btn-sm <?= $this->input->get('apmTag') ? 'active' :'' ?> btn-outline-danger btn-rounded waves-light waves-effect">Covid</a>
                         <?php
                         foreach($this->list_district_CRUD as $district):
                             $district_btn = 'btn-outline-success';
@@ -115,7 +121,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                         <div class="row">
                             <div class="col-12">
                                 <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>">
-                                    <div class="address-text text-purple font-weight-bold ml-2 border-bottom border-muted">
+                                    <div class="address-text <?= $covidColor ?> font-weight-bold ml-2 border-bottom border-muted">
                                         <?=$apartment['address_street'] ?> <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
                                     </div>
                                 </a>

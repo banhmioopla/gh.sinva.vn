@@ -37,7 +37,7 @@ class GhConsultantBooking extends CI_Model {
         return $result->result_array();
     }
 
-    public function getGroupByStatus($from = 0, $to = null, $user_id, $status){
+    public function getGroupByStatus($from = 0, $to = null, $user_id = 0 , $status = ''){
         if(empty($to)) {
             $to = strtotime('+1months');
         }

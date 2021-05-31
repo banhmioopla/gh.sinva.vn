@@ -84,10 +84,14 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                 '.$this->session->flashdata('fast_notify')['message'].'
                             </div>';
                     }
+
+                    $covidColor = $this->input->get('apmTag') ? 'text-danger' :'text-purple';
                     ?>
 
                     <span class="d-flex justify-content-center flex-wrap">
-                    <?php foreach($this->list_district_CRUD as $district): ?>
+                         <a href="<?= base_url().'admin/list-apartment?apmTag=5' ?>"
+                            class="btn m-1 btn-sm <?= $this->input->get('apmTag') ? 'active' :'' ?> btn-outline-danger btn-rounded waves-light waves-effect">Covid</a>
+                        <?php foreach($this->list_district_CRUD as $district): ?>
                         <a href="<?= base_url().'admin/list-apartment?district-code='.$district ?>"
                             class="btn m-1 btn-sm btn-outline-success
                             <?= $district_code == $district ? 'active':'' ?>
@@ -130,8 +134,8 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         </span>
                         <?php endif; ?>
                     </div>
-                    <div class="col address-text text-center text-purple text-address font-weight-bold">
-                        <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>">
+                    <div class="col address-text text-center  text-address font-weight-bold">
+                        <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" class="<?= $covidColor ?>">
                         <?=$apartment['address_street'] ?>
                         <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?></a>
                     </div>
