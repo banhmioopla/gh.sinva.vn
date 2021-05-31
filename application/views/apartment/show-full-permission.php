@@ -158,7 +158,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         </div>
                         <div class="col-md-12">
                             <h4 class="mb-md-2 text-danger"><u>Mô tả dự án</u> <small class="font-weight-bold"><a target="_blank" href="/admin/apartment/edit-description?id=<?= $apartment['id'] ?>"> <i class="mdi mdi-lead-pencil"></i> Chỉnh Sửa</a></small></h4>
-                            <div>
+                            <div class="p-2" style="white-space: pre-line; background:#fee69c">
                                 <?= $apartment['description'] ?>
                             </div>
                         </div>
