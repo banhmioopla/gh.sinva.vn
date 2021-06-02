@@ -53,8 +53,7 @@ class LibApartment {
             'commission_rate' => "hoa hồng 12Th",
             'commission_rate_6m' => "hoa hồng 6Th",
             'commission_rate_9m' => "hoa hồng 9Th",
-            'map_longitude' => "Bản đồ - Kinh độ",
-            'map_latitude' => "Bản đồ - Vĩ Độ",
+
         ];
         return $info;
     }

@@ -168,9 +168,9 @@ $route['admin/update-consultant-booking-editable'] = function($params = []) {
 	$action = '/updateEditable';
 	return $controller.$action;
 };
-$route['admin/list-rp-booking-customer'] = function($params = []) {
+$route['admin/report/apartment-updating'] = function($params = []) {
 	$controller = 'Report';
-	$action = '/showBookingCustomer';
+	$action = '/ApartmentUpdating';
 	return $controller.$action;
 };
 $route['admin/create-rp-booking-customer'] = function($params = []) {

@@ -116,6 +116,9 @@
                                         Thu Nhập Theo Hợp Đồng</a></li>
                             <?php endif;?>
 
+                            <li><a href="/admin/report/apartment-updating"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Báo Cáo Tiến Độ Cập Nhật Dự Án</a></li>
+
                             <?php if(isYourPermission('ShUser', 'show',
                                 $this->permission_set)):?>
                                 <li class="bg-dark"><a class="text-light" href="/share/user/show"><i class="mdi
