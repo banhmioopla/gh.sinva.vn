@@ -350,7 +350,7 @@ class Fee extends CustomBaseStep {
 
     /*Cơ chế mới cho mỗi thành viên*/
     private function syncPersonalIncome($user_id = null, $total_contract = 0, $total_sale = 0,
-                                                     $start_time, $end_time
+                                                     $start_time = '', $end_time = ''
     ) {
 
         $cd_config = $this->config->item('internal_mechanism_income_rate_control_department');
@@ -770,6 +770,7 @@ class Fee extends CustomBaseStep {
         }
 
         $this_get_new_apartment_total = 0;
+        $this_get_new_apartment_description = '';
         if($user['role_code'] != 'collaborators') {
             $this_get_new_apartment = $this->getTotalSaleGetNewApartment($user_id,$start_time, $end_time);
             $this_get_new_apartment_total = (double) $this_get_new_apartment['total'] * $this->get_new_apartment_rate;
