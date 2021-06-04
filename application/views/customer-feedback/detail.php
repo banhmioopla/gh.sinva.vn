@@ -72,7 +72,7 @@ $survey = $answer['feedback'];
                                     <label class="col-10 offset-2 font-weight-bold col-form-label">Anh/chị cảm thấy thái độ tiếp đón của nhân viên Sinvahome như thế nào?</label>
                                     <div class="col-9 offset-3">
                                         <div class="radio radio-danger checkbox-circle">
-                                            <input id="attitude-1" type="radio" disabled <?= $survey['attitude']['answer'] === 'Xuề xoà' ? 'checked':'' ?> required name="attitude" value="Niềm nở, nhiệt tình">
+                                            <input id="attitude-1" type="radio" disabled <?= $survey['attitude']['answer'] === 'Niềm nở, nhiệt tình' ? 'checked':'' ?> required name="attitude" value="Niềm nở, nhiệt tình">
                                             <label for="attitude-1">
                                                 Niềm nở, nhiệt tình
                                             </label>
