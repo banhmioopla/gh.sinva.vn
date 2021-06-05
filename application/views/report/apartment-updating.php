@@ -28,12 +28,14 @@
                                 <thead>
                                 <th>Dự Án</th>
                                 <th>% Hoàn Thiện Dịch Vụ</th>
+                                <th>% Hoàn Thiện Hình Ảnh</th>
                                 </thead>
                                 <tbody>
                                 <?php foreach ($list_apartment as $apm): ?>
                                     <tr>
                                         <td><?= $apm['address_street'] ?> Q. <?= $apm['district_code'] ?></td>
                                         <td><?= $update_rate[$apm['id']] * 100 ?></td>
+                                        <td><?= round((double)$update_rate_imgs[$apm['id']],3)*100?></td>
                                     </tr>
                                 <?php endforeach;?>
                                 </tbody>
