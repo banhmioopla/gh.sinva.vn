@@ -113,7 +113,11 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                 <?php foreach ($list_apartment as $apartment):
                     if($check_only_apartment && !in_array($apartment['id'], $this->list_apartment_view_only)) continue;
 
-
+                    $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
+                    $tag_promotion = '';
+                    if(count($list_promotion) > 0) {
+                        $tag_promotion = '<span class="badge badge-danger"><i class="mdi mdi-gift mr-2"></i> '.count($list_promotion). '</span>';
+                    }
                     $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
                     ?>
                     <!-- item -->
@@ -163,6 +167,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                 <?php if($ghRoom->getNumberByStatus($apartment['id'], 'Available') == 0): ?>
                                     <span class="badge badge-danger">FULL </span>
                                 <?php endif; ?>
+                                <?= $tag_promotion ?>
                             </div>
                             <div class="col-md-3 col-12 text-md text-center">
                                 <i class="mdi mdi-pistol"></i> <span class="d-none d-md-inline">Đàm Phán Bởi: </span><strong><?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id']):"SINVA" ?></strong>
@@ -299,7 +304,6 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                         <?php endif; ?>
                                     </h5>
                                     <?php
-                                    $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
                                     foreach ($list_promotion as $p):
                                         ?>
                                         <span class="badge badge-danger badge-pill"><?= $p['title'] ?></span>

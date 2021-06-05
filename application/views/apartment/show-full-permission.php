@@ -109,7 +109,14 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                     </div>
                 </div>
 
-                <?php foreach ($list_apartment as $apartment): ?>
+                <?php foreach ($list_apartment as $apartment):
+                    $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
+                    $tag_promotion = '';
+                    if(count($list_promotion)) {
+                        $tag_promotion = '<span class="badge badge-danger"><i class="mdi mdi-gift mr-2"></i> '.count($list_promotion).'</span>';
+                    }
+                    $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
+                    ?>
                 <div class="card-header apartment-block" role="tab"
                      id="headingThree">
                     <?php if($apartment['short_message']) echo '<h5 class="col text-center notifier-apartment">'.$apartment["short_message"].'</h5>'; ?>
@@ -128,7 +135,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         <h5 class="col text-center notifier-apartment d-none">Tiêu đề Shock</h5>
                     </div>
                     <div class="mt-1 apm-tag-list">
-
+                        <?= $tag_promotion ?>
                         <?php if($apartment['tag_id']): ?>
                             <span class="badge badge-pink"><?= $libTag->getNameById($apartment['tag_id']) ?></span>
                         <?php endif; ?>
@@ -167,9 +174,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
                     <div class="mt-2 list-action border-top">
                         <div class="d-flex justify-content-center notification-list">
-                            <?php 
-                            $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
-                            ?>
                             <a class="m-1 collapsed btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect "
                                 data-toggle="collapse" 
                                 data-parent="#accordion" 
@@ -287,7 +291,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                     <?php endif; ?>
                                 </h5>
                                 <?php
-                                $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
                                 foreach ($list_promotion as $p):
                                     ?>
                                     <span class="badge badge-danger badge-pill"><?= $p['title'] ?></span>
