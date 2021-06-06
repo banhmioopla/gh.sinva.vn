@@ -1267,6 +1267,21 @@ $route['admin/internal-content/page/income-rule'] = function($params = []) {
     $action = '/pageIncomeRule';
     return $controller.$action;
 };
+
+// Merge Business Apartment
+$route['admin/consultant-post/your-list'] = function($params = []) {
+    $controller = 'ConsultantPost';
+    $action = '/showYour';
+    return $controller.$action;
+};
+
+$route['admin/consultant-post/detail'] = function($params = []) {
+    $controller = 'ConsultantPost';
+    $action = '/showDetail';
+    return $controller.$action;
+};
+
+
 /* :::SHARE:::*/
 $route['share/user/create'] = function($params = []) {
     $controller = 'ShUser';

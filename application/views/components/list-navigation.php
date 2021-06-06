@@ -73,6 +73,21 @@
             <?php endif; ?>
         </div>
     </div>
+
+    <div class="col-12">
+        <div class="m-md-2 m-1 button-list">
+            <a href="/admin/list-apartment">
+                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i class="fa fa-tasks mr-1"></i> <span>Danh Sách Dự Án</span>
+                </button>
+            </a>
+            <a href="/admin/consultant-post/your-list">
+                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i class="mdi mdi-library-plus mr-1"></i> <span>Bài Đăng Tư Vấn</span>
+                </button>
+            </a>
+
+        </div>
+    </div>
+
     <div class="col-12">
         <div class="mt-1 ">
             <a href="/admin/internal-content/page/income-rule"> <i class="mdi mdi-message-processing"></i> <u>Thông báo thay đổi cách chi trả thu nhập</u></a>

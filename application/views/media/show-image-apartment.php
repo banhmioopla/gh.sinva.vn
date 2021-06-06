@@ -67,7 +67,10 @@ include VIEWPATH . 'functions.php';
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 text-center">
+                <?php $this->load->view('components/list-navigation'); ?>
+            </div>
+            <div class="col-12 mt-1">
                 <div class="card-box">
                     <div class="row ">
                         <div class="col-md-4">
@@ -79,8 +82,23 @@ include VIEWPATH . 'functions.php';
                                 </p>
                             </div>
                         </div>
-                        <div class="col-md-4">
 
+                        <div class="col-md-4">
+                            <div class="card-box bg-warning widget-flat border-warning text-white">
+                                <i class="mdi mdi-folder-multiple-image"></i>
+                                <h3 class="m-b-10"><?= count($list_post) ?></h3>
+                                <a href="/admin/consultant-post/your-list" class="btn btn-info pull-right">Đi đến kho bài đăng</a>
+                                <p class="text-uppercase mb-2 font-13 font-600">
+                                    Bài Đăng Tư Vấn
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col text-center">
+                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id']?>"
+                               class="btn-danger float-md-right mt-1 mt-md-0 btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
+                        </div>
+                        <div class="col-md-4">
+                            <strong class="text-danger">Xem hình các dự án khác</strong>
                             <select id="search-apartment-id" class="form-control">
                                 <option value="" disabled>Chọn Dự Án Khác</option>
                                 <?php foreach ($list_apartment as $item):
@@ -91,7 +109,7 @@ include VIEWPATH . 'functions.php';
 
                                     ?>
                                     <option
-                                            <?= $select ?>
+                                        <?= $select ?>
                                             value="<?= $item['id'] ?>"><?= $item['address_street'] . ' Ph.'.$item['address_ward'] ?></option>
                                 <?php endforeach;?>
                             </select>
@@ -104,16 +122,12 @@ include VIEWPATH . 'functions.php';
                                 })
                             </script>
                         </div>
-                        <div class="col text-center">
-                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id']?>"
-                               class="btn-danger float-md-right mt-1 mt-md-0 btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card-box">
+                            <div class="card-box " >
                                 <h3 class="text-danger font-weight-bold">Thông Tin Dịch Vụ</h3>
-                                <div class="row">
+                                <div class="row slimscroll border" style="max-height: 370px;">
                                     <div class="col-md-6 col-12 shadow-sm">
                                         <p class="mb-0 text-muted">Mô Tả</p>
                                         <h5 class="mb-2 text-wrap"><?= $apartment['description'] ?></h5>

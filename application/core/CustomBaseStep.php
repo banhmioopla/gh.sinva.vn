@@ -90,6 +90,7 @@ class CustomBaseStep extends CI_Controller {
             'Media' => ['showImgApartment', 'uploadImgApartment', 'ajaxApartmentShowImage'],
             'ConsultantBooking' => ['chart'],
             'Report' => ['ApartmentUpdating'],
+            'ConsultantPost' => ['showYour', 'showDetail'],
         ];
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 

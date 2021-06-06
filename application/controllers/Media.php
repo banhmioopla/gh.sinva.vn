@@ -11,6 +11,7 @@ class Media extends CustomBaseStep {
         $this->load->model('ghRoom');
         $this->load->model('ghApartment');
         $this->load->model('ghActivityTrack');
+        $this->load->model('ghPublicConsultingPost');
         $this->load->helper('money');
 
         $this->route_media_apm = '/';
@@ -49,6 +50,7 @@ class Media extends CustomBaseStep {
 
         $data['apartment'] = $apartment;
         $data['list_apartment'] = $this->ghApartment->get(['active' => 'YES']);
+        $data['list_post'] = $this->ghPublicConsultingPost->get(['user_create_id' => $this->auth['account_id']]);
         $data['chain_room'] = $chain_room;
         $data['counter'] = $counter;
         $data['label_apartment'] =  $this->config->item('label.apartment');

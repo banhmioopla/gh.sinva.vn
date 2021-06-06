@@ -19,7 +19,10 @@
         <!-- end page title end breadcrumb -->
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 text-center">
+                <?php $this->load->view('components/list-navigation'); ?>
+            </div>
+            <div class="col-12 mt-1">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-12">
