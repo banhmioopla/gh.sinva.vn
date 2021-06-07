@@ -56,7 +56,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                             <?= $row['title'] ?>
                                     </div>
                                 </td>
-                                <td class="promotion-description" data-pk="<?= $row['id'] ?>" data-name="description"><?= $row['description'] ?></td>
+                                <td class="promotion-description" style="white-space: pre-line;" data-pk="<?= $row['id'] ?>" data-name="description"><?= $row['description'] ?></td>
                                 <td >
                                     <div class="promotion-start_time"
                                          data-pk="<?= $row['id'] ?>"
