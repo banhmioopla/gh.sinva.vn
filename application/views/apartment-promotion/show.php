@@ -47,7 +47,12 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($list_promotion as $row ): ?>
+                            <?php foreach($list_promotion as $row ):
+                                $edit = '-';
+                                if(isYourPermission('ApartmentPromotion', 'showEdit', $this->permission_set)) {
+                                    $edit = '<a href="/admin/apartment-promotion/show-edit?id='.$row['id'].'" class="font-weight-bold">Chỉnh Sửa</a>';
+                                }
+                                ?>
                             <tr>
                                 <td>
                                     <div class="promotion-title"
@@ -73,7 +78,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                         <?= date('d/m/Y',$row['end_time']) ?>
                                     </div>
                                     </td>
-                                <td><i>-</i></td>
+                                <td><?= $edit ?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

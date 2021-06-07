@@ -28,6 +28,32 @@ class ApartmentPromotion extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
+    public function showEdit(){
+        $id = $this->input->get('id');
+
+        $data['promotion'] = $this->ghApartmentPromotion->getFirstById($id);
+        $data['apartment'] = $this->ghApartment->getFirstById($data['promotion']['apartment_id']);
+        if(isset($_POST['submit'])){
+            $description = $this->input->post('description');
+            $title = $this->input->post('title');
+            $test = $this->ghApartmentPromotion->updateById($id, [
+                'description' => $description,
+                'title' => $title,
+            ]);
+
+            $data['promotion'] = $this->ghApartmentPromotion->getFirstById($id);
+            $this->session->set_flashdata('fast_notify', [
+                'message' => 'Cập Nhật Ưu Đãi Thành Công',
+                'status' => 'success'
+            ]);
+        }
+
+        /*--- Load View ---*/
+        $this->load->view('components/header');
+        $this->load->view('apartment-promotion/show-edit', $data);
+        $this->load->view('components/footer');
+    }
+
     public function create() {
 
         $post = $this->input->post();
