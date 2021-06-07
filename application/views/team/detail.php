@@ -28,6 +28,7 @@
             <div class="col-12">
                 <div class="card-box">
                     <form>
+                        <input type="hidden" name="id" value="<?= $team['id'] ?>">
                         <div class="row align-items-center">
                             <div class="col">
                                 <strong>Khoảng ngày Từ</strong>
