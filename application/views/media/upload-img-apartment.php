@@ -41,7 +41,7 @@
                             <div class="row">
                                 <div class="col-md-6 offset-md-3">
                                     <p class="mb-2 mt-4 font-weight-bold text-danger">Vui lòng chọn mã phòng</p>
-                                    <select name="room_id" required id="" class="form-control">
+                                    <select name="room_id[]" required id="" class="form-control select2-multiple" multiple="multiple">
                                         <option value="">Vui lòng chọn mã phòng...</option>
                                         <?php foreach ($cb_room as $index => $room): ?>
                                             <option value="<?= $room['value'] ?>"> <?= $room['text'] ?></option>
@@ -53,7 +53,7 @@
                             <div class="row mt-1">
                                 <div class="form-group col-md-6 offset-md-3">
                                     <p class="mb-2 mt-4 font-weight-bold text-danger">Vui Lòng Chọn Ảnh Từ Máy</p>
-                                    <input type="file" name="files[]" multiple class="filestyle" data-buttontext="Select file"
+                                    <input type="file" name="files[]" required multiple class="filestyle" data-buttontext="Select file"
                                            data-btnClass="btn-light">
                                     <p class="text-success p-2 bg-dark mt-2 text-center" id="upload-msg"> 0 ảnh được chọn</p>
                                 </div>

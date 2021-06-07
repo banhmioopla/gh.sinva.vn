@@ -101,40 +101,50 @@ class Media extends CustomBaseStep {
             if (empty($max_id)) {
                 $max_id = 1;
             }
-            $room_id = $this->input->post('room_id');
-            for ($i = 0; $i < $filesCount; $i++) {
+            $list_room_id = $this->input->post('room_id');
+            if($filesCount == 0) {
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Vui Lòng chọn Ảnh',
+                    'status' => 'danger'
+                ]);
+                return redirect('/admin/apartment/upload-img?apartment_id='.$apartment['id']);
+            }
+            foreach ($list_room_id as $room_id) {
+                for ($i = 0; $i < $filesCount; $i++) {
 
-                $ext = strtolower(pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION));
-                $file_name = $max_id . '-apartment-' . $apartment_id . '-' . $time . '.' . $ext;
+                    $ext = strtolower(pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION));
+                    $file_name = $max_id . '-apartment-' . $apartment_id . '-' . $time . '.' . $ext;
 
-                $_FILES['file']['name'] = $file_name;
-                $_FILES['file']['type'] = $_FILES['files']['type'][$i];
-                $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
-                $_FILES['file']['error'] = $_FILES['files']['error'][$i];
-                $_FILES['file']['size'] = $_FILES['files']['size'][$i];
+                    $_FILES['file']['name'] = $file_name;
+                    $_FILES['file']['type'] = $_FILES['files']['type'][$i];
+                    $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+                    $_FILES['file']['error'] = $_FILES['files']['error'][$i];
+                    $_FILES['file']['size'] = $_FILES['files']['size'][$i];
 
-                if ($this->upload->do_upload('file')) {
-                    // Uploaded file data
-                    $this->upload->data();
-                    $uploadData[$i]['name'] = $file_name;
-                    $uploadData[$i]['file_type'] = $ext;
-                    $uploadData[$i]['time_insert'] = $time;
-                    $uploadData[$i]['controller'] = 'Apartment';
-                    $uploadData[$i]['room_id'] = $room_id;
-                    $uploadData[$i]['apartment_id'] = $apartment_id;
-                    $uploadData[$i]['user_id'] = $this->auth['account_id'];
-                    $uploadData[$i]['status'] = 'Pending';
-                    $max_id += 1;
+                    if ($this->upload->do_upload('file')) {
+                        // Uploaded file data
+                        $this->upload->data();
+                        $uploadData[$i]['name'] = $file_name;
+                        $uploadData[$i]['file_type'] = $ext;
+                        $uploadData[$i]['time_insert'] = $time;
+                        $uploadData[$i]['controller'] = 'Apartment';
+                        $uploadData[$i]['room_id'] = $room_id;
+                        $uploadData[$i]['apartment_id'] = $apartment_id;
+                        $uploadData[$i]['user_id'] = $this->auth['account_id'];
+                        $uploadData[$i]['status'] = 'Pending';
+                        $max_id += 1;
+                    }
                 }
+
+                if (!empty($uploadData)) {
+                    $this->ghImage->insert($uploadData);
+                }
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Upload <strong>'.$filesCount.'</strong> file(s) thành công ',
+                    'status' => 'success'
+                ]);
             }
 
-            if (!empty($uploadData)) {
-                $this->ghImage->insert($uploadData);
-            }
-            $this->session->set_flashdata('fast_notify', [
-                'message' => 'Upload <strong>'.$filesCount.'</strong> file(s) thành công ',
-                'status' => 'success'
-            ]);
         }
 
         $this->load->view('components/header');
