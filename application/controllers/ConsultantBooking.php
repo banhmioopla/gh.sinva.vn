@@ -350,7 +350,7 @@ class ConsultantBooking extends CustomBaseStep {
     }
 
 
-	private function emailConfig($mail_to = null, $name_to, $subject = null, $content)
+	private function emailConfig($mail_to = null, $name_to = null , $subject = null, $content = null)
     {
         $mail = new PHPMailer();
         try {

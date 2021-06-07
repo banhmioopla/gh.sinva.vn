@@ -481,11 +481,25 @@ include VIEWPATH . 'functions.php';
                         `;
                         } else {
                             html += `
-                            <div class="col-6 mt-1 col-md-3" id="img-box-${i.id}">
-                                    <video width="100%" height="80%"
+                            <div class="col-6 bg-white pt-1 mt-1 col-md-3" id="img-box-${i.id}">
+                                    <video width="100%" height="80%" class="border"
                                                controls="controls">
                                             <source src="${i.url}" type="video/mp4"/>
                                         </video>
+                                <div class="row mt-2 pl-1 pr-1">
+                                <div class="col">
+                                    <i type="button"
+                                    data-img-id="${i.id}"
+                                    class="btn btn-icon fa fa-remove delete-img ${delete_btn} btn-sm waves-effect waves-light btn-danger"> </i>
+                                </div>
+                                <div class="col">
+                                    <div class="checkbox text-right checkbox-danger">
+                                        <input id="checkbox-${i.id}" type="checkbox" name="post_imgs" value="${i.id}" >
+                                        <label for="checkbox-${i.id}"></label>
+                                    </div>
+                                </div>
+
+                            </div>
                             </div>
                             `;
                         }
