@@ -15,7 +15,7 @@ class CustomBaseStep extends CI_Controller {
 			return redirect('/');
 		}
 		
-		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig']);
+		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig', 'ghTeam']);
 		$this->auth = $this->session->userdata('auth');
 		$this->role = $this->ghRole->get(['code' =>$this->auth['role_code']])[0];
 		$this->load->library('LibRole', null, 'libRole');
@@ -34,6 +34,12 @@ class CustomBaseStep extends CI_Controller {
         $this->list_district_view_only = [];
         $temp_district_arr = [];
         $this->editable = false;
+        $this->yourTeam = false;
+
+        $yourTeam = $this->ghTeam->getFirstByLeaderUserId($this->auth['account_id']);
+        if($yourTeam){
+            $this->yourTeam = $yourTeam;
+        }
 
 		foreach($ghUserDistrict as $ud) {
 
@@ -92,6 +98,7 @@ class CustomBaseStep extends CI_Controller {
             'Report' => ['ApartmentUpdating'],
             'ConsultantPost' => ['showYour', 'showDetail'],
             'ApartmentPromotion' => [],
+            'Team' => ['detail'],
         ];
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 

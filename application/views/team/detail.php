@@ -12,8 +12,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h2 class="text-danger font-weight-bold">Danh Sách Thành Viên: <?= $team['name'] ?> </h2>
-                    <h2 class="text-danger font-weight-bold">Leader: <?= $team['leader_user_id'] ?> </h2>
+                    <h2 class="text-danger font-weight-bold"><?= $team['name'] ?> - Leader: <?= $team['leader_user_id'] ?> </h2>
                 </div>
             </div>
         </div>
@@ -26,16 +25,53 @@
         ?>
         <div class="district-alert"></div>
         <div class="row">
+            <div class="col-12">
+                <div class="card-box">
+                    <form>
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <strong>Khoảng ngày Từ</strong>
+                                <input type="text" class="form-control datepicker mt-1 mb-2" name="timeFrom" value="<?= $timeFrom ?>" >
+                            </div>
+                            <div class="col">
+                                <strong>Khoảng ngày Đến</strong>
+                                <input type="text" class="form-control datepicker mt-1 mb-2" name="timeTo" value="<?= $timeTo ?>">
+                            </div>
+                            <div class="col-12 float-right">
+                                <button type="submit" class="btn btn-danger mt-2 pull-right mb-2">TÌM KIẾM</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
-                    <table id="table-district" class="table table-bordered">
+                    <h3 class="text-danger font-weight-bold">Danh Sách Thành Viên</h3>
+                    <table id="table-district" class="table table-dark table-hover table-bordered">
                         <thead>
-                        <tr>
+                        <tr >
                             <th>Tên Thành Viên</th>
+                            <th class="text-center">Số Lượng Hợp Đồng</th>
+                            <th class="text-center">Số Lượt Book</th>
+                            <th>Doanh Số</th>
+                            <th>Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($list_member as $row ): ?>
+                        <?php foreach($list_member as $row ):
+                            $contract =count($ghContract->get([
+                                    'consultant_id' => $row['user_id'],
+                                    'time_insert >= ' => strtotime($timeFrom),
+                                    'time_insert <= ' => strtotime($timeTo) + 86399,
+                            ]));
+
+                            $booking =count($ghConsultantBooking->get([
+                                    'booking_user_id' => $row['user_id'],
+                                    'time_booking >=' => strtotime($timeFrom),
+                                    'time_booking <=' => strtotime($timeTo) + 86399,
+                            ]));
+
+                            ?>
                             <tr>
                                 <td>
                                     <div class="team-name"
@@ -44,7 +80,13 @@
                                         <?= $libUser->getNameByAccountid($row['user_id']) ?>
                                     </div>
                                 </td>
-
+                                <td class="text-center"><?= $contract ?></td>
+                                <td class="text-center"><?= $booking ?></td>
+                                <td>-</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
+                                    <button type="button" class="btn btn-sm btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -53,7 +95,7 @@
             </div>
             <div class="col-12 col-md-5">
                 <div class="card-box">
-                    <h4 class="header-title m-t-0">Thêm mới</h4>
+                    <h3 class="text-danger font-weight-bold">Thêm Thành Viên Mới</h3>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-team-user">
                         <input type="hidden" name="team_id" value="<?= $team['id'] ?>">
                         <div class="form-group row">
@@ -68,8 +110,8 @@
 
                         <div class="form-group row">
                             <div class="col-8 offset-4">
-                                <button type="submit" class="btn btn-custom waves-effect waves-light">
-                                    Thêm mới
+                                <button type="submit" class="btn btn-danger waves-effect waves-light">
+                                   <i class="fa fa-user-plus"></i> THÊM MỚI
                                 </button>
                             </div>
                         </div>
@@ -89,6 +131,10 @@
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true
+            });
+
+            $('.datepicker').datepicker({
+                format: "dd-mm-yyyy"
             });
 
         });

@@ -16,6 +16,10 @@ class GhTeam extends CI_Model {
         return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
     }
 
+    public function getFirstByLeaderUserId($leader_id) {
+        return $this->db->get_where($this->table, ['leader_user_id' => $leader_id])->row_array();
+    }
+
     public function getById($district_id) {
         return $this->db->get_where($this->table, ['id' => $district_id])->result_array();
     }

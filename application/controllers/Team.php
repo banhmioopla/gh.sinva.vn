@@ -8,6 +8,8 @@ class Team extends CustomBaseStep {
 		parent::__construct();
 		$this->load->model('ghTeam');
 		$this->load->model('ghTeamUser');
+		$this->load->model('ghContract');
+		$this->load->model('ghConsultantBooking');
         $this->load->library('LibUser', null, 'libUser');
 	}
 
@@ -26,13 +28,27 @@ class Team extends CustomBaseStep {
 	    $id = $this->input->get('id');
 	    $list_member = $this->ghTeamUser->get(['team_id' => $id]);
         $team = $this->ghTeam->getFirstById($id);
+        $timeFrom = date('01-m-Y');
+        $timeTo = date('d-m-Y');
+        if($this->input->get('timeFrom')){
+            $timeFrom = $this->input->get('timeFrom');
+        }
+
+        if($this->input->get('timeTo')){
+            $timeFrom = $this->input->get('timeTo');
+        }
+
         /*--- Load View ---*/
         $this->load->view('components/header');
         $this->load->view('team/detail', [
             'list_member' => $list_member,
             'team' => $team,
             'libUser' => $this->libUser,
+            'ghContract' => $this->ghContract,
+            'ghConsultantBooking' => $this->ghConsultantBooking,
             'ghTeam' => $this->ghTeam,
+            'timeFrom' => $timeFrom,
+            'timeTo' => $timeTo,
             'list_user' => $this->libUser->cb()
         ]);
         $this->load->view('components/footer');

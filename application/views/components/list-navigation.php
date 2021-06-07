@@ -84,6 +84,12 @@
                 <button type="button" class="btn btn-secondary waves-effect waves-light"> <i class="mdi mdi-library-plus mr-1"></i> <span>Bài Đăng Tư Vấn</span>
                 </button>
             </a>
+            <?php  if($this->yourTeam): ?>
+            <a href="/admin/team/detail?id=<?= $this->yourTeam['id'] ?>">
+                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i class="fa fa-group mr-1"></i> <span><?= $this->yourTeam['name'] ?></span>
+                </button>
+            </a>
+            <?php endif; ?>
 
         </div>
     </div>
