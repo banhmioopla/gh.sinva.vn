@@ -54,7 +54,7 @@
                             <th>Tên Thành Viên</th>
                             <th class="text-center">Số Lượng Hợp Đồng</th>
                             <th class="text-center">Số Lượt Book</th>
-                            <th>Doanh Số</th>
+                            <th>Doanh Số <small>x1000</small></th>
                             <th>Tùy Chọn</th>
                         </tr>
                         </thead>
@@ -65,6 +65,8 @@
                                     'time_insert >= ' => strtotime($timeFrom),
                                     'time_insert <= ' => strtotime($timeTo) + 86399,
                             ]));
+
+                            $total = $ghContract->getTotalSaleByConsultant($row['user_id'], $timeFrom, $timeTo);
 
                             $booking =count($ghConsultantBooking->get([
                                     'booking_user_id' => $row['user_id'],
@@ -83,7 +85,7 @@
                                 </td>
                                 <td class="text-center"><?= $contract ?></td>
                                 <td class="text-center"><?= $booking ?></td>
-                                <td>-</td>
+                                <td class="text-warning"><?= number_format($total/1000) ?></td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
                                     <button type="button" class="btn btn-sm btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>

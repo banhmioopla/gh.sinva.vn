@@ -13,6 +13,22 @@ class GhContract extends CI_Model {
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
+    public function getTotalSaleByConsultant($user_id, $timeFrom, $timeTo) {
+        $this->db->order_by('id','DESC');
+        $list = $this->db->get_where($this->table, [
+            'consultant_id' => $user_id,
+            'time_insert >= ' => strtotime($timeFrom),
+            'time_insert <= ' => strtotime($timeTo) + 86399,
+            ])->result_array();
+
+        $total = 0;
+        foreach ($list as $item) {
+            $total += $item['room_price'] * $item['commission_rate'] / 100;
+        }
+
+        return $total;
+    }
+
     public function getByActive() {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }
