@@ -35,7 +35,7 @@ class Team extends CustomBaseStep {
         }
 
         if($this->input->get('timeTo')){
-            $timeFrom = $this->input->get('timeTo');
+            $timeTo = $this->input->get('timeTo');
         }
 
         /*--- Load View ---*/
