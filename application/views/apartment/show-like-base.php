@@ -555,6 +555,7 @@
                     type: 'select2',
                     url: '<?= base_url() ?>admin/apartment-get-partner',
                     inputclass: '',
+                    mode: 'inline',
                     source: function() {
                         data = [];
                         $.ajax({
