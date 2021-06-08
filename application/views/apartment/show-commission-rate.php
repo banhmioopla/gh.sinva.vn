@@ -94,7 +94,7 @@
                 "oSearch": {"bSmart": false},
                 responsive: true,
                 "fnDrawCallback": function() {
-                <?php if(in_array($this->auth['role_code'], ['customer-care', 'product-manager'])): ?>
+                <?php if(in_array($this->auth['role_code'], ['customer-care', 'product-manager', 'branch-ceo', 'developer'])): ?>
                     $('.comissionrate').editable({
                         type: "text",
                         url: '<?= base_url() ?>admin/update-apartment-editable',
