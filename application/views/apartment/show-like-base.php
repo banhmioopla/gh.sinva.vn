@@ -72,7 +72,7 @@
                                     data-name="partner_id"
                                     data-value="<?= $row['partner_id'] ?>"
                                     data-pk="<?= $row['id'] ?>">
-                                    <?= $libPartner->getNameById($row['partner_id']) ?>
+                                    <?= $row['partner_id'] ? $libPartner->getNameById($row['partner_id']) : 'cập nhật' ?>
                                 </td>
 
                                 <td class="apartment-select-district"
