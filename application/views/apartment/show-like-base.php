@@ -403,7 +403,7 @@
                         template:"D / MM / YYYY",
                         format:"DD-MM-YYYY",
                         viewformat:"DD-MM-YYYY",
-                        mode: 'inline',
+                        mode: 'popup',
                         combodate: {
                             firstItem: 'name'
                         },
