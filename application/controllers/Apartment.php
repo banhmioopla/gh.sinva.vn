@@ -62,7 +62,7 @@ class Apartment extends CustomBaseStep {
 
 		$data['list_apartment'] = [];
 		foreach($list_apartment as $item) {
-			if(!$this->input->get('apmTag') == $item['tag_id']) {
+			if($this->input->get('apmTag') && !$this->input->get('apmTag') == $item['tag_id']) {
                 continue;
             }
             $data['list_apartment'][] = $item;
