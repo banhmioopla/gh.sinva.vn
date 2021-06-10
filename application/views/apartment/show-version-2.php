@@ -147,6 +147,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                     <div class="col-md col-6 text-right">
                                         <small class="text-primary "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i',
                                                     max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></small>
+                                        <smal> <?= $apartment['time_update'] . ' __ ' . $ghRoom->getMaxTimeUpdate($apartment['id']) ?></smal>
                                         <div class="text-md-right d-none d-md-block text-center">
                                             <a class="text-muted"
                                                target="_blank"
