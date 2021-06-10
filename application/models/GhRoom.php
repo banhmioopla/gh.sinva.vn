@@ -96,7 +96,7 @@ class GhRoom extends CI_Model {
         return count($result) > 0 ? count($result): 0;
     }
     public function getMaxTimeUpdate($apartment_id){
-        $this->db->where(['apartment_id' => $apartment_id]);
+        $this->db->where(['apartment_id' => $apartment_id, 'active' => 'YES']);
         $this->db->select_max('time_update');
         $result = $this->db->get($this->table);
         return $result->result_array() ? $result->result_array()[0]['time_update']:'';
