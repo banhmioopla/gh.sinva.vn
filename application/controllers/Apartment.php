@@ -62,9 +62,27 @@ class Apartment extends CustomBaseStep {
             }
 
             if($this->input->get('rangeTime') == 'Today') {
+			    $flag_continue = false;
                 if($item['time_update'] < strtotime(date('d-m-Y')) || $item['time_update'] > strtotime(date('d-m-Y')) +86399){
+                    $flag_continue = true;
+                }
+
+                if($flag_continue) {
+                    $list_room = $this->ghRoom->get([
+                        'active' => 'YES',
+                        'time_update >=' =>  strtotime(date('d-m-Y')),
+                        'time_update <=' =>  strtotime(date('d-m-Y')) +86399,
+                        'apartment_id' => $item['id'],
+                    ]);
+                    if(count($list_room) == 0) {
+                        $flag_continue = true;
+                    }
+                }
+
+                if(!$flag_continue) {
                     continue;
                 }
+
             }
 
             $data['list_apartment'][] = $item;
