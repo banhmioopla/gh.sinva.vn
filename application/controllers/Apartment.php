@@ -48,6 +48,13 @@ class Apartment extends CustomBaseStep {
 		
 		$data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
 		$data['list_ward'] = $this->ghRoom->getWardByDistrict($district_code);
+        if(
+            strlen($this->input->get('apmTag'))
+            || strlen($this->input->get('rangeTime'))
+        ){
+            $params = ['active' => 'YES'];
+        }
+
 		$list_apartment = $this->ghApartment->get($params);
 
 		$data['cb_district'] = $this->libDistrict->cbActive();
@@ -74,8 +81,11 @@ class Apartment extends CustomBaseStep {
                         'time_update <=' =>  strtotime(date('d-m-Y')) +86399,
                         'apartment_id' => $item['id'],
                     ]);
+
                     if(count($list_room) == 0) {
                         $flag_continue = true;
+                    } else {
+                        $flag_continue = false;
                     }
                 }
 
