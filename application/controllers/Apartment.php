@@ -79,7 +79,7 @@ class Apartment extends CustomBaseStep {
                     }
                 }
 
-                if(!$flag_continue) {
+                if($flag_continue) {
                     continue;
                 }
 
