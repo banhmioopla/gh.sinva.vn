@@ -40,12 +40,7 @@ class Apartment extends CustomBaseStep {
             'district_code' => $district_code,
             'active' => 'YES'
         ];
-		if($this->input->get('apmTag')) {
-            $params = [
-                'tag_id' => $this->input->get('apmTag'),
-                'active' => 'YES'
-            ];
-        }
+
 		$data['district_code'] = $district_code;
 		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);
 
@@ -65,6 +60,13 @@ class Apartment extends CustomBaseStep {
 			if($this->input->get('apmTag') && !$this->input->get('apmTag') == $item['tag_id']) {
                 continue;
             }
+
+            if($this->input->get('rangeTime') == 'Today') {
+                if($item['time_update'] < strtotime(date('d-m-Y')) || $item['time_update'] > strtotime(date('d-m-Y')) +86399){
+                    continue;
+                }
+            }
+
             $data['list_apartment'][] = $item;
 		}
 

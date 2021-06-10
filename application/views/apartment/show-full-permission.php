@@ -89,8 +89,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                     ?>
 
                     <span class="d-flex justify-content-center flex-wrap">
-                         <a href="<?= base_url().'admin/list-apartment?apmTag=5' ?>"
-                            class="btn m-1 btn-sm <?= $this->input->get('apmTag') ? 'active' :'' ?> btn-outline-danger btn-rounded waves-light waves-effect">Covid</a>
                         <?php foreach($this->list_district_CRUD as $district): ?>
                         <a href="<?= base_url().'admin/list-apartment?district-code='.$district ?>"
                             class="btn m-1 btn-sm btn-outline-success
@@ -99,6 +97,15 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             <?= $district ?></a>
                             
                     <?php endforeach; ?>
+                    </span>
+
+                    <span class="d-flex justify-content-center flex-wrap ">
+                        <a href="<?= base_url().'admin/list-apartment?apmTag=5' ?>"
+                           class="btn m-1 btn-sm <?= $this->input->get('apmTag') ? 'active' :'' ?> btn-outline-danger btn-small btn-rounded waves-light waves-effect"> <i class="fa fa-ambulance"></i> Covid</a>
+
+                        <a href="<?= base_url().'admin/list-apartment?rangeTime=Today' ?>"
+                           class="btn m-1 btn-sm <?= $this->input->get('rangeTime') ? 'active' :'' ?> btn-outline-danger btn-small btn-rounded waves-light waves-effect"> <i class="fa fa-calendar-o"></i> Update Hôm Nay</a>
+
                     </span>
                     <div class="mt-3">
                         <div class="form-group row">

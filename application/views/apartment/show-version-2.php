@@ -87,8 +87,6 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                 ?>
                 <div class="m-2 list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
-                        <a href="<?= base_url().'admin/list-apartment?apmTag=5' ?>"
-                           class="btn m-1 btn-sm <?= $this->input->get('apmTag') ? 'active' :'' ?> btn-outline-danger btn-rounded waves-light waves-effect">Covid</a>
                         <?php
                         foreach($this->list_district_CRUD as $district):
                             $district_btn = 'btn-outline-success';
@@ -102,6 +100,15 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
 
                         <?php endforeach; ?>
                     </span>
+                    <span class="d-flex justify-content-center flex-wrap ">
+                        <a href="<?= base_url().'admin/list-apartment?apmTag=5' ?>"
+                           class="btn m-1 btn-sm <?= $this->input->get('apmTag') ? 'active' :'' ?> btn-outline-danger btn-small btn-rounded waves-light waves-effect"> <i class="fa fa-ambulance"></i> Covid</a>
+
+                        <a href="<?= base_url().'admin/list-apartment?rangeTime=Today' ?>"
+                           class="btn m-1 btn-sm <?= $this->input->get('rangeTime') ? 'active' :'' ?> btn-outline-danger btn-small btn-rounded waves-light waves-effect"> <i class="fa fa-calendar-o"></i> Update Hôm Nay</a>
+
+                    </span>
+
                 </div>
                 <div class="card">
                     <div class="form-group row">
