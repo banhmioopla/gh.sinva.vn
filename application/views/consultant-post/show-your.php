@@ -7,9 +7,8 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">Highdmin</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Gh</a></li>
+                            <li class="breadcrumb-item active">Danh Sách Bài Đăng Tư Vấn</li>
                         </ol>
                     </div>
                     <h2 class="font-weight-bold text-danger">Danh Sách Bài Đăng Tư Vấn - <?= $this->auth['name'] ?></h2>
@@ -28,7 +27,6 @@
                             <table class="table table-dark">
                                 <thead>
                                 <th>Tiêu Đề</th>
-                                <th>Nội Dung</th>
                                 <th>Mã Phòng</th>
                                 <th width="150px">Ngày Tạo</th>
                                 <th>Tùy Chọn</th>
@@ -39,14 +37,13 @@
                                     $room = $ghRoom->getFirstById($post['room_id']);
                                     $apm = $ghApartment->getFirstById($room['apartment_id']);
 
-                                    $room_text = "<i class='fa fa-building-o'></i> {$apm['address_street']} <i class='fa fa-caret-right'></i>  <strong>{$room['code']}</strong> ";
+                                    $room_text = "{$apm['address_street']}  <strong class='text-warning'>{$room['code']}</strong> ";
                                     ?>
                                     <tr>
                                         <td><?= $post['title'] ? $post['title'] :'<i>không tiêu đề</i>' ?> </td>
-                                        <td><?= $post['content'] ? $post['content'] :'<i>không nội dung</i>' ?> </td>
                                         <td><?= $room_text ?> </td>
                                         <td><?= date('d-m-Y h:i', $post['time_create']) ?></td>
-                                        <td></td>
+                                        <td><a class="text-primary font-weight-bold" href="/admin/consultant-post/detail?id=<?= $post['id'] ?>">Chỉnh Sửa</a> </td>
                                     </tr>
                                 <?php endforeach;?>
                                 </tbody>

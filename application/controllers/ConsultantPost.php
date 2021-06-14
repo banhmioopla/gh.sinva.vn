@@ -24,14 +24,29 @@ class ConsultantPost extends CustomBaseStep {
 
     public function showDetail(){
         $id = $this->input->get('id');
+        $list_post = $this->ghPublicConsultingPost->get(['user_create_id' => $this->auth['account_id']]);
         $post = $this->ghPublicConsultingPost->getFirstById($id);
         if(!$post) {
             return redirect('/admin/consultant-post/your-list');
         }
 
+        if(isset($_POST['submit'])){
+            $content = trim($this->input->post('content'));
+
+            $this->ghPublicConsultingPost->updateById($id, [
+                'content' => $content,
+            ]);
+            $post = $this->ghPublicConsultingPost->getFirstById($id);
+            $this->session->set_flashdata('fast_notify', [
+                'message' => 'Cập Nhật Mô Tả Thành Công',
+                'status' => 'success',
+            ]);
+        }
+
         $this->load->view('components/header');
-        $this->load->view('contract/show-detail', [
+        $this->load->view('consultant-post/show-detail', [
             'post' => $post,
+            'list_post' => $list_post,
         ]);
         $this->load->view('components/footer');
     }
