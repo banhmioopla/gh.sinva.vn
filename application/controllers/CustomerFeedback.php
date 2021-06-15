@@ -37,7 +37,8 @@ class CustomerFeedback extends CustomBaseStep {
         $feedback = $this->ghPublicCustomerFeedback->getFirstById($id);
         $this->load->view('components/header');
         $this->load->view('customer-feedback/detail', [
-            'feedback' => $feedback
+            'feedback' => $feedback,
+            'libUser' => $this->libUser
         ]);
         $this->load->view('components/footer');
     }

@@ -9,13 +9,28 @@ $survey = $answer['feedback'];
 
 <div class="wrapper">
     <div class="container">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="btn-group pull-right">
+                        <ol class="breadcrumb hide-phone p-0 m-0">
+                            <li class="breadcrumb-item"><a href="#">Highdmin</a></li>
+                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
+                            <li class="breadcrumb-item active">Starter</li>
+                        </ol>
+                    </div>
+                    <h2 class="font-weight-bold text-danger">FeedBack - <?= $libUser->getNameByAccountid($feedback['user_id']) ?></h2>
+                    <h4 class="font-weight-bold text-danger">Ngày Feedback: <?= date('d/m/Y', $feedback['time_create']) ?></h4>
+                </div>
+            </div>
+        </div>
         <!-- end page title end breadcrumb -->
         <form action="/public/customer-feedback/create" method="post">
             <div class="row">
                 <div class="col-12 mt-2">
                     <div class="card-box">
                         <div class="row">
-                            <input type="hidden" name="user_id" value="<?= $this->input->get('account-id') ?>">
                             <div class="col-12">
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label text-right">Email *</label>
