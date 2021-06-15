@@ -45,7 +45,7 @@
 
                             </div>
                             <div class="col text-center">
-                                <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">
                                     Chỉnh Sửa
                                 </button>
                             </div>

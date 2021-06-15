@@ -64,3 +64,9 @@
 
     </div> <!-- end container -->
 </div>
+
+<script>
+    commands.push(function () {
+       $('table').dataTable();
+    });
+</script>
