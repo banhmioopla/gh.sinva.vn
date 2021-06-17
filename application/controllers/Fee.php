@@ -40,7 +40,7 @@ class Fee extends CustomBaseStep {
         $this->refer_rate = 0.05;
         $this->get_new_apartment_rate = 0.03;
 
-        $this->goon = true;
+        $this->goon = false;
     }
 
 
