@@ -2,6 +2,17 @@
 $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
 $check_approve = isYourPermission('Contract', 'approved', $this->permission_set);
 $checkPartial = isYourPermission('Contract', 'approved', $this->permission_set);
+
+$total_partial = 0;
+foreach ($list_partial as $item) {
+    $total_partial += $item['amount'];
+}
+
+$txt_partial = '';
+if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100) {
+    $txt_partial = '<span class="badge badge-primary font-weight-bold contract-status">đã thu đủ</span>';
+}
+
 ?>
 
 
@@ -79,12 +90,11 @@ $checkPartial = isYourPermission('Contract', 'approved', $this->permission_set);
                                 width="200px"><strong>Trạng Thái
                                     <strong></td>
                             <td>
-                                <div class="customer-name w-100 "
-                                     data-name="name"><span class="badge
+                                <div class=" w-100 "><span class="badge
                                      badge-<?= $status ?> font-weight-bold contract-status"><?=
                                         $label['contract.'
                                         . $contract['status']]
-                                        ?></span>
+                                        ?></span> <?= $txt_partial ?>
                                 </div>
                             </td>
                         </tr>
