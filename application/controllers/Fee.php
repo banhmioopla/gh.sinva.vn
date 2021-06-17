@@ -40,7 +40,7 @@ class Fee extends CustomBaseStep {
         $this->refer_rate = 0.05;
         $this->get_new_apartment_rate = 0.03;
 
-        $this->goon = false;
+        $this->goon = true;
     }
 
 
@@ -371,7 +371,7 @@ class Fee extends CustomBaseStep {
 
         $list_contract = $this->ghContract->get([
             'time_insert >=' => strtotime($start_date),
-            'time_insert <=' => strtotime($end_date),
+            'time_insert <=' => strtotime($end_date)+86399,
         ]);
 
         /*Tính Doanh Số, Số lượng HD Của 1 TV*/
