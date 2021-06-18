@@ -307,17 +307,39 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                 <div class="tab-pane apm-promotion" id="apm-promotion-<?= $apartment['id'] ?>">
                                     <h5 class="font-weight-bold text-danger">Chương Trình Khuyến Mãi
                                         <?php if($check_create_promotion): ?>
-                                            <span class="pull-right"><a class="btn btn-success" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">Thêm Mớixx</a></span>
+                                            <span class="pull-right"><a class="btn btn-success" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">Tạo Ưu Đãi Mới</a></span>
                                         <?php endif; ?>
                                     </h5>
                                     <?php
                                     foreach ($list_promotion as $p):
                                         ?>
-                                        <span class="badge badge-danger badge-pill"><?= $p['title'] ?></span>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#promotion-md-<?= $p['id'] ?>">
+                                            <?= $p['title'] ?>
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="promotion-md-<?= $p['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"><?= $p['title'] ?></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ...
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     <?php endforeach;
 
                                     ?>
-                                    <a href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>" class="badge badge-info badge-pill">Xem chi tiết</a>
+                                    <!--<a href="/admin/list-apartment-promotion?apartment-id=<?/*= $apartment['id'] */?>" class="badge badge-info badge-pill">Xem chi tiết</a>-->
                                 </div>
                                 <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>">
                                     <p><?= $apartment['note'] ?></p>
