@@ -305,15 +305,13 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane apm-promotion" id="apm-promotion-<?= $apartment['id'] ?>">
-                                    <h5 class="font-weight-bold text-danger">Chương Trình Khuyến Mãi
-                                        <?php if($check_create_promotion): ?>
-                                            <span class="pull-right"><a class="btn btn-success" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">Tạo Ưu Đãi Mới</a></span>
-                                        <?php endif; ?>
-                                    </h5>
+                                    <?php if($check_create_promotion): ?>
+                                        <a class="btn btn-success btn-sm" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>"><i class="fa fa-plus-square-o"></i></a>
+                                    <?php endif; ?>
                                     <?php
                                     foreach ($list_promotion as $p):
                                         ?>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#promotion-md-<?= $p['id'] ?>">
+                                        <button type="button" class="btn btn-sm m-1 btn-primary" data-toggle="modal" data-target="#promotion-md-<?= $p['id'] ?>">
                                             <?= $p['title'] ?>
                                         </button>
 
@@ -323,15 +321,10 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title"><?= $p['title'] ?></h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        ...
-                                                    </div>
+                                                    <div class="modal-body"><?= $p['description'] ?></div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
                                                     </div>
                                                 </div>
                                             </div>
