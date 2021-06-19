@@ -381,15 +381,73 @@ class Apartment extends CustomBaseStep {
 	    $list_room = $this->ghRoom->get(['apartment_id' => $id, 'active' => 'YES']);
 	    $contract = $this->ghContract->get(['apartment_id' => $id]);
 
+	    if(isset($_POST['submit'])) {
+            $update_data = [
+                'address_street' => $this->input->post('address_street'),
+                'address_ward' => $this->input->post('address_ward'),
+                'district_code' => $this->input->post('district_code'),
+                'description' => $this->input->post('description'),
+                'note' => $this->input->post('note'),
+                'electricity' => $this->input->post('electricity'),
+                'water' => $this->input->post('water'),
+                'internet' => $this->input->post('internet'),
+                'elevator' => $this->input->post('elevator'),
+                'washing_machine' => $this->input->post('washing_machine'),
+                'room_cleaning' => $this->input->post('room_cleaning'),
+                'parking' => $this->input->post('parking'),
+                'deposit' => $this->input->post('deposit'),
+                'kitchen' => $this->input->post('kitchen'),
+                'car_park' => $this->input->post('car_park'),
+                'kt3' => $this->input->post('kt3'),
+                'pet' => $this->input->post('pet'),
+                'extra_fee' => $this->input->post('extra_fee'),
+                'management_fee' => $this->input->post('management_fee'),
+                'security' => $this->input->post('security'),
+                'contract_long_term' => $this->input->post('contract_long_term'),
+                'contract_short_term' => $this->input->post('contract_short_term'),
+                'number_of_floor' => $this->input->post('number_of_floor'),
+                'short_message' => $this->input->post('short_message'),
+                'commission_rate' => $this->input->post('commission_rate'),
+                'commission_rate_6m' => $this->input->post('commission_rate_6m'),
+                'commission_rate_9m' => $this->input->post('commission_rate_9m'),
+
+                'map_longitude' => $this->input->post('map_longitude'),
+                'map_latitude' => $this->input->post('map_latitude'),
+                'user_collected_id' => $this->input->post('user_collected_id'),
+
+                'time_update' => time(),
+                'time_insert' => strtotime($this->input->post('time_insert')),
+            ];
+
+            $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
+            $apartment = $this->ghApartment->getFirstById($apartment['id']);
+            if($ok) {
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Cập Nhật Thành Công',
+                    'status' => 'success'
+                ]);
+            }
+        }
+        $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
+	    $list_apm = [];
+	    foreach ($list_apm_temp as $apm ) {
+            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+                continue;
+            }
+
+            $list_apm[] = $apm;
+        }
+
         $this->load->view('components/header');
         $this->load->view('apartment/show-profile', [
             'apartment' => $apartment,
             'list_room' => $list_room,
             'contract' => $contract,
             'libUser' => $this->libUser,
-            'cbDistrictActive' => $this->libDistrict->cbActive(),
+            'cbDistrictActive' => $this->libDistrict->cbActive($apartment['district_code']),
             'libCustomer' => $this->libCustomer,
-            'label_apartment' =>  $this->config->item('label.apartment')
+            'label_apartment' =>  $this->config->item('label.apartment'),
+            'list_apm' => $list_apm
         ]);
         $this->load->view('components/footer');
     }

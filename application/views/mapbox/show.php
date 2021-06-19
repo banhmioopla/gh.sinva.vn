@@ -38,11 +38,10 @@
             />
             <style>
                 .marker {
-                    background-image: url('https://i.ibb.co/tc3mrrn/location.png');
+                    background-image: url('https://i.ibb.co/WDNbfCC/unnamed.png');
                     background-size: cover;
-                    width: 45px;
-                    height: 45px;
-                    border-radius: 50%;
+                    width: 15px;
+                    height: 15px;
                     cursor: pointer;
                 }
                 .mapboxgl-popup {
@@ -55,7 +54,7 @@
                 }
             </style>
             <script>
-                mapboxgl.accessToken = 'pk.eyJ1IjoiaWFtc2h5YmVlIiwiYSI6ImNqendjbjc3czA4eHEzY3AwYXZtdnlrZngifQ.tmfsSrplUF0FvzQaU0oWOA';
+                mapboxgl.accessToken = 'pk.eyJ1IjoiaWFtc2h5YmVlIiwiYSI6ImNrbnY2Z2IxMzBqcXoycGtneHdqbWFwMXcifQ.l_L3CJ7LVRGVrNyIyxgf7Q';
 
 
                 var map = new mapboxgl.Map({
@@ -65,34 +64,25 @@
                     zoom: 12 // starting zoom
                 });
 
-                var language = new MapboxLanguage();
-                map.addControl(language);
-                // create the popup
 
-                var el = document.createElement('div');
+                let el = document.createElement('div');
                 el.id = 'marker';
 
-                var geojson = {
+                let geojson = {
                     type: 'FeatureCollection',
-                    features: <?= $map_data ?>
+                    features: <?= $map_data ?>,
                 };
                 // add markers to map
                 geojson.features.forEach(function(marker) {
-
-                    // create a HTML element for each feature
-                    var el = document.createElement('div');
+                    let el = document.createElement('div');
                     el.className = 'marker';
 
-                    // make a marker for each feature and add to the map
-
-
+                    let coo = marker.geometry.coordinates;
+                    let title = marker.properties.title;
                     new mapboxgl.Marker(el)
-                        .setLngLat(marker.geometry.coordinates)
-                        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                            .setHTML('<h5 class="text-danger">' + marker.properties
-                                    .title +
-                                '</h5><p>' +
-                                marker.properties.description + '</p>'))
+                        .setLngLat(coo)
+                        .setPopup(new mapboxgl.Popup({ offset: 25 })
+                            .setHTML('<h5 class="text-danger">' + title + '</h5>'))
                         .addTo(map);
                 });
 
@@ -100,7 +90,10 @@
                 map.on('load', function () {
                     map.addSource('places', {
                         'type': 'geojson',
-                        'data': geojson
+                        'data': geojson,
+                        'cluster': true,
+                        'clusterMaxZoom': 14, // Max zoom to cluster points on
+                        'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
                     });
                     // Add a layer showing the places.
                     map.addLayer({
@@ -119,7 +112,6 @@
                         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                         }
-
                         new mapboxgl.Popup()
                             .setLngLat(coordinates)
                             .setHTML(description)
