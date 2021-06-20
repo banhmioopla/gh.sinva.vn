@@ -74,11 +74,43 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
+                                    <strong class="col-form-strong">Hướng</strong>
+                                    <select name="direction" required class="form-control">
+                                        <option value="">Chọn Hướng</option>
+                                        <option <?= $apartment['direction'] == 'east' ? 'selected' :'' ?> value="east">Đông</option>
+                                        <option <?= $apartment['direction'] == 'west' ? 'selected' :'' ?> value="west">Tây</option>
+                                        <option <?= $apartment['direction'] == 'south' ? 'selected' :'' ?> value="south">Nam</option>
+                                        <option <?= $apartment['direction'] == 'north' ? 'selected' :'' ?> value="north">Bắc</option>
+                                        <option <?= $apartment['direction'] == 'east-south' ? 'selected' :'' ?> value="east-south">Đông Nam</option>
+                                        <option <?= $apartment['direction'] == 'west-south' ? 'selected' :'' ?> value="west-south">Tây Nam</option>
+                                        <option <?= $apartment['direction'] == 'east-north' ? 'selected' :'' ?> value="east-north">Đông Bắc</option>
+                                        <option <?= $apartment['direction'] == 'west-south' ? 'selected' :'' ?> value="west-south">Tây Bắc</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-4">
                                     <strong class="col-form-strong">Người Đàm Phán</strong>
                                     <select name="user_collected_id" id="user_collected_id" class="form-control">
                                         <?= $libUser->cb($apartment['user_collected_id']) ?>
                                     </select>
                                 </div>
+
+                                <div class="form-group col-md-4">
+                                    <strong class="col-form-strong">Thương Hiệu Hợp Tác</strong>
+                                    <select name="partner_id" id="partner_id" class="form-control">
+                                        <option value="">Thương Hiệu Hợp Tác</option>
+                                        <?php foreach ($list_brand as $brand):
+                                            $slc = '';
+                                            if($brand['id'] == $apartment['partner_id']) {
+                                                $slc = 'selected';
+                                            }
+
+                                            ?>
+                                            <option value="<?= $brand['id'] ?>" <?= $slc ?>><?= $brand['name'] ?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+
                                 <div class="form-group col-md-4">
                                     <strong class="col-form-strong">Ngày Lấy Về</strong>
                                     <input type="text"
@@ -86,7 +118,15 @@
                                            value="<?= date("d-m-Y", $apartment['time_insert']) ?>" >
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
+                                    <strong class="col-form-strong">Mở / Đóng </strong>
+                                    <select name="active" id=""  class="form-control">
+                                        <option value="YES">Mở</option>
+                                        <option value="NO">Đóng</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
                                     <strong class="col-form-strong text-primary">Đi Đến Dự Án Khác</strong>
                                     <select id="apartment_update_ready" class="form-control">
                                         <option value="">Cập Nhật Dự Án Khác</option>
@@ -299,6 +339,107 @@
             </div>
         </div>
         </form>
+
+        <form action="/admin" method="post">
+        <div class="row">
+            <div class="col-md-12" id="block-room">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 class="font-weight-bold text-danger text-center">Phòng</h3>
+                                <div class="col-md-8 offset-md-2 col-10 offset-1">
+                                    <input type="text" placeholder="Tìm Mã Phòng, Giá, Diện Tích..." class="form-control search-room border border-info">
+                                </div>
+                            </div>
+                            <?php foreach ($list_room as $room_item):
+                                $list_type_id = json_decode($room_item['room_type_id'], true);
+                                $text_type_name = "";
+                                $type_name_arr = [];
+                                if($list_type_id) {
+                                    if ($list_type_id && count($list_type_id) > 0) {
+                                        foreach ($list_type_id as $type_id) {
+                                            $typeModel = $ghBaseRoomType->get(['id' => $type_id]);
+                                            $type_name_arr[] = $typeModel[0]['name'];
+                                        }
+                                    }
+                                }
+
+                                $text_type_name = implode(', ', $type_name_arr);
+
+                                $list_status = [
+                                    'Available' => 'Trống',
+                                    'Full' => 'Full'
+                                ];
+
+                                ?>
+                                <div class="col-md-12 mt-2 list-room">
+                                    <div class="form-row p-2">
+                                        <div class="form-group col-md-3">
+                                            <strong class="col-form-strong text-danger">MÃ PHÒNG <span class="text-info"><?= $room_item['code'] ?></span></strong>
+                                            <input type="text" class="form-control"
+                                                   name="code" required
+                                                   value="<?= $room_item['code'] ?>" >
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <strong class="col-form-strong">Giá Phòng <span class="text-info"><?= number_format($room_item['price']) ?></span></strong>
+                                            <input type="number" class="form-control"
+                                                   name="price" required
+                                                   value="<?= $room_item['price'] ?>" >
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <strong class="col-form-strong">Trạng Thái <span class="text-info"><?= $room_item['status'] ?></span></strong>
+                                            <select name="status" id="" class="form-control">
+                                                <?php foreach ($list_status as $k => $stt):
+                                                    $slc = '';
+                                                    if($room_item['status'] == $k) {
+                                                        $slc = 'selected';
+                                                    }
+                                                    ?>
+                                                    <option value="<?= $k ?>" <?= $slc ?>><?= $stt ?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <strong class="col-form-strong">Ngày Sắp Trống <span class="text-info"><?= $room_item['time_available'] > 0 ? date('d-m-Y',$room_item['time_available']) :'' ?></span></strong>
+                                            <input type="text" value="<?= $room_item['time_available'] > 0 ? date('d-m-Y',$room_item['time_available']) :'' ?>" class="form-control datepicker">
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <strong class="col-form-strong">Diện Tích <span class="text-info"><?= $room_item['area'] ?></span></strong>
+                                            <input type="number" value="<?= $room_item['area']?>" class="form-control">
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <strong class="col-form-strong">Loại Phòng: <span class="text-info"><?= $text_type_name ?></span> </strong>
+                                            <select name="room_type_id[]" required id="" class="form-control room-type" multiple>
+                                                <option value="">Chọn 1 hoặc nhiều loại phòng</option>
+                                                <?php foreach ($list_room_type as $key => $name):
+                                                        $slc = '';
+                                                        if(in_array($key, $list_type_id)) {
+                                                            $slc = 'selected';
+                                                        }
+                                                    ?>
+                                                    <option <?= $slc ?> value="<?= $key ?>"><?= $name ?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col d-none">
+                                            <strong class="col-form-strong"> </strong>
+                                            <div class="form-row float-right">
+                                                <button name="submit" type="submit" class="btn btn-danger">Cập Nhật <strong><?= $room_item['code'] ?></strong></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </form>
+
     </div>
 </div>
 
@@ -317,7 +458,16 @@
                 format: "dd-mm-yyyy",
                 autoclose:true
             });
-            $('#apartment_update_ready, #user_collected_id').select2();
+            $('#apartment_update_ready, #user_collected_id, #partner_id, .room-type').select2();
+
+            $('.search-room').on('keyup', function(){
+                var value = $(this).val().toLowerCase();
+                $(".list-room").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+
 
             $('#apartment_update_ready').change(function () {
                 window.location = '/admin/profile-apartment?id='+$(this).val();

@@ -414,6 +414,9 @@ class Apartment extends CustomBaseStep {
                 'map_longitude' => $this->input->post('map_longitude'),
                 'map_latitude' => $this->input->post('map_latitude'),
                 'user_collected_id' => $this->input->post('user_collected_id'),
+                'partner_id' => $this->input->post('partner_id'),
+                'active' => $this->input->post('active'),
+                'direction' => $this->input->post('direction'),
 
                 'time_update' => time(),
                 'time_insert' => strtotime($this->input->post('time_insert')),
@@ -438,6 +441,14 @@ class Apartment extends CustomBaseStep {
             $list_apm[] = $apm;
         }
 
+        $list_brand = $this->ghPartner->get(['active' => 'YES']);
+
+        $room_type_model = $this->ghBaseRoomType->get();
+        $list_room_type = [];
+        foreach($room_type_model as $item) {
+            $list_room_type[$item['id']] = $item["name"];
+        }
+
         $this->load->view('components/header');
         $this->load->view('apartment/show-profile', [
             'apartment' => $apartment,
@@ -447,7 +458,10 @@ class Apartment extends CustomBaseStep {
             'cbDistrictActive' => $this->libDistrict->cbActive($apartment['district_code']),
             'libCustomer' => $this->libCustomer,
             'label_apartment' =>  $this->config->item('label.apartment'),
-            'list_apm' => $list_apm
+            'list_apm' => $list_apm,
+            'list_brand' => $list_brand,
+            'ghBaseRoomType' => $this->ghBaseRoomType,
+            'list_room_type' => $list_room_type
         ]);
         $this->load->view('components/footer');
     }
