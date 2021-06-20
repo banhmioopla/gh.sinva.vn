@@ -23,17 +23,28 @@ $check_consultant_booking = true;
                 </div>
             </div>
         </div>
-        <!-- end page title end breadcrumb -->
-        <?php if($this->session->has_userdata('fast_notify')) {
-            $flash_mess = $this->session->flashdata('fast_notify')['message'];
-            $flash_status = $this->session->flashdata('fast_notify')['status'];
-            unset($_SESSION['fast_notify']);
-        }
-        ?>
+        <div class="row">
+            <div class="col-12">
+                <?php
+                if($this->session->has_userdata('fast_notify')):
+                    ?>
+                    <div class="alert alert-<?= $this->session->flashdata('fast_notify')['status']?> alert-dismissible fade show" role="alert">
+                        <?= $this->session->flashdata('fast_notify')['message']?>
+                    </div>
+                    <?php unset($_SESSION['fast_notify']); endif; ?>
+            </div>
+        </div>
+
         <div class="role-alert"></div>
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive">
+                    <div class="pull-right">
+                        <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Upload Ảnh Mới</button></a>
+                        <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật Thông Tin Dịch Vụ</button></a>
+                    </div>
+
+                    <h4 class="font-weight-bold text-danger">Danh Sách Phòng</h4>
                     <table id="list-room-<?= $apartment['id'] ?>"
                            class="table list-room table-hover ">
                         <thead>
@@ -144,9 +155,22 @@ $check_consultant_booking = true;
                     </table>
                 </div>
             </div>
+
+            <div class="form-group col-md-6 offset-md-3 text-center">
+                <strong class="col-form-strong text-primary">Đi Đến Dự Án Khác</strong>
+                <select id="apartment_update_ready" class="form-control">
+                    <option value="">Cập Nhật Dự Án Khác</option>
+                    <?php foreach ($list_apm as $apm): ?>
+                        <option value="<?= $apm['id'] ?>">Q.<?= $apm['district_code'] . ' ' . $apm['address_street'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
             <div class="col-12 col-md-6">
                 <div class="card-box">
-                    <h4 class="header-title m-t-0">Thêm mới</h4>
+
+                    <h4 class="font-weight-bold text-danger">Thêm Mới</h4>
+
                     <form role="form" method="post"
                           action="<?= base_url()?>/admin/create-room?apartment-id=<?= $this->input->get('apartment-id') ?>">
                         <input type="hidden" name="apartment_id" value="<?= $this->input->get('apartment-id') ?>">
@@ -211,7 +235,7 @@ $check_consultant_booking = true;
 
                         <div class="form-group row">
                             <div class="col-8 offset-4">
-                                <button type="submit" class="btn btn-custom waves-effect waves-light">
+                                <button type="submit" class="btn btn-danger waves-effect waves-light">
                                     Thêm Mới
                                 </button>
                             </div>
@@ -221,6 +245,7 @@ $check_consultant_booking = true;
             </div>
             <div class="col-md-6">
                 <div class="card-box">
+                    <h4 class="font-weight-bold text-danger">Update Giá Phòng Nhanh</h4>
                     <div class="row">
                         <div id="notification" style="display: none;">
                             <div class="alert alert-success msg" role="alert">
@@ -231,7 +256,7 @@ $check_consultant_booking = true;
                                       placeholder="301=5000000, 302=5500000" cols="30" rows="10"></textarea>
                         </div>
                         <div class="col-12 text-center mt-1">
-                            <button class="btn btn-info" id="checker-update">Cập Nhật</button>
+                            <button class="btn btn-danger" id="checker-update">Cập Nhật</button>
                         </div>
                     </div>
                 </div>
@@ -269,88 +294,22 @@ $check_consultant_booking = true;
 
                         }
                     });
-                    console.log(result);
-
                 }
             });
 
-
-
             $('.list-room').DataTable({
-                "pageLength": 5,
+                "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true
             });
             $('.date-picker').datepicker({
                 format: "dd-mm-yyyy"
             });
-
-            $('.is-active-role input[type=checkbox]').click(function() {
-                var is_active = 'NO';
-                var this_id = $(this).attr('id');
-                var matches = this_id.match(/(\d+)/);
-                var role_id = matches[0];
-                if($(this).is(':checked')) {
-                    is_active = 'YES';
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>admin/update-role',
-                    data: {field_value: is_active, role_id: role_id, field_name : 'active'},
-                    async: false,
-                    success:function(response){
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.role-alert').html(notify_html_success);
-                        } else {
-                            $('.role-alert').html(notify_html_fail);
-                        }
-                    },
-                    beforeSend: function(){
-                        $('#loader').show();
-                    },
-                    complete: function(){
-                        $('#loader').hide();
-                    }
-                });
+            $('#apartment_update_ready').select2();
+            $('#apartment_update_ready').change(function () {
+                window.location = '/admin/room/show-create?apartment-id='+$(this).val();
             });
 
-            $('.role-name').editable({
-                type: "text",
-                url: '<?= base_url() ?>admin/update-role-editable',
-                inputclass: '',
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.role-alert').html(notify_html_success);
-                    } else {
-                        $('.role-alert').html(notify_html_fail);
-                    }
-                }
-            });
-
-            $('.delete-role').click(function(){
-                var this_id = $(this).attr('id');
-                var this_click = $(this);
-                var matches = this_id.match(/(\d+)/);
-                var role_id = matches[0];
-                if(role_id > 0) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '<?= base_url() ?>admin/delete-role',
-                        data: {role_id: role_id},
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.role-alert').html(notify_html_success);
-                                this_click.parents('tr').remove();
-                            } else {
-                                $('.role-alert').html(notify_html_fail);
-                            }
-                        }
-                    });
-                }
-            });
         });
     });
 </script>

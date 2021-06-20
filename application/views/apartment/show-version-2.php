@@ -112,9 +112,10 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                 </div>
                 <div class="card">
                     <div class="form-group row">
-                        <div class="col-md-8 offset-md-2 col-10 offset-1">
+                        <div class="col-md-8 col-10 offset-1">
                             <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
                         </div>
+                        <div class="col text-center text-md mt-md-0 mt-1"><a href="/admin/apartment/create"><button class="btn btn-success">Tạo Dự Án Mới</button></a></div>
                     </div>
                 </div>
                 <?php foreach ($list_apartment as $apartment):

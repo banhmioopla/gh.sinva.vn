@@ -73,6 +73,17 @@ class Room extends CustomBaseStep {
             'ghBaseRoomType' => $this->ghBaseRoomType,
             'label_apartment' => $this->config->item('label.apartment'),
         ];
+
+        $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
+        $list_apm = [];
+        foreach ($list_apm_temp as $apm ) {
+            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+                continue;
+            }
+
+            $list_apm[] = $apm;
+        }
+        $data['list_apm'] = $list_apm;
         $this->load->view('components/header');
         $this->load->view('room/showCreate', $data);
         $this->load->view('components/footer');

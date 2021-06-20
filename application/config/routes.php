@@ -1037,6 +1037,11 @@ $route['admin/apartment/edit-description'] = function($params = []) {
     $action = '/editDescription';
     return $controller.$action;
 };
+$route['admin/apartment/create'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/showCreate';
+    return $controller.$action;
+};
 
 $route['admin/create-apartment'] = function($params = []) {
 	$controller = 'Apartment';

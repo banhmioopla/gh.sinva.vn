@@ -53,8 +53,12 @@
                     <div class="row">
                         <div class="col-12">
                             <h3 class="font-weight-bold text-danger text-center">Địa Chỉ</h3>
-                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button type="button"
-                                                                                           class="btn btn-danger pull-right mr-1">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></button></a>
+                            <div class="pull-right">
+                                <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>">
+                                    <button type="button" class="btn btn-danger  mr-1">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></button></a>
+                                <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button type="button" class="btn btn-danger">Cập Nhật Thông Tin Phòng</button></a>
+                            </div>
+
                         </div>
                         <div class="col-md-12">
                             <div class="form-row">
