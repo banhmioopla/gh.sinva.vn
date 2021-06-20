@@ -37,6 +37,16 @@
             <div class="col-12">
                 <div class="card-box">
                     <div class="row">
+
+                        <div class="form-group col-md-6 offset-md-3">
+                            <strong class="col-form-strong text-primary">Đi Đến Dự Án Khác</strong>
+                            <select id="apartment_update_ready" class="form-control">
+                                <option value="">Cập Nhật Dự Án Khác</option>
+                                <?php foreach ($list_apm as $apm): ?>
+                                    <option value="<?= $apm['id'] ?>">Q.<?= $apm['district_code'] . ' ' . $apm['address_street'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <form action="" class="col-md-12" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6 offset-md-3">
@@ -79,6 +89,10 @@
             var files = $(this)[0].files;
             $('#upload-msg').text(files.length + ' ảnh được chọn.');
             console.log(files.length);
+        });
+
+        $('#apartment_update_ready').change(function () {
+            window.location = '/admin/apartment/upload-img?apartment_id='+$(this).val();
         });
     });
 </script>

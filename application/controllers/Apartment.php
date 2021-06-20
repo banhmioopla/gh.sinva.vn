@@ -487,6 +487,15 @@ class Apartment extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
+    public function showCreate(){
+
+        $this->load->view('components/header');
+        $this->load->view('apartment/show-create', [
+
+        ]);
+        $this->load->view('components/footer');
+    }
+
 	public function showCommmissionRate(){
 		$data['list_apartment'] = $this->ghApartment->get(['active' => 'YES'], 'district_code ASC');
 		$data['label_apartment'] =  $this->config->item('label.apartment');

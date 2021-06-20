@@ -147,11 +147,22 @@ class Media extends CustomBaseStep {
 
         }
 
+        $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
+        $list_apm = [];
+        foreach ($list_apm_temp as $apm ) {
+            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+                continue;
+            }
+
+            $list_apm[] = $apm;
+        }
+
         $this->load->view('components/header');
         $this->load->view('media/upload-img-apartment', [
             'apartment' => $apartment,
             'list_room' => $list_room,
-            'cb_room' => $cb_room
+            'cb_room' => $cb_room,
+            'list_apm' => $list_apm
         ]);
         $this->load->view('components/footer');
     }
