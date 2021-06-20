@@ -358,8 +358,11 @@
                                 if($list_type_id) {
                                     if ($list_type_id && count($list_type_id) > 0) {
                                         foreach ($list_type_id as $type_id) {
-                                            $typeModel = $ghBaseRoomType->get(['id' => $type_id]);
-                                            $type_name_arr[] = $typeModel[0]['name'];
+                                            $typeModel = $ghBaseRoomType->getFirstById($type_id);
+                                            if($typeModel) {
+                                                $type_name_arr[] = $typeModel['name'];
+                                            }
+
                                         }
                                     }
                                 }
