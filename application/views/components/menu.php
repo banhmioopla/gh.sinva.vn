@@ -16,6 +16,12 @@
                         mdi-chevron-double-right text-warning"></i> Danh Sách Dự
                                 Án</a></li>
 
+                        <?php if(isYourPermission('ApartmentRequest', 'show',$this->permission_set)):?>
+                            <li><a href="/sale/apartment-request/show"><i class="mdi
+                             mdi-chevron-double-right text-warning"></i> Duyệt Cập Nhật Dự Án</a></li>
+                        <?php endif;?>
+
+
                         <?php if(isYourPermission('Crawler', 'show',$this->permission_set)):?>
                             <li><a href="/admin/list-crawler"><i class="mdi
                              mdi-chevron-double-right text-warning"></i> Nghiên Cứu Thị Trường *</a></li>

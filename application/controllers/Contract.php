@@ -230,9 +230,6 @@ class Contract extends CustomBaseStep {
 				'user_insert_id' => $this->auth['account_id'],
 				'time_insert' => time()
 			];
-			if($this->auth['role_code'] !== 'customer-care') {
-				$new_customer_data['test_mode'] = 'YES';
-			}
 		
 			$customer_id = $this->ghCustomer->insert($new_customer_data);
 		} else {

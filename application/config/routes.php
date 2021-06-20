@@ -771,6 +771,19 @@ $route['admin/update-room-type-editable'] = function($params = []) {
 	return $controller.$action;
 };
 
+// ApartmentRequest
+$route['sale/apartment-request/show'] = function($params = []) {
+    $controller = 'ApartmentRequest';
+    $action = '/show';
+    return $controller.$action;
+};
+
+$route['sale/apartment-request/detail'] = function($params = []) {
+    $controller = 'ApartmentRequest';
+    $action = '/detail';
+    return $controller.$action;
+};
+
 // -- service
 $route['admin/list-service'] = function($params = []) {
 	$controller = 'Service';

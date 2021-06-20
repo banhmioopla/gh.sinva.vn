@@ -12,6 +12,10 @@ class GhPartner extends CI_Model {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }
 
+    public function getFirstById($room_id) {
+        return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
+    }
+
     public function getById($partner_id) {
         return $this->db->get_where($this->table, ['id' => $partner_id])->result_array();
     }

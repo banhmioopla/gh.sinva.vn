@@ -7,7 +7,7 @@ class Apartment extends CustomBaseStep {
 	{
 		parent::__construct(); 
 		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict',
-            'ghApartmentPromotion',
+            'ghApartmentPromotion', 'ghApartmentRequest',
             'ghTag', 'ghApartmentComment', 'ghConsultantBooking', 'ghBaseRoomType']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
@@ -134,6 +134,10 @@ class Apartment extends CustomBaseStep {
 		$this->load->view($template, $data);
 		$this->load->view('components/footer');
 	}
+
+	public function pendingForApprove(){
+
+    }
 
 
 	public function editDescription(){
@@ -422,7 +426,24 @@ class Apartment extends CustomBaseStep {
                 'time_insert' => strtotime($this->input->post('time_insert')),
             ];
 
-            $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
+            $ok = false;
+            if($this->isYourPermission('Apartment', 'pendingForApprove')){
+                $this->ghApartmentRequest->insert([
+                    'account_id' => $this->auth['account_id'],
+                    'apartment_id' => $apartment['id'],
+                    'status' => 'Pending',
+                    'request_data' => json_encode($update_data),
+                    'time_update' => time()
+                ]);
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Yêu cầu Update của bạn đã được tạo thành công',
+                    'status' => 'warning'
+                ]);
+            } else {
+                $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
+            }
+
+
             $apartment = $this->ghApartment->getFirstById($apartment['id']);
             if($ok) {
                 $this->session->set_flashdata('fast_notify', [
