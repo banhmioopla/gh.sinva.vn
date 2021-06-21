@@ -98,11 +98,11 @@ class Apartment extends CustomBaseStep {
             $data['list_apartment'][] = $item;
 		}
 
-		$template = 'apartment/show-full-permission';
-
-		if(!$this->editable) {
+//		$template = 'apartment/show-full-permission';
+        $template =  'apartment/show-version-2';
+		/*if(!$this->editable) {
 			$template =  'apartment/show-version-2';
-		}
+		}*/
 
 		$data['product_total'] = count($this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']));
 
