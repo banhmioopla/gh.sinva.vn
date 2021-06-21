@@ -1,3 +1,10 @@
+<?php
+$short_fill = ["Miễn phí combo", "Tòa nhà nằm trong hẻm", "Nên nắm kỹ thông tin trước khi tư vấn để tránh sai sót."];
+
+
+
+?>
+
 <div class="wrapper">
     <div class="container-fluid">
         <!-- Page-Title -->
@@ -161,10 +168,20 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <strong class="col-form-strong">Mô Tả Dự Án</strong>
+                                    <div class="mb-1">
+                                        <?php foreach ($short_fill as $term): ?>
+                                            <span class="fill-term-description badge badge-info"><?= $term ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
                                     <textarea name="description" id="description" class="form-control"><?= $apartment['description'] ?></textarea>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <strong class="col-form-strong">Ghi Chú</strong>
+                                    <div class="mb-1">
+                                        <?php foreach ($short_fill as $term): ?>
+                                            <span class="fill-term-note badge badge-info"><?= $term ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
                                     <textarea name="note" id="note" class="form-control" ><?= $apartment['note'] ?></textarea>
 
                                 </div>
@@ -461,6 +478,17 @@
                 minHeight: null,             // set minimum height of editor
                 maxHeight: null,             // set maximum height of editor
                 focus: true
+            });
+            $('.fill-term-description').click(function () {
+                let source = $('#description').summernote('code');
+                let term = " <p>" + ($(this).text().trim()) + '</p>';
+                $('#description').summernote('code', source + term);
+            });
+
+            $('.fill-term-note').click(function () {
+                let source = $('#note').summernote('code');
+                let term = " <p>" + ($(this).text().trim()) + '</p>';
+                $('#note').summernote('code', source + term);
             });
 
             $('.datepicker').datepicker({
