@@ -37,8 +37,16 @@
             <div class="col-12">
                 <div class="card-box">
                     <div class="row">
+                        <div class="col-12">
+                            <h3 class="font-weight-bold text-danger text-md text-center m-1">Upload Ảnh Dự Án
+                                <div class="pull-right">
+                                    <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></button></a>
+                                    <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger mt-md-0 mt-1">Cập Nhật Thông Tin Dịch Vụ</button></a>
+                                </div>
+                            </h3>
+                        </div>
 
-                        <div class="form-group col-md-6 offset-md-3">
+                        <div class="form-group col-md-6 offset-md-3 mt-md mt-2">
                             <strong class="col-form-strong text-primary">Đi Đến Dự Án Khác</strong>
                             <select id="apartment_update_ready" class="form-control">
                                 <option value="">Cập Nhật Dự Án Khác</option>
@@ -70,7 +78,10 @@
                             </div>
 
                             <div class="row mt-1">
-                                <button type="submit" class="btn btn-success col-md-2 offset-md-5">Upload <i class="mdi mdi-cloud-upload"></i></button>
+                                <div class="col-md-2 offset-md-5 text-center">
+                                    <button type="submit" class="btn btn-success">Upload <i class="mdi mdi-cloud-upload"></i></button>
+                                </div>
+
                             </div>
                         </form>
                     </div>
