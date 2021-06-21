@@ -174,7 +174,7 @@ class Room extends CustomBaseStep {
 			$old_room = $this->ghRoom->getById($room_id);
 			$old_log = json_encode($old_room[0]);
 
-            if($this->isYourPermission('Apartment', 'pendingForApprove')){
+            /*if($this->isYourPermission('Apartment', 'pendingForApprove')){
                 $this->ghApartmentRequest->insert([
                     'account_id' => $this->auth['account_id'],
                     'apartment_id' => $apartment['id'],
@@ -186,7 +186,7 @@ class Room extends CustomBaseStep {
                     'message' => 'Yêu cầu Update của bạn đã được tạo thành công',
                     'status' => 'warning'
                 ]);
-            }
+            }*/
 
 			$result = $this->ghRoom->updateById($room_id, $data);
 			
