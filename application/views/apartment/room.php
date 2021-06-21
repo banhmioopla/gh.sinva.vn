@@ -1,12 +1,12 @@
 <div class="table-responsive">
     <table id="list-room-<?= $apartment['id'] ?>" class="table list-room table-bordered ">
-        <thead>
+        <thead class="table-dark">
         <tr>
         <?php if($this->auth['role_code'] == 'customer-care'): ?>
             <th># ID</th>
         <?php endif; ?>
             <th>Mã Phòng</th>
-            <th class="text-warning">Loại Phòng</th>
+            <th>Loại Phòng</th>
             <th>Giá <small>x1000</small></th>
             <th>Diện Tích</th>
             <th>Trạng Thái</th>
