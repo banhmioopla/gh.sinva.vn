@@ -8,6 +8,7 @@ class Room extends CustomBaseStep {
 		parent::__construct();
 		$this->load->model('ghRoom');
 		$this->load->model('ghBaseRoomType');
+		$this->load->model('ghApartmentRequest');
 		$this->load->model('ghApartment');
 		$this->load->library('LibRoom', null, 'libRoom');
         $this->load->config('label.apartment');
@@ -172,6 +173,21 @@ class Room extends CustomBaseStep {
 
 			$old_room = $this->ghRoom->getById($room_id);
 			$old_log = json_encode($old_room[0]);
+
+            if($this->isYourPermission('Apartment', 'pendingForApprove')){
+                $this->ghApartmentRequest->insert([
+                    'account_id' => $this->auth['account_id'],
+                    'apartment_id' => $apartment['id'],
+                    'status' => 'Pending',
+                    'request_data' => json_encode($update_data),
+                    'time_update' => time()
+                ]);
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Yêu cầu Update của bạn đã được tạo thành công',
+                    'status' => 'warning'
+                ]);
+            }
+
 			$result = $this->ghRoom->updateById($room_id, $data);
 			
 			$modified_room = $this->ghRoom->getById($room_id);

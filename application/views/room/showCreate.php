@@ -3,6 +3,11 @@ $check_option = true;
 $check_contract = true;
 $check_consultant_booking = true;
 
+$check_update_room = false;
+if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
+    $check_update_room = true;
+
+}
 ?>
 
 <div class="wrapper">
@@ -46,13 +51,12 @@ $check_consultant_booking = true;
 
                     <h4 class="font-weight-bold text-danger">Danh Sách Phòng</h4>
                     <table id="list-room-<?= $apartment['id'] ?>"
-                           class="table list-room table-hover ">
-                        <thead>
+                           class="table list-room">
+                        <thead class="table-dark">
                         <tr>
                             <th class="font-weight-bold">Mã Phòng</th>
-                            <th class="text-warning">LP (TN)</th>
                             <th>Loại Phòng</th>
-                            <th>Giá</th>
+                            <th>Giá <small>x1000</small></th>
                             <th class="text-center">Diện Tích</th>
                             <th>Trạng Thái</th>
                             <th>Ng.Trống</th>
@@ -73,6 +77,28 @@ $check_consultant_booking = true;
                                     $bg_for_available = '';
                                     $color_for_available = '';
                                 }
+
+                                $list_type_id = json_decode($room['room_type_id'], true);
+                                $js_list_type = "";
+                                $text_type_name = "";
+
+                                $type_arr = [];
+                                if($list_type_id) {
+                                    $js_list_type = implode(",", $list_type_id);
+                                    if ($list_type_id && count($list_type_id) > 0) {
+                                        foreach ($list_type_id as $type_id) {
+                                            $typeModel = $ghBaseRoomType->getFirstById($type_id);
+                                            $type_arr[]= $typeModel['name'];
+                                        }
+                                    }
+                                }
+                                $text_type_name = implode(", ",$type_arr );
+
+                                $status_txt = '<span class="badge badge-danger">Full</span>';
+                                if($room['status'] === 'Available'){
+                                    $status_txt = '<span class="badge badge-success">Trống</span>';
+                                }
+
                                 ?>
                                 <tr class='<?= $bg_for_available ?> font-weight-bold'>
                                     <td><div class="room-data"
@@ -81,31 +107,12 @@ $check_consultant_booking = true;
                                              data-name="code"
                                         ><?= $room['code'] ? $room['code'] : 'không có thông tin' ?></div>
                                     </td>
-                                    <?php
-                                    $list_type_id = json_decode($room['room_type_id'], true);
-                                    $js_list_type = "";
-                                    $text_type_name = "";
-                                    if($list_type_id) {
-                                        $js_list_type = implode(",", $list_type_id);
-                                        if ($list_type_id && count($list_type_id) > 0) {
-                                            foreach ($list_type_id as $type_id) {
-                                                $typeModel = $ghBaseRoomType->get(['id' => $type_id]);
-                                                $text_type_name .= $typeModel[0]['name'] . ', ';
-                                            }
-                                        }
 
-                                    }
-
-                                    ?>
-                                    <td class="room-type"
+                                    <td class="list-room-type"
                                         data-name="room_type_id"
                                         data-pk="<?= $room['id'] ?>"
                                         data-value="<?= $js_list_type ?>"><?= $text_type_name ? $text_type_name : "-" ?></td>
-                                    <td><div class="room-data"
-                                             data-pk="<?= $room['id'] ?>"
-                                             data-value="<?= $room['type'] ?>"
-                                             data-name="type"
-                                        ><?= $room['type'] ? $room['type']: '-' ?></div></td>
+
                                     <td><div class="room-price font-weight-bold"
                                              data-pk="<?= $room['id'] ?>"
                                              data-value="<?= $room['price'] ?>"
@@ -114,22 +121,23 @@ $check_consultant_booking = true;
                                              data-pk= "<?= $room['id'] ?>"
                                              data-value= "<?= $room['area'] > 0 ? $room['area']:'' ?>"
                                              data-name="area"><?= $room['area'] > 0 ? $room['area']: '-' ?></div></td>
-                                    <td><div class="room-status font-weight-bold text-primary <?= $color_for_available ?>"
-                                             data-id="<?= $room['id'] ?>">
-                                            <?= $room['status'] ? $label_apartment[$room['status']] : '-' ?></div></td>
-                                    <td><div class="room-time_available text-success"
+                                    <td><div class="room-select-status text-center <?= $color_for_available ?>"
+                                             data-gh-status="<?= $room['status'] ?>"
+                                             data-id="<?= $room['id'] ?>"><?= $status_txt ?></div></td>
+                                    <td><div class="room-time_available text-center"
                                              data-pk="<?= $room['id'] ?>"
                                              data-value="<?= date('d-m-Y',$room['time_available']) ?>"
-                                             data-name="time_available"><?= $room['time_available'] > 0 ?
-                                                date('d-m-Y',$room['time_available']) :'-' ?></div></td>
+                                             data-name="time_available"><?= $room['time_available'] > 0 ? date('d-m-Y',$room['time_available']) :' - ' ?></div></td>
 
                                     <?php if($check_option):?>
                                         <td class="">
-                                            <div
-                                                class="d-flex flex-column flex-md-row justify-content-center">
+                                            <div class="d-flex flex-column flex-md-row justify-content-center">
+                                                <?php if($check_update_room): ?>
                                                 <button data-room-id="<?= $room['id'] ?>" data-room-code="<?= $room['code'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                                                     <i class="mdi mdi-delete"></i>
                                                 </button>
+                                                <?php endif;?>
+
                                                 <?php if($check_contract):?>
                                                     <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
                                                         <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
@@ -300,7 +308,157 @@ $check_consultant_booking = true;
             $('.list-room').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
-                responsive: true
+                 responsive: true,
+                "fnDrawCallback": function() {
+                    <?php if($check_update_room): ?>
+
+                    $('.list-room .room-data').editable({
+                        type: "text",
+                        url: '<?= base_url()."admin/update-room-editable" ?>',
+                        inputclass: ''
+                    }).on("shown", tab_key);
+
+                    $('.list-room .room-price, .list-room .room-area').editable({
+                        type: "number",
+                        url: '<?= base_url()."admin/update-room-editable" ?>',
+                        inputclass: '',
+                        display: function(value, response) {
+                            return false;   //disable this method
+                        },
+                        success: function(response, newValue) {
+                            $(this).html(nFormatter(newValue));
+                        }
+                    }).on("shown", tab_key);
+
+                    $('.list-room-type').click(function(){
+                        $(this).editable({
+                            type: 'checklist',
+                            url: '<?= base_url() ?>admin/update-room-editable',
+                            inputclass: '',
+                            source: function () {
+                                let data = [];
+                                $.ajax({
+                                    url: '<?= base_url() ?>admin/room-type/get-list-editable',
+                                    dataType: 'json',
+                                    async: false,
+                                    success: function (res) {
+                                        data = res;
+                                        return res;
+                                    }
+                                });
+                                return data;
+                            }
+                        });
+                    });
+
+                    $('.room-select-status').click(function() {
+                        let status = $(this).data('gh-status');
+                        let room_id = $(this).data('id');
+                        let update = 'Full';
+                        if(status === 'Available') {
+                            $(this).html('<span class="badge badge-danger">Full</span>');
+                            update = 'Full';
+                            $(this).data('gh-status', 'Full');
+                        }
+
+                        if(status === 'Full') {
+                            $(this).html('<span class="badge badge-success">Trống</span>');
+                            update = 'Available';
+                            $(this).data('gh-status', 'Available');
+                        }
+
+                        $.ajax({
+                            method: 'post',
+                            url:'<?= base_url()."admin/update-room-editable" ?>',
+                            data: {pk: room_id, name: 'status', value: update}
+                        });
+                    });
+
+                    $('.list-room .room-time_available').editable({
+                        placement: 'right',
+                        type: 'combodate',
+                        template:"D / MM / YYYY",
+                        format:"DD-MM-YYYY",
+                        viewformat:"DD-MM-YYYY",
+                        mode: 'popup',
+                        combodate: {
+                            firstItem: 'name',
+                            minYear: 2019,
+                            maxYear: 2025
+                        },
+                        inputclass: 'form-control-sm',
+                        url: '<?= base_url()."admin/update-room-editable" ?>'
+                    });
+
+                    $('.room-delete').on('click', function() {
+                        let this_btn = $(this);
+                        let room_id = $(this).data('room-id');
+                        let room_code = $(this).data('room-code');
+                        swal({
+                            title: 'Bạn Muốn Xóa Phòng ' + room_code,
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonClass: 'btn btn-confirm mt-2',
+                            cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                            confirmButtonText: 'Xóa',
+                        }).then(function () {
+                            $.ajax({
+                                type: 'POST',
+                                url:'<?= base_url()."admin/update-room-editable" ?>',
+                                data: {pk: room_id, name: 'active', value: 'NO'},
+                                success:function(response) {
+                                    let data = JSON.parse(response);
+                                    if(data.status > 0) {
+                                        this_btn.parents('tr').remove();
+                                    }
+                                }
+                            });
+                            swal({
+                                title: 'Đã Xóa Thành Công!',
+                                type: 'success',
+                                confirmButtonClass: 'btn btn-confirm mt-2'
+                            });
+                        })
+                    });
+
+                    $('.apartment-delete').on('click', function() {
+                        let apartment_id = $(this).data('apartment-id');
+                        let this_btn = $(this);
+                        swal({
+                            title: 'Bạn Muốn Ẩn Dự Án Này',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonClass: 'btn btn-confirm mt-2',
+                            cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                            confirmButtonText: 'Ẩn',
+                        }).then(function () {
+                            $.ajax({
+                                url: '<?= base_url() ?>admin/update-apartment-editable',
+                                data: {pk: apartment_id, name: 'active', value: 'NO', mode: 'del'},
+                                type: 'POST',
+                                success: function(response) {
+                                    let data = JSON.parse(response);
+                                    if(data.status > 0) {
+                                        this_btn.parents('.apartment-block').fadeOut(1500, function(){
+                                            this_btn.parents('.apartment-block').remove();
+                                            $('#modal-apartment-detail-' + apartment_id).remove();
+                                        });
+                                    }
+                                }
+                            });
+                            swal({
+                                title: 'Đã Ẩn Thành Công!',
+                                type: 'success',
+                                confirmButtonClass: 'btn btn-confirm mt-2'
+                            });
+                        });
+
+
+                    });
+                    // End Draw
+
+                    <?php endif; ?>
+                }
             });
             $('.date-picker').datepicker({
                 format: "dd-mm-yyyy"
