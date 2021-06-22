@@ -58,7 +58,7 @@
 
                                     <div class="form-group col-md-4">
                                         <strong class="col-form-strong">Hướng</strong> <span class="text-danger">*</span>
-                                        <select name="direction" required class="form-control">
+                                        <select name="direction" class="form-control">
                                             <option value="">Chọn Hướng</option>
                                             <option value="east">Đông</option>
                                             <option value="west">Tây</option>

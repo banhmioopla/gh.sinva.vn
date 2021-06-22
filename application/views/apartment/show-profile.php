@@ -88,7 +88,7 @@ $short_fill = ["Miễn phí combo", "Tòa nhà nằm trong hẻm", "Nên nắm k
 
                                 <div class="form-group col-md-4">
                                     <strong class="col-form-strong">Hướng</strong>
-                                    <select name="direction" required class="form-control">
+                                    <select name="direction" class="form-control">
                                         <option value="">Chọn Hướng</option>
                                         <option <?= $apartment['direction'] == 'east' ? 'selected' :'' ?> value="east">Đông</option>
                                         <option <?= $apartment['direction'] == 'west' ? 'selected' :'' ?> value="west">Tây</option>
