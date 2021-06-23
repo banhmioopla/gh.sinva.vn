@@ -29,7 +29,7 @@ class Media extends CustomBaseStep {
         }
 
         $apartment = $this->ghApartment->getFirstById($apartment_id);
-        $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apartment_id]);
+        $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apartment_id], 'code','ASC');
         $chain_room = [];
         $counter = 0;
         foreach ($list_room as $room) {

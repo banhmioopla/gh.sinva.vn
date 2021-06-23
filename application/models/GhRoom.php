@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class GhRoom extends CI_Model {
     private $table = 'gh_room';
 
-	public function get($where = []) {
+	public function get($where = [], $order_column  = 'id', $trend = 'DESC') {
+        $this->db->order_by($order_column, $trend);
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
