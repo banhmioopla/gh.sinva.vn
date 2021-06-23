@@ -141,7 +141,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                             <div class="col-12 <?= $bg_promotion ?>">
                                 <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>">
                                     <div class="address-text <?= $color_promotion ?> font-weight-bold ml-2">
-                                        <?=$apartment['address_street'] ?> <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:'' ?> <i>
+                                        <?=$apartment['address_street'] ?> <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:'' ?>
                                     </div>
                                 </a>
                             </div>
