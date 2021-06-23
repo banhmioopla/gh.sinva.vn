@@ -52,7 +52,7 @@ include VIEWPATH.'functions.php';
                                                id="room_<?= $item['id'] ?>"
                                                value="<?= $item['id'] ?>">
                                         <label class=" font-weight-bold text-<?= $status ?>"
-                                               for="room_<?= $item['id'] ?>"> MP: <?= $item['code'] ." (".($item['price'] ? view_money_format($item['price'],1): null).")" ?> </label>
+                                               for="room_<?= $item['id'] ?>"> <?= $item['code'] ." (".($item['price'] ? view_money_format($item['price'],1): null).")" ?> </label>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
