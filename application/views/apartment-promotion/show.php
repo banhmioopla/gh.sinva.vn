@@ -3,7 +3,10 @@ $check_create_promotion = false;
 if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
     $check_create_promotion = true;
 }
-
+$check_consultant_booking = false;
+if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
+    $check_consultant_booking = true;
+}
 
 ?>
 
@@ -25,6 +28,10 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 text-center"><?php $this->load->view('components/list-navigation'); ?></div>
+        </div>
+
         <!-- end page title end breadcrumb -->
         <?php if($this->session->has_userdata('fast_notify')) {
                 $flash_mess = $this->session->flashdata('fast_notify')['message'];
@@ -36,6 +43,14 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive">
+                    <div class="text-center">
+                        <?php if($check_consultant_booking): ?>
+                            <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create"><button class="btn btn-success"><i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span></button></a>
+                        <?php endif; ?>
+                        <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật T.Tin Phòng <i class="mdi mdi-cloud-upload"></i></button></a>
+                        <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger mt-md-0 mt-1">Cập Nhật T.Tin Dịch Vụ</button></a>
+                        <div class="text-center text-success"><small><?= $apartment['address_street'] ?></small></div>
+                    </div>
                     <table id="table-district" class="table table-bordered">
                         <thead>
                         <tr>
@@ -61,7 +76,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                             <?= $row['title'] ?>
                                     </div>
                                 </td>
-                                <td class="promotion-description" style="white-space: pre-line;" data-pk="<?= $row['id'] ?>" data-name="description"><?= $row['description'] ?></td>
+                                <td style="white-space: pre-line;"><?= $row['description'] ?></td>
                                 <td >
                                     <div class="promotion-start_time"
                                          data-pk="<?= $row['id'] ?>"
@@ -146,7 +161,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
     commands.push(function() {
         $(document).ready(function() {
             $('table').dataTable();
-            $('.promotion-title, .promotion-description').editable({
+            $('.promotion-title').editable({
                 type: "text",
                 url: '<?= base_url() ?>admin/update-apartment-promotion-editable',
                 inputclass: '',

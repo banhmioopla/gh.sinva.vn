@@ -1,3 +1,18 @@
+<?php
+$check_consultant_booking = false;
+if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
+    $check_consultant_booking = true;
+}
+
+$check_create_promotion = false;
+if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
+    $check_create_promotion = true;
+}
+
+
+?>
+
+
 <div class="wrapper">
     <div class="container">
 
@@ -19,6 +34,10 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-12 text-center"><?php $this->load->view('components/list-navigation'); ?></div>
+        </div>
+
+        <div class="row">
             <div class="col-12">
                 <?php if($this->session->has_userdata('fast_notify')) {
                     $flash_mess = $this->session->flashdata('fast_notify')['message'];
@@ -38,15 +57,21 @@
                 <div class="card-box">
                     <div class="row">
                         <div class="col-12">
-                            <h3 class="font-weight-bold text-danger text-md text-center m-1">Upload Ảnh Dự Án
-                                <div class="pull-right">
-                                    <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật T.Tin Phòng <i class="mdi mdi-cloud-upload"></i></button></a>
-                                    <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger mt-md-0 mt-1">Cập Nhật T.Tin Dịch Vụ</button></a>
-                                </div>
-                            </h3>
+                            <div class="text-center">
+                                <?php if($check_create_promotion): ?>
+                                    <a class="" href="/admin/list-apartment-promotion?apartment-id=290"><button class="btn btn-success"><i class="mdi mdi-gift"></i> <span class="d-none d-md-inline">Cập Nhật Ưu Đãi</span></button></a>
+                                <?php endif; ?>
+                                <?php if($check_consultant_booking): ?>
+                                    <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create"><button class="btn btn-success"><i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span></button></a>
+                                <?php endif; ?>
+                                <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật T.Tin Phòng <i class="mdi mdi-cloud-upload"></i></button></a>
+                                <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger mt-md-0 mt-1">Cập Nhật T.Tin Dịch Vụ</button></a>
+                                <div class="text-center text-success"><small><?= $apartment['address_street'] ?></small></div>
+                            </div>
+
                         </div>
 
-                        <div class="form-group col-md-6 offset-md-3 mt-md mt-2">
+                        <div class="form-group col-md-6 offset-md-3 mt-md-5 mt-2">
                             <strong class="col-form-strong text-primary">Đi Đến Dự Án Khác</strong>
                             <select id="apartment_update_ready" class="form-control">
                                 <option value="">Cập Nhật Dự Án Khác</option>

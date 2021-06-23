@@ -8,6 +8,16 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
     $check_update_room = true;
 
 }
+
+$check_consultant_booking = false;
+if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
+    $check_consultant_booking = true;
+}
+
+$check_create_promotion = false;
+if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
+    $check_create_promotion = true;
+}
 ?>
 
 <div class="wrapper">
@@ -45,8 +55,15 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
             <div class="col-12">
                 <div class="card-box table-responsive">
                     <div class="pull-right">
+                        <?php if($check_create_promotion): ?>
+                            <a class="" href="/admin/list-apartment-promotion?apartment-id=290"><button class="btn btn-success"><i class="mdi mdi-gift"></i> <span class="d-none d-md-inline">Cập Nhật Ưu Đãi</span></button></a>
+                        <?php endif; ?>
+                        <?php if($check_consultant_booking): ?>
+                            <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create"><button class="btn btn-success"><i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span></button></a>
+                        <?php endif; ?>
                         <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Upload Ảnh Mới</button></a>
                         <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật Thông Tin Dịch Vụ</button></a>
+
                     </div>
 
                     <h4 class="font-weight-bold text-danger">Danh Sách Phòng</h4>
@@ -142,14 +159,6 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                                                     <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
                                                         <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
                                                             <i class="mdi mdi-file-document"></i>
-                                                        </button>
-                                                    </a>
-                                                <?php endif;?>
-
-                                                <?php if($check_consultant_booking):?>
-                                                    <a href="<?= base_url() ?>admin/list-consultant-booking?room-id=<?= $room['id'] ?>&apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
-                                                        <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                                            <i class="mdi mdi-car-hatchback"></i>
                                                         </button>
                                                     </a>
                                                 <?php endif;?>

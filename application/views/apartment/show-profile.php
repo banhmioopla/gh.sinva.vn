@@ -1,7 +1,16 @@
 <?php
 $short_fill = ["Miễn phí combo", "Tòa nhà nằm trong hẻm", "Nên nắm kỹ thông tin trước khi tư vấn để tránh sai sót."];
 
+$check_consultant_booking = false;
+if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
+    $check_consultant_booking = true;
 
+}
+
+$check_create_promotion = false;
+if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
+    $check_create_promotion = true;
+}
 
 ?>
 
@@ -61,6 +70,12 @@ $short_fill = ["Miễn phí combo", "Tòa nhà nằm trong hẻm", "Nên nắm k
                         <div class="col-12">
                             <h3 class="font-weight-bold text-danger text-center">Địa Chỉ</h3>
                             <div class="pull-right text-md text-center">
+                                <?php if($check_create_promotion): ?>
+                                <a class="" href="/admin/list-apartment-promotion?apartment-id=290"><button class="btn btn-success"><i class="mdi mdi-gift"></i> <span class="d-none d-md-inline">Cập Nhật Ưu Đãi</span></button></a>
+                                <?php endif; ?>
+                                <?php if($check_consultant_booking): ?>
+                                    <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create"><button class="btn btn-success"><i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span></button></a>
+                                <?php endif; ?>
                                 <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>">
                                     <button type="button" class="btn btn-danger  mr-1">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></button></a>
                                 <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button type="button" class="mt-md-0 mt-1 btn btn-danger">Cập Nhật Thông Tin Phòng</button></a>
