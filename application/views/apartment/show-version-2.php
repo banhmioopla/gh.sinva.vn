@@ -123,18 +123,25 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
 
                     $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
                     $tag_promotion = '';
+                    $color_promotion = 'text-purple';
+                    $bg_promotion = '';
+                    $promotion_txt = '';
                     if(count($list_promotion) > 0) {
                         $tag_promotion = '<span class="badge badge-danger"><i class="mdi mdi-gift mr-2"></i> '.count($list_promotion). '</span>';
+                        $color_promotion =  $this->input->get('apmTag') ? $covidColor : 'text-white';
+                        $bg_promotion = 'bg-danger';
                     }
                     $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
+
+
                     ?>
                     <!-- item -->
                     <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 <?= $bg_promotion ?>">
                                 <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>">
-                                    <div class="address-text <?= $covidColor ?> font-weight-bold ml-2 border-bottom border-muted">
-                                        <?=$apartment['address_street'] ?> <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:''  ?>
+                                    <div class="address-text <?= $color_promotion ?> font-weight-bold ml-2">
+                                        <?=$apartment['address_street'] ?> <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:'' ?> <i>
                                     </div>
                                 </a>
                             </div>

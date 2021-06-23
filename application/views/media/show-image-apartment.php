@@ -47,7 +47,7 @@ include VIEWPATH . 'functions.php';
 
 
 <div class="wrapper">
-    <div class="container">
+    <div class="container-fluid">
 
         <!-- Page-Title -->
         <div class="row">
@@ -98,7 +98,7 @@ include VIEWPATH . 'functions.php';
                                class="btn-danger float-md-right mt-1 mt-md-0 btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
                         </div>
                         <div class="col-md-4">
-                            <strong class="text-danger">Xem hình các dự án khác</strong>
+                            <strong class="text-info">Xem hình các dự án khác</strong>
                             <select id="search-apartment-id" class="form-control">
                                 <option value="" disabled>Chọn Dự Án Khác</option>
                                 <?php foreach ($list_apartment as $item):
@@ -127,14 +127,14 @@ include VIEWPATH . 'functions.php';
                         <div class="col-md-12">
                             <div class="card-box " >
                                 <h3 class="text-danger font-weight-bold">Thông Tin Dịch Vụ</h3>
-                                <div class="row slimscroll border" style="max-height: 370px;">
+                                <div class="row slimscroll border border-danger" style="max-height: 450px;">
                                     <div class="col-md-6 col-12 shadow-sm">
                                         <p class="mb-0 text-muted">Mô Tả</p>
-                                        <h5 class="mb-2 text-wrap"><?= $apartment['description'] ?></h5>
+                                        <div class="mb-2" style="white-space: pre-wrap;"><?= $apartment['description'] ?></div>
                                     </div>
                                     <div class="col-md-6 col-12 shadow-sm">
                                         <p class="mb-0 text-muted">Ghi Chú Dự Án</p>
-                                        <h5 class="mb-2 text-wrap"><?= $apartment['note'] ?></h5>
+                                        <div class="mb-2 " style="white-space: pre-wrap;"><?= $apartment['note'] ?></div>
                                     </div>
                                     <div class="col-6 col-md-3 shadow-sm">
                                         <div class="mt-3">

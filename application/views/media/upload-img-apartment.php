@@ -40,8 +40,8 @@
                         <div class="col-12">
                             <h3 class="font-weight-bold text-danger text-md text-center m-1">Upload Ảnh Dự Án
                                 <div class="pull-right">
-                                    <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></button></a>
-                                    <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger mt-md-0 mt-1">Cập Nhật Thông Tin Dịch Vụ</button></a>
+                                    <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật T.Tin Phòng <i class="mdi mdi-cloud-upload"></i></button></a>
+                                    <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger mt-md-0 mt-1">Cập Nhật T.Tin Dịch Vụ</button></a>
                                 </div>
                             </h3>
                         </div>
