@@ -370,6 +370,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             $(this).data('gh-status', 'Full');
                         }
 
+
                         if(status === 'Full') {
                             $(this).html('<span class="badge badge-success">Trống</span>');
                             update = 'Available';
@@ -379,7 +380,12 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         $.ajax({
                             method: 'post',
                             url:'<?= base_url()."admin/update-room-editable" ?>',
-                            data: {pk: room_id, name: 'status', value: update}
+                            data: {pk: room_id, name: 'status', value: update},
+                            success:function () {
+                                console.log('===== ===== =====');
+                                console.log('status = ', status);
+                                console.log('room_id = ', status);
+                            }
                         });
                     });
 
