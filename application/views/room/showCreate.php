@@ -370,16 +370,16 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         let update = 'Full';
                         if(status === 'Available') {
                             console.log($(this));
-                            $(this).html('<span class="badge badge-danger">Full</span>');
+                            $('#room-status-'+room_id).html('<span class="badge badge-danger">Full</span>');
                             update = 'Full';
-                            $(this).data('gh-status', 'Full');
+                            $('#room-status-'+room_id).data('gh-status', 'Full');
                         }
 
 
                         if(status === 'Full') {
-                            $(this).html('<span class="badge badge-success">Trống</span>');
+                            $('#room-status-'+room_id).html('<span class="badge badge-success">Trống</span>');
                             update = 'Available';
-                            $(this).data('gh-status', 'Available');
+                            $('#room-status-'+room_id).data('gh-status', 'Available');
                         }
 
                         $.ajax({
@@ -387,9 +387,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             url:'<?= base_url()."admin/update-room-editable" ?>',
                             data: {pk: room_id, name: 'status', value: update},
                             success:function () {
-                                console.log('===== ===== =====');
-                                console.log('status = ', status);
-                                console.log('room_id = ', status);
+
                             }
                         });
                     });
