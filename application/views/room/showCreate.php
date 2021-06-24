@@ -369,6 +369,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         let room_id = $(this).data('id');
                         let update = 'Full';
                         if(status === 'Available') {
+                            console.log($(this));
                             $(this).html('<span class="badge badge-danger">Full</span>');
                             update = 'Full';
                             $(this).data('gh-status', 'Full');
