@@ -287,9 +287,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            let status = $(this).data('gh-status');
-            let room_id = $(this).data('id');
-            let update = 'Full';
+
 
 
             $('#checker-update').click(function () {
@@ -367,7 +365,9 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                     });
 
                     $('.room-select-status').click(function() {
-
+                        let status = $(this).data('gh-status');
+                        let room_id = $(this).data('id');
+                        let update = 'Full';
                         if(status === 'Available') {
                             $(this).html('<span class="badge badge-danger">Full</span>');
                             update = 'Full';
