@@ -63,7 +63,15 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
         <form action="" method="POST">
         <div class="row">
-
+            <div class="form-group col-md-4">
+                <strong class="col-form-strong text-primary">Cập Nhật Thông Tin Dịch Vụ Dự Án Khác</strong>
+                <select id="apartment_update_ready" class="form-control">
+                    <option value="">Cập Nhật Dự Án Khác</option>
+                    <?php foreach ($list_apm as $apm): ?>
+                        <option value="<?= $apm['id'] ?>">Q.<?= $apm['district_code'] . ' ' . $apm['address_street'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
             <div class="col-md-12">
                 <div class="card-box">
                     <div class="row">
@@ -154,15 +162,23 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                     </select>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <strong class="col-form-strong text-primary">Đi Đến Dự Án Khác</strong>
-                                    <select id="apartment_update_ready" class="form-control">
-                                        <option value="">Cập Nhật Dự Án Khác</option>
-                                        <?php foreach ($list_apm as $apm): ?>
-                                            <option value="<?= $apm['id'] ?>">Q.<?= $apm['district_code'] . ' ' . $apm['address_street'] ?></option>
-                                        <?php endforeach; ?>
+                                <div class="form-group col-md-2">
+                                    <strong class="col-form-strong">Tag </strong>
+                                    <select name="tag_id"  class="form-control">
+                                        <option value="">Gắn Tag</option>
+                                        <?php foreach ($list_tag as $tag):
+                                            $slc = '';
+                                            if($apartment['tag_id'] == $tag['id']) {
+                                                $slc = 'selected';
+                                            }
+
+                                            ?>
+                                            <option <?= $slc ?> value="<?= $tag['id'] ?>"><?= $tag['name'] ?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
+
+
 
                             </div>
                             <div class="form-row float-right">

@@ -47,18 +47,22 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                         <?php if($check_consultant_booking): ?>
                             <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create"><button class="btn btn-success"><i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span></button></a>
                         <?php endif; ?>
-                        <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật T.Tin Phòng <i class="mdi mdi-cloud-upload"></i></button></a>
+
+                        <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>">
+                            <button type="button" class="btn btn-danger"><i class="mdi mdi-cloud-upload"></i> Upload Ảnh Mới</button></a>
+
+                        <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật T.Tin Phòng </button></a>
                         <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger mt-md-0 mt-1">Cập Nhật T.Tin Dịch Vụ</button></a>
                         <div class="text-center text-success"><small><?= $apartment['address_street'] ?></small></div>
                     </div>
+                    <h4 class="font-weight-bold text-danger">Danh Sách Chương Trình Ưu Đãi</h4>
                     <table id="table-district" class="table table-bordered">
-                        <thead>
+                        <thead class="table-dark">
                         <tr>
-                            <th>Tiêu Đề</th>
-                            <th>Mô Tả</th>
-                            <th class="text-center">Ngày Bắt Đầu</th>
-                            <th class="text-center">Ngày Kết Thúc</th>
-                            <th class="text-center">Trạng Thái</th>
+                            <th class="text-center">Mô Tả</th>
+                            <th class="text-center">Bắt Đầu</th>
+                            <th class="text-center">Kết Thúc</th>
+                            <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -69,14 +73,10 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                 }
                                 ?>
                             <tr>
-                                <td>
-                                    <div class="promotion-title"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="title">
-                                            <?= $row['title'] ?>
-                                    </div>
+                                <td style="width: 55%;">
+                                    <h5><?= $row['title'] ?></h5>
+                                    <?= $row['description'] ?>
                                 </td>
-                                <td style="white-space: pre-line;"><?= $row['description'] ?></td>
                                 <td >
                                     <div class="promotion-start_time"
                                          data-pk="<?= $row['id'] ?>"
@@ -106,7 +106,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card-box">
-                    <h4 class="font-weight-bold text-danger">Thêm Mới</h4>
+                    <h4 class="font-weight-bold text-danger">Tạo Ưu Đãi Mới</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-apartment-promotion">
                         <input type="hidden" name="apartment_id" value="<?= $apartment['id'] ?>">
                         <div class="form-group row">
@@ -142,8 +142,8 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-8 offset-4">
-                                <button type="submit" class="btn btn-custom waves-effect waves-light">
+                            <div class="col text-center">
+                                <button type="submit" class="btn btn-danger waves-effect waves-light">
                                     Thêm mới
                                 </button>
                             </div>
@@ -160,54 +160,28 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('table').dataTable();
-            $('.promotion-title').editable({
-                type: "text",
-                url: '<?= base_url() ?>admin/update-apartment-promotion-editable',
-                inputclass: '',
-                mode: 'inline',
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.user-alert').html(notify_html_success);
-                    } else {
-                        $('.user-alert').html(notify_html_fail);
-                    }
+            $('table').dataTable({
+                "fnDrawCallback": function() {
+                    $('.promotion-start_time, .promotion-end_time').editable({
+                        type: 'combodate',
+                        template:"D / MM / YYYY",
+                        format:"DD-MM-YYYY",
+                        viewformat:"DD-MM-YYYY",
+                        combodate: {
+                            firstItem: 'name',
+                            maxYear: '2023',
+                            minYear: '2021'
+                        },
+                        inputclass: 'form-control-sm',
+                        url: '<?= base_url()."admin/update-apartment-promotion-editable" ?>'
+                    });
+
+                    $('.datepicker').datepicker({
+                        format: "dd-mm-yyyy"
+                    });
                 }
             });
 
-            $('.promotion-title, .promotion-description').editable({
-                type: "text",
-                url: '<?= base_url() ?>admin/update-apartment-promotion-editable',
-                inputclass: '',
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    if(data.status == true) {
-                        $('.user-alert').html(notify_html_success);
-                    } else {
-                        $('.user-alert').html(notify_html_fail);
-                    }
-                }
-            });
-
-            $('.promotion-start_time, .promotion-end_time').editable({
-                type: 'combodate',
-                template:"D / MM / YYYY",
-                format:"DD-MM-YYYY",
-                viewformat:"DD-MM-YYYY",
-                combodate: {
-                    firstItem: 'name',
-                    maxYear: '2023',
-                    minYear: '2021'
-                },
-                inputclass: 'form-control-sm',
-                url: '<?= base_url()."admin/update-apartment-promotion-editable" ?>'
-            });
-
-
-            $('.datepicker').datepicker({
-                format: "dd-mm-yyyy"
-            });
         });
     });
 </script>

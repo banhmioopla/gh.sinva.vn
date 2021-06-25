@@ -32,7 +32,6 @@
         <div class="row">
             <div class="col-12 col-md-12">
                 <div class="card-box">
-                    <a href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>" class="font-weight-bold">Quay lại trang: Ưu Đãi Tại -  <?= $apartment['address_street'] ?></a>
                     <form role="form" method="post" action="">
                         <div class="form-group row">
                             <label class="col-md-4 col-12 col-form-label">Tiêu Đề</label>
@@ -48,8 +47,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-8 offset-4">
-                                <button type="submit" name="submit" class="btn btn-custom waves-effect waves-light">
+                            <div class="col text-center">
+                                <a href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
+                                    <button type="button" name="submit" class="btn btn-secondary waves-effect waves-light">
+                                        Quay Lại Danh Sách
+                                    </button>
+                                </a>
+                                <button type="submit" name="submit" class="btn btn-danger waves-effect waves-light">
                                     Cập Nhật
                                 </button>
                             </div>

@@ -421,6 +421,7 @@ class Apartment extends CustomBaseStep {
                 'partner_id' => $this->input->post('partner_id'),
                 'active' => $this->input->post('active'),
                 'direction' => $this->input->post('direction'),
+                'tag_id' => $this->input->post('tag_id'),
 
                 'time_update' => time(),
                 'time_insert' => strtotime($this->input->post('time_insert')),
@@ -482,7 +483,8 @@ class Apartment extends CustomBaseStep {
             'list_apm' => $list_apm,
             'list_brand' => $list_brand,
             'ghBaseRoomType' => $this->ghBaseRoomType,
-            'list_room_type' => $list_room_type
+            'list_room_type' => $list_room_type,
+            'list_tag' => $this->ghTag->getAll()
         ]);
         $this->load->view('components/footer');
     }
