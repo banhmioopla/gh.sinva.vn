@@ -12,12 +12,31 @@ class CustomerFeedback extends CustomBaseStep {
     }
 
     public function show(){
-        $data['list_feedback'] = $this->ghPublicCustomerFeedback->get();
-        $data['libUser'] = $this->libUser;
+        $timeFrom = date('01-m-Y');
+        $timeTo = date(cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')).'-m-Y');
+
+        if($this->input->get('timeFrom')) {
+            $timeFrom = $this->input->get('timeFrom');
+        }
+
+        if($this->input->get('timeTo')) {
+            $timeTo = $this->input->get('timeTo');
+        }
+
+        $list_feedback = $this->ghPublicCustomerFeedback->get([
+            'time_create >= ' => strtotime($timeFrom),
+            'time_create <= ' => strtotime($timeTo) + 86399,
+        ]);
+
 
         /*--- Load View ---*/
         $this->load->view('components/header');
-        $this->load->view('customer-feedback/show', $data);
+        $this->load->view('customer-feedback/show', [
+            'list_feedback' => $list_feedback,
+            'timeFrom' => $timeFrom,
+            'timeTo' => $timeTo,
+            'libUser' => $this->libUser
+        ]);
         $this->load->view('components/footer');
     }
 

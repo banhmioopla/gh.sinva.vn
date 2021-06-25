@@ -22,7 +22,27 @@
             <div class="col-12">
                 <div class="card-box">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-md-12">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-3">
+                                        <strong>Từ Ngày</strong>
+                                        <input type="text" name="timeFrom" class="form-control datepicker" value="<?= $timeFrom ?>">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Đến Ngày</strong>
+                                        <input type="text" name="timeTo" class="form-control datepicker" value="<?= $timeTo ?>">
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <button type="submit" class="btn btn-danger">Áp Dụng</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                            <hr>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <h4 class="text-danger font-weight-bold">FeedBack Từ Khách Hàng</h4>
                             <table class="table table-dark">
                                 <thead>
                                 <tr>
@@ -68,5 +88,9 @@
 <script>
     commands.push(function () {
        $('table').dataTable();
+        $('.datepicker').datepicker({
+            format: "dd-mm-yyyy"
+        });
     });
+
 </script>
