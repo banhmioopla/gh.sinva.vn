@@ -233,8 +233,18 @@ include VIEWPATH . 'functions.php';
                                 <h3 class="text-danger font-weight-bold">Tạo Bài Đăng Tư Vấn <i class="mdi mdi-arrow-down-drop-circle"></i></h3>
                                 <strong class="text-danger">Tiêu Đề Bài Đăng</strong>
                                 <input type="text" required id="post_title" class="form-control">
+
                                 <strong class="text-danger">Mô Tả </strong>
                                 <textarea type="text" id="post_content" class="form-control" rows="2"></textarea>
+
+                                <div class="checkbox checkbox-danger  mt-1 text-center">
+
+                                    <input id="slc-all-img"type="checkbox">
+                                    <label for="slc-all-img">
+                                        <strong class="text-danger">Chọn Tất Cả Ảnh </strong>
+                                    </label>
+                                </div>
+
                                 <div class="text-center" id="notification"></div>
                                 <input type="hidden" id="post_password" value="">
                                 <input type="hidden" id="post_room_id">
@@ -305,6 +315,15 @@ include VIEWPATH . 'functions.php';
 <script>
     commands.push(function () {
         $(document).ready(function () {
+            $("#slc-all-img").change(function () {
+               if($("#slc-all-img").is(':checked')){
+                    $('input[name=post_imgs]').attr('checked', true);
+               } else {
+                   $('input[name=post_imgs]').attr('checked', false);
+               }
+            });
+
+
             $('#submit_consultant_post').click(function () {
                 let img_id = [];
                 let count_img = 0;

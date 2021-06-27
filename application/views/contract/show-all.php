@@ -49,13 +49,9 @@ foreach ($list_contract as $row) {
             <div class="col-md-6">
                 <div class="card-box">
                     <table class="table-hover table table-dark">
-                        <tr><td colspan="2" class="font-weight-bold text-center"><h3>TỔNG QUAN</h3></td></tr>
                         <tbody>
                         <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Hợp Đồng</td> <td class="text-right font-weight-bold"><?= $metric['quantity'] ?></td></tr>
                         <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng Giá Trị Hợp Đồng (giá thuê)</td> <td class="text-right font-weight-bold"><?= number_format($metric['total_room_price']) ?> vnđ</td></tr>
-                        <tr><td colspan="2" class="font-weight-bold text-center"><h3>THÁNG <?= date('m/Y') ?></h3></td></tr>
-                        <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Hợp Đồng </td> <td class="text-right font-weight-bold"><?= $metric['quantity_current_month'] ?></td></tr>
-                        <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng Giá Trị Hợp Đồng </td> <td class="text-right font-weight-bold"><?= number_format($metric['total_room_price_current_month']) ?> vnđ</td></tr>
                         </tbody>
                     </table>
                     <div>
@@ -63,8 +59,7 @@ foreach ($list_contract as $row) {
                         <div class="row mt-2">
                             <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
                                 <div class="col-6">
-                                    <a href="/admin/contract/sync-status-expire" class="btn
-                        btn-danger"><i>Quét Hợp Đồng Hết Hạn</i></a>
+                                    <a href="/admin/contract/sync-status-expire" class="btn btn-danger"><i>Quét Hợp Đồng Hết Hạn</i></a>
                                 </div>
 
                             <?php endif; ?>
@@ -109,7 +104,7 @@ foreach ($list_contract as $row) {
                         </div>
                         <div class="row mt-2">
                             <div class="col-6 offset-3">
-                                <button id="search" class="btn btn-danger w-100">TÌM</button>
+                                <button id="search" class="btn btn-danger w-100">Áp Dụng</button>
                             </div>
                         </div>
 
@@ -151,6 +146,7 @@ foreach ($list_contract as $row) {
                         ?>
                         <div class="col-md-12">
                             <div class="card-box">
+
                                 <!-- end page title end breadcrumb -->
                                 <?php
                                 if($this->session->has_userdata('fast_notify')) {
@@ -224,6 +220,7 @@ foreach ($list_contract as $row) {
         <div class="row">
             <div class="col-12">
                 <div class="card-box">
+                    <h4 class="font-weight-bold text-danger">Danh Sách Hợp Đồng Thuê Phòng</h4>
                     <table class="table-contract table table-dark table-bordered">
                         <thead>
                         <tr>
