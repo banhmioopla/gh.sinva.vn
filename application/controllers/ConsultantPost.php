@@ -32,9 +32,11 @@ class ConsultantPost extends CustomBaseStep {
 
         if(isset($_POST['submit'])){
             $content = trim($this->input->post('content'));
+            $title = trim($this->input->post('title'));
 
             $this->ghPublicConsultingPost->updateById($id, [
                 'content' => $content,
+                'title' => $title
             ]);
             $post = $this->ghPublicConsultingPost->getFirstById($id);
             $this->session->set_flashdata('fast_notify', [
