@@ -108,17 +108,22 @@ class Contract extends CustomBaseStep {
 
 	public function show(){
 	    $params = [];
-        $time_from = null;
-        $time_to = null;
+        $time_from = date('01-m-Y');
+        $time_to = date(cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')).'-m-Y');
+
+        $timeCheckInFrom = $time_from;
+        $timeCheckInTo = $time_to;
+
+        $params['time_check_in >='] = $timeCheckInFrom;
         if($this->input->get('timeCheckInFrom')) {
             $timeCheckInFrom = $this->input->get('timeCheckInFrom');
             $params['time_check_in >='] = strtotime($timeCheckInFrom);
         }
 
-
+        $params['time_check_in <='] = $timeCheckInTo;
         if($this->input->get('timeCheckInTo')) {
             $timeCheckInTo = $this->input->get('timeCheckInTo');
-            $params['time_check_in <='] = strtotime($timeCheckInTo)+86399;
+            $params['time_check_in <='] = strtotime($this->input->get('timeCheckInTo'))+86399;
         }
 
         if($this->input->get('timeExpireFrom')) {
@@ -145,6 +150,8 @@ class Contract extends CustomBaseStep {
 		/*--- Load View ---*/
         $data['time_from'] = $time_from;
         $data['time_to'] = $time_to;
+        $data['timeCheckInFrom'] = $timeCheckInFrom;
+        $data['timeCheckInTo'] = $timeCheckInTo;
 		$this->load->view('components/header',['menu' =>$this->menu]);
 		$this->load->view('contract/show-all', $data);
 		$this->load->view('components/footer');
