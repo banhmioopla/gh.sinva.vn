@@ -95,7 +95,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                         <h4 class="text-primary">Truy Cập Nhanh - Cập Nhật Phòng Dự Án Khác</h4>
                         <select id="apartment_update_ready" class=" form-control">
                             <option value="">Cập Nhật Phòng Dự Án Khác</option>
-                            <?php foreach ($list_apartment as $apm_move): ?>
+                            <?php foreach ($list_apm_ready as $apm_move): ?>
                                 <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
                             <?php endforeach; ?>
                         </select>

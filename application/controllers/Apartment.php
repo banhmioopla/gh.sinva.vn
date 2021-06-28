@@ -129,6 +129,16 @@ class Apartment extends CustomBaseStep {
 		$data['ghApartmentComment'] = $this->ghApartmentComment;
 		$data['ghApartmentPromotion'] = $this->ghApartmentPromotion;
 		$data['libApartment'] = $this->libApartment;
+        $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
+        $list_apm_ready = [];
+        foreach ($list_apm_temp as $apm ) {
+            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+                continue;
+            }
+
+            $list_apm_ready[] = $apm;
+        }
+        $data['list_apm_ready'] = $list_apm_ready;
 		/*--- Load View ---*/
 		$this->load->view('components/header');
 		$this->load->view($template, $data);
