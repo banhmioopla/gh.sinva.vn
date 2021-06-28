@@ -77,7 +77,7 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
             <div class="card card-body pl-0 pr-0 col-12 col-md-9">
                 <div class="text-center w-100">
                     <a target="_blank" href="/gh/list-apartment/v2?district-code=<?= $district_code ?>" class="text-muted font-weight-bold">Phiên Bản Thử nghiệm V2</a>
-                    <?php $this->load->view('components/list-navigation'); ?>
+                    <?php // $this->load->view('components/list-navigation'); ?>
                 </div>
 
                 <?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>

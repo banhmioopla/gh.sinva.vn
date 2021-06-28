@@ -29,6 +29,12 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
 $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
 
+$check_update_room = false;
+if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
+    $check_update_room = true;
+
+}
+
 ?>
 
 <div class="wrapper">
@@ -47,6 +53,12 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md offset-md-3 text-center">
+                <?php $this->load->view('components/list-navigation'); ?>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-3 d-md-block d-none">
                 <?php if(count($contract_noti) && isYourPermission('Apartment', 'showNotificaton', $this->permission_set)):?>
@@ -74,10 +86,23 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
                 <?php endif; ?>
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
-            <div class="card card-body pl-0 pr-0 col-12 col-md-9">
-                <div class="text-center w-100">
-                    <?php $this->load->view('components/list-navigation'); ?>
+            <div class="card card-body col-12 col-md-9">
+                <!--<div class="text-center w-100">-->
+                <!--</div>-->
+                <?php if($check_update_room): ?>
+                <div class="row">
+                    <div class="col">
+                        <h4 class="text-primary">Truy Cập Nhanh - Cập Nhật Phòng Dự Án Khác</h4>
+                        <select id="apartment_update_ready" class=" form-control">
+                            <option value="">Cập Nhật Phòng Dự Án Khác</option>
+                            <?php foreach ($list_apartment as $apm_move): ?>
+                                <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 </div>
+                <hr>
+                <?php endif;?>
 
                 <?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]);
 
@@ -443,66 +468,6 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
             }
         });
 
-        //Warning Message
-        $('.consultant-booking').click(function () {
-            let thisBooking = $(this);
-            let time = null;
-            swal({
-                title: '',
-                text: "Chúc Bạn Chốt Khách Thành Công!",
-                type: 'warning',
-                html: `
-                <form>
-                    <label>Ngày Dẫn Khách</label>
-                    <input name="bookingtime" class="datepicker form-control booking-time">
-
-                    <label>Số điện thoại</label>
-                    <input name="phonenumber" tpe="text" placeholder="0900..." class="form-control">
-                    <p class='msg-phonenumber text-danger'></p>
-                    <label>Giới tính</label>
-                    <input class="form-control">
-                    <label>Ghi Chú</label>
-                    <input required class="form-control">
-                </form>
-                `,
-                showCancelButton: true,
-                confirmButtonClass: 'btn btn-confirm mt-2',
-                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
-                confirmButtonText: 'Book',
-                onOpen: function() {
-                    $('.datepicker').datetimepicker({
-                        inline: true,
-                        sideBySide: true,
-                        format: 'DD/MM/YYYY hh:mm a',
-                    });
-                },
-                preConfirm: function () {
-                    let phone = $('input[name=phonenumber]').val();
-                    if(phone == '')
-                        return;
-                    else {
-                        $('.msg-phonenumber').text('hello');
-                    }
-                }
-            }).then(function () {
-                roomId = thisBooking.data('room-id');
-                time = $('.booking-time').val();
-                console.log(time);
-                // $.ajax({
-                //     method: "post",
-                //     url: "<?//= base_url(). 'admin/create-consultant-booking' ?>",
-                //     data: {roomId: roomId, time: time }
-                // });
-                swal({
-                        title: 'Đã Book Xong!',
-                        type: 'success',
-                        confirmButtonClass: 'btn btn-confirm mt-2'
-                    }
-                );
-
-            })
-        });
-
         $('.datepicker').datepicker({
             format: "dd/mm/yyyy"
         });
@@ -525,6 +490,10 @@ $check_only_apartment = count($this->list_apartment_view_only) ? true : false;
 
                 }
             });
+        });
+        $('#apartment_update_ready').select2();
+        $('#apartment_update_ready').change(function () {
+            window.location = '/admin/room/show-create?apartment-id='+$(this).val();
         });
 
     });
