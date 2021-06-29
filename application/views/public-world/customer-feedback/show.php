@@ -31,7 +31,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-10 offset-md-2 col-form-label">Email / <strong class="text-primary">Email Address</strong>*</label>
                                     <div class="col-md-8 offset-md-2">
-                                        <input type="email" name="email" class="form-control" placeholder="abc@gmailcom" required>
+                                        <input type="email" name="email" class="form-control" placeholder="abc@gmailcom" >
                                     </div>
                                 </div>
                                 <div class="form-group row">
