@@ -1314,6 +1314,18 @@ $route['admin/apartment-view/create'] = function($params = []) {
 
 
 /* :::SHARE:::*/
+$route['share/agency-group/show'] = function($params = []) {
+    $controller = 'ShAgencyGroup';
+    $action = '/show';
+    return $controller.$action;
+};
+
+$route['share/agency-group/create'] = function($params = []) {
+    $controller = 'ShAgencyGroup';
+    $action = '/create';
+    return $controller.$action;
+};
+
 $route['share/user/create'] = function($params = []) {
     $controller = 'ShUser';
     $action = '/create';

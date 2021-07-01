@@ -2,7 +2,9 @@
 	$js_plugins_path = base_url().'js-plugins/';
 	$assets_path  = base_url().'assets/';
 ?>
-
+<?php
+include VIEWPATH.'functions.php';
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -76,6 +78,7 @@
                             <img src="<?= $assets_path ?>images/logo_sm.png" alt="" height="26" class="logo-small" />
                             <img src="<?= $assets_path ?>images/logo-gh.png" alt="" height="22" class="logo-large" />
                         </a>
+
                     </div>
                     <!-- End Logo container-->
                     <div class="menu-extras topbar-custom">
@@ -91,6 +94,7 @@
                                 </a>
                                 <!-- End mobile menu toggle-->
                             </li>
+
                             <li class="dropdown notification-list hide-phone">
                                 <!-- <a class="nav-link dropdown-toggle waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="mdi mdi-earth"></i> English
@@ -280,7 +284,12 @@
                                 <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                                     <!-- item-->
                                     <div class="dropdown-item noti-title">
-                                        <h6 class="text-overflow m-0">sinva.vn</h6>
+                                        <?php if(isYourPermission('ShAgencyGroup', 'show', $this->permission_set)):?>
+                                            <a class="text-danger" href="/share/agency-group/show">
+                                               <h4 class="text-overflow">Đi đến <strong>SHARE</strong> </h4>
+                                            </a>
+                                            <hr>
+                                        <?php endif;?>
                                     </div>
                                     <!-- item-->
                                     <a href="<?= base_url().'admin/personal-profile'?>" class="dropdown-item notify-item">

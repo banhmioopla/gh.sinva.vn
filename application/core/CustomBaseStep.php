@@ -20,6 +20,7 @@ class CustomBaseStep extends CI_Controller {
 		$this->role = $this->ghRole->get(['code' =>$this->auth['role_code']])[0];
 		$this->load->library('LibRole', null, 'libRole');
 		$this->load->library('LibConfig', null, 'libConfig');
+		$this->load->library('LibUuid', null, 'libUuid');
 
 		$this->load->config('usermode');
 		$usermode = $this->config->item('usermode');
