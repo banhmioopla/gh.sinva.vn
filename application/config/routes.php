@@ -1305,6 +1305,13 @@ $route['admin/consultant-post/detail'] = function($params = []) {
     return $controller.$action;
 };
 
+// VIEW NUMBER
+$route['admin/apartment-view/create'] = function($params = []) {
+    $controller = 'ApartmentView';
+    $action = '/create';
+    return $controller.$action;
+};
+
 
 /* :::SHARE:::*/
 $route['share/user/create'] = function($params = []) {

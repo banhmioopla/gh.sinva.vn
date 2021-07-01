@@ -99,6 +99,7 @@ class CustomBaseStep extends CI_Controller {
             'ConsultantPost' => ['showYour', 'showDetail'],
             'ApartmentPromotion' => [],
             'Team' => ['detail'],
+            'ApartmentView' => ['create'],
         ];
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 

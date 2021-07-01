@@ -242,15 +242,18 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 
                             </a>
                             <?php endif; ?>
-                            <button type="button" class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect"
+                            <button type="button" class="btn m-1 apm-plus-view btn-sm btn-outline-danger btn-rounded waves-light waves-effect"
                                     data-toggle="collapse"
+                                    data-apartment-id="<?=$apartment['id'] ?>"
                                     data-parent="#accordion"
                                     aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>"
                                     data-target="#modal-apartment-detail-<?=$apartment['id'] ?>">
                                 <i class="mdi mdi-eye"></i> <span class="d-none d-md-inline">Chi Tiết</span></button>
 
-                            <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
-                                <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
+                            <a data-souce="image" href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
+                                <button type="button"
+                                        data-apartment-id="<?=$apartment['id'] ?>"
+                                        class="btn m-1 apm-plus-view  btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
                                     <i class="mdi mdi-folder-multiple-image"></i> <span class="d-none d-md-inline">Ảnh D/A</span>
                                 </button>
                             </a>
@@ -408,6 +411,17 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 <script>
 
     commands.push(function() {
+
+        $('.apm-plus-view').click(function () {
+            console.log($(this).attr("aria-expanded"));
+            if($(this).attr("aria-expanded") === undefined || $(this).attr("aria-expanded") === "false" || $(this).data("source") === 'image') {
+                $.ajax({
+                    url: '/admin/apartment-view/create',
+                    data: {apartment_id: $(this).data('apartment-id')},
+                    method: "POST"
+                });
+            }
+        });
 
         var t_room = $('.list-room').DataTable({
             columnDefs: [
