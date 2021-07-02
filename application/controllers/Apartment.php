@@ -766,7 +766,7 @@ class Apartment extends CustomBaseStep {
 
         } else {
             $customer = $this->ghApartment->getLike(['address_street' => $q]);
-            if($customer) {
+            if(count($customer)) {
                 foreach($customer as $c){
                     $data[] = ['id' => $c['id'], 'text' => 'Quận '.$c['district_code']
                         .' | '. $c['address_street']];
