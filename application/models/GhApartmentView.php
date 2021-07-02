@@ -29,6 +29,13 @@ class GhApartmentView extends CI_Model {
         return $result;
     }
 
+    public function getNumber($apartment_id){
+        $result = $this->db->get_where(
+            $this->table,
+            ['apartment_id' => $apartment_id])->result_array();
+        return count($result);
+    }
+
     public function delete($penalty_id) {
         $this->db->where('id' , $penalty_id);
         $this->db->delete($this->table);

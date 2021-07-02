@@ -28,6 +28,13 @@ class GhConsultantBooking extends CI_Model {
         return $result;
     }
 
+    public function getNumber($apartment_id){
+        $result = $this->db->get_where(
+            $this->table,
+            ['apartment_id' => $apartment_id])->result_array();
+        return count($result);
+    }
+
     public function getGroupByUserId($from = 0, $to = null){
 	    if(empty($to)) {
 	        $to = strtotime('+1months');
