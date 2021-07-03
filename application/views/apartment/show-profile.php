@@ -76,7 +76,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 <div class="card-box">
                     <div class="row">
                         <div class="col-12">
-                            <h3 class="font-weight-bold text-danger text-center">Địa Chỉ</h3>
+                            <h3 class="font-weight-bold text-danger text-center">Cập Nhật Vào Lúc: <?= date('d-m-Y h:i\'', $apartment['time_update']) ?></h3>
                             <div class="pull-right text-md text-center">
                                 <?php if($check_create_promotion): ?>
                                 <a class="" href="/admin/list-apartment-promotion?apartment-id=290"><button class="btn btn-success"><i class="mdi mdi-gift"></i> <span class="d-none d-md-inline">Cập Nhật Ưu Đãi</span></button></a>
