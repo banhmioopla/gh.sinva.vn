@@ -426,7 +426,7 @@ class Apartment extends CustomBaseStep {
                 'commission_rate' => $this->input->post('commission_rate'),
                 'commission_rate_6m' => $this->input->post('commission_rate_6m'),
                 'commission_rate_9m' => $this->input->post('commission_rate_9m'),
-
+                'number_of_people' => $this->input->post('number_of_people'),
                 'map_longitude' => $this->input->post('map_longitude'),
                 'map_latitude' => $this->input->post('map_latitude'),
                 'user_collected_id' => $this->input->post('user_collected_id'),
