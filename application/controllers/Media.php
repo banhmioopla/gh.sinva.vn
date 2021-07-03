@@ -49,7 +49,17 @@ class Media extends CustomBaseStep {
         }
 
         $data['apartment'] = $apartment;
-        $data['list_apartment'] = $this->ghApartment->get(['active' => 'YES']);
+        $list_apm_ready = [];
+        $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
+        foreach ($list_apm_temp as $apm ) {
+            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+                continue;
+            }
+
+            $list_apm_ready[] = $apm;
+        }
+
+        $data['list_apartment'] = $list_apm_ready;
         $data['list_post'] = $this->ghPublicConsultingPost->get(['user_create_id' => $this->auth['account_id']]);
         $data['chain_room'] = $chain_room;
         $data['counter'] = $counter;
