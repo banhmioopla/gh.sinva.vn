@@ -11,7 +11,7 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Trending</a>
+                    <a class="dropdown-item" href="/admin/apartment/trending">Trending</a>
                     <a class="dropdown-item" href="#">Top Booking</a>
                     <a class="dropdown-item" href="#">Top View</a>
                 </div>

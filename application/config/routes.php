@@ -460,14 +460,15 @@ $route['admin/list-apartment'] = function($params = []) {
 	$action = '/show';
 	return $controller.$action;
 };
+
+$route['admin/apartment/trending'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/showTrending';
+    return $controller.$action;
+};
 $route['admin/apartment/show-edit'] = function($params = []) {
     $controller = 'Apartment';
     $action = '/showEdit';
-    return $controller.$action;
-};
-$route['gh/list-apartment/v2'] = function($params = []) {
-    $controller = 'Apartment';
-    $action = '/showV2';
     return $controller.$action;
 };
 

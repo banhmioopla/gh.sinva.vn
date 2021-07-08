@@ -90,7 +90,7 @@ class CustomBaseStep extends CI_Controller {
 		    /*Controller => [actions]*/
 		    'InternalContent' => ['show', 'pageIncomeRule', 'create', 'updateEditable'],
             'Image' => ['ajax_get_room_image'],
-            'Apartment' => ['getWard', 'showV2', 'showEdit', 'editDescription'],
+            'Apartment' => ['getWard', 'showV2', 'showEdit', 'editDescription', 'showTrending'],
             'Customer' => ['exportExcel'],
             'CustomerFeedback' => ['detail', 'show', 'showYour'],
             'Room' => ['syncStatusRoom', 'fastUpdate'],

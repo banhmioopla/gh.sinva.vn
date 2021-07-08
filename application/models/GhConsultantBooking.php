@@ -35,6 +35,19 @@ class GhConsultantBooking extends CI_Model {
         return count($result);
     }
 
+    public function getNumberFromRangeTime($from_time, $to_time){
+        $sql = "SELECT apartment_id, COUNT(apartment_id) as counter
+                FROM gh_consultant_booking
+                WHERE time_booking >= {$from_time} AND time_booking <= {$to_time}
+                GROUP BY apartment_id
+                ORDER BY COUNT(apartment_id) DESC
+                LIMIT 10
+                ";
+
+        $result = $this->db->query($sql)->result_array();
+        return $result;
+    }
+
     public function getGroupByUserId($from = 0, $to = null){
 	    if(empty($to)) {
 	        $to = strtotime('+1months');

@@ -36,6 +36,19 @@ class GhApartmentView extends CI_Model {
         return count($result);
     }
 
+    public function getNumberFromRangeTime($from_time, $to_time){
+        $sql = "SELECT apartment_id, COUNT(apartment_id) as counter
+                FROM gh_apartment_view
+                WHERE time_create >= {$from_time} AND time_create <= {$to_time}
+                GROUP BY apartment_id
+                ORDER BY COUNT(apartment_id) DESC
+                LIMIT 10
+                ";
+
+        $result = $this->db->query($sql)->result_array();
+        return $result;
+    }
+
     public function delete($penalty_id) {
         $this->db->where('id' , $penalty_id);
         $this->db->delete($this->table);
