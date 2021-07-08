@@ -12,6 +12,10 @@ class ShareAgencyGroup extends CI_Model {
         return $this->db->get_where($this->table, ['id' => $district_id])->result_array();
     }
 
+    public function getFirstByUuid($uuid) {
+        return $this->db->get_where($this->table, ['uuid' => $uuid])->row_array();
+    }
+
     public function getAll() {
         return $this->db->get_where($this->table)->result_array();
     }

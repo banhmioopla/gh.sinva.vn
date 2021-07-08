@@ -7,15 +7,21 @@ class ShUser extends CustomBaseStep {
     {
         parent::__construct();
         $this->load->model('shareUser');
+        $this->load->model('ShareAgencyGroup');
+        $this->load->model('ShareRole');
         $this->load->library('encryption');
     }
 
     public function show(){
-        $list = $this->shareUser->get();
-        $this->load->view('components/header');
+        $group_uuid = $this->input->get('group-id');
+        $list = $this->shareUser->get(['group_uuid' => $group_uuid]);
 
+        $this->load->view('components/share-header');
         $this->load->view('sh-user/show', [
-            'list' => $list
+            'list' => $list,
+            'shareAgencyGroup' => $this->ShareAgencyGroup,
+            'shareRole' => $this->ShareRole,
+            'group' => $this->ShareAgencyGroup->getFirstByUuid($group_uuid)
         ]);
         $this->load->view('components/footer');
     }

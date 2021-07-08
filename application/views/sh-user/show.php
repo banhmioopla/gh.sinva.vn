@@ -5,14 +5,14 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
-                    <div class="btn-group pull-right">
+                    <div class="btn-group">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">Highdmin</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Share</a></li>
+                            <li class="breadcrumb-item"><a href="#"><?= $group['name'] ?> </a></li>
+                            <li class="breadcrumb-item active"><a class="text-primary" href="/share/agency-group/show">DS Thành Viên - <?= $group['name'] ?> </li>
                         </ol>
                     </div>
-                    <h2 class="font-weight-bold text-primary">Danh Sách Account Share</h2>
+                    <h2 class="font-weight-bold text-primary">DS Thành Viên - <?= $group['name'] ?> </h2>
                 </div>
             </div>
         </div>
@@ -36,9 +36,7 @@
                                 <th>Họ Tên</th>
                                 <th>SDT</th>
                                 <th>Email</th>
-                                <th>UserName</th>
-                                <th>Password</th>
-                                <th>Loại User</th>
+                                <th>Vai Trò</th>
                                 <th></th>
                                 </thead>
                                 <tbody>
@@ -47,9 +45,7 @@
                                         <td><?= $item['name']?></td>
                                         <td><?= $item['phone_number']?></td>
                                         <td><?= $item['email']?></td>
-                                        <td><?= $item['account']?></td>
-                                        <td><?= $item['password']?></td>
-                                        <td><?= $item['type']?></td>
+                                        <td><?= $shareRole->getNameById($item['role_id']) ?></td>
                                     </tr>
                                 <?php endforeach;?>
                                 </tbody>
@@ -63,8 +59,8 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card-box">
-                    <h3 class="text-primary">Thêm Share User Mới</h3>
-                    <form role="form" method="post" action="<?= base_url()?>share/user/create">
+                    <h4 class="text-primary font-weight-bold">Thêm Thành Viên Mới</h4>
+                    <form role="form" method="post" action="/share/user/create">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-12 col-form-label">Họ Tên<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
@@ -99,7 +95,7 @@
 
                         <div class="form-group row">
                             <div class="col-8 offset-4">
-                                <button type="submit" class="btn btn-custom waves-effect waves-light">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">
                                     Thêm Mới
                                 </button>
                             </div>

@@ -5,11 +5,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
-                    <div class="btn-group pull-right">
+                    <div class="btn-group">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">Highdmin</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">Share</a></li>
+                            <li class="breadcrumb-item active"><a class="text-primary" href="/share/agency-group/show">DS Đội Nhóm Môi Giới (Agency Group)</a></li>
                         </ol>
                     </div>
                     <h2 class="font-weight-bold text-primary">DS Đội Nhóm Môi Giới (Agency Group)</h2>
@@ -31,6 +30,7 @@
                 <div class="card-box">
                     <div class="row">
                         <div class="col-12">
+                            <h4 class="font-weight-bold text-primary">Danh Sách Đội Nhóm Môi Giới (Agency Group)</h4>
                             <table class="table">
                                 <thead class="table-dark">
                                 <th>Tên tổ chức</th>
@@ -46,7 +46,14 @@
                                         <td>-</td>
                                         <td><?= $item['status']?></td>
                                         <td>-</td>
-                                        <td><strong>Thành viên</strong> <strong>Dự Án</strong> <strong>Hợp Đồng</strong></td>
+                                        <td>
+                                            <a href="/share/show-user?group-id=<?= $item['uuid'] ?>">
+                                            <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect">
+                                                <i class="mdi mdi-account-multiple"></i> <span class="d-none d-md-inline">Thành Viên</span>
+                                            </button></a>
+
+                                            <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> <span class="d-none d-md-inline">Dự Án</span></button>
+                                        </td>
                                     </tr>
                                 <?php endforeach;?>
                                 </tbody>

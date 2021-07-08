@@ -1326,6 +1326,12 @@ $route['share/agency-group/show'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['share/user/show'] = function($params = []) {
+    $controller = 'ShUser';
+    $action = '/show';
+    return $controller.$action;
+};
+
 $route['share/agency-group/create'] = function($params = []) {
     $controller = 'ShAgencyGroup';
     $action = '/create';

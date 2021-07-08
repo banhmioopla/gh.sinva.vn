@@ -283,10 +283,10 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
     </div> <!-- end container -->
 </div>
-<!-- end wrapper -->
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
+
 
 
 
@@ -317,6 +317,32 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                     });
                 }
             });
+
+            <?php if($check_update_room): ?>
+            $('.room-select-status').click(function() {
+                let status = $(this).data('gh-status');
+                let room_id = $(this).data('id');
+                let update = 'Full';
+                if(status === 'Available') {
+                    $('#room-status-'+room_id).html('<span class="badge badge-danger">Full</span>');
+                    update = 'Full';
+                    $('#room-status-'+room_id).data('gh-status', update);
+                }
+
+                if(status === 'Full') {
+                    $('#room-status-'+room_id).html('<span class="badge badge-success">Trống</span>');
+                    update = 'Available';
+                    $('#room-status-'+room_id).data('gh-status', update);
+                }
+
+                $.ajax({
+                    method: 'post',
+                    url:'<?= base_url()."admin/update-room-editable" ?>',
+                    data: {pk: room_id, name: 'status', value: update}
+                });
+            });
+            <?php endif; ?>
+
 
             $('.list-room').DataTable({
                 "pageLength": 10,
@@ -364,28 +390,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         });
                     });
 
-                    $('.room-select-status').click(function() {
-                        let status = $(this).data('gh-status');
-                        let room_id = $(this).data('id');
-                        let update = 'Full';
-                        if(status === 'Available') {
-                            $('#room-status-'+room_id).html('<span class="badge badge-danger">Full</span>');
-                            update = 'Full';
-                            $('#room-status-'+room_id).data('gh-status', update);
-                        }
 
-                        if(status === 'Full') {
-                            $('#room-status-'+room_id).html('<span class="badge badge-success">Trống</span>');
-                            update = 'Available';
-                            $('#room-status-'+room_id).data('gh-status', update);
-                        }
-
-                        $.ajax({
-                            method: 'post',
-                            url:'<?= base_url()."admin/update-room-editable" ?>',
-                            data: {pk: room_id, name: 'status', value: update}
-                        });
-                    });
 
                     $('.list-room .room-time_available').editable({
                         placement: 'right',
