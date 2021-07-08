@@ -16,6 +16,12 @@
         </div>
 
         <div class="row">
+            <div class="col-md text-center">
+                <?php $this->load->view('components/list-navigation'); ?>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-6">
                 <div class="card-box">
                     <div class="row">
@@ -46,7 +52,7 @@
                         <div class="col-12">
                             <table class="table">
                                 <thead class="table-dark">
-                                <th>View Tuần</th>
+                                <th>Booking Tuần</th>
                                 <th>Dự Án</th>
                                 </thead>
                                 <tbody>
