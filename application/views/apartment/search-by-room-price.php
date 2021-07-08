@@ -1,5 +1,5 @@
 <?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
-<div id="listPrice">
+<div id="listPrice" class="card-box mt-1">
     <h4 class="text-danger font-weight-bold">Tìm Dự Án</h4>
     <div class="form-group row">
         <span class="col-md-2 col-6">
@@ -99,7 +99,7 @@
                         $selected = "selected";
                     }
                     ?>
-                    <option <?= $selected ?> value="01-<?= $i ?>-2021"> 1 - <?= $i?> - 2021</option>
+                    <option <?= $selected ?> value="01-<?= $i ?>-2021"> 01/<?= str_pad($i,2,'0',STR_PAD_LEFT)?>/2021</option>
                 <?php endfor;?>
             </select>
         </span>
@@ -108,7 +108,6 @@
         </span>
     </div>
 </div>
-    <hr>
 <script>
     commands.push(function(){
         $('#search').on('click', function(){

@@ -1,30 +1,65 @@
 <div class="row">
     <div class="col-12">
-        <div class="m-md-2 m-1 button-list">
-            <button type="button" class="btn btn-secondary delete-gh waves-effect waves-light"> <i
-                        class=" mdi mdi-rocket mr-1"></i> <span><small>Xóa Giỏ Hàng</small></span>
-            </button>
-            <script>
-                commands.push(function(){
-                    $('.delete-gh').click(function(){
-                        $('body').fadeOut(5000);
-                    });
-                });
-            </script>
-            <?php if(isYourPermission('Image', 'show',$this->permission_set)):?>
-                <a href="<?= base_url() ?>admin/show-image-apartment">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-folder-multiple-image mr-1"></i> <span>Kho Ảnh</span>
-                    </button>
-                </a>
-            <?php endif; ?>
+        <div class="m-1 button-list">
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"><i class="fa fa-wpexplorer"></i> Khám Phá</button>
+                <button type="button"
+                        class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Trending</a>
+                    <a class="dropdown-item" href="#">Top Booking</a>
+                    <a class="dropdown-item" href="#">Top View</a>
+                </div>
+            </div>
 
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"><i class="fa fa-tasks"></i> Dự Án</button>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+
+
+                    <a class="dropdown-item" href="/admin/list-apartment"> <i class="fa fa-tasks mr-1"></i> Danh Sách Dự Án</a>
+
+
+                    <?php if(isYourPermission('Image', 'show',$this->permission_set)):?>
+                        <a class="dropdown-item" href="/admin/show-image-apartment"> <i class="fa fa-tasks mr-1"></i> Kho Hình Ảnh</a>
+                    <?php endif; ?>
+
+                    <?php if(isYourPermission('Mapbox', 'show',$this->permission_set)):?>
+                        <a class="dropdown-item" href="/admin/list-mapbox"> <i class="mdi mdi-google-maps mr-1"></i> Bản Đồ Dự Án</a>
+                    <?php endif; ?>
+
+                    <?php if(isYourPermission('ApartmentTrack', 'show',$this->permission_set)):?>
+                        <a class="dropdown-item" href="/admin/list-apartment-track"> <i class="mdi mdi-timetable mr-1"></i> Nhật Ký Dự Án</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"><i class="fa fa-grav"></i> Của Tôi</button>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/admin/consultant-post/your-list"> <i class="mdi mdi-library-plus mr-1"></i> Bài Đăng Tư Vấn</a>
+                    <a class="dropdown-item" href="/personal/customer-feedback/list"> <i class="mdi mdi-library-plus mr-1"></i> Feedback KH</a>
+                </div>
+            </div>
 
             <?php if(isYourPermission('ShareCustomerUser', 'showCreate',$this->permission_set)
             ):?>
-                <a href="<?= base_url() ?>admin/show-create-share-customer-user">
+                <a href="<?= base_url() ?>admin/show-create-share-customer-user" class="btn-group">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-human-greeting mr-1"></i> <span>+ Chia Sẻ KH</span>
+                                class="mdi mdi-human-greeting"></i> <span>+ Chia Sẻ KH</span>
                     </button>
                 </a>
             <?php endif; ?>
@@ -36,22 +71,6 @@
                 </a>
             <?php endif; */ ?>
 
-            <?php if(isYourPermission('Mapbox', 'show',$this->permission_set)):?>
-            <a href="<?= base_url() ?>admin/list-mapbox">
-                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                            class="mdi mdi-google-maps mr-1"></i> <span
-                            class="text-">Bản Đồ</span>
-                </button>
-            </a>
-            <?php endif; ?>
-
-            <a href="<?= base_url() ?>personal/customer-feedback/list">
-                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                            class="mdi mdi-comment-check-outline"></i> <span
-                            class="text-">Đánh Giá KH</span>
-                </button>
-            </a>
-
             <?php /* if(isYourPermission('Story', 'show',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-story">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
@@ -62,12 +81,9 @@
                 </a>
             <?php endif; */?>
 
-            <?php if(isYourPermission('ApartmentTrack', 'show',$this->permission_set)):?>
-                <a href="<?= base_url() ?>admin/list-apartment-track">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
-                                class="mdi mdi-google-wallet
-                                 mr-1"></i> <span
-                                class="text-">Nhật Ký DA</span>
+            <?php  if($this->yourTeam): ?>
+                <a href="/admin/team/detail?id=<?= $this->yourTeam['id'] ?>" class="btn-group">
+                    <button type="button" class="btn btn-secondary waves-effect waves-light"> <i class="fa fa-group"></i> <span><?= $this->yourTeam['name'] ?></span>
                     </button>
                 </a>
             <?php endif; ?>
@@ -75,30 +91,9 @@
     </div>
 
     <div class="col-12">
-        <div class="m-md-2 m-1 button-list">
-            <a href="/admin/list-apartment">
-                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i class="fa fa-tasks mr-1"></i> <span>Danh Sách Dự Án</span>
-                </button>
-            </a>
-            <a href="/admin/consultant-post/your-list">
-                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i class="mdi mdi-library-plus mr-1"></i> <span>Bài Đăng Tư Vấn</span>
-                </button>
-            </a>
-            <?php  if($this->yourTeam): ?>
-            <a href="/admin/team/detail?id=<?= $this->yourTeam['id'] ?>">
-                <button type="button" class="btn btn-secondary waves-effect waves-light"> <i class="fa fa-group mr-1"></i> <span><?= $this->yourTeam['name'] ?></span>
-                </button>
-            </a>
-            <?php endif; ?>
-
-        </div>
-    </div>
-
-    <div class="col-12">
-        <div class="mt-1 ">
+        <div class="">
             <a href="/admin/internal-content/page/income-rule"> <i class="mdi mdi-message-processing"></i> <u>Thông báo thay đổi cách chi trả thu nhập</u></a>
         </div>
-
     </div>
 </div>
 

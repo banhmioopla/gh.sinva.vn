@@ -318,19 +318,70 @@ class Apartment extends CustomBaseStep {
             $params['gh_apartment.address_ward ='] = "'".$this->input->get('roomWard')."'";
         }
 
+        $list_room_search = $this->ghRoom->getBySearch($params);
 
-	    $data['ghApartment'] = $this->ghApartment;
-        $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
-	    $data['list_data'] = $this->ghRoom->getBySearch($params);
-        $data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
-        $data['list_type'] = $this->ghRoom->getTypeByDistrict();
-        $data['list_ward'] = $this->ghRoom->getWardByDistrict($this->input->get('roomDistrict'));
-	    $data['libRoom'] = $this->libRoom;
-	    $data['libDistrict'] = $this->libDistrict;
-	    $data['ghBaseRoomType'] = $this->ghBaseRoomType;
-        $data['label_apartment'] =  $this->config->item('label.apartment');
-        $this->load->view('components/header', ['menu' => $this->menu]);
-        $this->load->view('showbysearch/room', $data);
+        $arr_apartment_room = [];
+        $arr_apartment_info = [];
+        foreach ($list_room_search as $r){
+            $type_arr = [];
+            $list_type_id = json_decode($r['room_type_id'], true);
+            if($list_type_id) {
+                $js_list_type = implode(",", $list_type_id);
+                if ($list_type_id && count($list_type_id) > 0) {
+                    foreach ($list_type_id as $type_id) {
+                        $typeModel = $this->ghBaseRoomType->getFirstById($type_id);
+                        $type_arr[]= $typeModel['name'];
+                    }
+                }
+            }
+
+            $text_type_name = implode(", ",$type_arr );
+
+
+            $status_txt = '<span class="badge badge-danger">Full</span>';
+            if($r['status'] === 'Available'){
+                $status_txt = '<span class="badge badge-success">Trống</span>';
+            }
+
+            $arr_apartment_room[$r['apartment_id']][] = [
+                'room_id' => $r['id'],
+                'room_code' => $r['code'],
+                'room_price' => number_format($r['price']/1000),
+                'room_type' => $text_type_name,
+                'room_area' => $r['area'] . ' ㎡',
+                'room_status' => $status_txt,
+                'room_time_available' => $r['time_available'] > 0 ? date('d-m-Y', $r['time_available']) : '-',
+            ];
+
+            if(!isset($arr_apartment_info[$r['apartment_id']])){
+                $apm_info = $this->ghApartment->getFirstById($r['apartment_id']);
+                if($apm_info) {
+                    $arr_apartment_info[$r['apartment_id']] = [
+                        'apartment_id' => $r['apartment_id'],
+                        'address' =>
+                            "<span class='text-purple'> "
+                            ."Q.". $this->libDistrict->getNameByCode($apm_info['district_code'])
+                            . ' | ' . $apm_info['address_street'] . " Ph. " . $apm_info['address_ward'] . "</span>",
+                        'district_code' => $this->libDistrict->getNameByCode($apm_info['district_code']),
+                    ];
+                }
+
+            }
+        }
+
+        $this->load->view('components/header');
+        $this->load->view('apartment/search-result', [
+            'arr_apartment_info' => $arr_apartment_info,
+            'arr_apartment_room' => $arr_apartment_room,
+            'number_result' => count($list_room_search),
+            'list_price' => $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price'),
+            'label_apartment' => $this->config->item('label.apartment'),
+            'list_type' => $this->ghRoom->getTypeByDistrict(),
+            'list_ward' => $this->ghRoom->getWardByDistrict($this->input->get('roomDistrict')),
+            'list_district' => $this->ghDistrict->getListLimit($this->auth['account_id']),
+            'ghApartment' => $this->ghApartment,
+            'libRoom' => $this->libRoom,
+        ]);
         $this->load->view('components/footer');
     }
 

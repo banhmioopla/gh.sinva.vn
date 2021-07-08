@@ -34,7 +34,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h2 class="font-weight-bold text-danger">Tạo Phòng Mới - <?= $apartment['address_street'] ?> </h2>
+                    <h2 class="font-weight-bold text-danger"><?= $apartment['address_street'] ?> | Cập Nhật Phòng</h2>
                 </div>
             </div>
         </div>

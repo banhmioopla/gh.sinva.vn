@@ -389,6 +389,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -40,7 +40,7 @@ class LibRoom {
 
     public function cbAvailableRoomPrice($room_id = 0){
         $list_room = $this->CI->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
-        $cb = '<option value=0>Giá Phòng</option>';
+        $cb = '<option value="">Chọn giá phòng</option>';
         if(!empty($list_room)) {
             foreach ($list_room as $room) {
                 $selected = '';
@@ -58,7 +58,7 @@ class LibRoom {
                     $status_text .= ' - <span class="text-warning">'. date('d/m/Y', $room['time_available']) . '</span>';
                 }
 
-                $cb .= '<option '.$selected.' value='.$room['price'].'> '.number_format($room['price']).' ('.$room["object_counter"].')</option>';
+                $cb .= '<option '.$selected.' value='.$room['price'].'> '.number_format($room['price']/1000).' ('.$room["object_counter"].')</option>';
             }
         }
         return $cb;
