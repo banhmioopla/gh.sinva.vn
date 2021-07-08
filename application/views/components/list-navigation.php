@@ -55,14 +55,14 @@
                 </div>
             </div>
 
-            <?php if(isYourPermission('ShareCustomerUser', 'showCreate',$this->permission_set)
+            <?php /* if(isYourPermission('ShareCustomerUser', 'showCreate',$this->permission_set)
             ):?>
                 <a href="<?= base_url() ?>admin/show-create-share-customer-user" class="btn-group">
                     <button type="button" class="btn btn-secondary waves-effect waves-light"> <i
                                 class="mdi mdi-human-greeting"></i> <span>+ Chia Sẻ KH</span>
                     </button>
                 </a>
-            <?php endif; ?>
+            <?php endif; */?>
 
             <?php /* if(isYourPermission('Contract', 'showYour',$this->permission_set)):?>
                 <a href="<?= base_url() ?>admin/list-personal-contract">
