@@ -22,16 +22,83 @@ class Customer extends CustomBaseStep {
 	}
 
 	public function showYour(){
-		return $data['list_customer'] = $this->ghCustomer->getByUserAndShare($this->auth['account_id']);
+
+
+		$list_model = $this->ghCustomer->get([
+		    'user_insert_id' => $this->auth['account_id']
+        ]);
+
+		$time_from = date('d-m-Y', strtotime('-3month'));
+		$time_to = date('d-m-Y');
+
+		$arr_customer_id = [];
+
+        $list_contract = $this->ghContract->get([
+            'time_check_in >= ' => strtotime($time_from),
+            'time_check_in <= ' => strtotime($time_to)+86399,
+            'consultant_id' => $this->auth['account_id'],
+        ]);
+
+        $list_customer = [];
+        foreach ($list_contract as $contract) {
+            if(!in_array($contract['customer_id'], $arr_customer_id)){
+                $model_customer = $this->ghCustomer->getFirstById($contract['customer_id']);
+                if($model_customer) {
+                    $arr_customer_id[] = $contract['customer_id'];
+                    $list_customer[$contract['customer_id']] = [
+                        'name' => $model_customer['name'],
+                        'status' => "",
+                        'email' => $model_customer['email'],
+                        'phone' => $model_customer['phone'],
+                        'id' => $contract['customer_id'],
+                    ];
+                }
+            }
+        }
+
+        $list_booking = $this->ghConsultantBooking->get([
+            'time_booking >= ' => strtotime($time_from),
+            'time_booking <= ' => strtotime($time_to)+86399,
+            'booking_user_id' => $this->auth['account_id'],
+        ]);
+
+        foreach ($list_booking as $book){
+            if(!in_array($book['customer_id'], $arr_customer_id)){
+                $model_customer = $this->ghCustomer->getFirstById($book['customer_id']);
+                if($model_customer) {
+                    $arr_customer_id[] = $book['customer_id'];
+                    $list_customer[$book['customer_id']] = [
+                        'name' => $model_customer['name'],
+                        'status' => "",
+                        'email' => $model_customer['email'],
+                        'phone' => $model_customer['phone'],
+                        'id' => $book['customer_id'],
+                        'gender' => $model_customer['gender'],
+                        'birthdate' => $model_customer['birthdate'],
+                        'source' => $model_customer['source'],
+                    ];
+                }
+            }
+        }
+
+        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('customer/show-your', [
+            'libDistrict' => $this->libDistrict,
+            'ghCustomer' => $this->ghCustomer,
+            'ghContract' => $this->ghContract,
+            'libUser' => $this->libUser,
+            'time_from' => $time_from,
+            'time_to' => $time_to,
+            'list_customer' => $list_customer,
+            'label_apartment' => $this->config->item('label.apartment'),
+
+        ]);
+        $this->load->view('components/footer');
 	}
 
 	public function show(){
 
-		if($this->isYourPermission($this->current_controller, 'showYour')) {
-			$data['list_customer'] = $this->showYour();
-		} else {
-            $data['list_customer'] = $this->ghCustomer->getAll();
-        }
+        $data['list_customer'] = $this->ghCustomer->getAll();
         $search_params = [
             'month_check_in_contract' => "",
             'is_active' => ""

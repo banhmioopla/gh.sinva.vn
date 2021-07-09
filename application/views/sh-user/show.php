@@ -9,7 +9,7 @@
                         <ol class="breadcrumb hide-phone p-0 m-0">
                             <li class="breadcrumb-item"><a href="#">Share</a></li>
                             <li class="breadcrumb-item"><a href="#"><?= $group['name'] ?> </a></li>
-                            <li class="breadcrumb-item active"><a class="text-primary" href="/share/agency-group/show">DS Thành Viên - <?= $group['name'] ?> </li>
+                            <li class="breadcrumb-item active"><a class="text-primary" href="/share/agency-group/show">DS Thành Viên - <?= $group['name'] ?></a> </li>
                         </ol>
                     </div>
                     <h2 class="font-weight-bold text-primary">DS Thành Viên - <?= $group['name'] ?> </h2>
@@ -31,13 +31,13 @@
                 <div class="card-box">
                     <div class="row">
                         <div class="col-12">
-                            <table class="table table-dark">
-                                <thead>
+                            <table class="table">
+                                <thead class="table-dark">
                                 <th>Họ Tên</th>
                                 <th>SDT</th>
                                 <th>Email</th>
                                 <th>Vai Trò</th>
-                                <th></th>
+                                <th>Tùy Chọn </th>
                                 </thead>
                                 <tbody>
                                 <?php foreach ($list as $item): ?>
@@ -46,6 +46,12 @@
                                         <td><?= $item['phone_number']?></td>
                                         <td><?= $item['email']?></td>
                                         <td><?= $shareRole->getNameById($item['role_id']) ?></td>
+                                        <td>
+                                            <a href="/share/user/show?group-id=<?= $item['uuid'] ?>">
+                                                <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect">
+                                                    <i class="mdi mdi-account-multiple"></i> <span class="d-none d-md-inline">Thành Viên</span>
+                                                </button></a>
+                                        </td>
                                     </tr>
                                 <?php endforeach;?>
                                 </tbody>
@@ -60,7 +66,7 @@
             <div class="col-12 col-md-6">
                 <div class="card-box">
                     <h4 class="text-primary font-weight-bold">Thêm Thành Viên Mới</h4>
-                    <form role="form" method="post" action="/share/user/create">
+                    <form role="form" autocomplete="off" method="post" action="/share/user/create">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-12 col-form-label">Họ Tên<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
@@ -104,8 +110,5 @@
                 </div>
             </div>
         </div>
-
-
-
     </div> <!-- end container -->
 </div>

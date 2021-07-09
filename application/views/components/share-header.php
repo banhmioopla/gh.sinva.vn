@@ -9,7 +9,7 @@ include VIEWPATH.'functions.php';
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>SinvaTour | Hệ thống quản lý phòng nội bộ </title>
+    <title>ShareBoard | Sinva - và các Môi giới, Chủ Nhà </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -56,13 +56,7 @@ include VIEWPATH.'functions.php';
     <script src="<?= base_url() ?>js/custom-header.js"></script>
     <script>
         let commands = [];
-        let modify_mode = '<?= $this->auth['modifymode'] ? $this->auth['modifymode']: 'view' ?>';
     </script>
-    <style type="text/css" media="screen">
-        .apm-update-time {
-            font-size: 0.85em;
-        }
-    </style>
 </head>
 <body>
 <!-- Navigation Bar-->
@@ -78,7 +72,9 @@ include VIEWPATH.'functions.php';
                     <img src="<?= $assets_path ?>images/logo_sm.png" alt="" height="26" class="logo-small" />
                     <img src="<?= $assets_path ?>images/logo-gh.png" alt="" height="22" class="logo-large" />
                 </a>
-
+                <div class="logo">
+                    <div class="text-center">SINVAHOME</div>
+                </div>
             </div>
             <!-- End Logo container-->
             <div class="menu-extras topbar-custom">

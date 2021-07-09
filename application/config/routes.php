@@ -302,6 +302,11 @@ $route['admin/update-customer-editable'] = function($params = []) {
 	$action = '/updateEditable';
 	return $controller.$action;
 };
+$route['admin/customer/show-your'] = function($params = []) {
+    $controller = 'Customer';
+    $action = '/showYour';
+    return $controller.$action;
+};
 // Cron
 $route['admin/cron-customer'] = function($params = []) {
 	$controller = 'CronCustomer';
@@ -1349,9 +1354,9 @@ $route['share/user/show'] = function($params = []) {
     $action = '/show';
     return $controller.$action;
 };
-$route['share/user/update-editable'] = function($params = []) {
-    $controller = 'ShUser';
-    $action = '/updateEditable';
+$route['share/agency-group/apartment/list'] = function($params = []) {
+    $controller = 'ShAgencyGroup';
+    $action = '/create';
     return $controller.$action;
 };
 /* :::API-INTERNAL:::*/

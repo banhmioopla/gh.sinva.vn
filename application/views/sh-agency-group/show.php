@@ -47,7 +47,7 @@
                                         <td><?= $item['status']?></td>
                                         <td>-</td>
                                         <td>
-                                            <a href="/share/show-user?group-id=<?= $item['uuid'] ?>">
+                                            <a href="/share/user/show?group-id=<?= $item['uuid'] ?>">
                                             <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect">
                                                 <i class="mdi mdi-account-multiple"></i> <span class="d-none d-md-inline">Thành Viên</span>
                                             </button></a>

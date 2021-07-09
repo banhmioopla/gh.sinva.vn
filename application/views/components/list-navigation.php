@@ -50,6 +50,7 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/admin/consultant-post/your-list"> <i class="mdi mdi-library-plus mr-1"></i> Bài Đăng Tư Vấn</a>
                     <a class="dropdown-item" href="/personal/customer-feedback/list"> <i class="mdi mdi-library-plus mr-1"></i> Feedback KH</a>
+                    <a class="dropdown-item" href="/admin/customer/show-your"> <i class="mdi mdi-library-plus mr-1"></i> Danh Sách KH</a>
                 </div>
             </div>
 
