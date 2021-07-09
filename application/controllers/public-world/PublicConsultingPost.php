@@ -48,7 +48,6 @@ class PublicConsultingPost extends CI_Controller {
             'room' => $room,
             'post' => $this_post,
             'user' => $user,
-            'list_img' => $list_img,
             'libBaseRoomType' => $this->libBaseRoomType
         ]);
         $this->load->view($this->public_dir.'components/footer');

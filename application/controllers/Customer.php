@@ -50,7 +50,10 @@ class Customer extends CustomBaseStep {
                         'status' => "",
                         'email' => $model_customer['email'],
                         'phone' => $model_customer['phone'],
-                        'id' => $contract['customer_id'],
+                        'id' => $book['customer_id'],
+                        'gender' => $model_customer['gender'],
+                        'birthdate' => $model_customer['birthdate'],
+                        'source' => $model_customer['source'],
                     ];
                 }
             }
