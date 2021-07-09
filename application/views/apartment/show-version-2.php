@@ -93,6 +93,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                 <div class="row">
                     <div class="col">
                         <h4 class="text-primary">Truy Cập Nhanh - Cập Nhật Phòng Dự Án Khác</h4>
+                        <p>Một cách nhanh chóng, bạn có thể đi đến trang chỉnh sửa thông tin Phòng cho 1 Dự Án được chọn từ select box dưới đây</p>
                         <select id="apartment_update_ready" class=" form-control">
                             <option value="">Cập Nhật Phòng Dự Án Khác</option>
                             <?php foreach ($list_apm_ready as $apm_move): ?>
@@ -101,15 +102,18 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                         </select>
                     </div>
                 </div>
-                <hr>
                 <?php endif;?>
-
-                <?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]);
+                <div class="row">
+                    <div class="col-12">
+                        <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
+                    </div>
+                </div>
+                <?php
 
                 $covidColor = $this->input->get('apmTag') ? 'text-danger' :'text-purple';
 
                 ?>
-                <div class="m-2 list-action">
+                <div class="list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
                         <?php
                         foreach($this->list_district_CRUD as $district):

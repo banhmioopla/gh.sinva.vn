@@ -39,6 +39,14 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                     <?php $this->load->view('components/list-navigation'); ?>
                 </div>
             </div>
+            <div class="col-12">
+                <h4 class="text-danger font-weight-bold">Mô tả</h4>
+                <ul>
+                    <li>Danh sách khách hàng - Thống kê giúp bạn những khách hàng mà bạn đã ký hợp đồng, book xem phòng!</li>
+                    <li>Cột STT là số thứ tự khi 1 thành viên tạo 1 khách hàng mới vào GH</li>
+                    <li>Click vào STT để đá qua trang thông tin chi tiết của Khách Hàng</li>
+                </ul>
+            </div>
         </div>
 
         <div class="row">

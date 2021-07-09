@@ -1,5 +1,5 @@
 <?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
-<div id="listPrice" class="card-box mt-1">
+<div id="listPrice" class="card-box mb-1 mt-1">
     <h4 class="text-danger font-weight-bold">Tìm Dự Án</h4>
     <div class="form-group row">
         <span class="col-md-2 col-6">
