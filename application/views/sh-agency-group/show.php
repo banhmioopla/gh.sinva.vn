@@ -52,7 +52,9 @@
                                                 <i class="mdi mdi-account-multiple"></i> <span class="d-none d-md-inline">Thành Viên</span>
                                             </button></a>
 
-                                            <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> <span class="d-none d-md-inline">Dự Án</span></button>
+                                            <a href="/share/agency-group-apartment/show?group-id=<?= $item['uuid'] ?>">
+                                            <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect">
+                                                <i class="mdi mdi-lead-pencil"></i> <span class="d-none d-md-inline">Dự Án</span></button></a>
                                         </td>
                                     </tr>
                                 <?php endforeach;?>

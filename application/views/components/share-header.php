@@ -68,12 +68,8 @@ include VIEWPATH.'functions.php';
                 <!-- Text Logo -->
                 <!-- <a href="index.html" class="logo"><span class="logo-small"><i class="mdi mdi-radar"></i></span><span class="logo-large"><i class="mdi mdi-radar"></i> Highdmin</span></a> -->
                 <!-- Image Logo -->
-                <a href="/" class="logo">
-                    <img src="<?= $assets_path ?>images/logo_sm.png" alt="" height="26" class="logo-small" />
-                    <img src="<?= $assets_path ?>images/logo-gh.png" alt="" height="22" class="logo-large" />
-                </a>
                 <div class="logo">
-                    <div class="text-center">SINVAHOME</div>
+                    <div class="text-center">SHARE BOARD</div>
                 </div>
             </div>
             <!-- End Logo container-->
@@ -102,12 +98,9 @@ include VIEWPATH.'functions.php';
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                             <!-- item-->
                             <div class="dropdown-item noti-title">
-                                <?php if(isYourPermission('ShAgencyGroup', 'show', $this->permission_set)):?>
-                                    <a class="text-danger" href="/share/agency-group/show">
-                                        <h4 class="text-overflow">Đi đến <strong>GH</strong> </h4>
-                                    </a>
-                                    <hr>
-                                <?php endif;?>
+                                <a class="text-danger" href="/share/agency-group/show">
+                                    <h4 class="text-overflow">Đi đến <strong>GH</strong> </h4>
+                                </a>
                             </div>
 
                         </div>

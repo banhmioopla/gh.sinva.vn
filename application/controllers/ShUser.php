@@ -7,21 +7,27 @@ class ShUser extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('shareUser');
-        $this->load->model('ShareAgencyGroup');
-        $this->load->model('ShareRole');
+        $this->load->model('shareAgencyGroup');
+        $this->load->model('shareRole');
         $this->load->library('encryption');
+        $this->load->library('LibUuid', null, 'libUuid');
+        $this->load->library('LibEmail', null, 'libEmail');
+        $this->load->library('LibEncrypt', null, 'libEncrypt');
+
+
     }
 
     public function show(){
         $group_uuid = $this->input->get('group-id');
         $list = $this->shareUser->get(['group_uuid' => $group_uuid]);
-
+        $list_role = $this->shareRole->get();
         $this->load->view('components/share-header');
         $this->load->view('sh-user/show', [
             'list' => $list,
-            'shareAgencyGroup' => $this->ShareAgencyGroup,
-            'shareRole' => $this->ShareRole,
-            'group' => $this->ShareAgencyGroup->getFirstByUuid($group_uuid)
+            'list_role' => $list_role,
+            'shareAgencyGroup' => $this->shareAgencyGroup,
+            'shareRole' => $this->shareRole,
+            'group' => $this->shareAgencyGroup->getFirstByUuid($group_uuid)
         ]);
         $this->load->view('components/footer');
     }
@@ -30,23 +36,37 @@ class ShUser extends CI_Controller {
     public function create() {
 
         $post = $this->input->post();
-        $data['status'] = 'New';
-        $data['account'] = $post['phone_number'];
+        $data['status'] = $this->shareUser::STATUS_NEW;
+        $data['account_id'] = $post['phone_number'];
         $data['phone_number'] = $post['phone_number'];
         $data['password'] = $post['password'];
         $data['name'] = $post['name'];
         $data['email'] = $post['email'];
-        $data['type'] = 'Host';
+        $data['type'] = 'Agent';
+        $data['role_id'] = $post['role_id'];
+        $data['uuid'] = $this->libUuid->createUuid();
+        $data['group_uuid'] = $post['group_uuid'];
         $data['is_active'] = 'YES';
         $data['time_create'] = time();
         $data['time_update'] = time();
 
-        $result = $this->shareUser->insert($data);
+        echo "<pre>";
+        var_dump($data['password']); die;
 
-        $this->session->set_flashdata('fast_notify', [
-            'message' => 'Tạo Share User '.$post['name'].' thành công ',
-            'status' => 'success'
-        ]);
+        $result = $this->shareUser->insert($data);
+        if($result){
+            $this->session->set_flashdata('fast_notify', [
+                'message' => 'Tạo Share User: '.$post['name'].' thành công ',
+                'status' => 'success'
+            ]);
+            $content = '<h1>TẠO TÀI KHOẢN SHARE THÀNH CÔNG CHO CHỦ NHÂN: '.$post['name'].'</h1>';
+            $content .= '<ul> <li>Account ID: <strong>'.$data['account_id'].'</strong> </li> <li>Password: <strong>'.$data['password'].'</strong></li></ul>';
+            $content .= '<p>Tài khoản được tạo lúc: '.date('d-m-Y',$data['time_create']).'</p>';
+
+            $this->libEmail->sendEmailFromServer('mynameismrbinh@gmail.com', 'QUỐC BÌNH', 'Tạo Account SHARE', $content);
+
+        }
+
         return redirect($_SERVER["HTTP_REFERER"]);
     }
 

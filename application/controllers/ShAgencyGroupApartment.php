@@ -7,21 +7,58 @@ class ShAgencyGroupApartment extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('shareUser');
-        $this->load->model('ShareAgencyGroup');
-        $this->load->model('ShareRole');
+        $this->load->model('ghApartment');
+        $this->load->model('ghDistrict');
+        $this->load->model('shareAgencyGroup');
+        $this->load->model('shareGroupApartment');
         $this->load->library('encryption');
+        $this->load->library('LibDistrict', null, 'libDistrict');
     }
 
     public function show(){
         $group_uuid = $this->input->get('group-id');
-        $list = $this->shareUser->get(['group_uuid' => $group_uuid]);
+
+
+        if(isset($_POST['submit'])){
+            $post_data = $this->input->post();
+            $this->shareGroupApartment->deleteByGroup($group_uuid);
+            foreach ($post_data['apartment_id'] as $apm_id){
+                $this->shareGroupApartment->insert([
+                    'group_uuid' => $group_uuid,
+                    'apartment_id' => $apm_id,
+                    'is_active' => 'YES'
+                ]);
+            }
+
+            $this->session->set_flashdata('fast_notify', [
+                'message' => 'Cập nhật Share dự án thành công',
+                'status' => 'success'
+            ]);
+        }
+
+
+        $list = $this->shareGroupApartment->get(['group_uuid' => $group_uuid]);
+
+        $arr_apm_shared_id = [];
+        foreach ($list as $apm_shared){
+            $arr_apm_shared_id[] = $apm_shared['apartment_id'];
+        }
+
+        $list_apartment = $this->ghApartment->get(['active' => 'YES'], 'length(district_code), district_code, address_street');
+        $list_district = $this->ghDistrict->get();
+
+
+
 
         $this->load->view('components/share-header');
-        $this->load->view('sh-user/show', [
+        $this->load->view('sh-agency-group-apartment/show', [
             'list' => $list,
-            'shareAgencyGroup' => $this->ShareAgencyGroup,
-            'shareRole' => $this->ShareRole,
-            'group' => $this->ShareAgencyGroup->getFirstByUuid($group_uuid)
+            'arr_apm_shared_id' => $arr_apm_shared_id,
+            'list_apartment' => $list_apartment,
+            'list_district' => $list_district,
+            'libDistrict' => $this->libDistrict,
+            'shareAgencyGroup' => $this->shareAgencyGroup,
+            'group' => $this->shareAgencyGroup->getFirstByUuid($group_uuid)
         ]);
         $this->load->view('components/footer');
     }
@@ -30,21 +67,13 @@ class ShAgencyGroupApartment extends CI_Controller {
     public function create() {
 
         $post = $this->input->post();
-        $data['status'] = 'New';
-        $data['account'] = $post['phone_number'];
-        $data['phone_number'] = $post['phone_number'];
-        $data['password'] = $post['password'];
-        $data['name'] = $post['name'];
-        $data['email'] = $post['email'];
-        $data['type'] = 'Host';
-        $data['is_active'] = 'YES';
-        $data['time_create'] = time();
-        $data['time_update'] = time();
-
-        $result = $this->shareUser->insert($data);
+        $data['group_uuid'] = $post['group_uuid'];
+        $data['apartment_id'] = $post['apartment_id'];
+        $data['is_active'] = "YES";
+        $result = $this->shareGroupApartment->insert($data);
 
         $this->session->set_flashdata('fast_notify', [
-            'message' => 'Tạo Share User '.$post['name'].' thành công ',
+            'message' => 'Chia sẻ Dự Án thành công ',
             'status' => 'success'
         ]);
         return redirect($_SERVER["HTTP_REFERER"]);

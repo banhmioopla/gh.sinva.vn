@@ -87,7 +87,7 @@ class LibEmail {
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
             //Recipients
-            $mail->setFrom($serverConfig['Username'], 'GioHang');
+            $mail->setFrom($serverConfig['Username'], 'Support Giỏ Hàng SinvaHome');
             $mail->addAddress($mail_to, $name_to);     // Add a recipient
             $mail->send();
             echo 'Message has been sent';

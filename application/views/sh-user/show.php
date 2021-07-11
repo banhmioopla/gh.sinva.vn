@@ -67,6 +67,7 @@
                 <div class="card-box">
                     <h4 class="text-primary font-weight-bold">Thêm Thành Viên Mới</h4>
                     <form role="form" autocomplete="off" method="post" action="/share/user/create">
+                        <input type="hidden"  name="group_uuid" value="<?= $this->input->get('group-id')?>" >
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-12 col-form-label">Họ Tên<span class="text-danger">*</span></label>
                             <div class="col-md-8 col-12">
@@ -79,6 +80,17 @@
                             <div class="col-md-8 col-12">
                                 <input type="text" required class="form-control"
                                        id="phone_number" name="phone_number">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-12 col-form-label">Vai Trò</label>
+                            <div class="col-md-8 col-12">
+                                <select name="role_id" id="" class="form-control">
+                                    <option value="">Chọn vai trò</option>
+                                    <?php foreach ($list_role as $role): ?>
+                                        <option value="<?= $role['id'] ?>"><?= $role['name'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">

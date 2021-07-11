@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ShareUser extends CI_Model {
     private $table = 'share_user';
+    const STATUS_NEW = 'New';
+    const STATUS_OPEN = 'Open';
+    const STATUS_CLOSED = 'Closed';
 
     public function get($where = []) {
         $this->db->order_by('id DESC');

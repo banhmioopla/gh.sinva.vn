@@ -31,8 +31,8 @@ class ShareGroupApartment extends CI_Model {
         return $result;
     }
 
-    public function delete($district_id) {
-        $this->db->where('id' , $district_id);
+    public function deleteByGroup($group_uuid) {
+        $this->db->where('group_uuid' , $group_uuid);
         $this->db->delete($this->table);
         $result = $this->db->affected_rows();
         return $result;

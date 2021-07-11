@@ -12,7 +12,7 @@ class ShAgencyGroup extends CustomBaseStep {
 
     public function show(){
         $list = $this->shareAgencyGroup->get();
-        $this->load->view('components/header');
+        $this->load->view('components/share-header');
 
         $this->load->view('sh-agency-group/show', [
             'list' => $list
