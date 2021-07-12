@@ -75,8 +75,8 @@ include VIEWPATH.'functions.php';
                         <!-- <a href="index.html" class="logo"><span class="logo-small"><i class="mdi mdi-radar"></i></span><span class="logo-large"><i class="mdi mdi-radar"></i> Highdmin</span></a> -->
                         <!-- Image Logo -->
                         <a href="/" class="logo">
-                            <img src="https://i.ibb.co/Pwnj3gx/Logo.png" alt="" height="50" class="logo-small" />
-                            <img src="https://i.ibb.co/Pwnj3gx/Logo.png" alt="" height="60" class="logo-large" />
+                            <img src="https://i.ibb.co/LzhBRbs/Logo.png" alt="" height="50" class="logo-small" />
+                            <img src="https://i.ibb.co/LzhBRbs/Logo.png" alt="" height="75" class="logo-large" />
                         </a>
                     </div>
                     <!-- End Logo container-->
