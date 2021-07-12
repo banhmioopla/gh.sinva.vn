@@ -49,7 +49,6 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                             <li class="breadcrumb-item active">Dự Án</li>
                         </ol>
                     </div>
-                    <h3 class="page-title">Danh sách dự án quận <?= $district_code?> <br><small class="text-secondary"> - quốc bình: 0945 172 814</small></h3>
                 </div>
             </div>
         </div>
@@ -61,6 +60,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 
         <div class="row">
             <div class="col-md-3 d-md-block d-none">
+                <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
                 <?php if(count($contract_noti) && isYourPermission('Apartment', 'showNotificaton', $this->permission_set)):?>
                     <div class="mt-1 text-center font-weight-bold">Thông báo các lượt tạo hợp đồng</div>
                     <?php foreach($contract_noti as $item):?>
@@ -84,7 +84,6 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
-                <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
             </div>
             <div class="card card-body col-12 col-md-9">
                 <!--<div class="text-center w-100">-->
