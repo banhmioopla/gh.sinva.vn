@@ -50,9 +50,6 @@ class ShUser extends CI_Controller {
         $data['time_create'] = time();
         $data['time_update'] = time();
 
-        echo "<pre>";
-        var_dump($data['password']); die;
-
         $result = $this->shareUser->insert($data);
         if($result){
             $this->session->set_flashdata('fast_notify', [

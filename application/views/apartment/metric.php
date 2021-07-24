@@ -49,7 +49,7 @@
         <?php
         foreach($list_ready_room_type as $room):
             ?>
-            <span style="font-size:85%" class="m-1 badge badge-warning badge-pill"><a class="text-light" href="/admin/apartment/show-by-search?&roomType=<?= strip_tags(($room['room_type']))?>&roomDistrict=<?= $this->input->get('district-code') ?>"><?= strip_tags(($room['room_type']))?> | <?= $room['object_counter'] ?> P</a> </span>
+            <span class="m-1 badge badge-warning badge-pill"><a class="text-light" href="/admin/apartment/show-by-search?&roomType=<?= strip_tags(($room['room_type']))?>&roomDistrict=<?= $this->input->get('district-code') ?>"><?= strip_tags(($room['room_type']))?> | <?= $room['object_counter'] ?> P</a> </span>
         <?php
         endforeach;
         ?>
