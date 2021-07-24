@@ -194,6 +194,32 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 
                             </div>
                         </div>
+                        <div class="row">
+                            <?php
+                            foreach ($list_promotion as $p):
+                                ?>
+                                <button type="button" class="btn btn-sm m-1 btn-danger" data-toggle="modal" data-target="#promotion-md-<?= $p['id'] ?>">
+                                    <?= $p['title'] ?>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="promotion-md-<?= $p['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"><?= $p['title'] ?></h5>
+                                            </div>
+                                            <div class="modal-body"><?= $p['description'] ?></div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach;
+
+                            ?>
+                        </div>
                         <div class="row mt-3 text-danger">
                             <div class="col-md-3 col-4 border-right border-danger">
                                 <i class="mdi mdi-lumx"></i> <span class="d-none d-md-inline">Brand: </span><strong><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']) :'...' ?></strong>
@@ -227,7 +253,10 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                         </div>
                         <div class="mt-2 list-action row pull-right pl-3 pr-3" >
                             <span class="notification-list">
-
+                            <?php if($check_create_promotion): ?>
+                                <a href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
+                                                                <button class="btn btn-sm btn-outline-success btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i> Ưu Đãi</button></a>
+                            <?php endif; ?>
                             <a class="m-1 collapsed"
                                data-toggle="collapse"
                                data-parent="#accordion"
@@ -306,16 +335,6 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                     <div id="modal-apartment-detail-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-detail-<?=$apartment['id'] ?>">
                         <div class="card-body">
                             <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
-
-                                <li class="nav-item">
-                                    <a href="#apm-promotion-<?= $apartment['id'] ?>"
-                                       data-toggle="tab"
-                                       aria-expanded="false"
-                                       class="nav-link">
-                                         Ưu Đãi
-                                    </a>
-                                </li>
-
                                 <li class="nav-item">
                                     <a href="#apm-note-<?= $apartment['id'] ?>"
                                        data-toggle="tab"
@@ -344,36 +363,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                                 </li> -->
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane apm-promotion" id="apm-promotion-<?= $apartment['id'] ?>">
-                                    <?php if($check_create_promotion): ?>
-                                        <a class="btn btn-success btn-sm" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>"><i class="fa fa-plus-square-o"></i></a>
-                                    <?php endif; ?>
-                                    <?php
-                                    foreach ($list_promotion as $p):
-                                        ?>
-                                        <button type="button" class="btn btn-sm m-1 btn-primary" data-toggle="modal" data-target="#promotion-md-<?= $p['id'] ?>">
-                                            <?= $p['title'] ?>
-                                        </button>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="promotion-md-<?= $p['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"><?= $p['title'] ?></h5>
-                                                    </div>
-                                                    <div class="modal-body"><?= $p['description'] ?></div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endforeach;
-
-                                    ?>
-                                    <!--<a href="/admin/list-apartment-promotion?apartment-id=<?/*= $apartment['id'] */?>" class="badge badge-info badge-pill">Xem chi tiết</a>-->
-                                </div>
                                 <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>">
                                     <p><?= $apartment['note'] ?></p>
                                 </div>
