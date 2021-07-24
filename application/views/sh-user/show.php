@@ -36,6 +36,8 @@
                                 <th>Họ Tên</th>
                                 <th>SDT</th>
                                 <th>Email</th>
+                                <th>AccountID</th>
+                                <th>Password</th>
                                 <th>Vai Trò</th>
                                 <th>Tùy Chọn </th>
                                 </thead>
@@ -45,11 +47,13 @@
                                         <td><?= $item['name']?></td>
                                         <td><?= $item['phone_number']?></td>
                                         <td><?= $item['email']?></td>
+                                        <td><?= $item['account_id']?></td>
+                                        <td><?= $item['password']?></td>
                                         <td><?= $shareRole->getNameById($item['role_id']) ?></td>
                                         <td>
                                             <a href="/share/user/show?group-id=<?= $item['uuid'] ?>">
                                                 <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect">
-                                                    <i class="mdi mdi-account-multiple"></i> <span class="d-none d-md-inline">Thành Viên</span>
+                                                    <i class="mdi mdi-account-multiple"></i> <span class="d-none d-md-inline">Edit</span>
                                                 </button></a>
                                         </td>
                                     </tr>

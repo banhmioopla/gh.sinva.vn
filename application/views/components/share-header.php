@@ -98,7 +98,7 @@ include VIEWPATH.'functions.php';
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                             <!-- item-->
                             <div class="dropdown-item noti-title">
-                                <a class="text-danger" href="/share/agency-group/show">
+                                <a class="text-danger" href="/">
                                     <h4 class="text-overflow">Đi đến <strong>GH</strong> </h4>
                                 </a>
                             </div>
