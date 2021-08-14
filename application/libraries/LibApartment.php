@@ -65,8 +65,8 @@ class LibApartment {
         $to_time = strtotime($to);
 
         $list_contract = $this->CI->ghContract->get([
-            'time_insert >=' => $from_time,
-            'time_insert <=' => $to_time,
+            'time_check_in >=' => $from_time,
+            'time_check_in <=' => $to_time +86399,
             'apartment_id' => $apm_id
         ]);
         $total = 0;

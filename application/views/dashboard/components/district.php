@@ -5,7 +5,7 @@ foreach ($list_district as $dd) {
     $list_apm = $ghApartment->get(['active' => 'YES', 'district_code' => $dd['code']]);
     $sale_apm =  0;
     foreach ($list_apm as $apm) {
-        $sale_apm += $libApartment->getSaleTotalFromApm($from_time, $to_time,$apm['id']);
+        $sale_apm += $libApartment->getSaleTotalFromApm($apm['id'], $from_time, $to_time);
     }
     $district_sale_arr[$dd['name']] = $sale_apm;
 }
