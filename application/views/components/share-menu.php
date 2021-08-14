@@ -11,11 +11,7 @@
             </li>
 
             <li class="has-submenu">
-                <a href="#"><i class="icon-layers"></i>Share Board</a>
-                <ul class="submenu">
-                    <li><a href="/admin/list-google"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i>Danh sách group</a></li>
-                </ul>
+                <a href="/share/email-template/show"><i class="icon-layers"></i>DS mẫu email</a>
             </li>
         </ul>
         <!-- end #navigation -->

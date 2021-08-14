@@ -37,7 +37,7 @@ foreach ($list_user as $row) {
 
 
 <div class="wrapper">
-    <div class="container">
+    <div class="container-fluid">
         <!-- Page-Title -->
         <div class="row">
             <div class="col-sm-12">
@@ -168,23 +168,49 @@ foreach ($list_user as $row) {
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive">
-                    <h3>Tất cả thành viên</h3>
-                    <table class="table table-user table-bordered">
+                    <h4 class="text-danger font-weight-bold">Danh sách thành viên</h4>
+                    <form class="row mb-3" method="GET">
+                        <div class="col-md-3">
+                            <select name="" id="" class="form-control select2">
+                                <option value="">Chọn thành viên ...</option>
+                                <?php foreach ($list_all_user as $uu): ?>
+                                    <option value="<?= $uu['account_id'] ?>"><?= $uu['name'] ?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="date_of_birth" id="" class="form-control">
+                                <option value="">Tháng sinh nhật ...</option>
+                                <?php for($i = 1; $i <=12; ++$i):?>
+                                    <option value="<?= $i ?>">Tháng <?= str_pad($i, 2, '0', STR_PAD_LEFT); ?></option>
+                                <?php endfor;?>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="" id="" class="form-control">
+                                <option value="">Ngày vào làm ...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+
+                            <select name="active" class="form-control">
+                                <option value="">Trạng thái</option>
+                                <option value="YES">Mở </option>
+                                <option value="NO">Đóng</option>
+                            </select>
+                        </div>
+                    </form>
+                    <table class="table table-user table-bordered mt-3">
                         <thead>
                         <tr>
                             <th class="text-center">ID</th>
                             <th>Tên</th>
 
                             <th>Quyền</th>
-
                             <th>SĐT</th>
-                            <th>Email</th>
-                            <th>Sinh nhật</th>
-                            <th>Ngày Vào Làm</th>
                             <th>Người Tuyển</th>
-
                             <th class="text-center">Trạng thái</th>
-                            <th class="text-center">Mở</th>
+                            <th class="text-center">Tùy chọn</th>
                             <!-- <th class="text-center">Tùy Chọn</th> -->
                         </tr>
                         </thead>
@@ -197,7 +223,9 @@ foreach ($list_user as $row) {
                                            class="text-danger"
                                            href="/admin/personal-profile?account_id=<?= $row['account_id'] ?>">
                                             <?= $row['account_id'] ?>
-                                        </a>  </u>
+                                        </a>
+                                    </u>
+
                                 </td>
                                 <td>
                                     <div class="user-name user"
@@ -205,47 +233,22 @@ foreach ($list_user as $row) {
                                         data-name="name">
                                         <?= $row['name'] ?>
                                     </div>
+                                    <p><small>SN: <?= $row['date_of_birth'] > 0 ? date('d-m-Y',$row['date_of_birth']) :'' ?></small></p>
                                 </td>
 
                                 <td>
                                 <div class="user-role_code"
                                         data-pk="<?= $row['id'] ?>" 
                                         data-value = "<?= $row['role_code'] ?>"
-                                        data-name="role_code">quyền <?= $libRole->getNameByCode($row['role_code']) ?></div>
+                                        data-name="role_code"><?= $libRole->getNameByCode($row['role_code']) ?></div>
                                 </td>
 
                                 <td>
-                                    <div class="user-phone_number user"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="phone_number">
-                                        <?= $row['phone_number'] ?>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="user-email user"
-                                         data-pk="<?= $row['id'] ?>"
-                                         data-name="email">
-                                        <?= $row['email'] ?>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="user-date_of_birth user"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="date_of_birth"
-                                        data-value ="<?= $row['date_of_birth'] > 0 ? date('d-m-Y',$row['date_of_birth']) :'' ?>">
-                                        <?= $row['date_of_birth'] ? date('d/m/Y',$row['date_of_birth']) :'#' ?>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="user-time_joined user"
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="time_joined"
-                                        data-value ="<?= $row['time_joined'] > 0 ? date('d-m-Y',$row['time_joined']) :'' ?>">
-                                        <?= $row['time_joined'] ? date('d/m/Y',$row['time_joined']) :'#' ?>
-                                    </div>
+                                    <ul>
+                                        <li>Ngày làm: <strong><?= $row['time_joined'] > 0 ? date('d-m-Y',$row['time_joined']) :'' ?></strong></li>
+                                        <li>Phone: <strong><?= $row['phone_number'] ?></strong></li>
+                                        <li>Mail: <strong><?= $row['email'] ?></strong></li>
+                                    </ul>
                                 </td>
 
                                 <td>
@@ -260,28 +263,21 @@ foreach ($list_user as $row) {
 
                                 <td class="text-center">
                                     <?php 
-                                        $classStatus = 'secondary';
-                                        $txtStatus = 'quá khứ';
+                                        $classStatus = 'danger';
+                                        $txtStatus = 'đóng';
                                         if($row['active'] =='YES') {
                                             $classStatus = 'success';
-                                            $txtStatus = 'hiện tại';
+                                            $txtStatus = 'mở';
                                         }
                                     ?>
                                     <div>
-                                        <span style="font-size:100%" class=" badge badge-<?= $classStatus ?> badge-pill"><?= $txtStatus ?></span>
+                                        <span style="" class=" badge badge-<?= $classStatus ?> badge-pill"><?= $txtStatus ?></span>
                                     </div>
                                     
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <div class="checkbox checkbox-success is-active-user">
-                                            <input id="user-<?= $row['id'] ?>" 
-                                                value="<?= $row['active'] ?>"
-                                                type="checkbox" 
-                                                <?= $row['active'] =='YES' ? 'checked':'' ?>>
-                                            <label for="user-<?= $row['id'] ?>">
-                                            </label>
-                                        </div>
+                                        <a class="btn m-1 btn-sm btn-outline-info btn-rounded waves-light waves-effect " href="/admin/user/edit?">Cập nhật</a>
                                     </div>
                                 </td>
                             </tr>      
@@ -367,6 +363,9 @@ foreach ($list_user as $row) {
 <!-- end wrapper -->
 <script type="text/javascript">
     commands.push(function() {
+        $('.select2').select2();
+
+
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editableform.buttons =
             '<div class="d-flex justify-content-center mt-2">' +

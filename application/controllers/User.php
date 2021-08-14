@@ -14,6 +14,9 @@ class User extends CustomBaseStep {
 
 	public function show(){
 		$data['list_user'] = $this->ghUser->get(['account_id >' => 171020000]);
+
+        $data['list_all_user'] = $this->ghUser->get(['account_id >' => 171020000]);
+
 		$data['max_account_id'] = $this->ghUser->getMaxAccountId()[0]['account_id'];
 		$data['libRole'] = $this->libRole;
 		$data['libUser'] = $this->libUser;

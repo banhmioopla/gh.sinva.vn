@@ -114,6 +114,8 @@
                         <ul class="submenu">
                             <li><a href="/admin/list-dashboard"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Bảng điều khiển</a></li>
+                            <li><a href="/admin/dashboard/show/sale"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Bảng điều khiển - V2</a></li>
                             <?php if(isYourPermission('Fee', 'showIncomeMechanism',$this->permission_set)):?>
                                 <li><a href="/admin/list-fee-income-mechanism"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Cơ Chế

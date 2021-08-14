@@ -458,7 +458,7 @@ class Apartment extends CustomBaseStep {
                 'partner_id' => $this->input->post('partner_id'),
                 'active' => $this->input->post('active'),
                 'direction' => $this->input->post('direction'),
-                'tag_id' => $this->input->post('tag_id'),
+                'tag_id' => json_encode($this->input->post('tag_id')),
 
                 'time_update' => time(),
                 'time_insert' => strtotime($this->input->post('time_insert')),

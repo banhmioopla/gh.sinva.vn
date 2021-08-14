@@ -432,6 +432,8 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 });
             });
 
+            $('.select2').select2();
+
 
 
             $('#apartment_update_ready').change(function () {

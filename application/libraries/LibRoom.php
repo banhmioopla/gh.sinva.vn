@@ -116,6 +116,26 @@ class LibRoom {
         }
         return $cb;
     }
+
+    public function getSaleTotalFromRoom($room_id, $from, $to){
+
+        $from_time = strtotime($from);
+        $to_time = strtotime($to);
+
+        $list_contract = $this->ghContract->get([
+            'time_insert >=' => $from_time,
+            'time_insert <=' => $to_time,
+            'room_id' => $room_id
+        ]);
+        $total = 0;
+        foreach ($list_contract as $ct) {
+            $total += $ct['room_price'] * $ct['commission_rate'] / 100;
+
+        }
+
+        return $total;
+
+    }
 }
 
 ?>

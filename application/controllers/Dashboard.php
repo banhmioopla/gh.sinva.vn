@@ -13,14 +13,62 @@ class Dashboard extends CustomBaseStep {
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibPartner', null, 'libPartner');
 		$this->load->library('LibRoom', null, 'libRoom');
+		$this->load->library('LibTime', null, 'libTime');
 		$this->load->library('LibApartment', null, 'libApartment');
 		$this->load->library('LibBaseApartmentType', null, 'libBaseApartmentType');
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
+		$this->load->library('LibApartment', null, 'libApartment');
 		$this->load->library('LibTag', null, 'libTag');
 		$this->load->library('LibUser', null, 'libUser');
 
 		$this->permission_modify = [['customer-care' => 0], 'product-manager'];
 	}
+
+	public function showSale(){
+        $list_user = $this->ghUser->get(['active' => 'YES']);
+
+        $list_target = ['team', 'district','brand','member'];
+
+
+        $target_metric = 'district';
+        if($this->input->get('target')) {
+            $target_metric = $this->input->get('target');
+        }
+
+        $days_this_month = $this->libTime->calDayInMonthThisYear(date('m'));
+
+        $from_time = date('01-m-Y');
+        $to_time = date($days_this_month.'-m-Y');
+
+
+        if($this->input->get('from_time')) {
+            $from_time = $this->input->get('from_time');
+        }
+
+        if($this->input->get('to_time')) {
+            $to_time = $this->input->get('to_time');
+        }
+
+        $view_head1 = 'dashboard/components/'.$target_metric;
+
+        $this->load->view('components/header');
+        $this->load->view('dashboard/show-v2', [
+            'libApartment' => $this->libApartment,
+            'ghApartment' => $this->ghApartment,
+            'libTime' => $this->libTime,
+
+            'from_time' => $from_time,
+            'to_time' => $to_time,
+
+            'view_head1' => $view_head1,
+
+            'list_district' => $this->ghDistrict->get(['active' => 'YES']),
+            'list_user' => $this->ghUser->get(['active' => 'YES']),
+        ]);
+        $this->load->view('components/footer');
+    }
+
+
     public function show() {
         $list_customer = $this->ghCustomer->get();
         $total_customer = $list_customer ? count($list_customer) : 0;

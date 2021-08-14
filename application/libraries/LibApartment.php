@@ -57,6 +57,27 @@ class LibApartment {
         ];
         return $info;
     }
+
+
+    public function getSaleTotalFromApm($apm_id, $from, $to){
+
+        $from_time = strtotime($from);
+        $to_time = strtotime($to);
+
+        $list_contract = $this->CI->ghContract->get([
+            'time_insert >=' => $from_time,
+            'time_insert <=' => $to_time,
+            'apartment_id' => $apm_id
+        ]);
+        $total = 0;
+        foreach ($list_contract as $ct) {
+            $total += $ct['room_price'] * $ct['commission_rate'] / 100;
+
+        }
+
+        return $total;
+
+    }
 }
 
 ?>

@@ -123,6 +123,12 @@ $route['admin/list-dashboard'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/dashboard/show/sale'] = function($params = []) {
+    $controller = 'Dashboard';
+    $action = '/showSale';
+    return $controller.$action;
+};
+
 $route['admin/list-department'] = function($params = []) {
     $controller = 'Department';
     $action = '/show';
@@ -1363,6 +1369,12 @@ $route['share/user/show'] = function($params = []) {
 $route['share/agency-group/apartment/list'] = function($params = []) {
     $controller = 'ShAgencyGroup';
     $action = '/create';
+    return $controller.$action;
+};
+
+$route['share/email-template/show'] = function($params = []) {
+    $controller = 'ShEmailTemplate';
+    $action = '/show';
     return $controller.$action;
 };
 /* :::API-INTERNAL:::*/
