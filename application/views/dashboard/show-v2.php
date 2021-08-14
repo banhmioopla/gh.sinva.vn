@@ -25,12 +25,13 @@
             <div class="col-md-12">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a href="" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                        <!--['team', 'district','brand','member']-->
+                        <a href="/admin/dashboard/show/sale?target=district"  class="nav-link <?= $target == 'district' ? 'active' : '' ?>">
                             <i class="fi-monitor mr-2"></i> Quận
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" data-toggle="tab" aria-expanded="true" class="nav-link">
+                        <a href="/admin/dashboard/show/sale?target=brand"  class="nav-link <?= $target == 'brand' ? 'active' : '' ?>">
                             <i class="fi-monitor mr-2"></i> Thương hiệu hợp tác
                         </a>
                     </li>
@@ -50,6 +51,7 @@
                     <div class="tab-content">
                         <div class="tab-pane show active">
                             <form class="row">
+                                <input type="hidden" name="target" value="<?= $target ?>">
                                 <div class="col-3">
                                     <input type="text" class="form-control datepicker" name="from_time" value="<?= $from_time ?>">
                                 </div>

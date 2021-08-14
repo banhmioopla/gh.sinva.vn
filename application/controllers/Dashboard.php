@@ -61,9 +61,11 @@ class Dashboard extends CustomBaseStep {
             'to_time' => $to_time,
 
             'view_head1' => $view_head1,
+            'target' => $target_metric,
 
             'list_district' => $this->ghDistrict->get(['active' => 'YES']),
             'list_user' => $this->ghUser->get(['active' => 'YES']),
+            'list_partner' => $this->ghPartner->get(['active' => 'YES']),
         ]);
         $this->load->view('components/footer');
     }
