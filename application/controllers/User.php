@@ -64,6 +64,20 @@ class User extends CustomBaseStep {
 		return redirect('admin/list-user');
 	}
 
+
+	public function edit(){
+        $user_profile = $this->ghUser->getFirstByAccountId($this->input->get('account_id'));
+        /*--- Load View ---*/
+        $list_role = $this->ghRole->getAll();
+        $this->load->view('components/header');
+        $this->load->view('user/edit', [
+            'user' =>$user_profile,
+            'list_role' => $list_role,
+            'list_user' => $this->ghUser->get(['account_id <> ' => $this->input->get('account_id')]),
+        ]);
+        $this->load->view('components/footer');
+    }
+
 	public function changePassword() {
 		$user_profile = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
 		/*--- Load View ---*/

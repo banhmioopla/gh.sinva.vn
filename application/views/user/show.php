@@ -277,7 +277,8 @@ foreach ($list_user as $row) {
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <a class="btn m-1 btn-sm btn-outline-info btn-rounded waves-light waves-effect " href="/admin/user/edit?">Cập nhật</a>
+                                        <a class="btn m-1 btn-sm btn-outline-info btn-rounded waves-light waves-effect "
+                                           target="_blank" href="/admin/user/edit?account_id=<?= $row['account_id'] ?>">Cập nhật</a>
                                     </div>
                                 </td>
                             </tr>      

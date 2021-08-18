@@ -937,6 +937,12 @@ $route['admin/list-user'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/user/edit'] = function($params = []) {
+	$controller = 'User';
+	$action = '/edit';
+	return $controller.$action;
+};
+
 $route['admin/get-user-role'] = function($params = []) {
 	$controller = 'User';
 	$action = '/getRole';

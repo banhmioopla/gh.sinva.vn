@@ -432,7 +432,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 });
             });
 
-            $('.select2').select2();
 
 
 
