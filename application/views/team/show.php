@@ -30,12 +30,21 @@
                     <table id="table-district" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Tên Chi Nhánh</th>
-                            <th class="text-center">Giám Đốc Chi Nhánh</th>
+                            <th>Tên Chi Nhánh <br><small>tên nhóm</small></th>
+                            <th class="text-center">Giám Đốc Chi Nhánh <br><small>leader</small></th>
+                            <th class="text-center">Thành Viên </th>
+                            <th class="text-right">Doanh Số <br><small>tháng hiện tại</small></th>
                             <th class="text-center">Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
+
+                            <?php
+                            $from_time = date('01-m-Y');
+                            $num_days = $libTime->calDayInMonthThisYear(date('m'));
+                            $to_time = date($num_days.'-m-Y');
+
+                            ?>
                             <?php foreach($list_team as $row ): ?>
                             <tr>
                                 <td>
@@ -48,6 +57,8 @@
                                 <td>
                                     <?= $libUser->getNameByAccountid($row['leader_user_id']) ?>
                                 </td>
+                                <td class="text-center"><?= $libUser->getTotalUserByTeam($row['id']) ?></td>
+                                <td class="text-right"><?= $libUser->getTotalSaleByTeam($row['id'], $from_time, $to_time) ?></td>
                                 <td class="text-center">
                                     <a target="_blank" href="/admin/team/detail?id=<?= $row['id'] ?>" class="btn btn-danger">chi tiết</a>
                                 </td>

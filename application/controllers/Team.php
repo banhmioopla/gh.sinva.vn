@@ -11,6 +11,7 @@ class Team extends CustomBaseStep {
 		$this->load->model('ghContract');
 		$this->load->model('ghConsultantBooking');
         $this->load->library('LibUser', null, 'libUser');
+        $this->load->library('LibTime', null, 'libTime');
 	}
 
 	public function show(){
@@ -18,6 +19,7 @@ class Team extends CustomBaseStep {
 		$data['list_team'] = $this->ghTeam->getAll();
 		$data['list_leader'] = $this->libUser->cb();
 		$data['libUser'] = $this->libUser;
+		$data['libTime'] = $this->libTime;
 		/*--- Load View ---*/
 		$this->load->view('components/header');
 		$this->load->view('team/show', $data);

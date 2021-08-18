@@ -52,9 +52,19 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
         <div class="role-alert"></div>
         <div class="row">
+            <div class="form-group col-md-6 text-center">
+                <select id="apartment_update_ready" class="form-control">
+                    <option value="">Cập Nhật Phòng Dự Án Khác</option>
+                    <?php foreach ($list_apm as $apm): ?>
+                        <option value="<?= $apm['id'] ?>">Q.<?= $apm['district_code'] . ' ' . $apm['address_street'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
             <div class="col-12">
                 <div class="card-box table-responsive">
                     <div class="pull-right">
+                        <a  href="<?= $_SERVER['HTTP_REFERER'] ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+
                         <?php if($check_create_promotion): ?>
                             <a class="" href="/admin/list-apartment-promotion?apartment-id=290"><button class="btn btn-success"><i class="mdi mdi-gift"></i> <span class="d-none d-md-inline">Cập Nhật Ưu Đãi</span></button></a>
                         <?php endif; ?>
@@ -65,7 +75,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật Thông Tin Dịch Vụ</button></a>
 
                     </div>
-
                     <h4 class="font-weight-bold text-danger">Danh Sách Phòng</h4>
                     <table id="list-room-<?= $apartment['id'] ?>"
                            class="table list-room">
@@ -174,15 +183,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 </div>
             </div>
 
-            <div class="form-group col-md-6 offset-md-3 text-center">
-                <strong class="col-form-strong text-primary">Đi Đến Dự Án Khác</strong>
-                <select id="apartment_update_ready" class="form-control">
-                    <option value="">Cập Nhật Dự Án Khác</option>
-                    <?php foreach ($list_apm as $apm): ?>
-                        <option value="<?= $apm['id'] ?>">Q.<?= $apm['district_code'] . ' ' . $apm['address_street'] ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+
 
             <div class="col-12 col-md-6">
                 <div class="card-box">

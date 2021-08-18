@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="container">
+    <div class="container-fluid">
 
         <!-- Page-Title -->
         <div class="row">
@@ -7,12 +7,12 @@
                 <div class="page-title-box">
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
-                            <li class="breadcrumb-item"><a href="#">test</a></li>
-                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                            <li class="breadcrumb-item active">Starter</li>
+                            <li class="breadcrumb-item"><a href="#">GH</a></li>
+                            <li class="breadcrumb-item"><a href="#">Chi nhánh</a></li>
+                            <li class="breadcrumb-item active"><?= $team['name'] ?></li>
                         </ol>
                     </div>
-                    <h2 class="text-danger font-weight-bold"><?= $team['name'] ?> - Leader: <?= $team['leader_user_id'] ?> </h2>
+                    <h2 class="text-danger font-weight-bold">Chi nhánh: <?= $team['name'] ?></h2>
                 </div>
             </div>
         </div>
@@ -25,16 +25,37 @@
         ?>
         <div class="district-alert"></div>
         <div class="row">
+            <div class="col-md-3">
+                <div class="card-box widget-flat border-primary bg-primary text-white">
+                    <i class="fi-tag"></i>
+                    <h3 class="m-b-10"><?= $libUser->getTotalBookingByTeam($team['id'], $timeFrom, $timeTo) ?></h3>
+                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng Số Lượt Book</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-box widget-flat border-primary bg-primary text-white">
+                    <i class="fi-tag"></i>
+                    <h3 class="m-b-10"><?= $libUser->getNumberContractByTeam($team['id'], $timeFrom, $timeTo) ?></h3>
+                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng Số Lượng Hợp Đồng</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card-box widget-flat border-primary bg-primary text-white">
+                    <i class="fi-tag"></i>
+                    <h3 class="m-b-10"><?= $libUser->getTotalSaleByTeam($team['id'], $timeFrom, $timeTo) ?></h3>
+                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng Doanh Số</p>
+                </div>
+            </div>
             <div class="col-12">
                 <div class="card-box">
                     <form>
                         <input type="hidden" name="id" value="<?= $team['id'] ?>">
                         <div class="row align-items-center">
-                            <div class="col">
+                            <div class="col-md-3">
                                 <strong>Khoảng ngày Từ</strong>
                                 <input type="text" class="form-control datepicker mt-1 mb-2" name="timeFrom" value="<?= $timeFrom ?>" >
                             </div>
-                            <div class="col">
+                            <div class="col-md-3">
                                 <strong>Khoảng ngày Đến</strong>
                                 <input type="text" class="form-control datepicker mt-1 mb-2" name="timeTo" value="<?= $timeTo ?>">
                             </div>
@@ -48,13 +69,13 @@
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
                     <h3 class="text-danger font-weight-bold">Danh Sách Thành Viên</h3>
-                    <table id="table-district" class="table table-dark table-hover table-bordered">
+                    <table id="table-district" class="table table-hover table-bordered">
                         <thead>
                         <tr >
                             <th>Tên Thành Viên</th>
                             <th class="text-center">Số Lượng Hợp Đồng</th>
                             <th class="text-center">Số Lượt Book</th>
-                            <th>Doanh Số <small>x1000</small></th>
+                            <th class="text-right">Doanh Số <br> <small>(x1000)</small></th>
                             <th>Tùy Chọn</th>
                         </tr>
                         </thead>
@@ -80,12 +101,12 @@
                                     <div class="team-name"
                                          data-pk="<?= $row['id'] ?>"
                                          data-name="name">
-                                        <?= $libUser->getNameByAccountid($row['user_id']) ?>
+                                        <?= $libUser->getNameByAccountid($row['user_id']) . ' <br> <small>(' . $row['user_id'] . ')</small>'?>
                                     </div>
                                 </td>
                                 <td class="text-center"><?= $contract ?></td>
                                 <td class="text-center"><?= $booking ?></td>
-                                <td class="text-warning"><?= number_format($total/1000) ?></td>
+                                <td class="text-right"><?= number_format($total/1000) ?></td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
                                     <button type="button" class="btn btn-sm btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
