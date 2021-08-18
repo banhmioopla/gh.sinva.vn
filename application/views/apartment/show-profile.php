@@ -182,6 +182,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
                             </div>
                             <div class="form-row float-right">
+                                <a  href="<?=  $_SERVER['HTTP_REFERER'] ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>
                         </div>
@@ -218,6 +219,8 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                 </div>
                             </div>
                             <div class="form-row float-right">
+                                <a  href="<?=  $_SERVER['HTTP_REFERER'] ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>
                         </div>
@@ -385,6 +388,8 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         </div>
                         <div class="col-12">
                             <div class="form-row float-right">
+                                <a  href="<?=  $_SERVER['HTTP_REFERER'] ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>
                         </div>
