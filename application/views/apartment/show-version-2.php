@@ -171,34 +171,40 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                     <!-- item -->
                     <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
                         <div class="row">
-                            <div class="col-12 <?= $bg_promotion ?>">
+                            <div class="col-md-6 text-right text-md-left">
+                                <span class="text-primary "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i> '.date('d/m/Y H:i',
+                                            max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
+
+                            </div>
+
+                            <div class=" col-md-6 text-center text-md-right">
+                                <div class="text-md-right d-none d-md-block ">
+                                    <a class="text-primary"
+                                       target="_blank"
+                                       href="/admin/list-dashboard">Thông tin dịch vụ (<strong><?= $libApartment->completeInfoRate($apartment['id'])['counter'] ?></strong>) <small class="text-danger">[?] click để xem tiêu chí </small></a>
+                                </div>
+                            </div>
+
+
+                            <!--ADDRESS SECTION-->
+                            <div class=" col-12 <?= $bg_promotion ?>">
                                 <a href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>">
                                     <div class="address-text <?= $color_promotion ?> font-weight-bold ml-2">
                                         <?=$apartment['address_street'] ?> <?=$apartment['address_ward'] ? ', Ph. '.$apartment['address_ward']:'' ?>
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-md-12 col-12 mt-md-2">
-                                <div class="row">
-                                    <div class="col-md-6 col-6 text-center text-md">
-                                        <span class="text-success"><i class="mdi mdi-calendar-multiple-check d-inline d-md-none"></i> <span class="d-md-inline d-none">Trống: </span><strong><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></strong></span>
-                                        <span class="text-warning ml-2"><i class="mdi mdi-calendar-multiple d-inline d-md-none"></i> <span class="d-md-inline d-none">Sắp Trống: </span> <strong><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></strong></span>
-                                        <span class="text-danger ml-2"> <i class="mdi mdi-sigma d-inline d-md-none"></i> <span class="d-md-inline d-none"> Tổng P: </span><strong><?= $ghRoom->getNumber($apartment['id']) ?></strong></span>
-                                        <span class="text-info ml-2"> <i class="mdi mdi-sigma d-inline d-md-none"></i> <span class="d-md-inline d-none"> View: </span><strong><?= $ghApartmentView->getNumber($apartment['id']) ?></strong></span>
-                                        <span class="text-info ml-2"> <i class="mdi mdi-sigma d-inline d-md-none"></i> <span class="d-md-inline d-none"> Book: </span><strong><?= $ghConsultantBooking->getNumber($apartment['id']) ?></strong></span>
-                                    </div>
-                                    <div class="col-md col-6 text-right">
-                                        <small class="text-primary "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i>'.date('d/m/Y H:i',
-                                                    max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></small>
-                                        <div class="text-md-right d-none d-md-block text-center">
-                                            <a class="text-muted"
-                                               target="_blank"
-                                               href="/admin/list-dashboard">Thông tin dịch vụ (<strong><?= $libApartment->completeInfoRate($apartment['id'])['counter'] ?></strong>) <small class="text-danger">[?] click để xem tiêu chí </small></a>
-                                        </div>
-                                    </div>
-                                </div>
 
+
+                            <div class="col-md-6 col-12 text-center text-md">
+                                <span class="text-success"><i class="mdi mdi-calendar-multiple-check d-inline d-md-none"></i> <span class="d-md-inline d-none">Trống: </span><strong><?= $ghRoom->getNumberByStatus($apartment['id'], 'Available') ?></strong></span>
+                                <span class="text-warning ml-2"><i class="mdi mdi-calendar-multiple d-inline d-md-none"></i> <span class="d-md-inline d-none">Sắp Trống: </span> <strong><?= $ghRoom->getNumberByTimeavailable($apartment['id']) ?></strong></span>
+                                <span class="text-danger ml-2"> <i class="mdi mdi-sigma d-inline d-md-none"></i> <span class="d-md-inline d-none"> Tổng P: </span><strong><?= $ghRoom->getNumber($apartment['id']) ?></strong></span>
+                                <span class="text-info ml-2"> <i class="mdi mdi-eye d-inline d-md-none"></i> <span class="d-md-inline d-none"> View: </span><strong><?= $ghApartmentView->getNumber($apartment['id']) ?></strong></span>
+                                <span class="text-info ml-2"> <i class="mdi mdi-car-hatchback d-inline d-md-none"></i> <span class="d-md-inline d-none"> Book: </span><strong><?= $ghConsultantBooking->getNumber($apartment['id']) ?></strong></span>
                             </div>
+
+
                         </div>
                         <div class="row">
                             <?php
@@ -250,67 +256,64 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="ml-2 col-12">
+                            <div class="col-12">
                                 <h5 class="text-danger"><u>Mô Tả Dự Án</u></h5>
                                 <div class="p-1 apm-description" style="white-space: pre-line; background:#fee69c">
                                     <?= $apartment['description'] ? $apartment['description'] : ':<' ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-2 list-action row pull-right pl-3 pr-3" >
-                            <span class="notification-list">
-                            <?php if($check_create_promotion): ?>
-                                <a href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
-                                                                <button class="btn btn-sm btn-outline-success btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i> Ưu Đãi</button></a>
-                            <?php endif; ?>
-                            <a class="m-1 collapsed"
-                               data-toggle="collapse"
-                               data-parent="#accordion"
-                               href="#modal-apartment-comment-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-comment-<?=$apartment['id'] ?>">
-                                <button class="btn btn-sm btn-outline-warning btn-rounded waves-light waves-effect ">
-                                <i class="mdi mdi-comment-outline"></i> <span class="d-none d-md-inline">Bình Luận</span>
-                                <?php if(count($list_comment) > 0):?>
-                                    <span class="badge badge-danger badge-pill mr-2 noti-icon-badge"><?= count($list_comment) ?></span>
+                        <div class="row">
+                            <div class="col-12 list-action  text-center text-md-right mt-2" >
+                                <?php if($check_profile): ?>
+                                    <a class="m-1" href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
+                                        <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> <span class="d-none d-md-inline"></span></button>
+                                    </a>
+                                <?php endif;?>
+
+                                <?php if($check_create_promotion): ?>
+                                    <a class="m-1" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
+                                        <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
-                                </button>
-                            </a>
 
-                            <?php if($check_profile): ?>
-                                <a class="m-1"
-                                   href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
-                                    <button class="btn btn-sm btn-outline-info btn-rounded waves-light waves-effect"><i class="mdi mdi-information-outline"></i> <span class="d-none d-md-inline">Cập Nhật</span></button>
+                                <a class="m-1 collapsed"
+                                   data-toggle="collapse"
+                                   data-parent="#accordion"
+                                   href="#modal-apartment-comment-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-comment-<?=$apartment['id'] ?>">
+                                    <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect ">
+                                        <i class="mdi mdi-comment-outline"></i> <span class="d-none d-md-inline"></span>
+                                        <?php if(count($list_comment) > 0):?>
+                                            <span class="badge badge-danger badge-pill mr-2 noti-icon-badge"><?= count($list_comment) ?></span>
+                                        <?php endif; ?>
+                                    </button>
+                                </a>
 
-                            </a>
-                            <?php endif; ?>
-                            <button type="button" class="btn m-1 apm-plus-view btn-sm btn-outline-danger btn-rounded waves-light waves-effect"
-                                    data-toggle="collapse"
-                                    data-apartment-id="<?=$apartment['id'] ?>"
-                                    data-parent="#accordion"
-                                    aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>"
-                                    data-target="#modal-apartment-detail-<?=$apartment['id'] ?>">
-                                <i class="mdi mdi-eye"></i> <span class="d-none d-md-inline">Chi Tiết</span></button>
-
-                            <a data-souce="image" href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
-                                <button type="button"
+                                <button type="button" class="btn m-1 apm-plus-view btn-sm btn-outline-danger btn-rounded waves-light waves-effect"
+                                        data-toggle="collapse"
                                         data-apartment-id="<?=$apartment['id'] ?>"
-                                        class="btn m-1 apm-plus-view  btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
-                                    <i class="mdi mdi-folder-multiple-image"></i> <span class="d-none d-md-inline">Ảnh D/A</span>
-                                </button>
-                            </a>
+                                        data-parent="#accordion"
+                                        aria-controls="#modal-apartment-detail-<?=$apartment['id'] ?>"
+                                        data-target="#modal-apartment-detail-<?=$apartment['id'] ?>">
+                                    <i class="mdi mdi-eye"></i> <span class="d-none d-md-inline"></span></button>
 
-                            <?php if($check_consultant_booking): ?>
-                                <a href="<?= base_url() ?>admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
-                            <button type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                <i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span>
-                            </button>
-                            </a>
-                            <?php endif; ?>
+                                <a data-souce="image" href="/admin/apartment/show-image?apartment-id=<?= $apartment['id'] ?>" target="_blank">
+                                    <button type="button"
+                                            data-apartment-id="<?=$apartment['id'] ?>"
+                                            class="btn m-1 apm-plus-view  btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                                        <i class="mdi mdi-folder-multiple-image"></i> <span class="d-none d-md-inline"></span>
+                                    </button>
+                                </a>
 
-                                <!-- <button type="button" class="btn m-1 btn-sm btn-outline-primary btn-rounded waves-light waves-effect">
-                                    <i class="mdi mdi-folder-multiple-image"></i>
-                                </button> -->
-                        </span>
+                                <?php if($check_consultant_booking): ?>
+                                    <a href="<?= base_url() ?>admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
+                                        <button type="button" class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                                            <i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline"></span>
+                                        </button>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
                         </div>
+
                     </div>
 
                     <div id="modal-apartment-comment-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-comment-<?=$apartment['id'] ?>">
