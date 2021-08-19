@@ -78,6 +78,10 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 
             </div>
             <hr>
+            <?php else: ?>
+            <div class="col-md-12">
+                <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
+            </div>
         <?php endif;?>
         <div class="row">
             <div class="col-12">
