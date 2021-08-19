@@ -46,19 +46,43 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                     <div class="btn-group pull-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
                             <li class="breadcrumb-item"><a href="#">Giỏ Hàng</a></li>
-                            <li class="breadcrumb-item active">Dự Án</li>
+                            <li class="breadcrumb-item active">Danh sách dự án</li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md offset-md-3 text-center">
+            <div class="col-md text-center">
                 <?php $this->load->view('components/list-navigation'); ?>
             </div>
         </div>
+        <?php if($check_update_room): ?>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <div class="card-box">
+                        <h4 class="text-primary">Truy Cập Nhanh - Cập Nhật Phòng Dự Án Khác (dành cho QLDA)</h4>
+                        <p>Một cách nhanh chóng, bạn có thể đi đến trang chỉnh sửa thông tin Phòng cho 1 Dự Án được chọn từ select box dưới đây</p>
+                        <select id="apartment_update_ready" class=" form-control">
+                            <option value="">Cập Nhật Phòng Dự Án Khác</option>
+                            <?php foreach ($list_apm_ready as $apm_move): ?>
+                                <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
 
+                <div class="col-md-8">
+                    <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
+                </div>
+
+            </div>
+            <hr>
+        <?php endif;?>
         <div class="row">
+            <div class="col-12">
+                <h2 class="font-weight-bold text-danger">Danh sách dự án Q. <?= $libDistrict->getNameByCode($district_code) ?></h2>
+            </div>
             <div class="col-md-3 d-md-block d-none">
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
                 <?php if(count($contract_noti) && isYourPermission('Apartment', 'showNotificaton', $this->permission_set)):?>
@@ -88,25 +112,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
             <div class="card card-body col-12 col-md-9">
                 <!--<div class="text-center w-100">-->
                 <!--</div>-->
-                <?php if($check_update_room): ?>
-                <div class="row">
-                    <div class="col">
-                        <h4 class="text-primary">Truy Cập Nhanh - Cập Nhật Phòng Dự Án Khác</h4>
-                        <p>Một cách nhanh chóng, bạn có thể đi đến trang chỉnh sửa thông tin Phòng cho 1 Dự Án được chọn từ select box dưới đây</p>
-                        <select id="apartment_update_ready" class=" form-control">
-                            <option value="">Cập Nhật Phòng Dự Án Khác</option>
-                            <?php foreach ($list_apm_ready as $apm_move): ?>
-                                <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-                <?php endif;?>
-                <div class="row">
-                    <div class="col-12">
-                        <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
-                    </div>
-                </div>
+
                 <?php
 
                 $covidColor = $this->input->get('apmTag') ? 'text-danger' :'text-purple';

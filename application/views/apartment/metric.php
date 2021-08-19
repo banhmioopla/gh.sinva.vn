@@ -1,7 +1,5 @@
 
 <dl class="card-box">
-    <h3 class="font-weight-bold text-danger">Dự Án Q. <?= $libDistrict->getNameByCode($district_code) ?></h3>
-    <hr>
     <div class="row text-info font-weight-bold">
         <dt class="col-6"> <i class="mdi mdi-chevron-double-right"></i> Dự Án</dt>
         <dd class="col-6 text-right"><?= number_format($product_total) ?></dd>
