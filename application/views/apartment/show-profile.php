@@ -41,7 +41,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             </div>
 
             <div class="col-xs-6 col-sm-3">
-                <div class="card-box bg-danger widget-flat border-danger text-white">
+                <div class="card-box bg-primary widget-flat border-primary text-white">
                     <i class="fi-delete"></i>
                     <h3 class="m-b-10"><?= count($list_room) ?></h3>
                     <p class="text-uppercase m-b-5 font-13 font-600">Tổng Số Phòng</p>
@@ -79,14 +79,16 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             <h3 class="font-weight-bold text-danger text-center">Cập Nhật Vào Lúc: <?= date('d-m-Y h:i\'', $apartment['time_update']) ?></h3>
                             <div class="pull-right text-md text-center">
                                 <?php if($check_create_promotion): ?>
-                                <a class="" href="/admin/list-apartment-promotion?apartment-id=290"><button class="btn btn-success"><i class="mdi mdi-gift"></i> <span class="d-none d-md-inline">Cập Nhật Ưu Đãi</span></button></a>
+                                <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
+                                    <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
                                 <?php if($check_consultant_booking): ?>
-                                    <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create"><button class="btn btn-success"><i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span></button></a>
+                                    <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
+                                        <button class="btn btn-danger m-1"><i class="mdi mdi-car-hatchback"></i></button></a>
                                 <?php endif; ?>
                                 <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>">
-                                    <button type="button" class="btn btn-danger  mr-1">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></button></a>
-                                <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button type="button" class="mt-md-0 mt-1 btn btn-danger">Cập Nhật Thông Tin Phòng</button></a>
+                                    <button type="button" class="btn btn-primary  m-1"><i class="mdi mdi-folder-multiple-image"></i></button></a>
+                                <a href="/admin/room/show-create?apartment-id=290"><button class="btn btn-primary m-1"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
                             </div>
 
                         </div>

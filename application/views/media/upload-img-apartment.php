@@ -27,7 +27,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             <li class="breadcrumb-item active">Gallery</li>
                         </ol>
                     </div>
-                    <h2 class="text-success font-weight-bold">Upload Ảnh Dự Án: <i><?= $apartment['address_street'] ?></i>
+                    <h2 class="text-danger font-weight-bold">Upload Ảnh Dự Án | <i><?= $apartment['address_street'] ?></i>
                     </h2>
 
                 </div>
