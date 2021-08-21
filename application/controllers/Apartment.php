@@ -85,6 +85,7 @@ class Apartment extends CustomBaseStep {
             'active' => 'YES'
         ];
 
+        $this->session->set_userdata(['current_district_code' => $district_code]);
 		$data['district_code'] = $district_code;
 		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);
 

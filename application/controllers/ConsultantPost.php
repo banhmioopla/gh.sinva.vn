@@ -26,9 +26,12 @@ class ConsultantPost extends CustomBaseStep {
         $id = $this->input->get('id');
         $list_post = $this->ghPublicConsultingPost->get(['user_create_id' => $this->auth['account_id']]);
         $post = $this->ghPublicConsultingPost->getFirstById($id);
+
         if(!$post) {
             return redirect('/admin/consultant-post/your-list');
         }
+        $room = $this->ghRoom->getFirstById($post['room_id']);
+        $apartment = $this->ghApartment->getFirstById($room['apartment_id']);
 
         if(isset($_POST['submit'])){
             $content = trim($this->input->post('content'));
@@ -49,6 +52,8 @@ class ConsultantPost extends CustomBaseStep {
         $this->load->view('consultant-post/show-detail', [
             'post' => $post,
             'list_post' => $list_post,
+            'room' => $room,
+            'apartment' => $apartment
         ]);
         $this->load->view('components/footer');
     }

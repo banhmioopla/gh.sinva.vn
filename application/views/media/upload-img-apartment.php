@@ -59,14 +59,18 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         <div class="col-12">
                             <div class="text-center">
                                 <?php if($check_create_promotion): ?>
-                                    <a class="" href="/admin/list-apartment-promotion?apartment-id=290"><button class="btn btn-success"><i class="mdi mdi-gift"></i> <span class="d-none d-md-inline">Cập Nhật Ưu Đãi</span></button></a>
+                                    <a class="" href="/admin/list-apartment-promotion?apartment-id=290"><button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i> </button></a>
                                 <?php endif; ?>
                                 <?php if($check_consultant_booking): ?>
-                                    <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create"><button class="btn btn-success"><i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline">Book Phòng</span></button></a>
+                                    <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
+                                        <button class="btn btn-danger m-1"><i class="mdi mdi-car-hatchback "></i> </button></a>
                                 <?php endif; ?>
-                                <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button class="btn btn-danger">Cập Nhật T.Tin Phòng <i class="mdi mdi-cloud-upload"></i></button></a>
-                                <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-danger mt-md-0 mt-1">Cập Nhật T.Tin Dịch Vụ</button></a>
-                                <div class="text-center text-success"><small><?= $apartment['address_street'] ?></small></div>
+
+                                <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>">
+                                    <button class="btn btn-primary m-1"> <i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
+
+                                <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>">
+                                    <button class="btn btn-primary m-1"><i class="mdi mdi-lead-pencil"></i> </button></a>
                             </div>
 
                         </div>
