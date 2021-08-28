@@ -36,13 +36,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" data-toggle="tab" aria-expanded="true" class="nav-link">
+                        <a href="/admin/dashboard/show/sale?target=team" class="nav-link <?= $target == 'team' ? 'active' : '' ?>">
                             <i class="fi-monitor mr-2"></i> Đội nhóm
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" data-toggle="tab" aria-expanded="true" class="nav-link">
-                            <i class="fi-monitor mr-2"></i> Thành viên
                         </a>
                     </li>
                 </ul>

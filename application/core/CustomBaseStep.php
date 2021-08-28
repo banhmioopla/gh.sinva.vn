@@ -21,6 +21,7 @@ class CustomBaseStep extends CI_Controller {
 		$this->load->library('LibRole', null, 'libRole');
 		$this->load->library('LibConfig', null, 'libConfig');
 		$this->load->library('LibUuid', null, 'libUuid');
+		$this->load->library('LibTime', null, 'libTime');
 
 		$this->load->config('usermode');
 		$usermode = $this->config->item('usermode');

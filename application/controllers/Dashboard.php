@@ -54,6 +54,7 @@ class Dashboard extends CustomBaseStep {
         $this->load->view('components/header');
         $this->load->view('dashboard/show-v2', [
             'libApartment' => $this->libApartment,
+            'libUser' => $this->libUser,
             'ghApartment' => $this->ghApartment,
             'libTime' => $this->libTime,
 
@@ -66,6 +67,7 @@ class Dashboard extends CustomBaseStep {
             'list_district' => $this->ghDistrict->get(['active' => 'YES']),
             'list_user' => $this->ghUser->get(['active' => 'YES']),
             'list_partner' => $this->ghPartner->get(['active' => 'YES']),
+            'list_team' => $this->ghTeam->get()
         ]);
         $this->load->view('components/footer');
     }

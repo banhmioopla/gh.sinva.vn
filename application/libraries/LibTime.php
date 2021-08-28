@@ -52,6 +52,11 @@ class LibTime {
         return $retWeek;
     }
 
+    public function formatPaddingId($id) {
+        $length = 6;
+        return printf('%0'.$length.'d',$id);
+    }
+
 
 }
 
