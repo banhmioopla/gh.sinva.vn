@@ -88,7 +88,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                 <?php endif; ?>
                                 <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>">
                                     <button type="button" class="btn btn-primary  m-1"><i class="mdi mdi-folder-multiple-image"></i></button></a>
-                                <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
+                                <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>"><button type="button" class="btn btn-primary m-1"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
                             </div>
 
                         </div>
