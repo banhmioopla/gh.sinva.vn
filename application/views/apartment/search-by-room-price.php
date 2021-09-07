@@ -100,8 +100,6 @@
             window.location = '/admin/apartment/show-by-search?roomPriceMin='
                 + $('#roomPriceMin').val()
                 + '&roomPriceMax=' + $('#roomPriceMax').val()
-                + '&roomAreaMin=' + $('#roomAreaMin').val()
-                + '&roomAreaMax=' + $('#roomAreaMax').val()
                 + '&roomDistrict=' + $('#roomDistrict').val()
                 + '&roomType=' + $('#roomType').val()
                 + '&roomTimeAvailable=' + $('#roomTimeAvailable').val()
