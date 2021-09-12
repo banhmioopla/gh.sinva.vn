@@ -10,6 +10,7 @@ class Room extends CustomBaseStep {
 		$this->load->model('ghBaseRoomType');
 		$this->load->model('ghApartmentRequest');
 		$this->load->model('ghApartment');
+		$this->load->model('ghApartmentShaft');
 		$this->load->library('LibRoom', null, 'libRoom');
         $this->load->config('label.apartment');
 	}
@@ -66,11 +67,12 @@ class Room extends CustomBaseStep {
         $apm_id = $this->input->get("apartment-id");
         $list_room = $this->ghRoom->get(['apartment_id' => $apm_id, 'active' => 'YES']);
         $apartment = $this->ghApartment->getFirstById($apm_id);
-
+        $list_shaft = $this->ghApartmentShaft->get(['apartment_id' => $apm_id]);
         $data = [
             'list_room' => $list_room,
             'apartment' => $apartment,
             'libRoom' => $this->libRoom,
+            'list_shaft' => $list_shaft,
             'ghBaseRoomType' => $this->ghBaseRoomType,
             'label_apartment' => $this->config->item('label.apartment'),
         ];
@@ -279,6 +281,25 @@ class Room extends CustomBaseStep {
 		}
 		echo json_encode($result); die;
 	}
+
+	public function createShaft(){
+	    $post_data = $this->input->post();
+	    $this->ghApartmentShaft->insert($post_data);
+
+        return redirect('/admin/room/show-create?apartment-id='.$post_data['apartment_id']);
+    }
+
+    public function getShaft() {
+
+	    $apm_id = $this->input->get('apartment-id');
+        $list_type = $this->ghApartmentShaft->get(['apartment_id' => $apm_id]);
+        $result = [];
+        $result[] = ["value" => 0, "text" => "Chọn trục"];
+        foreach($list_type as $type) {
+            $result[] = ["value" => $type['id'], "text" => $type["name"]];
+        }
+        echo json_encode($result); die;
+    }
 
 
 }

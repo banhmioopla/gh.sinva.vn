@@ -401,7 +401,8 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                                         'libRoom' => $libRoom,
                                         'check_option' =>$check_option,
                                         'check_contract' =>$check_contract,
-                                        'check_consultant_booking' => $check_consultant_booking
+                                        'check_consultant_booking' => $check_consultant_booking,
+                                        'ghApartmentShaft' => $ghApartmentShaft
                                     ]) ?>
                                 </div>
                                 <div class="tab-pane" id="apm-map">

@@ -7,7 +7,7 @@ class Apartment extends CustomBaseStep {
 	{
 		parent::__construct(); 
 		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict',
-            'ghApartmentPromotion', 'ghApartmentRequest', 'ghApartmentView', 'ghConsultantBooking',
+            'ghApartmentPromotion', 'ghApartmentRequest', 'ghApartmentView', 'ghConsultantBooking', 'ghApartmentShaft',
             'ghTag', 'ghApartmentComment', 'ghConsultantBooking', 'ghBaseRoomType']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
@@ -176,6 +176,7 @@ class Apartment extends CustomBaseStep {
 		$data['ghApartmentComment'] = $this->ghApartmentComment;
 		$data['ghApartmentPromotion'] = $this->ghApartmentPromotion;
 		$data['libApartment'] = $this->libApartment;
+		$data['ghApartmentShaft'] = $this->ghApartmentShaft;
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
         $list_apm_ready = [];
         foreach ($list_apm_temp as $apm ) {

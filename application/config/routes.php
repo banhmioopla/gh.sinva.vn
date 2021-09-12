@@ -1260,6 +1260,24 @@ $route['admin/update-price-editable'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/room/create-shaft'] = function($params = []) {
+    $controller = 'Room';
+    $action = '/createShaft';
+    return $controller.$action;
+};
+
+$route['admin/room/create-shaft'] = function($params = []) {
+    $controller = 'Room';
+    $action = '/createShaft';
+    return $controller.$action;
+};
+
+$route['admin/get-room-shaft'] = function($params = []) {
+    $controller = 'Room';
+    $action = '/getShaft';
+    return $controller.$action;
+};
+
 // POST
 
 $route['admin/ajax/create-consulting-post'] = function($params = []) {
@@ -1330,12 +1348,11 @@ $route['admin/apartment-view/create'] = function($params = []) {
     return $controller.$action;
 };
 
-$route['/admin/apartment/trending'] = function($params = []) {
+$route['admin/apartment/trending'] = function($params = []) {
     $controller = 'ApartmentView';
     $action = '/trending';
     return $controller.$action;
 };
-
 
 /* :::SHARE:::*/
 $route['share/agency-group/show'] = function($params = []) {

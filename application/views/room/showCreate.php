@@ -21,7 +21,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 ?>
 
 <div class="wrapper">
-    <div class="container">
+    <div class="container-fluid">
 
         <!-- Page-Title -->
         <div class="row">
@@ -62,27 +62,32 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             </div>
             <div class="col-12">
                 <div class="card-box table-responsive">
-                    <div class="pull-right">
-                        <?php if($this->session->has_userdata('current_district_code')):?>
-                        <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
-                        <?php endif; ?>
-                        <?php if($check_create_promotion): ?>
-                            <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
-                                <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i> </button></a>
-                        <?php endif; ?>
-                        <?php if($check_consultant_booking): ?>
-                            <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
-                                <button class="btn btn-danger m-1"><i class="mdi mdi-car-hatchback"></i> </button></a>
-                        <?php endif; ?>
-                        <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"> <i class="mdi mdi-folder-multiple-image"></i> </button></a>
-                        <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"> <i class="mdi mdi-lead-pencil"></i></button></a>
+                    <div class="d-flex justify-content-between">
+                        <h4 class="font-weight-bold text-danger">Danh Sách Phòng</h4>
+                        <div class="">
+                            <?php if($this->session->has_userdata('current_district_code')):?>
+                                <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+                            <?php endif; ?>
+                            <?php if($check_create_promotion): ?>
+                                <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
+                                    <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i> </button></a>
+                            <?php endif; ?>
+                            <?php if($check_consultant_booking): ?>
+                                <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
+                                    <button class="btn btn-danger m-1"><i class="mdi mdi-car-hatchback"></i> </button></a>
+                            <?php endif; ?>
+                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"> <i class="mdi mdi-folder-multiple-image"></i> </button></a>
+                            <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"> <i class="mdi mdi-lead-pencil"></i></button></a>
+
+                        </div>
 
                     </div>
-                    <h4 class="font-weight-bold text-danger">Danh Sách Phòng</h4>
+
                     <table id="list-room-<?= $apartment['id'] ?>"
-                           class="table list-room">
+                           class="table list-room mt-4">
                         <thead class="table-dark">
                         <tr>
+                            <th class="font-weight-bold">Trục Phòng</th>
                             <th class="font-weight-bold">Mã Phòng</th>
                             <th>Loại Phòng</th>
                             <th>Giá <small>x1000</small></th>
@@ -130,6 +135,10 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
                                 ?>
                                 <tr class='<?= $bg_for_available ?> font-weight-bold'>
+                                    <td><div class="room-shaft_id"
+                                             data-pk="<?= $room['id'] ?>"
+                                             data-value = "<?= $room['shaft_id'] ?>"
+                                             data-name="shaft_id"><?= $room['shaft_id'] ? $libRoom->getNameByShaftId($room['shaft_id']) : '...' ?></div></td>
                                     <td><div class="room-data"
                                              data-pk="<?= $room['id'] ?>"
                                              data-value="<?= $room['code'] ?>"
@@ -187,6 +196,38 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             </div>
 
 
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="font-weight-bold text-danger">Trục Phòng</h4>
+
+                    <div>
+                        <?php foreach ($list_shaft as $item): ?>
+                        <span class="badge badge-danger"><?= $item['name'] ?></span>
+                        <?php endforeach;?>
+                    </div>
+
+                    <form role="form" method="post"
+                          class="mt-5"
+                          action="<?= base_url()?>/admin/room/create-shaft">
+                        <input type="hidden" name="apartment_id" value="<?= $this->input->get('apartment-id') ?>">
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-12 col-form-label">Tên Trục<span class="text-danger">*</span></label>
+                            <div class="col-md-8 col-12">
+                                <input type="text" required class="form-control"
+                                       id="name" name="name" placeholder="Tên Trục">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-8 offset-4">
+                                <button type="submit" class="btn btn-danger waves-effect waves-light">
+                                    Thêm Mới
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <div class="col-12 col-md-6">
                 <div class="card-box">
@@ -443,39 +484,26 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         })
                     });
 
-                    $('.apartment-delete').on('click', function() {
-                        let apartment_id = $(this).data('apartment-id');
-                        let this_btn = $(this);
-                        swal({
-                            title: 'Bạn Muốn Ẩn Dự Án Này',
-                            type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonClass: 'btn btn-confirm mt-2',
-                            cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
-                            confirmButtonText: 'Ẩn',
-                        }).then(function () {
-                            $.ajax({
-                                url: '<?= base_url() ?>admin/update-apartment-editable',
-                                data: {pk: apartment_id, name: 'active', value: 'NO', mode: 'del'},
-                                type: 'POST',
-                                success: function(response) {
-                                    let data = JSON.parse(response);
-                                    if(data.status > 0) {
-                                        this_btn.parents('.apartment-block').fadeOut(1500, function(){
-                                            this_btn.parents('.apartment-block').remove();
-                                            $('#modal-apartment-detail-' + apartment_id).remove();
-                                        });
+                    $('.room-shaft_id').click(function(){
+                        $(this).editable({
+                            type: 'select',
+                            url: '<?= base_url()."admin/update-room-editable" ?>',
+                            inputclass: '',
+                            source: function() {
+                                data = [];
+                                $.ajax({
+                                    url: '<?= base_url() ?>admin/get-room-shaft?apartment-id=<?= $apartment["id"] ?>',
+                                    dataType: 'json',
+                                    async: false,
+                                    success: function(res) {
+                                        data = res;
+                                        return res;
                                     }
-                                }
-                            });
-                            swal({
-                                title: 'Đã Ẩn Thành Công!',
-                                type: 'success',
-                                confirmButtonClass: 'btn btn-confirm mt-2'
-                            });
+                                });
+                                return data;
+                            },
+
                         });
-
-
                     });
                     // End Draw
 

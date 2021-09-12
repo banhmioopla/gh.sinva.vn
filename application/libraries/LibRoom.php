@@ -7,6 +7,7 @@ class LibRoom {
         $this->CI =& get_instance();
 		$this->CI->load->model('ghDistrict');
 		$this->CI->load->model('ghApartment');
+		$this->CI->load->model('ghApartmentShaft');
 		$this->CI->load->model('ghRoom');
     }
 
@@ -135,6 +136,14 @@ class LibRoom {
 
         return $total;
 
+    }
+
+    public function getNameByShaftId($shaft_id) {
+        $model = $this->CI->ghApartmentShaft->getFirstById($shaft_id);
+        if($model) {
+            return $model['name'];
+        }
+        return '';
     }
 }
 
