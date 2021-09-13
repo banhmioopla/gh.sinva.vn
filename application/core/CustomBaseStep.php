@@ -104,6 +104,7 @@ class CustomBaseStep extends CI_Controller {
             'ApartmentView' => ['create'],
             'Dashboard' => ['showSale']
         ];
+
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 
             if(!$this->checkCurrentPermission($this->permission_set)) {

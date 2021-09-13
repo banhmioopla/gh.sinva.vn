@@ -1348,12 +1348,6 @@ $route['admin/apartment-view/create'] = function($params = []) {
     return $controller.$action;
 };
 
-$route['admin/apartment/trending'] = function($params = []) {
-    $controller = 'ApartmentView';
-    $action = '/trending';
-    return $controller.$action;
-};
-
 /* :::SHARE:::*/
 $route['share/agency-group/show'] = function($params = []) {
     $controller = 'ShAgencyGroup';
