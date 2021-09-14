@@ -286,14 +286,14 @@ include VIEWPATH . 'functions.php';
                                             <?php if($any_empty_shaft): ?>
                                             <li class="nav-item">
                                                 <a href="#any_empty_shaft" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                                    <i class="fi-monitor mr-2"></i> [Không có trục]
+                                                    <i class="mdi mdi-arrange-send-to-back"></i> [Không có trục]
                                                 </a>
                                             </li>
                                             <?php endif; ?>
                                             <?php foreach ($list_shaft as $shaft):?>
                                             <li class="nav-item">
                                                 <a href="#shaft-<?= $shaft['id'] ?>" data-toggle="tab" aria-expanded="true" class="nav-link">
-                                                    <i class="fi-head mr-2"></i> <?= $shaft['name'] ?>
+                                                    <i class="mdi mdi-arrange-send-to-back"></i> <?= $shaft['name'] ?>
                                                 </a>
                                             </li>
 
