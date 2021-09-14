@@ -273,6 +273,9 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                                     <a class="m-1" href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> <span class="d-none d-md-inline"></span></button>
                                     </a>
+                                    <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>">
+                                        <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
+
                                 <?php endif;?>
 
                                 <?php if($check_create_promotion): ?>
