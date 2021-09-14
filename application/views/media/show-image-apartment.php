@@ -13,6 +13,9 @@ $view_service = [
     'check_commission_rate' => $check_commission_rate,
     'apartment' => $apartment
 ];
+$arr_room_no_shaft = [];
+
+
 ?>
 
 
@@ -276,20 +279,99 @@ include VIEWPATH . 'functions.php';
                                         </button>
                                     </div>
                                 </div>
-                                <div class="row">
-                                <?php
-                                $i = 0;
-                                foreach ($chain_room as $room):
+                                <?php if($has_shaft): ?>
+                                    <div class="row">
+                                    <div class="col-12">
+                                        <ul class="nav nav-tabs">
+                                            <?php if($any_empty_shaft): ?>
+                                            <li class="nav-item">
+                                                <a href="#any_empty_shaft" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    <i class="fi-monitor mr-2"></i> [Không có trục]
+                                                </a>
+                                            </li>
+                                            <?php endif; ?>
+                                            <?php foreach ($list_shaft as $shaft):?>
+                                            <li class="nav-item">
+                                                <a href="#shaft-<?= $shaft['id'] ?>" data-toggle="tab" aria-expanded="true" class="nav-link">
+                                                    <i class="fi-head mr-2"></i> <?= $shaft['name'] ?>
+                                                </a>
+                                            </li>
+
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                    <div class="tab-content">
+                                        <?php if($has_shaft): ?>
+
+                                            <?php foreach ($list_shaft as $shaft):
+                                                ?>
+                                                <div class="tab-pane" id="shaft-<?= $shaft['id'] ?>">
+                                                    <div class="row" >
+                                                        <?php
+                                                        $i = 0;
+
+                                                        foreach ($chain_room as $room):
+
+                                                            if(!($shaft['id'] == $room['shaft'])) {
+                                                                if(empty($room['shaft']) && !in_array($room['value'], $arr_room_no_shaft)){
+                                                                    $arr_room_no_shaft[] = $room;
+                                                                }
+                                                                continue;
+                                                            }
+                                                            ?>
+                                                            <div class="col-6 col-md-3 pl-1 pr-1" >
+                                                                <a href="#" class="text-left w-100 font-weight-bold border border-warning border-3 room-code"
+                                                                   id="room-id-<?= $room['value'] ?>"
+                                                                   data-filter=".room-id-<?= $room['value'] ?>"
+                                                                   data-room-id="<?= $room['value'] ?>"><?= $room['display'] ?></a>
+                                                            </div>
+
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+
+                                            <?php if($any_empty_shaft):?>
+                                                <div class="tab-pane" id="any_empty_shaft">
+                                                    <div class="row" >
+                                                        <?php
+                                                        $i = 0;
+
+                                                        foreach ($arr_room_no_shaft as $room):
+                                                            ?>
+                                                            <div class="col-6 col-md-3 pl-1 pr-1" >
+                                                                <a href="#" class="text-left w-100 font-weight-bold border border-warning border-3 room-code"
+                                                                   id="room-id-<?= $room['value'] ?>"
+                                                                   data-filter=".room-id-<?= $room['value'] ?>"
+                                                                   data-room-id="<?= $room['value'] ?>"><?= $room['display'] ?></a>
+                                                            </div>
+
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                </div>
+                                            <?php endif;?>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if(!$has_shaft):?>
+                                    <div class="row">
+                                    <?php
+                                    foreach ($chain_room as $room):
                                     ?>
-                                    <div class="col-6 col-md-3 pl-1 pr-1">
+                                    <div class="col-6 col-md-3 pl-1 pr-1" >
                                         <a href="#" class="text-left w-100 font-weight-bold border border-warning border-3 room-code"
                                            id="room-id-<?= $room['value'] ?>"
                                            data-filter=".room-id-<?= $room['value'] ?>"
                                            data-room-id="<?= $room['value'] ?>"><?= $room['display'] ?></a>
                                     </div>
 
-                                <?php endforeach; ?>
-                                </div>
+                                    <?php endforeach; ?>
+                                    </div>
+
+                                <?php endif; ?>
                             </div>
                             </form>
                         </div>

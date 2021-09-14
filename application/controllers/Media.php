@@ -11,6 +11,7 @@ class Media extends CustomBaseStep {
         $this->load->model('ghRoom');
         $this->load->model('ghApartment');
         $this->load->model('ghActivityTrack');
+        $this->load->model('ghApartmentShaft');
         $this->load->model('ghPublicConsultingPost');
         $this->load->helper('money');
 
@@ -28,8 +29,26 @@ class Media extends CustomBaseStep {
             redirect('notfound');
         }
 
-        $apartment = $this->ghApartment->getFirstById($apartment_id);
+        $list_shaft = $this->ghApartmentShaft->get(['apartment_id' => $apartment_id]);
         $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apartment_id], 'code','ASC');
+        $has_shaft = false;
+        $any_empty_shaft = false;
+        if(count($list_shaft)) {
+            $has_shaft = true;
+            foreach ($list_room as $rrrr) {
+                if(empty($rrrr['shaft_id'])) {
+                    $any_empty_shaft = true; break;
+                }
+            }
+        }
+
+        $data['has_shaft'] = $has_shaft;
+        $data['any_empty_shaft'] = $any_empty_shaft;
+        $data['list_shaft'] = $list_shaft;
+
+
+        $apartment = $this->ghApartment->getFirstById($apartment_id);
+
         $chain_room = [];
         $counter = 0;
         foreach ($list_room as $room) {
@@ -41,9 +60,14 @@ class Media extends CustomBaseStep {
             }
 
             if(count($img_this_room)) {
-                $chain_room[] = ['value' => $room['id'], 'display' => $room['code'] . ' <span class="badge badge-danger badge-pill mr-1">'.count($img_this_room).'</span> ' . ' <span class="float-right badge '.$is_available.'">'.number_format($room['price']/1000).'</span> '];
+                $chain_room[] = [
+                    'shaft' => $room['shaft_id'],
+                    'value' => $room['id'],
+                    'display' => $room['code'] . ' <span class="badge badge-danger badge-pill mr-1">'.count($img_this_room).'</span> ' . ' <span class="float-right badge '.$is_available.'">'.number_format($room['price']/1000).'</span> '];
             } else {
-                $chain_room[] = ['value' => $room['id'], 'display' => $room['code'] . ' <span class="float-right badge '.$is_available.'">'.number_format($room['price']/1000).'</span> '];
+                $chain_room[] = [
+                    'shaft' => $room['shaft_id'],
+                    'value' => $room['id'], 'display' => $room['code'] . ' <span class="float-right badge '.$is_available.'">'.number_format($room['price']/1000).'</span> '];
             }
 
         }
