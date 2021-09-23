@@ -101,7 +101,6 @@ class Apartment extends CustomBaseStep {
         }
 
 		$list_apartment = $this->ghApartment->get($params);
-
 		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['apartment_today'] = [];
 		$data['list_gadget_around'] = [];
@@ -423,6 +422,8 @@ class Apartment extends CustomBaseStep {
 
 	    $list_room = $this->ghRoom->get(['apartment_id' => $id, 'active' => 'YES']);
 	    $contract = $this->ghContract->get(['apartment_id' => $id]);
+	    $list_col = $this->ghApartment->getListCol();
+
 
 	    if(isset($_POST['submit'])) {
             $update_data = [
@@ -464,6 +465,7 @@ class Apartment extends CustomBaseStep {
 
                 'time_update' => time(),
                 'time_insert' => strtotime($this->input->post('time_insert')),
+                'hidden_service' => $this->input->post("hidden_cols") && count($this->input->post("hidden_cols")) ? json_encode($this->input->post("hidden_cols")) : "[]"
             ];
 
             $ok = false;

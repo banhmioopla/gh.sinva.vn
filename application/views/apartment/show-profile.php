@@ -11,9 +11,18 @@ $check_create_promotion = false;
 if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
     $check_create_promotion = true;
 }
+$hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_decode($apartment['hidden_service'], true) : [];
 
 ?>
-
+<style>
+    .hover-hidden-service{
+        background-color: white;
+        transition: .3s;
+    }
+    .hover-hidden-service:hover{
+        background-color: rgba(255, 172, 0, 0.28);
+    }
+</style>
 <div class="wrapper">
             <div class="container-fluid">
                 <!-- Page-Title -->
@@ -184,7 +193,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
                             </div>
                             <div class="form-row float-right">
-                                <a  href="<?=  $_SERVER['HTTP_REFERER'] ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+                                <a  href="<?= isset($_SERVER['HTTP_REFERER'])  ? $_SERVER['HTTP_REFERER'] : '#' ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>
                         </div>
@@ -221,7 +230,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                 </div>
                             </div>
                             <div class="form-row float-right">
-                                <a  href="<?=  $_SERVER['HTTP_REFERER'] ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+                                <a  href="<?=  isset($_SERVER['HTTP_REFERER'])  ? $_SERVER['HTTP_REFERER'] : '#' ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
 
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>
@@ -235,56 +244,89 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                     <div class="row">
                         <div class="col-12">
                             <h3 class="font-weight-bold text-danger text-center">Thông Tin Dịch Vụ</h3>
+                            <p class="text-center">để ẩn thông tin dịch vụ, click vào checkbox tương ứng</p>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Điện</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('electricity', $hidden_service) ? 'checked':'' ?> value="electricity">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="electricity"
                                        value="<?= $apartment['electricity'] ?>">
-                                <small class="form-text text-muted">Yup! Xin Chào Bạn.</small>
+<!--                                <small class="form-text text-muted">Yup! Xin Chào Bạn.</small>-->
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Nước</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('water', $hidden_service) ? 'checked':'' ?> value="water">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="water"
                                        value="<?= $apartment['water'] ?>">
 
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Internet</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('internet', $hidden_service) ? 'checked':'' ?> value="internet">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="internet"
                                        value="<?= $apartment['internet'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Giữ Xe</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('parking', $hidden_service) ? 'checked':'' ?> value="parking">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="parking"
                                        value="<?= $apartment['parking'] ?>">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Phí Quản Lý</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('management_fee', $hidden_service) ? 'checked':'' ?> value="management_fee">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="management_fee"
                                        value="<?= $apartment['management_fee'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Combo Phí</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('extra_fee', $hidden_service) ? 'checked':'' ?> value="extra_fee">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="extra_fee"
                                        value="<?= $apartment['extra_fee'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Cọc Phòng</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('deposit', $hidden_service) ? 'checked':'' ?> value="deposit">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="deposit"
                                        value="<?= $apartment['deposit'] ?>">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Số Lầu</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('number_of_floor', $hidden_service) ? 'checked':'' ?> value="number_of_floor">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="number_of_floor"
                                        value="<?= $apartment['number_of_floor'] ?>">
@@ -292,46 +334,74 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Thang Máy</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('elevator', $hidden_service) ? 'checked':'' ?> value="elevator">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="elevator"
                                        value="<?= $apartment['elevator'] ?>">
-                                <small class="form-text text-muted">Chúc Bạn Chốt Thật Nhiều Hợp Đồng!</small>
+<!--                                <small class="form-text text-muted">Chúc Bạn Chốt Thật Nhiều Hợp Đồng!</small>-->
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Máy Giặt</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('washing_machine', $hidden_service) ? 'checked':'' ?> value="washing_machine">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="washing_machine"
                                        value="<?= $apartment['washing_machine'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Dọn Phòng</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('room_cleaning', $hidden_service) ? 'checked':'' ?> value="room_cleaning">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="room_cleaning"
                                        value="<?= $apartment['room_cleaning'] ?>">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Số Người Ở</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('number_of_people', $hidden_service) ? 'checked':'' ?> value="number_of_people">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="number_of_people"
                                        value="<?= $apartment['number_of_people'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Bếp</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('kitchen', $hidden_service) ? 'checked':'' ?> value="kitchen">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="kitchen"
                                        value="<?= $apartment['kitchen'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Bảo Vệ</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('security', $hidden_service) ? 'checked':'' ?> value="security">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="security"
                                        value="<?= $apartment['security'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Thú Cưng</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('pet', $hidden_service) ? 'checked':'' ?> value="pet">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="pet"
                                        value="<?= $apartment['pet'] ?>">
@@ -340,46 +410,74 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Bãi Xe Ô Tô</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('car_park', $hidden_service) ? 'checked':'' ?> value="car_park">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="car_park"
                                        value="<?= $apartment['car_park'] ?>">
-                                <small class="form-text text-muted">Giỏ Hàng SINVAHOME</small>
+<!--                                <small class="form-text text-muted">Giỏ Hàng SINVAHOME</small>-->
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Hoa Hồng 12 Tháng</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('commission_rate', $hidden_service) ? 'checked':'' ?> value="commission_rate">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="commission_rate"
                                        value="<?= $apartment['commission_rate'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Hoa Hồng 9 Tháng</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('commission_rate_9m', $hidden_service) ? 'checked':'' ?> value="commission_rate_9m">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="commission_rate_9m"
                                        value="<?= $apartment['commission_rate_9m'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Hoa Hồng 6 Tháng</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('commission_rate_6m', $hidden_service) ? 'checked':'' ?> value="commission_rate_6m">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="commission_rate_6m"
                                        value="<?= $apartment['commission_rate_6m'] ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Hợp Đồng Dài Hạn</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('contract_long_term', $hidden_service) ? 'checked':'' ?> value="contract_long_term">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="contract_long_term"
                                        value="<?= $apartment['contract_long_term'] ?>">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Hợp Đồng Ngắn Hạn</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('contract_short_term', $hidden_service) ? 'checked':'' ?> value="contract_short_term">
+                                    <label></label>
+                                </div>
                                 <input type="text" class="form-control"
                                        name="contract_short_term"
                                        value="<?= $apartment['contract_short_term'] ?>">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group p-2 hover-hidden-service">
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="hidden_cols[]" <?= in_array('kt3', $hidden_service) ? 'checked':'' ?> value="kt3">
+                                    <label></label>
+                                </div>
                                 <strong class="text-primary">KT3</strong>
                                 <input type="text" class="form-control"
                                        name="kt3"
@@ -390,7 +488,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         </div>
                         <div class="col-12">
                             <div class="form-row float-right">
-                                <a  href="<?=  $_SERVER['HTTP_REFERER'] ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+                                <a  href="<?=  isset($_SERVER['HTTP_REFERER'])  ? $_SERVER['HTTP_REFERER'] : '#' ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
 
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>

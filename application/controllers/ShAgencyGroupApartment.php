@@ -13,6 +13,7 @@ class ShAgencyGroupApartment extends CI_Controller {
         $this->load->model('shareGroupApartment');
         $this->load->library('encryption');
         $this->load->library('LibDistrict', null, 'libDistrict');
+        $this->load->library('LibUuid', null, 'libUuid');
     }
 
     public function show(){
@@ -26,7 +27,8 @@ class ShAgencyGroupApartment extends CI_Controller {
                 $this->shareGroupApartment->insert([
                     'group_uuid' => $group_uuid,
                     'apartment_id' => $apm_id,
-                    'is_active' => 'YES'
+                    'is_active' => 'YES',
+                    'apartment_uuid' => $this->libUuid->createUuid()
                 ]);
             }
 

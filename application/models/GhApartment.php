@@ -81,6 +81,17 @@ class GhApartment extends CI_Model {
         $result = $this->db->affected_rows();
         return $result;
     }
+
+    public function getListCol() {
+        $result = $this->db->get_where($this->table, ['id > ' => 1])->row_array();
+        $out =  [];
+
+        foreach ($result as $col => $val) {
+            $out[] = $col;
+        }
+
+        return $out;
+	}
 }
 
 /* End of file mApartment.php */

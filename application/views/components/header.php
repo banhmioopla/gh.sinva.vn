@@ -101,13 +101,13 @@ include VIEWPATH.'functions.php';
                                 </a> -->
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <!-- item-->
-                                    <!-- <a href="javascript:void(0);" class="dropdown-item">
+                                     <a href="javascript:void(0);" class="dropdown-item">
                                         Spanish
-                                    </a> -->
+                                    </a>
                                     <!-- item-->
-                                    <!-- <a href="javascript:void(0);" class="dropdown-item">
+                                     <a href="javascript:void(0);" class="dropdown-item">
                                         Italian
-                                    </a> -->
+                                    </a>
                                     <!-- item-->
                                     <!-- <a href="javascript:void(0);" class="dropdown-item">
                                         French
