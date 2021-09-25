@@ -165,7 +165,9 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                              data-id="<?= $room['id'] ?>"><?= $status_txt ?></div></td>
                                     <td><div class="room-time_available text-center"
                                              data-pk="<?= $room['id'] ?>"
+                                             <?php if($room['time_available'] > 0):?>
                                              data-value="<?= date('d-m-Y',$room['time_available']) ?>"
+                                             <?php endif ?>
                                              data-name="time_available"><?= $room['time_available'] > 0 ? date('d-m-Y',$room['time_available']) :' - ' ?></div></td>
 
                                     <?php if($check_option):?>
@@ -438,18 +440,14 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
 
                     $('.list-room .room-time_available').editable({
-                        placement: 'right',
-                        type: 'combodate',
-                        template:"D / MM / YYYY",
-                        format:"DD-MM-YYYY",
-                        viewformat:"DD-MM-YYYY",
-                        mode: 'popup',
-                        combodate: {
-                            firstItem: 'name',
-                            minYear: 2019,
-                            maxYear: 2025
+                        type:'date',
+                        format: 'dd-mm-yyyy',
+                        viewformat: 'dd-mm-yyyy',
+                        datepicker: {
+                            "setDate": new Date(),
+                            "autoclose": true
                         },
-                        inputclass: 'form-control-sm',
+                        placement: 'left',
                         url: '<?= base_url()."admin/update-room-editable" ?>'
                     });
 
