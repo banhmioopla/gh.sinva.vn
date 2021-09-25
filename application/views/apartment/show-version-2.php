@@ -269,12 +269,15 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                         </div>
                         <div class="row">
                             <div class="col-12 list-action  text-center text-md-right mt-2" >
+
                                 <?php if($check_profile): ?>
                                     <a class="m-1" href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> <span class="d-none d-md-inline"></span></button>
                                     </a>
+
+
                                     <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>">
-                                        <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
+                                        <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> P </button></a>
 
                                 <?php endif;?>
 
@@ -282,7 +285,9 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                                     <a class="m-1" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
                                         <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
-
+                                <a class="m-1" href="/sale/apartment-export?id=<?= $apartment['id'] ?>" >
+                                    <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-file-excel"></i> <span class="d-none d-md-inline"></span></button>
+                                </a>
                                 <a class="m-1 collapsed"
                                    data-toggle="collapse"
                                    data-parent="#accordion"

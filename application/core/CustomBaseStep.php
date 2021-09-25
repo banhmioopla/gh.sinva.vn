@@ -102,7 +102,8 @@ class CustomBaseStep extends CI_Controller {
             'ApartmentPromotion' => [],
             'Team' => ['detail'],
             'ApartmentView' => ['create'],
-            'Dashboard' => ['showSale']
+            'Dashboard' => ['showSale'],
+            'ApartmentRequest' => ['exportApartmentExcel']
         ];
 
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {

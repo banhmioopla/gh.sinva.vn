@@ -796,6 +796,12 @@ $route['sale/apartment-request/detail'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['sale/apartment-export'] = function($params = []) {
+    $controller = 'ApartmentRequest';
+    $action = '/exportApartmentExcel';
+    return $controller.$action;
+};
+
 // -- service
 $route['admin/list-service'] = function($params = []) {
 	$controller = 'Service';
