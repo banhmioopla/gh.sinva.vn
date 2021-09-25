@@ -87,6 +87,9 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                         <div class="col-12">
                             <h3 class="font-weight-bold text-danger text-center">Cập Nhật Vào Lúc: <?= date('d-m-Y h:i\'', $apartment['time_update']) ?></h3>
                             <div class="pull-right text-md text-center">
+                                <?php if($this->session->has_userdata('current_district_code')):?>
+                                    <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+                                <?php endif; ?>
                                 <?php if($check_create_promotion): ?>
                                 <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
                                     <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i></button></a>
@@ -193,7 +196,6 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
 
                             </div>
                             <div class="form-row float-right">
-                                <a  href="<?= isset($_SERVER['HTTP_REFERER'])  ? $_SERVER['HTTP_REFERER'] : '#' ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>
                         </div>
@@ -230,8 +232,6 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 </div>
                             </div>
                             <div class="form-row float-right">
-                                <a  href="<?=  isset($_SERVER['HTTP_REFERER'])  ? $_SERVER['HTTP_REFERER'] : '#' ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
-
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>
                         </div>
@@ -488,8 +488,6 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                         </div>
                         <div class="col-12">
                             <div class="form-row float-right">
-                                <a  href="<?=  isset($_SERVER['HTTP_REFERER'])  ? $_SERVER['HTTP_REFERER'] : '#' ?>"><button type="button" class="btn btn-secondary mr-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
-
                                 <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
                             </div>
                         </div>
