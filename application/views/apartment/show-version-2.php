@@ -171,6 +171,8 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                     }
                     $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
 
+                    $surrounding_facilities = !empty($apartment['surrounding_facilities']) ? json_decode($apartment['surrounding_facilities'], true) : [];
+
 
                     ?>
                     <!-- item -->
@@ -265,6 +267,12 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                         <div class="row hide-in-sortable mt-2">
                             <div class="col-12">
                                 <h5 class="text-danger"><u>Mô Tả Dự Án</u></h5>
+                                <div class="mb-3">
+                                <?php foreach ($surrounding_facilities as $uu):?>
+
+                                    <span class="ml-2 badge badge-danger"><strong><?= $uu ?></strong></span>
+                                <?php endforeach;?>
+                                </div>
                                 <div class="p-1 apm-description" style="white-space: pre-line; background:#fee69c">
                                     <?= $apartment['description'] ? $apartment['description'] : ':<' ?>
                                 </div>
@@ -451,14 +459,12 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                             list_order.push({apm_id: $(this).data('apm-id'), order: x});
                         }
                     });
-                    console.log(list_order);
 
                     $.ajax({
                         url: '/admin/update-apartment-editable',
                         method: "POST",
                         data: {mode: 'sort', value: list_order},
                         success:function (res) {
-                            console.log(res.status);
                         }
                     });
 

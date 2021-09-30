@@ -495,6 +495,65 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
 
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3 class="font-weight-bold text-danger text-center">Tiện ích xung quanh</h3>
+                        </div>
+                        <?php
+                        $surrounding_facilities = !empty($apartment['surrounding_facilities']) ? json_decode($apartment['surrounding_facilities'], true):[];
+
+                        ?>
+                        <div class="col-md-6">
+                            <div class="form-group p-2 hover-hidden-service">
+                                <strong class="text-primary">Phòng Gym</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" <?= in_array('Gym', $surrounding_facilities) ? 'checked':'' ?> name="surrounding_facilities[]"  value="Gym">
+                                    <label></label>
+                                </div>
+                            </div>
+                            <div class="form-group p-2 hover-hidden-service">
+                                <strong class="text-primary">Trường học</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="surrounding_facilities[]" <?= in_array('Trường học', $surrounding_facilities) ? 'checked':'' ?> value="Trường học">
+                                    <label></label>
+                                </div>
+                            </div>
+                            <div class="form-group p-2 hover-hidden-service">
+                                <strong class="text-primary">Công viên</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="surrounding_facilities[]" <?= in_array('Công viên', $surrounding_facilities) ? 'checked':'' ?> value="Công viên">
+                                    <label></label>
+                                </div>
+                            </div>
+                            <div class="form-group p-2 hover-hidden-service">
+                                <strong class="text-primary">Siêu thị</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="surrounding_facilities[]" <?= in_array('Siêu thị', $surrounding_facilities) ? 'checked':'' ?> value="Siêu thị">
+                                    <label></label>
+                                </div>
+                            </div>
+                            <div class="form-group p-2 hover-hidden-service">
+                                <strong class="text-primary">View sông</strong>
+                                <div class="checkbox checkbox-dark checkbox-single pull-right">
+                                    <input type="checkbox" name="surrounding_facilities[]" <?= in_array('View sông', $surrounding_facilities) ? 'checked':'' ?> value="View sông">
+                                    <label></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-row float-right">
+                                <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
         </form>
     </div>

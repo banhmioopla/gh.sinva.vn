@@ -465,7 +465,9 @@ class Apartment extends CustomBaseStep {
 
                 'time_update' => time(),
                 'time_insert' => strtotime($this->input->post('time_insert')),
-                'hidden_service' => $this->input->post("hidden_cols") && count($this->input->post("hidden_cols")) ? json_encode($this->input->post("hidden_cols")) : "[]"
+                'hidden_service' => $this->input->post("hidden_cols") && count($this->input->post("hidden_cols")) ? json_encode($this->input->post("hidden_cols")) : "[]",
+                'surrounding_facilities' => $this->input->post("surrounding_facilities") && count($this->input->post("surrounding_facilities")) ? json_encode($this->input->post("surrounding_facilities")) : "[]",
+
             ];
 
             $ok = false;
