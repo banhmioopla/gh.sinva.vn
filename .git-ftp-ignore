@@ -1,5 +1,6 @@
 .DS_Store
-
+application/config/database.php
+application/config/config.php
 application/cache/*
 !application/cache/index.html
 
@@ -11,8 +12,7 @@ application/logs/*
 templates/*
 js-plugins/*
 media/*
-application/config/database.php
-application/config/config.php
+asset/*
 composer.lock
 
 user_guide_src/build/*
@@ -34,9 +34,3 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
-.gitignore
-*/.gitignore      # ignore files in sub directories
-*/.gitkeep
-.git-ftp-ignore
-.git-ftp-include
-.gitlab-ci.yml

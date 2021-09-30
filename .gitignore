@@ -12,6 +12,7 @@ application/logs/*
 templates/*
 js-plugins/*
 media/*
+asset/*
 composer.lock
 
 user_guide_src/build/*
