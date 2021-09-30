@@ -48,6 +48,7 @@
     <script src="<?= $js_plugins_path ?>flot-chart/curvedLines.js"></script>
     <script src="<?= $js_plugins_path ?>switchery/switchery.min.js"></script>
     <script src="<?= $js_plugins_path ?>flot-chart/jquery.flot.axislabels.js"></script>
+    <script src="<?= $js_plugins_path ?>jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- sweetalert2 -->

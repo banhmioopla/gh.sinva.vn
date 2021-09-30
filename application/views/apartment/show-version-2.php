@@ -155,6 +155,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                         <div class="col text-center text-md mt-md-0 mt-1"><a href="/admin/apartment/create"><button class="btn btn-success">Tạo Dự Án Mới</button></a></div>
                     </div>
                 </div>
+                <div id="sortable-ui">
                 <?php foreach ($list_apartment as $apartment):
                     if($check_only_apartment && !in_array($apartment['id'], $this->list_apartment_view_only)) continue;
 
@@ -173,9 +174,11 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 
                     ?>
                     <!-- item -->
+                    <div class="sort-apm-item" data-apm-id="<?=$apartment['id']?>">
                     <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
                         <div class="row">
                             <div class="col-md-6 text-right text-md-left">
+                                <i class=" mdi mdi-dots-vertical text-danger"></i>
                                 <span class="text-primary "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i> '.date('d/m/Y H:i',
                                             max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
 
@@ -236,7 +239,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 
                             ?>
                         </div>
-                        <div class="row mt-3 text-danger">
+                        <div class="row mt-3 hide-in-sortable text-danger">
                             <div class="col-md-3 col-4 border-right border-danger">
                                 <i class="mdi mdi-lumx"></i> <span class="d-none d-md-inline">Brand: </span><strong><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']) :'...' ?></strong>
                             </div>
@@ -259,7 +262,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                                 <i class="mdi mdi-pistol"></i> <span class="d-none d-md-inline">Đàm Phán Bởi: </span><strong><?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id']):"SINVA" ?></strong>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row hide-in-sortable mt-2">
                             <div class="col-12">
                                 <h5 class="text-danger"><u>Mô Tả Dự Án</u></h5>
                                 <div class="p-1 apm-description" style="white-space: pre-line; background:#fee69c">
@@ -267,7 +270,7 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row hide-in-sortable">
                             <div class="col-12 list-action  text-center text-md-right mt-2" >
 
                                 <?php if($check_profile): ?>
@@ -420,7 +423,9 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 
                         </div>
                     </div>
+                    </div>
                 <?php endforeach;?>
+                </div>
             </div>
         </div>
     </div>
@@ -428,6 +433,56 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 <script>
 
     commands.push(function() {
+        $( function() {
+            $('#sortable-ui').sortable({
+                opacity: 0.8,
+                revert: true,
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
+                axis: 'y',
+                tolerance: 'pointer',
+                connectWith: ".sort-apm-item",
+                update: function (event, ui) {
+                    let list_order = [];
+                    $(this).children().each(function (index) {
+                        let x = index+1;
+                        if($(this).data('position') != x) {
+                            $(this).data('position', x);
+                            list_order.push({apm_id: $(this).data('apm-id'), order: x});
+                        }
+                    });
+                    console.log(list_order);
+
+                    $.ajax({
+                        url: '/admin/update-apartment-editable',
+                        method: "POST",
+                        data: {mode: 'sort', value: list_order},
+                        success:function (res) {
+                            console.log(res.status);
+                        }
+                    });
+
+
+                },
+                start: function (e, ui) {
+                    ui.item.find('.hide-in-sortable').addClass('d-none');
+                    ui.item.height(95);
+                    $('.hide-in-sortable').height(95);
+                    $('.hide-in-sortable').fadeOut(1000,function () {
+                        $(this).addClass('d-none');
+                    });
+
+                },
+                stop: function (e, ui) {
+                    ui.item.find('.hide-in-sortable').removeClass('d-none');
+                    ui.item.height('auto');
+                    $('.hide-in-sortable').height('auto');
+                    $('.hide-in-sortable').fadeIn(1000,function () {
+                        $(this).removeClass('d-none');
+                    });
+                }
+            }).disableSelection();
+        } );
 
         $('.apm-plus-view').click(function () {
             console.log($(this).attr("aria-expanded"));
@@ -526,6 +581,8 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
         $('#apartment_update_ready').change(function () {
             window.location = '/admin/room/show-create?apartment-id='+$(this).val();
         });
+
+
 
     });
 </script>

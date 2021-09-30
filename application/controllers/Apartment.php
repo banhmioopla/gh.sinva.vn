@@ -651,6 +651,17 @@ class Apartment extends CustomBaseStep {
 		$field_value = $this->input->post('value');
 
 		$mode = $this->input->post('mode');
+
+		if($mode == 'sort') {
+	        $counter = 0;
+            foreach ($field_value as $itemmm) {
+                $checker = $this->ghApartment->updateById($itemmm['apm_id'], [
+                    'order_item' => $itemmm['order']
+                ]);
+                $counter++;
+            }
+            echo json_encode(['status' => $counter]); die;
+        }
 		if(!empty($apartment_id) and !empty($field_name)) {
 			$data = [
 				$field_name => $field_value,
