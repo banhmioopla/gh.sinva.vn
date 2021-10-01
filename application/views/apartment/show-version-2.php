@@ -148,11 +148,14 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 
                 </div>
                 <div class="card">
-                    <div class="form-group row">
-                        <div class="col-md-8 col-10 offset-1">
+                    <div class="form-group row mt-2">
+                        <div class="col-md-8 col-10">
                             <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
                         </div>
-                        <div class="col text-center text-md mt-md-0 mt-1"><a href="/admin/apartment/create"><button class="btn btn-success">Tạo Dự Án Mới</button></a></div>
+                        <div class="col text-right">
+                            <a href="/admin/apartment/create"><button class="btn btn-success">Tạo Dự Án Mới</button></a>
+                            <a target="_blank" href="/admin/apartment/sortable?district-code=<?= $district_code ?>"><button class="btn btn-success"> <i class=" mdi mdi-format-list-numbers"></i> Sắp xếp</button></a>
+                        </div>
                     </div>
                 </div>
                 <div id="sortable-ui">
@@ -441,55 +444,6 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
 <script>
 
     commands.push(function() {
-        $( function() {
-            $('#sortable-ui').sortable({
-                opacity: 0.8,
-                revert: true,
-                forceHelperSize: true,
-                forcePlaceholderSize: true,
-                axis: 'y',
-                tolerance: 'pointer',
-                connectWith: ".sort-apm-item",
-                update: function (event, ui) {
-                    let list_order = [];
-                    $(this).children().each(function (index) {
-                        let x = index+1;
-                        if($(this).data('position') != x) {
-                            $(this).data('position', x);
-                            list_order.push({apm_id: $(this).data('apm-id'), order: x});
-                        }
-                    });
-
-                    $.ajax({
-                        url: '/admin/update-apartment-editable',
-                        method: "POST",
-                        data: {mode: 'sort', value: list_order},
-                        success:function (res) {
-                        }
-                    });
-
-
-                },
-                start: function (e, ui) {
-                    ui.item.find('.hide-in-sortable').addClass('d-none');
-                    ui.item.height(95);
-                    $('.hide-in-sortable').height(95);
-                    $('.hide-in-sortable').fadeOut(1000,function () {
-                        $(this).addClass('d-none');
-                    });
-
-                },
-                stop: function (e, ui) {
-                    ui.item.find('.hide-in-sortable').removeClass('d-none');
-                    ui.item.height('auto');
-                    $('.hide-in-sortable').height('auto');
-                    $('.hide-in-sortable').fadeIn(1000,function () {
-                        $(this).removeClass('d-none');
-                    });
-                }
-            }).disableSelection();
-        } );
-
         $('.apm-plus-view').click(function () {
             console.log($(this).attr("aria-expanded"));
             if($(this).attr("aria-expanded") === undefined || $(this).attr("aria-expanded") === "false" || $(this).data("source") === 'image') {

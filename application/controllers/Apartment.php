@@ -532,6 +532,40 @@ class Apartment extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
+    public function showSortable(){
+        if(count($this->list_district_CRUD) == 0) {
+            $this->load->view('components/header');
+            $this->load->view('apartment/error');
+            $this->load->view('components/footer');
+            return;
+        }
+
+        $district_code = $this->input->get('district-code');
+        $district_code = !empty($district_code) ? $district_code: $this->list_district_CRUD[0];
+        $params = [
+            'district_code' => $district_code,
+            'active' => 'YES'
+        ];
+
+        $this->session->set_userdata(['current_district_code' => $district_code]);
+        $list_apm_temp = $this->ghApartment->get($params);
+        $list_apm_ready = [];
+
+        foreach ($list_apm_temp as $apm ) {
+            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+                continue;
+            }
+
+            $list_apm_ready[] = $apm;
+        }
+
+        $this->load->view('components/header');
+        $this->load->view('apartment/show-sortable', [
+            'list_apm_ready' => $list_apm_ready
+        ]);
+        $this->load->view('components/footer');
+    }
+
     public function showCreate(){
 
         $list_brand = $this->ghPartner->get(['active' => 'YES']);
@@ -660,7 +694,10 @@ class Apartment extends CustomBaseStep {
                 $checker = $this->ghApartment->updateById($itemmm['apm_id'], [
                     'order_item' => $itemmm['order']
                 ]);
-                $counter++;
+                if($checker){
+                    $counter++;
+                }
+
             }
             echo json_encode(['status' => $counter]); die;
         }

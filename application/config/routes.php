@@ -1091,6 +1091,12 @@ $route['admin/update-apartment-editable'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/apartment/sortable'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/showSortable';
+    return $controller.$action;
+};
+
 $route['admin/list-apartment-like-base'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/showLikeBase';
