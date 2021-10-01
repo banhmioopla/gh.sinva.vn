@@ -34,6 +34,10 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
     $check_update_room = true;
 
 }
+$show_sortable = false;
+if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
+    $show_sortable = true;
+}
 
 ?>
 
@@ -154,7 +158,9 @@ if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
                         </div>
                         <div class="col text-right">
                             <a href="/admin/apartment/create"><button class="btn btn-success">Tạo Dự Án Mới</button></a>
+                            <?php if($show_sortable): ?>
                             <a target="_blank" href="/admin/apartment/sortable?district-code=<?= $district_code ?>"><button class="btn btn-success"> <i class=" mdi mdi-format-list-numbers"></i> Sắp xếp</button></a>
+                            <?php endif;?>
                         </div>
                     </div>
                 </div>

@@ -17,7 +17,26 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-12">
+                <span class="d-flex justify-content-center flex-wrap ">
+                    <?php if($this->session->has_userdata('current_district_code')):?>
+                        <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-rounded m-1 btn-sm btn-outline-secondary"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+                    <?php endif; ?>
+                        <?php
+                        foreach($this->list_district_CRUD as $district):
+                            $district_btn = 'btn-outline-success';
+                            ?>
+
+                            <a href="<?= base_url().'admin/apartment/sortable?district-code='.$district ?>"
+                               class="btn m-1 btn-sm <?= $district_btn ?>
+                                <?= $district_code == $district ? 'active':'' ?>
+                                btn-rounded waves-light waves-effect">
+                            Q. <?= $district ?> </a>
+
+                        <?php endforeach; ?>
+                    </span>
+            </div>
+            <div class="col-md-6 offset-md-3 mt-3">
                 <div class="card-box">
                     <table class="table">
                         <tbody id="sortable-ui">

@@ -561,7 +561,8 @@ class Apartment extends CustomBaseStep {
 
         $this->load->view('components/header');
         $this->load->view('apartment/show-sortable', [
-            'list_apm_ready' => $list_apm_ready
+            'list_apm_ready' => $list_apm_ready,
+            'district_code' => $district_code
         ]);
         $this->load->view('components/footer');
     }
