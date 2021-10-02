@@ -172,6 +172,9 @@ class Media extends CustomBaseStep {
 
                 if (!empty($uploadData)) {
                     $this->ghImage->insert($uploadData);
+                    $this->ghApartment->updateById($apartment_id, [
+                        'time_update' => $time
+                    ]);
                 }
                 $this->session->set_flashdata('fast_notify', [
                     'message' => 'Upload <strong>'.$filesCount.'</strong> file(s) thành công ',

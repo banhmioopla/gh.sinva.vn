@@ -63,11 +63,12 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             <div class="col-12">
                 <div class="card-box table-responsive">
                     <div class="d-flex justify-content-between">
-                        <h4 class="font-weight-bold text-danger">Danh Sách Phòng</h4>
+                        <h4 class="font-weight-bold text-danger">Danh Sách Phòng | Cập Nhật <span id="time-info"><?= date('d-m-Y h:i\'', $apartment['time_update']) ?></span></h4>
                         <div class="">
                             <?php if($this->session->has_userdata('current_district_code')):?>
                                 <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
                             <?php endif; ?>
+                            <button id="update-time" data-apm="<?= $apartment['id'] ?>" class="btn btn-primary m-1"><i class=" mdi mdi-clock"></i> </button>
                             <?php if($check_create_promotion): ?>
                                 <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
                                     <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i> </button></a>
@@ -334,7 +335,21 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
     commands.push(function() {
         $(document).ready(function() {
 
+            $('#update-time').click(function () {
+                $.ajax({
+                    method: 'post',
+                    url:'<?= base_url()."admin/update-apartment-editable" ?>',
+                    data: {pk: $(this).data('apm') ,mode: 'only_time_update'},
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        $('#time-info').text(res.content);
+                        $('#time-info').addClass('bg-success text-light pl-2 pr-2');
+                        setTimeout(function(){ $('#time-info').removeClass('bg-success text-light pl-2 pr-2') }, 1500);
 
+                    }
+                });
+            });
 
 
             $('#checker-update').click(function () {

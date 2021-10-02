@@ -702,6 +702,15 @@ class Apartment extends CustomBaseStep {
             }
             echo json_encode(['status' => $counter]); die;
         }
+        $time = time();
+        if($mode == 'only_time_update') {
+            $result = $this->ghApartment->updateById($apartment_id, [
+                'time_update' => $time
+            ]);
+            if($result) {
+                echo json_encode(['status' => $result, 'content' => date('d-m-Y h:i\'', $time)]); die;
+            }
+        }
 		if(!empty($apartment_id) and !empty($field_name)) {
 			$data = [
 				$field_name => $field_value,

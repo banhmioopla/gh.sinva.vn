@@ -62,6 +62,36 @@ include VIEWPATH.'functions.php';
             .apm-update-time {
                 font-size: 0.85em;
             }
+            .topbar-main .notification-list .noti-icon-badge {
+                display: inline-block;
+                position: absolute;
+                top: 14px;
+                right: 8px;
+            }
+            .topbar-main .badge-danger {
+                background-color: #f1556c;
+            }
+            .topbar-main .badge {
+                font-family: "Rubik", sans-serif;
+                box-shadow: 0 0 24px 0 rgb(0 0 0 / 6%), 0 1px 0 0 rgb(0 0 0 / 2%);
+                padding: .35em .5em;
+                font-weight: 500;
+            }
+            .topbar-main .badge-danger {
+                color: #fff;
+                background-color: #dc3545;
+            }
+            .topbar-main .badge {
+                display: inline-block;
+                padding: .25em .4em;
+                font-size: 75%;
+                font-weight: 700;
+                line-height: 1;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: .25rem;
+            }
         </style>
     </head>
     <body>
@@ -95,10 +125,13 @@ include VIEWPATH.'functions.php';
                             </li>
 
                             <li class="dropdown notification-list hide-phone">
-                                <!-- <a class="nav-link dropdown-toggle waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <!--<a class="nav-link dropdown-toggle waves-effect nav-user"
+                                   data-toggle="dropdown"
+                                   href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
                                     <i class="mdi mdi-earth"></i> English
                                     <i class="mdi mdi-chevron-down"></i>
-                                </a> -->
+                                </a>-->
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <!-- item-->
                                      <a href="javascript:void(0);" class="dropdown-item">
@@ -108,44 +141,36 @@ include VIEWPATH.'functions.php';
                                      <a href="javascript:void(0);" class="dropdown-item">
                                         Italian
                                     </a>
-                                    <!-- item-->
-                                    <!-- <a href="javascript:void(0);" class="dropdown-item">
-                                        French
-                                    </a> -->
-                                    <!-- item-->
-                                    <!-- <a href="javascript:void(0);" class="dropdown-item">
-                                        Russian
-                                    </a> -->
                                 </div>
                             </li>
                             <li class="dropdown notification-list">
-                                <!-- <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="fi-bell noti-icon"></i>
-                                    <span class="badge badge-danger badge-pill noti-icon-badge">4</span>
-                                </a> -->
+                                    <span class="badge badge-danger badge-pill noti-icon-badge">14</span>
+                                </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-lg">
                                     <!-- item-->
-                                    <!-- <div class="dropdown-item noti-title">
+                                    <div class="dropdown-item noti-title">
                                         <h6 class="m-0">
                                             <span class="float-right">
                                                 <a href="" class="text-dark">
                                                     <small>x</small>
                                                 </a>
                                             </span>
-                                            Thông báo
+                                            Thông báo [đang code]
                                         </h6>
-                                    </div> -->
+                                    </div>
                                     <div class="slimscroll" style="max-height: 230px;">
                                         <!-- item-->
-                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-success">
                                                 <i class="mdi mdi-comment-account-outline"></i>
                                             </div>
                                             <p class="notify-details">
-                                                Caleb Flakelar commented on Admin
+                                                Báo cáo chưa update đủ thông tin
                                                 <small class="text-muted">1 min ago</small>
                                             </p>
-                                        </a> -->
+                                        </a>
                                         <!-- item-->
                                         <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="notify-icon bg-info">
