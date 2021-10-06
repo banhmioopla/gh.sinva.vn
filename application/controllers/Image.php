@@ -224,7 +224,13 @@ class Image extends CustomBaseStep
         if(!empty($path) && is_dir($path) ){
             $dir  = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS); //upper dirs are not included,otherwise DISASTER HAPPENS :)
             $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
-            foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} } if (!empty($empty_dirs)) {foreach ($empty_dirs as $eachDir) {rmdir($eachDir);}} rmdir($path);
+            foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} }
+            if (!empty($empty_dirs)) {
+                foreach ($empty_dirs as $eachDir) {
+                    $tt = rmdir($eachDir);
+                }
+            }
+            rmdir($path);
         }
     }
 
@@ -274,6 +280,84 @@ class Image extends CustomBaseStep
         echo json_encode(['status' => 'success']); die;
     }
 
+    public function downloadAllMediaApartment() {
+        ini_set('memory_limit', '22024M');
+        $this->load->library('zip');
+        $rootPath = 'media/apartment/';
+        $download_path = 'ImFineThanks';
+
+        $arr_img = [];
+        $list_district = $this->ghDistrict->get(['active' => 'YES']);
+        if(is_dir($download_path)){
+            $this->my_folder_delete($download_path);
+        }
+
+        mkdir($download_path);
+
+        foreach ($list_district as $district) {
+            $list_apm = $this->ghApartment->get(['active' => 'YES', 'district_code' => $district['code']]);
+
+            $district_path = $download_path . '/Q. '.$this->convert_vi_to_en($district['name']) . '/';
+            if( is_dir($district_path) === false )
+            {
+                mkdir($district_path);
+
+                foreach ($list_apm as $apm){
+                    $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm['id']]);
+                    $apartment_path = $district_path . trim(str_replace("/", "_", $this->convert_vi_to_en($apm['address_street']))). '/';
+
+                    if( is_dir($apartment_path) === false )
+                    {
+                        mkdir($apartment_path);
+
+                        foreach ($list_room as $room) {
+                            $img_model = $this->ghImage->get(['active' => 'YES' , 'room_id' => $room['id']]);
+                            $room_path = $apartment_path . trim($this->convert_vi_to_en($room['code'])) . '/';
+                            if( is_dir($room_path) === false )
+                            {
+                                mkdir($room_path);
+
+                                foreach ($img_model as $img) {
+
+                                    if(file_exists($rootPath.$img['name']) === true) {
+                                        copy($rootPath.$img['name'], $room_path.$img['name']);
+                                        $this->zip->read_file($room_path.$img['name'],true);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        if(is_dir($download_path)){
+            $this->my_folder_delete($download_path);
+        }
+        $zipName =  'GH ALBUM FULL TOPPING '.date('d-m-Y') . '.zip';
+        ob_end_clean();
+        $this->zip->download($zipName); die();
+    }
+
+
+    function convert_vi_to_en($str) {
+        $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", "a", $str);
+        $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", "e", $str);
+        $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", "i", $str);
+        $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", "o", $str);
+        $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", "u", $str);
+        $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", "y", $str);
+        $str = preg_replace("/(đ)/", "d", $str);
+        $str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", "A", $str);
+        $str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", "E", $str);
+        $str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", "I", $str);
+        $str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", "O", $str);
+        $str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", "U", $str);
+        $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", "Y", $str);
+        $str = preg_replace("/(Đ)/", "D", $str);
+        //$str = str_replace(" ", "-", str_replace("&*#39;","",$str));
+        return $str;
+    }
 
     public function delete()
     {

@@ -1125,6 +1125,13 @@ $route['admin/apartment-get-tag'] = function($params = []) {
 	return $controller.$action;
 };
 //
+$route['report/issue-apm-info'] = function($params = []) {
+    $controller = 'ApartmentReport';
+    $action = '/updateIssueApartmentInfo';
+    return $controller.$action;
+};
+
+//
 
 $route['admin/get-room-type'] = function($params = []) {
 	$controller = 'Room';
@@ -1231,6 +1238,12 @@ $route['admin/apartment/search'] = function($params = []) {
 $route['admin/download-image-apartment'] = function($params = []) {
     $controller = 'Image';
     $action = '/downloadMedia';
+    return $controller.$action;
+};
+
+$route['admin/download-all-image-apartment'] = function($params = []) {
+    $controller = 'Image';
+    $action = '/downloadAllMediaApartment';
     return $controller.$action;
 };
 

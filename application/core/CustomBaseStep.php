@@ -15,7 +15,7 @@ class CustomBaseStep extends CI_Controller {
 			return redirect('/');
 		}
 		
-		$this->load->model(['ghActivityTrack', 'ghUser', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig', 'ghTeam']);
+		$this->load->model(['ghActivityTrack', 'ghUser', 'ghNotification', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig', 'ghTeam']);
 		$this->auth = $this->session->userdata('auth');
 		$this->role = $this->ghRole->get(['code' =>$this->auth['role_code']])[0];
 		$this->load->library('LibRole', null, 'libRole');
@@ -37,6 +37,7 @@ class CustomBaseStep extends CI_Controller {
         $temp_district_arr = [];
         $this->editable = false;
         $this->yourTeam = false;
+        $this->list_report_issue = $this->ghNotification->get(['controller' => 'ApartmentReport']);
 
         $yourTeam = $this->ghTeam->getFirstByLeaderUserId($this->auth['account_id']);
         if($yourTeam){
@@ -90,7 +91,7 @@ class CustomBaseStep extends CI_Controller {
 		$open_modules = [
 		    /*Controller => [actions]*/
 		    'InternalContent' => ['show', 'pageIncomeRule', 'create', 'updateEditable'],
-            'Image' => ['ajax_get_room_image'],
+            'Image' => ['ajax_get_room_image', 'downloadAllMediaApartment'],
             'Apartment' => ['getWard', 'showV2', 'showEdit', 'editDescription', 'showTrending'],
             'Customer' => ['exportExcel', 'showYour'],
             'CustomerFeedback' => ['detail', 'show', 'showYour'],
@@ -103,7 +104,8 @@ class CustomBaseStep extends CI_Controller {
             'Team' => ['detail'],
             'ApartmentView' => ['create'],
             'Dashboard' => ['showSale'],
-            'ApartmentRequest' => ['exportApartmentExcel']
+            'ApartmentRequest' => ['exportApartmentExcel'],
+            'ApartmentReport' => ['updateIssueApartmentInfo'],
         ];
 
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {

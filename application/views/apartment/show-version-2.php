@@ -153,13 +153,14 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 </div>
                 <div class="card">
                     <div class="form-group row mt-2">
-                        <div class="col-md-8 col-10">
+                        <div class="col-md-7 col-12 text-md-left text-center">
                             <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
                         </div>
-                        <div class="col text-right">
-                            <a href="/admin/apartment/create"><button class="btn btn-success">Tạo Dự Án Mới</button></a>
+                        <div class="col-md-5 col-12 mt-md-0 mt-2 text-md-right text-center">
+                            <a href="/admin/apartment/create"><button class="btn btn-success mt-md-0 mt-1">Tạo Dự Án Mới</button></a>
+                            <a href="/admin/download-all-image-apartment"><button class="btn btn-success mt-md-0 mt-1"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
                             <?php if($show_sortable): ?>
-                            <a href="/admin/apartment/sortable?district-code=<?= $district_code ?>"><button class="btn btn-success"> <i class=" mdi mdi-format-list-numbers"></i> Sắp xếp</button></a>
+                            <a href="/admin/apartment/sortable?district-code=<?= $district_code ?>"><button class="btn btn-success mt-md-0 mt-1"> <i class=" mdi mdi-format-list-numbers"></i> Sắp xếp</button></a>
                             <?php endif;?>
                         </div>
                     </div>
@@ -303,8 +304,10 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
 
                                 <?php if($check_create_promotion): ?>
                                     <a class="m-1" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
-                                        <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
+                                        <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
+                                <span class="m-1"><button class="btn report-issue-apm-info btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
+
                                 <a class="m-1" href="/sale/apartment-export?id=<?= $apartment['id'] ?>" >
                                     <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-file-excel"></i> <span class="d-none d-md-inline"></span></button>
                                 </a>
@@ -450,8 +453,35 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
 <script>
 
     commands.push(function() {
+
+        $('.report-issue-apm-info').click(function () {
+            swal({
+                title: 'Báo cáo thiếu thông tin',
+                text: 'dự án abcd thiếu thông tin',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonClass: 'btn btn-confirm mt-2',
+                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                confirmButtonText: 'Báo cáo',
+                cancelButtonText: 'Hủy',
+            }).then(function () {
+                $.ajax({
+                    type: 'POST',
+                    url:'<?= base_url()."report/issue-apm-info" ?>',
+                    data: {apm: "<?= $apartment['id'] ?>", type: 'IssueApmInfo'},
+                    dataType: 'json',
+                    success:function(response) {
+                    }
+                });
+                swal({
+                    title: 'Đã báo cáo Thành Công!',
+                    type: 'success',
+                    confirmButtonClass: 'btn btn-confirm mt-2'
+                });
+            })
+        });
+
         $('.apm-plus-view').click(function () {
-            console.log($(this).attr("aria-expanded"));
             if($(this).attr("aria-expanded") === undefined || $(this).attr("aria-expanded") === "false" || $(this).data("source") === 'image') {
                 $.ajax({
                     url: '/admin/apartment-view/create',
