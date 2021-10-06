@@ -281,7 +281,7 @@ class Image extends CustomBaseStep
     }
 
     public function downloadAllMediaApartment() {
-        ini_set('memory_limit', '22222024M');
+        ini_set('memory_limit', '-1');
         $this->load->library('zip');
         $rootPath = 'media/apartment/';
         $download_path = 'ImFineThanks';
@@ -334,6 +334,7 @@ class Image extends CustomBaseStep
         if(is_dir($download_path)){
             $this->my_folder_delete($download_path);
         }
+
         $zipName =  'GH ALBUM FULL TOPPING '.date('d-m-Y') . '.zip';
         ob_end_clean();
         $this->zip->download($zipName); die();
