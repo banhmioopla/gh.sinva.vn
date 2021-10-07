@@ -281,8 +281,8 @@ class Image extends CustomBaseStep
     }
 
     public function downloadAllMediaApartment() {
-        set_time_limit(0);
-//        ini_set('memory_limit', '9999999999M');
+        set_time_limit(9000);
+        ini_set('memory_limit', -1);
         $this->load->library('zip');
 
         $rootPath = 'media/apartment/';
@@ -332,6 +332,8 @@ class Image extends CustomBaseStep
 
                 }
             }
+
+            break;
         }
         if(is_dir($download_path)){
             $this->my_folder_delete($download_path);
