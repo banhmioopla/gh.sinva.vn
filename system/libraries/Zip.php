@@ -269,7 +269,7 @@ class CI_Zip {
 		$gzdata = self::substr(gzcompress($data, $this->compression_level), 2, -4);
 		$compressed_size = self::strlen($gzdata);
 
-		$this->zipdata .=
+		$footer_temp =
 			"\x50\x4b\x03\x04\x14\x00\x00\x00\x08\x00"
 			.pack('v', $file_mtime)
 			.pack('v', $file_mdate)
@@ -280,7 +280,7 @@ class CI_Zip {
 			.pack('v', 0) // extra field length
 			.$filepath
 			.$gzdata; // "file data" segment
-
+        $this->zipdata .= $footer_temp;
 		$this->directory .=
 			"\x50\x4b\x01\x02\x00\x00\x14\x00\x00\x00\x08\x00"
 			.pack('v', $file_mtime)
@@ -405,13 +405,14 @@ class CI_Zip {
 		{
 			return FALSE;
 		}
+		$zipdata = $this->zipdata;
         $footer = $this->directory."\x50\x4b\x05\x06\x00\x00\x00\x00"
             .pack('v', $this->entries) // total # of entries "on this disk"
             .pack('v', $this->entries) // total # of entries overall
             .pack('V', self::strlen($this->directory)) // size of central dir
-            .pack('V', self::strlen($this->zipdata)) // offset to start of central dir
+            .pack('V', self::strlen($zipdata)) // offset to start of central dir
             ."\x00\x00";
-        return $this->zipdata.$footer; // .zip file comment length
+        return $zipdata.$footer; // .zip file comment length
 	}
 
 	// --------------------------------------------------------------------
