@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 class Image extends CustomBaseStep
 {
     public function __construct()
@@ -281,7 +280,6 @@ class Image extends CustomBaseStep
     }
 
     public function downloadAllMediaApartment() {
-        $this->load->library('zip');
         ini_set('memory_limit', '20000M');
         set_time_limit(100000);
         $rootPath = 'media/apartment/';
@@ -322,25 +320,20 @@ class Image extends CustomBaseStep
 
                                     if(file_exists($rootPath.$img['name']) === true) {
                                         copy($rootPath.$img['name'], $room_path.$img['name']);
-                                        $this->zip->read_file($room_path.$img['name'],true);
+//                                        $this->zip->read_file($room_path.$img['name'],true);
                                     }
                                 }
                             }
                         }
                     }
-
                 }
             }
-
-            break;
-        }
-        if(is_dir($download_path)){
-            $this->my_folder_delete($download_path);
         }
 
+        $the_folder = 'ImFineThanks';
         $zipName =  '[GH] ALBUM FULL TOPPING '.date('d-m-Y') . '.zip';
-        ob_end_clean();
-        $this->zip->download($zipName); die();
+        $this->load->library('LibZipper', null, 'libZipper');
+        $this->libZipper->create_func($the_folder,    $zipName) ;
     }
 
 
