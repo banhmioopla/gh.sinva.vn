@@ -122,7 +122,6 @@ class CI_Zip {
 		isset(self::$func_overload) OR self::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
 
 		$this->now = time();
-        ini_set('memory_limit', '-1');
 		log_message('info', 'Zip Compression Class Initialized');
 	}
 
@@ -407,13 +406,24 @@ class CI_Zip {
 			return FALSE;
 		}
 
-		return $this->zipdata
+		/*return $this->zipdata
 			.$this->directory."\x50\x4b\x05\x06\x00\x00\x00\x00"
 			.pack('v', $this->entries) // total # of entries "on this disk"
 			.pack('v', $this->entries) // total # of entries overall
 			.pack('V', self::strlen($this->directory)) // size of central dir
 			.pack('V', self::strlen($this->zipdata)) // offset to start of central dir
 			."\x00\x00"; // .zip file comment length
+        */
+
+		// CUSTOM SINVA
+        $this->zipdata
+        .= $this->directory."\x50\x4b\x05\x06\x00\x00\x00\x00"
+        .pack('v', $this->entries) // total # of entries "on this disk"
+        .pack('v', $this->entries) // total # of entries overall
+        .pack('V', self::strlen($this->directory)) // size of central dir
+        .pack('V', self::strlen($this->zipdata)) // offset to start of central dir
+        ."\x00\x00"; // .zip file comment length
+        return $this->zipdata;
 	}
 
 	// --------------------------------------------------------------------
