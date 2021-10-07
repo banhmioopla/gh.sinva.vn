@@ -158,7 +158,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                         </div>
                         <div class="col-md-5 col-12 mt-md-0 mt-2 text-md-right text-center">
                             <a href="/admin/apartment/create"><button class="btn btn-success mt-md-0 mt-1">Tạo Dự Án Mới</button></a>
-                            <a href="/admin/download-all-image-apartment"><button class="btn btn-success mt-md-0 mt-1"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
+                            <a href="/admin/download-all-image-apartment?district=<?= $district_code ?>"><button class="btn btn-success mt-md-0 mt-1"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
                             <?php if($show_sortable): ?>
                             <a href="/admin/apartment/sortable?district-code=<?= $district_code ?>"><button class="btn btn-success mt-md-0 mt-1"> <i class=" mdi mdi-format-list-numbers"></i> Sắp xếp</button></a>
                             <?php endif;?>

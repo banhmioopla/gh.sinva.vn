@@ -16,6 +16,10 @@ class GhDistrict extends CI_Model {
         return $this->db->get_where($this->table, ['id' => $district_id])->result_array();
     }
 
+    public function getFirstByCode($room_id) {
+        return $this->db->get_where($this->table, ['code' => $room_id])->row_array();
+    }
+
     public function getAll() {
         return $this->db->get_where($this->table)->result_array();
     }

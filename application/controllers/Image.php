@@ -291,37 +291,38 @@ class Image extends CustomBaseStep
             $this->my_folder_delete($download_path);
         }
 
+        $district = $this->input->get('district');
+        $district_model = $this->ghDistrict->getFirstByCode($district);
+
         mkdir($download_path);
 
-        foreach ($list_district as $district) {
-            $list_apm = $this->ghApartment->get(['active' => 'YES', 'district_code' => $district['code']]);
+        $list_apm = $this->ghApartment->get(['active' => 'YES', 'district_code' => $district]);
 
-            $district_path = $download_path . '/Q. '.$this->convert_vi_to_en($district['name']) . '/';
-            if( is_dir($district_path) === false )
-            {
-                mkdir($district_path);
+        $district_path = $download_path . '/Q. '.$this->convert_vi_to_en($district_model['name']) . '/';
+        if( is_dir($district_path) === false )
+        {
+            mkdir($district_path);
 
-                foreach ($list_apm as $apm){
-                    $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm['id']]);
-                    $apartment_path = $district_path . trim(str_replace("/", "_", $this->convert_vi_to_en($apm['address_street']))). '/';
+            foreach ($list_apm as $apm){
+                $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm['id']]);
+                $apartment_path = $district_path . trim(str_replace("/", "_", $this->convert_vi_to_en($apm['address_street']))). '/';
 
-                    if( is_dir($apartment_path) === false )
-                    {
-                        mkdir($apartment_path);
+                if( is_dir($apartment_path) === false )
+                {
+                    mkdir($apartment_path);
 
-                        foreach ($list_room as $room) {
-                            $img_model = $this->ghImage->get(['active' => 'YES' , 'room_id' => $room['id']]);
-                            $room_path = $apartment_path . trim($this->convert_vi_to_en($room['code'])) . '/';
-                            if( is_dir($room_path) === false )
-                            {
-                                mkdir($room_path);
+                    foreach ($list_room as $room) {
+                        $img_model = $this->ghImage->get(['active' => 'YES' , 'room_id' => $room['id']]);
+                        $room_path = $apartment_path . trim($this->convert_vi_to_en($room['code'])) . '/';
+                        if( is_dir($room_path) === false )
+                        {
+                            mkdir($room_path);
 
-                                foreach ($img_model as $img) {
+                            foreach ($img_model as $img) {
 
-                                    if(file_exists($rootPath.$img['name']) === true) {
-                                        copy($rootPath.$img['name'], $room_path.$img['name']);
+                                if(file_exists($rootPath.$img['name']) === true) {
+                                    copy($rootPath.$img['name'], $room_path.$img['name']);
 //                                        $this->zip->read_file($room_path.$img['name'],true);
-                                    }
                                 }
                             }
                         }
@@ -334,6 +335,9 @@ class Image extends CustomBaseStep
         $zipName =  '[GH] ALBUM FULL TOPPING '.date('d-m-Y') . '.zip';
         $this->load->library('LibZipper', null, 'libZipper');
         $this->libZipper->create_func($the_folder,    $zipName) ;
+        if(is_dir($download_path)){
+            $this->my_folder_delete($download_path);
+        }
     }
 
 
