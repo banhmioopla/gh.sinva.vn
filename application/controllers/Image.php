@@ -281,10 +281,11 @@ class Image extends CustomBaseStep
     }
 
     public function downloadAllMediaApartment() {
-        set_time_limit(9000);
-        ini_set('memory_limit', -1);
-        $this->load->library('zip');
 
+
+        $this->load->library('zip');
+        ini_set('memory_limit', '20000M');
+        set_time_limit(9000);
         $rootPath = 'media/apartment/';
         $download_path = 'ImFineThanks';
 
