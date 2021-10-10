@@ -7,12 +7,14 @@ class LibZipper extends ZipArchive
     {
         if($input_folder !== false && $output_zip_file !== false)
         {
+            ob_clean();
             $res = $this->open($output_zip_file, ZipArchive::CREATE);
             if($res === TRUE) 	{
                 $this->addDir($input_folder, basename($input_folder));
                 $this->close();
                 $chunksize = 5 * (1024 * 1024);
                 $size = intval(sprintf("%u", filesize($output_zip_file)));
+
                 header('Content-Type: application/octet-stream');
                 header('Content-Transfer-Encoding: binary');
                 header('Content-Length: '.$size);
