@@ -17,7 +17,7 @@ class LibZipper extends ZipArchive
 
                 header('Content-Type: application/octet-stream');
                 header('Content-Transfer-Encoding: binary');
-                header('Content-Length: '.$size);
+//                header('Content-Length: '.$size);
                 header('Content-Disposition: attachment;filename="'.basename($output_zip_file).'"');
                 if($size > $chunksize)
                 {
