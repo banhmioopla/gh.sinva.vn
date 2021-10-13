@@ -293,17 +293,16 @@ class Image extends CustomBaseStep
         mkdir($download_path);
         $apm_id = $this->input->get('apm');
         $apartment = $this->ghApartment->getFirstById($apm_id);
-
+        $address = trim(str_replace("/","_",$apartment['address_street']));
         $district_model = $this->ghDistrict->getFirstByCode($apartment['district_code']);
 //        $download_path .= ' '.$apartment['address_street'];
 
 
         $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm_id]);
-        $apartment_path = $download_path. '/' . $this->convert_vi_to_en(trim(str_replace("/","_",$apartment['address_street']))). '/';
+        $apartment_path = $download_path. '/' . $this->convert_vi_to_en($address). '/';
         if( is_dir($apartment_path) === false )
         {
             mkdir($apartment_path);
-
             foreach ($list_room as $room) {
                 $img_model = $this->ghImage->get(['active' => 'YES' , 'room_id' => $room['id']]);
                 $room_path = $apartment_path . trim($this->convert_vi_to_en($room['code'])) . '/';
@@ -322,7 +321,7 @@ class Image extends CustomBaseStep
             }
         }
 
-        $zipName =  '[GH] '.$apartment['address_street']." - date ".date('d-m-Y') . '.zip';
+        $zipName =  '[GH] '.$address." - date ".date('d-m-Y') . '.zip';
         $this->load->library('LibZipper', null, 'libZipper');
         $this->libZipper->create_func($apartment_path, $zipName) ;
         if(is_dir($download_path)){
