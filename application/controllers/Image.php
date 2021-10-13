@@ -299,7 +299,7 @@ class Image extends CustomBaseStep
 
 
         $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm_id]);
-        $apartment_path = $download_path. '/' . $this->convert_vi_to_en($apartment['address_street']). '/';
+        $apartment_path = $download_path. '/' . $this->convert_vi_to_en(trim(str_replace("/","_",$apartment['address_street']))). '/';
         if( is_dir($apartment_path) === false )
         {
             mkdir($apartment_path);
