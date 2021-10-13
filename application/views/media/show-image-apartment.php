@@ -258,6 +258,43 @@ include VIEWPATH . 'functions.php';
 
 
                         </div>
+                        <div class="col-md-6 col-12">
+                            <div class="card-box">
+                                <h3 class="text-danger font-weight-bold">Upload Ảnh <i class="mdi mdi-arrow-down-drop-circle"></i></h3>
+                                <div class="row">
+                                    <form action="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>" class="col-md-12" method="post" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="mb-2 mt-4 font-weight-bold text-danger">Vui lòng chọn mã phòng</p>
+                                                <select name="room_id[]" required id="" class="form-control select2-multiple" multiple="multiple">
+                                                    <option value="">Vui lòng chọn mã phòng...</option>
+                                                    <?php foreach ($cb_room as $index => $room): ?>
+                                                        <option value="<?= $room['value'] ?>"> <?= $room['text'] ?></option>
+                                                    <?php endforeach;?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-1">
+                                            <div class="form-group col-12">
+                                                <p class="mb-2 mt-4 font-weight-bold text-danger">Vui Lòng Chọn Ảnh Từ Máy</p>
+                                                <input type="file" name="files[]" required multiple class="filestyle" data-buttontext="Select file"
+                                                       data-btnClass="btn-light">
+                                                <p class="text-success p-2 bg-dark mt-2 text-center" id="upload-msg"> 0 ảnh được chọn</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-1">
+                                            <div class="col-12 text-center">
+                                                <button type="submit" class="btn btn-success">Upload <i class="mdi mdi-cloud-upload"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                     <hr>
                     <div class="row mt-2 ">
@@ -397,6 +434,14 @@ include VIEWPATH . 'functions.php';
 <script>
     commands.push(function () {
         $(document).ready(function () {
+
+            $('.select2-multiple').select2();
+            $('input[type=file]').change(function () {
+                var files = $(this)[0].files;
+                $('#upload-msg').text(files.length + ' ảnh được chọn.');
+                console.log(files.length);
+            });
+
             $("#slc-all-img").change(function () {
                if($("#slc-all-img").is(':checked')){
                     $('input[name=post_imgs]').attr('checked', true);

@@ -47,7 +47,19 @@ class Media extends CustomBaseStep {
         $data['list_shaft'] = $list_shaft;
 
 
+
+
         $apartment = $this->ghApartment->getFirstById($apartment_id);
+
+        $cb_room = [];
+        if($apartment) {
+            $list_room = $this->ghRoom->get(['apartment_id' => $apartment_id, 'active' => 'YES']);
+            foreach ($list_room as $room) {
+                $cb_room[] = ['value' => $room['id'], 'text' => $room['code'] . ' - '. number_format($room['price'])];
+            }
+        }
+
+        $data['cb_room'] = $cb_room;
 
         $chain_room = [];
         $counter = 0;
@@ -141,7 +153,7 @@ class Media extends CustomBaseStep {
                     'message' => 'Vui Lòng chọn Ảnh',
                     'status' => 'danger'
                 ]);
-                return redirect('/admin/apartment/upload-img?apartment_id='.$apartment['id']);
+                return redirect('/admin/apartment/show-image?apartment-id='.$apartment['id']);
             }
             foreach ($list_room_id as $room_id) {
                 for ($i = 0; $i < $filesCount; $i++) {
@@ -180,6 +192,7 @@ class Media extends CustomBaseStep {
                     'message' => 'Upload <strong>'.$filesCount.'</strong> file(s) thành công ',
                     'status' => 'success'
                 ]);
+                return redirect('/admin/apartment/show-image?apartment-id='.$apartment_id);
             }
 
         }

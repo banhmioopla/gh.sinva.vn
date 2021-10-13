@@ -28,6 +28,13 @@ class LibTime {
         return date('d/m/Y', $unix_time);
     }
 
+    public function calDay2Time($d1, $d2) { // string 1 string 2
+        $datetime1 = new DateTime(date("Y-m-d",$d1));
+        $datetime2 = new DateTime(date("Y-m-d",$d2));
+        $interval = $datetime1->diff($datetime2);
+        return $interval->days;
+    }
+
     function weekOfMonth($qDate) {
         $dt = strtotime($qDate);
         $day  = date('j',$dt);

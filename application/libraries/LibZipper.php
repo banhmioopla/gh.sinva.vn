@@ -35,8 +35,23 @@ class LibZipper extends ZipArchive
                 }
                 else readfile($output_zip_file);
                 unlink($output_zip_file);
+                $this->my_folder_delete('ImFineThanks');
             } else
                 { echo 'Could not create a zip archive. Contact Admin.'; }
+        }
+    }
+
+    function my_folder_delete($path) {
+        if(!empty($path) && is_dir($path) ){
+            $dir  = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS); //upper dirs are not included,otherwise DISASTER HAPPENS :)
+            $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
+            foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} }
+            if (!empty($empty_dirs)) {
+                foreach ($empty_dirs as $eachDir) {
+                    $tt = rmdir($eachDir);
+                }
+            }
+            rmdir($path);
         }
     }
 

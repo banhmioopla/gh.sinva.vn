@@ -14,6 +14,7 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibPartner', null, 'libPartner');
 		$this->load->library('LibRoom', null, 'libRoom');
+		$this->load->library('LibTime', null, 'libTime');
 		$this->load->library('LibBaseApartmentType', null, 'libBaseApartmentType');
 		$this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
 		$this->load->library('LibTag', null, 'libTag');
@@ -107,7 +108,14 @@ class Apartment extends CustomBaseStep {
 		$data['apartment_cur_week'] = $this->ghApartment->get(['time_update >' => strtotime('last Monday') ,'active' => 'YES']);
 
 		$data['list_apartment'] = [];
+		$today = time();
+        $list_apm_5days = [];
+        $data['today'] = $today;
 		foreach($list_apartment as $item) {
+            $isFiveDays = $this->libTime->calDay2Time($today, $item['time_update']);
+            if($isFiveDays > 4) {
+                $list_apm_5days[] = $item;
+            }
 			if($this->input->get('apmTag') && !$this->input->get('apmTag') == $item['tag_id']) {
                 continue;
             }
@@ -141,7 +149,8 @@ class Apartment extends CustomBaseStep {
 
             $data['list_apartment'][] = $item;
 		}
-
+        $data['list_apm_5days'] = $list_apm_5days;
+        $data['libTime'] = $this->libTime;
 //		$template = 'apartment/show-full-permission';
         $template =  'apartment/show-version-2';
 		/*if(!$this->editable) {

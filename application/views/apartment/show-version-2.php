@@ -92,6 +92,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 <h2 class="font-weight-bold text-danger">Danh sách dự án Q. <?= $libDistrict->getNameByCode($district_code) ?></h2>
             </div>
             <div class="col-md-3 d-md-block d-none">
+                <?php $this->load->view('apartment/five-days-ago') ?>
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
                 <?php if(count($contract_noti) && isYourPermission('Apartment', 'showNotificaton', $this->permission_set)):?>
                     <div class="mt-1 text-center font-weight-bold">Thông báo các lượt tạo hợp đồng</div>
@@ -158,7 +159,6 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                         </div>
                         <div class="col-md-5 col-12 mt-md-0 mt-2 text-md-right text-center">
                             <a href="/admin/apartment/create"><button class="btn btn-success mt-md-0 mt-1">Tạo Dự Án Mới</button></a>
-                            <a href="/admin/download-all-image-apartment?district=<?= $district_code ?>"><button class="btn btn-success mt-md-0 mt-1"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
                             <?php if($show_sortable): ?>
                             <a href="/admin/apartment/sortable?district-code=<?= $district_code ?>"><button class="btn btn-success mt-md-0 mt-1"> <i class=" mdi mdi-format-list-numbers"></i> Sắp xếp</button></a>
                             <?php endif;?>
@@ -306,7 +306,8 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                     <a class="m-1" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
-                                <span class="m-1"><button class="btn report-issue-apm-info btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
+                                <span class="m-1"><button class="btn report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
+                                <a href="/admin/download-all-image-apartment?apm=<?= $apartment['id'] ?>"><button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
 
                                 <a class="m-1" href="/sale/apartment-export?id=<?= $apartment['id'] ?>" >
                                     <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-file-excel"></i> <span class="d-none d-md-inline"></span></button>
