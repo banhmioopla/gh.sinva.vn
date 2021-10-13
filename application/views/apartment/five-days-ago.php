@@ -75,10 +75,9 @@
 
             });
 
-            console.log(arr_pk);
-            /*$.ajax({
+            $.ajax({
                 method: 'post',
-                url:'<= base_url()."admin/update-apartment-editable" ?>',
+                url:'<?= base_url()."admin/update-apartment-editable" ?>',
                 data: {arr_pk: arr_pk ,mode: 'list_only_time_update'},
                 dataType: "json",
                 success: function (res) {
@@ -87,7 +86,7 @@
                     setTimeout(function(){ $('#time-info').removeClass('bg-success text-light pl-2 pr-2') }, 1500);
 
                 }
-            });*/
+            });
         });
 
     });
