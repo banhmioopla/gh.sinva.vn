@@ -3,6 +3,9 @@
 	$js_plugins_path = base_url().'js-plugins/';
 	$assets_path  = base_url().'assets/';
 ?>
+
+
+
  <footer class="footer mt-5" style="position: unset;">
     <div class="container">
         <div class="row">
@@ -21,7 +24,9 @@
     <script src="<?= $assets_path ?>js/bootstrap.min.js"></script>
     <script src="<?= $assets_path ?>js/waves.js"></script>
     <script src="<?= $assets_path ?>js/jquery.slimscroll.js"></script>
-
+    <!-- Modal-Effect -->
+    <script src="<?= $js_plugins_path ?>custombox/js/custombox.min.js"></script>
+    <script src="<?= $js_plugins_path ?>custombox/js/legacy.min.js"></script>
     <!-- Required datatable js -->
     <script src="<?= $js_plugins_path ?>datatables/jquery.dataTables.min.js"></script>
     <script src="<?= $js_plugins_path ?>datatables/dataTables.bootstrap4.min.js"></script>

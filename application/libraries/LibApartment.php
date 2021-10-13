@@ -9,6 +9,13 @@ class LibApartment {
         $this->CI->load->model('ghApartment');
         $this->CI->load->model('ghRoom');
     }
+
+    public function sortByKey($your_data, $key) {
+        return usort($your_data, function($a, $b)
+        {
+            return $a['num_days'] >  $b['num_days'];
+        });
+    }
     public function completeInfoRate($apartment_id) {
         $rate = 0;
         $apartment =  $this->CI->ghApartment->getFirstById($apartment_id);

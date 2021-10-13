@@ -112,10 +112,6 @@ class Apartment extends CustomBaseStep {
         $list_apm_5days = [];
         $data['today'] = $today;
 		foreach($list_apartment as $item) {
-            $isFiveDays = $this->libTime->calDay2Time($today, $item['time_update']);
-            if($isFiveDays > 4) {
-                $list_apm_5days[] = $item;
-            }
 			if($this->input->get('apmTag') && !$this->input->get('apmTag') == $item['tag_id']) {
                 continue;
             }
@@ -149,7 +145,6 @@ class Apartment extends CustomBaseStep {
 
             $data['list_apartment'][] = $item;
 		}
-        $data['list_apm_5days'] = $list_apm_5days;
         $data['libTime'] = $this->libTime;
 //		$template = 'apartment/show-full-permission';
         $template =  'apartment/show-version-2';
@@ -185,16 +180,60 @@ class Apartment extends CustomBaseStep {
 		$data['ghApartmentPromotion'] = $this->ghApartmentPromotion;
 		$data['libApartment'] = $this->libApartment;
 		$data['ghApartmentShaft'] = $this->ghApartmentShaft;
-        $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
+        $list_apm_temp = $this->ghApartment->get(['active' => 'YES'], 'district_code DESC');
         $list_apm_ready = [];
+        $list_apm_5days_CURD = [];
         foreach ($list_apm_temp as $apm ) {
+            $isFiveDays = $this->libTime->calDay2Time($today, $apm['time_update']);
+            if($isFiveDays > 4) {
+
+                $list_apm_5days[] = [
+                    'address' => $apm['address_street'],
+                    'num_days' => $isFiveDays,
+                    'district' => $apm['district_code'],
+                ];
+            }
+
             if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
                 continue;
             }
+            if($this->isYourPermission('Apartment', 'showProfile')){
+                if($isFiveDays > 4) {
+
+                    $list_apm_5days_CURD[] = [
+                        'address' => $apm['address_street'],
+                        'num_days' => $isFiveDays,
+                        'district' => $apm['district_code'],
+                    ];
+                }
+            }
+
 
             $list_apm_ready[] = $apm;
         }
         $data['list_apm_ready'] = $list_apm_ready;
+
+        usort($list_apm_5days, function($a, $b)
+        {
+            return $a['num_days'] <  $b['num_days'];
+        });
+
+        if($this->isYourPermission('Apartment', 'showProfile')){
+            usort($list_apm_5days_CURD, function($a, $b)
+            {
+                return $a['num_days'] <  $b['num_days'];
+            });
+        }
+
+        if($this->isYourPermission('Apartment', 'showProfile')){
+            if(!$this->session->has_userdata('isTriggerFiveDay')){
+                $this->session->set_userdata(['isTriggerFiveDay' => true]);
+            }
+        }
+
+
+        $data['list_apm_5days'] = $list_apm_5days;
+        $data['list_apm_5days_CURD'] = $list_apm_5days_CURD;
 		/*--- Load View ---*/
 		$this->load->view('components/header');
 		$this->load->view($template, $data);
