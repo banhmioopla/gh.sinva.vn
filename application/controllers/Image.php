@@ -291,6 +291,7 @@ class Image extends CustomBaseStep
             $this->my_folder_delete($download_path);
         }
         mkdir($download_path);
+        $this->load->library('zip');
         $apm_id = $this->input->get('apm');
         $apartment = $this->ghApartment->getFirstById($apm_id);
         $address = trim(str_replace("/","_",$apartment['address_street']));
@@ -314,7 +315,7 @@ class Image extends CustomBaseStep
 
                         if(file_exists($rootPath.$img['name']) === true) {
                             copy($rootPath.$img['name'], $room_path.$img['name']);
-//                                        $this->zip->read_file($room_path.$img['name'],true);
+                            $this->zip->read_file($room_path.$img['name'],true);
                         }
                     }
                 }
@@ -322,8 +323,9 @@ class Image extends CustomBaseStep
         }
 
         $zipName =  '[GH] '.$address." - date ".date('d-m-Y') . '.zip';
+        $this->zip->download($zipName); die;
         $this->load->library('LibZipper', null, 'libZipper');
-        $this->libZipper->create_func($download_path, $zipName) ;
+//        $this->libZipper->create_func($download_path, $zipName) ;
         if(is_dir($download_path)){
             $this->my_folder_delete($download_path);
         }
