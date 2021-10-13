@@ -143,10 +143,10 @@ include VIEWPATH.'functions.php';
                                     </a>
                                 </div>
                             </li>
-                            <li class="dropdown notification-list">
+                            <li class="dropdown notification-list" id="bell-notification">
                                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="fi-bell noti-icon"></i>
-                                    <span class="badge badge-danger badge-pill noti-icon-badge">14</span>
+                                    <span class="badge badge-danger badge-pill noti-icon-badge"><?= count($this->list_report_issue) ?></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-lg">
                                     <!-- item-->
@@ -162,73 +162,23 @@ include VIEWPATH.'functions.php';
                                     </div>
                                     <div class="slimscroll" style="max-height: 230px;">
                                         <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-success">
-                                                <i class="mdi mdi-comment-account-outline"></i>
+                                        <?php foreach ($this->list_report_issue as $report): ?>
+                                        <a href="/admin/report/apartment-updating?id=" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-danger">
+                                                <i class="mdi mdi-alert"></i>
                                             </div>
                                             <p class="notify-details">
-                                                Báo cáo chưa update đủ thông tin
-                                                <small class="text-muted">1 min ago</small>
+                                               <?= $report['message'] ?>
+                                                <small class="text-muted"><?= date('d-m-Y', $report['time_insert']) ?> | <?= $this->libUser->getNameByAccountid($report['create_user_id']) ?></small>
                                             </p>
                                         </a>
-                                        <!-- item-->
-                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-info">
-                                                <i class="mdi mdi-account-plus"></i>
-                                            </div>
-                                            <p class="notify-details">
-                                                New user registered.
-                                                <small class="text-muted">5 hours ago</small>
-                                            </p>
-                                        </a> -->
-                                        <!-- item-->
-                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-danger">
-                                                <i class="mdi mdi-heart"></i>
-                                            </div>
-                                            <p class="notify-details">
-                                                Carlos Crouch liked
-                                                <b>Admin</b>
-                                                <small class="text-muted">3 days ago</small>
-                                            </p>
-                                        </a> -->
-                                        <!-- item-->
-                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-warning">
-                                                <i class="mdi mdi-comment-account-outline"></i>
-                                            </div>
-                                            <p class="notify-details">
-                                                Caleb Flakelar commented on Admin
-                                                <small class="text-muted">4 days ago</small>
-                                            </p>
-                                        </a> -->
-                                        <!-- item-->
-                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-purple">
-                                                <i class="mdi mdi-account-plus"></i>
-                                            </div>
-                                            <p class="notify-details">
-                                                New user registered.
-                                                <small class="text-muted">7 days ago</small>
-                                            </p>
-                                        </a> -->
-                                        <!-- item-->
-                                        <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-custom">
-                                                <i class="mdi mdi-heart"></i>
-                                            </div>
-                                            <p class="notify-details">
-                                                Carlos Crouch liked
-                                                <b>Admin</b>
-                                                <small class="text-muted">13 days ago</small>
-                                            </p>
-                                        </a> -->
+                                        <?php endforeach; ?>
                                     </div>
                                     <!-- All-->
-                                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-                                        View all
+                                    <!--<a href="/notification/show" class="dropdown-item text-center text-primary notify-item notify-all">
+                                        xem tất cả
                                         <i class="fi-arrow-right"></i>
-                                    </a>
+                                    </a>-->
                                 </div>
                             </li>
                             <li class="dropdown notification-list">
