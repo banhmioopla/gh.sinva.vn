@@ -37,7 +37,7 @@
                 <div class="checkbox checkbox-danger">
                     <input id="checkboxFive-<?= $apm5['apm_id'] ?>" class="check-five-days" value="<?= $apm5['apm_id'] ?>" type="checkbox">
                     <label for="checkboxFive-<?= $apm5['apm_id'] ?>">
-                        <?= "Q.". $apm5['district']. " | ". $apm5['address'] ?>
+                        <a target="_blank" href="/admin/profile-apartment?id=<?= $apm5['apm_id'] ?>"><?= "Q.". $apm5['district']. " | ". $apm5['address'] ?></a>
                     </label>
                 </div> </dt>
             <dd class="col-2 text-right text-danger"><?= "-".$apm5['num_days'] ?></dd>
