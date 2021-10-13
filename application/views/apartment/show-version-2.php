@@ -305,7 +305,9 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                     <a class="m-1" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
-                                <span class="m-1"><button data-address="<?= $apartment['address_street'] ?>" class="btn report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
+                                <span class="m-1"><button data-address="<?= $apartment['address_street'] ?>"
+                                                          data-apm="<?= $apartment['id'] ?>"
+                                                          class="btn report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
                                 <a href="/admin/download-all-image-apartment?apm=<?= $apartment['id'] ?>"><button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
 
                                 <a class="m-1" href="/sale/apartment-export?id=<?= $apartment['id'] ?>" >
@@ -456,6 +458,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
 
         $('.report-issue-apm-info').click(function () {
             let address = $(this).data('address');
+            let apm_id = $(this).data('apm');
             swal({
                 title: 'Báo cáo thiếu thông tin',
                 text: 'dự án '+address+' thiếu thông tin',
@@ -469,7 +472,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 $.ajax({
                     type: 'POST',
                     url:'<?= base_url()."report/issue-apm-info" ?>',
-                    data: {apm: "<?= $apartment['id'] ?>", type: 'IssueApmInfo'},
+                    data: {apm: apm_id, type: 'IssueApmInfo'},
                     dataType: 'json',
                     success:function(response) {
                     }
