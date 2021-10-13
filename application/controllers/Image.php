@@ -322,7 +322,7 @@ class Image extends CustomBaseStep
             }
         }
 
-        $zipName =  '[GH] '.$address." - date ".date('d-m-Y') . '.zip';
+        $zipName =  '[GH] '.$this->convert_vi_to_en($address)." - date ".date('d-m-Y') . '.zip';
         $this->zip->download($zipName); die;
         $this->load->library('LibZipper', null, 'libZipper');
 //        $this->libZipper->create_func($download_path, $zipName) ;
