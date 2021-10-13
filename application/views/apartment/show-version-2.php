@@ -191,8 +191,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                         <div class="row">
                             <div class="col-md-6 text-right text-md-left">
                                 <i class=" mdi mdi-dots-vertical text-danger"></i>
-                                <span class="text-primary "><?= $apartment['time_update'] ? '<i class="mdi mdi-update"></i> '.date('d/m/Y H:i',
-                                            max($apartment['time_update'],$ghRoom->getMaxTimeUpdate($apartment['id']))) :'' ?></span>
+                                <span class="text-primary "><?= '<i class="mdi mdi-update"></i> '.date('d/m/Y H:i', $apartment['time_update']) ?></span>
 
                             </div>
 

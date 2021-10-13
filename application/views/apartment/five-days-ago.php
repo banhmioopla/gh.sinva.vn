@@ -33,12 +33,15 @@
             </div>
         <?php foreach ($list_apm_5days_CURD as $apm5): ?>
             <!--ITEM -->
-            <dt class="col-10 apm-five-d" data-apm-id="<?= $apm5['apm_id'] ?>"> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address'] ?></dt>
+            <dt class="col-10" >
+                <div class="checkbox checkbox-danger">
+                    <input id="checkboxFive-<?= $apm5['apm_id'] ?>" class="check-five-days" value="<?= $apm5['apm_id'] ?>" type="checkbox">
+                    <label for="checkboxFive-<?= $apm5['apm_id'] ?>">
+                        <?= "Q.". $apm5['district']. " | ". $apm5['address'] ?>
+                    </label>
+                </div> </dt>
             <dd class="col-2 text-right text-danger"><?= "-".$apm5['num_days'] ?></dd>
         <?php endforeach; ?>
-            <div class="col-12">
-
-            </div>
         </div>
     </div>
     <?php if(count($list_apm_5days_CURD)): ?>
@@ -65,12 +68,17 @@
         <?php endif; ?>
         $('#update-all-apm-today').click(function () {
             let arr_pk = [];
-            $('.apm-five-d').each(function () {
-                arr_pk.push($(this).data('apm-id'));
+            $('.check-five-days').each(function () {
+                if($(this).is(":checked")){
+                    arr_pk.push($(this).val());
+                }
+
             });
-            $.ajax({
+
+            console.log(arr_pk);
+            /*$.ajax({
                 method: 'post',
-                url:'<?= base_url()."admin/update-apartment-editable" ?>',
+                url:'<= base_url()."admin/update-apartment-editable" ?>',
                 data: {arr_pk: arr_pk ,mode: 'list_only_time_update'},
                 dataType: "json",
                 success: function (res) {
@@ -79,7 +87,7 @@
                     setTimeout(function(){ $('#time-info').removeClass('bg-success text-light pl-2 pr-2') }, 1500);
 
                 }
-            });
+            });*/
         });
 
     });
