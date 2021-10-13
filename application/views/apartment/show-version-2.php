@@ -305,7 +305,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                     <a class="m-1" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
-                                <span class="m-1"><button class="btn report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
+                                <span class="m-1"><button data-address="<?= $apartment['address_street'] ?>" class="btn report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
                                 <a href="/admin/download-all-image-apartment?apm=<?= $apartment['id'] ?>"><button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
 
                                 <a class="m-1" href="/sale/apartment-export?id=<?= $apartment['id'] ?>" >
@@ -455,9 +455,10 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
     commands.push(function() {
 
         $('.report-issue-apm-info').click(function () {
+            let address = $(this).data('address');
             swal({
                 title: 'Báo cáo thiếu thông tin',
-                text: 'dự án abcd thiếu thông tin',
+                text: 'dự án '+address+' thiếu thông tin',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-confirm mt-2',
