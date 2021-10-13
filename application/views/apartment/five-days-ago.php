@@ -3,8 +3,11 @@
         <div class="col-12">
             <h5 class="bg-dark text-warning p-3">NGỦ SUỐT 5 NGÀY</h5>
             <?php if($check_profile): ?>
-            <button href="#custom-modal" id="five-days" class="btn btn-secondary waves-effect w-md mr-2 mb-2"
-               data-animation="fadein" data-overlayColor="#36404a" data-plugin="custommodal" data-overlaySpeed="100">Danh sách của QLDA</button>
+                <?php if(count($list_apm_5days_CURD)): ?>
+                <button href="#custom-modal" id="five-days" class="btn btn-secondary waves-effect w-md mr-2 mb-2"
+                        data-animation="fadein"
+                        data-overlayColor="#36404a" data-plugin="custommodal" data-overlaySpeed="100">Danh sách của QLDA</button>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <?php foreach ($list_apm_5days as $apm5): ?>
@@ -30,19 +33,54 @@
             </div>
         <?php foreach ($list_apm_5days_CURD as $apm5): ?>
             <!--ITEM -->
-            <dt class="col-10"> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address'] ?></dt>
+            <dt class="col-10 apm-five-d" data-apm-id="<?= $apm5['apm_id'] ?>"> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address'] ?></dt>
             <dd class="col-2 text-right text-danger"><?= "-".$apm5['num_days'] ?></dd>
         <?php endforeach; ?>
+            <div class="col-12">
+
+            </div>
         </div>
     </div>
+    <?php if(count($list_apm_5days_CURD)): ?>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-12 text-muted">
+                Một lần chơi lớn! thử xem thiên hạ có trầm trồ! <span id="time-info"></span>
+            </div>
+            <div class="col-12">
+                <button type="button" id="update-all-apm-today" class="btn btn-primary waves-effect waves-light">Đồng bộ ngày cập nhật dự án thành ngày <?= date('d-m-Y') ?></button>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>
 <script>
     commands.push(function() {
-        <?php if($this->session->userdata('isTriggerFiveDay') === true):
-            $this->session->set_userdata(['isTriggerFiveDay' => false]);
-
-        ?>
-        $('#five-days').trigger('click');
+        <?php if(count($list_apm_5days_CURD)): ?>
+            <?php if($this->session->userdata('isTriggerFiveDay') === true):
+                $this->session->set_userdata(['isTriggerFiveDay' => false]);
+            ?>
+                $('#five-days').trigger('click');
+            <?php endif; ?>
         <?php endif; ?>
+        $('#update-all-apm-today').click(function () {
+            let arr_pk = [];
+            $('.apm-five-d').each(function () {
+                arr_pk.push($(this).data('apm-id'));
+            });
+            $.ajax({
+                method: 'post',
+                url:'<?= base_url()."admin/update-apartment-editable" ?>',
+                data: {arr_pk: arr_pk ,mode: 'list_only_time_update'},
+                dataType: "json",
+                success: function (res) {
+                    $('#time-info').text(res.content);
+                    $('#time-info').addClass('bg-success text-light pl-2 pr-2');
+                    setTimeout(function(){ $('#time-info').removeClass('bg-success text-light pl-2 pr-2') }, 1500);
+
+                }
+            });
+        });
+
     });
 </script>

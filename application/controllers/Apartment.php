@@ -204,6 +204,7 @@ class Apartment extends CustomBaseStep {
                         'address' => $apm['address_street'],
                         'num_days' => $isFiveDays,
                         'district' => $apm['district_code'],
+                        'apm_id' => $apm['id'],
                     ];
                 }
             }
@@ -758,6 +759,22 @@ class Apartment extends CustomBaseStep {
             if($result) {
                 echo json_encode(['status' => $result, 'content' => date('d-m-Y h:i\'', $time)]); die;
             }
+        }
+
+        if($mode == 'list_only_time_update') {
+
+            $arr_pk = $this->input->post('arr_pk');
+            $counter = 0;
+            foreach ($arr_pk as $apm_id){
+                $is_update = $this->ghApartment->updateById($apm_id, [
+                    'time_update' => $time
+                ]);
+                if($is_update) {
+                    $counter++;
+                }
+
+            }
+            echo json_encode(['status' => $counter, 'content' => "Cập nhật thành công, Vui lòng load lại GH để tận hưởng!"]); die;
         }
 		if(!empty($apartment_id) and !empty($field_name)) {
 			$data = [
