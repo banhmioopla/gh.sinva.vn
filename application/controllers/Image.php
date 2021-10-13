@@ -323,7 +323,7 @@ class Image extends CustomBaseStep
 
         $zipName =  '[GH] '.$address." - date ".date('d-m-Y') . '.zip';
         $this->load->library('LibZipper', null, 'libZipper');
-        $this->libZipper->create_func($apartment_path, $zipName) ;
+        $this->libZipper->create_func($download_path, $zipName) ;
         if(is_dir($download_path)){
             $this->my_folder_delete($download_path);
         }
