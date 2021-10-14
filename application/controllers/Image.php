@@ -293,13 +293,9 @@ class Image extends CustomBaseStep
             $this->my_folder_delete($download_path);
         }
         mkdir($download_path);
-        $this->load->library('LibZipCustom', null, 'libZipCustom');
         $apm_id = $this->input->get('apm');
         $apartment = $this->ghApartment->getFirstById($apm_id);
         $address = trim(str_replace("/","_",$apartment['address_street']));
-        $district_model = $this->ghDistrict->getFirstByCode($apartment['district_code']);
-//        $download_path .= ' '.$apartment['address_street'];
-
 
         $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm_id]);
         $apartment_path = $download_path. '/' . $this->convert_vi_to_en($address). '/';
@@ -326,15 +322,26 @@ class Image extends CustomBaseStep
             }
         }
         if($has_img) {
-            $zipName =  '[GH] '.$this->convert_vi_to_en($address)." - date ".date('d-m-Y') . '.zip';
+            $zipName =  'Album '.$this->convert_vi_to_en($address)." - date ".date('d-m-Y') . '.zip';
             $zipArchive = new ZipArchive;
-            $zipArchive->open($zipName, (ZipArchive::CREATE | ZipArchive::OVERWRITE));
+            $zipArchive->open($zipName, ZipArchive::CREATE);
             $this->createZip($zipArchive, $download_path."/");
-            header('Content-Type: application/zip');
-            header('Content-Disposition: attachment; filename="'.basename($zipName).'"');
-            header('Content-Length: ' . filesize($zipName));
-            flush();
-            readfile($zipName); die;
+            $zipArchive->close();
+            ob_end_clean();
+            if(file_exists($zipName)){
+                header('Content-Type: application/zip');
+                header('Content-Disposition: attachment; filename="'.basename($zipName).'"');
+                header('Content-Length: ' . filesize($zipName));
+                flush();
+                readfile($zipName);
+            } else {
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Zip file thất bại',
+                    'status' => 'danger'
+                ]);
+                return redirect('/admin/list-apartment?district-code='.$this->session->userdata('current_district_code'));
+            }
+
         }
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Dự án '.$address.' không có hình ảnh',
@@ -344,7 +351,7 @@ class Image extends CustomBaseStep
 
     }
 
-    function createZip($zip,$dir){
+    function createZip(&$zip,$dir){
         if (is_dir($dir)){
 
             if ($dh = opendir($dir)){
