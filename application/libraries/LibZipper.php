@@ -19,21 +19,21 @@ class LibZipper extends ZipArchive
                 header('Content-Transfer-Encoding: binary');
                 header('Content-Length: '.$size);
                 header('Content-Disposition: attachment;filename="'.basename($output_zip_file).'"');
-//                if($size > $chunksize)
-//                {
-//                    $handle = fopen($input_folder, 'rb');
-//
-//                    while (!feof($handle))
-//                    {
-//                        print(@fread($handle, $chunksize));
-//
-//                        ob_flush();
-//                        flush();
-//                    }
-//
-//                    fclose($handle);
-//                }
-//                else readfile($output_zip_file);
+                if($size > $chunksize)
+                {
+                    $handle = fopen($input_folder, 'rb');
+
+                    while (!feof($handle))
+                    {
+                        print(@fread($handle, $chunksize));
+
+                        ob_flush();
+                        flush();
+                    }
+
+                    fclose($handle);
+                }
+                else readfile($output_zip_file);
                 readfile($output_zip_file);
                 unlink($output_zip_file);
 //                $this->my_folder_delete('ImFineThanks');
