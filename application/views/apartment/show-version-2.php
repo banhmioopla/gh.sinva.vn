@@ -165,6 +165,17 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <?php
+                        if($this->session->has_userdata('fast_notify')):
+                            ?>
+                            <div class="alert alert-<?= $this->session->flashdata('fast_notify')['status']?> alert-dismissible fade show" role="alert">
+                                <?= $this->session->flashdata('fast_notify')['message']?>
+                            </div>
+                            <?php unset($_SESSION['fast_notify']); endif; ?>
+                    </div>
+                </div>
                 <div id="sortable-ui">
                 <?php foreach ($list_apartment as $apartment):
                     if($check_only_apartment && !in_array($apartment['id'], $this->list_apartment_view_only)) continue;

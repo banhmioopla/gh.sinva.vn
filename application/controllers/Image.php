@@ -284,7 +284,9 @@ class Image extends CustomBaseStep
         set_time_limit(180);
         $rootPath = 'media/apartment/';
         $download_path = 'ImFineThanks';
-
+        foreach (glob($_SERVER['DOCUMENT_ROOT'].'/*.zip') as $filename) {
+            unlink($filename);
+        }
         $arr_img = [];
         $list_district = $this->ghDistrict->get(['active' => 'YES']);
         if(is_dir($download_path)){
@@ -301,6 +303,7 @@ class Image extends CustomBaseStep
 
         $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm_id]);
         $apartment_path = $download_path. '/' . $this->convert_vi_to_en($address). '/';
+        $has_img = false;
         if( is_dir($apartment_path) === false )
         {
             mkdir($apartment_path);
@@ -314,20 +317,65 @@ class Image extends CustomBaseStep
                     foreach ($img_model as $img) {
 
                         if(file_exists($rootPath.$img['name']) === true) {
+                            $has_img = true;
                             copy($rootPath.$img['name'], $room_path.$img['name']);
-                            $this->libZipCustom->read_file($room_path.$img['name'],true);
+//                            $zipFile->addFile($room_path.$img['name']);
                         }
                     }
                 }
             }
         }
+        if($has_img) {
+            $zipName =  '[GH] '.$this->convert_vi_to_en($address)." - date ".date('d-m-Y') . '.zip';
+            $zipArchive = new ZipArchive;
+            $zipArchive->open($zipName, (ZipArchive::CREATE | ZipArchive::OVERWRITE));
+            $this->createZip($zipArchive, $download_path."/");
+            header('Content-Type: application/zip');
+            header('Content-Disposition: attachment; filename="'.basename($zipName).'"');
+            header('Content-Length: ' . filesize($zipName));
+            flush();
+            readfile($zipName); die;
+        }
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Dự án '.$address.' không có hình ảnh',
+            'status' => 'danger'
+        ]);
+        return redirect('/admin/list-apartment?district-code='.$this->session->userdata('current_district_code'));
 
-        $zipName =  '[GH] '.$this->convert_vi_to_en($address)." - date ".date('d-m-Y') . '.zip';
-        $this->libZipCustom->download($zipName); die;
-//        $this->load->library('LibZipper', null, 'libZipper');
-//        $this->libZipper->create_func($download_path, $zipName) ;
-        if(is_dir($download_path)){
-            $this->my_folder_delete($download_path);
+    }
+
+    function createZip($zip,$dir){
+        if (is_dir($dir)){
+
+            if ($dh = opendir($dir)){
+                while (($file = readdir($dh)) !== false){
+
+                    // If file
+                    if (is_file($dir.$file)) {
+                        if($file != '' && $file != '.' && $file != '..'){
+
+                            $zip->addFile($dir.$file);
+                        }
+                    }else{
+                        // If directory
+                        if(is_dir($dir.$file) ){
+
+                            if($file != '' && $file != '.' && $file != '..'){
+
+                                // Add empty directory
+                                $zip->addEmptyDir($dir.$file);
+
+                                $folder = $dir.$file.'/';
+                                // Read data of the folder
+                                $this->createZip($zip,$folder);
+                            }
+                        }
+
+                    }
+
+                }
+                closedir($dh);
+            }
         }
     }
 
