@@ -59,6 +59,17 @@ class GhApartment extends CI_Model {
         return $result->result_array();
     }
 
+    public function getUpdateTimeByApm($apm_id) {
+        $apartment = $this->getFirstById($apm_id);
+        $time_update = $apartment['time_update'];
+        $q_room = "SELECT MAX(time_update) as time_update FROM gh_room WHERE apartment_id = ".$apm_id." AND active = 'YES'";
+        $result = $this->db->query($q_room)->row_array();
+        if($result['time_update'] > $time_update) {
+            $time_update = $result['time_update'];
+        }
+        return $time_update;
+    }
+
     public function getFirstById($room_id) {
         return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
     }

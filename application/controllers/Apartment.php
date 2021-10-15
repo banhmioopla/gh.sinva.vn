@@ -184,7 +184,8 @@ class Apartment extends CustomBaseStep {
         $list_apm_ready = [];
         $list_apm_5days_CURD = [];
         foreach ($list_apm_temp as $apm ) {
-            $isFiveDays = $this->libTime->calDay2Time($today, $apm['time_update']);
+            $time_update = $this->ghApartment->getUpdateTimeByApm($apm['id']);
+            $isFiveDays = $this->libTime->calDay2Time($today, $time_update);
             if($isFiveDays > 4) {
 
                 $list_apm_5days[] = [
