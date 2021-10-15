@@ -41,8 +41,20 @@ class Media extends CustomBaseStep {
                 }
             }
         }
+        $link_has_shaft = "";
+
+        if($has_shaft) {
+            $link_has_shaft = "<a href='/admin/apartment/show-image?apartment-id=".$apartment_id."&hasShaft=false'>Ẩn trục phòng</a>";
+        }
+
+        if($this->input->get('hasShaft') == 'false') {
+            $has_shaft = false;
+            $link_has_shaft = "<a href='/admin/apartment/show-image?apartment-id=".$apartment_id."&hasShaft=true'>Hiện trục phòng</a>";
+        }
+
 
         $data['has_shaft'] = $has_shaft;
+        $data['link_has_shaft'] = $link_has_shaft;
         $data['any_empty_shaft'] = $any_empty_shaft;
         $data['list_shaft'] = $list_shaft;
 

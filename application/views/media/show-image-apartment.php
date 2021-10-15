@@ -303,7 +303,7 @@ include VIEWPATH . 'functions.php';
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
-                                Click vào mã phòng phía dưới để xem ảnh!
+                                Click vào mã phòng phía dưới để xem ảnh! <?= $link_has_shaft ?>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">

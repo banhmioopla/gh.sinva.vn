@@ -92,7 +92,9 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 <h2 class="font-weight-bold text-danger">Danh sách dự án Q. <?= $libDistrict->getNameByCode($district_code) ?></h2>
             </div>
             <div class="col-md-3 d-md-block d-none">
+                <?php if($check_profile):?>
                 <?php $this->load->view('apartment/five-days-ago', ['check_profile' => $check_profile]) ?>
+                <?php endif; ?>
                 <?php $this->load->view('apartment/metric', ['district_code' => $district_code]) ?>
                 <?php if(count($contract_noti) && isYourPermission('Apartment', 'showNotificaton', $this->permission_set)):?>
                     <div class="mt-1 text-center font-weight-bold">Thông báo các lượt tạo hợp đồng</div>
