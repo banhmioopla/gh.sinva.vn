@@ -326,7 +326,7 @@ class Image extends CustomBaseStep
             $zipName =  'Album '.$this->convert_vi_to_en($address)." - date ".date('d-m-Y') . '.zip';
             $zipArchive = new ZipArchive;
             $zipArchive->open($zipName, ZipArchive::CREATE);
-            $this->createZip($zipArchive, $apartment_path."/");
+            $this->createZip($zipArchive, $download_path."/");
             $zipArchive->close();
 //            ob_end_clean();
             if(file_exists($zipName)){
