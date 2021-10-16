@@ -338,7 +338,6 @@ class Image extends CustomBaseStep
 //                readfile($zipName);
 
 //                 OPTION 2
-                set_time_limit(0);
                 ini_set('memory_limit', '512M');
                 $this->libZipper->downloadSample($zipName);
 
