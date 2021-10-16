@@ -322,18 +322,26 @@ class Image extends CustomBaseStep
             }
         }
         if($has_img) {
+            $this->load->library('LibZipper', null, 'libZipper');
             $zipName =  'Album '.$this->convert_vi_to_en($address)." - date ".date('d-m-Y') . '.zip';
             $zipArchive = new ZipArchive;
             $zipArchive->open($zipName, ZipArchive::CREATE);
             $this->createZip($zipArchive, $download_path."/");
             $zipArchive->close();
-            ob_end_clean();
+//            ob_end_clean();
             if(file_exists($zipName)){
-                header('Content-Type: application/zip');
-                header('Content-Disposition: attachment; filename="'.basename($zipName).'"');
-                header('Content-Length: ' . filesize($zipName));
-                flush();
-                readfile($zipName);
+//                OPTION 1
+//                header('Content-Type: application/zip');
+//                header('Content-Disposition: attachment; filename="'.basename($zipName).'"');
+//                header('Content-Length: ' . filesize($zipName));
+//                flush();
+//                readfile($zipName);
+
+//                 OPTION 2
+                set_time_limit(0);
+                ini_set('memory_limit', '512M');
+                $this->libZipper->downloadSample($zipName); die;
+
             } else {
                 $this->session->set_flashdata('fast_notify', [
                     'message' => 'Zip file thất bại',
