@@ -62,7 +62,7 @@ class LibZipper extends ZipArchive
                 $chunksize = 8 * (1024 * 1024); //8MB (highest possible fread length)
                 if ($size > $chunksize)
                 {
-                    $handle = fopen($_FILES["file"]["tmp_name"], 'rb');
+                    $handle = fopen($fileName, 'rb');
                     $buffer = '';
                     while (!feof($handle) && (connection_status() === CONNECTION_NORMAL))
                     {
