@@ -326,7 +326,7 @@ class Image extends CustomBaseStep
             $zipName =  'Album '.$this->convert_vi_to_en($address)." - date ".date('d-m-Y') . '.zip';
             $zipArchive = new ZipArchive;
             $zipArchive->open($zipName, ZipArchive::CREATE);
-            $this->createZip($zipArchive, $download_path."/");
+            $this->createZip($zipArchive, $apartment_path."/");
             $zipArchive->close();
 //            ob_end_clean();
             if(file_exists($zipName)){
@@ -340,7 +340,7 @@ class Image extends CustomBaseStep
 //                 OPTION 2
                 set_time_limit(0);
                 ini_set('memory_limit', '512M');
-                $this->libZipper->downloadSample($zipName); die;
+                $this->libZipper->downloadSample($zipName);
 
             } else {
                 $this->session->set_flashdata('fast_notify', [
