@@ -207,7 +207,7 @@ foreach ($list_user as $row) {
                             <th>Tên</th>
 
                             <th>Quyền</th>
-                            <th>SĐT</th>
+                            <th>...</th>
                             <th>Người Tuyển</th>
                             <th class="text-center">Trạng thái</th>
                             <th class="text-center">Tùy chọn</th>
