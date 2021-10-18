@@ -690,6 +690,24 @@ class Apartment extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
+    public function duplicateApartment(){
+        $apm_id = $this->input->get('id');
+        $apartment_clone = $this->ghApartment->getFirstById($apm_id);
+        unset($apartment_clone['id']);
+        $apartment_clone['time_insert'] =  $apartment_clone['time_update'] = time();
+        $apartment_clone['user_collected_id'] = $this->auth['account_id'];
+        $apartment_clone['address_street'] = "COPY | " .$apartment_clone['address_street'];
+        $result = $this->ghApartment->insert($apartment_clone);
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Tạo dự án '.$apartment_clone['address_street'] .' thành công ',
+            'status' => 'success'
+        ]);
+        if($this->session->has_userdata('current_district_code')){
+            return redirect('/admin/list-apartment?district-code='.$this->session->userdata('current_district_code'));
+        }
+        return redirect('/admin/list-apartment');
+    }
+
 	public function showCommmissionRate(){
 		$data['list_apartment'] = $this->ghApartment->get(['active' => 'YES'], 'district_code ASC');
 		$data['label_apartment'] =  $this->config->item('label.apartment');

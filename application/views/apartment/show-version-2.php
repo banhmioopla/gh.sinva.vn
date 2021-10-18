@@ -304,6 +304,9 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                             <div class="col-12 list-action  text-center text-md-right mt-2" >
 
                                 <?php if($check_profile): ?>
+                                    <a class="m-1" href="/admin/apartment/duplicate?id=<?= $apartment['id'] ?>" >
+                                        <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-credit-card-multiple"></i> </button>
+                                    </a>
                                     <a class="m-1" href="/admin/profile-apartment?id=<?= $apartment['id'] ?>" >
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> <span class="d-none d-md-inline"></span></button>
                                     </a>

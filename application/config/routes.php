@@ -1235,6 +1235,13 @@ $route['admin/apartment/search'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/apartment/duplicate'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/duplicateApartment';
+    return $controller.$action;
+};
+
+
 $route['admin/download-image-apartment'] = function($params = []) {
     $controller = 'Image';
     $action = '/downloadMedia';
