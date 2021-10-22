@@ -128,6 +128,11 @@ $route['admin/dashboard/show/sale'] = function($params = []) {
     $action = '/showSale';
     return $controller.$action;
 };
+$route['admin/dashboard/show/project'] = function($params = []) {
+    $controller = 'Dashboard';
+    $action = '/showListProject';
+    return $controller.$action;
+};
 
 $route['admin/list-department'] = function($params = []) {
     $controller = 'Department';

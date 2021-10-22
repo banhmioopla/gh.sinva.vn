@@ -56,7 +56,6 @@ include VIEWPATH.'functions.php';
 		<script src="<?= base_url() ?>js/custom-header.js"></script>
 		<script>
             let commands = [];
-            let modify_mode = '<?= $this->auth['modifymode'] ? $this->auth['modifymode']: 'view' ?>';
 		</script>
         <style type="text/css" media="screen">
             .apm-update-time {

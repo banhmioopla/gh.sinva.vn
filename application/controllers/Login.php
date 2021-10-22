@@ -6,6 +6,7 @@ class Login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('ghUser');
+		$this->load->model('ghRole');
 		$this->default_url = '/admin/list-apartment';
 		$this->logout_url = '/admin/logout';
 	}
@@ -19,8 +20,15 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if($user_profile) {
                 $this->session->set_userdata(['auth' => $user_profile]);
-                setcookie('gh_account_id',$user_profile['account_id'],time()+60*60*24*365, '/');
-                setcookie('gh_password',$user_profile['password'],time()+60*60*24*365, '/');
+                $role = $this->ghRole->getFirstByCode($user_profile['role_code']);
+                $permission_set = json_decode($role['list_function'], true);
+                if($this->isYourPermission('Dashboard', 'showListProject', $permission_set)){
+                    $this->default_url = '/admin/dashboard/show/project';
+                }
+                $this->input->cookie('gh_account_id',$user_profile['account_id'], time()+60*60*24*365);
+                $this->input->cookie('gh_password',$user_profile['password'], time()+60*60*24*365);
+//                setcookie('gh_account_id',$user_profile['account_id'],time()+60*60*24*365, '/');
+//                setcookie('gh_password',$user_profile['password'],time()+60*60*24*365, '/');
                 return redirect($this->default_url);
 			} else {
 				return redirect($this->logout_url);
@@ -33,14 +41,15 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if($user_profile) {
 				$this->session->set_userdata(['auth' => $user_profile]);
-                setcookie('gh_account_id',$user_profile['account_id'],time()+60*60*24*365, '/');
-                $cookie = array(
-                    'name'   => 'gh_password',
-                    'value'  => "{$user_profile['password']}",
-                    'expire' => 86400*30,
-                    'domain' => $_SERVER['SERVER_NAME']
-                );
-                setcookie('gh_password',$user_profile['password'],time()+60*60*24*365, '/');
+                $role = $this->ghRole->getFirstByCode($user_profile['role_code']);
+                $permission_set = json_decode($role['list_function'], true);
+
+                if($this->isYourPermission('Dashboard', 'showListProject', $permission_set)){
+                    $this->default_url = '/admin/dashboard/show/project';
+                }
+
+                $this->input->cookie('gh_account_id',$user_profile['account_id'], time()+60*60*24*365);
+                $this->input->cookie('gh_password',$user_profile['password'], time()+60*60*24*365);
 				return redirect($this->default_url);
 			}
 		}
@@ -57,6 +66,15 @@ class Login extends CI_Controller {
 		delete_cookie('gh_password');
 		return $this->show();
 	}
+
+    protected function isYourPermission($controller, $action, $permission_set){
+        $list_controller = array_keys($permission_set);
+        if(in_array($controller, $list_controller) && isset($permission_set[$controller]) && in_array($action, $permission_set[$controller])) {
+            return true;
+        }
+        return false;
+
+    }
 
 }
 

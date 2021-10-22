@@ -156,6 +156,14 @@ class Dashboard extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
+    public function showListProject(){
+        $this->load->view('components/header');
+        $this->load->view('dashboard/show-list-project', [
+
+        ]);
+        $this->load->view('components/footer');
+    }
+
     public function showTest(){
         $data = [];
         $data_setup = $this->setupData();
@@ -164,7 +172,7 @@ class Dashboard extends CustomBaseStep {
         ($data_setup['data']['consultant_booking'], $data_setup['from'], $data_setup['to']);
 
         $data['chart_consultantbooking'] = json_encode($chart_consultantbooking);
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('dashboard/show-test', $data);
         $this->load->view('components/footer');
     }

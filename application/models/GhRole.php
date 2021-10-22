@@ -12,6 +12,10 @@ class GhRole extends CI_Model {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }
 
+    public function getFirstByCode($code) {
+        return $this->db->get_where($this->table, ['code' => $code])->row_array();
+    }
+
     public function getById($role_id) {
         return $this->db->get_where($this->table, ['id' => $role_id])->result_array();
     }

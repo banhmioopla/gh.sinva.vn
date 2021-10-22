@@ -14,22 +14,15 @@ class CustomBaseStep extends CI_Controller {
 //			$this->session->sess_destroy();
 			return redirect('/');
 		}
-		
+        $this->load->library('LibRole', null, 'libRole');
+        $this->load->library('LibConfig', null, 'libConfig');
+        $this->load->library('LibUuid', null, 'libUuid');
+        $this->load->library('LibTime', null, 'libTime');
+        $this->load->library('LibUser', null, 'libUser');
 		$this->load->model(['ghActivityTrack', 'ghUser', 'ghNotification', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig', 'ghTeam']);
 		$this->auth = $this->session->userdata('auth');
-		$this->role = $this->ghRole->get(['code' =>$this->auth['role_code']])[0];
-		$this->load->library('LibRole', null, 'libRole');
-		$this->load->library('LibConfig', null, 'libConfig');
-		$this->load->library('LibUuid', null, 'libUuid');
-		$this->load->library('LibTime', null, 'libTime');
-		$this->load->library('LibUser', null, 'libUser');
+		$this->role = $this->ghRole->getFirstByCode($this->auth['role_code']);
 
-		$this->load->config('usermode');
-		$usermode = $this->config->item('usermode');
-	
-		$this->auth['modifymode'] = 'view';
-		$this->menu = null;;
-		
 		$ghUserDistrict = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
 		$this->list_district_CRUD = [];
 		$this->list_apartment_CRUD = [];
@@ -67,8 +60,6 @@ class CustomBaseStep extends CI_Controller {
                 if($ud['apartment_id']){
                     $this->list_apartment_view_only[] = $ud['apartment_id'];
                 }
-            } else {
-                $this->editable = true;
             }
 		}
 		
@@ -104,7 +95,7 @@ class CustomBaseStep extends CI_Controller {
             'ApartmentPromotion' => [],
             'Team' => ['detail'],
             'ApartmentView' => ['create'],
-            'Dashboard' => ['showSale'],
+            'Dashboard' => ['showSale', 'showListProject'],
             'ApartmentRequest' => ['exportApartmentExcel'],
             'ApartmentReport' => ['updateIssueApartmentInfo'],
         ];

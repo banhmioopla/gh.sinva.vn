@@ -10,6 +10,7 @@ class GhApartment extends CI_Model {
         } else {
             $this->db->order_by('order_item ASC,  id DESC, address_street ASC'); // comment xxx yyy
         }
+        $where['apartment_type_id'] = 1;
 
         return $this->db->get_where($this->table, $where)->result_array();
     }
@@ -21,15 +22,15 @@ class GhApartment extends CI_Model {
     }
 
     public function getByActive() {
-        return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
+        return $this->db->get_where($this->table, ['active' => 'YES', 'apartment_type_id' => 1])->result_array();
 	}
 	
 	public function getByDistrictId($district_id) {
-        return $this->db->get_where($this->table, ['district_id' => $district_id])->result_array();
+        return $this->db->get_where($this->table, ['district_id' => $district_id, 'apartment_type_id' => 1])->result_array();
     }
 
     public function getById($apartment_id) {
-        return $this->db->get_where($this->table, ['id' => $apartment_id])->result_array();
+        return $this->db->get_where($this->table, ['id' => $apartment_id, 'apartment_type_id' => 1])->result_array();
     }
 
     public function getAll() {
@@ -40,7 +41,7 @@ class GhApartment extends CI_Model {
 
     public function getByUserDistrict($account_id) {
         $q = "SELECT * FROM gh_apartment, gh_user_district 
-                WHERE gh_apartment.district_code = gh_user_district.district_code AND gh_user_district.user_id = $account_id
+                WHERE gh_apartment.district_code = gh_user_district.district_code AND gh_user_district.user_id = $account_id AND gh_apartment.apartment_type_id = 1
         ";
         // if($account_id == 2019 or $account_id == 171020010) {
         //     $q = "SELECT * FROM gh_apartment, gh_user_district 
@@ -53,7 +54,7 @@ class GhApartment extends CI_Model {
     public function getByDistrictReport($set_district) {
         $q = "SELECT * FROM gh_apartment 
                 WHERE FIND_IN_SET(gh_apartment.district_code, '".$set_district."')  
-                AND gh_apartment.active = 'YES'
+                AND gh_apartment.active = 'YES' AND gh_apartment.apartment_type_id = 1
         ";
         $result = $this->db->query($q);
         return $result->result_array();
@@ -62,7 +63,7 @@ class GhApartment extends CI_Model {
     public function getUpdateTimeByApm($apm_id) {
         $apartment = $this->getFirstById($apm_id);
         $time_update = $apartment['time_update'];
-        $q_room = "SELECT MAX(time_update) as time_update FROM gh_room WHERE apartment_id = ".$apm_id." AND active = 'YES'";
+        $q_room = "SELECT MAX(time_update) as time_update FROM gh_room WHERE  apartment_id = ".$apm_id." AND active = 'YES'";
         $result = $this->db->query($q_room)->row_array();
         if($result['time_update'] > $time_update) {
             $time_update = $result['time_update'];
@@ -94,7 +95,7 @@ class GhApartment extends CI_Model {
     }
 
     public function getListCol() {
-        $result = $this->db->get_where($this->table, ['id > ' => 1])->row_array();
+        $result = $this->db->get_where($this->table, ['id > ' => 1, 'gh_apartment' => 1])->row_array();
         $out =  [];
 
         foreach ($result as $col => $val) {
