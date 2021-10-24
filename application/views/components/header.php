@@ -104,8 +104,8 @@ include VIEWPATH.'functions.php';
                         <!-- <a href="index.html" class="logo"><span class="logo-small"><i class="mdi mdi-radar"></i></span><span class="logo-large"><i class="mdi mdi-radar"></i> Highdmin</span></a> -->
                         <!-- Image Logo -->
                         <a href="/" class="logo">
-                            <img src="https://i.ibb.co/LzhBRbs/Logo.png" alt="" height="50" class="logo-small" />
-                            <img src="https://i.ibb.co/LzhBRbs/Logo.png" alt="" height="75" class="logo-large" />
+                            <img src="https://i.ibb.co/LzhBRbs/Logo.png" alt="" height="45" class="logo-small" />
+                            <img src="https://i.ibb.co/LzhBRbs/Logo.png" alt="" height="50" class="logo-large" />
                         </a>
                     </div>
                     <!-- End Logo container-->
@@ -295,6 +295,9 @@ include VIEWPATH.'functions.php';
             </div>
             <!-- end topbar-main -->
             <?php $this->load->view('components/menu')?>
+            <div class="text-center" id="pin-notification-section">
+                <span class="pt-2 pb-3 font-weight-bold text-danger" id="pin-notification"><?= $this->pin_notification['content'] ?></span>
+            </div>
             <!-- end navbar-custom -->
             <div id="gh-loader">
                 <div class="sk-wave">

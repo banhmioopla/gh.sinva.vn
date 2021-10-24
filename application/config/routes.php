@@ -1431,6 +1431,15 @@ $route['share/email-template/show'] = function($params = []) {
     $action = '/show';
     return $controller.$action;
 };
+/*HOMETOWN*/
+
+
+$route['home-town/show'] = function($params = []) {
+    $controller = 'HomeTown';
+    $action = '/show';
+    return $controller.$action;
+};
+
 /* :::API-INTERNAL:::*/
 
 $route['api-internal/apartments'] = function($params = []) {

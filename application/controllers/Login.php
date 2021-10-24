@@ -27,8 +27,6 @@ class Login extends CI_Controller {
                 }
                 $this->input->cookie('gh_account_id',$user_profile['account_id'], time()+60*60*24*365);
                 $this->input->cookie('gh_password',$user_profile['password'], time()+60*60*24*365);
-//                setcookie('gh_account_id',$user_profile['account_id'],time()+60*60*24*365, '/');
-//                setcookie('gh_password',$user_profile['password'],time()+60*60*24*365, '/');
                 return redirect($this->default_url);
 			} else {
 				return redirect($this->logout_url);

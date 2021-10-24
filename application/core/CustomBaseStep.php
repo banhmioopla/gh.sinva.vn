@@ -62,7 +62,17 @@ class CustomBaseStep extends CI_Controller {
                 }
             }
 		}
-		
+
+		foreach (glob($_SERVER['DOCUMENT_ROOT'].'/*.zip') as $filename) {
+            unlink($filename);
+        }
+
+        if(is_dir('ImFineThanks')){
+            $this->my_folder_delete('ImFineThanks');
+        }
+
+        $this->pin_notification = json_decode($this->load->view('json-content/pin-notification.json', '',true), true);
+
 		$this->permission_set = json_decode($this->role['list_function'], true);
 		$current_user = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
 		$authorised_user = $this->ghUser->get(['account_id' => $current_user[0]['authorised_user_id']]);
@@ -128,6 +138,20 @@ class CustomBaseStep extends CI_Controller {
         }
         return false;
     
+    }
+
+    function my_folder_delete($path) {
+        if(!empty($path) && is_dir($path) ){
+            $dir  = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS); //upper dirs are not included,otherwise DISASTER HAPPENS :)
+            $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
+            foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} }
+            if (!empty($empty_dirs)) {
+                foreach ($empty_dirs as $eachDir) {
+                    $tt = rmdir($eachDir);
+                }
+            }
+            rmdir($path);
+        }
     }
 
 	

@@ -756,7 +756,11 @@ class Apartment extends CustomBaseStep {
 		$field_value = $this->input->post('value');
 
 		$mode = $this->input->post('mode');
-
+        if($mode == 'pin_notification') {
+            $file = $this->load->view('json-content/pin-notification.json', '',true);
+            file_put_contents(APPPATH.'views/'.'json-content/pin-notification.json', json_encode(["content" => $field_value]));
+            echo json_encode(['status' => true, "content" => "Cập nhật thành công!"]); die;
+        }
 		if($mode == 'sort') {
 	        $counter = 0;
             foreach ($field_value as $itemmm) {

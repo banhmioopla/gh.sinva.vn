@@ -29,7 +29,7 @@
                 >
                     <i class="fi-tag"></i>
                     <h3 class="m-b-10">9999</h3>
-                    <a href="#">
+                    <a href="/admin/list-apartment">
                         <p class="text-uppercase text-light m-b-5 font-13 font-600">
                             Căn Hộ Dịch Vụ
                         </p>
@@ -42,7 +42,7 @@
                 >
                     <i class="fi-archive"></i>
                     <h3 class="m-b-10">9999</h3>
-                    <a href="#">
+                    <a href="/home-town/show">
                         <p class="text-uppercase text-light m-b-5 font-13 font-600">
                             Nhà Phố
                         </p>

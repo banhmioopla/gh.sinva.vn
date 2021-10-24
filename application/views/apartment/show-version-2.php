@@ -67,12 +67,27 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                     <div class="card-box">
                         <h4 class="text-primary">Truy Cập Nhanh - Cập Nhật Phòng Dự Án Khác (dành cho QLDA)</h4>
                         <p>Một cách nhanh chóng, bạn có thể đi đến trang chỉnh sửa thông tin Phòng cho 1 Dự Án được chọn từ select box dưới đây</p>
-                        <select id="apartment_update_ready" class=" form-control">
-                            <option value="">Cập Nhật Phòng Dự Án Khác</option>
-                            <?php foreach ($list_apm_ready as $apm_move): ?>
-                                <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div>
+                            <select id="apartment_update_ready" class=" form-control">
+                                <option value="">Cập Nhật Phòng Dự Án Khác</option>
+                                <?php foreach ($list_apm_ready as $apm_move): ?>
+                                    <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="mt-2">
+                            <h4 class="text-primary">Thông báo - Ghim</h4>
+                            <div class="row">
+                                <div class="col-8">
+                                    <input type="text" id="input-pin-notification" value="<?= $this->pin_notification['content'] ?>" class="form-control mt-2 border border-info">
+                                    <div class="text-success p-1" id="status-pin-notification"></div>
+                                </div>
+                                <div class="col-4">
+                                    <button id="update-pin-notification" class="btn btn-danger waves-effect mt-2" >Ghim</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -468,9 +483,33 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
         </div>
     </div>
 </div>
+
 <script>
 
     commands.push(function() {
+        $("#update-pin-notification").click(function () {
+            let content = $('#input-pin-notification').val();
+            $.ajax({
+                url: '/admin/update-apartment-editable',
+                method: "POST",
+                data: {mode: "pin_notification", value: content},
+                dataType: 'json',
+                success: function (res) {
+                    if(res.status === true) {
+                        $('#status-pin-notification').text(res.content);
+                        $('#pin-notification').text(content);
+                        $('#pin-notification-section').addClass("bg-success");
+                        setTimeout(function () {
+                            $('#pin-notification-section').removeClass("bg-success");
+                        }, 2500);
+
+                        $('#status-pin-notification').fadeOut(2500);
+                    }
+                }
+            })
+        });
+
+
 
         $('.report-issue-apm-info').click(function () {
             let address = $(this).data('address');
