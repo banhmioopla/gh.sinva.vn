@@ -18,7 +18,7 @@ class PermissionRole extends CustomBaseStep {
 		$data['role_function'] = $this->ghRole->get(['code' => $this->input->get('role-code')])[0]['list_function'];
 		$data['list_permission'] = $this->libcontrollerlist->getControllers();
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('permission/show', $data);
 		$this->load->view('components/footer');
 	}

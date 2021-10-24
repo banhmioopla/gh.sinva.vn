@@ -22,7 +22,7 @@ class User extends CustomBaseStep {
 		$data['libUser'] = $this->libUser;
         $data['select_user'] = $this->libUser->cb(0,'YES');
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('user/show', $data);
 		$this->load->view('components/footer');
 	}

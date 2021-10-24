@@ -128,7 +128,7 @@ class Fee extends CustomBaseStep {
 
 
 
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('fee/show-personal-profile', [
             'list_user_income' => $view_data_income,
             'libUser' => $this->libUser,

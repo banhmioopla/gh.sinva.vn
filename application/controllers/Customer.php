@@ -84,7 +84,7 @@ class Customer extends CustomBaseStep {
             }
         }
 
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('customer/show-your', [
             'libDistrict' => $this->libDistrict,
             'ghCustomer' => $this->ghCustomer,
@@ -187,7 +187,7 @@ class Customer extends CustomBaseStep {
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		$data['search_params'] = $search_params;
 		/*--- Load View ---*/
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('customer/show', $data);
 		$this->load->view('components/footer');
 	}
@@ -201,7 +201,7 @@ class Customer extends CustomBaseStep {
 		$data['libRoom'] = $this->libRoom;
 		$data['label_apartment'] =  $this->config->item('label.apartment');
 		/*--- Load View ---*/
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('customer/care', $data);
 		$this->load->view('components/footer');
 	}
@@ -391,7 +391,7 @@ class Customer extends CustomBaseStep {
         $data['ghApartment'] = $this->ghApartment;
         $data['libUser'] = $this->libUser;
         $data['label_apartment'] =  $this->config->item('label.apartment');
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('customer/detail-profile-show', $data);
         $this->load->view('components/footer');
 

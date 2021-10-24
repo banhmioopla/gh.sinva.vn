@@ -32,7 +32,7 @@ class UserPenalty extends CustomBaseStep {
         $data['month'] = $from_time;
 
         /*--- Load View ---*/
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('user-penalty/show', $data);
         $this->load->view('components/footer');
     }

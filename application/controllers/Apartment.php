@@ -460,7 +460,7 @@ class Apartment extends CustomBaseStep {
 		$data['libUser'] = $this->libUser;
 		$data['cb_user'] = $this->libUser->cb();
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('apartment/show-like-base', $data);
 		$this->load->view('components/footer');
 	}
@@ -923,7 +923,7 @@ class Apartment extends CustomBaseStep {
 		$data['full_room_total'] = count($this->ghRoom->get(['active' => 'YES', 'status' => 'Full']));
 		$data['list_district'] = [];
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('apartment/dashboard', $data);
 		$this->load->view('components/footer');
 	}

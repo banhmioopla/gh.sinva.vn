@@ -13,7 +13,7 @@ class BaseApartmentType extends CI_Controller {
 	public function show(){
         $data['list_baseapartmenttype'] = $this->ghBaseApartmentType->getAll();
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('base-apartment-type/show', $data);
 		$this->load->view('components/footer');
 	}

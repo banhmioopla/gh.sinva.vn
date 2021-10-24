@@ -100,7 +100,7 @@ class Image extends CustomBaseStep
         $data['label_apartment'] =  $this->config->item('label.apartment');
 
 
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('media/store-apartment/show', $data);
         $this->load->view('components/footer');
 
@@ -165,7 +165,7 @@ class Image extends CustomBaseStep
         $data['ghImage'] = $this->ghImage;
         $data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
         $data['libDistrict'] = $this->libDistrict;
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('media/store-apartment/show-gallery-apartment', $data);
         $this->load->view('components/footer');
     }

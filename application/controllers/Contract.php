@@ -38,7 +38,7 @@ class Contract extends CustomBaseStep {
             unset($_SESSION['fast_notify']);
         }
 
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('contract/show-your', $data);
         $this->load->view('components/footer');
 
@@ -166,7 +166,7 @@ class Contract extends CustomBaseStep {
 		$data['libDistrict'] = $this->libDistrict;
 		
 		/*--- Load View ---*/
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('contract/create-show-v2', $data);
 		$this->load->view('components/footer');
 	}

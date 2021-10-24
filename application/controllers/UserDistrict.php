@@ -37,7 +37,7 @@ class UserDistrict extends CustomBaseStep {
 
 
         /*--- Load View ---*/
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('user-district/show', $data);
         $this->load->view('components/footer');
     }

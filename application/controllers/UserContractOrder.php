@@ -63,7 +63,7 @@ class UserContractOrder extends CustomBaseStep {
         }
 
         /*--- Load View ---*/
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('usercontractorder/show-create', $data);
         $this->load->view('components/footer');
     }

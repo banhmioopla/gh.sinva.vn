@@ -12,7 +12,7 @@ class BasePrice extends CustomBaseStep {
 	public function show(){
         $data['list_baseprice'] = $this->ghBasePrice->getAll();
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('base-price/show', $data);
 		$this->load->view('components/footer');
 	}

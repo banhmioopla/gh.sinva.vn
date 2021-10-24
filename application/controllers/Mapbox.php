@@ -38,7 +38,7 @@ class Mapbox extends CustomBaseStep {
         }
         $data['map_data'] = json_encode($data['map_data']);
 
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('mapbox/show', $data);
         $this->load->view('components/footer');
     }

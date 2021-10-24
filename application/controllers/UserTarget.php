@@ -14,7 +14,7 @@ class UserTarget extends CustomBaseStep {
         $data['list_district'] = $this->ghDistrict->getAll();
 
         /*--- Load View ---*/
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('district/show', $data);
         $this->load->view('components/footer');
     }

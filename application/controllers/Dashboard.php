@@ -151,7 +151,7 @@ class Dashboard extends CustomBaseStep {
             'chart_consultantbooking' => $data['chart_consultantbooking'],
             'chart_contract' => $data['chart_contract']
         ];
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('dashboard/show', $data);
         $this->load->view('components/footer');
     }

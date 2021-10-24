@@ -13,7 +13,7 @@ class Tag extends CustomBaseStep {
 		$data['list_tag'] = $this->ghTag->getAll();
 		
 		/*--- Load View ---*/
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('tag/show', $data);
 		$this->load->view('components/footer');
 	}

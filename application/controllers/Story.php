@@ -18,7 +18,7 @@ class Story extends CustomBaseStep {
             'time_insert > ' => 0,
         ]);
         $data['libUser'] = $this->libUser;
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('story/show', $data);
         $this->load->view('components/footer');
     }

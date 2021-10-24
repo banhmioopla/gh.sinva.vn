@@ -14,7 +14,7 @@ class Penalty extends CustomBaseStep {
         $data['list_penalty'] = $this->ghPenalty->getAll();
         $data['ghPenalty'] = $this->ghPenalty;
         /*--- Load View ---*/
-        $this->load->view('components/header', ['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('penalty/show', $data);
         $this->load->view('components/footer');
     }

@@ -14,7 +14,7 @@ class Service extends CustomBaseStep {
 		$data['list_service'] = $this->ghService->getAll();
 		
 		/*--- Load View ---*/
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('service/show', $data);
 		$this->load->view('components/footer');
 	}

@@ -13,7 +13,7 @@ class BaseRoomType extends CustomBaseStep {
 	public function show(){
         $data['list_baseroomtype'] = $this->ghBaseRoomType->getAll();
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('base-room-type/show', $data);
 		$this->load->view('components/footer');
 	}

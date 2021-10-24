@@ -80,8 +80,6 @@ class CustomBaseStep extends CI_Controller {
 		if(!empty($authorised_user)) {
 			$this->authorised_user = $authorised_user;
 			$this->authorised_mode = true;
-			$temp_menu = $this->menu;
-			$this->menu = $temp_menu;
 		}
 		$this->permission_controller_set = array_keys($this->permission_set);
 		if(isset($this->permission_set[$this->current_controller])) {

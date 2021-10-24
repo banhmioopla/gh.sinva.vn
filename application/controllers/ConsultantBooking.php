@@ -260,7 +260,7 @@ class ConsultantBooking extends CustomBaseStep {
         }
 
 		// send Email
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('consultantbooking/create', $data);
         $this->load->view('components/footer');
 //        $this->sendEmailNotification($data);

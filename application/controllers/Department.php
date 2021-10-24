@@ -11,7 +11,7 @@ class Department extends CustomBaseStep {
     public function show(){
 
         /*--- Load View ---*/
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('department/show');
         $this->load->view('components/footer');
     }

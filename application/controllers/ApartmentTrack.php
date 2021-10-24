@@ -21,7 +21,7 @@ class ApartmentTrack extends CustomBaseStep {
         $data['ghApartment'] = $this->ghApartment;
         $data['label'] =  $this->config->item('label.apartment');
         /*--- Load View ---*/
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('apartment-track/show', $data);
         $this->load->view('components/footer');
     }

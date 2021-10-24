@@ -19,7 +19,7 @@ class BusinessPartner extends CustomBaseStep {
         $data['ghMergeBusinessApartment'] = $this->ghMergeBusinessApartment;
         $data['ghApartment'] = $this->ghApartment;
         /*--- Load View ---*/
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('businesspartner/show', $data);
         $this->load->view('components/footer');
     }
