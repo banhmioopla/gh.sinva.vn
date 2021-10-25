@@ -310,9 +310,11 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                     <span class="ml-2 badge badge-danger"><strong><?= $uu ?></strong></span>
                                 <?php endforeach;?>
                                 </div>
+                                <?php if($apartment['description']): ?>
                                 <div class="p-1 apm-description" style="white-space: pre-line; background:#fee69c">
-                                    <?= $apartment['description'] ? $apartment['description'] : ':<' ?>
+                                    <?= $apartment['description'] ? $apartment['description'] : '' ?>
                                 </div>
+                                <?php endif;?>
                             </div>
                         </div>
                         <div class="row hide-in-sortable">
