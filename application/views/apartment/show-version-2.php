@@ -303,7 +303,9 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                         </div>
                         <div class="row hide-in-sortable mt-2">
                             <div class="col-12">
+                                <?php if($apartment['description']): ?>
                                 <h5 class="text-danger"><u>Mô Tả Dự Án</u></h5>
+                                <?php endif;?>
                                 <div class="mb-3">
                                 <?php foreach ($surrounding_facilities as $uu):?>
 
