@@ -90,7 +90,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                             <h4 class="text-primary">Update toàn bộ dự án [?]</h4>
                             <div class="row">
                                 <div class="col-4">
-                                    <button id="update-time_available" class="btn btn-danger waves-effect mt-2" >Xoá ngày sắp trống cũ</button>
+                                    <button id="update-time_available" class="btn btn-danger waves-effect mt-2" >Xoá ngày sắp trống <i>đã cũ</i></button>
                                 </div>
                             </div>
                         </div>
@@ -504,9 +504,12 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 url:'<?= base_url()."admin/room/time-available/get" ?>',
                 dataType: 'json',
                 success:function(response) {
-
+                    let title = 'Không có dự án nào có ngày sắp trống "Không hợp lệ" !';
+                    let has_available_time = false;
                     let html = "<ul class='text-left m'>";
                     for (const [key, value] of Object.entries(response)) {
+                        has_available_time = true;
+
                         html += "<li class='mt-2'>" + value['address'] + ": <ul>";
                         for (const _room of value['list_room']) {
                             html += '<li class="font-weight-bold"> ' + _room + ' </li>';
@@ -514,12 +517,15 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                         html += "</ul></li>";
                     }
                     html += "</ul>";
-
+                    if(has_available_time) {
+                        title = 'Review thông tin "Ngày sắp trống" ';
+                    }
                     swal({
-                        title: 'Review thông tin "Ngày sắp trống" ',
+                        title: title,
                         type: 'warning',
                         html: html,
                         showCancelButton: true,
+                        showConfirmButton: has_available_time,
                         confirmButtonClass: 'btn btn-confirm mt-2',
                         cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
                         confirmButtonText: 'Xác nhận Xóa',
