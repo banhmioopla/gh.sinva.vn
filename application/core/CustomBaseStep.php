@@ -95,7 +95,7 @@ class CustomBaseStep extends CI_Controller {
             'Apartment' => ['getWard', 'showV2', 'showEdit', 'editDescription', 'showTrending', 'duplicateApartment'],
             'Customer' => ['exportExcel', 'showYour'],
             'CustomerFeedback' => ['detail', 'show', 'showYour'],
-            'Room' => ['syncStatusRoom', 'fastUpdate', 'getShaft'],
+            'Room' => ['syncStatusRoom', 'fastUpdate', 'getShaft', 'getListRoomOldTimeAvailable'],
             'Media' => ['showImgApartment', 'uploadImgApartment', 'ajaxApartmentShowImage'],
             'ConsultantBooking' => ['chart'],
             'Report' => ['ApartmentUpdating'],

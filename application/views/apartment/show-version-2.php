@@ -65,18 +65,17 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
             <div class="row mt-3">
                 <div class="col-md-4">
                     <div class="card-box">
-                        <h4 class="text-primary">Truy Cập Nhanh - Cập Nhật Phòng Dự Án Khác (dành cho QLDA)</h4>
-                        <p>Một cách nhanh chóng, bạn có thể đi đến trang chỉnh sửa thông tin Phòng cho 1 Dự Án được chọn từ select box dưới đây</p>
+                        <h4 class="text-primary">Cập nhật thông tin phòng</h4>
                         <div>
                             <select id="apartment_update_ready" class=" form-control">
-                                <option value="">Cập Nhật Phòng Dự Án Khác</option>
+                                <option value="">Cập nhật thông tin phòng</option>
                                 <?php foreach ($list_apm_ready as $apm_move): ?>
                                     <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="mt-2">
-                            <h4 class="text-primary">Thông báo - Ghim</h4>
+                            <h4 class="text-primary">Ghim 1 Thông báo</h4>
                             <div class="row">
                                 <div class="col-8">
                                     <input type="text" id="input-pin-notification" value="<?= $this->pin_notification['content'] ?>" class="form-control mt-2 border border-info">
@@ -84,6 +83,14 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                 </div>
                                 <div class="col-4">
                                     <button id="update-pin-notification" class="btn btn-danger waves-effect mt-2" >Ghim</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <h4 class="text-primary">Update toàn bộ dự án [?]</h4>
+                            <div class="row">
+                                <div class="col-4">
+                                    <button id="update-time_available" class="btn btn-danger waves-effect mt-2" >Xoá ngày sắp trống cũ</button>
                                 </div>
                             </div>
                         </div>
@@ -491,6 +498,83 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
 <script>
 
     commands.push(function() {
+        $('#update-time_available').click(function () {
+            $.ajax({
+                type: 'GET',
+                url:'<?= base_url()."admin/room/time-available/get" ?>',
+                dataType: 'json',
+                success:function(response) {
+
+                    let html = "<ul class='text-left m'>";
+                    for (const [key, value] of Object.entries(response)) {
+                        html += "<li class='mt-2'>" + value['address'] + ": <ul>";
+                        for (const _room of value['list_room']) {
+                            html += '<li class="font-weight-bold"> ' + _room + ' </li>';
+                        }
+                        html += "</ul></li>";
+                    }
+                    html += "</ul>";
+
+                    swal({
+                        title: 'Review thông tin "Ngày sắp trống" ',
+                        type: 'warning',
+                        html: html,
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn btn-confirm mt-2',
+                        cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                        confirmButtonText: 'Xác nhận Xóa',
+                        cancelButtonText: 'Huỷ'
+                    }).then(function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() . "admin/update-room-editable" ?>',
+                            data: {mode: 'empty_time_available'},
+                            dataType: 'json',
+                            success: function (response) {
+                                console.log(response);
+                                swal({
+                                    title: response.content,
+                                    type: 'success',
+                                    confirmButtonClass: 'btn btn-confirm mt-2'
+                                });
+                            }
+                        });
+
+                    });
+                }
+            });
+
+
+            /*swal({
+                title: 'Xác nhận xoá thông tin "Ngày sắp trống" ',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonClass: 'btn btn-confirm mt-2',
+                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                confirmButtonText: 'Xóa',
+            }).then(function () {
+                $.ajax({
+                    type: 'POST',
+                    url:'<//?= base_url()."admin/update-room-editable" ?>',
+                    data: {pk: room_id, name: 'active', value: 'NO'},
+                    success:function(response) {
+                        let data = JSON.parse(response);
+                        if(data.status > 0) {
+                            this_btn.parents('tr').remove();
+                        }
+                    }
+                });
+                swal({
+                    title: 'Đã Xóa Thành Công!',
+                    type: 'success',
+                    confirmButtonClass: 'btn btn-confirm mt-2'
+                });
+            });*/
+
+        });
+
+
+
         $("#update-pin-notification").click(function () {
             let content = $('#input-pin-notification').val();
             $.ajax({

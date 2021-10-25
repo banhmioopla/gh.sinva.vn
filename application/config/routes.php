@@ -1143,6 +1143,12 @@ $route['admin/get-room-type'] = function($params = []) {
 	$action = '/getType';
 	return $controller.$action;
 };
+
+$route['admin/room/time-available/get'] = function($params = []) {
+	$controller = 'Room';
+	$action = '/getListRoomOldTimeAvailable';
+	return $controller.$action;
+};
 $route['admin/get-room-status'] = function($params = []) {
 	$controller = 'Room';
 	$action = '/getStatus';

@@ -23,6 +23,22 @@ class Room extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+	public function getListRoomOldTimeAvailable(){
+	    $list_room = $this->ghRoom->get(['time_available >' => 0 ,'active' => 'YES', 'time_available < ' =>  strtotime(date('d-m-Y'))]);
+	    $data = [];
+	    foreach ($list_room as $room) {
+	        $apm = $this->ghApartment->getFirstById($room['apartment_id']);
+	        if(!isset($data["apm_".$room['apartment_id']]['address'])){
+                $data["apm_".$room['apartment_id']]['address'] = $apm['address_street'];
+            }
+            $data["apm_".$room['apartment_id']]['list_room'][] = "<span class='text-danger'>".$room['code'] . " </span> <i>". date('d/m/Y', $room['time_available']) . "</i>";
+
+        }
+
+
+	    echo json_encode($data); die;
+    }
+
 	
 
 	public function create() {
@@ -149,7 +165,21 @@ class Room extends CustomBaseStep {
 		$room_id = $this->input->post('pk');
 		$field_name = $this->input->post('name');
 		$field_value = $this->input->post('value');
+        if($this->input->post('mode') == 'empty_time_available') {
+            $list_room = $this->ghRoom->get(['time_available >' => 0 ,'active' => 'YES', 'time_available < ' =>  strtotime(date('d-m-Y'))]);
+            $counter = 0;
+            foreach ($list_room as $room) {
+                $result = $this->ghRoom->updateById($room['id'], [
+                    'time_update' => time(),
+                    'time_available' => 0
+                ]);
+                if($result) {
+                    $counter++;
+                }
 
+            }
+            echo json_encode(['status' => true, 'content' => 'Cập nhật thành công ' . $counter. ' phòng!']); die;
+        }
 		if(!empty($room_id) and !empty($field_name)) {
 			$data = [
 				$field_name => $field_value

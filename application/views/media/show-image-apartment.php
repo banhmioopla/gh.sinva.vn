@@ -352,7 +352,7 @@ include VIEWPATH . 'functions.php';
                                                         foreach ($chain_room as $room):
 
                                                             if(!($shaft['id'] == $room['shaft'])) {
-                                                                if(empty($room['shaft']) && !in_array($room['value'], $arr_room_no_shaft)){
+                                                                if(empty($room['shaft']) && !in_array($room, $arr_room_no_shaft)){
                                                                     $arr_room_no_shaft[] = $room;
                                                                 }
                                                                 continue;
