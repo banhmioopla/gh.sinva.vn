@@ -95,7 +95,7 @@ class GhApartment extends CI_Model {
     }
 
     public function getListCol() {
-        $result = $this->db->get_where($this->table, ['id > ' => 1, 'gh_apartment' => 1])->row_array();
+        $result = $this->db->get_where($this->table, ['id > ' => 1, 'apartment_type_id' => 1])->row_array();
         $out =  [];
 
         foreach ($result as $col => $val) {
