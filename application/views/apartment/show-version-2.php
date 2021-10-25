@@ -343,7 +343,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                 <span class="m-1"><button data-address="<?= $apartment['address_street'] ?>"
                                                           data-apm="<?= $apartment['id'] ?>"
                                                           class="btn report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
-                                <a href="/admin/download-all-image-apartment?apm=<?= $apartment['id'] ?>"><button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
+                                <a href="/admin/download-all-image-apartment?apm=<?= $apartment['id'] ?>"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
 
                                 <a class="m-1" href="/sale/apartment-export?id=<?= $apartment['id'] ?>" >
                                     <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-file-excel"></i> <span class="d-none d-md-inline"></span></button>
