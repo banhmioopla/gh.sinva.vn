@@ -714,7 +714,7 @@ class Apartment extends CustomBaseStep {
 		$data['libDistrict'] = $this->libDistrict;
 
 		/*--- Load View ---*/
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('apartment/show-commission-rate', $data);
 		$this->load->view('components/footer');
 	}

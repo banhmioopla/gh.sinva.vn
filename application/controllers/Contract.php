@@ -152,7 +152,7 @@ class Contract extends CustomBaseStep {
         $data['time_to'] = $time_to;
         $data['timeCheckInFrom'] = $timeCheckInFrom;
         $data['timeCheckInTo'] = $timeCheckInTo;
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('contract/show-all', $data);
 		$this->load->view('components/footer');
 	}

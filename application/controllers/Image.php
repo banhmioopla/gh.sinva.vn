@@ -118,7 +118,7 @@ class Image extends CustomBaseStep
             'apartment_model' => $this->ghApartment->getFirstById($apartment_id),
             'list_post' => []
         ];
-        $this->load->view('components/header', ['menu' => $this->menu]);
+        $this->load->view('components/header');
         $this->load->view('image/show-room', $data);
         $this->load->view('components/footer');
 

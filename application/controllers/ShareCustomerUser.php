@@ -48,7 +48,7 @@ class ShareCustomerUser extends CustomBaseStep {
         $data['libUser'] = $this->libUser;
         $data['label'] =  $this->config->item('label.apartment');
 
-        $this->load->view('components/header',['menu' =>$this->menu]);
+        $this->load->view('components/header');
         $this->load->view('sharecustomeruser/show-create', $data);
         $this->load->view('components/footer');
     }

@@ -86,7 +86,7 @@ class User extends CustomBaseStep {
 			$this->ghUser->updateById($this->auth['id'], ['password' => $new_password]);
 			$user_profile = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
 		}
-		$this->load->view('components/header', ['menu' => $this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('user/change-password', $user_profile[0]);
 		$this->load->view('components/footer');
 	}
