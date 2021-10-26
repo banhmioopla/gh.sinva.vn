@@ -258,7 +258,7 @@ include VIEWPATH.'functions.php';
                                     <!-- item-->
                                     <div class="dropdown-item noti-title">
                                         <?php if(isYourPermission('ShAgencyGroup', 'show', $this->permission_set)):?>
-                                            <a class="text-danger" href="/share/agency-group/show">
+                                            <a class="text-danger" href="/share/agency-group/dashboard/show">
                                                <h4 class="text-overflow">Đi đến <strong>SHARE</strong> </h4>
                                             </a>
                                             <hr>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class ShAgencyGroup extends CustomBaseStep {
+class ShAgencyGroup extends CI_Controller {
     private $access_control;
     public function __construct()
     {
