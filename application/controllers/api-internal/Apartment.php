@@ -7,6 +7,9 @@ class Apartment extends RestController {
     {
         // Construct the parent class
         parent::__construct();
+
+        $this->load->model('ghApartment');
+
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: GET, OPTIONS");
     }
@@ -14,44 +17,8 @@ class Apartment extends RestController {
     public function apartment_get()
     {
         // Users from a data store e.g. database
-        $users = [
-            ['id' => 0, 'name' => 'John', 'email' => 'john@example.com'],
-            ['id' => 1, 'name' => 'Jim', 'email' => 'jim@example.com'],
-        ];
-
-        $id = $this->get( 'id' );
-
-        if ( $id === null )
-        {
-            // Check if the users data store contains users
-            if ( $users )
-            {
-                // Set the response and exit
-                $this->response( $users, 200 );
-            }
-            else
-            {
-                // Set the response and exit
-                $this->response( [
-                    'status' => false,
-                    'message' => 'No users were found'
-                ], 404 );
-            }
-        }
-        else
-        {
-            if ( array_key_exists( $id, $users ) )
-            {
-                $this->response( $users[$id], 200 );
-            }
-            else
-            {
-                $this->response( [
-                    'status' => false,
-                    'message' => 'No such user found'
-                ], 404 );
-            }
-        }
+        $list_apm = $this->ghApartment->get(['active' => 'YES', 'id >' => 305]);
+        return $this->response( $list_apm, 200 );
     }
 
     public function apartmentById_get() {

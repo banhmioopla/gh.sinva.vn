@@ -8,6 +8,7 @@ class ShAgencyGroup extends CI_Controller {
         parent::__construct();
         $this->load->model('shareAgencyGroup');
         $this->load->library('encryption');
+        $this->load->library('LibUuid', null, 'libUuid');
     }
 
     public function show(){

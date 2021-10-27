@@ -74,19 +74,19 @@
 
         <div class="row">
             <div class="col-12">
-                <h4 class="font-weight-bold text-primary">Đội nhóm</h4>
-            </div>
-            <div class="col-12">
                 <div class="card-box">
+                    <h4 class="font-weight-bold text-primary"><a href="/share/agency-group/show">Đội nhóm</a> </h4>
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <th>Tên Nhóm</th>
+                        <th>Trạng Thái</th>
                         <th>Ngày Tạo</th>
                         </thead>
                         <tbody>
                         <?php foreach ($list_agency_group as $group):?>
                             <tr>
-                                <td><?= $group['name'] ?></td>
+                                <td><?= $group['name'] ?> <a target="_blank" href="/share/agency-group/dashboard/show-group-detail?id=<?= $group['id'] ?>"><i class="mdi mdi-gesture-double-tap"></i></a></td>
+                                <td> - </td>
                                 <td><?= date("d/m/Y",$group['time_create']) ?></td>
                             </tr>
                         <?php endforeach;?>
@@ -98,11 +98,9 @@
 
         <div class="row">
             <div class="col-12">
-                <h4 class="font-weight-bold text-primary">Danh sách quyền</h4>
-            </div>
-            <div class="col-12">
                 <div class="card-box">
-                    <table class="table">
+                    <h4 class="font-weight-bold text-primary">Danh sách quyền</h4>
+                    <table class="table table-bordered">
                         <thead class="thead-dark">
                         <th>Tên Quyền</th>
                         <th>Mô Tả</th>

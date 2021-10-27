@@ -10,6 +10,7 @@ class ShDashboard extends CI_Controller {
         $this->load->model('shareAgencyGroup');
         $this->load->model('shareRole');
         $this->load->model('sharePackage');
+        $this->load->model('ghApartment');
         $this->load->library('encryption');
         $this->load->library('LibUuid', null, 'libUuid');
         $this->load->library('LibEmail', null, 'libEmail');
@@ -29,6 +30,21 @@ class ShDashboard extends CI_Controller {
             'list_agency_group' => $list_agency_group,
             'shareAgencyGroup' => $this->shareAgencyGroup,
             'shareRole' => $this->shareRole,
+        ]);
+        $this->load->view('components/footer');
+    }
+
+    public function showGroupDetail() {
+        $group_id = $this->input->get('id');
+
+        $group = $this->shareAgencyGroup->getFirstById($group_id);
+        $list_user = $this->shareUser->get(['group_uuid' => $group['uuid'] ]);
+        $list_apartment = $this->ghApartment->get(['group_uuid' => $group['uuid'] ]);
+        $this->load->view('components/share-header');
+        $this->load->view('sh-dashboard/show-group-detail', [
+            'group' => $group,
+            'list_user' => $list_user,
+            'list_apartment' => $list_apartment,
         ]);
         $this->load->view('components/footer');
     }

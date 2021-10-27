@@ -6,6 +6,8 @@ class GhConsultantBooking extends CI_Model {
 
 	public function get($where = []) {
         $this->db->order_by('time_booking desc');
+        $where['share_user_uuid'] = NULL;
+
         return $this->db->get_where($this->table, $where)->result_array();
     }
 

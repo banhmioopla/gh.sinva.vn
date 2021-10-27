@@ -11,6 +11,7 @@ class GhApartment extends CI_Model {
             $this->db->order_by('order_item ASC,  id DESC, address_street ASC'); // comment xxx yyy
         }
         $where['apartment_type_id'] = 1;
+        $where['group_uuid'] = NULL;
 
         return $this->db->get_where($this->table, $where)->result_array();
     }
@@ -22,15 +23,15 @@ class GhApartment extends CI_Model {
     }
 
     public function getByActive() {
-        return $this->db->get_where($this->table, ['active' => 'YES', 'apartment_type_id' => 1])->result_array();
+        return $this->db->get_where($this->table, ['active' => 'YES', 'apartment_type_id' => 1, 'group_uuid' => null])->result_array();
 	}
 	
 	public function getByDistrictId($district_id) {
-        return $this->db->get_where($this->table, ['district_id' => $district_id, 'apartment_type_id' => 1])->result_array();
+        return $this->db->get_where($this->table, ['district_id' => $district_id, 'apartment_type_id' => 1, 'group_uuid' => null])->result_array();
     }
 
     public function getById($apartment_id) {
-        return $this->db->get_where($this->table, ['id' => $apartment_id, 'apartment_type_id' => 1])->result_array();
+        return $this->db->get_where($this->table, ['id' => $apartment_id, 'apartment_type_id' => 1, 'group_uuid' => null])->result_array();
     }
 
     public function getAll() {
@@ -41,7 +42,8 @@ class GhApartment extends CI_Model {
 
     public function getByUserDistrict($account_id) {
         $q = "SELECT * FROM gh_apartment, gh_user_district 
-                WHERE gh_apartment.district_code = gh_user_district.district_code AND gh_user_district.user_id = $account_id AND gh_apartment.apartment_type_id = 1
+                WHERE gh_apartment.district_code = gh_user_district.district_code AND gh_user_district.user_id = $account_id 
+                AND gh_apartment.apartment_type_id = 1 AND group_uuid IS NULL
         ";
         // if($account_id == 2019 or $account_id == 171020010) {
         //     $q = "SELECT * FROM gh_apartment, gh_user_district 
@@ -54,7 +56,7 @@ class GhApartment extends CI_Model {
     public function getByDistrictReport($set_district) {
         $q = "SELECT * FROM gh_apartment 
                 WHERE FIND_IN_SET(gh_apartment.district_code, '".$set_district."')  
-                AND gh_apartment.active = 'YES' AND gh_apartment.apartment_type_id = 1
+                AND gh_apartment.active = 'YES' AND gh_apartment.apartment_type_id = 1 AND group_uuid IS NULL
         ";
         $result = $this->db->query($q);
         return $result->result_array();

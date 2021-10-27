@@ -196,7 +196,7 @@ class Contract extends CustomBaseStep {
             $current_partial_amount += $item['amount'];
         }
 		$data['remaining_amount'] = $model['room_price'] - $current_partial_amount;
-		$this->load->view('components/header',['menu' =>$this->menu]);
+		$this->load->view('components/header');
 		$this->load->view('contract/detail-show', $data);
 		$this->load->view('components/footer');
 	}

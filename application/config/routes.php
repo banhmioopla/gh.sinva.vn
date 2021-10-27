@@ -1398,6 +1398,12 @@ $route['share/agency-group/dashboard/show'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['share/agency-group/dashboard/show-group-detail'] = function($params = []) {
+    $controller = 'ShDashboard';
+    $action = '/showGroupDetail';
+    return $controller.$action;
+};
+
 $route['share/agency-group/show'] = function($params = []) {
     $controller = 'ShAgencyGroup';
     $action = '/show';
