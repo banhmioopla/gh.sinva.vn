@@ -42,6 +42,11 @@ class LibUser {
         return $list_user ? $list_user[0]['name'] : $account_id;
     }
 
+    public function getPhoneByAccountid($account_id){
+        $list_user = $this->CI->ghUser->get(['account_id' => $account_id]);
+        return $list_user ? $list_user[0]['phone_number'] : "";
+    }
+
     public function getLastNameByAccountId($account_id){
         $user = $this->CI->ghUser->getFirstByAccountId($account_id);
 
