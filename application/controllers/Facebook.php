@@ -32,29 +32,26 @@ class Facebook extends CI_Controller {
 
             $text = "";
             $valid = false;
-            $from_page = explode(" ", $message);
-            $list_apm = $this->ghApartment->get(['active' => 'YES' , 'district_code' => $from_page[1]]);
-            foreach ($list_apm as $apm){
-                $text .= $from_page[3].": ". $apm['address_street']. " \n ";
-            }
-            $valid = true;
-            if($valid === true) {
-                $jsonData = [
-                    "recipient" => [
-                        "id" => $sender,
-                        "message" => [
-                            "text" => "GIOHANG "
-                        ]
-                    ]
-                ];
 
-                /* curl setting to send a json post data */
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($jsonData));
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                if (!empty($message)) {
-                    $result = curl_exec($ch); // user will get the message
-                }
+            $list_apm = $this->ghApartment->get(['active' => 'YES' , 'district_code' => '7']);
+            foreach ($list_apm as $apm){
+                $text .= $apm['address_street']. " \n ";
+            }
+            $jsonData = [
+                "recipient" => [
+                    "id" => $sender,
+                    "message" => [
+                        "text" => "GIOHANG "
+                    ]
+                ]
+            ];
+
+            /* curl setting to send a json post data */
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($jsonData));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            if (!empty($message)) {
+                $result = curl_exec($ch); // user will get the message
             }
 
         }
