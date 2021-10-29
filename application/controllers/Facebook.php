@@ -9,9 +9,10 @@ class Facebook extends CI_Controller {
 
     public function sendApi(){
         /* validate verify token needed for setting up web hook */
-        if (isset($_GET['hub.verify_token'])) {
-            if ($_GET['hub.verify_token'] === 'IUzI1NiIsInR5cCI6IkpXVCJ9') {
-                echo $_GET['hub.challenge'];
+        if (isset($_GET['hub_mode']) && isset($_GET['hub_challenge']) && isset($_GET['hub_verify_token'])) {
+            if ($_GET['hub_verify_token'] === 'IUzI1NiIsInR5cCI6IkpXVCJ9') {
+                echo $_GET['hub_challenge'];
+                http_response_code(200);
                 return;
             } else {
                 echo 'Invalid Verify Token';
