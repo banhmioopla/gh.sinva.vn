@@ -14,9 +14,6 @@ class Facebook extends CI_Controller {
                 echo $_GET['hub_challenge'];
                 http_response_code(200);
                 return;
-            } else {
-                echo 'Invalid Verify Token';
-                return;
             }
         }
 
@@ -26,7 +23,7 @@ class Facebook extends CI_Controller {
 
             $sender = $input['entry'][0]['messaging'][0]['sender']['id']; //sender facebook id
             $message = $input['entry'][0]['messaging'][0]['message']['text']; //text that user sent
-            $token = "EAAcaufZAIHOABAN7V9Wkq2ihPhiQ1G6nWw28LLPTaUZAyMaXbXYTdwZCirZAt7eePsVQgzZBr8ITcTyhPZCW12hMLUYt0VjC86ywDo2QiDDaSdXG9VnLMik5M468jGLXHa0UZBJ4XCfaKDZAbf5ZBOXFfTrHPNZCDdh7c8SBKh5NlQnLDpSC34GQ2U";
+            $token = "EAAcaufZAIHOABAAGthP2YKyhyOZCzY8eo9r0GnCXBnNzrn6nH3uidmIQkQz5PDpgbr9VpbGwGm4zLh0TZAHtZC64J5ZCkZBNNHUD9YWks1EnwHIzGK5kZAgMLnZArnc4MxAVkRu9g3F9eI9Ns2qq9infIlYo62xioDZA0TFQkoH83Uy3S4pcD0ZC3NwzIEfX3MbuZCBIIcovSALhAZDZD";
             $url = 'https://graph.facebook.com/v2.6/me/messages?access_token='.$token;
 
             /*initialize curl*/
