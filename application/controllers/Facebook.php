@@ -29,26 +29,19 @@ class Facebook extends CI_Controller {
             /*initialize curl*/
             $ch = curl_init($url);
             /*prepare response*/
-
             $text = "";
-            $valid = false;
 
-            $list_apm = $this->ghApartment->get(['active' => 'YES' , 'district_code' => '7']);
-            foreach ($list_apm as $apm){
-                $text .= $apm['address_street']. " \n ";
-            }
-            $jsonData = [
-                "recipient" => [
-                    "id" => $sender,
-                    "message" => [
-                        "text" => "GIOHANG "
-                    ]
-                ]
-            ];
-
+            $jsonData = '{
+                "recipient":{
+                    "id":"' . $sender . '"
+                    },
+                    "message":{
+                        "text":"GH, ' . $text . '"
+                    }
+                }';
             /* curl setting to send a json post data */
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($jsonData));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
             if (!empty($message)) {
                 $result = curl_exec($ch); // user will get the message
