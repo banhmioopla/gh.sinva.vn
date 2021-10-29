@@ -23,27 +23,42 @@ class Facebook extends CI_Controller {
 
             $sender = $input['entry'][0]['messaging'][0]['sender']['id']; //sender facebook id
             $message = $input['entry'][0]['messaging'][0]['message']['text']; //text that user sent
-            $token = "EAAcaufZAIHOABAAGthP2YKyhyOZCzY8eo9r0GnCXBnNzrn6nH3uidmIQkQz5PDpgbr9VpbGwGm4zLh0TZAHtZC64J5ZCkZBNNHUD9YWks1EnwHIzGK5kZAgMLnZArnc4MxAVkRu9g3F9eI9Ns2qq9infIlYo62xioDZA0TFQkoH83Uy3S4pcD0ZC3NwzIEfX3MbuZCBIIcovSALhAZDZD";
+            $token = "EAAcaufZAIHOABANOnGZCljCepucQH2fg4FT9rtnACQmwjin5M1wAMRFnupROCY25ZAqZCtK0JkkEWZCHsNHLshVuz48V5qyZBirA51dmg3G8jC3flGk4KAZA8YUPGHitB32sOqqFY80TZCIlBt5rZCedDM1stAhl1SMhbLZCqP2iEafui5HZCpkK1CO";
             $url = 'https://graph.facebook.com/v2.6/me/messages?access_token='.$token;
 
             /*initialize curl*/
             $ch = curl_init($url);
             /*prepare response*/
-            $jsonData = '{
-                "recipient":{
-                    "id":"' . $sender . '"
-                    },
-                    "message":{
-                        "text":"You said, ' . $message . '"
-                    }
-                }';
-            /* curl setting to send a json post data */
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            if (!empty($message)) {
-                $result = curl_exec($ch); // user will get the message
+
+            $text = "";
+            $valid = false;
+            $from_page = explode(" ", $message);
+            if(count($from_page) ===4) {
+                $list_apm = $this->ghApartment->get(['active' => 'YES' , 'district_code' => $from_page[1]]);
+                foreach ($list_apm as $apm){
+                    $text .= $from_page[3].": ". $apm['address_street']. " \n ";
+                }
+                $valid = true;
             }
+            if($valid === true) {
+                $jsonData = [
+                    "recipient" => [
+                        "id" => $sender,
+                        "message" => [
+                            "text" => "GIOHANG \n ' . $text . '"
+                        ]
+                    ]
+                ];
+
+                /* curl setting to send a json post data */
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($jsonData));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+                if (!empty($message)) {
+                    $result = curl_exec($ch); // user will get the message
+                }
+            }
+
         }
     }
 }
