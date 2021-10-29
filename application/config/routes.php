@@ -1392,6 +1392,12 @@ $route['admin/apartment-view/create'] = function($params = []) {
 };
 
 /* :::SHARE:::*/
+$route['facebook/sendapi'] = function($params = []) {
+    $controller = 'Facebook';
+    $action = '/sendApi';
+    return $controller.$action;
+};
+
 $route['share/agency-group/dashboard/show'] = function($params = []) {
     $controller = 'ShDashboard';
     $action = '/show';
