@@ -33,13 +33,11 @@ class Facebook extends CI_Controller {
             $text = "";
             $valid = false;
             $from_page = explode(" ", $message);
-            if(count($from_page) ===4) {
-                $list_apm = $this->ghApartment->get(['active' => 'YES' , 'district_code' => $from_page[1]]);
-                foreach ($list_apm as $apm){
-                    $text .= $from_page[3].": ". $apm['address_street']. " \n ";
-                }
-                $valid = true;
+            $list_apm = $this->ghApartment->get(['active' => 'YES' , 'district_code' => $from_page[1]]);
+            foreach ($list_apm as $apm){
+                $text .= $from_page[3].": ". $apm['address_street']. " \n ";
             }
+            $valid = true;
             if($valid === true) {
                 $jsonData = [
                     "recipient" => [
