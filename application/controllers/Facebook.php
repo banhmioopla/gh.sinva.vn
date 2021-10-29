@@ -43,7 +43,7 @@ class Facebook extends CI_Controller {
                     "recipient" => [
                         "id" => $sender,
                         "message" => [
-                            "text" => "GIOHANG \n ' . $text . '"
+                            "text" => "GIOHANG "
                         ]
                     ]
                 ];
