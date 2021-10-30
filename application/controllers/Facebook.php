@@ -122,14 +122,17 @@ class Facebook extends CI_Controller {
 
             if(strpos($message, 'da') !== false && $message[0] === 'd'){
                 $arr_msg = explode("da", $message);
-                $content = "";
+
                 if(count($arr_msg) === 2){
+                    $apm = $this->ghApartment->getFirstById($arr_msg[1]);
+                    $content = $apm['address_street']. " \n";
+                    $content .= "=== {$apm['id']} === \n";
                     $list_room = $this->ghRoom->get(['apartment_id' => $arr_msg[1], 'active' => 'YES', 'status' => "Available"]);
                     foreach ($list_room as $room) {
                         $price = $room['price']/1000;
                         $code = $room['code'];
                         $id = $room['id'];
-                        $content .= "* {$id} * Mã {$code} : {$price} \n ";
+                        $content .= "* {$id} * Mã {$code} : {$price} \n";
                     }
 
                     $ready_message = [
@@ -145,13 +148,14 @@ class Facebook extends CI_Controller {
 
             if(strpos($message, 'dv') !== false && $message[0] === 'd'){
                 $arr_msg = explode("dv", $message);
-                $content = "";
                 if(count($arr_msg) === 2){
                     $apm = $this->ghApartment->getFirstById($arr_msg[1]);
-                    $content = " Điện: ".$apm['electricity'] ." \n ";
-                    $content .= "Nước: ".$apm['water'] ." \n ";
-                    $content .= "Internet: ".$apm['internet'] ." \n ";
-                    $content .= "Thang máy: ".$apm['elevator'] ." \n ";
+                    $content = $apm['address_street']. " \n";
+                    $content .= "=== {$apm['id']} === \n";
+                    $content = "Điện: ".$apm['electricity'] ." \n";
+                    $content .= "Nước: ".$apm['water'] ." \n";
+                    $content .= "Internet: ".$apm['internet'] ." \n";
+                    $content .= "Thang máy: ".$apm['elevator'] ." \n";
 
                     $ready_message = [
                         "recipient" => [
