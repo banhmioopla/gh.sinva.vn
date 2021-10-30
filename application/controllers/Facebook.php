@@ -54,7 +54,7 @@ class Facebook extends CI_Controller {
             $token2 = "EAAcaufZAIHOABAFj0iNIAwLtxZCb98ZBk2i9MN0em1O79bwMZBvCBeHaSFm6e6ZCZBHV0QPkdW6yMVGXaO4EfGb8MW50os3Ub1j1r8sEvPwchITZCs9mbpdIwDXuYvIxFKV4bvWDruLu6fhFDyK5pGpjAjZCrO5gqhg1Hz8xtKv1fMMvjftl8pp9";
             $url = 'https://graph.facebook.com/v2.6/me/messages?access_token='.$token2;
             $url12 = "https://graph.facebook.com/v12.0/me/messages?access_token=".$token2;
-            $botName ="SimCon 🐌  \n ";
+            $botName ="SimCon 🐌 "."\n";
             /*initialize curl*/
             $ch = curl_init($url12);
             /*prepare response*/
@@ -66,7 +66,7 @@ class Facebook extends CI_Controller {
                     "id" => $sender
                 ],
                 "message" => [
-                    "text" => $list_step['step1']['question']
+                    "text" => $botName. $list_step['step1']['question']
                 ]
             ];
 
@@ -104,7 +104,7 @@ class Facebook extends CI_Controller {
 
             if(!empty($quickRepPayload) && is_array($quickRepPayload)){
                 if(isset($quickRepPayload['step'] ) && $quickRepPayload['step'] === 'step2') {
-                    $content = "";
+                    $content = $botName;
                     if(isset($quickRepPayload['d_code'])){
                         $list_apm = $this->ghApartment->get(['active' => 'YES', 'district_code' => $quickRepPayload['d_code']]);
                         foreach ($list_apm as $apm) {
@@ -127,7 +127,8 @@ class Facebook extends CI_Controller {
 
                 if(count($arr_msg) === 2){
                     $apm = $this->ghApartment->getFirstById($arr_msg[1]);
-                    $content = $apm['address_street']. " \n";
+                    $content = $botName;
+                    $content .= $apm['address_street']. " \n";
                     $content .= "=== {$apm['id']} === \n";
                     $list_room = $this->ghRoom->get(['apartment_id' => $arr_msg[1], 'active' => 'YES', 'status' => "Available"]);
                     foreach ($list_room as $room) {
@@ -170,6 +171,7 @@ class Facebook extends CI_Controller {
                 $arr_msg = explode("dv", $message);
                 if(count($arr_msg) === 2){
                     $apm = $this->ghApartment->getFirstById($arr_msg[1]);
+                    $content = $botName;
                     $content = $apm['address_street']. " \n";
                     $content .= "=== {$apm['id']} === \n";
                     $content = "Điện: ".$apm['electricity'] ." \n";
