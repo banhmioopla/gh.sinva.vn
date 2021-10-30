@@ -51,8 +51,9 @@ class Facebook extends CI_Controller {
             $postback = isset($messaging["postback"]["payload"]) ? $messaging["postback"]["payload"] : "";
             $quickRepPayload = isset($messaging["message"]["quick_reply"]['payload']) ? json_decode($messaging["message"]["quick_reply"]['payload'], true) : null;
             $token = "EAAcaufZAIHOABANOnGZCljCepucQH2fg4FT9rtnACQmwjin5M1wAMRFnupROCY25ZAqZCtK0JkkEWZCHsNHLshVuz48V5qyZBirA51dmg3G8jC3flGk4KAZA8YUPGHitB32sOqqFY80TZCIlBt5rZCedDM1stAhl1SMhbLZCqP2iEafui5HZCpkK1CO";
-            $url = 'https://graph.facebook.com/v2.6/me/messages?access_token='.$token;
-            $url12 = "https://graph.facebook.com/v12.0/me/messages?access_token=".$token;
+            $token2 = "EAAcaufZAIHOABAFj0iNIAwLtxZCb98ZBk2i9MN0em1O79bwMZBvCBeHaSFm6e6ZCZBHV0QPkdW6yMVGXaO4EfGb8MW50os3Ub1j1r8sEvPwchITZCs9mbpdIwDXuYvIxFKV4bvWDruLu6fhFDyK5pGpjAjZCrO5gqhg1Hz8xtKv1fMMvjftl8pp9";
+            $url = 'https://graph.facebook.com/v2.6/me/messages?access_token='.$token2;
+            $url12 = "https://graph.facebook.com/v12.0/me/messages?access_token=".$token2;
             $botName ="SimCon 🐌  \n ";
             /*initialize curl*/
             $ch = curl_init($url12);
