@@ -9,6 +9,7 @@ class Facebook extends CI_Controller {
         $this->load->model('ghApartment');
         $this->load->model('ghDistrict');
         $this->load->model('ghRoom');
+        $this->load->model('ghBaseRoomType');
     }
 
     function list_step(){
@@ -129,10 +130,28 @@ class Facebook extends CI_Controller {
                     $content .= "=== {$apm['id']} === \n";
                     $list_room = $this->ghRoom->get(['apartment_id' => $arr_msg[1], 'active' => 'YES', 'status' => "Available"]);
                     foreach ($list_room as $room) {
-                        $price = $room['price']/1000;
+                        $price = number_format($room['price']/1000);
                         $code = $room['code'];
                         $id = $room['id'];
-                        $content .= "* {$id} * Mã {$code} : {$price} \n";
+
+                        $list_type_id = json_decode($room['room_type_id'], true);
+                        $js_list_type = "";
+                        $text_type_name = "";
+
+                        $type_arr = [];
+                        if($list_type_id) {
+                            $js_list_type = implode(",", $list_type_id);
+                            if ($list_type_id && count($list_type_id) > 0) {
+                                foreach ($list_type_id as $type_id) {
+                                    $typeModel = $this->ghBaseRoomType->getFirstById($type_id);
+                                    $type_arr[]= $typeModel['name'];
+                                }
+                            }
+                        }
+                        $text_type_name = implode(", ",$type_arr );
+
+
+                        $content .= "* Mã {$code} : {$price} | {$text_type_name} \n";
                     }
 
                     $ready_message = [
