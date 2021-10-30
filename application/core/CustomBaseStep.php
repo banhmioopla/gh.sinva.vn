@@ -32,7 +32,9 @@ class CustomBaseStep extends CI_Controller {
         $this->editable = false;
         $this->yourTeam = false;
         $this->list_report_issue = $this->ghNotification->get(['controller' => 'ApartmentReport']);
-
+        echo "<pre style='margin-top: 120px'>";
+        var_dump(str_contains('da123', 'da'));
+        die;
         $yourTeam = $this->ghTeam->getFirstByLeaderUserId($this->auth['account_id']);
         if($yourTeam){
             $this->yourTeam = $yourTeam;
