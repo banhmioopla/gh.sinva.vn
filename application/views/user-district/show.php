@@ -131,7 +131,7 @@
                                                 $is_ov = 'checked';
                                                 $text_ov = "text-pink";
                                             }
-                                            if($model['apartment_id'] === $district['code']){
+                                            if($model['apartment_id'] === $apm['id']){
                                                 $is_select = 'checked';
                                             }
                                         }
