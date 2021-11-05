@@ -72,7 +72,7 @@ class Apartment extends CustomBaseStep {
 	public function show(){
 
 		$data = [];
-        if(count($this->list_OPEN_DISTRICT) == 0) {
+        if(empty($this->product_category)) {
             $this->load->view('components/header');
             $this->load->view('apartment/error');
             $this->load->view('components/footer');

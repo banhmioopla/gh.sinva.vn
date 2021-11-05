@@ -64,9 +64,6 @@ class CustomBaseStep extends CI_Controller {
                 }
             }
         }
-
-        $this->list_product_open = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
-
         $yourTeam = $this->ghTeam->getFirstByLeaderUserId($this->auth['account_id']);
         if($yourTeam){
             $this->yourTeam = $yourTeam;

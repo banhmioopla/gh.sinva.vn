@@ -154,7 +154,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 <div class="list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
                         <?php
-                        foreach($this->list_district_CRUD as $district):
+                        foreach($this->list_OPEN_DISTRICT as $district):
                             $district_btn = 'btn-outline-success';
                             ?>
 
@@ -223,7 +223,6 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                     $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
 
                     $surrounding_facilities = !empty($apartment['surrounding_facilities']) ? json_decode($apartment['surrounding_facilities'], true) : [];
-
 
                     ?>
                     <!-- item -->

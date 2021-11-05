@@ -53,9 +53,9 @@ class UserDistrict extends CustomBaseStep {
 
 
             foreach ($post['apm'] as $apm) {
-                $is_vo = "NO";
+                $is_vo = "YES";
                 if(in_array($apm, $ov_arr)){
-                    $is_vo = "YES";
+                    $is_vo = "NO";
                 }
 
                 $this->ghUserDistrict->insert([
@@ -67,9 +67,9 @@ class UserDistrict extends CustomBaseStep {
         } else {
             if(count($post['code'])>0) {
                 foreach ($post['code'] as $code) {
-                    $is_vo = "NO";
+                    $is_vo = "YES";
                     if(in_array($code, $ov_arr)){
-                        $is_vo = "YES";
+                        $is_vo = "NO";
                     }
 
 

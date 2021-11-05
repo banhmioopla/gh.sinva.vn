@@ -54,7 +54,7 @@
                             $is_ov = ""; $text_ov = "text-secondary"; $is_select = "";
 
                             if(!empty($model)){
-                                if($model['is_view_only'] === 'NO'){
+                                if($model['is_view_only'] === 'YES'){
                                     $is_ov = 'checked';
                                     $text_ov = "text-pink";
                                 }
@@ -127,7 +127,7 @@
                                         $is_ov = ""; $text_ov = "text-secondary"; $is_select = "";
 
                                         if(!empty($model)){
-                                            if($model['is_view_only'] === 'NO'){
+                                            if($model['is_view_only'] === 'YES'){
                                                 $is_ov = 'checked';
                                                 $text_ov = "text-pink";
                                             }
