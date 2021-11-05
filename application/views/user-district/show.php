@@ -52,12 +52,12 @@
 
                             $model = $ghUserDistrict->getFirstByDistrictUser($district['code'], $this->input->get('account-id'));
                             $is_ov = ""; $text_ov = "text-secondary";
-                            if($model && $model['is_view_only'] === 'YES'){
+                            if(!empty($model) && $model['is_view_only'] === 'YES'){
                                 $is_ov = 'checked';
                                 $text_ov = "text-pink";
                             }
                             $is_select = "";
-                            if($model && $model['district_code '] === $district['code']){
+                            if(!empty($model) && $model['district_code '] === $district['code']){
                                 $is_select = 'checked';
                             }
                             ?>
@@ -121,12 +121,12 @@
                                         <?php
                                         $model = $ghUserDistrict->getFirstByApmUser($apm['id'], $this->input->get('account-id'));
                                         $is_ov = ""; $text_ov = "text-secondary";
-                                        if($model && $model['is_view_only'] === 'YES'){
+                                        if(!empty($model) && $model['is_view_only'] === 'YES'){
                                             $is_ov = 'checked';
                                             $text_ov = "text-pink";
                                         }
                                         $is_select = "";
-                                        if($model && $model['apartment_id'] === $apm['id']){
+                                        if(!empty($model) && $model['apartment_id'] === $apm['id']){
                                             $is_select = 'checked';
                                         }
 
