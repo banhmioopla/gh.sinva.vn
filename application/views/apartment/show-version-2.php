@@ -27,7 +27,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
     $check_create_promotion = true;
 }
 
-$check_only_apartment = count($this->list_apartment_view_only) ? true : false;
+
 
 $check_update_room = false;
 if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
@@ -202,13 +202,19 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 </div>
                 <div id="sortable-ui">
                 <?php foreach ($list_apartment as $apartment):
-                    if($check_only_apartment && !in_array($apartment['id'], $this->list_apartment_view_only)) continue;
-
                     $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
                     $tag_promotion = '';
                     $color_promotion = 'text-purple';
                     $bg_promotion = '';
                     $promotion_txt = '';
+                    $is_editable_apartment = false;
+                    if($this->product_category === "APARTMENT_GROUP" && in_array($apartment["id"], $this->list_apartment_CRUD )){
+                        $is_editable_apartment = true;
+                    }
+                    if($this->product_category === "DISTRICT_GROUP" && in_array($apartment["district_code"], $this->list_district_CRUD )){
+                        $is_editable_apartment = true;
+                    }
+
                     if(count($list_promotion) > 0) {
                         $tag_promotion = '<span class="badge badge-danger"><i class="mdi mdi-gift mr-2"></i> '.count($list_promotion). '</span>';
                         $color_promotion =  $this->input->get('apmTag') ? $covidColor : 'text-white';
@@ -329,7 +335,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                         <div class="row hide-in-sortable">
                             <div class="col-12 list-action  text-center text-md-right mt-2" >
 
-                                <?php if($check_profile): ?>
+                                <?php if($is_editable_apartment): ?>
                                     <a class="m-1" href="/admin/apartment/duplicate?id=<?= $apartment['id'] ?>" >
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-credit-card-multiple"></i> </button>
                                     </a>
@@ -341,12 +347,12 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                     <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>">
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> P </button></a>
 
-                                <?php endif;?>
-
-                                <?php if($check_create_promotion): ?>
                                     <a class="m-1" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
-                                <?php endif; ?>
+
+                                <?php endif;?>
+
+
                                 <span class="m-1"><button data-address="<?= $apartment['address_street'] ?>"
                                                           data-apm="<?= $apartment['id'] ?>"
                                                           class="btn report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>

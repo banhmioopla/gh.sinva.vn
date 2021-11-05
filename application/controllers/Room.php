@@ -96,7 +96,10 @@ class Room extends CustomBaseStep {
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
         $list_apm = [];
         foreach ($list_apm_temp as $apm ) {
-            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+            if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
+                continue;
+            }
+            if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
                 continue;
             }
 

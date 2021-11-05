@@ -62,25 +62,28 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             </div>
             <div class="col-12">
                 <div class="card-box table-responsive">
-                    <div class="">
-                        <h4 class="font-weight-bold text-danger">Danh Sách Phòng | Cập Nhật <span id="time-info"><?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apartment['id'])) ?></span></h4>
-                        <div class="d-flex justify-content-between">
-                            <?php if($this->session->has_userdata('current_district_code')):?>
-                                <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
-                            <?php endif; ?>
-                            <button id="update-time" data-apm="<?= $apartment['id'] ?>" class="btn btn-primary m-1"><i class=" mdi mdi-clock"></i> </button>
-                            <?php if($check_create_promotion): ?>
-                                <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
-                                    <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i> </button></a>
-                            <?php endif; ?>
-                            <?php if($check_consultant_booking): ?>
-                                <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
-                                    <button class="btn btn-danger m-1"><i class="mdi mdi-car-hatchback"></i> </button></a>
-                            <?php endif; ?>
-                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"> <i class="mdi mdi-folder-multiple-image"></i> </button></a>
-                            <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"> <i class="mdi mdi-lead-pencil"></i></button></a>
+                    <div class="row">
+                        <h4 class="font-weight-bold text-danger col-12">Danh Sách Phòng | Cập Nhật <span id="time-info"><?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apartment['id'])) ?></span></h4>
+                        <div class="col-12 ">
+                            <div class="pull-right text-md text-center">
+                                <?php if($this->session->has_userdata('current_district_code')):?>
+                                    <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
+                                <?php endif; ?>
+                                <button id="update-time" data-apm="<?= $apartment['id'] ?>" class="btn btn-primary m-1"><i class=" mdi mdi-clock"></i> </button>
+                                <?php if($check_create_promotion): ?>
+                                    <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
+                                        <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i> </button></a>
+                                <?php endif; ?>
+                                <?php if($check_consultant_booking): ?>
+                                    <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
+                                        <button class="btn btn-danger m-1"><i class="mdi mdi-car-hatchback"></i> </button></a>
+                                <?php endif; ?>
+                                <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"> <i class="mdi mdi-folder-multiple-image"></i> </button></a>
+                                <a href="/admin/profile-apartment?id=<?= $apartment['id'] ?>"><button class="btn btn-primary m-1"> <i class="mdi mdi-lead-pencil"></i></button></a>
 
+                            </div>
                         </div>
+
 
                     </div>
 

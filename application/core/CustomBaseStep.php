@@ -26,42 +26,51 @@ class CustomBaseStep extends CI_Controller {
 		$ghUserDistrict = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
 		$this->list_district_CRUD = [];
 		$this->list_apartment_CRUD = [];
-		$this->list_apartment_view_only = [];
-        $this->list_district_view_only = [];
         $temp_district_arr = [];
         $this->editable = false;
         $this->yourTeam = false;
         $this->list_report_issue = $this->ghNotification->get(['controller' => 'ApartmentReport']);
 
+        $oneUD = $this->ghUserDistrict->getFirstByUser($this->auth['account_id']);
+        $this->product_category = null;
+        $this->list_OPEN_DISTRICT = [];
+        $this->list_OPEN_APARTMENT = [];
+        if(!empty($oneUD['apartment_id'])) {
+            $this->product_category = "APARTMENT_GROUP";
+            foreach($ghUserDistrict as $ud){
+                if($ud['is_view_only'] ==='NO'){
+                    $this->list_apartment_CRUD[] = $ud['apartment_id'];
+                }
+                $apm_model = $this->ghApartment->getFirstById($ud['apartment_id']);
+                if(!in_array($apm_model['district_code'], $this->list_OPEN_DISTRICT)){
+                    $this->list_OPEN_DISTRICT[] = $apm_model['district_code'];
+                }
+
+                if(!in_array($apm_model['id'], $this->list_OPEN_APARTMENT)){
+                    $this->list_OPEN_APARTMENT[] = $apm_model['id'];
+                }
+            }
+        }
+
+        if(!empty($oneUD['district_code'])) {
+            $this->product_category = "DISTRICT_GROUP";
+            foreach($ghUserDistrict as $ud){
+                if($ud['is_view_only'] ==='NO'){
+                    $this->list_district_CRUD[] = $ud['district_code'];
+                }
+
+                if(!in_array($ud['district_code'], $this->list_OPEN_DISTRICT)){
+                    $this->list_OPEN_DISTRICT[] = $ud['district_code'];
+                }
+            }
+        }
+
+        $this->list_product_open = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
+
         $yourTeam = $this->ghTeam->getFirstByLeaderUserId($this->auth['account_id']);
         if($yourTeam){
             $this->yourTeam = $yourTeam;
         }
-
-		foreach($ghUserDistrict as $ud) {
-
-            if($ud['apartment_id']){
-                $this->list_apartment_CRUD = $ud['apartment_id'];
-                $model_apm = $this->ghApartment->getFirstById($ud['apartment_id']);
-                if($model_apm && !in_array($model_apm['district_code'], $temp_district_arr)){
-                    $temp_district_arr[]= $model_apm['district_code'];
-                    $this->list_district_CRUD[] = $model_apm['district_code'];
-                }
-            } else {
-                if(!in_array($ud['district_code'], $temp_district_arr)) {
-                    $this->list_district_CRUD[] = $ud['district_code'];
-                    $temp_district_arr[]= $ud['district_code'];
-                }
-
-            }
-
-			if($ud['is_view_only'] == 'YES') {
-                $this->list_district_view_only[] = $ud['district_code'];
-                if($ud['apartment_id']){
-                    $this->list_apartment_view_only[] = $ud['apartment_id'];
-                }
-            }
-		}
 
 		foreach (glob($_SERVER['DOCUMENT_ROOT'].'/*.zip') as $filename) {
             unlink($filename);
@@ -100,7 +109,7 @@ class CustomBaseStep extends CI_Controller {
             'ConsultantBooking' => ['chart'],
             'Report' => ['ApartmentUpdating'],
             'ConsultantPost' => ['showYour', 'showDetail'],
-            'ApartmentPromotion' => [],
+            'ApartmentPromotion' => ["create"],
             'Team' => ['detail'],
             'ApartmentView' => ['create'],
             'ApartmentTrack' => ['show'],

@@ -19,6 +19,7 @@ class UserDistrict extends CustomBaseStep {
         $data['list_district'] = $this->ghDistrict->get(['active' => 'YES']);
         $data['libUser'] = $this->libUser;
         $data['ghApartment'] = $this->ghApartment;
+        $data['ghUserDistrict'] = $this->ghUserDistrict;
 
         $list_ud = [];
         $list_apm = [];
@@ -46,25 +47,36 @@ class UserDistrict extends CustomBaseStep {
 
         $post = $this->input->post();
         $this->ghUserDistrict->delete(['user_id' => $post['account_id']]);
-        $is_view_only = 'NO';
-        if($this->input->post('is_view_only')){
-            $is_view_only = 'YES';
-        }
+        $ov_arr = $this->input->post('ov');
+
         if(is_array($this->input->post('apm')) && count($this->input->post('apm'))>0) {
+
+
             foreach ($post['apm'] as $apm) {
+                $is_vo = "NO";
+                if(in_array($apm, $ov_arr)){
+                    $is_vo = "YES";
+                }
+
                 $this->ghUserDistrict->insert([
                     'apartment_id' => $apm,
                     'user_id' => $post['account_id'],
-                    'is_view_only' => $is_view_only
+                    'is_view_only' => $is_vo
                 ]);
             }
         } else {
             if(count($post['code'])>0) {
                 foreach ($post['code'] as $code) {
+                    $is_vo = "NO";
+                    if(in_array($code, $ov_arr)){
+                        $is_vo = "YES";
+                    }
+
+
                     $this->ghUserDistrict->insert([
                         'district_code' => $code,
                         'user_id' => $post['account_id'],
-                        'is_view_only' => $is_view_only
+                        'is_view_only' => $is_vo
                     ]);
                 }
             }

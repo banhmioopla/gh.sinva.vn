@@ -72,7 +72,7 @@ class Apartment extends CustomBaseStep {
 	public function show(){
 
 		$data = [];
-        if(count($this->list_district_CRUD) == 0) {
+        if(count($this->list_OPEN_DISTRICT) == 0) {
             $this->load->view('components/header');
             $this->load->view('apartment/error');
             $this->load->view('components/footer');
@@ -80,7 +80,7 @@ class Apartment extends CustomBaseStep {
         }
 
         $district_code = $this->input->get('district-code');
-		$district_code = !empty($district_code) ? $district_code: $this->list_district_CRUD[0];
+		$district_code = !empty($district_code) ? $district_code: $this->list_OPEN_DISTRICT[0];
 		$params = [
             'district_code' => $district_code,
             'active' => 'YES'
@@ -143,6 +143,13 @@ class Apartment extends CustomBaseStep {
 
             }
 
+            if($this->product_category == "APARTMENT_GROUP" && !in_array($item['id'], $this->list_OPEN_APARTMENT)) {
+                continue;
+            }
+            if($this->product_category == "DISTRICT_GROUP" && !in_array($item['district_code'], $this->list_OPEN_DISTRICT)) {
+                continue;
+            }
+
             $data['list_apartment'][] = $item;
 		}
         $data['libTime'] = $this->libTime;
@@ -183,6 +190,7 @@ class Apartment extends CustomBaseStep {
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES'], 'district_code DESC');
         $list_apm_ready = [];
         $list_apm_5days_CURD = [];
+
         foreach ($list_apm_temp as $apm ) {
             $time_update = $this->ghApartment->getUpdateTimeByApm($apm['id']);
             $isFiveDays = $this->libTime->calDay2Time($today, $time_update);
@@ -195,7 +203,10 @@ class Apartment extends CustomBaseStep {
                 ];
             }
 
-            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+            if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
+                continue;
+            }
+            if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
                 continue;
             }
             if($this->isYourPermission('Apartment', 'showProfile')){
@@ -213,6 +224,7 @@ class Apartment extends CustomBaseStep {
 
             $list_apm_ready[] = $apm;
         }
+
         $data['list_apm_ready'] = $list_apm_ready;
 
         usort($list_apm_5days, function($a, $b)
@@ -549,7 +561,10 @@ class Apartment extends CustomBaseStep {
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
 	    $list_apm = [];
 	    foreach ($list_apm_temp as $apm ) {
-            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+            if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
+                continue;
+            }
+            if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
                 continue;
             }
 
