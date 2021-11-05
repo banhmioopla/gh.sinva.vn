@@ -62,9 +62,9 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             </div>
             <div class="col-12">
                 <div class="card-box table-responsive">
-                    <div class="d-flex justify-content-between">
+                    <div class="">
                         <h4 class="font-weight-bold text-danger">Danh Sách Phòng | Cập Nhật <span id="time-info"><?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apartment['id'])) ?></span></h4>
-                        <div class="">
+                        <div class="d-flex justify-content-between">
                             <?php if($this->session->has_userdata('current_district_code')):?>
                                 <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
                             <?php endif; ?>

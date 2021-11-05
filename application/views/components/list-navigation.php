@@ -35,9 +35,7 @@
                         <a class="dropdown-item" href="/admin/list-mapbox"> <i class="mdi mdi-google-maps mr-1"></i> Bản Đồ Dự Án</a>
                     <?php endif; ?>
 
-                    <?php if(isYourPermission('ApartmentTrack', 'show',$this->permission_set)):?>
-                        <a class="dropdown-item" href="/admin/list-apartment-track"> <i class="mdi mdi-timetable mr-1"></i> Nhật Ký Dự Án</a>
-                    <?php endif; ?>
+                    <a class="dropdown-item" href="/admin/list-apartment-track"> <i class="mdi mdi-timetable mr-1"></i> Nhật Ký Dự Án</a>
                 </div>
             </div>
 
