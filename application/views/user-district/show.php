@@ -51,15 +51,18 @@
                         <?php foreach($list_district as $district):
 
                             $model = $ghUserDistrict->getFirstByDistrictUser($district['code'], $this->input->get('account-id'));
-                            $is_ov = ""; $text_ov = "text-secondary";
-                            if(!empty($model) && $model['is_view_only'] === 'YES'){
-                                $is_ov = 'checked';
-                                $text_ov = "text-pink";
+                            $is_ov = ""; $text_ov = "text-secondary"; $is_select = "";
+
+                            if(!empty($model)){
+                                if($model['is_view_only'] === 'NO'){
+                                    $is_ov = 'checked';
+                                    $text_ov = "text-pink";
+                                }
+                                if($model['district_code'] === $district['code']){
+                                    $is_select = 'checked';
+                                }
                             }
-                            $is_select = "";
-                            if(!empty($model) && $model['district_code '] === $district['code']){
-                                $is_select = 'checked';
-                            }
+
                             ?>
                             <div class="col-md-6 col-12">
                                 <div class="d-flex flex-wrap justify-content-xl-between border-primary border-bottom mt-2">
@@ -120,14 +123,17 @@
 
                                         <?php
                                         $model = $ghUserDistrict->getFirstByApmUser($apm['id'], $this->input->get('account-id'));
-                                        $is_ov = ""; $text_ov = "text-secondary";
-                                        if(!empty($model) && $model['is_view_only'] === 'YES'){
-                                            $is_ov = 'checked';
-                                            $text_ov = "text-pink";
-                                        }
-                                        $is_select = "";
-                                        if(!empty($model) && $model['apartment_id'] === $apm['id']){
-                                            $is_select = 'checked';
+
+                                        $is_ov = ""; $text_ov = "text-secondary"; $is_select = "";
+
+                                        if(!empty($model)){
+                                            if($model['is_view_only'] === 'NO'){
+                                                $is_ov = 'checked';
+                                                $text_ov = "text-pink";
+                                            }
+                                            if($model['apartment_id'] === $district['code']){
+                                                $is_select = 'checked';
+                                            }
                                         }
 
                                         ?>
