@@ -528,6 +528,12 @@ $route['admin/list-user-income-detail'] = function($params = []) {
     $controller = 'UserIncomeDetail';
     $action = '/show';
     return $controller.$action;
+};
+
+$route['admin/income-202111'] = function($params = []) {
+    $controller = 'SystemIncomeRunning';
+    $action = '/show';
+    return $controller.$action;
 }
 
 ;$route['admin/sync-income'] = function($params = []) {

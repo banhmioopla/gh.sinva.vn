@@ -91,6 +91,9 @@ include VIEWPATH.'functions.php';
                 vertical-align: baseline;
                 border-radius: .25rem;
             }
+            .dropdown-menu{
+                z-index: 9999999;
+            }
         </style>
     </head>
     <body>

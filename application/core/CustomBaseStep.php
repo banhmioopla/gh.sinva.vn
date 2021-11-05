@@ -113,6 +113,7 @@ class CustomBaseStep extends CI_Controller {
             'Dashboard' => ['showSale', 'showListProject'],
             'ApartmentRequest' => ['exportApartmentExcel'],
             'ApartmentReport' => ['updateIssueApartmentInfo'],
+            'SystemIncomeRunning' => ['show'],
             'HomeTown' => ['show'],
         ];
 

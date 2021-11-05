@@ -97,9 +97,10 @@
 
                         <?php if(isYourPermission('UserIncomeDetail', 'show',$this->permission_set)):?>
                             <li><a href="/admin/list-user-income-detail"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Tổng Hợp Chi Tiết Thu Nhập *</a></li>
+                            mdi-chevron-double-right text-warning"></i> Tổng Hợp Chi Tiết Thu Nhập (NHÁP)</a></li>
                         <?php endif;?>
-
+                        <li><a href="/admin/income-202111"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Thu nhập <strong>mới nhất</strong></a></li>
                         <?php /* if(isYourPermission('Fee', 'showUserCumulativeSale',$this->permission_set)):?>
                             <li><a href="/admin/list-user-cumulative-sale"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Quản Lý Doanh Số Tích Lũy</a></li>
