@@ -47,7 +47,7 @@ class UserDistrict extends CustomBaseStep {
 
         $post = $this->input->post();
         $this->ghUserDistrict->delete(['user_id' => $post['account_id']]);
-        $ov_arr = $this->input->post('ov');
+        $ov_arr = count($this->input->post('ov')) > 0 ? $this->input->post('ov') : [];
 
         if(is_array($this->input->post('apm')) && count($this->input->post('apm'))>0) {
 

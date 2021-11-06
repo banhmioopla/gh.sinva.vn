@@ -683,7 +683,7 @@ class Apartment extends CustomBaseStep {
                 'message' => 'Tạo Thành Công Dư Án: '.$update_data['address_street'],
                 'status' => 'success'
             ]);
-            return redirect('/admin/room/show-create?apartment-id='.$new_id);
+            return redirect('/admin/room/show-create?apartment-id='.$new_id, "refresh");
         }
 
 

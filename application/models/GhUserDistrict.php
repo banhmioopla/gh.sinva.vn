@@ -37,6 +37,39 @@ class GhUserDistrict extends CI_Model {
         ])->row_array();
     }
 
+    // Lấy tất cả USER QLDA của QUẬN | APARTMENT
+    public function getListCrudUser($apm_id){
+        $this->load->model('ghApartment');
+        $apm = $this->ghApartment->getFirstById($apm_id);
+        $list_crud = $this->get(['is_view_only' => "NO"]);
+        $arr_user = [];
+        foreach ($list_crud as $crud){
+            if(!empty($crud['district_code']) || !empty($crud['apartment_id'])){
+                if(!in_array($crud["user_id"], $arr_user)){
+                    $arr_user[] = $crud["user_id"];
+                }
+            }
+        }
+
+
+        return $arr_user;
+
+    }
+
+    public function getNameUserByListCrud($apm_id){
+        $list_user_id = $this->getListCrudUser($apm_id);
+        $result = [];
+        $this->load->model('ghUser');
+        foreach ($list_user_id as $user_id){
+            $user = $this->ghUser->getFirstByAccountId($user_id);
+            if($user){
+                $result[] = $user["name"]. " <strong>". $user["phone_number"]. "</strong>";
+            }
+        }
+
+        return $result;
+    }
+
 }
 
 /* End of file mApartment.php */

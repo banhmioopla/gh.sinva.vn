@@ -106,9 +106,7 @@
                                     </div>
 
                                 </div>
-                                <div class="form-row float-right">
-                                    <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -132,9 +130,7 @@
 
                                     </div>
                                 </div>
-                                <div class="form-row float-right">
-                                    <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -300,7 +296,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-row float-right">
-                                    <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
+                                    <button name="submit" type="submit" class="btn btn-danger">Thêm Mới</button>
                                 </div>
                             </div>
                         </div>
@@ -320,7 +316,19 @@
                 height: 300,                 // set editor height
                 minHeight: null,             // set minimum height of editor
                 maxHeight: null,             // set maximum height of editor
-                focus: true
+                focus: true,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                ]
             });
 
             $('.datepicker').datepicker({
