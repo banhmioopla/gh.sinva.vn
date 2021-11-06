@@ -46,16 +46,16 @@ class UserDistrict extends CustomBaseStep {
     public function create() {
 
         $post = $this->input->post();
-        $this->ghUserDistrict->delete(['user_id' => $post['account_id']]);
-        $ov_arr = count($this->input->post('ov')) > 0 ? $this->input->post('ov') : [];
 
+        $this->ghUserDistrict->delete(['user_id' => $post['account_id']]);
+        $ov_arr = !empty($this->input->post('ov')) && count($this->input->post('ov')) > 0 ? $this->input->post('ov') : [];
         if(is_array($this->input->post('apm')) && count($this->input->post('apm'))>0) {
 
 
             foreach ($post['apm'] as $apm) {
-                $is_vo = "YES";
+                $is_vo = "NO";
                 if(in_array($apm, $ov_arr)){
-                    $is_vo = "NO";
+                    $is_vo = "YES";
                 }
 
                 $this->ghUserDistrict->insert([
@@ -67,9 +67,9 @@ class UserDistrict extends CustomBaseStep {
         } else {
             if(count($post['code'])>0) {
                 foreach ($post['code'] as $code) {
-                    $is_vo = "YES";
+                    $is_vo = "NO";
                     if(in_array($code, $ov_arr)){
-                        $is_vo = "NO";
+                        $is_vo = "YES";
                     }
 
 
