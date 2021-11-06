@@ -24,25 +24,6 @@ $route['admin/list-mapbox'] = function($params = []) {
     return $controller.$action;
 };
 
-// UserCumulativeSale
-$route['admin/list-user-cumulative-sale'] = function($params = []) {
-    $controller = 'Fee';
-    $action = '/showUserCumulativeSale';
-    return $controller.$action;
-};
-
-
-$route['admin/update-user-cumulative-sale-editable'] = function($params = []) {
-    $controller = 'Fee';
-    $action = '/updateUserCumulativeSaleEditable';
-    return $controller.$action;
-};
-$route['admin/income/send-email-notification-personal-income'] = function($params = []) {
-    $controller = 'Fee';
-    $action = '/sendEmailNotificationPersonalIncome';
-    return $controller.$action;
-};
-
 // story
 $route['admin/list-story'] = function($params = []) {
     $controller = 'Story';
@@ -517,34 +498,10 @@ $route['normal/list-apartment'] = function($params = []) {
 	$action = '/showNormal';
 	return $controller.$action;
 };
-// Fee
-$route['admin/list-fee-contract-income'] = function($params = []) {
-    $controller = 'Fee';
-    $action = '/showOverviewIncome';
-    return $controller.$action;
-};
-
-$route['admin/list-user-income-detail'] = function($params = []) {
-    $controller = 'UserIncomeDetail';
-    $action = '/show';
-    return $controller.$action;
-};
 
 $route['admin/income-202111'] = function($params = []) {
     $controller = 'SystemIncomeRunning';
     $action = '/show';
-    return $controller.$action;
-}
-
-;$route['admin/sync-income'] = function($params = []) {
-    $controller = 'UserIncomeDetail';
-    $action = '/syncIncome';
-    return $controller.$action;
-};
-
-$route['admin/update-user-income-detail-editable'] = function($params = []) {
-    $controller = 'UserIncomeDetail';
-    $action = '/updateEditable';
     return $controller.$action;
 };
 
@@ -560,21 +517,9 @@ $route['admin/overview-refer-new-user'] = function($params = []) {
     return $controller.$action;
 };
 
-$route['admin/fee/chart-user-income'] = function($params = []) {
-    $controller = 'Fee';
-    $action = '/buildChart';
-    return $controller.$action;
-};
-
-$route['admin/personal-profile'] = function($params = []) {
-    $controller = 'Fee';
-    $action = '/showPersonalProfile';
-    return $controller.$action;
-};
-
-$route['admin/list-fee-income-mechanism'] = function($params = []) {
-    $controller = 'Fee';
-    $action = '/showIncomeMechanism';
+$route['user/profile'] = function($params = []) {
+    $controller = 'User';
+    $action = '/showProfile';
     return $controller.$action;
 };
 
@@ -1368,12 +1313,6 @@ $route['admin/list-internal-content'] = function($params = []) {
 $route['admin/internal-content/create'] = function($params = []) {
     $controller = 'InternalContent';
     $action = '/create';
-    return $controller.$action;
-};
-
-$route['admin/internal-content/page/income-rule'] = function($params = []) {
-    $controller = 'InternalContent';
-    $action = '/pageIncomeRule';
     return $controller.$action;
 };
 

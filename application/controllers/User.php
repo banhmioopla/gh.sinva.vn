@@ -13,7 +13,7 @@ class User extends CustomBaseStep {
 	}
 
 	public function show(){
-		$data['list_user'] = $this->ghUser->get(['account_id >' => 171020000]);
+		$data['list_user'] = $this->ghUser->get(['account_id >' => 171020000, "active" => "YES"]);
 
         $data['list_all_user'] = $this->ghUser->get(['account_id >' => 171020000]);
 
@@ -26,6 +26,22 @@ class User extends CustomBaseStep {
 		$this->load->view('user/show', $data);
 		$this->load->view('components/footer');
 	}
+
+	public function showProfile(){
+	    $account_id = $this->auth['account_id'];
+	    if($this->input->get('uid')){
+            $account_id = $this->input->get('uid');
+        }
+
+        $user = $this->ghUser->getFirstByAccountId($account_id);
+
+
+        $this->load->view('components/header');
+        $this->load->view('user/show-profile', [
+            'user' => $user,
+        ]);
+        $this->load->view('components/footer');
+    }
 
 	public function create() {
 	

@@ -115,6 +115,7 @@ class CustomBaseStep extends CI_Controller {
             'ApartmentReport' => ['updateIssueApartmentInfo'],
             'SystemIncomeRunning' => ['show'],
             'HomeTown' => ['show'],
+            'User' => ['showProfile'],
         ];
 
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
