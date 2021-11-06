@@ -505,6 +505,12 @@ $route['admin/income-202111'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['chart/get-data'] = function($params = []) {
+    $controller = 'SystemIncomeRunning';
+    $action = '/chartData';
+    return $controller.$action;
+};
+
 $route['admin/overview-get-new-apartment'] = function($params = []) {
     $controller = 'User';
     $action = '/showOverviewGetNewApartment';

@@ -65,7 +65,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
             <div class="row mt-3">
                 <div class="col-md-4">
                     <div class="card-box">
-                        <h4 class="text-primary">Cập nhật thông tin phòng</h4>
+                        <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Cập nhật thông tin phòng</h4>
                         <div>
                             <select id="apartment_update_ready" class=" form-control">
                                 <option value="">Cập nhật thông tin phòng</option>
@@ -74,23 +74,25 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <hr>
                         <div class="mt-2">
-                            <h4 class="text-primary">Ghim 1 Thông báo</h4>
+                            <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Ghim 1 Thông báo</h4>
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-12">
                                     <input type="text" id="input-pin-notification" value="<?= $this->pin_notification['content'] ?>" class="form-control mt-2 border border-info">
                                     <div class="text-success p-1" id="status-pin-notification"></div>
                                 </div>
-                                <div class="col-4">
-                                    <button id="update-pin-notification" class="btn btn-danger waves-effect mt-2" >Ghim</button>
+                                <div class="col-12">
+                                    <button id="update-pin-notification" class="btn pull-right btn-danger waves-effect mt-2" >Ghim</button>
                                 </div>
                             </div>
                         </div>
+                        <hr>
                         <div class="mt-2">
-                            <h4 class="text-primary">Update toàn bộ dự án [?]</h4>
+                            <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Update toàn bộ dự án [?]</h4>
                             <div class="row">
-                                <div class="col-4">
-                                    <button id="update-time_available" class="btn btn-danger waves-effect mt-2" >Xoá ngày sắp trống <i>đã cũ</i></button>
+                                <div class="col-12">
+                                    <button id="update-time_available" class="btn btn-danger pull-right waves-effect mt-2" >Xoá ngày sắp trống <i>đã cũ</i></button>
                                 </div>
                             </div>
                         </div>

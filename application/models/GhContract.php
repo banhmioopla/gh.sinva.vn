@@ -126,8 +126,10 @@ class GhContract extends CI_Model {
 
     public function getTotalSaleByTeam($team_id, $from_date, $to_date){
         $this->load->model('ghTeamUser');
+        $this->load->model('ghTeam');
         $list_uu = $this->ghTeamUser->get(["team_id" => $team_id]);
-        $total = 0;
+        $leader = $this->ghTeam->getFirstById($team_id);
+        $total = $this->getTotalSaleByUser($leader['leader_user_id'], $from_date, $to_date);
 
         foreach ($list_uu as $uu) {
 
@@ -172,17 +174,40 @@ class GhContract extends CI_Model {
         return $total;
     }
 
-    public function getSaleRefByContract($account_id , $from, $to){
+    public function getSaleRefByContract($account_id){
         $apply_date = "01-11-2021";
         $num_contract_apply = 3;
         $sinva_get_rate_ref = 0.05;
 
 
-        $sale_by_limit = $this->getTotalSaleByUserLimit($account_id, $num_contract_apply, $apply_date, $to);
+        $sale_by_limit = $this->getTotalSaleByUserLimit($account_id, $num_contract_apply, $apply_date, date("d-m-Y"));
 
         return [
             "sinva" => $sale_by_limit * $sinva_get_rate_ref
         ];
+
+    }
+
+    public function getListSaleItemByUser($account_id, $from, $to){
+        $list_contract =$this->get([
+            'consultant_id' => $account_id,
+            'time_check_in >=' => strtotime($from),
+            'time_check_in <=' => strtotime($to)+86399,
+        ]);
+
+        $arr = [];
+        foreach ($list_contract as $con){
+            $this->load->model('ghApartment');
+            $this->load->model('ghRoom');
+            $room = $this->ghRoom->getFirstById($con['room_id']);
+            $apm = $this->ghApartment->getFirstById($room['apartment_id']);
+            $arr[] = [
+                "total_sale" => $this->getTotalSaleByContract($con['id']),
+                "description" => "<span class='text-muted'>Ngày ký ".date("d-m-Y", $con['time_check_in']) . "</span>, ". $apm['address_street'] . " <strong>".$room['code']."</strong> ",
+            ];
+        }
+
+        return $arr;
 
     }
 
