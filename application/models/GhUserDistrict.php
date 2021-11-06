@@ -44,7 +44,12 @@ class GhUserDistrict extends CI_Model {
         $list_crud = $this->get(['is_view_only' => "NO"]);
         $arr_user = [];
         foreach ($list_crud as $crud){
-            if(!empty($crud['district_code']) || !empty($crud['apartment_id'])){
+            if(!empty($crud['district_code']) && $apm['district_code'] === $crud['district_code']){
+                if(!in_array($crud["user_id"], $arr_user)){
+                    $arr_user[] = $crud["user_id"];
+                }
+            }
+            if(!empty($crud['apartment_id']) && $apm['id'] === $crud['apartment_id']){
                 if(!in_array($crud["user_id"], $arr_user)){
                     $arr_user[] = $crud["user_id"];
                 }
