@@ -127,6 +127,20 @@ include VIEWPATH . 'functions.php';
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-12 mt-1 text-danger">
+                            <div class="card-box">
+                                <div class="row">
+                                    <h3 class="text-danger col-12 font-weight-bold">QLDA</h3>
+                                    <?php foreach ($this->ghUserDistrict->getNameUserByListCrud($this->input->get('apartment-id')) as $curd):?>
+                                        <div class="col-4 text-danger">
+                                            <?= $curd ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                        </div>
+
                         <div class="col-md-12">
                             <div class="card-box " >
                                 <h3 class="text-danger font-weight-bold">Thông Tin Dịch Vụ</h3>
