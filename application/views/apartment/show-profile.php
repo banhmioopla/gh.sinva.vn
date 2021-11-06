@@ -141,7 +141,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 <div class="form-group col-md-4">
                                     <strong class="col-form-strong">Người Đàm Phán</strong>
                                     <select name="user_collected_id" id="user_collected_id" class="form-control">
-                                        <?= $libUser->cb($apartment['user_collected_id']) ?>
+                                        <?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id'])."<br>".$libUser->getPhoneByAccountid($apartment['user_collected_id']):"SINVA" ?>
                                     </select>
                                 </div>
 

@@ -87,10 +87,10 @@ include VIEWPATH . 'functions.php';
                         </div>
 
                         <div class="col-md-4">
-                            <div class="card-box bg-warning widget-flat border-warning text-white">
+                            <div class="card-box bg-danger widget-flat border-danger text-white">
                                 <i class="mdi mdi-folder-multiple-image"></i>
                                 <h3 class="m-b-10"><?= count($list_post) ?></h3>
-                                <a href="/admin/consultant-post/your-list" class="btn btn-info pull-right">Đi đến kho bài đăng</a>
+                                <a href="/admin/consultant-post/your-list" class="btn btn-secondary pull-right">Đi đến kho bài đăng</a>
                                 <p class="text-uppercase mb-2 font-13 font-600">
                                     Bài Đăng Tư Vấn
                                 </p>
@@ -130,12 +130,7 @@ include VIEWPATH . 'functions.php';
                         <div class="col-12 mt-1 text-danger">
                             <div class="card-box">
                                 <div class="row">
-                                    <h3 class="text-danger col-12 font-weight-bold">QLDA</h3>
-                                    <?php foreach ($this->ghUserDistrict->getNameUserByListCrud($this->input->get('apartment-id')) as $curd):?>
-                                        <div class="col-4 text-danger">
-                                            <?= $curd ?>
-                                        </div>
-                                    <?php endforeach; ?>
+                                    <h3 class="text-danger col-12 font-weight-bold">QLDA: <?= $apartment['user_collected_id'] ? ''.$this->libUser->getNameByAccountid($apartment['user_collected_id'])." - ".$this->libUser->getPhoneByAccountid($apartment['user_collected_id']):"SINVA" ?></h3>
                                 </div>
                             </div>
 

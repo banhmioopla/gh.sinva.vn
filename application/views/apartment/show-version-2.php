@@ -310,18 +310,8 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                 <?= $tag_promotion ?>
                             </div>
                             <div class="col-md-3 col-12 text-md text-center">
-                                <i class="mdi mdi-pistol"></i> <span class="d-none d-md-inline">Đàm Phán Bởi: </span><strong><?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id'])."<br>".$libUser->getPhoneByAccountid($apartment['user_collected_id']):"SINVA" ?></strong>
+                                <i class="mdi mdi-pistol"></i> <span class="d-none d-md-inline">QLDA: </span><strong><?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id'])."<br>".$libUser->getPhoneByAccountid($apartment['user_collected_id']):"SINVA" ?></strong>
                             </div>
-                        </div>
-                        <div class="row mt-1 text-danger">
-                            <div class="col-12">
-                                <h5 class="text-danger"><u>QLDA</u></h5>
-                            </div>
-                            <?php foreach ($this->ghUserDistrict->getNameUserByListCrud($apartment['id']) as $curd):?>
-                            <div class="col-4">
-                                <?= $curd ?>
-                            </div>
-                            <?php endforeach; ?>
                         </div>
                         <div class="row hide-in-sortable mt-2">
                             <div class="col-12">
