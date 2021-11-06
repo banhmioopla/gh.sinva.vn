@@ -62,8 +62,8 @@ class GhUserDistrict extends CI_Model {
         $this->load->model('ghUser');
         foreach ($list_user_id as $user_id){
             $user = $this->ghUser->getFirstByAccountId($user_id);
-            if($user){
-                $result[] = $user["name"]. " <strong>". $user["phone_number"]. "</strong>";
+            if($user['active'] === "YES"){
+                $result[] = $user["name"]. "  <strong class=''>(". $user["phone_number"]. ")</strong>";
             }
         }
 
