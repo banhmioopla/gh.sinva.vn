@@ -139,9 +139,17 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <strong class="col-form-strong">Người Đàm Phán</strong>
+                                    <strong class="col-form-strong">QLDA</strong>
                                     <select name="user_collected_id" id="user_collected_id" class="form-control">
-                                        <?= $apartment['user_collected_id'] ? ''.$libUser->getNameByAccountid($apartment['user_collected_id'])."<br>".$libUser->getPhoneByAccountid($apartment['user_collected_id']):"SINVA" ?>
+                                        <option value="">Chọn QLDA</option>
+                                        <?php foreach ($list_user as $uuu):
+                                            $slc = "";
+                                            if($apartment['user_collected_id'] == $uuu['account_id']){
+                                                $slc = "selected";
+                                            }
+                                            ?>
+                                            <option <?= $slc ?> value="<?= $uuu['account_id'] ?>"><?= $uuu['name'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 
