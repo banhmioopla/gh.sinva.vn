@@ -139,13 +139,14 @@ class GhContract extends CI_Model {
         $total_sale = 0;
         $income_rate = 0.63;
         $refer_fund = 0;
-        if(strtotime($from_date) >= strtotime($this->apply_date)){
-            $list_con = $this->get([
-                'consultant_id' => $account_id,
-                'time_check_in >=' => strtotime($from_date),
-                'time_check_in <=' => strtotime($to_date)+86399,
-            ]);
 
+
+        $list_con = $this->get([
+            'consultant_id' => $account_id,
+            'time_check_in >=' => strtotime($from_date),
+            'time_check_in <=' => strtotime($to_date)+86399,
+        ]);
+        if(strtotime($from_date) >= strtotime($this->apply_date)){
             if(count($list_con) < 4 ) {
                 $income_rate = 0.6;
                 $this->rate_team_fund = 0;
@@ -154,10 +155,10 @@ class GhContract extends CI_Model {
                 $this->rate_team_fund = 0.02;
                 $refer_fund = -$this->getSaleRefByContract($account_id);
             }
+        }
 
-            foreach ($list_con as $con){
-                $total_sale += $this->getTotalSaleByContract($con['id']);
-            }
+        foreach ($list_con as $con){
+            $total_sale += $this->getTotalSaleByContract($con['id']);
         }
         $this->load->model('ghTeamUser');
         $this->load->model('ghTeam');
@@ -182,7 +183,6 @@ class GhContract extends CI_Model {
             "product_manager_fund" => $total_sale * $this->product_manager_fund,
             "refer_fund" => $refer_fund,
             "team_id" => $team_id,
-            "team_name" => 0,
         ];
     }
 
