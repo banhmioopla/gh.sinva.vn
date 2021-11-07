@@ -139,7 +139,7 @@ class GhContract extends CI_Model {
         $total_sale = 0;
         $income_rate = 0.63;
         $refer_fund = 0;
-
+        $this->rate_team_fund = 0.02;
 
         $list_con = $this->get([
             'consultant_id' => $account_id,
