@@ -83,18 +83,29 @@ class SystemIncomeRunning extends CustomBaseStep
                 $refer_user_income_pack[$income_pack['refer_account_id']]  += $income_pack['refer_fund'];
             }
 
-            if($total_sale > 0 || (isset($refer_user_income_pack[$user["account_id"]]) && $refer_user_income_pack[$user["account_id"]] > 0)) {
-                $data["user"][] = [
-                    "account_id" => $user["account_id"],
-                    "name" => $user["name"],
-                    "total" => $income_pack['total_sale'],
-                    "income_pack" => $income_pack,
-                    "fund" => $data['refer_fund'],
-                    "list_sale_item" => $this->ghContract->getListSaleItemByUser($user['account_id'], $from_date, $to_date),
-                ];
+            $data["user"][] = [
+                "account_id" => $user["account_id"],
+                "name" => $user["name"],
+                "total" => $income_pack['total_sale'],
+                "income_pack" => $income_pack,
+                "fund" => $data['refer_fund'],
+                "list_sale_item" => $this->ghContract->getListSaleItemByUser($user['account_id'], $from_date, $to_date),
+            ];
+
+        }
+
+        foreach ($data["user"] as $index => $uData){
+            if(empty($uData['total'])) {
+                if(!isset($refer_user_income_pack[$uData['account_id']])){
+                    unset($data["user"][$index]); continue;
+                }
+                if(empty($refer_user_income_pack[$uData['account_id']])) {
+                    unset($data["user"][$index]); continue;
+                }
             }
 
         }
+
 
         $list_contract = $this->ghContract->get([
             'time_check_in >= ' => strtotime($from_date),
