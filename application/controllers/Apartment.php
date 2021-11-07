@@ -531,7 +531,7 @@ class Apartment extends CustomBaseStep {
                 'surrounding_facilities' => $this->input->post("surrounding_facilities") && count($this->input->post("surrounding_facilities")) ? json_encode($this->input->post("surrounding_facilities")) : "[]",
 
             ];
-
+            $old_log = json_encode($apartment);
             $ok = false;
             if($this->isYourPermission('Apartment', 'pendingForApprove')){
                 $this->ghApartmentRequest->insert([
@@ -549,9 +549,19 @@ class Apartment extends CustomBaseStep {
                 $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
             }
 
-
-            $apartment = $this->ghApartment->getFirstById($apartment['id']);
             if($ok) {
+                $modified_log = json_encode($this->ghApartment->getFirstById($apartment['id']));
+                $log = [
+                    'table_name' => 'gh_apartment',
+                    'old_content' => $old_log,
+                    'modified_content' => $modified_log,
+                    'time_insert' => time(),
+                    'action' => 'update',
+                    'user_id' => $this->auth['account_id']
+                ];
+                $tracker = $this->ghActivityTrack->insert($log);
+
+
                 $this->session->set_flashdata('fast_notify', [
                     'message' => 'Cập Nhật Thành Công',
                     'status' => 'success'
