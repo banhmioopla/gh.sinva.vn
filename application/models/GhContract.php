@@ -136,10 +136,21 @@ class GhContract extends CI_Model {
     }
 
     public function getTotalIncomeByUser($account_id, $from_date, $to_date){
+
+        $this->load->model('ghTeamUser');
+        $this->load->model('ghTeam');
+        $this->load->model('ghUser');
+
+
         $total_sale = 0;
         $income_rate = 0.63;
         $refer_fund = 0;
         $this->rate_team_fund = 0.02;
+
+        $user = $this->ghUser->getFirstByAccountId($account_id);
+        $refer_by = $refer_by = "SINVA | ". date("d-m-Y", $user['time_joined']);
+        $refer_me = $this->ghUser->getFirstByAccountId($user["user_refer_id"]);
+
 
         $list_con = $this->get([
             'consultant_id' => $account_id,
@@ -149,18 +160,16 @@ class GhContract extends CI_Model {
         if(strtotime($from_date) >= strtotime($this->apply_date)){
             if(count($list_con) < 4 ) {
                 $income_rate = 0.6;
-                $this->rate_team_fund = 0;
-            } else {
-                $this->rate_team_fund = 0.02;
+                if(strtotime($user['time_joined']) >= strtotime($this->apply_date)){
+                    $this->rate_team_fund = 0;
+                }
             }
         }
 
         foreach ($list_con as $con){
             $total_sale += $this->getTotalSaleByContract($con['id']);
         }
-        $this->load->model('ghTeamUser');
-        $this->load->model('ghTeam');
-        $this->load->model('ghUser');
+
 
         $my_team = $this->ghTeamUser->getFirstByUserId($account_id);
         $team_id = 0;
@@ -176,9 +185,7 @@ class GhContract extends CI_Model {
             $team_name = $this->ghTeam->getFirstById($my_team['team_id'])["name"];
         }
 
-        $user = $this->ghUser->getFirstByAccountId($account_id);
-        $refer_by = $refer_by = "SINVA | ". date("d-m-Y", $user['time_joined']);
-        $refer_me = $this->ghUser->getFirstByAccountId($user["user_refer_id"]);
+
 
         if($refer_me){
             $refer_by = $refer_me['name']. " | ". date("d-m-Y", $user['time_joined']);
@@ -187,7 +194,6 @@ class GhContract extends CI_Model {
 
         if(strtotime($user['time_joined']) >= strtotime($this->apply_date)){
             $refer_fund = $this->getSaleRefByContract($account_id);
-
         }
 
         return [
