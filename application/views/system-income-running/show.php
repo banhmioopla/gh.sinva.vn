@@ -215,11 +215,12 @@
                                                     <?php endforeach; ?>
                                                 </ul>
                                                 <hr>
-                                                <h5>Mấy miếng bánh khác</h5>
+
                                                 <div>
                                                     Được tuyển vào bởi: <?= $income_pack['refer_by'] ?>
                                                     <hr>
                                                 </div>
+                                                <h5>Chia bánh</h5>
                                                 <ul>
                                                     <li>Quỹ team <?= $income_pack['team_name'] ?> <span class="pull-right"><?= number_format($income_pack['team_fund']) ?></span> </li>
                                                     <li>Cố vấn <span class="pull-right"><?= number_format($income_pack['consultant_boss_fund']) ?></span></li>
