@@ -184,17 +184,29 @@
                                     <div class="card">
                                         <div class="card-header" role="tab" id="headingThree">
                                             <h5 class="mb-0 mt-0">
-                                                <a class="collapsed text-danger" data-toggle="collapse"
-                                                   href="#collapse-<?= $dd['account_id'] ?>" aria-expanded="false">
-                                                    <i class="mdi mdi-account-circle"></i> <?= $dd['name'] ?> <span class="text-primary pull-right"> <span class="bg-dark p-1 rounded text-success"> <span class="text-warning">(<?= ($income_pack['income_rate']*100) ."%" ?>)</span> <?= number_format($income_pack['total_income']) ?></span> <?= number_format($income_pack['total_sale']) ?></span>
-                                                </a>
-                                                <?php if($dd["total"]):?>
-                                                    <div class="m-b-20 pl-2 mt-2">
-                                                        <span class="badge badge-primary">sinva: <?= number_format($dd['fund']['sinva_fund']) ?></span>
-                                                        <span class="badge badge-primary">team: <?= number_format($dd['fund']['team_fund']) ?></span>
-                                                        <span class="badge badge-primary">HĐ: <?= count($dd['list_sale_item']) ?></span>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <a class="collapsed text-danger" data-toggle="collapse"
+                                                           href="#collapse-<?= $dd['account_id'] ?>" aria-expanded="false">
+                                                            <i class="mdi mdi-account-circle"></i> <?= $dd['name'] ?>
+                                                        </a>
+                                                        <span class="pull-right text-primary p-1"><?= number_format($income_pack['total_sale']) ?></span>
                                                     </div>
-                                                <?php endif;?>
+                                                    <div class="col-12 mt-1">
+                                                        <div class="text-primary bg-dark text-center p-1 rounded text-success"><span class="text-warning">(<?= ($income_pack['income_rate']*100) ."%" ?>)</span> <?= number_format($income_pack['total_income']) ?></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-2">
+                                                    <div class="col-12 m-b-20 text-center pl-md-2 mt-2">
+                                                        <span class="badge badge-primary mb-1">sinva: <?= number_format($dd['fund']['sinva_fund']) ?></span>
+                                                        <span class="badge badge-primary mb-1">team: <?= number_format($dd['fund']['team_fund']) ?></span>
+                                                        <span class="badge badge-primary mb-1">HĐ: <?= count($dd['list_sale_item']) ?></span>
+
+
+                                                    </div>
+                                                </div>
+
                                             </h5>
                                         </div>
                                         <div id="collapse-<?= $dd['account_id'] ?>" class="collapse" role="tabpanel" >
