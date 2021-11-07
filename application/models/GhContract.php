@@ -243,7 +243,7 @@ class GhContract extends CI_Model {
                 WHERE {$account_id} = consultant_id 
                  AND time_check_in >= {$int_from}  AND time_check_in <= {$int_to} 
                  
-                 ORDER BY gh_contract.id ASC " ;
+                 ORDER BY gh_contract.id ASC LIMIT $n" ;
 
         $result = $this->db->query($sql);
 
