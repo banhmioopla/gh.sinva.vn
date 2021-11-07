@@ -104,71 +104,81 @@ $action_map = [
                         $col = "";
                         $val = "";
                         $title = "";
+                        if($row['action'] == 'update'){
+                            if($row['table_name'] == 'gh_apartment') {
+                                $title = "DA: " . $old_content['address_street'];
+                            }
 
-                        if($row['table_name'] == 'gh_apartment') {
-                            $title = "DA: " . $old_content['address_street'];
+                            if($row['table_name'] == 'gh_room') {
+                                $apartment_id = $old_content['apartment_id'];
+                                $apm = $ghApartment->get(['id' => $apartment_id])[0];
+                                $title = "DA: " . $apm['address_street']. ' | Mã ' . $old_content['code'];
+
+                            }
                         }
-
-                        if($row['table_name'] == 'gh_room') {
-                            $apartment_id = $old_content['apartment_id'];
-                            $apm = $ghApartment->get(['id' => $apartment_id])[0];
-                            $title = "DA: " . $apm['address_street']. ' | Mã ' . $old_content['code'];
-
-                        }
-
-                        $timeline_icon_bg = 'bg-danger';
-                        if($row['time_insert'] > strtotime('today')) {
-                            $timeline_icon_bg = 'bg-warning';
-                        } ?>
+                         ?>
 
                     <?php
                         $content_des = "";
                         $content_old = "";
                         $content_new = "";
-                        foreach ($diff as $k => $v):
-                            $_old = $old_content[$k];
-                            $_new = $new_content[$k];
-                            if($k == 'time_update') {
-                                continue;
-                            }
-                            if($k == 'time_available') {
-                                $_old = $old_content[$k] > 0 ? date('d/m/Y H:i', $old_content[$k]) : '';
-                                $_new = date('d/m/Y H:i', $new_content[$k]);
-                            }
-
-                            if($k == "user_collected_id") {
-                                $_old = $this->ghUser->getFirstByAccountId($old_content[$k])['name'];
-                                $_new = $this->ghUser->getFirstByAccountId($new_content[$k])['name'];
-                            }
-
-                            if($k == 'price') {
-                                $_old = number_format($old_content[$k]);
-                                $_new = number_format($new_content[$k]);
-                            }
-
-                            if($k == 'status') {
-                                $_old = $title_map[$old_content[$k]];
-                                $_new = $title_map[$new_content[$k]];
-                            }
-                            $content_des .= '<span class="badge badge-primary mr-1">';
-                            $content_des .= isset($action_map[$row["action"]]) ? $action_map[$row["action"]]." " : '[rỗng]';
-                            $content_des .= isset($title_map[$k]) ? $title_map[$k] : '[rỗng]';
+                        if($row['action'] == 'create'){
+                            $content_des .= '<span class="badge badge-success mr-1">';
+                            $content_des .= "thêm mới";
                             $content_des .= '</span>';
+                            if($row['table_name'] == 'gh_apartment'){
+                                $title = $content_new = $new_content['address_street'];
+                            }
+                        }
+                        if($row['action'] == 'update'):
 
-                            $content_old .= isset($title_map[$k]) ? "<div><strong class='text-danger'>".$title_map[$k]."</strong></div>" : '[rỗng]';
-                            $content_old .= !empty($_old) ? "<div>".$_old."</div>" : "[rỗng]";
 
-                            $content_new .= isset($title_map[$k]) ? "<div><strong class='text-danger'>".$title_map[$k]."</strong></div>" : '[rỗng]';
-                            $content_new .= !empty($_new) ? "<div>".$_new."</div>" : "[rỗng]";
-                        ?>
-                        <?php endforeach;?>
-                        <tr>
-                            <td><?= date('d/m/Y H:i', $row['time_insert']) ?></td>
-                            <td><?= $libUser->getNameByAccountid($row['user_id']) ?></td>
-                            <td><?= $title ?> <br> <?= $content_des ?></td>
-                            <td><?= $content_old ?></td>
-                            <td><?= $content_new ?></td>
-                        </tr>
+                            foreach ($diff as $k => $v):
+                                $_old = $old_content[$k];
+                                $_new = $new_content[$k];
+                                if($k == 'time_update') {
+                                    continue;
+                                }
+                                if($k == 'time_available') {
+                                    $_old = $old_content[$k] > 0 ? date('d/m/Y H:i', $old_content[$k]) : '';
+                                    $_new = date('d/m/Y H:i', $new_content[$k]);
+                                }
+
+                                if($k == "user_collected_id") {
+                                    $_old = $this->ghUser->getFirstByAccountId($old_content[$k])['name'];
+                                    $_new = $this->ghUser->getFirstByAccountId($new_content[$k])['name'];
+                                }
+
+                                if($k == 'price') {
+                                    $_old = number_format($old_content[$k]);
+                                    $_new = number_format($new_content[$k]);
+                                }
+
+                                if($k == 'status') {
+                                    $_old = $title_map[$old_content[$k]];
+                                    $_new = $title_map[$new_content[$k]];
+                                }
+                                $content_des .= '<span class="badge badge-primary mr-1">';
+                                $content_des .= isset($action_map[$row["action"]]) ? $action_map[$row["action"]]." " : '[rỗng]';
+                                $content_des .= isset($title_map[$k]) ? $title_map[$k] : '[rỗng]';
+                                $content_des .= '</span>';
+
+                                $content_old .= isset($title_map[$k]) ? "<div><strong class='text-danger'>".$title_map[$k]."</strong></div>" : '[rỗng]';
+                                $content_old .= !empty($_old) ? "<div>".$_old."</div>" : "[rỗng]";
+
+                                $content_new .= isset($title_map[$k]) ? "<div><strong class='text-danger'>".$title_map[$k]."</strong></div>" : '[rỗng]';
+                                $content_new .= !empty($_new) ? "<div>".$_new."</div>" : "[rỗng]";
+                            ?>
+                            <?php endforeach;?>
+                        <?php endif;?>
+                            <tr>
+                                <td><?= date('d/m/Y H:i', $row['time_insert']) ?></td>
+                                <td><?= $libUser->getNameByAccountid($row['user_id']) ?></td>
+                                <td><?= $title ?> <br> <?= $content_des ?></td>
+                                <td><?= $content_old ?></td>
+                                <td><?= $content_new ?></td>
+                            </tr>
+
 
                     <?php endforeach;?>
                     </tbody>

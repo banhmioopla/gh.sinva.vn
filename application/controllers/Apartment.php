@@ -690,6 +690,16 @@ class Apartment extends CustomBaseStep {
             ];
 
             $new_id = $this->ghApartment->insert($update_data);
+            if($new_id){
+                $log = [
+                    'table_name' => 'gh_apartment',
+                    'old_content' => "[]",
+                    'modified_content' => json_encode($this->ghApartment->getFirstById($new_id)),
+                    'time_insert' => time(),
+                    'action' => 'create'
+                ];
+                $tracker = $this->ghActivityTrack->insert($log);
+            }
             $this->session->set_flashdata('fast_notify', [
                 'message' => 'Tạo Thành Công Dư Án: '.$update_data['address_street'],
                 'status' => 'success'
@@ -724,6 +734,17 @@ class Apartment extends CustomBaseStep {
         $apartment_clone['user_collected_id'] = $this->auth['account_id'];
         $apartment_clone['address_street'] = "COPY | " .$apartment_clone['address_street'];
         $result = $this->ghApartment->insert($apartment_clone);
+        if($result){
+            $log = [
+                'table_name' => 'gh_apartment',
+                'old_content' => "[]",
+                'modified_content' => json_encode($this->ghApartment->getFirstById($result)),
+                'time_insert' => time(),
+                'action' => 'create',
+                'user_id' => $this->auth['account_id']
+            ];
+            $tracker = $this->ghActivityTrack->insert($log);
+        }
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Tạo dự án '.$apartment_clone['address_street'] .' thành công ',
             'status' => 'success'
