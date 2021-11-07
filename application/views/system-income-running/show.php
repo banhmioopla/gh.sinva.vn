@@ -222,6 +222,8 @@
                                                 </div>
                                                 <h5>Chia bánh</h5>
                                                 <ul>
+                                                    <li>Gói 25% <?= $income_pack['team_name'] ?> <span class="pull-right"><?= number_format($item['total_sale']*0.25) ?></span> </li>
+                                                    <li>Gói 75% <?= $income_pack['team_name'] ?> <span class="pull-right"><?= number_format($item['total_sale']*0.75) ?></span> </li>
                                                     <li>Quỹ team <?= $income_pack['team_name'] ?> <span class="pull-right"><?= number_format($income_pack['team_fund']) ?></span> </li>
                                                     <li>Cố vấn <span class="pull-right"><?= number_format($income_pack['consultant_boss_fund']) ?></span></li>
                                                     <li>QLDA <span class="pull-right"><?= number_format($income_pack['product_manager_fund']) ?></span></li>
