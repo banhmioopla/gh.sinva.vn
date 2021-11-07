@@ -11,6 +11,12 @@ class GhTeamUser extends CI_Model {
     public function getById($district_id) {
         return $this->db->get_where($this->table, ['id' => $district_id])->result_array();
     }
+    public function getFirstById($room_id) {
+        return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
+    }
+    public function getFirstByUserId($room_id) {
+        return $this->db->get_where($this->table, ['user_id' => $room_id])->row_array();
+    }
 
     public function getAll() {
         return $this->db->get_where($this->table)->result_array();

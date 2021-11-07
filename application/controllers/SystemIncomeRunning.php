@@ -35,9 +35,10 @@ class SystemIncomeRunning extends CustomBaseStep
         $data = [
             "team" => [],
             "user" => [],
-            'sinva' => [
-                'share_with_sinva' => 0
-            ]
+            'refer_fund' => [
+                'sinva_fund' => 0,
+                'team_fund' => 0,
+            ],
         ];
         $list_team = $this->ghTeam->get();
         foreach ($list_team as $team) {
@@ -46,23 +47,41 @@ class SystemIncomeRunning extends CustomBaseStep
                 "total" => $this->ghContract->getTotalSaleByTeam($team['id'], $from_date, $to_date)
             ];
         }
+        $team_pack = [];
 
+        $team_fund = 0; $total_income = 0; $general_fund = 0; $product_manager_fund = 0; $consultant_boss_fund = 0;
         foreach ($list_user as $user){
-            $share_with_sinva = 0;
-
+            $fund = $this->ghContract->getSaleRefByContract($user['account_id']);
             if(empty($user['user_refer_id'])){
-                $share_with_sinva = $this->ghContract->getSaleRefByContract($user['account_id'])["sinva"];
-                $data['sinva']['share_with_sinva'] += $share_with_sinva;
+                $data['refer_fund']['sinva_fund'] += $fund;
+            } else {
+                $data['refer_fund']['team_fund'] += $fund;
             }
 
+            $income_pack = $this->ghContract->getTotalIncomeByUser($user['account_id'], $from_date, $to_date);
+            $total_sale = $income_pack['total_sale'];
+            $total_income += $income_pack['total_income'];
 
-            $data["user"][] = [
-                "account_id" => $user["account_id"],
-                "name" => $user["name"],
-                "total" => $this->ghContract->getTotalSaleByUser($user['account_id'], $from_date, $to_date),
-                "share_with_sinva" => $share_with_sinva,
-                "list_sale_item" => $this->ghContract->getListSaleItemByUser($user['account_id'], $from_date, $to_date),
-            ];
+            if(isset($team_pack[$income_pack['team_id']])){
+                $team_pack[$income_pack['team_id']] += $income_pack['team_fund'];
+            } else {
+                $team_pack[$income_pack['team_id']] = $income_pack['team_fund'];
+            }
+
+            $general_fund += $income_pack['general_fund'];
+            $product_manager_fund += $income_pack['product_manager_fund'];
+            $consultant_boss_fund += $income_pack['consultant_boss_fund'];
+            $team_fund += $income_pack['team_fund'];
+            if($total_sale > 0) {
+                $data["user"][] = [
+                    "account_id" => $user["account_id"],
+                    "name" => $user["name"],
+                    "total" => $income_pack['total_sale'],
+                    "income_pack" => $income_pack,
+                    "fund" => $data['refer_fund'],
+                    "list_sale_item" => $this->ghContract->getListSaleItemByUser($user['account_id'], $from_date, $to_date),
+                ];
+            }
 
         }
 
@@ -73,7 +92,7 @@ class SystemIncomeRunning extends CustomBaseStep
 
         $sinva = [
             'total_sale' => 0,
-            'share_sale_by_ref' =>$data['sinva']['share_with_sinva'],
+            'share_sale_by_ref' => $data['refer_fund']['sinva_fund'],
             'remain_sale' => 0
         ];
         foreach ($list_contract as $con){
@@ -89,7 +108,12 @@ class SystemIncomeRunning extends CustomBaseStep
             "data" => $data,
             "timeFrom" => $from_date,
             "timeTo" => $to_date,
-            "sinva" => $sinva
+            "sinva" => $sinva,
+            "general_fund" => $general_fund,
+            "consultant_boss_fund" => $consultant_boss_fund,
+            "product_manager_fund" => $product_manager_fund,
+            "team_fund" => $team_fund,
+            "total_income" => $total_income,
         ]);
         $this->load->view('components/footer');
     }

@@ -1,0 +1,30 @@
+[
+  {
+    "team_id":1,
+    "ref_rate": 0.06,
+    "log_rate": [
+      {
+        "time_update" : 1636131600,
+        "ref_rate":0.04
+      },
+      {
+        "time_update" : 1636131600,
+        "ref_rate":0.04
+      }
+    ]
+  },
+  {
+    "team_id":2,
+    "ref_rate": 0.06,
+    "log_rate": [
+      {
+        "time_update" : 1636131600,
+        "ref_rate":0.04
+      },
+      {
+        "time_update" : 1636131600,
+        "ref_rate":0.04
+      }
+    ]
+  }
+]

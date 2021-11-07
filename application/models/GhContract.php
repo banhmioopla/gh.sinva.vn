@@ -7,8 +7,19 @@ class GhContract extends CI_Model {
     const STATUS_CANCEL = 'Cancel';
     const STATUS_PENDING = 'Pending';
     const STATUS_EXPIRED = 'Expired';
+    public function __construct()
+    {
+        $this->apply_date = "01-11-2021";
+        $this->num_contract_apply = 3;
+        $this->refer_fund = 0.05;
+        $this->rate_team_fund = 0.02;
+        $this->consultant_boss_fund = 0.03;
 
-	public function get($where = []) {
+        $this->general_fund = 0.02;
+        $this->product_manager_fund = 0.05;
+    }
+
+    public function get($where = []) {
         $this->db->order_by('id','DESC');
         return $this->db->get_where($this->table, $where)->result_array();
     }
@@ -124,6 +135,57 @@ class GhContract extends CI_Model {
         return $total;
     }
 
+    public function getTotalIncomeByUser($account_id, $from_date, $to_date){
+        $total_sale = 0;
+        $income_rate = 0.63;
+
+        if(strtotime($from_date) >= strtotime($this->apply_date)){
+            $list_con = $this->get([
+                'consultant_id' => $account_id,
+                'time_check_in >=' => strtotime($from_date),
+                'time_check_in <=' => strtotime($to_date)+86399,
+            ]);
+
+            if(count($list_con) < 4 ) {
+                $income_rate = 0.6;
+                $this->rate_team_fund = 0;
+                $refer_fund = $this->getSaleRefByContract($account_id);
+            } else {
+                $this->rate_team_fund = 0.02;
+                $refer_fund = -$this->getSaleRefByContract($account_id);
+            }
+
+            foreach ($list_con as $con){
+                $total_sale += $this->getTotalSaleByContract($con['id']);
+            }
+        }
+        $this->load->model('ghTeamUser');
+        $this->load->model('ghTeam');
+        $my_team = $this->ghTeamUser->getFirstByUserId($account_id);
+        $team_id = 0;
+        if(empty($my_team)){
+            $my_team = $this->ghTeam->getFirstByLeaderUserId($account_id);
+            if($my_team){
+                $team_id = $my_team['id'];
+            }
+        } else {
+            $team_id = $my_team['team_id'];
+        }
+
+        return [
+            "total_sale" => $total_sale,
+            "total_income" => $total_sale * $income_rate,
+            "income_rate" => $income_rate,
+            "team_fund" => $total_sale * $this->rate_team_fund,
+            "consultant_boss_fund" => $total_sale * $this->consultant_boss_fund,
+            "general_fund" => $total_sale * $this->general_fund,
+            "product_manager_fund" => $total_sale * $this->product_manager_fund,
+            "refer_fund" => $refer_fund,
+            "team_id" => $team_id,
+            "team_name" => 0,
+        ];
+    }
+
     public function getTotalSaleByTeam($team_id, $from_date, $to_date){
         $this->load->model('ghTeamUser');
         $this->load->model('ghTeam');
@@ -174,18 +236,9 @@ class GhContract extends CI_Model {
         return $total;
     }
 
-    public function getSaleRefByContract($account_id){
-        $apply_date = "01-11-2021";
-        $num_contract_apply = 3;
-        $sinva_get_rate_ref = 0.05;
-
-
-        $sale_by_limit = $this->getTotalSaleByUserLimit($account_id, $num_contract_apply, $apply_date, date("d-m-Y"));
-
-        return [
-            "sinva" => $sale_by_limit * $sinva_get_rate_ref
-        ];
-
+    public function getSaleRefByContract($account_id){ // get total refer user fund
+        $sale_by_limit = $this->getTotalSaleByUserLimit($account_id, $this->num_contract_apply, $this->apply_date, date("d-m-Y"));
+        return $sale_by_limit * $this->refer_fund;
     }
 
     public function getListSaleItemByUser($account_id, $from, $to){

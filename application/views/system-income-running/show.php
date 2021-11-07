@@ -72,14 +72,14 @@
                         <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                             <div class="card-box shadow tilebox-one">
                                 <i class="icon-chart float-right text-muted"></i>
-                                <h6 class="text-muted text-uppercase mt-0">CHIA SẺ VỚI SALE</h6>
+                                <h6 class="text-muted text-uppercase mt-0">Phí do SINVA tuyển dụng</h6>
                                 <h2 class="m-b-20"><span ><?= number_format($sinva['share_sale_by_ref']) ?></span></h2>
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                             <div class="card-box shadow tilebox-one">
                                 <i class="icon-chart float-right text-muted"></i>
-                                <h6 class="text-muted text-uppercase mt-0">DT CÒN LẠI (TỔNG DT - CHIA SẺ VỚI SALE)</h6>
+                                <h6 class="text-muted text-uppercase mt-0">DT CÒN LẠI (TỔNG DT - SINVA tuyển dụng)</h6>
                                 <h2 class="m-b-20"><span ><?= number_format($sinva['remain_sale']) ?></span></h2>
                             </div>
                         </div>
@@ -90,6 +90,52 @@
                         </div>
                         <div class="alert alert-primary" role="alert">
                             Thành viên do ĐỘI NHÓM tuyển dụng, doanh thu share lại với ĐỘI NHÓM là <strong>(n)%</strong> của <strong>MỖI HỢP ĐỒNG</strong> đầu tiên!
+                        </div>
+                    </div>
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card-box">
+                            <h4 class="header-title mb-4 text-center">Góc chia bánh | 75% | <?= number_format(0.75*$sinva['total_sale']) ?></h4>
+
+                            <ul
+                                    class="list-unstyled transaction-list border pl-2 pr-4 border-dark slimscroll mb-0"
+                                    style="max-height: 200px"
+                            >
+
+                                <li>
+                                    <i class=" fa fa-get-pocket text-success"></i>
+                                    <span class="tran-text">Quỹ chung Sinva </span>
+                                    <span class="pull-right text-success tran-price"><?= number_format($general_fund) ?></span>
+                                    <span class="clearfix"></span>
+                                </li>
+
+                                <li>
+                                    <i class=" fa fa-get-pocket text-success"></i>
+                                    <span class="tran-text">Quỹ cố vấn </span>
+                                    <span class="pull-right text-success tran-price"><?= number_format($consultant_boss_fund) ?></span>
+                                    <span class="clearfix"></span>
+                                </li>
+                                <li>
+                                    <i class=" fa fa-get-pocket text-success"></i>
+                                    <span class="tran-text">Quỹ QLDA </span>
+                                    <span class="pull-right text-success tran-price"><?= number_format($product_manager_fund) ?></span>
+                                    <span class="clearfix"></span>
+                                </li>
+
+                                <li>
+                                    <i class=" fa fa-get-pocket text-success"></i>
+                                    <span class="tran-text">Quỹ đội nhóm </span>
+                                    <span class="pull-right text-success tran-price"><?= number_format($team_fund) ?></span>
+                                    <span class="clearfix"></span>
+                                </li>
+
+                                <li>
+                                    <i class=" fa fa-get-pocket text-success"></i>
+                                    <span class="tran-text">TN ch.viên </span>
+                                    <span class="pull-right text-success tran-pricex"><?= number_format($total_income) ?></span>
+                                    <span class="clearfix"></span>
+                                </li>
+
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -126,16 +172,21 @@
                         <div class="col-12">
                             <div id="accordion" role="tablist" aria-multiselectable="true" class="m-b-30">
                                 <?php foreach ($data['user'] as $dd):?>
+                                    <?php
+                                    $income_pack = $dd["income_pack"];
+
+                                    ?>
                                     <div class="card">
                                         <div class="card-header" role="tab" id="headingThree">
                                             <h5 class="mb-0 mt-0">
                                                 <a class="collapsed text-danger" data-toggle="collapse"
                                                    href="#collapse-<?= $dd['account_id'] ?>" aria-expanded="false">
-                                                    <i class="mdi mdi-account-circle"></i> <?= $dd['name'] ?> <span class="text-primary pull-right"><?= number_format($dd['total']) ?></span>
+                                                    <i class="mdi mdi-account-circle"></i> <?= $dd['name'] ?> <span class="text-primary pull-right"> <span class="bg-dark p-1 rounded text-success"> <span class="text-warning">(<?= ($income_pack['income_rate']*100) ."%" ?>)</span> <?= number_format($income_pack['total_income']) ?></span> <?= number_format($income_pack['total_sale']) ?></span>
                                                 </a>
-                                                <?php if($dd['share_with_sinva']):?>
+                                                <?php if($dd["total"]):?>
                                                     <div class="m-b-20 pl-2 mt-2">
-                                                        <span class="badge badge-primary">sinva: <?= number_format($dd['share_with_sinva']) ?></span>
+                                                        <span class="badge badge-primary">sinva: <?= number_format($dd['fund']['sinva_fund']) ?></span>
+                                                        <span class="badge badge-primary">team: <?= number_format($dd['fund']['team_fund']) ?></span>
                                                         <span class="badge badge-primary">HĐ: <?= count($dd['list_sale_item']) ?></span>
                                                     </div>
                                                 <?php endif;?>
@@ -148,6 +199,15 @@
                                                     <?php foreach ($dd['list_sale_item'] as $item): ?>
                                                         <li><?= $item['description'] ?> <span class="pull-right text-primary"><?= number_format($item['total_sale']) ?></span></li>
                                                     <?php endforeach; ?>
+                                                </ul>
+
+                                                <h5>Mấy miếng bánh khác</h5>
+                                                <ul>
+                                                    <li>Quỹ team <span class="pull-right"><?= number_format($income_pack['team_fund']) ?></span> </li>
+                                                    <li>Cố vấn <span class="pull-right"><?= number_format($income_pack['consultant_boss_fund']) ?></span></li>
+                                                    <li>QLDA <span class="pull-right"><?= number_format($income_pack['product_manager_fund']) ?></span></li>
+                                                    <li>Quỹ Sinva <span class="pull-right"><?= number_format($income_pack['general_fund']) ?></span></li>
+                                                    <li>Phí tuyển dụng tôi <span class="pull-right"><?= number_format($income_pack['refer_fund']) ?></span></li>
                                                 </ul>
                                             </div>
                                         </div>
