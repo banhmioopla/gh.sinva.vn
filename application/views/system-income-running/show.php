@@ -180,6 +180,12 @@
                                     <?php
                                     $income_pack = $dd["income_pack"];
                                     $refer_user_income = isset($refer_user_income_pack[$dd['account_id']]) ? $refer_user_income_pack[$dd['account_id']]: 0;
+
+                                    $text_income = "text-success";
+                                    if(empty($income_pack['total_income'])){
+                                        $text_income = "text-warning";
+                                    }
+
                                     ?>
                                     <div class="card">
                                         <div class="card-header" role="tab" id="headingThree">
@@ -193,7 +199,7 @@
                                                         <span class="pull-right text-primary pl-1"><?= round($income_pack['total_sale']/$sinva['total_sale'],3)*100 ?>% | <?= number_format($income_pack['total_sale']) ?></span>
                                                     </div>
                                                     <div class="col-12 mt-1">
-                                                        <div class="text-primary bg-dark text-center p-1 rounded text-success"><?= number_format($refer_user_income+$income_pack['total_income']) ?></div>
+                                                        <div class="text-primary bg-dark text-center p-1 rounded <?= $text_income ?>"><?= number_format($refer_user_income+$income_pack['total_income']) ?></div>
                                                     </div>
                                                 </div>
 
@@ -232,10 +238,10 @@
 
                                                 </ul>
                                                 <hr>
-                                                <h5>Ăn tiền <span class="pull-right pl-2 pr-1 rounded text-success bg-dark"><?= number_format($refer_user_income+$income_pack['total_income']) ?></span></h5>
+                                                <h5>Ăn tiền <span class="pull-right pl-2 pr-1 rounded <?= $text_income ?> bg-dark"><?= number_format($refer_user_income+$income_pack['total_income']) ?></span></h5>
                                                 <ul>
                                                     <li>Ăn hợp đồng  <span class="pull-right pl-2 rounded pr-1 text-success bg-dark"><span class="text-warning">(<?= ($income_pack['income_rate']*100) ."%" ?>)</span> <?= number_format($income_pack['total_income']) ?></span></li>
-                                                    <li class="mt-1">Ăn tuyển dụng  <span class="pull-right  text-success bg-dark pl-2 pr-1"><?= number_format($refer_user_income) ?></span></li>
+                                                    <li class="mt-1">Ăn tuyển dụng  <span class="pull-right  <?= $text_income ?> bg-dark pl-2 pr-1"><?= number_format($refer_user_income) ?></span></li>
                                                 </ul>
                                             </div>
                                         </div>
