@@ -19,8 +19,8 @@ class GhContract extends CI_Model {
         $this->product_manager_fund = 0.05;
     }
 
-    public function get($where = []) {
-        $this->db->order_by('id','DESC');
+    public function get($where = [], $order_column  = 'id', $trend = 'DESC') {
+        $this->db->order_by($order_column, $trend);
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
@@ -276,6 +276,7 @@ class GhContract extends CI_Model {
         ]);
 
         $arr = [];
+        $i = 1;
         foreach ($list_contract as $con){
             $this->load->model('ghApartment');
             $this->load->model('ghRoom');
@@ -283,8 +284,9 @@ class GhContract extends CI_Model {
             $apm = $this->ghApartment->getFirstById($room['apartment_id']);
             $arr[] = [
                 "total_sale" => $this->getTotalSaleByContract($con['id']),
-                "description" => "<span class='text-muted'>Ngày ký ".date("d-m-Y", $con['time_check_in']) . "</span>, ". $apm['address_street'] . " <strong>".$room['code']."</strong> ",
+                "description" => "<span class='text-muted'>".$i.") Ngày ký ".date("d-m-Y", $con['time_check_in']) . "</span>, ". $apm['address_street'] . " <strong>".$room['code']."</strong> ",
             ];
+            $i++;
         }
 
         return $arr;
