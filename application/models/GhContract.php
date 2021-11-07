@@ -285,7 +285,6 @@ class GhContract extends CI_Model {
                 "total_sale" => $this->getTotalSaleByContract($con['id']),
                 "description" => "<span class='text-muted'> Ngày ký ".date("d-m-Y", $con['time_check_in']) . "</span>, ". $apm['address_street'] . " <strong>".$room['code']."</strong> ",
             ];
-            $i++;
         }
 
         return $arr;
