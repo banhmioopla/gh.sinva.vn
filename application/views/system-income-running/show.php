@@ -175,6 +175,11 @@
                 <div class="card-box">
                     <div class="row">
                         <div class="col-12">
+                            <div class="alert alert-primary" role="alert">
+                                Click vào tên để xem chi tiết!
+                            </div>
+                        </div>
+                        <div class="col-12">
                             <div id="accordion" role="tablist" aria-multiselectable="true" class="m-b-30">
                                 <?php foreach ($data['user'] as $dd):?>
                                     <?php
