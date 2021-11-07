@@ -92,7 +92,7 @@
                             Thành viên do ĐỘI NHÓM tuyển dụng, doanh thu share lại với ĐỘI NHÓM là <strong>(n)%</strong> của <strong>MỖI HỢP ĐỒNG</strong> đầu tiên!
                         </div>
                     </div>
-                    <div class="col-lg-8 offset-lg-2">
+                    <div class="col-md-8 offset-md-2">
                         <div class="card-box">
                             <h4 class="header-title mb-4 text-center">Góc chia bánh | 75% | <?= number_format(0.75*$sinva['total_sale']) ?></h4>
 
@@ -136,6 +136,11 @@
                                 </li>
 
                             </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-8 offset-md-2">
+                        <div class="card-box">
+                            <div id="3d-exploded-chart"></div>
                         </div>
                     </div>
                 </div>
@@ -278,12 +283,42 @@
                 bar_chart.draw(google_chart_data, options);
                 return bar_chart;
             },
+            GoogleChart.prototype.createPieChart = function(selector, data, colors, is3D, issliced) {
+                    var options = {
+                        fontName: 'Roboto',
+                        fontSize: 13,
+                        height: 300,
+                        chartArea: {
+                            left: 0,
+                            width: '100%',
+                            height: '100%'
+                        },
+                        colors: colors
+                    };
 
+                    if(is3D) {
+                        options['is3D'] = true;
+                    }
+
+                    if(issliced) {
+                        options['is3D'] = true;
+                        options['pieSliceText'] = 'label';
+                        options['slices'] = {
+                            2: {offset: 0.10},
+                            5: {offset: 0.20}
+                        };
+                    }
+
+                    var google_chart_data = google.visualization.arrayToDataTable(data);
+                    var pie_chart = new google.visualization.PieChart(selector);
+                    pie_chart.draw(google_chart_data, options);
+                    return pie_chart;
+                },
             GoogleChart.prototype.init = function () {
                 var $this = this;
                 //creating bar chart
                 let post_data = {mode: "USER_WITH_SALE", timeFrom: $("input[name=timeFrom]").val(), timeTo: $("input[name=timeTo]").val()};
-                console.log(post_data);
+
                 $.ajax({
                     url: '/chart/get-data',
                     method: "POST",
@@ -294,6 +329,18 @@
                         $this.createBarChart($('#bar-chart')[0], res, ['#4eb7eb', '#f2e778'], res.length);
                     }
                 });
+
+                var sliced_Data = [
+                    ['Language', 'Speakers (in millions)'],
+                    ['Thu nhập', 60],
+                    ['Tuyển dụng', 5],
+                    ['Quỹ Team', 2],
+                    ['Cố vấn', 3],
+                    ['Quỹ Chung Cty', 2],
+                    ['QLDA', 5],
+                    ['Chi phí cứng', 25]
+                ];
+                $this.createPieChart($('#3d-exploded-chart')[0], sliced_Data, ['#f59842', '#f5ec42','#f56342','#02c0ce', '#e3eaef', '#32c861',"#353d4a"], true, true);
 
             };
 
