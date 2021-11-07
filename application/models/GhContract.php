@@ -157,6 +157,7 @@ class GhContract extends CI_Model {
             'time_check_in >=' => strtotime($from_date),
             'time_check_in <=' => strtotime($to_date)+86399,
         ]);
+        $team_fund_plus_rate = 0;
         if(strtotime($from_date) >= strtotime($this->apply_date)){
             if(count($list_con) < 4 ) {
                 $income_rate = 0.6;
@@ -196,12 +197,15 @@ class GhContract extends CI_Model {
         if($user['time_joined'] >= strtotime($from_date) && strtotime($from_date) >= strtotime($this->apply_date)){
             $refer_fund = $this->getSaleRefByContract($account_id);
         }
+        if($income_rate === 0.06 && empty($refer_fund)){
+            $team_fund_plus_rate = 0.02;
+        }
 
         return [
             "total_sale" => $total_sale,
             "total_income" => $total_sale * $income_rate,
             "income_rate" => $income_rate,
-            "team_fund" => $total_sale * $this->rate_team_fund,
+            "team_fund" => $total_sale * ($this->rate_team_fund+$team_fund_plus_rate),
             "consultant_boss_fund" => $total_sale * $this->consultant_boss_fund,
             "general_fund" => $total_sale * $this->general_fund,
             "product_manager_fund" => $total_sale * $this->product_manager_fund,
