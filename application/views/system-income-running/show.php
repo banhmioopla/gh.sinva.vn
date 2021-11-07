@@ -190,7 +190,7 @@
                                                            href="#collapse-<?= $dd['account_id'] ?>" aria-expanded="false">
                                                             <i class="mdi mdi-account-circle"></i> <?= $dd['name'] ?>
                                                         </a>
-                                                        <span class="pull-right text-primary pl-1"><?= number_format($income_pack['total_sale']) ?></span>
+                                                        <span class="pull-right text-primary pl-1"><?= round($income_pack['total_sale']/$sinva['total_sale'],3)*100 ?>% | <?= number_format($income_pack['total_sale']) ?></span>
                                                     </div>
                                                     <div class="col-12 mt-1">
                                                         <div class="text-primary bg-dark text-center p-1 rounded text-success"><?= number_format($refer_user_income+$income_pack['total_income']) ?></div>
