@@ -10,6 +10,7 @@ class SystemIncomeRunning extends CustomBaseStep
         $this->load->model(['ghActivityTrack', "ghContract",
             'ghUser', 'ghNotification', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig', 'ghTeam']);
         $this->load->library('LibTime', null, 'libTime');
+        $this->apply_date = "01-11-2021";
     }
 
 
@@ -52,10 +53,12 @@ class SystemIncomeRunning extends CustomBaseStep
         $team_fund = 0; $total_income = 0; $general_fund = 0; $product_manager_fund = 0; $consultant_boss_fund = 0;
         foreach ($list_user as $user){
             $fund = $this->ghContract->getSaleRefByContract($user['account_id']);
-            if(empty($user['user_refer_id'])){
+            if(empty($user['user_refer_id']) && $user['time_joined'] >= strtotime($this->apply_date)){
                 $data['refer_fund']['sinva_fund'] += $fund;
             } else {
-                $data['refer_fund']['team_fund'] += $fund;
+                if($user['time_joined'] >= strtotime($this->apply_date)){
+                    $data['refer_fund']['team_fund'] += $fund;
+                }
             }
 
             $income_pack = $this->ghContract->getTotalIncomeByUser($user['account_id'], $from_date, $to_date);
