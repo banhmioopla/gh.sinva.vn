@@ -73,10 +73,14 @@ class SystemIncomeRunning extends CustomBaseStep
             $team_fund += $income_pack['team_fund'];
 
             // THU NHẬP người tuyển tôi
-            if($income_pack['refer_account_id'] > 0 && isset($income_by_refer[$income_pack['refer_account_id']])){
-                $refer_user_income_pack[$income_pack['refer_account_id']] += $income_pack['refer_fund'];
+            if(!isset($income_by_refer[$income_pack['refer_account_id']])){
+                if( $income_pack['refer_fund'] > 0) {
+                    $refer_user_income_pack[$income_pack['refer_account_id']] = $income_pack['refer_fund'];
+                }
+
+
             } else {
-                $refer_user_income_pack[$income_pack['refer_account_id']] = $income_pack['refer_fund'];
+                $refer_user_income_pack[$income_pack['refer_account_id']]  += $income_pack['refer_fund'];
             }
 
             if($total_sale > 0 || (isset($refer_user_income_pack[$user["account_id"]]) && $refer_user_income_pack[$user["account_id"]] > 0)) {
@@ -86,7 +90,6 @@ class SystemIncomeRunning extends CustomBaseStep
                     "total" => $income_pack['total_sale'],
                     "income_pack" => $income_pack,
                     "fund" => $data['refer_fund'],
-                    "refer_user_income_pack" => $refer_user_income_pack,
                     "list_sale_item" => $this->ghContract->getListSaleItemByUser($user['account_id'], $from_date, $to_date),
                 ];
             }
@@ -109,8 +112,6 @@ class SystemIncomeRunning extends CustomBaseStep
 
         $sinva['remain_sale'] = $sinva['total_sale'] - $sinva['share_sale_by_ref'];
 
-
-
         $this->load->view('components/header');
         $this->load->view('system-income-running/show',[
             "data" => $data,
@@ -122,6 +123,7 @@ class SystemIncomeRunning extends CustomBaseStep
             "product_manager_fund" => $product_manager_fund,
             "team_fund" => $team_fund,
             "total_income" => $total_income,
+            "refer_user_income_pack" => $refer_user_income_pack,
         ]);
         $this->load->view('components/footer');
     }

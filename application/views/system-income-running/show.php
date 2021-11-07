@@ -193,7 +193,7 @@
                                                         <span class="pull-right text-primary pl-1"><?= number_format($income_pack['total_sale']) ?></span>
                                                     </div>
                                                     <div class="col-12 mt-1">
-                                                        <div class="text-primary bg-dark text-center p-1 rounded text-success"><span class="text-warning">(<?= ($income_pack['income_rate']*100) ."%" ?>)</span> <?= number_format($income_pack['total_income']) ?></div>
+                                                        <div class="text-primary bg-dark text-center p-1 rounded text-success"><?= number_format($refer_user_income+$income_pack['total_income']) ?></div>
                                                     </div>
                                                 </div>
 
@@ -226,7 +226,13 @@
                                                     <li>QLDA <span class="pull-right"><?= number_format($income_pack['product_manager_fund']) ?></span></li>
                                                     <li>Quỹ Sinva <span class="pull-right"><?= number_format($income_pack['general_fund']) ?></span></li>
                                                     <li>Phí tuyển dụng  <span class="pull-right"><?= number_format($income_pack['refer_fund']) ?></span></li>
-                                                    <li>Ăn tuyển dụng  <span class="pull-right text-warning bg-dark"><?= number_format($refer_user_income) ?></span></li>
+
+                                                </ul>
+                                                <hr>
+                                                <h5>Ăn tiền <span class="pull-right pl-2 pr-1 rounded text-success bg-dark"><?= number_format($refer_user_income+$income_pack['total_income']) ?></span></h5>
+                                                <ul>
+                                                    <li>Ăn hợp đồng  <span class="pull-right pl-2 rounded pr-1 text-success bg-dark"><span class="text-warning">(<?= ($income_pack['income_rate']*100) ."%" ?>)</span> <?= number_format($income_pack['total_income']) ?></span></li>
+                                                    <li class="mt-1">Ăn tuyển dụng  <span class="pull-right  text-success bg-dark pl-2 pr-1"><?= number_format($refer_user_income) ?></span></li>
                                                 </ul>
                                             </div>
                                         </div>
