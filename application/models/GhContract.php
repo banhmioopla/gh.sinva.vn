@@ -160,7 +160,7 @@ class GhContract extends CI_Model {
         if(strtotime($from_date) >= strtotime($this->apply_date)){
             if(count($list_con) < 4 ) {
                 $income_rate = 0.6;
-                if(strtotime($user['time_joined']) >= strtotime($this->apply_date)){
+                if($user['time_joined'] >= strtotime($this->apply_date)){
                     $this->rate_team_fund = 0;
                 }
             }
@@ -192,7 +192,7 @@ class GhContract extends CI_Model {
         }
 
 
-        if(strtotime($user['time_joined']) >= strtotime($this->apply_date)){
+        if($user['time_joined'] >= strtotime($this->apply_date)){
             $refer_fund = $this->getSaleRefByContract($account_id);
         }
 
