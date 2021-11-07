@@ -172,7 +172,7 @@ class GhContract extends CI_Model {
 
 
         $my_team = $this->ghTeamUser->getFirstByUserId($account_id);
-        $team_id = 0;
+        $team_id = $refer_account_id = 0;
         $team_name = "";
         if(empty($my_team)){
             $my_team = $this->ghTeam->getFirstByLeaderUserId($account_id);
@@ -189,6 +189,7 @@ class GhContract extends CI_Model {
 
         if($refer_me){
             $refer_by = $refer_me['name']. " | ". date("d-m-Y", $user['time_joined']);
+            $refer_account_id = $refer_me['account_id'];
         }
 
 
@@ -206,6 +207,7 @@ class GhContract extends CI_Model {
             "product_manager_fund" => $total_sale * $this->product_manager_fund,
             "refer_fund" => $refer_fund,
             "refer_by" => $refer_by,
+            "refer_account_id" => $refer_account_id,
             "team_name" => $team_name,
             "team_id" => $team_id,
         ];

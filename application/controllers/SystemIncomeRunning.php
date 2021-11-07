@@ -48,17 +48,13 @@ class SystemIncomeRunning extends CustomBaseStep
                 "total" => $this->ghContract->getTotalSaleByTeam($team['id'], $from_date, $to_date)
             ];
         }
-        $team_pack = [];
+        $team_pack = $refer_user_income_pack = [];
 
         $team_fund = 0; $total_income = 0; $general_fund = 0; $product_manager_fund = 0; $consultant_boss_fund = 0;
         foreach ($list_user as $user){
             $fund = $this->ghContract->getSaleRefByContract($user['account_id']);
             if(empty($user['user_refer_id']) && $user['time_joined'] >= strtotime($this->apply_date)){
                 $data['refer_fund']['sinva_fund'] += $fund;
-            } else {
-                if($user['time_joined'] >= strtotime($this->apply_date)){
-                    $data['refer_fund']['team_fund'] += $fund;
-                }
             }
 
             $income_pack = $this->ghContract->getTotalIncomeByUser($user['account_id'], $from_date, $to_date);
@@ -75,13 +71,22 @@ class SystemIncomeRunning extends CustomBaseStep
             $product_manager_fund += $income_pack['product_manager_fund'];
             $consultant_boss_fund += $income_pack['consultant_boss_fund'];
             $team_fund += $income_pack['team_fund'];
-            if($total_sale > 0) {
+
+            // THU NHẬP người tuyển tôi
+            if($income_pack['refer_account_id'] > 0 && isset($income_by_refer[$income_pack['refer_account_id']])){
+                $refer_user_income_pack[$income_pack['refer_account_id']] += $income_pack['refer_fund'];
+            } else {
+                $refer_user_income_pack[$income_pack['refer_account_id']] = $income_pack['refer_fund'];
+            }
+
+            if($total_sale > 0 || (isset($refer_user_income_pack[$user["account_id"]]) && $refer_user_income_pack[$user["account_id"]] > 0)) {
                 $data["user"][] = [
                     "account_id" => $user["account_id"],
                     "name" => $user["name"],
                     "total" => $income_pack['total_sale'],
                     "income_pack" => $income_pack,
                     "fund" => $data['refer_fund'],
+                    "refer_user_income_pack" => $refer_user_income_pack,
                     "list_sale_item" => $this->ghContract->getListSaleItemByUser($user['account_id'], $from_date, $to_date),
                 ];
             }

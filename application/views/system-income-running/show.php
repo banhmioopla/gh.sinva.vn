@@ -179,7 +179,7 @@
                                 <?php foreach ($data['user'] as $dd):?>
                                     <?php
                                     $income_pack = $dd["income_pack"];
-
+                                    $refer_user_income = isset($refer_user_income_pack[$dd['account_id']]) ? $refer_user_income_pack[$dd['account_id']]: 0;
                                     ?>
                                     <div class="card">
                                         <div class="card-header" role="tab" id="headingThree">
@@ -200,10 +200,7 @@
                                                 <div class="row mt-2">
                                                     <div class="col-12 m-b-20 text-center pl-md-2 mt-2">
                                                         <span class="badge badge-primary mb-1">sinva: <?= number_format($dd['fund']['sinva_fund']) ?></span>
-                                                        <span class="badge badge-primary mb-1">team: <?= number_format($dd['fund']['team_fund']) ?></span>
                                                         <span class="badge badge-primary mb-1">HĐ: <?= count($dd['list_sale_item']) ?></span>
-
-
                                                     </div>
                                                 </div>
 
@@ -229,6 +226,7 @@
                                                     <li>QLDA <span class="pull-right"><?= number_format($income_pack['product_manager_fund']) ?></span></li>
                                                     <li>Quỹ Sinva <span class="pull-right"><?= number_format($income_pack['general_fund']) ?></span></li>
                                                     <li>Phí tuyển dụng  <span class="pull-right"><?= number_format($income_pack['refer_fund']) ?></span></li>
+                                                    <li>Ăn tuyển dụng  <span class="pull-right text-warning bg-dark"><?= number_format($refer_user_income) ?></span></li>
                                                 </ul>
                                             </div>
                                         </div>
