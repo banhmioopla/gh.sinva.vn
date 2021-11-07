@@ -171,7 +171,7 @@
             <div class="col-12">
                 <h2>DOANH SỐ CÁ NHÂN</h2>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-12">
