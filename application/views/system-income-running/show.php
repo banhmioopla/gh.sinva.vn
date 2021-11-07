@@ -217,14 +217,18 @@
                                                         <li><?= $item['description'] ?> <span class="pull-right text-primary"><?= number_format($item['total_sale']) ?></span></li>
                                                     <?php endforeach; ?>
                                                 </ul>
-
+                                                <hr>
                                                 <h5>Mấy miếng bánh khác</h5>
+                                                <div>
+                                                    Được tuyển vào bởi: <?= $income_pack['refer_by'] ?>
+                                                    <hr>
+                                                </div>
                                                 <ul>
-                                                    <li>Quỹ team <span class="pull-right"><?= number_format($income_pack['team_fund']) ?></span> </li>
+                                                    <li>Quỹ team <?= $income_pack['team_name'] ?> <span class="pull-right"><?= number_format($income_pack['team_fund']) ?></span> </li>
                                                     <li>Cố vấn <span class="pull-right"><?= number_format($income_pack['consultant_boss_fund']) ?></span></li>
                                                     <li>QLDA <span class="pull-right"><?= number_format($income_pack['product_manager_fund']) ?></span></li>
                                                     <li>Quỹ Sinva <span class="pull-right"><?= number_format($income_pack['general_fund']) ?></span></li>
-                                                    <li>Phí tuyển dụng tôi <span class="pull-right"><?= number_format($income_pack['refer_fund']) ?></span></li>
+                                                    <li>Phí tuyển dụng  <span class="pull-right"><?= number_format($income_pack['refer_fund']) ?></span></li>
                                                 </ul>
                                             </div>
                                         </div>

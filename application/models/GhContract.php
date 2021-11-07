@@ -150,10 +150,8 @@ class GhContract extends CI_Model {
             if(count($list_con) < 4 ) {
                 $income_rate = 0.6;
                 $this->rate_team_fund = 0;
-                $refer_fund = $this->getSaleRefByContract($account_id);
             } else {
                 $this->rate_team_fund = 0.02;
-                $refer_fund = -$this->getSaleRefByContract($account_id);
             }
         }
 
@@ -162,15 +160,34 @@ class GhContract extends CI_Model {
         }
         $this->load->model('ghTeamUser');
         $this->load->model('ghTeam');
+        $this->load->model('ghUser');
+
         $my_team = $this->ghTeamUser->getFirstByUserId($account_id);
         $team_id = 0;
+        $team_name = "";
         if(empty($my_team)){
             $my_team = $this->ghTeam->getFirstByLeaderUserId($account_id);
             if($my_team){
                 $team_id = $my_team['id'];
+                $team_name = $this->ghTeam->getFirstById($my_team['id'])["name"];
             }
         } else {
             $team_id = $my_team['team_id'];
+            $team_name = $this->ghTeam->getFirstById($my_team['team_id'])["name"];
+        }
+
+        $user = $this->ghUser->getFirstByAccountId($account_id);
+        $refer_by = $refer_by = "SINVA | ". date("d-m-Y", $user['time_joined']);
+        $refer_me = $this->ghUser->getFirstByAccountId($user["user_refer_id"]);
+
+        if($refer_me){
+            $refer_by = $refer_me['name']. " | ". date("d-m-Y", $user['time_joined']);
+        }
+
+
+        if(strtotime($user['time_joined']) >= strtotime($this->apply_date)){
+            $refer_fund = $this->getSaleRefByContract($account_id);
+
         }
 
         return [
@@ -182,6 +199,8 @@ class GhContract extends CI_Model {
             "general_fund" => $total_sale * $this->general_fund,
             "product_manager_fund" => $total_sale * $this->product_manager_fund,
             "refer_fund" => $refer_fund,
+            "refer_by" => $refer_by,
+            "team_name" => $team_name,
             "team_id" => $team_id,
         ];
     }
