@@ -215,11 +215,11 @@
                                         <div id="collapse-<?= $dd['account_id'] ?>" class="collapse" role="tabpanel" >
                                             <div class="card-body">
                                                 <h5>Doanh số từ hợp đồng</h5>
-                                                <ul>
+                                                <ol>
                                                     <?php foreach ($dd['list_sale_item'] as $item): ?>
                                                         <li><?= $item['description'] ?> <span class="pull-right text-primary"><?= number_format($item['total_sale']) ?></span></li>
                                                     <?php endforeach; ?>
-                                                </ul>
+                                                </ol>
                                                 <hr>
 
                                                 <div>

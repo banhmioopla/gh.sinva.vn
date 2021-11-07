@@ -273,10 +273,9 @@ class GhContract extends CI_Model {
             'consultant_id' => $account_id,
             'time_check_in >=' => strtotime($from),
             'time_check_in <=' => strtotime($to)+86399,
-        ]);
+        ], "id", "ASC");
 
         $arr = [];
-        $i = 1;
         foreach ($list_contract as $con){
             $this->load->model('ghApartment');
             $this->load->model('ghRoom');
@@ -284,7 +283,7 @@ class GhContract extends CI_Model {
             $apm = $this->ghApartment->getFirstById($room['apartment_id']);
             $arr[] = [
                 "total_sale" => $this->getTotalSaleByContract($con['id']),
-                "description" => "<span class='text-muted'>".$i.") Ngày ký ".date("d-m-Y", $con['time_check_in']) . "</span>, ". $apm['address_street'] . " <strong>".$room['code']."</strong> ",
+                "description" => "<span class='text-muted'> Ngày ký ".date("d-m-Y", $con['time_check_in']) . "</span>, ". $apm['address_street'] . " <strong>".$room['code']."</strong> ",
             ];
             $i++;
         }
