@@ -84,7 +84,6 @@
                 <?php endif;?>
 
 
-                <?php if(isYourPermission('Service', 'show',$this->permission_set)):?>
                 <li class="has-submenu">
                     <a href="#"><i class="icon-layers"></i>Chi Phí</a>
                     <ul class="submenu">
@@ -98,7 +97,6 @@
                         <?php endif; */?>
                     </ul>
                 </li>
-                <?php endif;?>
 
                 <?php if(isYourPermission('Dashboard', 'show',$this->permission_set)):?>
                     <li class="has-submenu">
