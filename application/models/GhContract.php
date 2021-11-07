@@ -138,7 +138,7 @@ class GhContract extends CI_Model {
     public function getTotalIncomeByUser($account_id, $from_date, $to_date){
         $total_sale = 0;
         $income_rate = 0.63;
-
+        $refer_fund = 0;
         if(strtotime($from_date) >= strtotime($this->apply_date)){
             $list_con = $this->get([
                 'consultant_id' => $account_id,
