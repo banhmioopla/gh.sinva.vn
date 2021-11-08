@@ -75,7 +75,7 @@ $arr_room_id = [];
 
 
                     ?>
-                    <td><div><?= $text_type_name ?></div></td>
+                    <td><div><?= $text_type_name ?></div> <div class="text-primary"><?= !empty($room['type']) ? $room['type'] : '' ?></div></td>
                     <td><div class="font-weight-bold"><?= number_format($room['price']/1000) ?></div></td>
                     <td><div><?= $room['area'] ?></div></td>
                     <td class="text-center"><div><?= $status_txt ?></div></td>

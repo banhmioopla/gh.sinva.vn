@@ -384,7 +384,7 @@ class Apartment extends CustomBaseStep {
                 'room_id' => $r['id'],
                 'room_code' => $r['code'],
                 'room_price' => number_format($r['price']/1000),
-                'room_type' => $text_type_name,
+                'room_type' => "<div>".$text_type_name."</div>" . "<div class='text-primary'>".$r['type']."</div>",
                 'room_area' => $r['area'] . ' ㎡',
                 'room_status' => $status_txt,
                 'room_time_available' => $r['time_available'] > 0 ? date('d-m-Y', $r['time_available']) : '-',

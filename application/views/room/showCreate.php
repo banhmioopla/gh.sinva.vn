@@ -150,10 +150,22 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                         ><?= $room['code'] ? $room['code'] : 'không có thông tin' ?></div>
                                     </td>
 
-                                    <td class="list-room-type"
-                                        data-name="room_type_id"
-                                        data-pk="<?= $room['id'] ?>"
-                                        data-value="<?= $js_list_type ?>"><?= $text_type_name ? $text_type_name : "-" ?></td>
+                                    <td >
+                                        <div
+                                                class="list-room-type"
+                                                data-name="room_type_id"
+                                                data-pk="<?= $room['id'] ?>"
+                                                data-value="<?= $js_list_type ?>"
+                                        ><?= $text_type_name ? $text_type_name : "-" ?></div>
+                                        <hr>
+                                        <div
+                                                class="type text-primary"
+                                                data-name="type"
+                                                data-pk="<?= $room['id'] ?>"
+                                                data-value="<?= $room['type'] ?>"
+
+                                        ><?= !empty($room['type']) ? $room['type'] : '[thông tin thêm]' ?></div>
+                                        </td>
 
                                     <td><div class="room-price font-weight-bold"
                                              data-pk="<?= $room['id'] ?>"
@@ -416,7 +428,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 "fnDrawCallback": function() {
                     <?php if($check_update_room): ?>
 
-                    $('.list-room .room-data').editable({
+                    $('.list-room .room-data, .list-room .type').editable({
                         type: "text",
                         url: '<?= base_url()."admin/update-room-editable" ?>',
                         inputclass: ''
