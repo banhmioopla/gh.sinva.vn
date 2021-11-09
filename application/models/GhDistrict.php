@@ -41,7 +41,7 @@ class GhDistrict extends CI_Model {
 	    $sql = "SELECT DISTINCT d.* FROM gh_district d, gh_user_district ud , gh_apartment apm
                 WHERE (d.code = ud.district_code AND ud.user_id = $user_id AND (d.active= 'YES')) OR (ud.apartment_id = apm.id AND ud.user_id = $user_id) 
                 AND (d.code = apm.district_code AND (d.active= 'YES')) 
-                  ORDER_BY d.name ASC 
+                  ORDER BY d.name ASC 
                 ";
         $result = $this->db->query($sql);
 
