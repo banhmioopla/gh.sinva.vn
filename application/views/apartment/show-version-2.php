@@ -156,15 +156,15 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 <div class="list-action">
                     <span class="d-flex justify-content-center flex-wrap ">
                         <?php
-                        foreach($this->list_OPEN_DISTRICT as $district):
+                        foreach($list_district as $district):
                             $district_btn = 'btn-outline-success';
                             ?>
 
-                            <a href="<?= base_url().'admin/list-apartment?district-code='.$district ?>"
+                            <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
                                class="btn m-1 btn-sm <?= $district_btn ?>
-                                <?= $district_code == $district ? 'active':'' ?>
+                                <?= $district_code == $district['code'] ? 'active':'' ?>
                                 btn-rounded waves-light waves-effect">
-                            Q. <?= $district ?> </a>
+                            Q. <?= $district['name'] ?> </a>
 
                         <?php endforeach; ?>
                     </span>

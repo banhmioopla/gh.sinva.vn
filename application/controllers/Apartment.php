@@ -91,8 +91,14 @@ class Apartment extends CustomBaseStep {
 		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);
 
 		$data['contract_noti'] = $this->ghNotification->get();
-		
-		$data['list_district'] = $this->ghDistrict->getListLimit($this->auth['account_id']);
+		$list_district = $this->ghDistrict->get(['active' => 'YES'],'length(name),name', '');
+		foreach ($list_district as $key => $dd){
+		    if(!in_array($dd['code'], $this->list_OPEN_DISTRICT)){
+		        unset($list_district[$key]);
+            }
+        }
+        $data['list_district'] = $list_district;
+
 		$data['list_ward'] = $this->ghRoom->getWardByDistrict($district_code);
         if(
             strlen($this->input->get('apmTag'))
