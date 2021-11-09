@@ -40,7 +40,7 @@ class GhDistrict extends CI_Model {
     public function getListLimit($user_id){
 	    $sql = "SELECT DISTINCT d.* FROM gh_district d, gh_user_district ud , gh_apartment apm
                 WHERE (d.code = ud.district_code AND ud.user_id = $user_id) OR (ud.apartment_id = apm.id AND ud.user_id = $user_id) AND (d.code = apm.district_code)
-                ORDER_BY d.name ASC
+                AND d.active= 'YES' ORDER_BY d.name ASC 
                 ";
         $result = $this->db->query($sql);
 
