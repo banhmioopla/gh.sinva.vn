@@ -540,8 +540,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         });
                     });
                     // End Draw
-
-                    <?php endif; ?>
                 }
             });
             $('.date-picker').datepicker({
