@@ -432,7 +432,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 'pagingType': "full_numbers",
                  responsive: true,
                 "fnDrawCallback": function() {
-                    <?php if($check_update_room): ?>
+
 
                     $('.list-room .room-data, .list-room .type').editable({
                         type: "text",
