@@ -3,12 +3,6 @@ $check_option = true;
 $check_contract = true;
 $check_consultant_booking = true;
 
-$check_update_room = false;
-if(isYourPermission('Room', 'updateEditable', $this->permission_set)){
-    $check_update_room = true;
-
-}
-
 $check_consultant_booking = false;
 if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
     $check_consultant_booking = true;
@@ -189,11 +183,11 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                     <?php if($check_option):?>
                                         <td class="">
                                             <div class="d-flex flex-column flex-md-row justify-content-center">
-                                                <?php if($check_update_room): ?>
+
                                                 <button data-room-id="<?= $room['id'] ?>" data-room-code="<?= $room['code'] ?>" type="button" class="btn m-1 room-delete btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
                                                     <i class="mdi mdi-delete"></i>
                                                 </button>
-                                                <?php endif;?>
+
 
                                                 <?php if($check_contract):?>
                                                     <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
@@ -409,7 +403,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                 }
             });
 
-            <?php if($check_update_room): ?>
             $('.room-select-status').click(function() {
                 let status = $(this).data('gh-status');
                 let room_id = $(this).data('id');
@@ -432,7 +425,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                     data: {pk: room_id, name: 'status', value: update}
                 });
             });
-            <?php endif; ?>
 
 
             $('.list-room').DataTable({
