@@ -20,6 +20,10 @@ class GhRoom extends CI_Model {
         return $this->db->get_where($this->table, ['id' => $room_id])->row_array();
     }
 
+    public function getFirstByCodeWithApm($code, $apm_id) {
+        return $this->db->get_where($this->table, ['code' => $code, 'apartment_id' => $apm_id])->row_array();
+    }
+
     public function getById($room_id) {
         return $this->db->get_where($this->table, ['id' => $room_id])->result_array();
     }

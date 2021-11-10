@@ -1,4 +1,6 @@
 <?php
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Room extends CustomBaseStep {
@@ -63,6 +65,52 @@ class Room extends CustomBaseStep {
         ]);
         return redirect('/admin/room/show-create?apartment-id='.$this->input->get('apartment-id'));
 	}
+
+    public function importRoomExcel(){
+
+        $apm_id = $this->input->get('apm_id');
+        $template_file = $this->input->post("fileImport");
+
+        $file_name = $_FILES['fileImport']['tmp_name'];
+
+        $spreadsheet = IOFactory::load($file_name);
+        $sheet_data = $spreadsheet->getActiveSheet()->toArray();
+        foreach ($sheet_data as $row => $col){
+            if($row < 4) { //0 1 2 3 4
+                continue;
+            }
+            if(!empty($col[0])){
+                $room = $this->ghRoom->getFirstByCodeWithApm($col[0], $apm_id);
+                $status = trim($col[2]) == 'T' ? 'Available' : 'Full';
+                if($room) {
+
+                    $this->ghRoom->updateById($room['id'],[
+                        'price' => $col[1],
+                        'status' => $status,
+                        'time_update' => time(),
+                        'area' => $col[3],
+                    ]);
+                } else {
+                    $this->ghRoom->insert([
+                        'apartment_id' => $apm_id,
+                        'code' => $col[0],
+                        'price' => $col[1],
+                        'time_update' => time(),
+                        'time_insert' => time(),
+                        'area' => $col[3],
+                        'status' => $status,
+                    ]);
+                }
+            }
+        }
+
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Tạo | Update phòng thành công ',
+            'status' => 'success'
+        ]);
+        return redirect('/admin/room/show-create?apartment-id='.$apm_id, 'refresh');
+
+    }
 
     public function syncStatusRoom(){
         $list_apartment = $this->ghApartment->get(['active' => 'YES']);

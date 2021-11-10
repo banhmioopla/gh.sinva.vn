@@ -342,6 +342,20 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <form method="post" action="/room/import-from-excel?apm_id=<?= $apartment['id']?>" class="card-box" enctype="multipart/form-data">
+                    <h4 class="font-weight-bold text-danger">Tạo Phòng Nhanh</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="file" name="fileImport" required class="form-control">
+                        </div>
+                        <div class="col-12 text-center mt-1">
+                            <button class="btn btn-danger" type="submit">Cập nhật Excel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div> <!-- end row -->
 
     </div> <!-- end container -->
