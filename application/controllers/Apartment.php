@@ -486,7 +486,6 @@ class Apartment extends CustomBaseStep {
 
 	public function showProfile(){
 	    $id = $this->input->get('id');
-	    $apartment = $this->ghApartment->getFirstById($id);
 
 	    $list_room = $this->ghRoom->get(['apartment_id' => $id, 'active' => 'YES']);
 	    $contract = $this->ghContract->get(['apartment_id' => $id]);
@@ -538,8 +537,7 @@ class Apartment extends CustomBaseStep {
 
             ];
             $old_log = json_encode($apartment);
-            $ok = false;
-            if($this->isYourPermission('Apartment', 'pendingForApprove')){
+            /*if($this->isYourPermission('Apartment', 'pendingForApprove')){
                 $this->ghApartmentRequest->insert([
                     'account_id' => $this->auth['account_id'],
                     'apartment_id' => $apartment['id'],
@@ -551,9 +549,9 @@ class Apartment extends CustomBaseStep {
                     'message' => 'Yêu cầu Update của bạn đã được tạo thành công',
                     'status' => 'warning'
                 ]);
-            } else {
-                $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
-            }
+            }*/
+            $apartment = $this->ghApartment->getFirstById($id);
+            $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
 
             if($ok) {
                 $modified_log = json_encode($this->ghApartment->getFirstById($apartment['id']));
@@ -588,7 +586,7 @@ class Apartment extends CustomBaseStep {
         }
 
         $list_brand = $this->ghPartner->get(['active' => 'YES']);
-
+        $apartment = $this->ghApartment->getFirstById($id);
         $room_type_model = $this->ghBaseRoomType->get();
         $list_room_type = [];
         foreach($room_type_model as $item) {
