@@ -49,7 +49,7 @@ class SystemIncomeRunning extends CustomBaseStep
                 "total" => $this->ghContract->getTotalSaleByTeam($team['id'], $from_date, $to_date)
             ];
         }
-        $team_pack = $refer_user_income_pack = [];
+        $team_pack = $refer_user_income_pack = $pro_manager_pack = [];
 
         $team_fund = 0; $total_income = 0; $general_fund = 0; $product_manager_fund = 0; $consultant_boss_fund = 0;
         foreach ($list_user as $user){
@@ -74,15 +74,27 @@ class SystemIncomeRunning extends CustomBaseStep
             $team_fund += $income_pack['team_fund'];
 
             // THU NHẬP người tuyển tôi
-            if(!isset($income_by_refer[$income_pack['refer_account_id']])){
+            if(!isset($refer_user_income_pack[$income_pack['refer_account_id']])){
                 if( $income_pack['refer_fund'] > 0) {
                     $refer_user_income_pack[$income_pack['refer_account_id']] = $income_pack['refer_fund'];
                 }
-
-
             } else {
                 $refer_user_income_pack[$income_pack['refer_account_id']]  += $income_pack['refer_fund'];
             }
+
+            // Thu nhập người QLDA
+            if(count($income_pack['product_manager_list'])) {
+                foreach ($income_pack['product_manager_list'] as $pm_id => $pm_amount){
+                    if(!isset($pro_manager_pack[$pm_id])){
+                        if($pm_amount > 0) {
+                            $pro_manager_pack[$pm_id] = $pm_amount;
+                        }
+                    } else {
+                        $pro_manager_pack[$pm_id] += $pm_amount;
+                    }
+                }
+            }
+
 
             $data["user"][] = [
                 "account_id" => $user["account_id"],
@@ -100,13 +112,21 @@ class SystemIncomeRunning extends CustomBaseStep
                 if(!isset($refer_user_income_pack[$uData['account_id']])){
                     unset($data["user"][$index]); continue;
                 }
+
                 if(empty($refer_user_income_pack[$uData['account_id']])) {
+                    unset($data["user"][$index]); continue;
+                }
+
+                if(!isset($pro_manager_pack[$uData['account_id']])){
+                    unset($data["user"][$index]); continue;
+                }
+
+                if(empty($pro_manager_pack[$uData['account_id']])) {
                     unset($data["user"][$index]); continue;
                 }
             }
 
         }
-
 
         $list_contract = $this->ghContract->get([
             'time_check_in >= ' => strtotime($from_date),
@@ -136,6 +156,7 @@ class SystemIncomeRunning extends CustomBaseStep
             "team_fund" => $team_fund,
             "total_income" => $total_income,
             "refer_user_income_pack" => $refer_user_income_pack,
+            "pro_manager_pack" => $pro_manager_pack,
             "libUser" => $this->libUser,
         ]);
         $this->load->view('components/footer');

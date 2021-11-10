@@ -182,6 +182,7 @@
                                     <?php
                                     $income_pack = $dd["income_pack"];
                                     $refer_user_income = isset($refer_user_income_pack[$dd['account_id']]) ? $refer_user_income_pack[$dd['account_id']]: 0;
+                                    $pro_manager_income = isset($pro_manager_pack[$dd['account_id']]) ? $pro_manager_pack[$dd['account_id']]: 0;
 
                                     $text_income = "text-success";
                                     if(empty($income_pack['total_income'])){
@@ -253,6 +254,7 @@
                                                 <ul>
                                                     <li>Ăn hợp đồng  <span class="pull-right pl-2 rounded pr-1 text-success bg-dark"><span class="text-warning">(<?= ($income_pack['income_rate']*100) ."%" ?>)</span> <?= number_format($income_pack['total_income']) ?></span></li>
                                                     <li class="mt-1">Ăn tuyển dụng  <span class="pull-right  <?= $text_income ?> bg-dark pl-2 pr-1"><?= number_format($refer_user_income) ?></span></li>
+                                                    <li class="mt-1">Ăn QLDA  <span class="pull-right  <?= $text_income ?> bg-dark pl-2 pr-1"><?= number_format($pro_manager_income) ?></span></li>
                                                 </ul>
                                             </div>
                                         </div>
