@@ -24,22 +24,22 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
     }
 </style>
 <div class="wrapper">
-            <div class="container-fluid">
-                <!-- Page-Title -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="page-title-box">
-                            <div class="btn-group pull-right">
-                                <ol class="breadcrumb hide-phone p-0 m-0">
-                                    <li class="breadcrumb-item"><a href="#">test</a></li>
-                                    <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
-                                    <li class="breadcrumb-item active">Starter</li>
-                                </ol>
-                            </div>
-                            <h2 class="font-weight-bold text-danger">Cập Nhật Dịch Vụ | <i><?= $apartment['address_street']?></i></h2>
-                        </div>
+    <div class="container-fluid">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="btn-group pull-right">
+                        <ol class="breadcrumb hide-phone p-0 m-0">
+                            <li class="breadcrumb-item"><a href="#">test</a></li>
+                            <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
+                            <li class="breadcrumb-item active">Starter</li>
+                        </ol>
                     </div>
+                    <h2 class="font-weight-bold text-danger">Cập Nhật Dịch Vụ | <i><?= $apartment['address_street']?></i></h2>
                 </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xs-6 col-sm-3">
                 <div class="card-box widget-flat border-primary bg-primary text-white">
@@ -70,8 +70,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
             </div>
         </div>
 
-        <form action="" method="POST">
-        <div class="row">
+        <form class="row" action="" method="POST">
             <div class="form-group col-md-4">
                 <strong class="col-form-strong text-primary">Cập Nhật Thông Tin Dịch Vụ Dự Án Khác</strong>
                 <select id="apartment_update_ready" class="form-control">
@@ -91,8 +90,8 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                     <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
                                 <?php endif; ?>
                                 <?php if($check_create_promotion): ?>
-                                <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
-                                    <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i></button></a>
+                                    <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
+                                        <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
                                 <?php if($check_consultant_booking): ?>
                                     <a href="/admin/create-new-consultant-booking?apartment-id=<?= $apartment['id'] ?>&district-code=<?= $apartment['district_code'] ?>&mode=create">
@@ -264,7 +263,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 <input type="text" class="form-control"
                                        name="electricity"
                                        value="<?= $apartment['electricity'] ?>">
-<!--                                <small class="form-text text-muted">Yup! Xin Chào Bạn.</small>-->
+                                <!--                                <small class="form-text text-muted">Yup! Xin Chào Bạn.</small>-->
                             </div>
                             <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Nước</strong>
@@ -351,7 +350,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 <input type="text" class="form-control"
                                        name="elevator"
                                        value="<?= $apartment['elevator'] ?>">
-<!--                                <small class="form-text text-muted">Chúc Bạn Chốt Thật Nhiều Hợp Đồng!</small>-->
+                                <!--                                <small class="form-text text-muted">Chúc Bạn Chốt Thật Nhiều Hợp Đồng!</small>-->
                             </div>
                             <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Máy Giặt</strong>
@@ -427,7 +426,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 <input type="text" class="form-control"
                                        name="car_park"
                                        value="<?= $apartment['car_park'] ?>">
-<!--                                <small class="form-text text-muted">Giỏ Hàng SINVAHOME</small>-->
+                                <!--                                <small class="form-text text-muted">Giỏ Hàng SINVAHOME</small>-->
                             </div>
                             <div class="form-group p-2 hover-hidden-service">
                                 <strong class="text-primary">Hoa Hồng 12 Tháng</strong>
@@ -562,7 +561,6 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                     </div>
                 </div>
             </div>
-        </div>
         </form>
     </div>
 </div>
