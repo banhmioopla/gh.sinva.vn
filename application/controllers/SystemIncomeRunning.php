@@ -10,6 +10,7 @@ class SystemIncomeRunning extends CustomBaseStep
         $this->load->model(['ghActivityTrack', "ghContract",
             'ghUser', 'ghNotification', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig', 'ghTeam']);
         $this->load->library('LibTime', null, 'libTime');
+        $this->load->library('LibUser', null, 'libUser');
         $this->apply_date = "01-11-2021";
     }
 
@@ -135,6 +136,7 @@ class SystemIncomeRunning extends CustomBaseStep
             "team_fund" => $team_fund,
             "total_income" => $total_income,
             "refer_user_income_pack" => $refer_user_income_pack,
+            "libUser" => $this->libUser,
         ]);
         $this->load->view('components/footer');
     }

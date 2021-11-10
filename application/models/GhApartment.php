@@ -53,6 +53,21 @@ class GhApartment extends CI_Model {
         return $result->result_array();
     }
 
+    public function getProductManagerByApm($apm_id){
+        $this->load->model('ghUser');
+	    $apm = $this->getFirstById($apm_id);
+	    if($apm && !empty($apm['user_collected_id'])){
+	        $user = $this->ghUser->getFirstByAccountId($apm['user_collected_id']);
+
+            return [
+                'account_id' => $user['account_id'],
+                'name' => $user['name'],
+            ];
+        }
+
+        return false;
+    }
+
     public function getByDistrictReport($set_district) {
         $q = "SELECT * FROM gh_apartment 
                 WHERE FIND_IN_SET(gh_apartment.district_code, '".$set_district."')  

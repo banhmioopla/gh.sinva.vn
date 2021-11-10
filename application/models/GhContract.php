@@ -167,8 +167,19 @@ class GhContract extends CI_Model {
             }
         }
 
+        $list_pro_manager = [];
         foreach ($list_con as $con){
-            $total_sale += $this->getTotalSaleByContract($con['id']);
+            $sale_amount = $this->getTotalSaleByContract($con['id']);
+            $total_sale += $sale_amount;
+            $p_m = $this->ghApartment->getProductManagerByApm($con['apartment_id']);
+            if(!empty($p_m)){
+                if(isset($list_pro_manager[$p_m['account_id']])){
+                    $list_pro_manager[$p_m['account_id']] += $this->product_manager_fund * $sale_amount;
+                } else {
+                    $list_pro_manager[$p_m['account_id']] = $this->product_manager_fund * $sale_amount;
+                }
+
+            }
         }
 
 
@@ -209,6 +220,7 @@ class GhContract extends CI_Model {
             "consultant_boss_fund" => $total_sale * $this->consultant_boss_fund,
             "general_fund" => $total_sale * $this->general_fund,
             "product_manager_fund" => $total_sale * $this->product_manager_fund,
+            "product_manager_list" => $list_pro_manager,
             "refer_fund" => $refer_fund,
             "refer_by" => $refer_by,
             "refer_account_id" => $refer_account_id,

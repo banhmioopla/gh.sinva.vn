@@ -86,10 +86,7 @@
                     </div>
                     <div class="col-12">
                         <div class="alert alert-primary" role="alert">
-                            Thành viên do SINVA tuyển dụng, doanh thu share lại với SINVA là <strong>5%</strong> của <strong>3 HỢP ĐỒNG</strong> đầu tiên!
-                        </div>
-                        <div class="alert alert-primary" role="alert">
-                            Thành viên do ĐỘI NHÓM tuyển dụng, doanh thu share lại với ĐỘI NHÓM là <strong>(n)%</strong> của <strong>MỖI HỢP ĐỒNG</strong> đầu tiên!
+                            Thành viên do SINVA tuyển dụng, doanh thu share lại với (SINVA | ĐỘI NHÓM) là <strong>5%</strong> của <strong>3 HỢP ĐỒNG</strong> đầu tiên!
                         </div>
                     </div>
                     <div class="col-md-8 offset-md-2">
@@ -237,7 +234,16 @@
                                                     <li>Gói 75% <span class="pull-right"><?= number_format($income_pack['total_sale']*0.75) ?></span> </li>
                                                     <li>Quỹ team <?= $income_pack['team_name'] ?> <span class="pull-right"><?= number_format($income_pack['team_fund']) ?></span> </li>
                                                     <li>Cố vấn <span class="pull-right"><?= number_format($income_pack['consultant_boss_fund']) ?></span></li>
-                                                    <li>QLDA <span class="pull-right"><?= number_format($income_pack['product_manager_fund']) ?></span></li>
+                                                    <li>
+                                                        QLDA <span class="pull-right"><?= number_format($income_pack['product_manager_fund']) ?></span>
+                                                        <?php if($income_pack['product_manager_fund'] > 0): ?>
+                                                        <ul>
+                                                            <?php foreach ($income_pack['product_manager_list'] as $pm_account => $pm_amount):?>
+                                                                <li><?= $libUser->getNameByAccountid($pm_account) ." (". number_format($pm_amount) .")" ?></li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                        <?php endif; ?>
+                                                    </li>
                                                     <li>Quỹ Sinva <span class="pull-right"><?= number_format($income_pack['general_fund']) ?></span></li>
                                                     <li>Phí tuyển dụng  <span class="pull-right"><?= number_format($income_pack['refer_fund']) ?></span></li>
 
