@@ -202,7 +202,7 @@
                                                         <span class="pull-right text-primary pl-1"><?= round($income_pack['total_sale']/$sinva['total_sale'],3)*100 ?>% | <?= number_format($income_pack['total_sale']) ?></span>
                                                     </div>
                                                     <div class="col-12 mt-1">
-                                                        <div class="text-primary bg-dark text-center p-1 rounded <?= $text_income ?>"><?= number_format($refer_user_income+$income_pack['total_income']) ?></div>
+                                                        <div class="text-primary bg-dark text-center p-1 rounded <?= $text_income ?>"><?= number_format($pro_manager_income+$refer_user_income+$income_pack['total_income']) ?></div>
                                                     </div>
                                                 </div>
 
