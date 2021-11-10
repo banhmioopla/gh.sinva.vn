@@ -122,7 +122,8 @@ class SystemIncomeRunning extends CustomBaseStep
                         continue;
                     }
                 }
-                unset($data["user"][$uData['account_id']]);
+
+                unset($data["user"][$index]);
             }
 
         }
