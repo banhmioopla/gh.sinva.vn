@@ -490,7 +490,7 @@ class Apartment extends CustomBaseStep {
 	    $list_room = $this->ghRoom->get(['apartment_id' => $id, 'active' => 'YES']);
 	    $contract = $this->ghContract->get(['apartment_id' => $id]);
 	    $list_col = $this->ghApartment->getListCol();
-
+        $apartment = $this->ghApartment->getFirstById($id);
 
 	    if(isset($_POST['submit'])) {
             $update_data = [
@@ -550,7 +550,7 @@ class Apartment extends CustomBaseStep {
                     'status' => 'warning'
                 ]);
             }*/
-            $apartment = $this->ghApartment->getFirstById($id);
+
             $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
 
             if($ok) {
