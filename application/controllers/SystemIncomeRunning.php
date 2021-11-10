@@ -109,21 +109,20 @@ class SystemIncomeRunning extends CustomBaseStep
 
         foreach ($data["user"] as $index => $uData){
             if(empty($uData['total'])) {
-                if(!isset($refer_user_income_pack[$uData['account_id']])){
-                    unset($data["user"][$index]); continue;
+                $next = true;
+                if(isset($refer_user_income_pack[$uData['account_id']])){
+                    if(!empty($refer_user_income_pack[$uData['account_id']])) {
+                        continue;
+                    }
                 }
 
-                if(empty($refer_user_income_pack[$uData['account_id']])) {
-                    unset($data["user"][$index]); continue;
-                }
 
-                if(!isset($pro_manager_pack[$uData['account_id']])){
-                    unset($data["user"][$index]); continue;
+                if(isset($pro_manager_pack[$uData['account_id']])){
+                    if(!empty($pro_manager_pack[$uData['account_id']])) {
+                        continue;
+                    }
                 }
-
-                if(empty($pro_manager_pack[$uData['account_id']])) {
-                    unset($data["user"][$index]); continue;
-                }
+                unset($data["user"][$uData['account_id']]);
             }
 
         }
