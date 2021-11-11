@@ -637,10 +637,7 @@ include VIEWPATH . 'functions.php';
                         } else {
                             html += `
                             <div class="col-6 bg-white pt-1 mt-1 col-md-3" id="img-box-${i.id}">
-                                    <video width="100%" height="80%" class="border"
-                                    src="${i.url}"
-                                               controls="controls">
-                                        </video>
+                                    <video width="100%" height="80%" class="border" controls="controls"><source src="${i.url}" type="video/quicktime"> </video>
                                 <div class="row mt-2 pl-1 pr-1">
                                 <div class="col">
                                     <i type="button"
