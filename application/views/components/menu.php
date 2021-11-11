@@ -27,7 +27,7 @@
 
                         <?php if(isYourPermission('Apartment', 'showLikeBase',$this->permission_set)):?>
                             <li><a href="/admin/list-apartment-like-base"><i class="mdi
-                             mdi-chevron-double-right text-warning"></i> Danh Sách Dự Án (Bảng)</a></li>
+                             mdi-chevron-double-right text-warning"></i> Dự án đã đóng</a></li>
                         <?php endif;?>
 
                         <?php if(isYourPermission('District', 'show',$this->permission_set)):?>
