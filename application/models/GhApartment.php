@@ -8,7 +8,7 @@ class GhApartment extends CI_Model {
 	    if($orderByString) {
             $this->db->order_by($orderByString);
         } else {
-            $this->db->order_by('order_item ASC,  id DESC, address_street ASC'); // comment xxx yyy
+            $this->db->order_by('length(order_item) ASC,order_item ASC,  id DESC, address_street ASC'); // comment xxx yyy
         }
         $where['apartment_type_id'] = 1;
         $where['group_uuid'] = NULL;
