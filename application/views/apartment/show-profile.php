@@ -178,8 +178,8 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 <div class="form-group col-md-2">
                                     <strong class="col-form-strong">Mở / Đóng </strong>
                                     <select name="active" id=""  class="form-control">
-                                        <option value="YES">Mở</option>
-                                        <option value="NO">Đóng</option>
+                                        <option <?= $apartment['active'] == 'YES' ? 'selected': '' ?> value="YES">Mở</option>
+                                        <option <?= $apartment['active'] == 'NO' ? 'selected': '' ?> value="NO">Đóng</option>
                                     </select>
                                 </div>
 
