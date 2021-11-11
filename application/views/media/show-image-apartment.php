@@ -639,7 +639,7 @@ include VIEWPATH . 'functions.php';
                             <div class="col-6 bg-white pt-1 mt-1 col-md-3" id="img-box-${i.id}">
                                     <video width="100%" height="80%" class="border"
                                                controls="controls">
-                                            <source src="${i.url}" type="video/mp4"/>
+                                            <source src="${i.url}"/>
                                         </video>
                                 <div class="row mt-2 pl-1 pr-1">
                                 <div class="col">
