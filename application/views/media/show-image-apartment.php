@@ -636,7 +636,7 @@ include VIEWPATH . 'functions.php';
                         `;
                         } else {
                             let link = "";
-                            if(!i.url.includes(".MOV")){
+                            if(i.url.includes(".MOV")){
                                 link = `<a href='${i.url}'>Chrome ko hỗ trợ, click tui để tải nhé!</a>`;
                             }
                             html += `
