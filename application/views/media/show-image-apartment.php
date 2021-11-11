@@ -602,7 +602,7 @@ include VIEWPATH . 'functions.php';
                         delete_btn = " ";
                     <?php endif;?>
                     for(let i of data) {
-                        if(!(i.url.includes(".mp4") || i.url.includes(".mov"))) {
+                        if(!(i.url.includes(".mp4") || i.url.includes(".MOV"))) {
                             html += `
                         <div class="col-6 mt-1 col-md-3" id="img-box-${i.id}">
                             <div class="pl-1 pr-1 pt-1 pb-2 bg-white rounded" >
@@ -636,7 +636,7 @@ include VIEWPATH . 'functions.php';
                         `;
                         } else {
                             let link = "";
-                            if(!i.url.includes(".mov")){
+                            if(!i.url.includes(".MOV")){
                                 link = `<a href='${i.url}'>Chrome ko hỗ trợ, click tui để tải nhé!</a>`;
                             }
                             html += `
