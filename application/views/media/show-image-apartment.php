@@ -635,9 +635,14 @@ include VIEWPATH . 'functions.php';
                         </div>
                         `;
                         } else {
+                            let link = "";
+                            if(!i.url.includes(".mov")){
+                                link = `<a href='${i.url}'>Chrome ko hỗ trợ, click tui để tải nhé!</a>`;
+                            }
                             html += `
                             <div class="col-6 bg-white pt-1 mt-1 col-md-3" id="img-box-${i.id}">
-                                    <video width="100%" height="80%" class="border" controls="controls">
+                                    ${link}
+                                    <video width="100%" height="80%" class="border"  controls="controls">
                                     <source src="${i.url}" type="video/quicktime">
                                     <source src="${i.url}" type="video/mp4">
                                     <source src="${i.url}" type="video/x-msvideo">
