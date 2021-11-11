@@ -126,7 +126,7 @@ class Media extends CustomBaseStep {
         $list_img = $this->ghImage->get(['room_id' => $room_id, 'active' => 'YES']);
         $result = [];
         foreach ($list_img as $img) {
-            $result[] = ['url' => '/media/apartment/'.$img['name'], 'id' => $img['id']];
+            $result[] = ['url' => '/media/apartment/'.strtolower($img['name']), 'id' => $img['id']];
         }
 
         echo json_encode($result); die;
