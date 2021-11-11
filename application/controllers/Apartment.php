@@ -613,7 +613,7 @@ class Apartment extends CustomBaseStep {
     }
 
     public function showSortable(){
-        if(count($this->list_district_CRUD) == 0) {
+        if(empty($this->product_category)) {
             $this->load->view('components/header');
             $this->load->view('apartment/error');
             $this->load->view('components/footer');
