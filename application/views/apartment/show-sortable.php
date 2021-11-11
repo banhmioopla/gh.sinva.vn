@@ -23,7 +23,7 @@
                         <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-rounded m-1 btn-sm btn-outline-secondary"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
                     <?php endif; ?>
                         <?php
-                        foreach($this->list_district_CRUD as $district):
+                        foreach($this->list_OPEN_DISTRICT as $district):
                             $district_btn = 'btn-outline-success';
                             ?>
 
