@@ -86,12 +86,6 @@
             <?php endif; ?>
         </div>
     </div>
-
-    <div class="col-12">
-        <div class="">
-            <a href="/admin/internal-content/page/income-rule"> <i class="mdi mdi-message-processing"></i> <u>Thông báo thay đổi cách chi trả thu nhập</u></a>
-        </div>
-    </div>
 </div>
 
 

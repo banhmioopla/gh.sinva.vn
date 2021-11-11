@@ -62,46 +62,46 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
             </div>
         </div>
         <?php if($check_update_room): ?>
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <div class="card-box">
-                        <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Cập nhật thông tin phòng</h4>
-                        <div>
-                            <select id="apartment_update_ready" class=" form-control">
-                                <option value="">Cập nhật thông tin phòng</option>
-                                <?php foreach ($list_apm_ready as $apm_move): ?>
-                                    <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <hr>
-                        <div class="mt-2">
-                            <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Ghim 1 Thông báo</h4>
-                            <div class="row">
-                                <div class="col-12">
-                                    <input type="text" id="input-pin-notification" value="<?= $this->pin_notification['content'] ?>" class="form-control mt-2 border border-info">
-                                    <div class="text-success p-1" id="status-pin-notification"></div>
-                                </div>
-                                <div class="col-12">
-                                    <button id="update-pin-notification" class="btn pull-right btn-danger waves-effect mt-2" >Ghim</button>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="mt-2">
-                            <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Update toàn bộ dự án [?]</h4>
-                            <div class="row">
-                                <div class="col-12">
-                                    <button id="update-time_available" class="btn btn-danger pull-right waves-effect mt-2" >Xoá ngày sắp trống <i>đã cũ</i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
                     <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
+                </div>
+                <div class="col-md-12  mt-3">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Cập nhật thông tin phòng</h4>
+                                <div>
+                                    <select id="apartment_update_ready" class=" form-control">
+                                        <option value="">Cập nhật thông tin phòng</option>
+                                        <?php foreach ($list_apm_ready as $apm_move): ?>
+                                            <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Ghim 1 Thông báo</h4>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <input type="text" id="input-pin-notification" value="<?= $this->pin_notification['content'] ?>" class="form-control border border-info">
+                                        <div class="text-success p-1" id="status-pin-notification"></div>
+                                    </div>
+                                    <div class="col-2">
+                                        <button id="update-pin-notification" class="btn pull-right btn-danger waves-effect" >Ghim</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i>Tuỳ chọn khác... [?]</h4>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button id="update-time_available" class="btn btn-danger pull-right waves-effect" >Xoá ngày sắp trống <i>đã cũ</i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
