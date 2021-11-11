@@ -550,9 +550,7 @@ class Apartment extends CustomBaseStep {
                     'status' => 'warning'
                 ]);
             }*/
-            echo "<pre style='margin-top: 120px'>";
-            var_dump($update_data);
-            die;
+
             $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
 
             if($ok) {
