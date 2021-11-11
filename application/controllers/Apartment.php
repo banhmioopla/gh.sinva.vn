@@ -621,7 +621,7 @@ class Apartment extends CustomBaseStep {
         }
 
         $district_code = $this->input->get('district-code');
-        $district_code = !empty($district_code) ? $district_code: $this->list_district_CRUD[0];
+        $district_code = !empty($district_code) ? $district_code: $this->list_OPEN_DISTRICT[0];
         $params = [
             'district_code' => $district_code,
             'active' => 'YES'
@@ -632,9 +632,13 @@ class Apartment extends CustomBaseStep {
         $list_apm_ready = [];
 
         foreach ($list_apm_temp as $apm ) {
-            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+            if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
                 continue;
             }
+            if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
+                continue;
+            }
+
 
             $list_apm_ready[] = $apm;
         }
