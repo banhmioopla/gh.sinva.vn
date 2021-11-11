@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h2 class="font-weight-bold text-danger">Dự Án Bảng</h2>
+                    <h2 class="font-weight-bold text-danger">Dự Án Đã Đóng</h2>
                 </div>
             </div>
         </div>
@@ -31,129 +31,6 @@
         <div class="row">
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
-                    <h4 class="text-danger font-weight-bold text-center">Dự Án Đang Mở</h4>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Đối tác</th>
-                            <th>Quận</th>
-                            <th>Đường</th>
-                            <th>Phường</th>
-                            <th>Số Lầu</th>
-                            <th>KT3</th>
-                            <th>Hướng</th>
-                            <th>Tag #</th>
-                            <th>TV Lấy Về</th>
-                            <th>Ngày Nhập</th>
-                            <th class="text-center">Mở</th>
-                        </tr>
-                    </table>
-                    <table id="table-apartment-active-yes" class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Đối tác</th>
-                            <th>Quận</th>
-                            <th>Đường</th>
-                            <th>Phường</th>
-                            <th>Số Lầu</th>
-                            <th>KT3</th>
-                            <th>Hướng</th>
-                            <th>Tag #</th>
-                            <th>TV Lấy Về</th>
-                            <th>Ngày Nhập</th>
-                            <th class="text-center">Mở</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach($list_apartment as $row ):
-                            if($row['active'] == 'NO') continue;
-                            ?>
-                            <tr>
-                                <td class="apartment-select-partner"
-                                    data-name="partner_id"
-                                    data-value="<?= $row['partner_id'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['partner_id'] ? $libPartner->getNameById($row['partner_id']) : 'cập nhật' ?>
-                                </td>
-
-                                <td class="apartment-select-district"
-                                    data-name="district_code"
-                                    data-value="<?= $row['district_code'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    quận <?= $libDistrict->getNameByCode($row['district_code']) ?>
-                                </td>
-
-                                <td class="apartment-data"
-                                    data-name="address_street"
-                                    data-value="<?= ' '.$row['address_street'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['address_street'] ?>
-                                </td>
-
-                                <td class="apartment-data"
-                                    data-name="address_ward"
-                                    data-value="<?= $row['address_ward'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    phường <?= $row['address_ward'] ?>
-                                </td>
-                                <td class="apartment-data"
-                                    data-name="number_of_floor"
-                                    data-value="<?= $row['number_of_floor'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['number_of_floor'] ?> Lầu
-                                </td>
-                                <td class="apartment-data"
-                                    data-name="kt3"
-                                    data-value="<?= $row['kt3'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['kt3'] ? $row['kt3']:'#' ?>
-                                </td>
-                                <td class="apartment-select-direction"
-                                    data-name="direction"
-                                    data-value="<?= $row['direction'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['direction'] ? $label_apartment[$row['direction']]:'#' ?>
-                                </td>
-                                <td class="apartment-select-tag"
-                                    data-name="tag_id"
-                                    data-value="<?= $row['tag_id'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    # <?= $row['tag_id'] ? $libTag->getNameById($row['tag_id']):'chọn...' ?>
-                                </td>
-                                <td class="apartment-data"
-                                    data-name="user_collected_id"
-                                    data-value="<?= $row['user_collected_id'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['user_collected_id'] > 0 ? $libUser->getNameByAccountid($row['user_collected_id']):'#' ?>
-                                </td>
-                                <td >
-                                    <div class="time_insert"
-                                         data-name="time_insert"
-                                         data-value="<?= $row['time_insert'] ? date("d-m-Y",$row['time_insert']):'' ?>"
-                                         data-pk="<?= $row['id'] ?>">
-                                        <?= $row['time_insert'] ? date("d-m-Y",$row['time_insert']):'#' ?>
-                                    </div>
-
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="checkbox checkbox-success is-active-apartment">
-                                            <input id="apartment-<?= $row['id'] ?>"
-                                                   value="<?= $row['active'] ?>"
-                                                   type="checkbox"
-                                                <?= $row['active'] =='YES' ? 'checked':'' ?>>
-                                            <label for="apartment-<?= $row['id'] ?>">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-12 col-md-7">
-                <div class="card-box table-responsive">
                     <h4 class="text-danger font-weight-bold text-center">Dự Án Đã Đóng</h4>
                     <table id="table-apartment-active-no" class="table table-bordered">
                         <thead>
@@ -162,14 +39,6 @@
                             <th>Quận</th>
                             <th>Đường</th>
                             <th>Phường</th>
-                            <th>Thông báo ngắn</th>
-                            <th>Số Lầu</th>
-                            <th>KT3</th>
-                            <th>Hướng</th>
-                            <th>map_longitude</th>
-                            <th>map_latitude</th>
-                            <th>Tag #</th>
-                            <th>TV Lấy Về</th>
                             <th class="text-center">Mở</th>
                         </tr>
                         </thead>
@@ -179,14 +48,6 @@
                             <th>Quận</th>
                             <th>Đường</th>
                             <th>Phường</th>
-                            <th>Thông báo ngắn</th>
-                            <th>Số Lầu</th>
-                            <th>KT3</th>
-                            <th>Hướng</th>
-                            <th>map_longitude</th>
-                            <th>map_latitude</th>
-                            <th>Tag #</th>
-                            <th>TV Lấy Về</th>
                             <th class="text-center">Mở</th>
                         </tr>
                         </tfoot>
@@ -221,54 +82,6 @@
                                     data-value="<?= $row['address_ward'] ?>"
                                     data-pk="<?= $row['id'] ?>">
                                     phường <?= $row['address_ward'] ?>
-                                </td>
-                                <td class="apartment-short_message"
-                                    data-name="short_message"
-                                    data-value="<?= $row['short_message'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['short_message'] ? $row['short_message']:'#' ?>
-                                </td>
-                                <td class="apartment-data"
-                                    data-name="number_of_floor"
-                                    data-value="<?= $row['number_of_floor'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['number_of_floor'] ?> Lầu
-                                </td>
-                                <td class="apartment-data"
-                                    data-name="kt3"
-                                    data-value="<?= $row['kt3'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['kt3'] ? $row['kt3']:'#' ?>
-                                </td>
-                                <td class="apartment-select-direction"
-                                    data-name="direction"
-                                    data-value="<?= $row['direction'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['direction'] ? $label_apartment[$row['direction']]:'#' ?>
-                                </td>
-                                <td class="apartment-data"
-                                    data-name="map_longitude"
-                                    data-value="<?= $row['map_longitude'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['map_longitude'] ? $row['map_longitude']:'#' ?>
-                                </td>
-                                <td class="apartment-data"
-                                    data-name="map_latitude"
-                                    data-value="<?= $row['map_latitude'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['map_latitude'] ? $row['map_latitude']:'#' ?>
-                                </td>
-                                <td class="apartment-select-tag"
-                                    data-name="tag_id"
-                                    data-value="<?= $row['tag_id'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    # <?= $row['tag_id'] ? $libTag->getNameById($row['tag_id']):'chọn...' ?>
-                                </td>
-                                <td class="apartment-data"
-                                    data-name="user_collected_id"
-                                    data-value="<?= $row['user_collected_id'] ?>"
-                                    data-pk="<?= $row['id'] ?>">
-                                    <?= $row['user_collected_id'] > 0 ? $libUser->getNameByAccountid($row['user_collected_id']):'#' ?>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
