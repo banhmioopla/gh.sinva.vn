@@ -10,11 +10,14 @@
                 <?php endif; ?>
             <?php endif; ?>
         </div>
-        <?php foreach ($list_apm_5days as $apm5): ?>
-        <!--ITEM -->
-        <dt class="col-10"> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address'] ?></dt>
-        <dd class="col-2 text-right text-danger"><?= "-".$apm5['num_days'] ?></dd>
-        <?php endforeach; ?>
+        <div class="slimscroll col-12" style="max-height: 450px">
+            <?php foreach ($list_apm_5days as $apm5): ?>
+                <!--ITEM -->
+                <dt class="col-10"> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address'] ?></dt>
+                <dd class="col-2 text-right text-danger"><?= "-".$apm5['num_days'] ?></dd>
+            <?php endforeach; ?>
+        </div>
+
     </div>
 
 </dl>
