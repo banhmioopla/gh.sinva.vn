@@ -200,14 +200,7 @@ class Apartment extends CustomBaseStep {
         foreach ($list_apm_temp as $apm ) {
             $time_update = $this->ghApartment->getUpdateTimeByApm($apm['id']);
             $isFiveDays = $this->libTime->calDay2Time($today, $time_update);
-            if($isFiveDays > 4) {
 
-                $list_apm_5days[] = [
-                    'address' => $apm['address_street'],
-                    'num_days' => $isFiveDays,
-                    'district' => $apm['district_code'],
-                ];
-            }
 
             if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
                 continue;
@@ -215,16 +208,14 @@ class Apartment extends CustomBaseStep {
             if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
                 continue;
             }
-            if($this->isYourPermission('Apartment', 'showProfile')){
-                if($isFiveDays > 4) {
+            if($isFiveDays > 4) {
 
-                    $list_apm_5days_CURD[] = [
-                        'address' => $apm['address_street'],
-                        'num_days' => $isFiveDays,
-                        'district' => $apm['district_code'],
-                        'apm_id' => $apm['id'],
-                    ];
-                }
+                $list_apm_5days_CURD[] = [
+                    'address' => $apm['address_street'],
+                    'num_days' => $isFiveDays,
+                    'district' => $apm['district_code'],
+                    'apm_id' => $apm['id'],
+                ];
             }
 
 
