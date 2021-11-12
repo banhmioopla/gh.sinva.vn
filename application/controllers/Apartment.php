@@ -208,8 +208,9 @@ class Apartment extends CustomBaseStep {
             if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
                 continue;
             }
-            if($isFiveDays > 4) {
 
+            if($isFiveDays > 4) {
+                if(in_array($apm['id'], $this->list_apartment_CRUD) || in_array($apm['district_code'], $this->list_district_CRUD))
                 $list_apm_5days_CURD[] = [
                     'address' => $apm['address_street'],
                     'num_days' => $isFiveDays,
