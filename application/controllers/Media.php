@@ -204,8 +204,10 @@ class Media extends CustomBaseStep {
                     'message' => 'Upload <strong>'.$filesCount.'</strong> file(s) thành công ',
                     'status' => 'success'
                 ]);
-                return redirect('/admin/apartment/show-image?apartment-id='.$apartment_id);
+
             }
+
+            return redirect('/admin/apartment/show-image?apartment-id='.$apartment_id, "refresh");
 
         }
 
