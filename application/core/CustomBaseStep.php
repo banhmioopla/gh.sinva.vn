@@ -116,6 +116,7 @@ class CustomBaseStep extends CI_Controller {
             'SystemIncomeRunning' => ['show', 'chartData'],
             'HomeTown' => ['show'],
             'User' => ['showProfile'],
+            'CronCustomer' => ['removeImg'],
         ];
 
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {

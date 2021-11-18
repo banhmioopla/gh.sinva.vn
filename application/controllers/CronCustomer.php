@@ -146,6 +146,18 @@ class CronCustomer extends CustomBaseStep {
             echo SimpleXLSX::parseError();
         }
     }
+
+    public function removeImg(){
+        $this->load->model('ghMedia');
+        $list_img = $this->ghMedia->get(['active' => 'NO']);
+        foreach ($list_img as $img) {
+            $url = base_url()."media/apartment/" . $img['name'];
+            if(file_exists($url)){
+                echo $url . " <br>";
+            }
+
+        }
+    }
 }
 
 /* End of file Apartment.php */

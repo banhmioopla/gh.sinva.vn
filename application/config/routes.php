@@ -317,6 +317,12 @@ $route['admin/cron-income-contract'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/cron-remove-image'] = function($params = []) {
+    $controller = 'CronCustomer';
+    $action = '/removeImg';
+    return $controller.$action;
+};
+
 //
 
 $route['admin/search-business-partner-apartment'] = function($params = []) {
