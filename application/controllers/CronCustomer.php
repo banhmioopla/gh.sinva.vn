@@ -149,14 +149,38 @@ class CronCustomer extends CustomBaseStep {
 
     public function removeImg(){
         $this->load->model('ghMedia');
-        $list_img = $this->ghMedia->get(['active' => 'NO']);
-        foreach ($list_img as $img) {
-            $url = base_url()."media/apartment/" . $img['name'];
-            if(file_exists($url)){
-                echo $url . " <br>";
-            }
+        $this->load->model('ghRoom');
 
+        $list_room_no = $this->ghRoom->get(['active' => 'NO']);
+        $count = 0;
+
+        $directory = "media/apartment/";
+        $filecount = 0;
+        $files = glob($directory . "*");
+        if ($files){
+            $filecount = count($files);
         }
+        echo "There were $filecount files";
+
+        foreach ($list_room_no as $room) {
+            $list_img = $this->ghMedia->get(['room_id' => $room['id']]);
+
+            foreach ($list_img as $img) {
+                $url ="media/apartment/" . $img['name'];
+                $count++;
+                echo $url . "<br>";
+                if(file_exists($url)){
+                    if(unlink($url) === true) {
+                        $this->ghMedia->delete($img['id']);
+                    }
+                }
+            }
+        }
+
+        echo "NUM == " . $count;
+
+        return;
+
     }
 }
 
