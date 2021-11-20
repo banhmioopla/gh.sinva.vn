@@ -40,8 +40,8 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
             <div class="col-md-12 border-top"><?php $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?></div>
             <div class="col-12">
                 <div class="card-box table-responsive shadow">
-                    <h4 class="text-center text-danger"><?= number_format($number_result) ?> Kết Quả</h4>
                     <div class="row">
+                        <div class="col-md-12 text-danger text-center"><h4><?= $number_result ?> Phòng</h4></div>
                         <div class="col-12">
                             <div role="tablist" aria-multiselectable="true" class="m-b-30">
 
@@ -77,32 +77,52 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
 
                                         <div id="apm-<?= $apm_id ?>" class="collapse" role="tabpanel">
                                             <div class="card-body">
-                                                <table class="table table-room">
-                                                    <thead>
-                                                        <th>Mã Phòng</th>
-                                                        <th>Loại</th>
-                                                        <th>Giá</th>
-                                                        <th>Diện tích</th>
-                                                        <th>Trạng Thái</th>
-                                                        <th>Sắp Trống</th>
-                                                        <th>Tùy Chọn</th>
-                                                    </thead>
-                                                    <tbody>
-                                                    <?php if(isset($arr_apartment_room[$apm_id])):  ?>
-                                                        <?php foreach ($arr_apartment_room[$apm_id] as $room):?>
-                                                            <tr>
-                                                            <td><?= $room['room_code'] ?></td>
-                                                            <td><?= $room['room_type'] ?></td>
-                                                            <td><?= $room['room_price'] ?></td>
-                                                            <td><?= $room['room_area'] ?></td>
-                                                            <td><?= $room['room_status'] ?></td>
-                                                            <td><?= $room['room_time_available'] ?></td>
-                                                            <td>-</td>
-                                                            </tr>
-                                                        <?php endforeach;?>
-                                                    <?php endif;  ?>
-                                                    </tbody>
-                                                </table>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h4 class="text-danger">Dịch vụ</h4>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <table class="table">
+                                                            <tbody><tr><td class="text-muted">Kỳ hạn hợp đồng</td> <td><?= $apm_info['contract_term'] ?></td></tr></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h4 class="text-danger">Danh sách phòng</h4>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <table class="table table-room">
+                                                            <thead>
+                                                            <th>Mã Phòng</th>
+                                                            <th>Loại</th>
+                                                            <th>Giá</th>
+                                                            <th>Diện tích</th>
+                                                            <th>Trạng Thái</th>
+                                                            <th>Sắp Trống</th>
+                                                            <th>Tùy Chọn</th>
+                                                            </thead>
+                                                            <tbody>
+                                                            <?php if(isset($arr_apartment_room[$apm_id])):  ?>
+                                                                <?php foreach ($arr_apartment_room[$apm_id] as $room):?>
+                                                                    <tr>
+                                                                        <td><?= $room['room_code'] ?></td>
+                                                                        <td><?= $room['room_type'] ?></td>
+                                                                        <td><?= $room['room_price'] ?></td>
+                                                                        <td><?= $room['room_area'] ?></td>
+                                                                        <td><?= $room['room_status'] ?></td>
+                                                                        <td><?= $room['room_time_available'] ?></td>
+                                                                        <td>-</td>
+                                                                    </tr>
+                                                                <?php endforeach;?>
+                                                            <?php endif;  ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

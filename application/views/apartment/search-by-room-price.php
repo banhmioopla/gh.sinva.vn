@@ -2,7 +2,7 @@
 <div id="listPrice" class="card-box mb-1 mt-1">
     <h4 class="text-danger font-weight-bold">Tìm Dự Án</h4>
     <div class="form-group row">
-        <span class="col-md-4 col-6">
+        <span class="col-md-4 col-6 mb-2">
             <strong>Quận</strong>
             <select name="roomDistrict" id="roomDistrict" class="form-control">
                 <?php foreach ($list_district as $d):
@@ -17,7 +17,7 @@
             </select>
         </span>
 
-        <div class="col-md-4 col-6">
+        <div class="col-md-4 col-6 mb-2">
             <strong>Phường</strong>
             <select name="roomWard" id="roomWard" class="form-control">
                 <option value="">Phường...</option>
@@ -33,7 +33,7 @@
             </select>
         </div>
 
-        <div class="col-md-4 col-12 offset-0">
+        <div class="col-md-4 col-12 offset-0 mb-2">
             <strong>Loại Phòng</strong>
             <select name="roomType" id="roomType" class="form-control">
                 <option value="">Loại Phòng</option>
@@ -47,14 +47,14 @@
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="col-md-3 col-6">
+        <div class="col-md-3 col-6 mb-2">
             <strong>Giá Min</strong>
             <select name="roomPriceMin" id="roomPriceMin" class="form-control">
                 <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMin'))
                 ?>
             </select>
         </div>
-        <div class="col-md-3 col-6">
+        <div class="col-md-3 col-6 mb-2">
             <strong>Giá Max</strong>
             <select name="roomPriceMax" id="roomPriceMax" class="form-control">
                 <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMax'))
@@ -62,16 +62,16 @@
             </select>
         </div>
 
-        <span class="col-md-3 col-6 offset-0">
+        <span class="col-md-3 col-6 offset-0 mb-2">
             <strong>Trạng Thái </strong>
             <select name="roomStatus" id="roomStatus" class="form-control">
                 <option value="">Vui Lòng Chọn</option>
-                <option value="Available">Trống</option>
-                <option value="Full">Full</option>
+                <option value="Available" <?= $this->input->get('roomStatus') == 'Available' ? 'selected' :'' ?>>Trống</option>
+                <option value="Full" <?= $this->input->get('roomStatus') == 'Full' ? 'selected' :'' ?>>Full</option>
             </select>
         </span>
 
-        <span class="col-md-3 col-6 offset-0">
+        <span class="col-md-3 col-6 offset-0 mb-2">
             <strong>Thời Gian Trống</strong>
             <select name="roomTimeAvailable" id="roomTimeAvailable" class="form-control">
                 <option value="">Trống từ ngày ...</option>
@@ -83,6 +83,15 @@
                     ?>
                     <option <?= $selected ?> value="01-<?= $i ?>-2021"> 01/<?= str_pad($i,2,'0',STR_PAD_LEFT)?>/2021</option>
                 <?php endfor;?>
+            </select>
+        </span>
+
+        <span class="col-md-3 col-6 offset-0 mb-2">
+            <strong>Kỳ hạn hợp đồng</strong>
+            <select name="contractTerm" id="contractTerm" class="form-control">
+                <option value="">Vui Lòng Chọn</option>
+                <option value="long" <?= $this->input->get('contractTerm') == 'long' ? 'selected' :'' ?>>Dài hạn</option>
+                <option value="short" <?= $this->input->get('contractTerm') == 'short' ? 'selected' :'' ?>>Ngắn hạn</option>
             </select>
         </span>
 
@@ -105,6 +114,7 @@
                 + '&roomTimeAvailable=' + $('#roomTimeAvailable').val()
                 + '&roomStatus=' + $('#roomStatus').val()
                 + '&roomWard=' + $('#roomWard').val()
+                + '&contractTerm=' + $('#contractTerm').val()
             ;
         });
         $('#roomDistrict').change(function () {

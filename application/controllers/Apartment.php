@@ -357,6 +357,7 @@ class Apartment extends CustomBaseStep {
 
         $arr_apartment_room = [];
         $arr_apartment_info = [];
+        $number_result = 0;
         foreach ($list_room_search as $r){
             $type_arr = [];
             $list_type_id = json_decode($r['room_type_id'], true);
@@ -391,6 +392,23 @@ class Apartment extends CustomBaseStep {
             if(!isset($arr_apartment_info[$r['apartment_id']])){
                 $apm_info = $this->ghApartment->getFirstById($r['apartment_id']);
                 if($apm_info) {
+                    $contract_term = "";
+                    if($this->input->get('contractTerm') == 'short') {
+                        $checker = strpos(trim(strtolower($apm_info['contract_short_term'])), "không");
+                        if($checker !== false || empty($apm_info['contract_short_term'])) {
+                            continue;
+                        }
+                        $contract_term = "Ngắn hạn: ". $apm_info['contract_short_term'];
+                    }
+
+                    if($this->input->get('contractTerm') == 'long') {
+                        $checker = strpos(trim(strtolower($apm_info['contract_long_term'])), "không");
+                        if($checker !== false || empty($apm_info['contract_long_term'])) {
+                            continue;
+                        }
+                        $contract_term = "Dài hạn: ". $apm_info['contract_long_term'];
+                    }
+
                     $arr_apartment_info[$r['apartment_id']] = [
                         'apartment_id' => $r['apartment_id'],
                         'address' =>
@@ -398,9 +416,10 @@ class Apartment extends CustomBaseStep {
                             ."Q.". $this->libDistrict->getNameByCode($apm_info['district_code'])
                             . ' | ' . $apm_info['address_street'] . " Ph. " . $apm_info['address_ward'] . "</span>",
                         'district_code' => $this->libDistrict->getNameByCode($apm_info['district_code']),
+                        'contract_term' => $contract_term
                     ];
                 }
-
+                $number_result++;
             }
         }
 
@@ -408,7 +427,7 @@ class Apartment extends CustomBaseStep {
         $this->load->view('apartment/search-result', [
             'arr_apartment_info' => $arr_apartment_info,
             'arr_apartment_room' => $arr_apartment_room,
-            'number_result' => count($list_room_search),
+            'number_result' => $number_result,
             'list_price' => $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price'),
             'label_apartment' => $this->config->item('label.apartment'),
             'list_type' => $this->ghRoom->getTypeByDistrict(),
