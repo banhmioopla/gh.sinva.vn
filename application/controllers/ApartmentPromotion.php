@@ -8,7 +8,7 @@ class ApartmentPromotion extends CustomBaseStep {
         parent::__construct();
         $this->load->model('ghUser');
         $this->load->model('ghRole');
-        $this->load->model('ghUserIncomeDetail');
+
         $this->load->model('ghApartmentPromotion');
         $this->load->model('ghApartment');
         $this->load->model('ghRoom');
