@@ -106,7 +106,7 @@ class CustomBaseStep extends CI_Controller {
             'ConsultantBooking' => ['chart'],
             'Report' => ['ApartmentUpdating'],
             'ConsultantPost' => ['showYour', 'showDetail'],
-            'ApartmentPromotion' => ["create", "show"],
+            'ApartmentPromotion' => ["create", "show", "delete"],
             'Team' => ['detail'],
             'ApartmentView' => ['create'],
             'ApartmentTrack' => ['show'],

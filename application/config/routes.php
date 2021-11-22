@@ -208,6 +208,12 @@ $route['admin/list-apartment-promotion'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/apartment-promotion/delete'] = function($params = []) {
+    $controller = 'ApartmentPromotion';
+    $action = '/delete';
+    return $controller.$action;
+};
+
 $route['admin/apartment-promotion/show-edit'] = function($params = []) {
     $controller = 'ApartmentPromotion';
     $action = '/showEdit';

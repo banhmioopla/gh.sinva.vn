@@ -31,11 +31,8 @@ class GhApartmentPromotion extends CI_Model {
         return $result;
     }
 
-    public function delete($data_set) {
-        $this->db->where($data_set);
-        $this->db->delete($this->table);
-        $result = $this->db->affected_rows();
-        return $result;
+    public function delete($id) {
+        return $this->db->delete('gh_apartment_promotion', array('id' => $id));
     }
 }
 

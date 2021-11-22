@@ -618,6 +618,8 @@ class Apartment extends CustomBaseStep {
         foreach($room_type_model as $item) {
             $list_room_type[$item['id']] = $item["name"];
         }
+
+
         $list_user = $this->ghUser->get(['active' => "YES"]);
         $this->load->view('components/header');
         $this->load->view('apartment/show-profile', [
@@ -633,7 +635,8 @@ class Apartment extends CustomBaseStep {
             'list_user' => $list_user,
             'ghBaseRoomType' => $this->ghBaseRoomType,
             'list_room_type' => $list_room_type,
-            'list_tag' => $this->ghTag->getAll()
+            'list_tag' => $this->ghTag->getAll(),
+            "ghApartmentPromotion" => $this->ghApartmentPromotion,
         ]);
         $this->load->view('components/footer');
     }

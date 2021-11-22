@@ -246,6 +246,8 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                 </div>
             </div>
 
+
+
             <div class="col-md-12">
                 <div class="card-box">
                     <div class="row">
@@ -562,6 +564,74 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                 </div>
             </div>
         </form>
+
+        <form action="/admin/create-apartment-promotion" method="POST" class="row">
+            <div class="col-md-12">
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="font-weight-bold text-danger text-center">Quản lý ưu đãi</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group p-2">
+                                <strong class="text-primary">Tiêu đề</strong>
+                                <input type="text" class="form-control"
+                                       name="title" required
+                                       value="">
+                                <input type="hidden" name="apartment_id" value="<?= $apartment['id'] ?>" >
+                            </div>
+                            <div class="form-group p-2">
+                                <strong class="text-primary">Ngày bắt đầu</strong>
+                                <input type="text" class="form-control datepicker"
+                                       name="start_time" required
+                                       value="">
+                            </div>
+                            <div class="form-group p-2">
+                                <strong class="text-primary">Ngày kết thúc</strong>
+                                <input type="text" class="form-control datepicker"
+                                       name="end_time" required
+                                       value="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <strong class="col-form-strong">Mô tả ưu đãi</strong>
+                            <textarea name="description" id="promotion_description" class="form-control" ></textarea>
+
+                        </div>
+                        <div class="col-12">
+                            <div class="form-row float-right">
+                                <button name="submit" type="submit" class="btn btn-danger">Cập Nhật</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <?php
+                        $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
+
+                        ?>
+                        <?php foreach ($list_promotion as $promotion):?>
+                        <div class="col-md-4 promotion-card">
+                            <div class="card m-b-30">
+                                <h5 class="card-header"><?= $promotion['title'] ?>
+                                    <div class="form-row float-right">
+                                        <button name="submit" type="button" data-id="<?= $promotion['id'] ?>" class="delete-promotion btn btn-danger">Xoá</button>
+                                    </div>
+                                </h5>
+                                <div class="card-body">
+                                    <div><?= date("d/m/Y",$promotion['start_time']) ." . " .date("d/m/Y",$promotion['end_time']) ?></div>
+                                    <?= $promotion['description'] ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php endforeach;?>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -569,7 +639,24 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
 
     commands.push(function() {
         $(document).ready(function() {
-            $('#description, #note').summernote({
+            $('.delete-promotion').click(function () {
+                let _this = $(this);
+
+                $.ajax({
+                    url: '/admin/apartment-promotion/delete',
+                    type: "POST",
+                    dataType: "json",
+                    data: {id:_this.data('id')},
+                    success: function () {
+
+                        let xx  = _this.closest(".promotion-card").remove();
+                        console.log(xx);
+                        console.log(123);
+                    }
+                })
+            });
+
+            $('#description, #note, #promotion_description').summernote({
                 height: 300,                 // set editor height
                 minHeight: null,             // set minimum height of editor
                 maxHeight: null,             // set maximum height of editor

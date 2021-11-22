@@ -66,10 +66,10 @@ class ApartmentPromotion extends CustomBaseStep {
         ];
         $result = $this->ghApartmentPromotion->insert($data);
         $this->session->set_flashdata('fast_notify', [
-            'message' => 'Tạo Chương Trình : <strong>'.$post['title'].'<strong> thành công ',
+            'message' => 'Tạo ưu đãi : <strong>'.$post['title'].'<strong> thành công ',
             'status' => 'success'
         ]);
-        return redirect('admin/list-apartment-promotion?apartment-id='.$post['apartment_id']);
+        return redirect('/admin/profile-apartment?id='.$post['apartment_id'], 'refresh');
     }
     public function updateEditable() {
         $id = $this->input->post('pk');
@@ -109,28 +109,8 @@ class ApartmentPromotion extends CustomBaseStep {
     }
 
     public function delete(){
-        $user_id = $this->input->post('user_id');
-
-        if(!empty($user_id)) {
-            $old_user = $this->ghUser->getById($user_id);
-            $log = [
-                'table_name' => 'gh_user',
-                'old_content' => null,
-                'modified_content' => json_encode($old_user[0]),
-                'time_insert' => time(),
-                'action' => 'delete'
-            ];
-
-            // call model
-            $tracker = $this->ghActivityTrack->insert($log);
-            $result = $this->ghUser->delete($user_id);
-
-            if($result > 0) {
-                echo json_encode(['status' => true]); die;
-            }
-            echo json_encode(['status' => false]); die;
-        }
-        echo json_encode(['status' => false]); die;
+        $this->ghApartmentPromotion->delete($this->input->post('id'));
+        echo json_encode(['status' => true]); die;
     }
 }
 

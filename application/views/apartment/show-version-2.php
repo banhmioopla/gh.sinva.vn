@@ -266,32 +266,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
 
 
                         </div>
-                        <div class="row">
-                            <?php
-                            foreach ($list_promotion as $p):
-                                ?>
-                                <button type="button" class="btn btn-sm m-1 btn-danger" data-toggle="modal" data-target="#promotion-md-<?= $p['id'] ?>">
-                                    <?= $p['title'] ?>
-                                </button>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="promotion-md-<?= $p['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title"><?= $p['title'] ?></h5>
-                                            </div>
-                                            <div class="modal-body"><?= $p['description'] ?></div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach;
-
-                            ?>
-                        </div>
                         <div class="row mt-3 hide-in-sortable text-danger">
                             <div class="col-md-3 col-4 border-right border-danger">
                                 <i class="mdi mdi-lumx"></i> <span class="d-none d-md-inline">Brand: </span><strong><?= $apartment['partner_id'] ? $libPartner->getNameById($apartment['partner_id']) :'...' ?></strong>
@@ -316,7 +291,10 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                             </div>
                         </div>
                         <div class="row hide-in-sortable mt-2">
-                            <div class="col-12">
+                            <?php
+                            $col_with = count($list_promotion) > 0 ? 'col-md-6': 'col-md-12';
+                            ?>
+                            <div class="<?= $col_with ?> col-12">
                                 <?php if($apartment['description']): ?>
                                 <h5 class="text-danger"><u>Mô Tả Dự Án</u></h5>
                                 <?php endif;?>
@@ -332,6 +310,24 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                 </div>
                                 <?php endif;?>
                             </div>
+
+                            <?php if(count($list_promotion) > 0): ?>
+                            <div class="col-md-6 col-12">
+                                <h5 class="text-danger"><u>Ưu đãi</u></h5>
+                                <div class="mb-3"></div>
+                                <?php foreach ($list_promotion as $promotion):  ?>
+                                    <div class="p-1 apm-description mb-1" style="white-space: pre-line; background:#fee69c">
+                                        <h5 class="text-warning bg-dark p-2 text-center mb-0">
+                                            <?= $promotion['title'] ?>
+                                        </h5>
+                                        <div class="text-center"><?= date("d/m/Y",$promotion['start_time']) ." . " .date("d/m/Y",$promotion['end_time']) ?></div>
+                                        <?= $promotion['description'] ? $promotion['description'] : '' ?>
+
+                                    </div>
+                                <?php endforeach;?>
+
+                            </div>
+                            <?php endif;?>
                         </div>
                         <div class="row hide-in-sortable">
                             <div class="col-12 list-action  text-center text-md-right mt-2" >
@@ -347,9 +343,6 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
 
                                     <a href="/admin/room/show-create?apartment-id=<?= $apartment['id'] ?>">
                                         <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> P </button></a>
-
-                                    <a class="m-1" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
-                                        <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"> <i class="mdi mdi-gift"></i></button></a>
 
                                 <?php endif;?>
 
