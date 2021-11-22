@@ -622,7 +622,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 </h5>
                                 <div class="card-body">
                                     <div><?= date("d/m/Y",$promotion['start_time']) ." . " .date("d/m/Y",$promotion['end_time']) ?></div>
-                                    <?= $promotion['description'] ?>
+                                    <p><?= $promotion['description'] ?></p>
                                 </div>
                             </div>
                         </div>
