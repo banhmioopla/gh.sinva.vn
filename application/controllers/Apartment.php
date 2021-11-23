@@ -358,7 +358,9 @@ class Apartment extends CustomBaseStep {
         $arr_apartment_room = [];
         $arr_apartment_info = [];
         $number_result = 0;
+
         foreach ($list_room_search as $r){
+            $border_highlight = "";
             $type_arr = [];
             $list_type_id = json_decode($r['room_type_id'], true);
             if($list_type_id) {
@@ -379,14 +381,30 @@ class Apartment extends CustomBaseStep {
                 $status_txt = '<span class="badge badge-success">Trống</span>';
             }
 
+
+            $room_price = number_format($r['price']/1000);
+            $highlight = "";
+            if($this->input->get('inUpdate24h') == "true"){
+                $log = $this->ghActivityTrack->getFirstByObjId($r['id']);
+
+                if($log && ($log['time_insert'] <= strtotime(date('d-m-Y')) +84399) && ($log['time_insert'] >= strtotime(date('d-m-Y')))) {
+                    $old_log = json_decode($log['old_content'], true);
+                    $room_price .= " <br> <span class='text-muted'><del>".number_format($old_log["price"]/1000)."</del></span>";
+                    $highlight = "row-24h-highlight";
+                    $border_highlight = "border-highlight";
+                }
+
+            }
+
             $arr_apartment_room[$r['apartment_id']][] = [
                 'room_id' => $r['id'],
                 'room_code' => $r['code'],
-                'room_price' => number_format($r['price']/1000),
+                'room_price' => $room_price,
                 'room_type' => "<div>".$text_type_name."</div>" . "<div class='text-primary'>".$r['type']."</div>",
                 'room_area' => $r['area'] . ' ㎡',
                 'room_status' => $status_txt,
                 'room_time_available' => $r['time_available'] > 0 ? date('d-m-Y', $r['time_available']) : '-',
+                'room_high_light' => $highlight
             ];
 
             if(!isset($arr_apartment_info[$r['apartment_id']])){
@@ -409,6 +427,19 @@ class Apartment extends CustomBaseStep {
                         $contract_term = "Dài hạn: ". $apm_info['contract_long_term'];
                     }
 
+                    $description_old = "";
+                    if($this->input->get('inUpdate24h') == "true"){
+                        $log = $this->ghActivityTrack->getFirstByObjId($r['apartment_id']);
+
+                        if($log && ($log['time_insert'] <= strtotime(date('d-m-Y')) +84399) && ($log['time_insert'] >= strtotime(date('d-m-Y')))) {
+                            $old_log = json_decode($log['old_content'], true);
+                            $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";
+                            $border_highlight = "border-highlight";
+                        }
+                        if(empty($log)) continue;
+
+                    }
+
                     $arr_apartment_info[$r['apartment_id']] = [
                         'apartment_id' => $r['apartment_id'],
                         'address' =>
@@ -416,7 +447,10 @@ class Apartment extends CustomBaseStep {
                             ."Q.". $this->libDistrict->getNameByCode($apm_info['district_code'])
                             . ' | ' . $apm_info['address_street'] . " Ph. " . $apm_info['address_ward'] . "</span>",
                         'district_code' => $this->libDistrict->getNameByCode($apm_info['district_code']),
-                        'contract_term' => $contract_term
+                        'contract_term' => $contract_term,
+                        'description' => $apm_info['description'],
+                        'description_old' => $description_old,
+                        'border_highlight' => $border_highlight,
                     ];
                 }
                 $number_result++;
@@ -581,13 +615,19 @@ class Apartment extends CustomBaseStep {
 
             if($ok) {
                 $modified_log = json_encode($this->ghApartment->getFirstById($apartment['id']));
+                $diff = array_diff_assoc($this->ghApartment->getFirstById($apartment['id']),json_decode($old_log,true));
+                $obj_id = null;
+                if(array_key_exists("description",$diff)){
+                    $obj_id = $apartment['id'];
+                }
                 $log = [
                     'table_name' => 'gh_apartment',
                     'old_content' => $old_log,
                     'modified_content' => $modified_log,
                     'time_insert' => time(),
                     'action' => 'update',
-                    'user_id' => $this->auth['account_id']
+                    'user_id' => $this->auth['account_id'],
+                    "obj_id" => $obj_id
                 ];
                 $tracker = $this->ghActivityTrack->insert($log);
 

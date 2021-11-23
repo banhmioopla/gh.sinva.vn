@@ -95,6 +95,14 @@
             </select>
         </span>
 
+        <span class="col-md-3 col-6 offset-0 mb-2">
+            <strong>24h - Giá P</strong>
+            <select name="inUpdate24h" id="inUpdate24h" class="form-control">
+                <option value="">Vui Lòng Chọn</option>
+                <option value="true" <?= $this->input->get('inUpdate24h') == 'true' ? 'selected' :'' ?>>24h - Giá P, Mô tả</option>
+            </select>
+        </span>
+
     </div>
 
     <div class="form-group row">
@@ -115,6 +123,7 @@
                 + '&roomStatus=' + $('#roomStatus').val()
                 + '&roomWard=' + $('#roomWard').val()
                 + '&contractTerm=' + $('#contractTerm').val()
+                + '&inUpdate24h=' + $('#inUpdate24h').val()
             ;
         });
         $('#roomDistrict').change(function () {

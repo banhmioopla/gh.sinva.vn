@@ -7,6 +7,15 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
 }
 
 ?>
+<style>
+    .row-24h-highlight{
+        background:#c7ffc9
+    }
+
+    .border-highlight{
+        border-left: 4px solid limegreen;
+    }
+</style>
 <div class="wrapper">
     <div class="sk-wandering-cubes" style="display:none" id="loader">
         <div class="sk-cube sk-cube1"></div>
@@ -47,7 +56,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
 
                                 <?php foreach ($arr_apartment_info as $apm_id => $apm_info): ?>
                                     <div class="card">
-                                        <div class="card-header row" role="tab" id="headingOne">
+                                        <div class="card-header <?= $apm_info['border_highlight'] ?> row" role="tab" id="headingOne">
                                             <div class="col-md-6 col-12">
                                                 <h5 class="mb-0 mt-0">
                                                     <a data-toggle="collapse" href="#apm-<?= $apm_id ?>" class="text-dark"
@@ -77,16 +86,32 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
 
                                         <div id="apm-<?= $apm_id ?>" class="collapse" role="tabpanel">
                                             <div class="card-body">
-
+                                                <?php if(!empty($apm_info['description_old'])): ?>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h4 class="text-danger">Mô tả Dự án</h4>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h5 class="text-danger">Mới</h5>
+                                                        <?= $apm_info['description'] ?>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h5 class="text-danger">Cũ</h5>
+                                                        <?= $apm_info['description_old'] ?>
+                                                    </div>
+                                                </div>
+                                                <?php endif; ?>
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <h4 class="text-danger">Dịch vụ</h4>
                                                     </div>
+                                                    <?php if(!empty($apm_info['contract_term'])): ?>
                                                     <div class="col-md-6">
                                                         <table class="table">
                                                             <tbody><tr><td class="text-muted">Kỳ hạn hợp đồng</td> <td><?= $apm_info['contract_term'] ?></td></tr></tbody>
                                                         </table>
                                                     </div>
+                                                    <?php endif; ?>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
@@ -107,7 +132,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                                             <tbody>
                                                             <?php if(isset($arr_apartment_room[$apm_id])):  ?>
                                                                 <?php foreach ($arr_apartment_room[$apm_id] as $room):?>
-                                                                    <tr>
+                                                                    <tr class="<?= $room['room_high_light'] ?>">
                                                                         <td><?= $room['room_code'] ?></td>
                                                                         <td><?= $room['room_type'] ?></td>
                                                                         <td><?= $room['room_price'] ?></td>

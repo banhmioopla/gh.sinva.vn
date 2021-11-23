@@ -38,6 +38,11 @@ class GhActivityTrack extends CI_Model {
         return $this->db->get_where($this->table)->result_array();
     }
 
+    public function getFirstByObjId($id) {
+        $this->db->order_by('id', 'DESC');
+        return $this->db->get_where($this->table, ['obj_id' => $id])->row_array();
+    }
+
 }
 
 /* End of file mApartment.php */

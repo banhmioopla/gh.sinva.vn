@@ -254,8 +254,8 @@ class Room extends CustomBaseStep {
 			}
 			$data['time_update'] = time();
 
-			$old_room = $this->ghRoom->getById($room_id);
-			$old_log = json_encode($old_room[0]);
+			$old_room = $this->ghRoom->getFirstById($room_id);
+			$old_log = json_encode($old_room);
 
             /*if($this->isYourPermission('Apartment', 'pendingForApprove')){
                 $this->ghApartmentRequest->insert([
@@ -273,16 +273,23 @@ class Room extends CustomBaseStep {
 
 			$result = $this->ghRoom->updateById($room_id, $data);
 			
-			$modified_room = $this->ghRoom->getById($room_id);
-			$modified_log = json_encode($modified_room[0]);
-			
+			$modified_room = $this->ghRoom->getFirstById($room_id);
+			$modified_log = json_encode($modified_room);
+
+			$obj_id = null;
+
+			if($field_name == 'price'){
+                $obj_id = $room_id;
+            }
+
 			$log = [
 				'table_name' => 'gh_room',
 				'old_content' => $old_log,
 				'modified_content' => $modified_log,
 				'time_insert' => time(),
 				'action' => 'update',
-                'user_id' => $this->auth['account_id']
+                'user_id' => $this->auth['account_id'],
+                'obj_id' => $obj_id,
 			];
 			$tracker = $this->ghActivityTrack->insert($log);
 
