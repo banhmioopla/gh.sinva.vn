@@ -392,8 +392,7 @@ class Apartment extends CustomBaseStep {
                     $room_price .= " <br> <span class='text-muted'><del>".number_format($old_log["price"]/1000)."</del></span>";
                     $highlight = "row-24h-highlight";
                     $border_highlight = "border-highlight";
-                }
-                if(empty($log)) {
+                } else {
                     $continue = true;
                 }
 
@@ -444,10 +443,9 @@ class Apartment extends CustomBaseStep {
                             $old_log = json_decode($log['old_content'], true);
                             $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";
                             $border_highlight = "border-highlight";
-                        }
-                        if(empty($log)) {
+                        } else {
                             $continue = true;
-                        };
+                        }
 
                         if($continue === true) continue;
                     }
