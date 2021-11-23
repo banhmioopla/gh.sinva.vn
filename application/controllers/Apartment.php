@@ -393,7 +393,12 @@ class Apartment extends CustomBaseStep {
                     $highlight = "row-24h-highlight";
                     $border_highlight = "border-highlight";
                 }
-
+                if(empty($log)) {
+                    continue;
+                }
+                if($r['status'] !== 'Available'){
+                    continue;
+                }
             }
 
             $arr_apartment_room[$r['apartment_id']][] = [
