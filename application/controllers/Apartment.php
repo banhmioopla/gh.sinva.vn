@@ -383,7 +383,7 @@ class Apartment extends CustomBaseStep {
 
 
             $room_price = number_format($r['price']/1000);
-            $highlight = "";
+            $highlight = ""; $continue = false;
             if($this->input->get('inUpdate24h') == "true"){
                 $log = $this->ghActivityTrack->getFirstByObjId($r['id']);
 
@@ -394,23 +394,26 @@ class Apartment extends CustomBaseStep {
                     $border_highlight = "border-highlight";
                 }
                 if(empty($log)) {
-                    continue;
+                    $continue = true;
                 }
+
                 if($r['status'] !== 'Available'){
-                    continue;
+                    $continue = true;
                 }
             }
+            if($continue === false) {
+                $arr_apartment_room[$r['apartment_id']][] = [
+                    'room_id' => $r['id'],
+                    'room_code' => $r['code'],
+                    'room_price' => $room_price,
+                    'room_type' => "<div>".$text_type_name."</div>" . "<div class='text-primary'>".$r['type']."</div>",
+                    'room_area' => $r['area'] . ' ㎡',
+                    'room_status' => $status_txt,
+                    'room_time_available' => $r['time_available'] > 0 ? date('d-m-Y', $r['time_available']) : '-',
+                    'room_high_light' => $highlight
+                ];
+            }
 
-            $arr_apartment_room[$r['apartment_id']][] = [
-                'room_id' => $r['id'],
-                'room_code' => $r['code'],
-                'room_price' => $room_price,
-                'room_type' => "<div>".$text_type_name."</div>" . "<div class='text-primary'>".$r['type']."</div>",
-                'room_area' => $r['area'] . ' ㎡',
-                'room_status' => $status_txt,
-                'room_time_available' => $r['time_available'] > 0 ? date('d-m-Y', $r['time_available']) : '-',
-                'room_high_light' => $highlight
-            ];
 
             if(!isset($arr_apartment_info[$r['apartment_id']])){
                 $apm_info = $this->ghApartment->getFirstById($r['apartment_id']);
@@ -437,12 +440,16 @@ class Apartment extends CustomBaseStep {
                         $log = $this->ghActivityTrack->getFirstByObjId($r['apartment_id']);
 
                         if($log && ($log['time_insert'] <= strtotime(date('d-m-Y')) +84399) && ($log['time_insert'] >= strtotime(date('d-m-Y')))) {
+                            $continue = false;
                             $old_log = json_decode($log['old_content'], true);
                             $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";
                             $border_highlight = "border-highlight";
                         }
-                        if(empty($log)) continue;
+                        if(empty($log)) {
+                            $continue = true;
+                        };
 
+                        if($continue === true) continue;
                     }
 
                     $arr_apartment_info[$r['apartment_id']] = [
