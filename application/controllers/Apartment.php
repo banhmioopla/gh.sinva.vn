@@ -453,7 +453,7 @@ class Apartment extends CustomBaseStep {
                             $continue = true;
                         }
 
-                        $list_promotion = $this->ghApartmentPromotion->get(['insert_time >=' => $from24h]);
+                        $list_promotion = $this->ghApartmentPromotion->get(['insert_time >=' => $from24h, "apartment_id" => $r['apartment_id']]);
                         $log = $this->ghActivityTrack->getLimitOneByObjId($r['apartment_id'], 'gh_apartment', $from24h, $to24h);
 
                         if(!empty($log)) {
