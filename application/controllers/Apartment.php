@@ -385,9 +385,11 @@ class Apartment extends CustomBaseStep {
             $room_price = number_format($r['price']/1000);
             $highlight = ""; $continue = false;
             if($this->input->get('inUpdate24h') == "true"){
-                if($r['time_update'] < date('d-m-Y')){
+
+                if($r['time_update'] < strtotime(date('d-m-Y'))){
                     $continue = true;
                 }
+
 
                 if($continue === false) {
                     $log = $this->ghActivityTrack->getLimitOneByObjId($r['id'],'gh_room', date('d-m-Y'), date('d-m-Y'));
@@ -408,6 +410,7 @@ class Apartment extends CustomBaseStep {
 
             }
             if($continue === false) {
+
                 $arr_apartment_room[$r['apartment_id']][] = [
                     'room_id' => $r['id'],
                     'room_code' => $r['code'],
@@ -443,7 +446,8 @@ class Apartment extends CustomBaseStep {
 
                     $description_old = "";
                     if($this->input->get('inUpdate24h') == "true"){
-                        if($apm_info['time_update'] < date('d-m-Y')){
+
+                        if($apm_info['time_update'] < strtotime(date('d-m-Y')) && $continue === true){
                             $continue = true;
                         }
 
@@ -456,10 +460,9 @@ class Apartment extends CustomBaseStep {
                                 $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";
                                 $border_highlight = "border-highlight";
                             } else {
-                                $continue = true;
+                                if($continue === true) $continue = true;
                             }
                         }
-
 
                         if($continue === true) continue;
                     }
