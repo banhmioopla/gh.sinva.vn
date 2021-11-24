@@ -385,9 +385,9 @@ class Apartment extends CustomBaseStep {
             $room_price = number_format($r['price']/1000);
             $highlight = ""; $continue = false;
             if($this->input->get('inUpdate24h') == "true"){
-                $log = $this->ghActivityTrack->getFirstByObjId($r['id']);
+                $log = $this->ghActivityTrack->getLimitOneByObjId($r['id'],'gh_room', date('d-m-Y'), date('d-m-Y'));
 
-                if($log && ($log['time_insert'] <= strtotime(date('d-m-Y')) +84399) && ($log['time_insert'] >= strtotime(date('d-m-Y')))) {
+                if(!empty($log)) {
                     $old_log = json_decode($log['old_content'], true);
                     $room_price .= " <br> <span class='text-muted'><del>".number_format($old_log["price"]/1000)."</del></span>";
                     $highlight = "row-24h-highlight";
@@ -436,9 +436,9 @@ class Apartment extends CustomBaseStep {
 
                     $description_old = "";
                     if($this->input->get('inUpdate24h') == "true"){
-                        $log = $this->ghActivityTrack->getFirstByObjId($r['apartment_id']);
+                        $log = $this->ghActivityTrack->getLimitOneByObjId($r['apartment_id'], 'gh_apartment', date('d-m-Y'), date('d-m-Y'));
 
-                        if($log && ($log['time_insert'] <= strtotime(date('d-m-Y')) +84399) && ($log['time_insert'] >= strtotime(date('d-m-Y')))) {
+                        if(!empty($log)) {
                             $continue = false;
                             $old_log = json_decode($log['old_content'], true);
                             $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";

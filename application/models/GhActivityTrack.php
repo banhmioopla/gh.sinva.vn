@@ -43,6 +43,16 @@ class GhActivityTrack extends CI_Model {
         return $this->db->get_where($this->table, ['obj_id' => $id])->row_array();
     }
 
+    public function getLimitOneByObjId($id, $table, $from, $to) {
+        $this->db->order_by('id', 'DESC');
+        return $this->db->get_where($this->table, [
+            'obj_id' => $id,
+            'table_name' => $table,
+            'time_insert >=' => strtotime($from),
+            'time_insert <=' => strtotime($to)+86399,
+            ])->row_array();
+    }
+
 }
 
 /* End of file mApartment.php */
