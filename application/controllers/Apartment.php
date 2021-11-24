@@ -385,20 +385,27 @@ class Apartment extends CustomBaseStep {
             $room_price = number_format($r['price']/1000);
             $highlight = ""; $continue = false;
             if($this->input->get('inUpdate24h') == "true"){
-                $log = $this->ghActivityTrack->getLimitOneByObjId($r['id'],'gh_room', date('d-m-Y'), date('d-m-Y'));
-
-                if(!empty($log)) {
-                    $old_log = json_decode($log['old_content'], true);
-                    $room_price .= " <br> <span class='text-muted'><del>".number_format($old_log["price"]/1000)."</del></span>";
-                    $highlight = "row-24h-highlight";
-                    $border_highlight = "border-highlight";
-                } else {
+                if($r['time_update'] < date('d-m-Y')){
                     $continue = true;
                 }
 
-                if($r['status'] !== 'Available'){
-                    $continue = true;
+                if($continue === false) {
+                    $log = $this->ghActivityTrack->getLimitOneByObjId($r['id'],'gh_room', date('d-m-Y'), date('d-m-Y'));
+
+                    if(!empty($log)) {
+                        $old_log = json_decode($log['old_content'], true);
+                        $room_price .= " <br> <span class='text-muted'><del>".number_format($old_log["price"]/1000)."</del></span>";
+                        $highlight = "row-24h-highlight";
+                        $border_highlight = "border-highlight";
+                    } else {
+                        $continue = true;
+                    }
+
+                    if($r['status'] !== 'Available'){
+                        $continue = true;
+                    }
                 }
+
             }
             if($continue === false) {
                 $arr_apartment_room[$r['apartment_id']][] = [
@@ -436,16 +443,23 @@ class Apartment extends CustomBaseStep {
 
                     $description_old = "";
                     if($this->input->get('inUpdate24h') == "true"){
-                        $log = $this->ghActivityTrack->getLimitOneByObjId($r['apartment_id'], 'gh_apartment', date('d-m-Y'), date('d-m-Y'));
-
-                        if(!empty($log)) {
-                            $continue = false;
-                            $old_log = json_decode($log['old_content'], true);
-                            $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";
-                            $border_highlight = "border-highlight";
-                        } else {
+                        if($apm_info['time_update'] < date('d-m-Y')){
                             $continue = true;
                         }
+
+                        if($continue === false) {
+                            $log = $this->ghActivityTrack->getLimitOneByObjId($r['apartment_id'], 'gh_apartment', date('d-m-Y'), date('d-m-Y'));
+
+                            if(!empty($log)) {
+                                $continue = false;
+                                $old_log = json_decode($log['old_content'], true);
+                                $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";
+                                $border_highlight = "border-highlight";
+                            } else {
+                                $continue = true;
+                            }
+                        }
+
 
                         if($continue === true) continue;
                     }
