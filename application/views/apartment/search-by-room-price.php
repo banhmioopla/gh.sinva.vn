@@ -96,10 +96,10 @@
         </span>
 
         <span class="col-md-3 col-6 offset-0 mb-2">
-            <strong>24h - Giá P, Mô tả</strong>
+            <strong>24h - Giá P | Mô tả | Ưu đãi</strong>
             <select name="inUpdate24h" id="inUpdate24h" class="form-control">
                 <option value="">Vui Lòng Chọn</option>
-                <option value="true" <?= $this->input->get('inUpdate24h') == 'true' ? 'selected' :'' ?>>24h - Giá P, Mô tả</option>
+                <option value="true" <?= $this->input->get('inUpdate24h') == 'true' ? 'selected' :'' ?>>24h - Giá P | Mô tả | Ưu đãi</option>
             </select>
         </span>
 
