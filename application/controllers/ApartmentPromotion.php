@@ -63,6 +63,7 @@ class ApartmentPromotion extends CustomBaseStep {
             'start_time' => strlen($post['start_time']) ?  strtotime($post['start_time']) : null,
             'end_time' => strlen($post['end_time']) ?  strtotime($post['end_time']) : null,
             'apartment_id' => $post['apartment_id'],
+            'insert_time' => time(),
         ];
         $result = $this->ghApartmentPromotion->insert($data);
         $this->session->set_flashdata('fast_notify', [
