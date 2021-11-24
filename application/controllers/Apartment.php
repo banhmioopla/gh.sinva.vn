@@ -359,6 +359,8 @@ class Apartment extends CustomBaseStep {
         $arr_apartment_info = [];
         $number_result = 0;
 
+        $from24h = strtotime('-24hours');
+        $to24h =  strtotime(date("d-m-Y"))+86399;
         foreach ($list_room_search as $r){
             $border_highlight = "";
             $type_arr = [];
@@ -386,13 +388,13 @@ class Apartment extends CustomBaseStep {
             $highlight = ""; $continue = false;
             if($this->input->get('inUpdate24h') == "true"){
 
-                if($r['time_update'] < strtotime(date('d-m-Y'))){
+                if($r['time_update'] < $from24h){
                     $continue = true;
                 }
 
 
                 if($continue === false) {
-                    $log = $this->ghActivityTrack->getLimitOneByObjId($r['id'],'gh_room', date('d-m-Y'), date('d-m-Y'));
+                    $log = $this->ghActivityTrack->getLimitOneByObjId($r['id'],'gh_room', $from24h, $to24h);
 
                     if(!empty($log)) {
                         $old_log = json_decode($log['old_content'], true);
@@ -444,24 +446,21 @@ class Apartment extends CustomBaseStep {
                         $contract_term = "Dài hạn: ". $apm_info['contract_long_term'];
                     }
 
-                    $description_old = "";
+                    $description_old = ""; $list_promotion = [];
                     if($this->input->get('inUpdate24h') == "true"){
 
-                        if($apm_info['time_update'] < strtotime(date('d-m-Y')) && $continue === true){
+                        if($apm_info['time_update'] < $from24h && $continue === true){
                             $continue = true;
                         }
 
-                        if($continue === false) {
-                            $log = $this->ghActivityTrack->getLimitOneByObjId($r['apartment_id'], 'gh_apartment', date('d-m-Y'), date('d-m-Y'));
+                        $list_promotion = $this->ghApartmentPromotion->get(['insert_time >=' => $from24h]);
+                        $log = $this->ghActivityTrack->getLimitOneByObjId($r['apartment_id'], 'gh_apartment', $from24h, $to24h);
 
-                            if(!empty($log)) {
-                                $continue = false;
-                                $old_log = json_decode($log['old_content'], true);
-                                $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";
-                                $border_highlight = "border-highlight";
-                            } else {
-                                if($continue === true) $continue = true;
-                            }
+                        if(!empty($log)) {
+                            $continue = false;
+                            $old_log = json_decode($log['old_content'], true);
+                            $description_old = "<span class='text-muted'>".$old_log["description"]."</span>";
+                            $border_highlight = "border-highlight";
                         }
 
                         if($continue === true) continue;
@@ -478,6 +477,7 @@ class Apartment extends CustomBaseStep {
                         'description' => $apm_info['description'],
                         'description_old' => $description_old,
                         'border_highlight' => $border_highlight,
+                        "list_promotion" => $list_promotion,
                     ];
                 }
                 $number_result++;

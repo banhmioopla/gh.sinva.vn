@@ -48,8 +48,8 @@ class GhActivityTrack extends CI_Model {
         return $this->db->get_where($this->table, [
             'obj_id' => $id,
             'table_name' => $table,
-            'time_insert >=' => strtotime($from),
-            'time_insert <=' => strtotime($to)+86399,
+            'time_insert >=' => $from,
+            'time_insert <=' => $to,
             ])->row_array();
     }
 

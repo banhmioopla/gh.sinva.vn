@@ -99,6 +99,31 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                                         <h5 class="text-danger">Cũ</h5>
                                                         <?= $apm_info['description_old'] ?>
                                                     </div>
+                                                    <div class="col-12">
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                                <?php endif; ?>
+                                                <?php if(count($apm_info["list_promotion"]) > 0): ?>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h4 class="text-danger">Ưu đãi</h4>
+                                                    </div>
+                                                    <?php foreach($apm_info["list_promotion"] as $promotion): ?>
+
+                                                        <div class="col-12 promotion-card">
+                                                            <div class="card m-b-30">
+                                                                <h5 class="bg-dark text-warning p-2"><?= $promotion['title'] ?></h5>
+                                                                <div class="card-body">
+                                                                    <div><?= date("d/m/Y",$promotion['start_time']) ." - " .date("d/m/Y",$promotion['end_time']) ?></div>
+                                                                    <p><?= $promotion['description'] ?></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                    <div class="col-12">
+                                                        <hr>
+                                                    </div>
                                                 </div>
                                                 <?php endif; ?>
                                                 <div class="row">

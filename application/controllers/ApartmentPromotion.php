@@ -65,6 +65,10 @@ class ApartmentPromotion extends CustomBaseStep {
             'apartment_id' => $post['apartment_id'],
             'insert_time' => time(),
         ];
+
+        $this->ghApartment->updateById($post['apartment_id'], [
+            "time_update" => time()
+        ]);
         $result = $this->ghApartmentPromotion->insert($data);
         $this->session->set_flashdata('fast_notify', [
             'message' => 'Tạo ưu đãi : <strong>'.$post['title'].'<strong> thành công ',
