@@ -227,8 +227,11 @@ class Room extends CustomBaseStep {
                 if($result) {
                     $counter++;
                 }
-
+                $this->ghApartment->updateById($room['apartment_id'], [
+                    ['time_update' => time()]
+                ]);
             }
+
             echo json_encode(['status' => true, 'content' => 'Cập nhật thành công ' . $counter. ' phòng!']); die;
         }
 		if(!empty($room_id) and !empty($field_name)) {
@@ -272,8 +275,11 @@ class Room extends CustomBaseStep {
             }*/
 
 			$result = $this->ghRoom->updateById($room_id, $data);
-			
+
 			$modified_room = $this->ghRoom->getFirstById($room_id);
+            $this->ghApartment->updateById($modified_room['apartment_id'], [
+                ['time_update' => time()]
+            ]);
 			$modified_log = json_encode($modified_room);
 
 			$obj_id = null;
