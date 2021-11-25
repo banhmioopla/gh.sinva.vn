@@ -107,7 +107,7 @@ class Apartment extends CustomBaseStep {
             $params = ['active' => 'YES'];
         }
 
-		$list_apartment = $this->ghApartment->get($params);
+		$list_apartment = $this->ghApartment->get($params, 'time_update DESC,  id DESC, address_street ASC');
 		$data['cb_district'] = $this->libDistrict->cbActive();
 		$data['apartment_today'] = [];
 		$data['list_gadget_around'] = [];
