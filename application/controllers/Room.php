@@ -278,7 +278,7 @@ class Room extends CustomBaseStep {
 
 			$modified_room = $this->ghRoom->getFirstById($room_id);
             $this->ghApartment->updateById($modified_room['apartment_id'], [
-                ['time_update' => time()]
+                'time_update' => time()
             ]);
 			$modified_log = json_encode($modified_room);
 
