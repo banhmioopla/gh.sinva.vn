@@ -21,44 +21,7 @@
 
 </dl>
 <!-- Modal -->
-<div id="custom-modal" class="modal-demo bs-example-modal-lg">
-    <button type="button" class="close" onclick="Custombox.close();">
-        <span>&times;</span><span class="sr-only">Close</span>
-    </button>
-    <h4 class="custom-modal-title text-center"> <div>Đã 5 ngày rồi bạn chưa cập nhật</div> <div class="mt-2">Hãy kiểm tra danh sách ngay nhé!</div></h4>
-    <div class="custom-modal-text">
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-danger" role="alert">
-                    <strong><?= count($list_apm_5days_CURD) ?> dự án</strong> đợi bạn review
-                </div>
-            </div>
-        <?php foreach ($list_apm_5days_CURD as $apm5): ?>
-            <!--ITEM -->
-            <dt class="col-10" >
-                <div class="checkbox checkbox-danger">
-                    <input id="checkboxFive-<?= $apm5['apm_id'] ?>" class="check-five-days" value="<?= $apm5['apm_id'] ?>" type="checkbox">
-                    <label for="checkboxFive-<?= $apm5['apm_id'] ?>">
-                        <a target="_blank" href="/admin/profile-apartment?id=<?= $apm5['apm_id'] ?>"><?= "Q.". $apm5['district']. " | ". $apm5['address'] ?></a>
-                    </label>
-                </div> </dt>
-            <dd class="col-2 text-right text-danger"><?= "-".$apm5['num_days'] ?></dd>
-        <?php endforeach; ?>
-        </div>
-    </div>
-    <?php if(count($list_apm_5days_CURD)): ?>
-    <div class="modal-footer">
-        <div class="row">
-            <div class="col-12 text-muted">
-                Một lần chơi lớn! thử xem thiên hạ có trầm trồ! <span id="time-info"></span>
-            </div>
-            <div class="col-12">
-                <button type="button" id="update-all-apm-today" class="btn btn-primary waves-effect waves-light">Đồng bộ ngày cập nhật dự án thành ngày <?= date('d-m-Y') ?></button>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
-</div>
+
 <script>
     commands.push(function() {
         <?php if(count($list_apm_5days_CURD)): ?>

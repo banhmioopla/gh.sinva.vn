@@ -392,31 +392,6 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
 
                     </div>
 
-                    <div id="modal-apartment-comment-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-comment-<?=$apartment['id'] ?>">
-
-                        <div class="card-body">
-                            <h5 class="mb-1 text-muted"><u>Bình luận gần đây</u></h5>
-                            <div class="comment-list border-bottom slimscroll">
-                                <div id='newContentComment'></div>
-                                <?php if(count($list_comment) > 0): ?>
-                                    <?php foreach($list_comment as $comment): ?>
-                                        <div class="comment-box-item taskList border-bottom">
-                                            <p class="commnet-item-date"><?= date('d/m/Y, H:i', $comment['time_insert']) ?></p>
-                                            <p class="commnet-item-msg"><span class="text-danger" style="font-size:12px"> <u><?= $libUser->getLastNameByAccountId($comment['user_id']) ?></u>:</span> <i><?= $comment['content'] ?></i></p>
-                                        </div>
-                                    <?php endforeach; ?>
-                                <?php endif;?>
-
-                                <div class="comment-box-item mt-3">
-                                    <input type="text" id="apm-comment-<?= $apartment['id'] ?>" class="new-comment border border-info form-control" placeholder = "nhập bình luận ...">
-                                </div>
-                                <button type="button" data-apm-id="<?= $apartment['id'] ?>" class="btn m-1 add-new-comment room-delete btn-sm btn-outline-success btn-rounded waves-light waves-effect">
-                                    +<i class="mdi mdi-comment-plus-outline"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
                     <div id="modal-apartment-detail-<?=$apartment['id'] ?>" class="collapse" role="tabpanel" aria-labelledby="modal-apartment-detail-<?=$apartment['id'] ?>">
                         <div class="card-body">
                             <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
@@ -489,6 +464,38 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="custom-modal" class="modal-demo bs-example-modal-lg">
+        <button type="button" class="close" onclick="Custombox.close();">
+            <span>&times;</span><span class="sr-only">Close</span>
+        </button>
+        <h4 class="custom-modal-title text-center"> <div>Đã 5 ngày rồi bạn chưa cập nhật</div> <div class="mt-2">Hãy kiểm tra danh sách ngay nhé!</div></h4>
+        <div class="custom-modal-text">
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong><?= count($list_apm_5days_CURD) ?> dự án</strong> đợi bạn review
+                    </div>
+                </div>
+                <?php foreach ($list_apm_5days_CURD as $apm5): ?>
+                    <!--ITEM -->
+                    <dt class="col-10" >
+                        <div class="checkbox checkbox-danger">
+                            <input id="checkboxFive-<?= $apm5['apm_id'] ?>" class="check-five-days" value="<?= $apm5['apm_id'] ?>" type="checkbox">
+                            <label for="checkboxFive-<?= $apm5['apm_id'] ?>">
+                                <a target="_blank" href="/admin/profile-apartment?id=<?= $apm5['apm_id'] ?>"><?= "Q.". $apm5['district']. " | ". $apm5['address'] ?></a>
+                            </label>
+                        </div> </dt>
+                    <dd class="col-2 text-right text-danger"><?= "-".$apm5['num_days'] ?></dd>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php if(count($list_apm_5days_CURD)): ?>
+            <div class="modal-footer">
+                <button type="button" id="update-all-apm-today" class="btn btn-primary waves-effect waves-light">Đồng bộ ngày cập nhật dự án thành ngày <?= date('d-m-Y') ?></button>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 
