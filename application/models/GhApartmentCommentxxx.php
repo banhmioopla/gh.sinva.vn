@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class GhApartmentComment extends CI_Model {
     private $table = 'gh_apartment_comment';
 
-	public function get($where = []) {
+    public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
