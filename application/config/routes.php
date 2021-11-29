@@ -1047,6 +1047,12 @@ $route['admin/apartment/create'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/apartment/rating'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/updateRating';
+    return $controller.$action;
+};
+
 $route['admin/create-apartment'] = function($params = []) {
 	$controller = 'Apartment';
 	$action = '/create';

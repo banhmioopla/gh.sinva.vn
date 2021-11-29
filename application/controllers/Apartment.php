@@ -252,6 +252,34 @@ class Apartment extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+	public function updateRating(){
+        $post = $this->input->post();
+
+        $from_date = date("01-m-Y");
+        $to_month = date("m");
+        $to_year = date("Y");
+
+        $day_last = cal_days_in_month(CAL_GREGORIAN, $to_month, $to_year);
+        $to_date = $day_last."-".$to_month."-".$to_year;
+
+        $list = $this->ghApartmentComment->get([
+            'apartment_id' => $post['apm_id'],
+            'user_id' => $this->auth['account_id'],
+            'time_insert >=' => strtotime($from_date),
+            'time_insert <=' => strtotime($to_date)+86399,
+        ]);
+        foreach ($list as $rate){
+            $this->ghApartmentComment->deleteById($rate['id']);
+        }
+        $this->ghApartmentComment->insert([
+            'apartment_id' => $post['apm_id'],
+            'content' =>$post['content'],
+            'user_id' => $this->auth['account_id'],
+            'time_insert' => time(),
+            'score' => $post['score'],
+        ]);
+    }
+
 	public function pendingForApprove(){
 
     }

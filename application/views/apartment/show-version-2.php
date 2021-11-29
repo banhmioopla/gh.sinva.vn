@@ -38,9 +38,21 @@ $show_sortable = false;
 if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
     $show_sortable = true;
 }
+$randomName= ["Chôm chôm", "Đu đủ", "Su hào", "Nghé", "Nai", "Chuối Hột", "Sushi"];
+
+$from_date = date("01-m-Y");
+$to_month = date("m");
+$to_year = date("Y");
+
+$day_last = cal_days_in_month(CAL_GREGORIAN, $to_month, $to_year);
+$to_date = $day_last."-".$to_month."-".$to_year;
 
 ?>
-
+<style>
+    .bg-comment{
+        background-color: #fcffd4;
+    }
+</style>
 <div class="wrapper">
 
     <div class="container-fluid">
@@ -222,7 +234,7 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                     $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
 
                     $surrounding_facilities = !empty($apartment['surrounding_facilities']) ? json_decode($apartment['surrounding_facilities'], true) : [];
-
+                    $apartment_score = $this->ghApartmentComment->getScoreByApm($apartment['id'], $from_date, $to_date);
                     ?>
                     <!-- item -->
                     <div class="sort-apm-item" data-apm-id="<?=$apartment['id']?>">
@@ -241,7 +253,9 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                        href="/admin/list-dashboard">Thông tin dịch vụ (<strong><?= $libApartment->completeInfoRate($apartment['id'])['counter'] ?></strong>) <small class="text-danger">[?] click để xem tiêu chí </small></a>
                                 </div>
                             </div>
-
+                            <div class="col-md-12 text-center">
+                                <div class="rating-score" data-score="<?= $apartment_score ?>" data-apm-id="<?=$apartment['id']?>"></div>
+                            </div>
 
                             <!--ADDRESS SECTION-->
                             <div class=" col-12 <?= $bg_promotion ?>">
@@ -352,17 +366,6 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                 <a class="m-1" href="/sale/apartment-export?id=<?= $apartment['id'] ?>" >
                                     <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-file-excel"></i> <span class="d-none d-md-inline"></span></button>
                                 </a>
-                                <a class="m-1 collapsed"
-                                   data-toggle="collapse"
-                                   data-parent="#accordion"
-                                   href="#modal-apartment-comment-<?=$apartment['id'] ?>" aria-expanded="false" aria-controls="#modal-apartment-comment-<?=$apartment['id'] ?>">
-                                    <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect ">
-                                        <i class="mdi mdi-comment-outline"></i> <span class="d-none d-md-inline"></span>
-                                        <?php if(count($list_comment) > 0):?>
-                                            <span class="badge badge-danger badge-pill mr-2 noti-icon-badge"><?= count($list_comment) ?></span>
-                                        <?php endif; ?>
-                                    </button>
-                                </a>
 
                                 <button type="button" class="btn m-1 apm-plus-view btn-sm btn-outline-danger btn-rounded waves-light waves-effect"
                                         data-toggle="collapse"
@@ -396,11 +399,11 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                         <div class="card-body">
                             <ul class="nav nav-pills navtab-bg nav-justified pull-in ">
                                 <li class="nav-item">
-                                    <a href="#apm-note-<?= $apartment['id'] ?>"
+                                    <a href="#apm-comment-<?= $apartment['id'] ?>"
                                        data-toggle="tab"
                                        aria-expanded="false"
                                        class="nav-link">
-                                        Ghi Chú Quan Trọng
+                                        Đánh giá
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -416,16 +419,30 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                                         Danh Sách Phòng
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a href="#apm-map" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                        <i class="mdi mdi-google-maps mr-2"></i>
-                                    </a>
-                                </li> -->
+
                             </ul>
                             <div class="tab-content">
 
-                                <div class="tab-pane apm-note" id="apm-note-<?= $apartment['id'] ?>">
-                                    <p><?= $apartment['note'] ?></p>
+                                <div class="tab-pane" id="apm-comment-<?= $apartment['id'] ?>">
+                                    <div class="row">
+                                        <?php foreach ($list_comment as $rating): ?>
+                                            <div class="col-12">
+                                                <div class="comment-list slimscroll" style="max-height: 370px">
+                                                    <div class="comment-box-item p-2 bg-comment">
+                                                        <div class="rated-star" data-score="<?= $rating['score'] ?>"></div>
+                                                        <p class="commnet-item-date"><?= date("d/m/Y H:i",$rating['time_insert']) ?></p>
+                                                        <h6 class="commnet-item-msg">
+                                                            <?= $rating['content'] ?>
+                                                        </h6>
+                                                        <p class="commnet-item-user"><i class="mdi mdi-account-circle"></i> <?= $randomName[array_rand($randomName, 1)]; ?></p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        <?php endforeach;?>
+
+
+                                    </div>
                                 </div>
                                 <div class="tab-pane service-list show active" id="apm-service-<?= $apartment['id'] ?>">
                                     <div id="carouselButton-<?= $apartment['id'] ?>" class="carousel slide" data-ride="carousel">
@@ -503,6 +520,61 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
 <script>
 
     commands.push(function() {
+        $('.rated-star').raty({
+            score: function () {
+                return $(this).data('score');
+            },
+            readOnly: true,
+            starOff: 'fa fa-star-o text-danger',
+            starOn: 'fa fa-star text-danger',
+        });
+        $('.rating-score').raty({
+            starOff: 'fa fa-star-o text-danger',
+            starOn: 'fa fa-star text-danger',
+            click:function (score, evt) {
+                let apm_id = $(this).data('apm-id');
+                swal({
+                    title: 'Xin comment ạ',
+                    input: 'text',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oke',
+                    showLoaderOnConfirm: true,
+                    confirmButtonClass: 'btn btn-confirm mt-2',
+                    cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                    preConfirm: function (inputVal) {
+                        return new Promise(function (resolve, reject) {
+                            setTimeout(function () {
+                                if (inputVal.length === 0) {
+                                    reject('Không để trống bình luận')
+                                } else {
+                                    resolve()
+                                }
+                            }, 1000)
+                        })
+                    },
+                    allowOutsideClick: false
+                }).then(function (inputVal) {
+                    let pack = {apm_id: apm_id, score: score, content: inputVal};
+
+                    console.log(pack);
+                    $.ajax({
+                        url: '/admin/apartment/rating',
+                        type: "POST",
+                        dataType: 'json',
+                        data: pack
+                    });
+                    swal({
+                        type: 'success',
+                        title: 'GH nói cảm ơn',
+                        html: "Cám ơn nhiều nhaaa",
+                        confirmButtonClass: 'btn btn-confirm mt-2'
+                    });
+                })
+            },
+            score: function () {
+                return $(this).data('score');
+            },
+        });
         $('#update-time_available').click(function () {
             $.ajax({
                 type: 'GET',
@@ -554,34 +626,6 @@ if(isYourPermission('Apartment', 'showSortable', $this->permission_set)){
                     });
                 }
             });
-
-
-            /*swal({
-                title: 'Xác nhận xoá thông tin "Ngày sắp trống" ',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonClass: 'btn btn-confirm mt-2',
-                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
-                confirmButtonText: 'Xóa',
-            }).then(function () {
-                $.ajax({
-                    type: 'POST',
-                    url:'<//?= base_url()."admin/update-room-editable" ?>',
-                    data: {pk: room_id, name: 'active', value: 'NO'},
-                    success:function(response) {
-                        let data = JSON.parse(response);
-                        if(data.status > 0) {
-                            this_btn.parents('tr').remove();
-                        }
-                    }
-                });
-                swal({
-                    title: 'Đã Xóa Thành Công!',
-                    type: 'success',
-                    confirmButtonClass: 'btn btn-confirm mt-2'
-                });
-            });*/
-
         });
 
 

@@ -16,6 +16,20 @@ class GhApartmentComment extends CI_Model {
         return $this->db->insert($this->table, $data);
     }
 
+    public function getFirstById($id) {
+        return $this->db->get_where($this->table, ['id' => $id])->row_array();
+    }
+
+    public function getScoreByApm($apm_id, $from, $to) {
+        $list =  $this->db->get_where($this->table, ['apartment_id' => $apm_id])->result_array();
+        $score = 0; $count = 0;
+        foreach ($list as $item){
+            $score+=  $item['score']; $count++;
+        }
+
+        return $count > 0 ? round($score/$count, 0) : 0;
+    }
+
     public function updateById($id, $data) {
         $this->db->where('id', $id);
         $this->db->update($this->table, $data);
