@@ -20,7 +20,7 @@ class GhApartmentComment extends CI_Model {
         return $this->db->get_where($this->table, ['id' => $id])->row_array();
     }
 
-    public function getScoreByApm($apm_id, $from, $to) {
+    public function getScoreByApm($apm_id, $from, $to) { //
         $list =  $this->db->get_where($this->table, ['apartment_id' => $apm_id])->result_array();
         $score = 0; $count = 0;
         foreach ($list as $item){

@@ -234,7 +234,7 @@ $to_date = $day_last."-".$to_month."-".$to_year;
                     $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
 
                     $surrounding_facilities = !empty($apartment['surrounding_facilities']) ? json_decode($apartment['surrounding_facilities'], true) : [];
-                    $apartment_score = $this->ghApartmentComment->getScoreByApm($apartment['id'], $from_date, $to_date);
+                    $apartment_score = $ghApartmentComment->getScoreByApm($apartment['id'], $from_date, $to_date);
                     ?>
                     <!-- item -->
                     <div class="sort-apm-item" data-apm-id="<?=$apartment['id']?>">
