@@ -92,7 +92,7 @@ include VIEWPATH.'functions.php';
                 border-radius: .25rem;
             }
             .dropdown-menu{
-                z-index: 9999999;
+                z-index: 1000;
             }
         </style>
     </head>

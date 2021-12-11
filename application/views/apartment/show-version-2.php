@@ -119,9 +119,12 @@ $to_date = $day_last."-".$to_month."-".$to_year;
             </div>
             <hr>
             <?php else: ?>
-            <div class="col-md-12">
-                <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
+                </div>
             </div>
+
         <?php endif;?>
         <div class="row">
             <div class="col-12">
@@ -156,94 +159,85 @@ $to_date = $day_last."-".$to_month."-".$to_year;
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-            <div class="card card-body col-12 col-md-9">
-                <!--<div class="text-center w-100">-->
-                <!--</div>-->
+            <div class="col-12 col-md-9">
+                <div class="card-box">
+                    <div class="text-right mb-2 mb-2">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+                        </div>
+                    </div>
+                    <?php
+                    $covidColor = $this->input->get('apmTag') ? 'text-danger' :'text-purple';
+                    ?>
+                    <div class="list-action">
+                        <span class="d-flex justify-content-center flex-wrap ">
+                            <?php
+                            foreach($list_district as $district):
+                                $district_btn = 'btn-outline-success';
+                                ?>
 
-                <?php
+                                <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
+                                   class="btn m-1 btn-sm <?= $district_btn ?>
+                                    <?= $district_code == $district['code'] ? 'active':'' ?>
+                                    btn-rounded waves-light waves-effect">
+                                Q. <?= $district['name'] ?> </a>
 
-                $covidColor = $this->input->get('apmTag') ? 'text-danger' :'text-purple';
+                            <?php endforeach; ?>
+                        </span>
+                        <span class="d-flex justify-content-center flex-wrap ">
+                            <a href="<?= base_url().'admin/list-apartment?apmTag=5' ?>"
+                               class="btn m-1 btn-sm <?= $this->input->get('apmTag') ? 'active' :'' ?> btn-outline-danger btn-small btn-rounded waves-light waves-effect"> <i class="fa fa-ambulance"></i> Covid</a>
 
-                ?>
-                <div class="list-action">
-                    <span class="d-flex justify-content-center flex-wrap ">
-                        <?php
-                        foreach($list_district as $district):
-                            $district_btn = 'btn-outline-success';
-                            ?>
+                            <a href="<?= base_url().'admin/list-apartment?rangeTime=Today' ?>"
+                               class="btn m-1 btn-sm <?= $this->input->get('rangeTime') ? 'active' :'' ?> btn-outline-danger btn-small btn-rounded waves-light waves-effect"> <i class="fa fa-calendar-o"></i> Update Hôm Nay</a>
+                        </span>
 
-                            <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
-                               class="btn m-1 btn-sm <?= $district_btn ?>
-                                <?= $district_code == $district['code'] ? 'active':'' ?>
-                                btn-rounded waves-light waves-effect">
-                            Q. <?= $district['name'] ?> </a>
 
-                        <?php endforeach; ?>
-                    </span>
-                    <span class="d-flex justify-content-center flex-wrap ">
-                        <a href="<?= base_url().'admin/list-apartment?apmTag=5' ?>"
-                           class="btn m-1 btn-sm <?= $this->input->get('apmTag') ? 'active' :'' ?> btn-outline-danger btn-small btn-rounded waves-light waves-effect"> <i class="fa fa-ambulance"></i> Covid</a>
-
-                        <a href="<?= base_url().'admin/list-apartment?rangeTime=Today' ?>"
-                           class="btn m-1 btn-sm <?= $this->input->get('rangeTime') ? 'active' :'' ?> btn-outline-danger btn-small btn-rounded waves-light waves-effect"> <i class="fa fa-calendar-o"></i> Update Hôm Nay</a>
-
-                    </span>
-
-                </div>
-                <div class="card">
-                    <div class="form-group row mt-2">
+                    </div>
+                    <div class="row mt-2">
                         <div class="col-md-9 col-12 text-md-left text-center">
                             <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
                         </div>
-                        <div class="col-md-3 col-12 mt-md-0 mt-2 text-md-right text-center">
-                            <div class="btn-group mb-2">
-                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <?php
+                            if($this->session->has_userdata('fast_notify')):
+                                ?>
+                                <div class="alert alert-<?= $this->session->flashdata('fast_notify')['status']?> alert-dismissible fade show" role="alert">
+                                    <?= $this->session->flashdata('fast_notify')['message']?>
                                 </div>
-                            </div>
+                                <?php unset($_SESSION['fast_notify']); endif; ?>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <?php
-                        if($this->session->has_userdata('fast_notify')):
-                            ?>
-                            <div class="alert alert-<?= $this->session->flashdata('fast_notify')['status']?> alert-dismissible fade show" role="alert">
-                                <?= $this->session->flashdata('fast_notify')['message']?>
-                            </div>
-                            <?php unset($_SESSION['fast_notify']); endif; ?>
-                    </div>
-                </div>
-                <div>
-                <?php foreach ($list_apartment as $apartment):
-                    $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
-                    $tag_promotion = '';
-                    $color_promotion = 'text-purple';
-                    $bg_promotion = '';
-                    $promotion_txt = '';
-                    $is_editable_apartment = false;
-                    if($this->product_category === "APARTMENT_GROUP" && in_array($apartment["id"], $this->list_apartment_CRUD )){
-                        $is_editable_apartment = true;
-                    }
-                    if($this->product_category === "DISTRICT_GROUP" && in_array($apartment["district_code"], $this->list_district_CRUD )){
-                        $is_editable_apartment = true;
-                    }
+                    <?php foreach ($list_apartment as $apartment):
+                        $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
+                        $tag_promotion = '';
+                        $color_promotion = 'text-purple';
+                        $bg_promotion = '';
+                        $promotion_txt = '';
+                        $is_editable_apartment = false;
+                        if($this->product_category === "APARTMENT_GROUP" && in_array($apartment["id"], $this->list_apartment_CRUD )){
+                            $is_editable_apartment = true;
+                        }
+                        if($this->product_category === "DISTRICT_GROUP" && in_array($apartment["district_code"], $this->list_district_CRUD )){
+                            $is_editable_apartment = true;
+                        }
 
-                    if(count($list_promotion) > 0) {
-                        $tag_promotion = '<span class="badge badge-danger"><i class="mdi mdi-gift mr-2"></i> '.count($list_promotion). '</span>';
-                        $color_promotion =  $this->input->get('apmTag') ? $covidColor : 'text-white';
-                        $bg_promotion = 'bg-danger';
-                    }
-                    $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
+                        if(count($list_promotion) > 0) {
+                            $tag_promotion = '<span class="badge badge-danger"><i class="mdi mdi-gift mr-2"></i> '.count($list_promotion). '</span>';
+                            $color_promotion =  $this->input->get('apmTag') ? $covidColor : 'text-white';
+                            $bg_promotion = 'bg-danger';
+                        }
+                        $list_comment = $ghApartmentComment->get(['apartment_id' => $apartment['id']]);
 
-                    $surrounding_facilities = !empty($apartment['surrounding_facilities']) ? json_decode($apartment['surrounding_facilities'], true) : [];
-                    $apartment_score = $ghApartmentComment->getScoreByApm($apartment['id'], $from_date, $to_date);
-                    ?>
-                    <!-- item -->
+                        $surrounding_facilities = !empty($apartment['surrounding_facilities']) ? json_decode($apartment['surrounding_facilities'], true) : [];
+                        $apartment_score = $ghApartmentComment->getScoreByApm($apartment['id'], $from_date, $to_date);
+                        ?>
+                        <!-- item -->
 
                         <div class="card-header apartment-block mt-1" role="tab" id="headingThree">
                             <div class="row">
@@ -314,37 +308,37 @@ $to_date = $day_last."-".$to_month."-".$to_year;
                                 ?>
                                 <div class="<?= $col_with ?> col-12">
                                     <?php if($apartment['description']): ?>
-                                    <h5 class="text-danger"><u>Mô Tả Dự Án</u></h5>
+                                        <h5 class="text-danger"><u>Mô Tả Dự Án</u></h5>
                                     <?php endif;?>
                                     <div class="mb-3">
-                                    <?php foreach ($surrounding_facilities as $uu):?>
+                                        <?php foreach ($surrounding_facilities as $uu):?>
 
-                                        <span class="ml-2 badge badge-danger"><strong><?= $uu ?></strong></span>
-                                    <?php endforeach;?>
+                                            <span class="ml-2 badge badge-danger"><strong><?= $uu ?></strong></span>
+                                        <?php endforeach;?>
                                     </div>
                                     <?php if($apartment['description']): ?>
-                                    <div class="p-1 apm-description" style="white-space: pre-line; background:#fee69c">
-                                        <?= $apartment['description'] ? $apartment['description'] : '' ?>
-                                    </div>
+                                        <div class="p-1 apm-description" style="white-space: pre-line; background:#fee69c">
+                                            <?= $apartment['description'] ? $apartment['description'] : '' ?>
+                                        </div>
                                     <?php endif;?>
                                 </div>
 
                                 <?php if(count($list_promotion) > 0): ?>
-                                <div class="col-md-6 col-12">
-                                    <h5 class="text-danger"><u>Ưu đãi</u></h5>
-                                    <div class="mb-3"></div>
-                                    <?php foreach ($list_promotion as $promotion):  ?>
-                                        <div class="p-1 apm-description mb-1" style="white-space: pre-line; background:#fee69c">
-                                            <h5 class="text-warning bg-dark p-2 text-center mb-0">
-                                                <?= $promotion['title'] ?>
-                                            </h5>
-                                            <div class="text-center"><?= date("d/m/Y",$promotion['start_time']) ." . " .date("d/m/Y",$promotion['end_time']) ?></div>
-                                            <?= $promotion['description'] ? $promotion['description'] : '' ?>
+                                    <div class="col-md-6 col-12">
+                                        <h5 class="text-danger"><u>Ưu đãi</u></h5>
+                                        <div class="mb-3"></div>
+                                        <?php foreach ($list_promotion as $promotion):  ?>
+                                            <div class="p-1 apm-description mb-1" style="white-space: pre-line; background:#fee69c">
+                                                <h5 class="text-warning bg-dark p-2 text-center mb-0">
+                                                    <?= $promotion['title'] ?>
+                                                </h5>
+                                                <div class="text-center"><?= date("d/m/Y",$promotion['start_time']) ." . " .date("d/m/Y",$promotion['end_time']) ?></div>
+                                                <?= $promotion['description'] ? $promotion['description'] : '' ?>
 
-                                        </div>
-                                    <?php endforeach;?>
+                                            </div>
+                                        <?php endforeach;?>
 
-                                </div>
+                                    </div>
                                 <?php endif;?>
                             </div>
                             <div class="row ">
@@ -482,7 +476,7 @@ $to_date = $day_last."-".$to_month."-".$to_year;
 
                             </div>
                         </div>
-                <?php endforeach;?>
+                    <?php endforeach;?>
                 </div>
             </div>
         </div>
@@ -669,7 +663,7 @@ $to_date = $day_last."-".$to_month."-".$to_year;
                 }
             });
         });
-
+        $('#setting_default_district').select2();
         $('#setting_default_district').change(function () {
             let _this = $(this);
             let keyword = _this.data('keyword');
