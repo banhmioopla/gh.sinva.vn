@@ -9,6 +9,7 @@ class CustomBaseStep extends CI_Controller {
 		$this->current_controller =  $this->router->fetch_class();
 		$this->current_action =  $this->router->fetch_method();
 
+
 		if(!$this->session->has_userdata('auth'))
 		{
 //			$this->session->sess_destroy();
@@ -19,10 +20,14 @@ class CustomBaseStep extends CI_Controller {
         $this->load->library('LibUuid', null, 'libUuid');
         $this->load->library('LibTime', null, 'libTime');
         $this->load->library('LibUser', null, 'libUser');
-		$this->load->model(['ghActivityTrack', 'ghUser', 'ghNotification', 'ghUserDistrict', 'ghApartment', 'ghRole', 'ghConfig', 'ghTeam']);
+		$this->load->model([
+		    'ghActivityTrack', 'ghUser', 'ghNotification',
+            'ghUserDistrict', 'ghApartment', 'ghRole',
+            'ghConfig', 'ghUserConfig',
+            'ghTeam']);
 		$this->auth = $this->session->userdata('auth');
 		$this->role = $this->ghRole->getFirstByCode($this->auth['role_code']);
-
+        $this->default_district =  $this->session->userdata($this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT);
 		$ghUserDistrict = $this->ghUserDistrict->get(['user_id' => $this->auth['account_id']]);
 		$this->list_district_CRUD = [];
 		$this->list_apartment_CRUD = [];
@@ -117,6 +122,7 @@ class CustomBaseStep extends CI_Controller {
             'SystemIncomeRunning' => ['show', 'chartData'],
             'HomeTown' => ['show'],
             'User' => ['showProfile'],
+            'UserConfig' => ['update'],
             'CronCustomer' => ['removeImg'],
         ];
 

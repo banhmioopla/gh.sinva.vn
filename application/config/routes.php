@@ -1160,6 +1160,12 @@ $route['admin/create-user-district'] = function($params = []) {
     $action = '/create';
     return $controller.$action;
 };
+
+$route['admin/user-setting/update'] = function($params = []) {
+    $controller = 'UserConfig';
+    $action = '/update';
+    return $controller.$action;
+};
 // admin/image
 $route['admin/upload-image'] = function($params = []) {
 	$controller = 'Image';

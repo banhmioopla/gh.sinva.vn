@@ -7,6 +7,7 @@ class Login extends CI_Controller {
 		parent::__construct();
 		$this->load->model('ghUser');
 		$this->load->model('ghRole');
+		$this->load->model('ghUserConfig');
 		$this->default_url = '/admin/list-apartment';
 		$this->logout_url = '/admin/logout';
 	}
@@ -20,6 +21,7 @@ class Login extends CI_Controller {
 			$user_profile = $this->ghUser->login($data);
 			if($user_profile) {
                 $this->session->set_userdata(['auth' => $user_profile]);
+
                 $role = $this->ghRole->getFirstByCode($user_profile['role_code']);
                 $permission_set = json_decode($role['list_function'], true);
                 if($this->isYourPermission('Dashboard', 'showListProject', $permission_set)){
@@ -27,6 +29,12 @@ class Login extends CI_Controller {
                 }
                 set_cookie('gh_account_id',$user_profile['account_id'], time()+60*60*24*365);
                 set_cookie('gh_password',$user_profile['password'], time()+60*60*24*365);
+                $default_district = $this->ghUserConfig->getFirstByKeywordAndUser($this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT, $user_profile['account_id']);
+                if($default_district && !empty($default_district['value'])) {
+                    $this->default_url .= "?district-code=".$default_district['value'];
+                    $this->session->set_userdata([$this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT => $default_district['value']]);
+                }
+
                 return redirect($this->default_url);
 			} else {
 				return redirect($this->logout_url);
