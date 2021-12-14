@@ -567,8 +567,6 @@ class Apartment extends CustomBaseStep {
 	}
 
 	public function showLikeBase(){
-		$data['list_apartment'] = $this->ghApartment->getByUserDistrict($this->auth['account_id']);
-
         $list_apm_temp = $this->ghApartment->get(['active' => 'NO']);
         $list_apm = [];
         foreach ($list_apm_temp as $apm ) {

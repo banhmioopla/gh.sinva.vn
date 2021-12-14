@@ -10,8 +10,6 @@ class GhApartment extends CI_Model {
         } else {
             $this->db->order_by('length(order_item) ASC,order_item ASC,  id DESC, address_street ASC'); // comment xxx yyy
         }
-        $where['apartment_type_id'] = 1;
-        $where['group_uuid'] = NULL;
 
         return $this->db->get_where($this->table, $where)->result_array();
     }

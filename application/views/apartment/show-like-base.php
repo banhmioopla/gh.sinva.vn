@@ -53,7 +53,6 @@
                         </tfoot>
                         <tbody>
                         <?php foreach($list_apartment as $row ):
-                            if($row['active'] !== 'NO') continue;
                             ?>
                             <tr>
                                 <td class="apartment-select-partner"
