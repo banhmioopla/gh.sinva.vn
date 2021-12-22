@@ -75,31 +75,7 @@ include VIEWPATH . 'functions.php';
             </div>
             <div class="col-12 mt-1">
                 <div class="card-box">
-                    <div class="row ">
-                        <div class="col-md-4">
-                            <div class="card-box bg-danger widget-flat border-danger text-white">
-                                <i class="mdi mdi-folder-multiple-image"></i>
-                                <h3 class="m-b-10"><?= $counter ?></h3>
-                                <p class="text-uppercase mb-2 font-13 font-600">
-                                    Số Lượng Hình Ảnh
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card-box bg-danger widget-flat border-danger text-white">
-                                <i class="mdi mdi-folder-multiple-image"></i>
-                                <h3 class="m-b-10"><?= count($list_post) ?></h3>
-                                <a href="/admin/consultant-post/your-list" class="btn btn-secondary pull-right">Đi đến kho bài đăng</a>
-                                <p class="text-uppercase mb-2 font-13 font-600">
-                                    Bài Đăng Tư Vấn
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col text-center">
-                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id']?>"
-                               class="btn-danger float-md-right mt-1 mt-md-0 btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
-                        </div>
+                    <div class="row">
                         <div class="col-md-4">
                             <strong class="text-info">Xem hình các dự án khác</strong>
                             <select id="search-apartment-id" class="form-control">
@@ -126,123 +102,159 @@ include VIEWPATH . 'functions.php';
                             </script>
                         </div>
                     </div>
+                    <div class="row mt-2">
+                        <div class="col-md-3">
+                            <div class="card-box bg-danger widget-flat border-danger text-white">
+                                <i class="mdi mdi-folder-multiple-image"></i>
+                                <h3 class="m-b-10"><?= $counter ?></h3>
+                                <p class="text-uppercase mb-2 font-13 font-600">
+                                    Số Lượng Hình Ảnh
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card-box bg-danger widget-flat border-danger text-white">
+                                <i class="mdi mdi-folder-multiple-image"></i>
+                                <h3 class="m-b-10"><?= count($list_post) ?></h3>
+                                <a href="/admin/consultant-post/your-list" class="btn btn-secondary pull-right">Đi đến kho bài đăng</a>
+                                <p class="text-uppercase mb-2 font-13 font-600">
+                                    Bài Đăng Tư Vấn
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col text-center">
+                            <a href="/admin/apartment/upload-img?apartment_id=<?= $apartment['id']?>"
+                               class="btn-danger float-md-right mt-1 mt-md-0 btn text-center">Upload Ảnh Mới <i class="mdi mdi-cloud-upload"></i></a>
+                        </div>
+
+                    </div>
                     <div class="row">
-                        <div class="col-12 mt-1 text-danger">
-                            <div class="card-box">
-                                <div class="row">
-                                    <h3 class="text-danger col-12 font-weight-bold">QLDA: <?= $apartment['user_collected_id'] ? ''.$this->libUser->getNameByAccountid($apartment['user_collected_id'])." - ".$this->libUser->getPhoneByAccountid($apartment['user_collected_id']):"SINVA" ?></h3>
-                                </div>
+                        <div class="col-md-6 col-12 shadow-sm">
+                            <h4 class="text-danger font-weight-bold">Quản lý dự án</h4>
+                            <div class="mb-2" style="white-space: pre-wrap;"><?= $apartment['user_collected_id'] ?
+                                    ''.$this->libUser->getNameByAccountid($apartment['user_collected_id'])." - ".$this->libUser->getPhoneByAccountid($apartment['user_collected_id']):"SINVA" ?></div>
+                        </div>
+
+                        <div class="col-md-6 col-12 shadow-sm">
+                            <h4 class="text-danger font-weight-bold">Thời gian cập nhật</h4>
+                            <div class="mb-2" style="white-space: pre-wrap;"><?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apartment['id'])) ?></div>
+                        </div>
+
+                        <div class="col-md-6 col-12 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Mô Tả</p>
+                                <div class="mb-2" style="white-space: pre-wrap;"><?= $apartment['description'] ?></div>
                             </div>
 
                         </div>
+                        <div class="col-md-6 col-12 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Ghi Chú Dự Án</p>
+                                <div class="mb-2 " style="white-space: pre-wrap;"><?= $apartment['note'] ?></div>
+                            </div>
 
-                        <div class="col-md-12">
-                            <div class="card-box " >
-                                <h3 class="text-danger font-weight-bold">Thông Tin Dịch Vụ</h3>
-                                <div class="row slimscroll border border-danger" style="max-height: 450px;">
-                                    <div class="col-md-6 col-12 shadow-sm">
-                                        <p class="mb-0 text-muted">Mô Tả</p>
-                                        <div class="mb-2" style="white-space: pre-wrap;"><?= $apartment['description'] ?></div>
-                                    </div>
-                                    <div class="col-md-6 col-12 shadow-sm">
-                                        <p class="mb-0 text-muted">Ghi Chú Dự Án</p>
-                                        <div class="mb-2 " style="white-space: pre-wrap;"><?= $apartment['note'] ?></div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Điện</p>
-                                            <h4 class="mb-2 text-wrap"><?= $apartment['electricity'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Nước</p>
-                                            <h4 class="mb-2 text-wrap"><?= $apartment['water'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Internet</p>
-                                            <h4 class="mb-2"><?= $apartment['internet'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Giữ xe</p>
-                                            <h4 class="mb-2"><?= $apartment['parking'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted ">Phí Quản Lý</p>
-                                            <h4 class="mb-2"><?= $apartment['management_fee'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Combo Phí</p>
-                                            <h4 class="mb-2"><?= $apartment['extra_fee'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Cọc Phòng</p>
-                                            <h4 class="mb-2"><?= $apartment['deposit'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Thang máy</p>
-                                            <h4 class="mb-2"><?= $apartment['elevator'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Máy Giặt</p>
-                                            <h4 class="mb-2"><?= $apartment['washing_machine'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Dọn Phòng</p>
-                                            <h4 class="mb-2"><?= $apartment['room_cleaning'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Số Người Ở</p>
-                                            <h4 class="mb-2"><?= $apartment['number_of_people'] ?></h4>
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Điện</p>
+                                <h4 class="mb-2 text-wrap"><?= $apartment['electricity'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Nước</p>
+                                <h4 class="mb-2 text-wrap"><?= $apartment['water'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Internet</p>
+                                <h4 class="mb-2"><?= $apartment['internet'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Giữ xe</p>
+                                <h4 class="mb-2"><?= $apartment['parking'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger ">Phí Quản Lý</p>
+                                <h4 class="mb-2"><?= $apartment['management_fee'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Combo Phí</p>
+                                <h4 class="mb-2"><?= $apartment['extra_fee'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Cọc Phòng</p>
+                                <h4 class="mb-2"><?= $apartment['deposit'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Thang máy</p>
+                                <h4 class="mb-2"><?= $apartment['elevator'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Máy Giặt</p>
+                                <h4 class="mb-2"><?= $apartment['washing_machine'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Dọn Phòng</p>
+                                <h4 class="mb-2"><?= $apartment['room_cleaning'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Số Người Ở</p>
+                                <h4 class="mb-2"><?= $apartment['number_of_people'] ?></h4>
+                            </div>
+                        </div>
 
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Bếp</p>
-                                            <h4 class="mb-2"><?= $apartment['kitchen'] ?></h4>
-                                        </div>
-                                    </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Bếp</p>
+                                <h4 class="mb-2"><?= $apartment['kitchen'] ?></h4>
+                            </div>
+                        </div>
 
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Bảo vệ</p>
-                                            <h4 class="mb-2"><?= $apartment['security'] ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3 shadow-sm">
-                                        <div class="mt-3">
-                                            <p class="mb-0 text-muted">Thú cưng</p>
-                                            <h4 class="mb-2"><?= $apartment['pet'] ?></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Bảo vệ</p>
+                                <h4 class="mb-2"><?= $apartment['security'] ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 shadow-sm">
+                            <div class="mt-3">
+                                <p class="mb-0 text-danger">Thú cưng</p>
+                                <h4 class="mb-2"><?= $apartment['pet'] ?></h4>
                             </div>
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-12 mt-5">
+                            <div class="alert alert-light alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button> Click vào tiêu đề để hiện form! </div>
+                        </div>
                         <div class="col-md-6 col-12">
-                            <div class="card-box">
-                                <h3 class="text-danger font-weight-bold">Tạo Bài Đăng Tư Vấn <i class="mdi mdi-arrow-down-drop-circle"></i></h3>
+                            <h4 class="text-danger font-weight-bold"
+                                data-toggle="collapse"
+                                href="#consultantPostForm"
+                            >Tạo Bài Đăng Tư Vấn <i class="mdi mdi-arrow-down-drop-circle"></i></h4>
+                            <div id="consultantPostForm" class="collapse">
                                 <strong class="text-danger">Tiêu Đề Bài Đăng</strong>
                                 <input type="text" required id="post_title" class="form-control">
 
@@ -264,45 +276,42 @@ include VIEWPATH . 'functions.php';
                                     <button type="button" id="submit_consultant_post" class="btn btn-danger waves-effect waves-light">Tạo Bài Tư Vấn <i class="mdi mdi-library-plus"></i></button>
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="col-md-6 col-12">
-                            <div class="card-box">
-                                <h3 class="text-danger font-weight-bold">Upload Ảnh <i class="mdi mdi-arrow-down-drop-circle"></i></h3>
-                                <div class="row">
-                                    <form action="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>" class="col-md-12" method="post" enctype="multipart/form-data">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="mb-2 mt-4 font-weight-bold text-danger">Vui lòng chọn mã phòng</p>
-                                                <select name="room_id[]" required id="" class="form-control select2-multiple" multiple="multiple">
-                                                    <option value="">Vui lòng chọn mã phòng...</option>
-                                                    <?php foreach ($cb_room as $index => $room): ?>
-                                                        <option value="<?= $room['value'] ?>"> <?= $room['text'] ?></option>
-                                                    <?php endforeach;?>
-                                                </select>
-                                            </div>
+                            <h4 class="text-danger font-weight-bold"
+                                data-toggle="collapse"
+                                href="#uploadImgForm">Upload Ảnh <i class="mdi mdi-arrow-down-drop-circle"></i></h4>
+                            <div class="row collapse" id="uploadImgForm" >
+                                <form action="/admin/apartment/upload-img?apartment_id=<?= $apartment['id'] ?>" class="col-md-12" method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="mb-2 mt-4 font-weight-bold text-danger">Vui lòng chọn mã phòng</p>
+                                            <select name="room_id[]" required id="" class="form-control select2-multiple" multiple="multiple">
+                                                <option value="">Vui lòng chọn mã phòng...</option>
+                                                <?php foreach ($cb_room as $index => $room): ?>
+                                                    <option value="<?= $room['value'] ?>"> <?= $room['text'] ?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-1">
+                                        <div class="form-group col-12">
+                                            <p class="mb-2 mt-4 font-weight-bold text-danger">Vui Lòng Chọn Ảnh Từ Máy</p>
+                                            <input type="file" name="files[]" required multiple class="filestyle" data-buttontext="Select file"
+                                                   data-btnClass="btn-light">
+                                            <p class="text-success p-2 bg-dark mt-2 text-center" id="upload-msg"> 0 ảnh được chọn</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-1">
+                                        <div class="col-12 text-center">
+                                            <button type="submit" class="btn btn-success">Upload <i class="mdi mdi-cloud-upload"></i></button>
                                         </div>
 
-                                        <div class="row mt-1">
-                                            <div class="form-group col-12">
-                                                <p class="mb-2 mt-4 font-weight-bold text-danger">Vui Lòng Chọn Ảnh Từ Máy</p>
-                                                <input type="file" name="files[]" required multiple class="filestyle" data-buttontext="Select file"
-                                                       data-btnClass="btn-light">
-                                                <p class="text-success p-2 bg-dark mt-2 text-center" id="upload-msg"> 0 ảnh được chọn</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mt-1">
-                                            <div class="col-12 text-center">
-                                                <button type="submit" class="btn btn-success">Upload <i class="mdi mdi-cloud-upload"></i></button>
-                                            </div>
-
-                                        </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
-
                         </div>
                     </div>
                     <hr>
