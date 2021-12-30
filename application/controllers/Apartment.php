@@ -159,11 +159,7 @@ class Apartment extends CustomBaseStep {
             $data['list_apartment'][] = $item;
 		}
         $data['libTime'] = $this->libTime;
-//		$template = 'apartment/show-full-permission';
-        $template =  'apartment/show-version-2';
-		/*if(!$this->editable) {
-			$template =  'apartment/show-version-2';
-		}*/
+        $template =  'apartment/show-version-3';
 
 		$data['product_total'] = count($this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']));
 
@@ -242,7 +238,13 @@ class Apartment extends CustomBaseStep {
                 $this->session->set_userdata(['isTriggerFiveDay' => true]);
             }
         }
+        if(empty($this->input->get('current_apartment')) && count($data['list_apartment'])) {
+            $data['current_apartment'] = $data['list_apartment'][0];
+        }
 
+        if($this->input->get('current_apartment')){
+            $data['current_apartment'] = $this->ghApartment->getFirstById($this->input->get('current_apartment'));
+        }
 
         $data['list_apm_5days'] = $list_apm_5days;
         $data['list_apm_5days_CURD'] = $list_apm_5days_CURD;
