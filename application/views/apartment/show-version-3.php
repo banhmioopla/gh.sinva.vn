@@ -54,7 +54,7 @@ if($this->product_category === "APARTMENT_GROUP" && in_array($current_apartment[
 if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["district_code"], $this->list_district_CRUD )){
     $is_editable_apartment = true;
 }
-$hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_decode($apartment['hidden_service'], true) : [];
+$hidden_service = !empty(json_decode($apartment['hidden_service'], true)) ? json_decode($apartment['hidden_service'], true) : [];
 
 ?>
 <style>
