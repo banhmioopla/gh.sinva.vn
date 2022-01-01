@@ -132,6 +132,129 @@ class Media extends CustomBaseStep {
         echo json_encode($result); die;
     }
 
+    public function ajaxGalleryShowImage(){
+        $room_id = $this->input->post('room_id');
+        $root_url = "/media/apartment/";
+
+        $html = "";
+        $item_html_start = '<div class="carousel-item">';
+        $item_html ='
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        <a href="%URL%" class="image-popup">
+                        <img class="img-fluid" src="%URL%"
+                             alt="%URL%"></a>
+                    </div>
+                </div>';
+        $item_html_end = '</div>';
+        $list_img = $this->ghImage->get(['room_id' => $room_id, 'active' => 'YES']);
+        $result = []; $html = ""; $num = 4; $index = 1;
+
+        foreach ($list_img as $img) {
+            if($index % $num === 0){
+                $html .= $item_html_start.$html.$item_html_end;
+            }
+
+            $html .= str_replace("%URL%", $root_url.$img['name'], $item_html);
+            $index++;
+        }
+
+        echo json_encode([
+            'html' => $html
+        ]); die;
+    }
+
+    public function uploadServiceApartment(){
+        $apartment_id = $this->input->get('apartment_id');
+        $apartment = $this->ghApartment->getFirstById($apartment_id);
+        $cb_room = [];
+        if(isset($_POST) && count($_POST))
+        {
+            // File upload configuration
+            $uploadPath = 'media/apartment/';
+            $config['upload_path'] = $uploadPath;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|mp4|mov';
+            $time = time();
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            $filesCount = count($_FILES['files']['name']);
+            $max_id = $this->ghImage->getMaxId()[0]['id'];
+
+            $uploadData = [];
+            if (empty($max_id)) {
+                $max_id = 1;
+            }
+            $list_room_id = $this->input->post('room_id');
+            if($filesCount == 0) {
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Vui Lòng chọn Ảnh',
+                    'status' => 'danger'
+                ]);
+                return redirect('/admin/apartment/show-image?apartment-id='.$apartment['id']);
+            }
+            foreach ($list_room_id as $room_id) {
+                for ($i = 0; $i < $filesCount; $i++) {
+
+                    $ext = strtolower(pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION));
+                    $file_name = $max_id . '-apartment-' . $apartment_id . '-' . $time . '.' . $ext;
+
+                    $_FILES['file']['name'] = $file_name;
+                    $_FILES['file']['type'] = $_FILES['files']['type'][$i];
+                    $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+                    $_FILES['file']['error'] = $_FILES['files']['error'][$i];
+                    $_FILES['file']['size'] = $_FILES['files']['size'][$i];
+
+                    if ($this->upload->do_upload('file')) {
+                        // Uploaded file data
+                        $this->upload->data();
+                        $uploadData[$i]['name'] = $file_name;
+                        $uploadData[$i]['file_type'] = $ext;
+                        $uploadData[$i]['time_insert'] = $time;
+                        $uploadData[$i]['controller'] = 'Apartment';
+                        $uploadData[$i]['room_id'] = $room_id;
+                        $uploadData[$i]['apartment_id'] = $apartment_id;
+                        $uploadData[$i]['user_id'] = $this->auth['account_id'];
+                        $uploadData[$i]['status'] = 'Pending';
+                        $max_id += 1;
+                    }
+                }
+
+                if (!empty($uploadData)) {
+                    $this->ghImage->insert($uploadData);
+                    $this->ghApartment->updateById($apartment_id, [
+                        'time_update' => $time
+                    ]);
+                }
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Upload <strong>'.$filesCount.'</strong> file(s) thành công ',
+                    'status' => 'success'
+                ]);
+
+            }
+
+            return redirect('/admin/apartment/show-image?apartment-id='.$apartment_id, "refresh");
+
+        }
+
+        $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
+        $list_apm = [];
+        foreach ($list_apm_temp as $apm ) {
+            if(!in_array($apm['district_code'], $this->list_district_CRUD)) {
+                continue;
+            }
+
+            $list_apm[] = $apm;
+        }
+
+        $this->load->view('components/header');
+        $this->load->view('media/upload-img-apartment', [
+            'apartment' => $apartment,
+            'list_room' => $list_room,
+            'cb_room' => $cb_room,
+            'list_apm' => $list_apm
+        ]);
+        $this->load->view('components/footer');
+    }
     public function uploadImgApartment(){
         $apartment_id = $this->input->get('apartment_id');
         $apartment = $this->ghApartment->getFirstById($apartment_id);

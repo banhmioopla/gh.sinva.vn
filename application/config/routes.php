@@ -1220,6 +1220,12 @@ $route['admin/ajax/apartment/show-img'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/ajax/gallery/show-img'] = function($params = []) {
+    $controller = 'Media';
+    $action = '/ajaxGalleryShowImage';
+    return $controller.$action;
+};
+
 
 $route['admin/apartment/search'] = function($params = []) {
 	$controller = 'Apartment';

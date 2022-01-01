@@ -190,8 +190,7 @@ class Apartment extends CustomBaseStep {
 		$data['libApartment'] = $this->libApartment;
 		$data['ghApartmentShaft'] = $this->ghApartmentShaft;
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES'], 'district_code DESC');
-        $list_apm_ready = [];
-        $list_apm_5days_CURD = [];
+        $list_apm_ready = $list_apm_5days_CURD = [];
 
         foreach ($list_apm_temp as $apm ) {
             $time_update = $this->ghApartment->getUpdateTimeByApm($apm['id']);
@@ -245,6 +244,8 @@ class Apartment extends CustomBaseStep {
         if($this->input->get('current_apartment')){
             $data['current_apartment'] = $this->ghApartment->getFirstById($this->input->get('current_apartment'));
         }
+        $data['hidden_service'] = isset($data['current_apartment']['hidden_service'])
+            ? json_decode($data['current_apartment']['hidden_service'], true) : [];
 
         $data['list_apm_5days'] = $list_apm_5days;
         $data['list_apm_5days_CURD'] = $list_apm_5days_CURD;
