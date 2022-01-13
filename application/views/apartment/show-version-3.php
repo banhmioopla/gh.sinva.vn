@@ -419,7 +419,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <?php foreach ($list_room as $_room):?>
                             <button type="button"
                                     data-id="<?= $_room['id'] ?>"
-                                    class="btn m-1 btn-secondary waves-light room-code waves-effect"> <?= $_room['code'] ?> (10)</button>
+                                    class="btn m-1 btn-secondary waves-light room-code waves-effect"> <?= $_room['code'] ?></button>
                     <?php endforeach;?>
                     </div>
                     <div class="col-12">
