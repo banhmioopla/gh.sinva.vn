@@ -1226,6 +1226,23 @@ $route['admin/ajax/gallery/show-img'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/ajax/gallery/show-img/service'] = function($params = []) {
+    $controller = 'Media';
+    $action = '/ajaxGalleryShowImageService';
+    return $controller.$action;
+};
+
+$route['admin/ajax/gallery/upload-img/service'] = function($params = []) {
+    $controller = 'Media';
+    $action = '/uploadImgService';
+    return $controller.$action;
+};
+$route['admin/gallery/delete'] = function($params = []) {
+    $controller = 'Media';
+    $action = '/delete';
+    return $controller.$action;
+};
+
 
 $route['admin/apartment/search'] = function($params = []) {
 	$controller = 'Apartment';

@@ -128,7 +128,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
         $('input[type=file]').change(function () {
             var files = $(this)[0].files;
             $('#upload-msg').text(files.length + ' ảnh được chọn.');
-            console.log(files.length);
         });
 
         $('#apartment_update_ready').change(function () {

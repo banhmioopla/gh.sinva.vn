@@ -80,6 +80,21 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     }
 </style>
 <div class="container-fluid">
+    <!-- Page-Title -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <div class="btn-group pull-right">
+                    <ol class="breadcrumb hide-phone p-0 m-0">
+                        <li class="breadcrumb-item"><a href="#">test</a></li>
+                        <li class="breadcrumb-item"><a href="#">Extra Pages</a></li>
+                        <li class="breadcrumb-item active">Starter</li>
+                    </ol>
+                </div>
+                <h2 class="font-weight-bold text-danger">Dự án</h2>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="page-title-box">
@@ -152,103 +167,85 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
     <?php endif;?>
 
-    <div class="row">
-        <div class="col-12">
-            <h2 class="font-weight-bold text-danger">Danh sách dự án Q. <?= $libDistrict->getNameByCode($district_code) ?></h2>
-        </div>
-    </div>
+
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 col-12">
             <div class="card-box">
-                <h4 class="header-title mb-4">Danh sách dự án</h4>
+                <div class="col-12">
+                    <div class="d-flex justify-content-center flex-wrap ">
+                        <?php
+                        foreach($list_district as $district):
+                            $district_btn = 'btn-outline-success';
+                            ?>
+
+                            <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
+                               class="btn m-1 btn-sm <?= $district_btn ?>
+                        <?= $district_code == $district['code'] ? 'active':'' ?>
+                        btn-rounded waves-light waves-effect">
+                                Q. <?= $district['name'] ?> </a>
+
+                        <?php endforeach; ?>
+                    </div>
+                    <hr>
+                </div>
+                <div class="col-12">
+                    <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
+                </div>
 
                 <ul
                     class="list-unstyled slimscroll mb-0"
-                    style="max-height: 370px"
+                    style="max-height: 300px"
                 >
                     <?php foreach ($list_apartment as $apm): ?>
                     <li class="mb-3">
-                        <h5 class="font-weight-bold"> <i class="mdi mdi-bookmark"></i><?= $apm['address_street'] ?></h5>
-                        <div class="text-right text-muted"><?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apm['id'])) ?></div>
+                        <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-bookmark"></i> <?= $apm['address_street'] ?></a> </h5>
+                        <div class="text-right text-muted"><i class="mdi mdi-clock"></i> <?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apm['id'])) ?></div>
                         <div class="clearfix"></div>
                     </li>
                     <?php endforeach;?>
                 </ul>
             </div>
         </div>
-        <div class="col-md-9">
-
+        <div class="col-md-9 col-12">
             <div class="card-box">
-                <div class="d-flex justify-content-center flex-wrap ">
-                    <?php
-                    foreach($list_district as $district):
-                        $district_btn = 'btn-outline-success';
-                        ?>
-
-                        <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
-                           class="btn m-1 btn-sm <?= $district_btn ?>
-                        <?= $district_code == $district['code'] ? 'active':'' ?>
-                        btn-rounded waves-light waves-effect">
-                            Q. <?= $district['name'] ?> </a>
-
-                    <?php endforeach; ?>
-                </div>
-                <hr>
                 <div class="row">
-                    <div class="col-12 mt-2 mb-1">
-                        <div class="card m-b-30">
-                            <h2 class="font-weight-bold text-danger"><?= $current_apartment['address_street'] ?></h2>
+                    <div class="col-12  mt-2 mb-1">
+                        <div class="card m-b-30 bg-dark">
+                            <h2 class="font-weight-bold pl-2 text-warning"><?= $current_apartment['address_street'] ?></h2>
                         </div>
                     </div>
                     <!--BUTTONS ACTioNS-->
                     <div class="col-12 list-action mt-2" >
-                        <h4 class="font-weight-bold text-danger">Tuỳ chọn</h4>
+                        <h4 class="font-weight-bold text-danger">Tuỳ chọn <i class="mdi mdi-settings"></i></h4>
                         <div class="text-md-right text-center">
                             <?php if($is_editable_apartment): ?>
                                 <a class="m-1" href="/admin/apartment/duplicate?id=<?= $current_apartment['id'] ?>" >
-                                    <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-credit-card-multiple"></i> </button>
+                                    <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-credit-card-multiple"></i> Copy DA</button>
                                 </a>
                                 <a class="m-1" href="/admin/profile-apartment?id=<?= $current_apartment['id'] ?>" >
-                                    <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> <span class="d-none d-md-inline"></span></button>
+                                    <button class="btn btn-sm btn-outline-primary m-1 btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> DA</button>
                                 </a>
 
-
                                 <a href="/admin/room/show-create?apartment-id=<?= $current_apartment['id'] ?>">
-                                    <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> P </button></a>
+                                    <button class="btn btn-sm btn-outline-primary m-1 btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
 
                             <?php endif;?>
 
 
                             <span class="m-1"><button data-address="<?= $current_apartment['address_street'] ?>"
                                                       data-apm="<?= $current_apartment['id'] ?>"
-                                                      class="btn report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i> <span class="d-none d-md-inline"></span></button></span>
+                                                      class="btn m-1 report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i></button></span>
                             <a href="/admin/download-all-image-apartment?apm=<?= $current_apartment['id'] ?>"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
 
                             <a class="m-1" href="/sale/apartment-export?id=<?= $current_apartment['id'] ?>" >
-                                <button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-file-excel"></i> <span class="d-none d-md-inline"></span></button>
-                            </a>
-
-                            <button type="button" class="btn m-1 apm-plus-view btn-sm btn-outline-danger btn-rounded waves-light waves-effect"
-                                    data-toggle="collapse"
-                                    data-apartment-id="<?=$current_apartment['id'] ?>"
-                                    data-parent="#accordion"
-                                    aria-controls="#modal-apartment-detail-<?=$current_apartment['id'] ?>"
-                                    data-target="#modal-apartment-detail-<?=$current_apartment['id'] ?>">
-                                <i class="mdi mdi-eye"></i> <span class="d-none d-md-inline"></span></button>
-
-                            <a data-souce="image" href="/admin/apartment/show-image?apartment-id=<?= $current_apartment['id'] ?>" target="_blank">
-                                <button type="button"
-                                        data-apartment-id="<?=$current_apartment['id'] ?>"
-                                        class="btn m-1 apm-plus-view  btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
-                                    <i class="mdi mdi-folder-multiple-image"></i> <span class="d-none d-md-inline"></span>
-                                </button>
+                                <button class="btn btn-sm m-1 btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-file-excel"></i> Excel</button>
                             </a>
 
                             <?php if($check_consultant_booking): ?>
                                 <a href="<?= base_url() ?>admin/create-new-consultant-booking?apartment-id=<?= $current_apartment['id'] ?>&district-code=<?= $current_apartment['district_code'] ?>&mode=create">
                                     <button type="button" class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
-                                        <i class="mdi mdi-car-hatchback"></i> <span class="d-none d-md-inline"></span>
+                                        <i class="mdi mdi-car-hatchback"></i> Book
                                     </button>
                                 </a>
                             <?php endif; ?>
@@ -256,13 +253,24 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <hr>
                     </div>
                     <div class="col-12">
+                        <h4 class="font-weight-bold text-danger">Tổng quan</h4>
+                    </div>
+                    <div class="col-md-3 col-6 mb-4">
+                        <div> <i class="mdi mdi-cube"></i> Quản lý dự án</div>
+                        <div class="font-weight-bold pl-2"><?= $this->libUser->getNameByAccountid($current_apartment['user_collected_id']) . " | ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ?></div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-4">
+                        <div> <i class="mdi mdi-cube"></i> Thời gian cập nhật</div>
+                        <div class="font-weight-bold pl-2"><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></div>
+                    </div>
+                    <div class="col-12">
                         <h4 class="font-weight-bold text-danger">Mô tả</h4>
                         <blockquote class="blockquote">
-                            <p class="mb-0"><?= $current_apartment['description'] ?></p>
+                            <?= $current_apartment['description'] ?>
                         </blockquote>
                     </div>
                     <?php
-                    $list_promotion = $ghApartmentPromotion->get(['apartment_id' => $current_apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
+                    $list_promotion = $this->ghApartmentPromotion->get(['apartment_id' => $current_apartment['id'], 'end_time >=' => strtotime(date('d-m-Y'))]);
                     if(count($list_promotion) > 0): ?>
                         <div class="col-12">
                             <h4 class="font-weight-bold text-danger">Ưu đãi</h4>
@@ -287,43 +295,43 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     </div>
                     <?php if(!in_array('deposit', $hidden_service)): ?>
                         <div class="col-md-3 col-6 mb-4">
-                            <div><?= $label_apartment['deposit'] ?></div>
-                            <div class="font-weight-bold"><?= $current_apartment['deposit'] ?></div>
+                            <div> <i class="mdi mdi-cube"></i> <?= $label_apartment['deposit'] ?></div>
+                            <div class="font-weight-bold pl-2"><?= $current_apartment['deposit'] ?></div>
                         </div>
                     <?php endif; ?>
 
                     <?php if(!in_array('commission_rate', $hidden_service)): ?>
                         <div class="col-md-3 col-6 mb-4">
-                            <div><?= $label_apartment['commission_rate'] ?></div>
-                            <div class="font-weight-bold"><?= $current_apartment['commission_rate'] ?></div>
+                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate'] ?>%</div>
+                            <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate'] ?>%</div>
                         </div>
                     <?php endif; ?>
 
                     <?php if(!in_array('commission_rate_9m', $hidden_service)): ?>
                         <div class="col-md-3 col-6 mb-4">
-                            <div><?= $label_apartment['commission_rate_9m'] ?></div>
-                            <div class="font-weight-bold"><?= $current_apartment['commission_rate_9m'] ?></div>
+                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate_9m'] ?>%</div>
+                            <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate_9m'] ?>%</div>
                         </div>
                     <?php endif; ?>
 
                     <?php if(!in_array('commission_rate_6m', $hidden_service)): ?>
                         <div class="col-md-3 col-6 mb-4">
-                            <div><?= $label_apartment['commission_rate_6m'] ?></div>
-                            <div class="font-weight-bold"><?= $current_apartment['commission_rate_6m'] ?></div>
+                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate_6m'] ?>%</div>
+                            <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate_6m'] ?>%</div>
                         </div>
                     <?php endif; ?>
 
                     <?php if(!in_array('contract_long_term', $hidden_service)): ?>
                         <div class="col-md-3 col-6 mb-4">
-                            <div><?= $label_apartment['contract_long_term'] ?></div>
-                            <div class="font-weight-bold"><?= $current_apartment['contract_long_term'] ?></div>
+                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['contract_long_term'] ?></div>
+                            <div class="font-weight-bold pl-2"><?= $current_apartment['contract_long_term'] ?></div>
                         </div>
                     <?php endif; ?>
 
                     <?php if(!in_array('contract_short_term', $hidden_service)): ?>
                         <div class="col-md-3 col-6 mb-4">
-                            <div><?= $label_apartment['contract_short_term'] ?></div>
-                            <div class="font-weight-bold"><?= $current_apartment['contract_short_term'] ?></div>
+                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['contract_short_term'] ?></div>
+                            <div class="font-weight-bold pl-2"><?= $current_apartment['contract_short_term'] ?></div>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -341,28 +349,71 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12">
                         <?php $this->load->view('apartment/room',[
                             'apartment' => $current_apartment,
-                            'libRoom' => $libRoom,
+                            'libRoom' => $this->libRoom,
                             'check_option' =>$check_option,
                             'check_contract' =>$check_contract,
                             'check_consultant_booking' => $check_consultant_booking,
-                            'ghApartmentShaft' => $ghApartmentShaft
+                            'ghApartmentShaft' => $this->ghApartmentShaft
                         ]) ?>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger">Ảnh / Video | Dịch vụ & Tiện ích xung quanh </h4>
+                        <form action="/admin/ajax/gallery/upload-img/service"
+                              method="POST" enctype="multipart/form-data">
+                            <div class="form-group m-b-0">
+                                <div class="row">
+                                    <div class="col-md-9 text-right">
+                                        <input type="file" class="filestyle" name="files[]"
+                                               required
+                                               multiple
+                                               data-placeholder="No file"
+                                               data-btnClass="btn-light">
+                                        <input type="hidden" name="apartment_id" value="<?= $current_apartment['id'] ?>" >
+                                    </div>
+                                    <div class="col-md-3 mt-md-0 mt-1 text-center">
+                                        <button type="submit" class="btn btn-danger">Up Ảnh</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="col-12">
                         <?php $this->load->view('apartment/components/gallery-service') ?>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger">Ảnh / Video | Phòng</h4>
+                        <form action="/admin/apartment/upload-img"
+                              method="POST" enctype="multipart/form-data">
+                            <div class="form-group m-b-0">
+                                <div class="row">
+                                    <div class="col-9 mb-2">
+                                        <p class="mb-2 font-weight-bold text-danger">Vui lòng chọn mã phòng</p>
+                                        <select name="room_id[]" required class="form-control select2-multiple" multiple="multiple">
+                                            <option value="">Vui lòng chọn mã phòng...</option>
+                                            <?php foreach ($cb_room as $index => $room): ?>
+                                                <option value="<?= $room['value'] ?>"> <?= $room['text'] ?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                    <div class="col-9 text-right">
+                                        <input type="file" class="filestyle" name="files[]" required multiple data-placeholder="No file"
+                                               data-btnClass="btn-light">
+                                        <input type="hidden" name="apartment_id" value="<?= $current_apartment['id'] ?>" >
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <button type="submit" class="btn btn-danger">Up Ảnh</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                     <?php
-                    $list_room = $libRoom->getByApartmentIdAndActive($current_apartment['id']);
+                    $list_room = $this->libRoom->getByApartmentIdAndActive($current_apartment['id']);
                     ?>
                     <div class="col-md-12">
                     <?php foreach ($list_room as $_room):?>
@@ -382,6 +433,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 </div>
 <script>
     commands.push(function () {
+        $('.select2-multiple').select2();
         $('.image-popup').magnificPopup({
             type: 'image',
             closeOnContentClick: true,
@@ -393,111 +445,13 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             }
         });
 
-        $('.img-room-code').click(function () {
-            let room_id = $(this).data('room-id');
-            $('.room-code').removeClass('current');
-            $(this).addClass('current');
-            $('#gh-loader').show();
-            $.ajax({
-                url:'/admin/ajax/apartment/show-img',
-                method:'post',
-                data: {room_id:room_id},
-                success:function (res) {
-                    let data = JSON.parse(res);
-                    let html = "";
-                    if(data.length > 0) {
-                        $('#submit_consultant_post').show();
-
-                    } else {
-                        $('#submit_consultant_post').hide();
-                    }
-                    let delete_btn = "d-none";
-                    <?php if($check_modify): ?>
-                    delete_btn = " ";
-                    <?php endif;?>
-                    for(let i of data) {
-                        if(!(i.url.includes(".mp4") || i.url.includes(".MOV"))) {
-                            html += `
-                        <div class="col-6 mt-1 col-md-3" id="img-box-${i.id}">
-                            <div class="pl-1 pr-1 pt-1 pb-2 bg-white rounded" >
-                            <a href="${i.url}" class="image-popup">
-                                <div class="portfolio-masonry-box pl-1 pr-1 mt-0 bg-white">
-                                    <div class="portfolio-masonry-img">
-                                        <img src="${i.url}"
-                                         class="thumb-img img-fluid img-apartment"
-                                         alt="work-thumbnail">
-                                    </div>
-
-                                </div>
-                            </a>
-                            <div class="row mt-2 pl-1 pr-1">
-                                <div class="col">
-                                    <i type="button"
-                                    data-img-id="${i.id}"
-                                    class="btn btn-icon fa fa-remove delete-img ${delete_btn} btn-sm waves-effect waves-light btn-danger"> </i>
-                                </div>
-                                <div class="col">
-                                    <div class="checkbox text-right checkbox-danger">
-                                        <input id="checkbox-${i.id}" type="checkbox" name="post_imgs" value="${i.id}" >
-                                        <label for="checkbox-${i.id}"></label>
-                                    </div>
-                                </div>
-
-                            </div>
-                            </div>
-
-                        </div>
-                        `;
-                        } else {
-                            let link = "";
-                            if(i.url.includes(".MOV")){
-                                link = `<a href='${i.url}'>Chrome ko hỗ trợ, click tui để tải nhé!</a>`;
-                            }
-                            html += `
-                            <div class="col-6 bg-white pt-1 mt-1 col-md-3" id="img-box-${i.id}">
-                                    ${link}
-                                    <video width="100%" height="80%" class="border"  controls="controls">
-                                    <source src="${i.url}" type="video/mp4">
-                                    </video>
-                                <div class="row mt-2 pl-1 pr-1">
-                                <div class="col">
-                                    <i type="button"
-                                    data-img-id="${i.id}"
-                                    class="btn btn-icon fa fa-remove delete-img ${delete_btn} btn-sm waves-effect waves-light btn-danger"> </i>
-                                </div>
-                                <div class="col">
-                                    <div class="checkbox text-right checkbox-danger">
-                                        <input id="checkbox-${i.id}" type="checkbox" name="post_imgs" value="${i.id}" >
-                                        <label for="checkbox-${i.id}"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            `;
-                        }
-                    }
-                    $('#list-img').html(html);
-
-                    $('.portfolioContainer').each(function() { // the containers for all your galleries
-                        $(this).magnificPopup({
-                            delegate: 'a.image-popup', // the selector for gallery item
-                            type: 'image',
-                            gallery: {
-                                enabled:true
-                            }
-                        });
-                    });
-                    setTimeout(function(){ $('#gh-loader').hide() }, 1500);
-                }
-            });
-        });
-
         $('.list-room').DataTable({
             columnDefs: [
                 { type: 'sort-numbers-ignore-text', targets : 0 }
             ],
             pageLength: 5
         });
+
         function sortNumbersIgnoreText(a, b, high) {
             var reg = /[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?/;
             a = a.match(reg);

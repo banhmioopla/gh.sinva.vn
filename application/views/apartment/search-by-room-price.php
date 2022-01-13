@@ -50,14 +50,14 @@
         <div class="col-md-3 col-6 mb-2">
             <strong>Giá Min</strong>
             <select name="roomPriceMin" id="roomPriceMin" class="form-control">
-                <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMin'))
+                <?php echo $this->libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMin'))
                 ?>
             </select>
         </div>
         <div class="col-md-3 col-6 mb-2">
             <strong>Giá Max</strong>
             <select name="roomPriceMax" id="roomPriceMax" class="form-control">
-                <?php echo $libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMax'))
+                <?php echo $this->libRoom->cbAvailableRoomPrice($this->input->get('roomPriceMax'))
                 ?>
             </select>
         </div>

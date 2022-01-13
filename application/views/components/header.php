@@ -299,7 +299,7 @@ include VIEWPATH.'functions.php';
             <!-- end topbar-main -->
             <?php $this->load->view('components/menu')?>
             <div class="text-center" id="pin-notification-section">
-                <span class="pt-2 pb-3 font-weight-bold text-danger" id="pin-notification"><?= $this->pin_notification['content'] ?></span>
+                <span class="p-2 font-weight-bold text-danger" id="pin-notification"><?= $this->pin_notification['content'] ?></span>
             </div>
             <!-- end navbar-custom -->
             <div id="gh-loader">

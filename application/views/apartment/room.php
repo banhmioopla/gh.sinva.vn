@@ -61,7 +61,7 @@ $arr_room_id = [];
                         $js_list_type = implode(",", $list_type_id);
                         if ($list_type_id && count($list_type_id) > 0) {
                             foreach ($list_type_id as $type_id) {
-                                $typeModel = $ghBaseRoomType->getFirstById($type_id);
+                                $typeModel = $this->ghBaseRoomType->getFirstById($type_id);
                                 $type_arr[]= $typeModel['name'];
                             }
                         }

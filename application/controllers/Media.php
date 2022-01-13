@@ -123,7 +123,10 @@ class Media extends CustomBaseStep {
     public function ajaxApartmentShowImage(){
         $room_id = $this->input->post('room_id');
 
-        $list_img = $this->ghImage->get(['room_id' => $room_id, 'active' => 'YES']);
+        $list_img = $this->ghImage->get([
+            'room_id' => $room_id,
+            'controller' => "Apartment",
+            'active' => 'YES']);
         $result = [];
         foreach ($list_img as $img) {
             $result[] = ['url' => '/media/apartment/'.$img['name'], 'id' => $img['id']];
@@ -139,23 +142,35 @@ class Media extends CustomBaseStep {
         $html = "";
         $item_html_start = '<div class="carousel-item">';
         $item_html ='
-                <div class="col-md-3 mb-3">
-                    <div class="card">
-                        <a href="%URL%" class="image-popup">
-                        <img class="img-fluid" src="%URL%"
-                             alt="%URL%"></a>
+                <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
+                    <div class="portfolio-masonry-box mt-0">
+                    <a href="%URL%" class="image-popup">
+                        <div class="portfolio-masonry-img">
+                            <img class="img-fluid" src="%URL%"
+                                 alt="%URL%">
+                        </div></a>
+                        <div class="portfolio-masonry-detail">
+                            <button class="btn btn-danger btn-delete-img" data-id="%ID_IMG%">Xoá</button>
+                        </div>
                     </div>
                 </div>';
         $item_html_end = '</div>';
         $list_img = $this->ghImage->get(['room_id' => $room_id, 'active' => 'YES']);
         $result = []; $html = ""; $num = 4; $index = 1;
 
-        foreach ($list_img as $img) {
-            if($index % $num === 0){
-                $html .= $item_html_start.$html.$item_html_end;
+        foreach ($list_img as $i =>  $img) {
+
+            if($index === 1 || (($index-1)%$num ===0 )) {
+                $html .= $item_html_start;
+            }
+            $item_img = str_replace("%URL%", $root_url.$img['name'], $item_html);
+            $item_img = str_replace("%ID_IMG%", $img['id'], $item_img);
+
+            $html .= $item_img;
+            if($index % $num === 0 || $i+1 === count($list_img)){
+                $html .= $item_html_end;
             }
 
-            $html .= str_replace("%URL%", $root_url.$img['name'], $item_html);
             $index++;
         }
 
@@ -164,75 +179,117 @@ class Media extends CustomBaseStep {
         ]); die;
     }
 
-    public function uploadServiceApartment(){
-        $apartment_id = $this->input->get('apartment_id');
+    public function ajaxGalleryShowImageService(){
+        $root_url = "/media/service-apartment/";
+
+        $html = "";
+        $item_html_start = '<div class="carousel-item">';
+        $item_html ='
+                <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
+                    <div class="portfolio-masonry-box mt-0">
+                    <a href="%URL%" class="image-popup">
+                        <div class="portfolio-masonry-img">
+                            <img class="img-fluid" src="%URL%"
+                                 alt="%URL%">
+                        </div></a>
+                        <div class="portfolio-masonry-detail">
+                            <button class="btn btn-danger btn-delete-img" data-id="%ID_IMG%">Xoá</button>
+                        </div>
+                    </div>
+                </div>';
+        $item_html_end = '</div>';
+        $list_img = $this->ghImage->get([
+            'apartment_id' => $this->input->post('apartment_id'),
+            'controller' => 'ServiceApartment',
+            'active' => 'YES']);
+        $result = []; $html = ""; $num = 4; $index = 1;
+
+        foreach ($list_img as $i =>  $img) {
+
+            if($index === 1 || (($index-1)%$num ===0 )) {
+                $html .= $item_html_start;
+            }
+            $item_img = str_replace("%URL%", $root_url.$img['name'], $item_html);
+            $item_img = str_replace("%ID_IMG%", $img['id'], $item_img);
+
+            $html .= $item_img;
+            if($index % $num === 0 || $i+1 === count($list_img)){
+                $html .= $item_html_end;
+            }
+
+            $index++;
+        }
+
+        echo json_encode([
+            'html' => $html
+        ]); die;
+    }
+
+    public function uploadImgService(){
+        $apartment_id = $this->input->post('apartment_id');
         $apartment = $this->ghApartment->getFirstById($apartment_id);
         $cb_room = [];
-        if(isset($_POST) && count($_POST))
+        if(!empty($apartment_id))
         {
-            // File upload configuration
-            $uploadPath = 'media/apartment/';
+            $uploadPath = 'media/service-apartment/';
             $config['upload_path'] = $uploadPath;
             $config['allowed_types'] = 'jpg|jpeg|png|gif|mp4|mov';
             $time = time();
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
+
             $filesCount = count($_FILES['files']['name']);
             $max_id = $this->ghImage->getMaxId()[0]['id'];
-
             $uploadData = [];
             if (empty($max_id)) {
                 $max_id = 1;
             }
-            $list_room_id = $this->input->post('room_id');
             if($filesCount == 0) {
                 $this->session->set_flashdata('fast_notify', [
                     'message' => 'Vui Lòng chọn Ảnh',
                     'status' => 'danger'
                 ]);
-                return redirect('/admin/apartment/show-image?apartment-id='.$apartment['id']);
+                return redirect('/admin/list-apartment?current_apm_id='.$apartment['id']);
             }
-            foreach ($list_room_id as $room_id) {
-                for ($i = 0; $i < $filesCount; $i++) {
 
-                    $ext = strtolower(pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION));
-                    $file_name = $max_id . '-apartment-' . $apartment_id . '-' . $time . '.' . $ext;
+            for ($i = 0; $i < $filesCount; $i++) {
 
-                    $_FILES['file']['name'] = $file_name;
-                    $_FILES['file']['type'] = $_FILES['files']['type'][$i];
-                    $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
-                    $_FILES['file']['error'] = $_FILES['files']['error'][$i];
-                    $_FILES['file']['size'] = $_FILES['files']['size'][$i];
+                $ext = strtolower(pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION));
+                $file_name = $max_id . '-service-' . $apartment_id . '-' . $time . '.' . $ext;
 
-                    if ($this->upload->do_upload('file')) {
-                        // Uploaded file data
-                        $this->upload->data();
-                        $uploadData[$i]['name'] = $file_name;
-                        $uploadData[$i]['file_type'] = $ext;
-                        $uploadData[$i]['time_insert'] = $time;
-                        $uploadData[$i]['controller'] = 'Apartment';
-                        $uploadData[$i]['room_id'] = $room_id;
-                        $uploadData[$i]['apartment_id'] = $apartment_id;
-                        $uploadData[$i]['user_id'] = $this->auth['account_id'];
-                        $uploadData[$i]['status'] = 'Pending';
-                        $max_id += 1;
-                    }
+                $_FILES['file']['name'] = $file_name;
+                $_FILES['file']['type'] = $_FILES['files']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+                $_FILES['file']['error'] = $_FILES['files']['error'][$i];
+                $_FILES['file']['size'] = $_FILES['files']['size'][$i];
+
+                if ($this->upload->do_upload('file')) {
+                    // Uploaded file data
+                    $this->upload->data();
+                    $uploadData[$i]['name'] = $file_name;
+                    $uploadData[$i]['file_type'] = $ext;
+                    $uploadData[$i]['time_insert'] = $time;
+                    $uploadData[$i]['controller'] = 'ServiceApartment';
+                    $uploadData[$i]['room_id'] = null;
+                    $uploadData[$i]['apartment_id'] = $apartment_id;
+                    $uploadData[$i]['user_id'] = $this->auth['account_id'];
+                    $uploadData[$i]['status'] = 'Pending';
+                    $max_id += 1;
                 }
+            }
 
-                if (!empty($uploadData)) {
-                    $this->ghImage->insert($uploadData);
-                    $this->ghApartment->updateById($apartment_id, [
-                        'time_update' => $time
-                    ]);
-                }
-                $this->session->set_flashdata('fast_notify', [
-                    'message' => 'Upload <strong>'.$filesCount.'</strong> file(s) thành công ',
-                    'status' => 'success'
+            if (!empty($uploadData)) {
+                $this->ghImage->insert($uploadData);
+                $this->ghApartment->updateById($apartment_id, [
+                    'time_update' => $time
                 ]);
-
             }
+            $this->session->set_flashdata('fast_notify', [
+                'message' => 'Upload <strong>'.$filesCount.'</strong> file(s) thành công ',
+                'status' => 'success'
+            ]);
 
-            return redirect('/admin/apartment/show-image?apartment-id='.$apartment_id, "refresh");
+            return redirect('/admin/list-apartment?current_apm_id='.$apartment['id'] , "refresh");
 
         }
 
@@ -256,7 +313,7 @@ class Media extends CustomBaseStep {
         $this->load->view('components/footer');
     }
     public function uploadImgApartment(){
-        $apartment_id = $this->input->get('apartment_id');
+        $apartment_id = $this->input->post('apartment_id');
         $apartment = $this->ghApartment->getFirstById($apartment_id);
         $cb_room = [];
         if($apartment) {
@@ -288,7 +345,7 @@ class Media extends CustomBaseStep {
                     'message' => 'Vui Lòng chọn Ảnh',
                     'status' => 'danger'
                 ]);
-                return redirect('/admin/apartment/show-image?apartment-id='.$apartment['id']);
+                return redirect('/admin/list-apartment?current_apm_id='.$apartment['id'], "refresh");
             }
             foreach ($list_room_id as $room_id) {
                 for ($i = 0; $i < $filesCount; $i++) {
@@ -330,7 +387,7 @@ class Media extends CustomBaseStep {
 
             }
 
-            return redirect('/admin/apartment/show-image?apartment-id='.$apartment_id, "refresh");
+            return redirect('/admin/list-apartment?current_apm_id='.$apartment_id, "refresh");
 
         }
 
@@ -354,94 +411,25 @@ class Media extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
-    public function create() {
-
-        $data = $this->input->post();
-        if(empty($data['active'])) {
-            $data['active'] = 'NO';
-        }
-
-        if(!empty($data['name'])) {
-            $result = $this->ghPartner->insert($data);
-            $this->session->set_flashdata('fast_notify', [
-                'message' => 'Tạo đối tác: <strong>'.$data['name'].'<strong> thành công ',
-                'status' => 'success'
-            ]);
-            return redirect('admin/list-partner');
-        }
-    }
-
-    // Ajax
-    public function update() {
-        $partner_id = $this->input->post('partner_id');
-        $field_value = $this->input->post('field_value');
-        $field_name = $this->input->post('field_name');
-
-        if(!empty($partner_id) and !empty($field_value)) {
-            $data = [
-                $field_name => $field_value
-            ];
-            $result = $this->ghPartner->updateById($partner_id, $data);
-            echo json_encode(['status' => $result]); die;
-        }
-        echo json_encode(['status' => false]); die;
-    }
-
-    public function updateEditable() {
-        $partner_id = $this->input->post('pk');
-        $field_name = $this->input->post('name');
-        $field_value = $this->input->post('value');
-
-        if(!empty($partner_id) and !empty($field_value)) {
-            $data = [
-                $field_name => $field_value
-            ];
-
-            $old_partner = $this->ghPartner->getById($partner_id);
-            $old_log = json_encode($old_partner[0]);
-
-            $result = $this->ghPartner->updateById($partner_id, $data);
-
-            $modified_partner = $this->ghPartner->getById($partner_id);
-            $modified_log = json_encode($modified_partner[0]);
-
-            $log = [
-                'table_name' => 'gh_partner',
-                'old_content' => $old_log,
-                'modified_content' => $modified_log,
-                'time_insert' => time(),
-                'action' => 'update'
-            ];
-            $tracker = $this->ghActivityTrack->insert($log);
-
-            echo json_encode(['status' => $result]); die;
-        }
-        echo json_encode(['status' => false]); die;
-    }
-
     public function delete(){
-        $partner_id = $this->input->post('partner_id');
-        if(!empty($partner_id)) {
-            $old_partner = $this->ghPartner->getById($partner_id);
-
-            $log = [
-                'table_name' => 'gh_partner',
-                'old_content' => null,
-                'modified_content' => json_encode($old_partner[0]),
-                'time_insert' => time(),
-                'action' => 'delete'
-            ];
-
-            // call model
-            $tracker = $this->ghActivityTrack->insert($log);
-            $result = $this->ghPartner->delete($partner_id);
-
-            if($result > 0) {
-                echo json_encode(['status' => true]); die;
+        $id = $this->input->post('id');
+        if(!empty($id)) {
+            $media_obj = $this->ghImage->getFirstById($id);
+            if($media_obj) {
+                if($media_obj['controller'] === "Apartment"){
+                    $media_path = "media/apartment/".$media_obj['name'];
+                }
+                if($media_obj['controller'] === "ServiceApartment"){
+                    $media_path = "media/service-apartment/".$media_obj['name'];;
+                }
+                if(file_exists($media_path)){
+                    if(unlink($media_path) === true) {
+                        $this->ghMedia->delete($id);
+                    }
+                }
             }
-            echo json_encode(['status' => false]); die;
         }
-        echo json_encode(['status' => false]); die;
+        echo json_encode(['status' => true]); die;
     }
 
 }

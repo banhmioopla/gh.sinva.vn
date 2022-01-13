@@ -8,7 +8,14 @@
     </div>
     <!--/.Controls-->
 
-    <div class="carousel-inner" id="gallery-room-container" role="listbox"></div>
+    <div class="carousel-inner" id="gallery-room-container" role="listbox">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            Ảnh phòng
+        </div>
+    </div>
 </div>
 
 <script>
@@ -32,7 +39,23 @@
                             enabled:true
                         }
                     });
+                    $('#gallery-room-container .carousel-item').first().addClass('active');
                     setTimeout(function(){ $('#gh-loader').hide() }, 1000);
+                }
+            });
+        });
+
+        $('body').delegate(".btn-delete-img","click",function () {
+            var img_id = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '/admin/gallery/delete',
+                data: {id:img_id},
+                dataType:"json",
+                success: function () {
+                    $('#img-box-'+img_id).fadeOut( "slow", function() {
+                        $('#img-box-'+img_id).remove();
+                    });
                 }
             });
         });

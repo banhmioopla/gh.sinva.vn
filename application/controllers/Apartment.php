@@ -80,40 +80,29 @@ class Apartment extends CustomBaseStep {
         }
 
         $district_code = $this->input->get('district-code');
-		$district_code = !empty($district_code) ? $district_code: $this->list_OPEN_DISTRICT[0];
+        if(empty($district_code)){
+            $district_code = $this->list_OPEN_DISTRICT[0];
+        }
+
 		$params = [
             'district_code' => $district_code,
             'active' => 'YES'
         ];
-
         $this->session->set_userdata(['current_district_code' => $district_code]);
-		$data['district_code'] = $district_code;
-		$data['consultant_booking'] = $this->ghConsultantBooking->get(['time_booking > ' => strtotime(date('d-m-Y'))]);
 
-		$data['contract_noti'] = $this->ghNotification->get();
 		$list_district = $this->ghDistrict->get(['active' => 'YES'],'length(name),name', '');
 		foreach ($list_district as $key => $dd){
 		    if(!in_array($dd['code'], $this->list_OPEN_DISTRICT)){
 		        unset($list_district[$key]);
             }
         }
-        $data['list_district'] = $list_district;
 
-		$data['list_ward'] = $this->ghRoom->getWardByDistrict($district_code);
-        if(
-            strlen($this->input->get('apmTag'))
-            || strlen($this->input->get('rangeTime'))
-        ){
+		$list_ward = $this->ghRoom->getWardByDistrict($district_code);
+        if(strlen($this->input->get('apmTag')) || strlen($this->input->get('rangeTime'))){
             $params = ['active' => 'YES'];
         }
 
 		$list_apartment = $this->ghApartment->get($params, 'time_update DESC,  id DESC, address_street ASC');
-		$data['cb_district'] = $this->libDistrict->cbActive();
-		$data['apartment_today'] = [];
-		$data['list_gadget_around'] = [];
-		$data['apartment_cur_week'] = $this->ghApartment->get(['time_update >' => strtotime('last Monday') ,'active' => 'YES']);
-
-		$data['list_apartment'] = [];
 		$today = time();
         $list_apm_5days = [];
         $data['today'] = $today;
@@ -158,37 +147,8 @@ class Apartment extends CustomBaseStep {
 
             $data['list_apartment'][] = $item;
 		}
-        $data['libTime'] = $this->libTime;
-        $template =  'apartment/show-version-3';
 
-		$data['product_total'] = count($this->ghApartment->get(['district_code' => $district_code, 'active' => 'YES']));
 
-		$data['room_total'] = $this->ghRoom->getNumberByDistrict($district_code, null);
-		$data['available_room_total'] = $this->ghRoom->getNumberByDistrict($district_code, 'gh_room.status = "Available" ');
-
-		$data['ready_room_total'] = $this->ghRoom->getNumberByDistrict($district_code, 'gh_room.time_available > 0 ');
-
-		$data['list_ready_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.time_available > 0 ');
-		$data['list_available_room_type'] = $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.status = "Available" ');
-		$data['list_available_room_price'] = $this->ghRoom->getPriceByDistrict($district_code, 'gh_room.status = "Available" ');
-        $data['list_price'] = $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price');
-        $data['list_type'] = $this->ghRoom->getTypeByDistrict();
-		/*--- bring library to view ---*/
-		$data['libDistrict'] = $this->libDistrict;
-		$data['label_apartment'] =  $this->config->item('label.apartment');
-		$data['libRoom'] =  $this->libRoom;
-		$data['libBaseRoomType'] =  $this->libBaseRoomType;
-		$data['libTag'] = $this->libTag;
-		$data['libPartner'] = $this->libPartner;
-		$data['libUser'] = $this->libUser;
-		$data['ghRoom'] = $this->ghRoom;
-		$data['ghBaseRoomType'] = $this->ghBaseRoomType;
-		$data['ghConsultantBooking'] = $this->ghConsultantBooking;
-		$data['ghApartmentView'] = $this->ghApartmentView;
-		$data['ghApartmentComment'] = $this->ghApartmentComment;
-		$data['ghApartmentPromotion'] = $this->ghApartmentPromotion;
-		$data['libApartment'] = $this->libApartment;
-		$data['ghApartmentShaft'] = $this->ghApartmentShaft;
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES'], 'district_code DESC');
         $list_apm_ready = $list_apm_5days_CURD = [];
 
@@ -218,8 +178,6 @@ class Apartment extends CustomBaseStep {
             $list_apm_ready[] = $apm;
         }
 
-        $data['list_apm_ready'] = $list_apm_ready;
-
         usort($list_apm_5days, function($a, $b)
         {
             return $a['num_days'] <  $b['num_days'];
@@ -237,21 +195,44 @@ class Apartment extends CustomBaseStep {
                 $this->session->set_userdata(['isTriggerFiveDay' => true]);
             }
         }
-        if(empty($this->input->get('current_apartment')) && count($data['list_apartment'])) {
-            $data['current_apartment'] = $data['list_apartment'][0];
+        $current_apartment = null;
+        if(empty($this->input->get('current_apm_id')) && count($data['list_apartment'])) {
+            $current_apartment = $list_apartment[0];
         }
 
-        if($this->input->get('current_apartment')){
-            $data['current_apartment'] = $this->ghApartment->getFirstById($this->input->get('current_apartment'));
+        if($this->input->get('current_apm_id')){
+            $current_apartment = $this->ghApartment->getFirstById($this->input->get('current_apm_id'));
         }
-        $data['hidden_service'] = isset($data['current_apartment']['hidden_service'])
-            ? json_decode($data['current_apartment']['hidden_service'], true) : [];
+        $hidden_service = isset($current_apartment['hidden_service'])
+            ? json_decode($current_apartment['hidden_service'], true) : [];
 
-        $data['list_apm_5days'] = $list_apm_5days;
-        $data['list_apm_5days_CURD'] = $list_apm_5days_CURD;
+        $cb_room = [];
+        if($current_apartment) {
+            $list_room = $this->ghRoom->get(['apartment_id' => $current_apartment['id'], 'active' => 'YES']);
+            foreach ($list_room as $room) {
+                $cb_room[] = ['value' => $room['id'], 'text' => $room['code'] . ' - '. number_format($room['price'])];
+            }
+        }
+
 		/*--- Load View ---*/
 		$this->load->view('components/header');
-		$this->load->view($template, $data);
+        $template =  'apartment/show-version-3';
+		$this->load->view($template, [
+		    'district_code' => $district_code,
+            'current_apartment' => $current_apartment,
+            'list_ward' => $list_ward,
+            'list_district' => $list_district,
+            'list_apartment' => $list_apartment,
+            'cb_room' => $cb_room,
+            'list_apm_5days' => $list_apm_5days,
+            'list_apm_5days_CURD' => $list_apm_5days_CURD,
+            'list_apm_ready' => $list_apm_ready,
+            'label_apartment' => $this->config->item('label.apartment'),
+            'hidden_service' => $hidden_service,
+            'list_price' => $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price'),
+            'list_type' => $this->ghRoom->getTypeByDistrict(),
+            'list_ready_room_type' => $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.time_available > 0 '),
+        ]);
 		$this->load->view('components/footer');
 	}
 
