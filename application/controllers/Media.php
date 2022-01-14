@@ -138,6 +138,11 @@ class Media extends CustomBaseStep {
     public function ajaxGalleryShowImage(){
         $room_id = $this->input->post('room_id');
         $root_url = "/media/apartment/";
+        $video_tag = '<video width="100%" height="80%" class="border"  controls="controls">
+                                    <source src="%URL%" type="video/mp4">
+                    </video>';
+        $img_tag = '<img class="img-fluid" src="%URL%"
+                                 alt="%URL%">';
 
         $html = "";
         $item_html_start = '<div class="carousel-item">';
@@ -146,8 +151,7 @@ class Media extends CustomBaseStep {
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup">
                         <div class="portfolio-masonry-img">
-                            <img class="img-fluid" src="%URL%"
-                                 alt="%URL%">
+                            %MEDIA_TAG%
                         </div></a>
                         <div class="portfolio-masonry-detail">
                             <button class="btn btn-danger btn-delete-img" data-id="%ID_IMG%">Xoá</button>
@@ -159,11 +163,15 @@ class Media extends CustomBaseStep {
         $result = []; $html = ""; $num = 4; $index = 1;
 
         foreach ($list_img as $i =>  $img) {
-
+            $media_tag = $img_tag;
+            if(in_array(strtolower($img['file_type']),['mov', 'mp4'])){
+                $media_tag = $video_tag;
+            }
             if($index === 1 || (($index-1)%$num ===0 )) {
                 $html .= $item_html_start;
             }
-            $item_img = str_replace("%URL%", $root_url.$img['name'], $item_html);
+            $item_img = str_replace("%MEDIA_TAG%", $media_tag, $item_html);
+            $item_img = str_replace("%URL%", $root_url.$img['name'], $item_img);
             $item_img = str_replace("%ID_IMG%", $img['id'], $item_img);
 
             $html .= $item_img;
