@@ -43,9 +43,10 @@
                         callbacks: {
                             elementParse: function(item) {
                                 // the class name
+                                console.log("magnificPopup");
                                 console.log(item.el[0].className);
                                 item.type = 'image';
-                                if(item.el[0].className == 'app-video') {
+                                if(item.el[0].className.includes("app-video") === true) {
                                     item.type = 'iframe';
                                 }
                             }
