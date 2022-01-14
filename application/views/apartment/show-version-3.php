@@ -331,56 +331,65 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                 <div class="row mt-3">
                     <div class="col-12">
-                        <h4 class="font-weight-bold text-danger">Cọc & Hoa Hồng</h4>
+                        <h4 class="font-weight-bold text-danger" data-toggle="collapse" aria-expanded="true"
+                            aria-controls="commission-info" href="#commission-info">Cọc & Hoa Hồng <i class="mdi mdi-arrow-down-drop-circle-outline"></i></h4>
                     </div>
-                    <?php if(!in_array('deposit', $hidden_service)): ?>
-                        <div class="col-md-3 col-6 mb-4">
-                            <div> <i class="mdi mdi-cube"></i> <?= $label_apartment['deposit'] ?></div>
-                            <div class="font-weight-bold pl-2"><?= $current_apartment['deposit'] ?></div>
-                        </div>
-                    <?php endif; ?>
+                    <div class="col-12 collapse" id="commission-info" >
+                        <div class="row">
+                            <?php if(!in_array('deposit', $hidden_service)): ?>
+                                <div class="col-md-3 col-6 mb-4">
+                                    <div> <i class="mdi mdi-cube"></i> <?= $label_apartment['deposit'] ?></div>
+                                    <div class="font-weight-bold pl-2"><?= $current_apartment['deposit'] ?></div>
+                                </div>
+                            <?php endif; ?>
 
-                    <?php if(!in_array('commission_rate', $hidden_service)): ?>
-                        <div class="col-md-3 col-6 mb-4">
-                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate'] ?>%</div>
-                            <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate'] ?>%</div>
-                        </div>
-                    <?php endif; ?>
+                            <?php if(!in_array('commission_rate', $hidden_service)): ?>
+                                <div class="col-md-3 col-6 mb-4">
+                                    <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate'] ?>%</div>
+                                    <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate'] ?>%</div>
+                                </div>
+                            <?php endif; ?>
 
-                    <?php if(!in_array('commission_rate_9m', $hidden_service)): ?>
-                        <div class="col-md-3 col-6 mb-4">
-                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate_9m'] ?>%</div>
-                            <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate_9m'] ?>%</div>
-                        </div>
-                    <?php endif; ?>
+                            <?php if(!in_array('commission_rate_9m', $hidden_service)): ?>
+                                <div class="col-md-3 col-6 mb-4">
+                                    <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate_9m'] ?>%</div>
+                                    <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate_9m'] ?>%</div>
+                                </div>
+                            <?php endif; ?>
 
-                    <?php if(!in_array('commission_rate_6m', $hidden_service)): ?>
-                        <div class="col-md-3 col-6 mb-4">
-                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate_6m'] ?>%</div>
-                            <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate_6m'] ?>%</div>
-                        </div>
-                    <?php endif; ?>
+                            <?php if(!in_array('commission_rate_6m', $hidden_service)): ?>
+                                <div class="col-md-3 col-6 mb-4">
+                                    <div><i class="mdi mdi-cube"></i> <?= $label_apartment['commission_rate_6m'] ?>%</div>
+                                    <div class="font-weight-bold pl-2"><?= $current_apartment['commission_rate_6m'] ?>%</div>
+                                </div>
+                            <?php endif; ?>
 
-                    <?php if(!in_array('contract_long_term', $hidden_service)): ?>
-                        <div class="col-md-3 col-6 mb-4">
-                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['contract_long_term'] ?></div>
-                            <div class="font-weight-bold pl-2"><?= $current_apartment['contract_long_term'] ?></div>
-                        </div>
-                    <?php endif; ?>
+                            <?php if(!in_array('contract_long_term', $hidden_service)): ?>
+                                <div class="col-md-3 col-6 mb-4">
+                                    <div><i class="mdi mdi-cube"></i> <?= $label_apartment['contract_long_term'] ?></div>
+                                    <div class="font-weight-bold pl-2"><?= $current_apartment['contract_long_term'] ?></div>
+                                </div>
+                            <?php endif; ?>
 
-                    <?php if(!in_array('contract_short_term', $hidden_service)): ?>
-                        <div class="col-md-3 col-6 mb-4">
-                            <div><i class="mdi mdi-cube"></i> <?= $label_apartment['contract_short_term'] ?></div>
-                            <div class="font-weight-bold pl-2"><?= $current_apartment['contract_short_term'] ?></div>
+                            <?php if(!in_array('contract_short_term', $hidden_service)): ?>
+                                <div class="col-md-3 col-6 mb-4">
+                                    <div><i class="mdi mdi-cube"></i> <?= $label_apartment['contract_short_term'] ?></div>
+                                    <div class="font-weight-bold pl-2"><?= $current_apartment['contract_short_term'] ?></div>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                    <?php endif; ?>
+                    </div>
+
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-12">
-                        <h4 class="font-weight-bold text-danger">Dịch vụ</h4>
+                        <h4 class="font-weight-bold text-danger" data-toggle="collapse" aria-expanded="true" aria-controls="service-info" href="#service-info">Dịch vụ <i class="mdi mdi-arrow-down-drop-circle-outline"></i></h4>
                     </div>
-                    <?php $this->load->view('apartment/components/service-info') ?>
+                    <div class="col-12">
+                        <?php $this->load->view('apartment/components/service-info') ?>
+                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col-12">
