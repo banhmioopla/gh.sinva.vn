@@ -198,7 +198,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             ?>
                             <div class="col-12 col-md-6">
                                 <div class="alert alert-danger" role="alert">
-                                    KH <?= $customer_checker['name'] ?>  - ngày hết hạn: <?= date("d/m/Y", $customer_checker['birthdate']) ?>,
+                                    KH <?= $customer_checker['name'] ?>  - sinh nhật: <?= date("d/m/Y", $customer_checker['birthdate']) ?>,
                                     <a href="/admin/detail-customer?id=<?= $customer_checker['id'] ?>" target="_blank">Link KH</a>
                                 </div>
                             </div>
