@@ -161,7 +161,7 @@ class GhCustomer extends CI_Model {
         if($model){
 
             if(!empty($model['birthdate'])){
-                $mapping_this_year = strtotime(date('d-m').'-'.date('Y'));
+                $mapping_this_year = strtotime(date('d-m', $model['birthdate']).'-'.date('Y'));
                 if($mapping_this_year >= $time_from &&  $mapping_this_year <= $time_to){
                     return $model;
                 }
