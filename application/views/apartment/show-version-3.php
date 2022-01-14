@@ -264,6 +264,23 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <div class="font-weight-bold pl-2"><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></div>
                     </div>
                     <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-2 col-4 text-success mb-4">
+                                <div> <i class="mdi mdi-cube"></i> Trống</div>
+                                <div class="font-weight-bold pl-2"><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Available") ?></div>
+                            </div>
+                            <div class="col-md-2 col-4 text-danger mb-4">
+                                <div> <i class="mdi mdi-cube"></i> Full</div>
+                                <div class="font-weight-bold pl-2"><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Full") ?></div>
+                            </div>
+                            <div class="col-md-2 col-4 text-warning mb-4">
+                                <div> <i class="mdi mdi-cube"></i> Sắp trống</div>
+                                <div class="font-weight-bold pl-2"><?= $this->ghRoom->getNumberByTimeavailable($current_apartment['id']) ?></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
                         <h4 class="font-weight-bold text-danger">Mô tả</h4>
                         <blockquote class="blockquote">
                             <?= $current_apartment['description'] ?>
