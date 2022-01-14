@@ -36,8 +36,20 @@
                         delegate: '.image-popup',
                         type: 'image',
                         gallery: {
-                            enabled:true
-                        }
+                            enabled:true,
+                            navigateByImgClick: true,
+                            preload: [0,1]
+                        },
+                        callbacks: {
+                            elementParse: function(item) {
+                                // the class name
+                                console.log(item.el[0].className);
+                                item.type = 'image';
+                                if(item.el[0].className == 'app-video') {
+                                    item.type = 'iframe';
+                                }
+                            }
+                        },
                     });
                     $('#gallery-room-container .carousel-item').first().addClass('active');
                     setTimeout(function(){ $('#gh-loader').hide() }, 1000);

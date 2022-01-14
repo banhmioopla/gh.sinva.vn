@@ -149,7 +149,7 @@ class Media extends CustomBaseStep {
         $item_html ='
                 <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
-                    <a href="%URL%" class="image-popup">
+                    <a href="%URL%" class="image-popup %CLASS_MEDIA%">
                         <div class="portfolio-masonry-img">
                             %MEDIA_TAG%
                         </div></a>
@@ -163,9 +163,9 @@ class Media extends CustomBaseStep {
         $result = []; $html = ""; $num = 4; $index = 1;
 
         foreach ($list_img as $i =>  $img) {
-            $media_tag = $img_tag;
+            $media_tag = $img_tag; $media_class = "app-image";
             if(in_array(strtolower($img['file_type']),['mov', 'mp4'])){
-                $media_tag = $video_tag;
+                $media_tag = $video_tag; $media_class = "app-video";
             }
             if($index === 1 || (($index-1)%$num ===0 )) {
                 $html .= $item_html_start;
@@ -173,6 +173,7 @@ class Media extends CustomBaseStep {
             $item_img = str_replace("%MEDIA_TAG%", $media_tag, $item_html);
             $item_img = str_replace("%URL%", $root_url.$img['name'], $item_img);
             $item_img = str_replace("%ID_IMG%", $img['id'], $item_img);
+            $item_img = str_replace("%CLASS_MEDIA%", $media_class, $item_img);
 
             $html .= $item_img;
             if($index % $num === 0 || $i+1 === count($list_img)){
