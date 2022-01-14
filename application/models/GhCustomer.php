@@ -152,6 +152,23 @@ class GhCustomer extends CI_Model {
         }
         return false;
     }
+
+    public function getCustomerBirthDateOfRemainDays($n_day_remain, $customer_id){
+        $time_to = strtotime("+" . $n_day_remain . ' days');
+        $time_from = strtotime(date('d-m-Y'));
+        $model = $this->getFirstById($customer_id);
+
+        if($model){
+
+            if(!empty($model['birthdate'])){
+                $mapping_this_year = strtotime(date('d-m').'-'.date('Y'));
+                if($mapping_this_year >= $time_from &&  $mapping_this_year <= $time_to){
+                    return $model;
+                }
+            }
+        }
+        return false;
+    }
 }
 
 /* End of file mApartment.php */

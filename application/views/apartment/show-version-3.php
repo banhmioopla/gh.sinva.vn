@@ -188,6 +188,23 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
+                <div class="row">
+                    <div class="col-12"><h4 class="font-weight-bold text-danger">KH sắp đến sinh nhựt (10 ngày)</h4></div>
+
+                    <?php foreach($list_customer["customers"] as $row ):
+                        $customer_checker = $this->ghCustomer->getCustomerBirthDateOfRemainDays(10, $row['id']);
+                        if($customer_checker !== false):
+
+                            ?>
+                            <div class="col-12 col-md-6">
+                                <div class="alert alert-danger" role="alert">
+                                    KH <?= $customer_checker['name'] ?>  - ngày hết hạn: <?= date("d/m/Y", $customer_checker['birthdate']) ?>,
+                                    <a href="/admin/detail-customer?id=<?= $customer_checker['id'] ?>" target="_blank">Link KH</a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
 
@@ -382,7 +399,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                 </div>
 
-                <div class="row mt-3">
+                <div class="row">
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger" data-toggle="collapse" aria-expanded="true" aria-controls="service-info" href="#service-info">Dịch vụ <i class="mdi mdi-arrow-down-drop-circle-outline"></i></h4>
                     </div>
