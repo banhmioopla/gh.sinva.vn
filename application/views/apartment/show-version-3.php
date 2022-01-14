@@ -168,7 +168,30 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     <?php endif;?>
 
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-12"><h4 class="font-weight-bold text-danger">Hợp đồng sắp hết hạn (30 ngày)</h4></div>
 
+                    <?php foreach($list_customer["customers"] as $row ):
+                        $contract_checker = $this->ghCustomer->getCustomerOfExpireDays(30, $row['id'], $this->auth['account_id']);
+                        if($contract_checker !== false):
+                            $contract_apartment = $this->ghApartment->getFirstById($contract_checker['apartment_id']);
+                            ?>
+                            <div class="col-12 col-md-6">
+                                <div class="alert alert-danger" role="alert">
+                                    Hợp đồng sắp hết hạn <?= $contract_apartment['address_street'] ?>  - ngày hết hạn: <?= date("d/m/Y", $contract_checker['time_expire']) ?>,
+                                    <a href="/admin/detail-contract?id=<?= $contract_checker['id'] ?>" target="_blank">Link hợp đồng</a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <div class="row">
         <div class="col-md-3 col-12">
             <div class="card-box">
@@ -433,10 +456,17 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     $list_room = $this->libRoom->getByApartmentIdAndActive($current_apartment['id']);
                     ?>
                     <div class="col-md-12">
-                    <?php foreach ($list_room as $_room):?>
+                    <?php foreach ($list_room as $_room):
+                        $img_count = $this->ghImage->get([
+                            'room_id' => $_room['id'],
+                            'controller' => 'Apartment',
+                            'active' => 'YES'
+                        ]);
+                        $img_count = count($img_count) > 0 ? ' ('.count($img_count).')': '';
+                        ?>
                             <button type="button"
                                     data-id="<?= $_room['id'] ?>"
-                                    class="btn m-1 btn-secondary waves-light room-code waves-effect"> <?= $_room['code'] ?></button>
+                                    class="btn m-1 btn-secondary waves-light room-code waves-effect"> <?= $_room['code'] . $img_count?></button>
                     <?php endforeach;?>
                     </div>
                     <div class="col-12">

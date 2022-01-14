@@ -159,7 +159,7 @@ class Media extends CustomBaseStep {
                     </div>
                 </div>';
         $item_html_end = '</div>';
-        $list_img = $this->ghImage->get(['room_id' => $room_id, 'active' => 'YES']);
+        $list_img = $this->ghImage->get(['room_id' => $room_id, "controller" => "Apartment", 'active' => 'YES']);
         $result = []; $html = ""; $num = 4; $index = 1;
 
         foreach ($list_img as $i =>  $img) {

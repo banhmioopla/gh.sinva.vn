@@ -6,7 +6,7 @@ class Apartment extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict',
+		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict', 'ghImage',
             'ghApartmentPromotion', 'ghApartmentRequest', 'ghApartmentView', 'ghConsultantBooking', 'ghApartmentShaft',
             'ghTag', 'ghApartmentComment', 'ghConsultantBooking', 'ghBaseRoomType']);
 		$this->load->config('label.apartment');
@@ -214,6 +214,8 @@ class Apartment extends CustomBaseStep {
             }
         }
 
+        $list_customer = $this->ghCustomer->getCustomerOfConsultant($this->auth['account_id']);
+
 		/*--- Load View ---*/
 		$this->load->view('components/header');
         $template =  'apartment/show-version-3';
@@ -232,6 +234,7 @@ class Apartment extends CustomBaseStep {
             'list_price' => $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price'),
             'list_type' => $this->ghRoom->getTypeByDistrict(),
             'list_ready_room_type' => $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.time_available > 0 '),
+            'list_customer' => $list_customer,
         ]);
 		$this->load->view('components/footer');
 	}
