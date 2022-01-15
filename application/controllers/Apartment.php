@@ -212,6 +212,7 @@ class Apartment extends CustomBaseStep {
             foreach ($list_room as $room) {
                 $cb_room[] = ['value' => $room['id'], 'text' => $room['code'] . ' - '. number_format($room['price'])];
             }
+            $district_code = $current_apartment['district_code'];
         }
 
         $list_customer = $this->ghCustomer->getCustomerOfConsultant($this->auth['account_id']);

@@ -172,7 +172,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
         <div class="col-12">
             <div class="card-box">
                 <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger">Hợp đồng sắp hết hạn (30 ngày)</h4></div>
+                    <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-arrow-right-drop-circle-outline"></i> Hợp đồng sắp hết hạn (30 ngày)</h4></div>
 
                     <?php foreach($list_customer["customers"] as $row ):
                         $contract_checker = $this->ghCustomer->getCustomerOfExpireDays(30, $row['id'], $this->auth['account_id']);
@@ -189,7 +189,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <?php endforeach; ?>
                 </div>
                 <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger">KH sắp đến sinh nhựt (10 ngày)</h4></div>
+                    <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-arrow-right-drop-circle-outline"></i> KH sắp đến sinh nhựt (10 ngày)</h4></div>
 
                     <?php foreach($list_customer["customers"] as $row ):
                         $customer_checker = $this->ghCustomer->getCustomerBirthDateOfRemainDays(10, $row['id']);
@@ -206,7 +206,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <?php endforeach; ?>
                 </div>
                 <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger">Dự án sắp trống (30 ngày)</h4></div>
+                    <div class="col-12"><h4 class="font-weight-bold text-danger"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Dự án sắp trống (30 ngày)</h4></div>
 
                     <?php foreach ($list_apm_ready as $apm_move):
                         $apm_checker = $this->ghApartment->getApmWithTimeAvailableRemain(30, $apm_move['id']);
