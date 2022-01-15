@@ -685,9 +685,6 @@ $to_date = $day_last."-".$to_month."-".$to_year;
                 }
             })
         });
-
-
-
         $("#update-pin-notification").click(function () {
             let content = $('#input-pin-notification').val();
             $.ajax({
@@ -709,8 +706,6 @@ $to_date = $day_last."-".$to_month."-".$to_year;
                 }
             })
         });
-
-
 
         $('.report-issue-apm-info').click(function () {
             let address = $(this).data('address');

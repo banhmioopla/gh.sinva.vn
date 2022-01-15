@@ -1,25 +1,22 @@
-<dl class="card-box">
-    <div class="row">
-        <div class="col-12">
-            <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i>Dự án đã update sau 5 ngày</h4>
-            <?php if($check_profile): ?>
-                <?php if(count($list_apm_5days_CURD)): ?>
+<div class="row">
+    <div class="col-12">
+        <h4 class="text-primary"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i>Dự án đã update sau 5 ngày</h4>
+        <?php if($check_profile): ?>
+            <?php if(count($list_apm_5days_CURD)): ?>
                 <button href="#custom-modal" id="five-days" class="btn btn-danger waves-effect w-md mr-2 mb-2"
                         data-animation="fadein"
-                        data-overlayColor="#36404a" data-plugin="custommodal" data-overlaySpeed="100">Danh sách của QLDA</button>
-                <?php endif; ?>
+                        data-overlayColor="#36404a" data-plugin="custommodal" data-overlaySpeed="100">Xem danh sách</button>
             <?php endif; ?>
-        </div>
-        <div class="slimscroll col-12" style="max-height: 450px">
-            <?php foreach ($list_apm_5days_CURD as $apm5): ?>
-                <!--ITEM -->
-                <div> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address']?> <span class="pull-right text-danger"> <?= "-{$apm5['num_days']}" ?></span></div>
-            <?php endforeach; ?>
-        </div>
-
+        <?php endif; ?>
+    </div>
+    <div class="slimscroll col-12" style="max-height: 350px">
+        <?php foreach ($list_apm_5days_CURD as $apm5): ?>
+            <!--ITEM -->
+            <div> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address']?> <span class="pull-right text-danger"> <?= "-{$apm5['num_days']}" ?></span></div>
+        <?php endforeach; ?>
     </div>
 
-</dl>
+</div>
 <!-- Modal -->
 
 <script>

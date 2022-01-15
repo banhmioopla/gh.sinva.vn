@@ -231,30 +231,48 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </div>
                 <div class="col-12">
                     <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
+                    <ul
+                            class="list-unstyled slimscroll mb-0"
+                            style="max-height: 300px"
+                    >
+                        <?php foreach ($list_apartment as $apm): ?>
+                            <li class="mb-3">
+                                <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-bookmark"></i> <?= $apm['address_street'] ?></a> </h5>
+                                <div class="text-right text-muted"><i class="mdi mdi-clock"></i> <?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apm['id'])) ?></div>
+                                <div class="clearfix"></div>
+                            </li>
+                        <?php endforeach;?>
+                    </ul>
                 </div>
 
-                <ul
-                    class="list-unstyled slimscroll mb-0"
-                    style="max-height: 300px"
-                >
-                    <?php foreach ($list_apartment as $apm): ?>
-                    <li class="mb-3">
-                        <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-bookmark"></i> <?= $apm['address_street'] ?></a> </h5>
-                        <div class="text-right text-muted"><i class="mdi mdi-clock"></i> <?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apm['id'])) ?></div>
-                        <div class="clearfix"></div>
-                    </li>
-                    <?php endforeach;?>
-                </ul>
+            </div>
+
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php $this->load->view('apartment/components/five-days-ago',[
+                            'check_profile' => $check_profile
+                        ]) ?>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="col-md-9 col-12">
+            <?php
+            $apartment_score = $this->ghApartmentComment->getScoreByApm($current_apartment['id'], $from_date, $to_date);
+            $list_comment = $this->ghApartmentComment->get(['apartment_id' => $current_apartment['id']]);
+            $surrounding_facilities = !empty($current_apartment['surrounding_facilities']) ? json_decode($current_apartment['surrounding_facilities'], true) : [];
+            ?>
             <div class="card-box">
                 <div class="row">
                     <div class="col-12  mt-2 mb-1">
                         <div class="card m-b-30 bg-dark">
                             <h2 class="font-weight-bold pl-2 text-warning"><?= $current_apartment['address_street'] ?></h2>
+                            <div class="rating-score text-right p-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="badge badge-warning"><?= count($list_comment) ?> </span> </div>
                         </div>
                     </div>
+
                     <!--BUTTONS ACTioNS-->
                     <div class="col-12 list-action mt-2" >
                         <h4 class="font-weight-bold text-danger">Tuỳ chọn <i class="mdi mdi-settings"></i></h4>
@@ -344,6 +362,11 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             <?php endforeach;?>
                         </div>
                     <?php endif;?>
+                    <div class="col-12">
+                        <?php foreach ($surrounding_facilities as $uu):?>
+                            <span class="ml-2 badge badge-danger"><?= $uu ?></span>
+                        <?php endforeach;?>
+                    </div>
                 </div>
 
                 <div class="row mt-3">
@@ -406,6 +429,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12">
                         <?php $this->load->view('apartment/components/service-info') ?>
                     </div>
+
 
                 </div>
                 <div class="row">
@@ -499,14 +523,190 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <?php $this->load->view('apartment/components/gallery-room') ?>
                     </div>
                 </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h4 class="font-weight-bold text-danger">Bình luận</h4>
+                    </div>
+                    <?php foreach ($list_comment as $rating): ?>
+                        <div class="col-12">
+                            <div class="comment-list slimscroll" style="max-height: 370px">
+                                <div class="comment-box-item p-2 bg-comment">
+                                    <div class="rated-star" data-score="<?= $rating['score'] ?>"></div>
+                                    <p class="commnet-item-date"><?= date("d/m/Y H:i",$rating['time_insert']) ?></p>
+                                    <h6 class="commnet-item-msg">
+                                        <?= $rating['content'] ?>
+                                    </h6>
+                                    <p class="commnet-item-user"><i class="mdi mdi-account-circle"></i> <?= $randomName[array_rand($randomName, 1)]; ?></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    <?php endforeach;?>
+
+
+                </div>
             </div>
         </div>
     </div>
-
+    <?php $this->load->view('apartment/components/modals') ?>
 </div>
 <script>
     commands.push(function () {
-        $('.select2-multiple').select2();
+        $('.rated-star').raty({
+            score: function () {
+                return $(this).data('score');
+            },
+            readOnly: true,
+            starOff: 'fa fa-star-o text-danger',
+            starOn: 'fa fa-star text-danger',
+        });
+        $('.rating-score').raty({
+            starOff: 'fa fa-star-o text-warning',
+            starOn: 'fa fa-star text-warning',
+            click:function (score, evt) {
+                let apm_id = $(this).data('apm-id');
+                swal({
+                    title: 'Xin comment ạ',
+                    input: 'text',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oke',
+                    showLoaderOnConfirm: true,
+                    confirmButtonClass: 'btn btn-confirm mt-2',
+                    cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                    preConfirm: function (inputVal) {
+                        return new Promise(function (resolve, reject) {
+                            setTimeout(function () {
+                                if (inputVal.length === 0) {
+                                    reject('Không để trống bình luận')
+                                } else {
+                                    resolve()
+                                }
+                            }, 1000)
+                        })
+                    },
+                    allowOutsideClick: false
+                }).then(function (inputVal) {
+                    let pack = {apm_id: apm_id, score: score, content: inputVal};
+
+                    console.log(pack);
+                    $.ajax({
+                        url: '/admin/apartment/rating',
+                        type: "POST",
+                        dataType: 'json',
+                        data: pack
+                    });
+                    swal({
+                        type: 'success',
+                        title: 'GH',
+                        html: "Cám ơn nhiều nhaaa",
+                        confirmButtonClass: 'btn btn-confirm mt-2'
+                    });
+                })
+            },
+            score: function () {
+                return $(this).data('score');
+            },
+        });
+        $('#update-time_available').click(function () {
+            $.ajax({
+                type: 'GET',
+                url:'<?= base_url()."admin/room/time-available/get" ?>',
+                dataType: 'json',
+                success:function(response) {
+                    let title = 'Không có dự án nào có ngày sắp trống "Không hợp lệ" !';
+                    let has_available_time = false;
+                    let html = "<ul class='text-left m'>";
+                    for (const [key, value] of Object.entries(response)) {
+                        has_available_time = true;
+
+                        html += "<li class='mt-2'>" + value['address'] + ": <ul>";
+                        for (const _room of value['list_room']) {
+                            html += '<li class="font-weight-bold"> ' + _room + ' </li>';
+                        }
+                        html += "</ul></li>";
+                    }
+                    html += "</ul>";
+                    if(has_available_time) {
+                        title = 'Review thông tin "Ngày sắp trống" ';
+                    }
+                    swal({
+                        title: title,
+                        type: 'warning',
+                        html: html,
+                        showCancelButton: true,
+                        showConfirmButton: has_available_time,
+                        confirmButtonClass: 'btn btn-confirm mt-2',
+                        cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                        confirmButtonText: 'Xác nhận Xóa',
+                        cancelButtonText: 'Huỷ'
+                    }).then(function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() . "admin/update-room-editable" ?>',
+                            data: {mode: 'empty_time_available'},
+                            dataType: 'json',
+                            success: function (response) {
+                                console.log(response);
+                                swal({
+                                    title: response.content,
+                                    type: 'success',
+                                    confirmButtonClass: 'btn btn-confirm mt-2'
+                                });
+                            }
+                        });
+
+                    });
+                }
+            });
+        });
+        $('#setting_default_district').change(function () {
+            let _this = $(this);
+            let keyword = _this.data('keyword');
+            let account_id = _this.data('account_id');
+            let value = _this.val();
+
+            let data = {keyword: keyword, account_id: account_id, value: value};
+            console.log(data);
+            $.ajax({
+                dataType : 'json',
+                data: data,
+                url: "/admin/user-setting/update",
+                method: "POST",
+                success: function (res) {
+                    console.log(res);
+                    if(res.status === true){
+                        $('#setting-msg').text(res.msg);
+                    }
+                }
+            })
+        });
+        $("#update-pin-notification").click(function () {
+            let content = $('#input-pin-notification').val();
+            $.ajax({
+                url: '/admin/update-apartment-editable',
+                method: "POST",
+                data: {mode: "pin_notification", value: content},
+                dataType: 'json',
+                success: function (res) {
+                    if(res.status === true) {
+                        $('#status-pin-notification').text(res.content);
+                        $('#pin-notification').text(content);
+                        $('#pin-notification-section').addClass("bg-success");
+                        setTimeout(function () {
+                            $('#pin-notification-section').removeClass("bg-success");
+                        }, 2500);
+
+                        $('#status-pin-notification').fadeOut(2500);
+                    }
+                }
+            })
+        });
+
+        $('#apartment_update_ready').change(function () {
+            window.location = '/admin/room/show-create?apartment-id='+$(this).val();
+        });
+
+        $('.select2-multiple, #apartment_update_ready, #setting_default_district').select2();
         $('.image-popup').magnificPopup({
             type: 'image',
             closeOnContentClick: true,
