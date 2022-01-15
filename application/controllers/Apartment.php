@@ -78,10 +78,14 @@ class Apartment extends CustomBaseStep {
             $this->load->view('components/footer');
             return;
         }
-
-        $district_code = $this->input->get('district-code');
-        if(empty($district_code)){
-            $district_code = $this->list_OPEN_DISTRICT[0];
+        $current_apartment = null;
+        $district_code = $this->list_OPEN_DISTRICT[0];
+        if(!empty( $this->input->get('district-code'))){
+            $district_code = $this->input->get('district-code');
+        }
+        if($this->input->get('current_apm_id')){
+            $current_apartment = $this->ghApartment->getFirstById($this->input->get('current_apm_id'));
+            $district_code = $current_apartment['district_code'];
         }
 
 		$params = [
@@ -148,6 +152,10 @@ class Apartment extends CustomBaseStep {
             $data['list_apartment'][] = $item;
 		}
 
+        if(empty($this->input->get('current_apm_id')) && count($data['list_apartment'])) {
+            $current_apartment = $list_apartment[0];
+        }
+
 
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES'], 'district_code DESC');
         $list_apm_ready = $list_apm_5days_CURD = [];
@@ -195,14 +203,7 @@ class Apartment extends CustomBaseStep {
                 $this->session->set_userdata(['isTriggerFiveDay' => true]);
             }
         }
-        $current_apartment = null;
-        if(empty($this->input->get('current_apm_id')) && count($data['list_apartment'])) {
-            $current_apartment = $list_apartment[0];
-        }
 
-        if($this->input->get('current_apm_id')){
-            $current_apartment = $this->ghApartment->getFirstById($this->input->get('current_apm_id'));
-        }
         $hidden_service = isset($current_apartment['hidden_service'])
             ? json_decode($current_apartment['hidden_service'], true) : [];
 
@@ -212,7 +213,6 @@ class Apartment extends CustomBaseStep {
             foreach ($list_room as $room) {
                 $cb_room[] = ['value' => $room['id'], 'text' => $room['code'] . ' - '. number_format($room['price'])];
             }
-            $district_code = $current_apartment['district_code'];
         }
 
         $list_customer = $this->ghCustomer->getCustomerOfConsultant($this->auth['account_id']);
