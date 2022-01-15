@@ -109,7 +109,7 @@ class Apartment extends CustomBaseStep {
 		$list_apartment = $this->ghApartment->get($params, 'time_update DESC,  id DESC, address_street ASC');
 		$today = time();
         $list_apm_5days = [];
-        $data['today'] = $today;
+        $data['today'] = $today;  $data['list_apartment'] = [];
 		foreach($list_apartment as $item) {
 			if($this->input->get('apmTag') && !$this->input->get('apmTag') == $item['tag_id']) {
                 continue;
