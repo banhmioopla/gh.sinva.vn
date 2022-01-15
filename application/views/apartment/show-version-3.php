@@ -205,6 +205,27 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
+                <div class="row">
+                    <div class="col-12"><h4 class="font-weight-bold text-danger">Dự án sắp trống (30 ngày)</h4></div>
+
+                    <?php foreach ($list_apm_ready as $apm_move):
+                        $apm_checker = $this->ghApartment->getApmWithTimeAvailableRemain(30, $apm_move['id']);
+                        if($apm_checker !== false):
+                            $room_info = []; $apm_model = $this->ghApartment->getFirstById($apm_move['id']);
+                                foreach ($apm_checker as $room_checker):
+
+                                    $room_info []= $room_checker['code'] . ' ('. date("d/m/Y", $room_checker['time_available']) . ') ';
+                                endforeach; ?>
+                            <div class="col-12 col-md-6">
+                                <div class="alert alert-danger" role="alert">
+                                    <strong><?= $apm_model['address_street'] ?>:</strong>
+                                    <?= implode(", ", $room_info) ?>,
+                                    <a href="/admin/list-apartment?current_apm_id=<?= $room_checker['apartment_id'] ?>" target="_blank">Link DA</a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
 

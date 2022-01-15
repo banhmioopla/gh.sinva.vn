@@ -119,6 +119,20 @@ class GhApartment extends CI_Model {
 
         return $out;
 	}
+
+	public function getApmWithTimeAvailableRemain($n_day_remain, $apm_id){
+        $this->load->model("ghRoom");
+        $list_room = $this->ghRoom->get([
+            'apartment_id' => $apm_id,
+            'active' => 'YES',
+            'time_available >=' => strtotime(date('d-m-Y')),
+            'time_available <=' => strtotime('+'.$n_day_remain.'days'),
+        ]);
+        if(count($list_room)) {
+            return $list_room;
+        }
+        return false;
+    }
 }
 
 /* End of file mApartment.php */
