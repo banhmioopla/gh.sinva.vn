@@ -212,49 +212,42 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     <div class="row">
         <div class="col-md-3 col-12">
             <div class="card-box">
-                <div class="col-12">
-                    <div class="d-flex justify-content-center flex-wrap ">
-                        <?php
-                        foreach($list_district as $district):
-                            $district_btn = 'btn-outline-success';
-                            ?>
+                <div class="d-flex justify-content-center flex-wrap ">
+                    <?php
+                    foreach($list_district as $district):
+                        $district_btn = 'btn-outline-success';
+                        ?>
 
-                            <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
-                               class="btn m-1 btn-sm <?= $district_btn ?>
+                        <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
+                           class="btn m-1 btn-sm <?= $district_btn ?>
                         <?= $district_code == $district['code'] ? 'active':'' ?>
                         btn-rounded waves-light waves-effect">
-                                Q. <?= $district['name'] ?> </a>
+                            Q. <?= $district['name'] ?> </a>
 
-                        <?php endforeach; ?>
-                    </div>
-                    <hr>
+                    <?php endforeach; ?>
                 </div>
-                <div class="col-12">
-                    <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
-                    <ul
-                            class="list-unstyled slimscroll mb-0"
-                            style="max-height: 300px"
-                    >
-                        <?php foreach ($list_apartment as $apm): ?>
-                            <li class="mb-3">
-                                <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-bookmark"></i> <?= $apm['address_street'] ?></a> </h5>
-                                <div class="text-right text-muted"><i class="mdi mdi-clock"></i> <?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apm['id'])) ?></div>
-                                <div class="clearfix"></div>
-                            </li>
-                        <?php endforeach;?>
-                    </ul>
-                </div>
+                <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
+                <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
+
+                <ul
+                        class="list-unstyled slimscroll mb-0 mt-1"
+                        style="max-height: 300px"
+                >
+                    <?php foreach ($list_apartment as $apm): ?>
+                        <li class="mb-3 address-item">
+                            <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-bookmark"></i> <?= $apm['address_street'] ?></a> </h5>
+                            <div class="text-right text-muted"><i class="mdi mdi-clock"></i> <?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apm['id'])) ?></div>
+                            <div class="clearfix"></div>
+                        </li>
+                    <?php endforeach;?>
+                </ul>
 
             </div>
 
             <div class="card-box">
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php $this->load->view('apartment/components/five-days-ago',[
-                            'check_profile' => $check_profile
-                        ]) ?>
-                    </div>
-                </div>
+                <?php $this->load->view('apartment/components/five-days-ago',[
+                    'check_profile' => $check_profile
+                ]) ?>
 
             </div>
         </div>
@@ -552,6 +545,13 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 </div>
 <script>
     commands.push(function () {
+        $('.search-address').on('keyup', function(){
+            var value = $(this).val().toLowerCase();
+            $(".address-item").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
         $('.rated-star').raty({
             score: function () {
                 return $(this).data('score');

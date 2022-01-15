@@ -9,11 +9,14 @@
             <?php endif; ?>
         <?php endif; ?>
     </div>
-    <div class="slimscroll col-12" style="max-height: 350px">
-        <?php foreach ($list_apm_5days_CURD as $apm5): ?>
-            <!--ITEM -->
-            <div> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address']?> <span class="pull-right text-danger"> <?= "-{$apm5['num_days']}" ?></span></div>
-        <?php endforeach; ?>
+    <div class="col-12" >
+        <div class="slimscroll" style="max-height: 350px">
+            <?php foreach ($list_apm_5days_CURD as $apm5): ?>
+                <!--ITEM -->
+                <div> <i class="mdi mdi-chevron-double-right"></i> <?= "Q.". $apm5['district']. " | ". $apm5['address']?> <span class="float-right text-danger"> <?= "-{$apm5['num_days']}" ?></span></div>
+            <?php endforeach; ?>
+        </div>
+
     </div>
 
 </div>
