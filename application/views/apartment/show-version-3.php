@@ -78,6 +78,9 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     .carousel-multi-item-2 .card img {
         border-radius: 2px;
     }
+    body.noscroll {
+        overflow-y: hidden!important;
+    }
 </style>
 <div class="container-fluid">
     <!-- Page-Title -->

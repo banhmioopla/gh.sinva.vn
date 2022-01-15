@@ -49,6 +49,12 @@
                                 if(item.el[0].className.includes("app-video") === true) {
                                     item.type = 'iframe';
                                 }
+                            },
+                            open: function() {
+                                $('body').addClass('noscroll');
+                            },
+                            close: function() {
+                                $('body').removeClass('noscroll');
                             }
                         },
                     });
