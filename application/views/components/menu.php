@@ -114,6 +114,9 @@
 
                             <li><a href="/admin/report/apartment-updating"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Báo Cáo Tiến Độ Cập Nhật Dự Án</a></li>
+
+                            <li><a href="/admin/dashboard/show/user-collected-overview"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Tổng quan DA - QLDA</a></li>
                         </ul>
                     </li>
 

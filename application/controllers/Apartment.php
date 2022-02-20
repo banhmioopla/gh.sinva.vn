@@ -69,7 +69,10 @@ class Apartment extends CustomBaseStep {
 
 	public function showNotificaton(){}
 
-	public function show(){
+	public function show($product_type = 1){
+        $this->product_type = $product_type;
+
+        $this->session->set_userdata(['switch_product_type' => $this->ghApartment->switchProductType($product_type)]);
 
 		$data = [];
         if(empty($this->product_category)) {

@@ -32,9 +32,11 @@ class CustomBaseStep extends CI_Controller {
 		$this->list_district_CRUD = [];
 		$this->list_apartment_CRUD = [];
         $temp_district_arr = [];
-        $this->editable = false;
         $this->yourTeam = false;
         $this->list_report_issue = $this->ghNotification->get(['controller' => 'ApartmentReport']);
+        $this->product_type = null;
+
+        $this->product_type_switch = $this->ghApartment->switchProductType($this->product_type);
 
         $oneUD = $this->ghUserDistrict->getFirstByUser($this->auth['account_id']);
         $this->product_category = null;
@@ -116,7 +118,7 @@ class CustomBaseStep extends CI_Controller {
             'ApartmentView' => ['create'],
             'ApartmentTrack' => ['show'],
 
-            'Dashboard' => ['showSale', 'showListProject'],
+            'Dashboard' => ['showSale', 'showListProject', 'showByUserCollectedOverview'],
             'ApartmentRequest' => ['exportApartmentExcel'],
             'ApartmentReport' => ['updateIssueApartmentInfo'],
             'SystemIncomeRunning' => ['show', 'chartData'],

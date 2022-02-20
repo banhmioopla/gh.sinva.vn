@@ -177,6 +177,21 @@ class Dashboard extends CustomBaseStep {
         $this->load->view('components/footer');
     }
 
+    public function showByUserCollectedOverview(){
+
+        $district_current = $this->input->get('district-current');
+        $list_district = $this->ghDistrict->get(['active' => 'YES'],'length(name),name', '');
+        if(empty($district_current)){
+            $district_current = $list_district[0]['code'];
+        }
+        $this->load->view('components/header');
+        $this->load->view('dashboard/show-user-collected-overview', [
+            'list_district' => $list_district,
+            'district_current' => $district_current
+        ]);
+        $this->load->view('components/footer');
+    }
+
 
     private function setupData($filter='LAST_15_DAY'){
         $from = date('d-m-Y', strtotime('-15days'));

@@ -115,6 +115,12 @@ $route['admin/dashboard/show/project'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/dashboard/show/user-collected-overview'] = function($params = []) {
+    $controller = 'Dashboard';
+    $action = '/showByUserCollectedOverview';
+    return $controller.$action;
+};
+
 $route['admin/list-department'] = function($params = []) {
     $controller = 'Department';
     $action = '/show';
@@ -1030,9 +1036,9 @@ $route['admin/login'] = function($params = []) {
 
 
 // -- apartment
-$route['admin/list-apartment'] = function($params = []) {
+$route['admin/list-apartment/(:any)'] = function($product_type) {
 	$controller = 'Apartment';
-	$action = '/show';
+	$action = '/show/'.$product_type;
 	return $controller.$action;
 };
 
@@ -1457,7 +1463,7 @@ $route['share/email-template/show'] = function($params = []) {
 
 
 $route['home-town/show'] = function($params = []) {
-    $controller = 'HomeTown';
+    $controller = 'Apartment';
     $action = '/show';
     return $controller.$action;
 };
