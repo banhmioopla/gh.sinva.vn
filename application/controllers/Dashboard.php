@@ -222,8 +222,8 @@ class Dashboard extends CustomBaseStep {
                     $sheet->setCellValue("C". $start_row, $user['name']);
                     $sheet->setCellValue("D". $start_row, $user['phone_number']);
                 } else {
-                    $sheet->setCellValue("C". $start_row, $default_user['name']);
-                    $sheet->setCellValue("D". $start_row, $default_user['phone_number']);
+                    $sheet->setCellValue("C". $start_row, "xxxx");
+                    $sheet->setCellValue("D". $start_row, "yyy");
                 }
 
                 $start_row++;
