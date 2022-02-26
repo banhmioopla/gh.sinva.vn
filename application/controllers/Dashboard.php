@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use PhpOffice\PhpSpreadsheet\IOFactory;
 class Dashboard extends CustomBaseStep {
     public function __construct()
 	{
@@ -181,6 +181,11 @@ class Dashboard extends CustomBaseStep {
 
         $district_current = $this->input->get('district-current');
         $list_district = $this->ghDistrict->get(['active' => 'YES'],'length(name),name', '');
+        if($this->input->get('export') === 'excel'){
+            return $this->exportExcelByUserCollectedOverview();
+        }
+
+
         if(empty($district_current)){
             $district_current = $list_district[0]['code'];
         }
@@ -190,6 +195,73 @@ class Dashboard extends CustomBaseStep {
             'district_current' => $district_current
         ]);
         $this->load->view('components/footer');
+    }
+
+    private function exportExcelByUserCollectedOverview(){
+        $template_file = 'media/template-export/APARTMENT-OVERVIEW.xlsx';
+        $spreadsheet = IOFactory::load($template_file);
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $time = date("Y-m-d");
+        $list_district = $this->ghDistrict->get(['active' => 'YES'],'length(name),name', '');
+        $start_row = 8;
+        foreach ($list_district as $district){
+            if($district['code'] == 7) continue;
+
+            $list_apartment = $this->ghApartment->get(['active' => 'YES' , 'district_code' => $district['code']]);
+
+            foreach ($list_apartment as $apm){
+
+                $user = $this->ghUser->getFirstByAccountId($apm['user_collected_id']);
+
+                $sheet->setCellValue("A". $start_row, $this->libDistrict->getNameByCode($apm['district_code']));
+                $sheet->setCellValue("B". $start_row, $apm['address_street']);
+                $sheet->setCellValue("C". $start_row, $user['name']);
+                $sheet->setCellValue("D". $start_row, $user['phone_number']);
+                $start_row++;
+            }
+            $sheet->getStyle('A'.$start_row)
+                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+            $sheet->getStyle('B'.$start_row)
+                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+            $sheet->getStyle('C'.$start_row)
+                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+            $sheet->getStyle('D'.$start_row)
+                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+            $sheet->getStyle('E'.$start_row)
+                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+            $start_row++;
+
+        }
+
+        $list_apartment = $this->ghApartment->get(['active' => 'YES' , 'district_code' => 7]);
+
+        foreach ($list_apartment as $apm){
+
+            $user = $this->ghUser->getFirstByAccountId($apm['user_collected_id']);
+
+            $sheet->setCellValue("A". $start_row, $this->libDistrict->getNameByCode($apm['district_code']));
+            $sheet->setCellValue("B". $start_row, $apm['address_street']);
+            $sheet->setCellValue("C". $start_row, $user['name']);
+            $sheet->setCellValue("D". $start_row, $user['phone_number']);
+            $start_row++;
+        }
+
+        $sheet->setCellValue("B2", $time);
+
+        $sheet->getStyle('A1:E666')
+            ->getAlignment()->setWrapText(true);
+
+        $file_name = $time ." - ". " Tổng quan DA QLDA" . '.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$file_name.'"');
+        header('Cache-Control: max-age=0');
+        ob_end_clean();
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        return $writer->save('php://output');
+        die;
+
+
     }
 
 

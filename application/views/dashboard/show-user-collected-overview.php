@@ -35,6 +35,10 @@
                             Q. <?= $district['name'] ?> </a>
 
                     <?php endforeach; ?>
+                    <a href='/admin/dashboard/show/user-collected-overview?export=excel'
+                       class="btn m-1 btn-sm btn-outline-danger
+                        btn-rounded waves-light waves-effect">
+                        Tải excel </a>
                 </div>
             </div>
 
