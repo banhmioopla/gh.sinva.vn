@@ -220,17 +220,20 @@ class Dashboard extends CustomBaseStep {
                 $sheet->setCellValue("D". $start_row, $user['phone_number']);
                 $start_row++;
             }
-            $sheet->getStyle('A'.$start_row)
-                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
-            $sheet->getStyle('B'.$start_row)
-                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
-            $sheet->getStyle('C'.$start_row)
-                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
-            $sheet->getStyle('D'.$start_row)
-                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
-            $sheet->getStyle('E'.$start_row)
-                ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
-            $start_row++;
+            if(count($list_apartment)) {
+                $sheet->getStyle('A'.$start_row)
+                    ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+                $sheet->getStyle('B'.$start_row)
+                    ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+                $sheet->getStyle('C'.$start_row)
+                    ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+                $sheet->getStyle('D'.$start_row)
+                    ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+                $sheet->getStyle('E'.$start_row)
+                    ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5bf574');
+                $start_row++;
+            }
+
 
         }
 
