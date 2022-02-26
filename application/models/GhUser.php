@@ -24,6 +24,10 @@ class GhUser extends CI_Model {
         return $this->db->get_where($this->table, ['account_id' => $user_id])->row_array();
     }
 
+    public function getFirstActiveByAccountId($user_id) {
+        return $this->db->get_where($this->table, ['account_id' => $user_id, 'active' => 'YES'])->row_array();
+    }
+
     public function getAll() {
         return $this->db->get_where($this->table, ['account_id >= ' => 171020000])->result_array();
     }
