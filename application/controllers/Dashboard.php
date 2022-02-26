@@ -216,11 +216,6 @@ class Dashboard extends CustomBaseStep {
                 $sheet->setCellValue("B". $start_row, $apm['address_street']);
                 $user = $this->ghUser->getFirstActiveByAccountId($apm['user_collected_id']);
                 if(!empty($user)) {
-                    if(empty($user['name'])){
-                        echo "<pre>";
-                        var_dump($user);
-                        die;
-                    }
                     $sheet->setCellValue("C". $start_row, $user['name']);
                     $sheet->setCellValue("D". $start_row, $user['phone_number']);
                 } else {
@@ -255,8 +250,13 @@ class Dashboard extends CustomBaseStep {
 
             $sheet->setCellValue("A". $start_row, $this->libDistrict->getNameByCode($apm['district_code']));
             $sheet->setCellValue("B". $start_row, $apm['address_street']);
-            $sheet->setCellValue("C". $start_row, $user['name']);
-            $sheet->setCellValue("D". $start_row, $user['phone_number']);
+            if(!empty($user)) {
+                $sheet->setCellValue("C". $start_row, $user['name']);
+                $sheet->setCellValue("D". $start_row, $user['phone_number']);
+            } else {
+                $sheet->setCellValue("C". $start_row, $default_user['name']);
+                $sheet->setCellValue("D". $start_row, $default_user['phone_number']);
+            }
             $start_row++;
         }
 
