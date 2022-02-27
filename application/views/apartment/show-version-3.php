@@ -276,6 +276,14 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             </div>
         </div>
         <div class="col-md-9 col-12">
+            <div class="text-right mb-2 mb-2">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+                </div>
+            </div>
             <?php
             $apartment_score = $this->ghApartmentComment->getScoreByApm($current_apartment['id'], $from_date, $to_date);
             $list_comment = $this->ghApartmentComment->get(['apartment_id' => $current_apartment['id']]);
