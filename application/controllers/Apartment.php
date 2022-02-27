@@ -776,7 +776,7 @@ class Apartment extends CustomBaseStep {
                 'address_ward' => $this->input->post('address_ward'),
                 'district_code' => $this->input->post('district_code'),
                 'description' => $this->input->post('description'),
-                'note' => $this->input->post('note'),
+//                'note' => $this->input->post('note'),
                 'electricity' => $this->input->post('electricity'),
                 'water' => $this->input->post('water'),
                 'internet' => $this->input->post('internet'),
