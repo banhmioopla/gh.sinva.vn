@@ -56,13 +56,17 @@ class Customer extends CustomBaseStep {
                 $select_year = $this->input->post("year_check_in_contract");
                 $search_params['month_check_in_contract'] = $select_month;
                 $search_params['year_check_in_contract'] = $select_year;
-                $last_date = (string)cal_days_in_month(CAL_GREGORIAN, date('m', strtotime($select_month)) , '2021')
+
+                $start_date = '01-'.$select_month.'-'.$select_year;
+
+                $last_date = (string)cal_days_in_month(CAL_GREGORIAN, $select_month , $select_year)
                     .'-'
-                    .date('m', strtotime($select_month))
-                    .$select_year;
+                    .$select_month
+                    ."-".$select_year;
+
                 foreach ($data['list_customer'] as $customer) {
                     $contract = $this->ghContract->get(['customer_id' => $customer['id'],
-                        'time_check_in>='=> strtotime('01-'.$select_month.'-'.$select_year),
+                        'time_check_in>='=> strtotime($start_date),
                         'time_check_in<='=> strtotime($last_date)+86399,
                     ]);
                     if(count($contract)) {
