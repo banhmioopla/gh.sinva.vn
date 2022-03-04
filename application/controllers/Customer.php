@@ -59,7 +59,7 @@ class Customer extends CustomBaseStep {
                 $last_date = (string)cal_days_in_month(CAL_GREGORIAN, date('m', strtotime($select_month)) , '2021')
                     .'-'
                     .date('m', strtotime($select_month))
-                    .'-2021';
+                    .$select_year;
                 foreach ($data['list_customer'] as $customer) {
                     $contract = $this->ghContract->get(['customer_id' => $customer['id'],
                         'time_check_in>='=> strtotime('01-'.$select_month.'-'.$select_year),
