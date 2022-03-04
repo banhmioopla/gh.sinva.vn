@@ -57,14 +57,26 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                     <h4 class="font-weight-bold text-center pb-1 border-bottom">Tìm Kiếm</h4>
                     <form action="/admin/list-customer" method="post">
                         <div class="row">
-                            <div class="col-md-3 col-12">
+                            <div class="col-md-2 col-12">
                                 <div class="form-group">
                                     <label for="month_check_in_contract" class="font-weight-bold">Tháng Ký Hợp Đồng</label>
                                     <select class="custom-select mt-1" name="month_check_in_contract" id="month_check_in_contract">
-                                        <option value="">Thời Gian Ký Hợp Đồng (2021)</option>
+                                        <option value="">Tháng Ký</option>
                                         <?php for($i = 1; $i <= 12; $i++): ?>
-                                            <option value="01-<?= $i ?>-2021"
-                                             <?= $search_params['month_check_in_contract'] == '01-'. $i.'-2021' ? 'selected':"" ?>>Tháng <?= $i ?> - 2021 </option>
+                                            <option value="<?= $i ?>"
+                                             <?= $search_params['month_check_in_contract'] == $i? 'selected':"" ?>>Tháng <?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-12">
+                                <div class="form-group">
+                                    <label for="month_check_in_contract" class="font-weight-bold">Tháng Ký Hợp Đồng</label>
+                                    <select class="custom-select mt-1" name="year_check_in_contract" id="year_check_in_contract">
+                                        <option value="">Năm Ký</option>
+                                        <?php for($i = 2020; $i <= 2024; $i++): ?>
+                                            <option value="<?= $i ?>"
+                                                <?= $search_params['year_check_in_contract'] == $i ? 'selected':"" ?>><?= $i ?></option>
                                         <?php endfor; ?>
                                     </select>
                                 </div>
@@ -100,7 +112,7 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                 </div>
                             </div>
 
-                            <div class="col-md-3 offset-md-3 offset-0 col-12">
+                            <div class="col-md-3 offset-md-1 offset-0 col-12">
                                 <button type="submit" name="search" value="oke" class="btn w-75 btn-danger waves-light waves-effect">Tìm</button>
                                 <a href="/admin/export-customer" name="search" value="oke" class="btn w-75 mt-1 btn-success waves-light waves-effect">Excel KH Ký Tháng Hiện Tại</a>
                             </div>
