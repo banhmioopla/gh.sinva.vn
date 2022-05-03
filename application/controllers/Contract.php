@@ -469,6 +469,22 @@ class Contract extends CustomBaseStep {
 		echo json_encode(['status' => false]); die;
 	}
 
+	private function sendMailCreate($data){
+        $content = '<h1 style="color:darkgreen">Hợp đồng được tạo thành công , chúc mừng <strong>'.$data['consultant_name'].'</strong></h1>';
+        $content .= '<ul>';
+        $content .= '<ul> <li>Ngày tạo: <strong>'.$data['create_date'].'</strong> </li>';
+        $content .= '<li>Dự án: <strong>'.$data['apartment_address'].'</strong> </li> ';
+        $content .= '<li>Mã phòng: <strong>'.$data['room_code'].'</strong> </li> ';
+        $content .= '<li>Giá thuê: <strong>'.$data['room_price'].'</strong> </li> ';
+        $content .= '<li>Số tháng: <strong>'.$data['create_date'].'</strong> </li> ';
+        $content .= '<li>Hoa hồng: <strong>'.$data['create_date'].'</strong> </li> ';
+        $content .= '<li>Khách hàng: <strong>'.$data['create_date'].'</strong> </li> ';
+        $content .= '</ul>';
+        $content .= '<p style="margin-top:25px"> <small>Giỏ hàng Sinva home</small></p>';
+
+        $this->libEmail->sendEmailFromServer($data[''], 'QUỐC BÌNH', 'Tạo Account SHARE', $content);
+    }
+
 }
 
 /* End of file Apartment.php */

@@ -7,6 +7,9 @@ class GhConfig extends CI_Model {
     public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();
     }
+    public function getFirstByCode($code) {
+        return $this->db->get_where($this->table, ['code' => $code])->row_array();
+    }
 
     public function insert($data) {
         $this->db->insert($this->table, $data);
