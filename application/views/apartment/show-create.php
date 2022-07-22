@@ -73,8 +73,9 @@
 
                                     <div class="form-group col-md-4">
                                         <strong class="col-form-strong">Người Đàm Phán</strong> <span class="text-danger">*</span>
-                                        <select readonly="" name="user_collected_id" class="form-control">
-                                            <option value="<?= $this->auth['account_id'] ?>"><?= $this->auth['name'] ?></option>
+
+                                        <select name="user_collected_id" class="select2 mt-3 form-control">
+                                            <?= $libUser->cb($this->auth['account_id'], 'YES') ?>
                                         </select>
                                     </div>
 
@@ -335,7 +336,7 @@
                 format: "dd-mm-yyyy",
                 autoclose:true
             });
-            $('#apartment_update_ready, #user_collected_id, #partner_id, .room-type').select2();
+            $('#apartment_update_ready, #user_collected_id, #partner_id, .room-type, .select2').select2();
 
             $('.search-room').on('keyup', function(){
                 var value = $(this).val().toLowerCase();
