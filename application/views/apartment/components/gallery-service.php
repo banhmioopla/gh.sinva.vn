@@ -37,14 +37,14 @@
                     gallery: {
                         enabled:true
                     },
-                    callbacks:function (item) {
+                    /*callbacks:function (item) {
                         open: function() {
                             $('body').addClass('noscroll');
                         },
                         close: function() {
                             $('body').removeClass('noscroll');
                         }
-                    }
+                    }*/
                 });
                 $('#gallery-service-container .carousel-item').first().addClass('active');
             }
