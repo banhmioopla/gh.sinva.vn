@@ -167,7 +167,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <?php foreach($list_contract_30d_remain as $row ):
                         $apm_30d_checker = $this->ghApartment->getFirstById($row['apartment_id']);
                             ?>
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <div class="alert alert-danger" role="alert">
                                 Hợp đồng sắp hết hạn <?= $apm_30d_checker['address_street'] ?>  - ngày hết hạn: <?= date("d/m/Y", $row['time_expire']) ?>,
                                 <a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank">Link hợp đồng</a>
@@ -183,7 +183,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-bell-outline"></i> Sinh nhật khách (10 ngày)</h4></div>
                     <?php foreach($list_customer_birth_10d_remain as $row ):
                             ?>
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <div class="alert alert-danger" role="alert">
                                 KH <?= $row['name'] ?>  - sinh nhật: <?= date("d/m/Y", $row['birthdate']) ?>,
                                 <a href="/admin/detail-customer?id=<?= $row['id'] ?>" target="_blank">Link KH</a>
@@ -205,7 +205,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                                     $room_info []= $room_checker['code'] . ' ('. date("d/m/Y", $room_checker['time_available']) . ') ';
                                 endforeach; ?>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-4">
                                 <div class="alert alert-danger" role="alert">
                                     <strong><?= $apm_model['address_street'] ?>:</strong>
                                     <?= implode(", ", $room_info) ?>,
