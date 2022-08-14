@@ -23,14 +23,11 @@ foreach ($list_contract as $row) {
         $metric['quantity_current_month'] ++;
         $metric['total_room_price_current_month'] += $row['room_price'];
     }
-
-
 }
-
 ?>
 
 <div class="wrapper">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
@@ -46,25 +43,108 @@ foreach ($list_contract as $row) {
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md text-center">
+                <?php $this->load->view('components/list-navigation'); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card-box">
-                    <table class="table-hover table table-dark">
-                        <tbody>
-                        <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Hợp Đồng</td> <td class="text-right font-weight-bold"><?= $metric['quantity'] ?></td></tr>
-                        <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng Giá Trị Hợp Đồng (giá thuê)</td> <td class="text-right font-weight-bold"><?= number_format($metric['total_room_price']) ?> vnđ</td></tr>
-                        </tbody>
-                    </table>
                     <div>
-                        <div><strong>TÙY CHỌN</strong></div>
-                        <div class="row mt-2">
-                            <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
-                                <div class="col-6">
-                                    <a href="/admin/contract/sync-status-expire" class="btn btn-danger"><i>Quét Hợp Đồng Hết Hạn</i></a>
+                        <h4><strong class="text-danger">Tổng quan</strong></h4>
+                        <table class="table-hover table table-dark">
+                            <tbody>
+                            <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Hợp Đồng</td> <td class="text-right font-weight-bold"><?= $metric['quantity'] ?></td></tr>
+                            <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng Giá Trị Hợp Đồng (giá thuê)</td> <td class="text-right font-weight-bold"><?= number_format($metric['total_room_price']) ?> vnđ</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3">
+                        <h4><strong class="text-danger">Chờ duyệt</strong></h4>
+                        <div class="row">
+                            <?php if(count($list_notification) > 0
+                                && isYourPermission('Contract', 'approved', $this->permission_set) ):
+                                ?>
+                                <div class="col-md-12">
+                                    <!-- end page title end breadcrumb -->
+                                    <?php
+                                    if($this->session->has_userdata('fast_notify')) {
+                                        $flash_mess = $this->session->flashdata('fast_notify')['message'];
+                                        $flash_status = $this->session->flashdata('fast_notify')['status'];
+                                        unset($_SESSION['fast_notify']);
+                                        ?>
+
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <?= $flash_mess ?>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+                                    <table style="font-size: 13px;" id="listPending" class="table table-dark">
+                                        <thead>
+                                        <tr class="">
+                                            <th width="150px" class="text-center font-weight-bold">ID HỢP ĐỒNG</th>
+                                            <th class="text-center font-weight-bold">Nội dung</th>
+                                            <th class="text-center font-weight-bold">Ngày tạo</th>
+                                            <th width="100px" class="text-center font-weight-bold">TÙY CHỌN</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        foreach($list_notification as $row ):
+                                            ?>
+                                            <tr>
+                                                <td class="text-center"><a target = '_blank'
+                                                                           href="/admin/detail-contract?id=<?= $row['object_id']
+                                                                           ?>">#<?= 1000+ $row['object_id'] ?></a></td>
+                                                <td>
+                                                    <strong>
+                                                        <?= $row['message'] ?>
+                                                    </strong>
+
+                                                </td>
+                                                <td class="text-center"><?= date('d/m/Y H:i', $row['time_insert'])?></td>
+                                                <td class="text-center">
+                                                    <div>
+                                                        <a class="btn btn-danger btn-sm"
+                                                           href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>">  Duyệt </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php else: ?>
+                                <div class="col-md-12">
+                                    <div class="card-box">
+                                        <h4 class="font-weight-bold text-danger">THÔNG BÁO</h4>
+                                        <div class="alert alert-danger" role="alert">
+                                            Không có Hợp đồng nào đang chờ chờ duyệt!
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             <?php endif; ?>
                         </div>
-                        <div class="row mt-2">
+
+                        <div class="row mt-2 mb-5">
+                            <?php if(isYourPermission($this->current_controller,'syncStatusExpire', $this->permission_set)): ?>
+                                <div class="col-6">
+                                    <a href="/admin/contract/sync-status-expire" class="btn btn-danger"><i class=" mdi mdi-shuffle-variant"></i> Quét HĐ Hết Hạn</a>
+                                </div>
+
+                            <?php endif; ?>
+                        </div>
+                        <h4><strong class="text-danger">Tìm kiếm</strong></h4>
+                        <div class="row">
+
                             <div class="col-12">Chọn khoảng <strong>ngày ký</strong></div>
                             <div class="col-6">
                                 <input type="text" class="form-control datepicker"
@@ -92,18 +172,9 @@ foreach ($list_contract as $row) {
                                        value="<?= $this->input->get('timeExpireTo') ?>">
                             </div>
                         </div>
+
                         <div class="row mt-2">
-                            <div class="col-12">Bộ Phận</div>
-                            <div class="col-12">
-                                <select id="department" class="form-control">
-                                    <option value="">Tất cả</option>
-                                    <option value="sale" <?= $this->input->get('department') == 'sale' ? 'selected':'' ?>>Bộ phận kinh doanh</option>
-                                    <option value="cd" <?= $this->input->get('department') == 'cd' ? 'selected':'' ?>>Bộ phận vận hành</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-6 offset-3">
+                            <div class="col-4 offset-4">
                                 <button id="search" class="btn btn-danger w-100">Áp Dụng</button>
                             </div>
                         </div>
@@ -126,102 +197,10 @@ foreach ($list_contract as $row) {
 
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card-box">
-                            <table class="table-hover table table-dark">
-                                <tbody>
-                                <tr><td colspan="2" class="font-weight-bold text-center"><h5>BỘ PHẬN KINH DOANH</h5></td></tr>
-                                <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Hợp Đồng</td> <td class="text-right font-weight-bold">đang code</td></tr>
-
-                                <tr><td colspan="2" class="font-weight-bold text-center"><h5>BỘ PHẬN VẬN HÀNH</h5></td></tr>
-                                <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Hợp Đồng</td> <td class="text-right font-weight-bold">đang code</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <?php if(count($list_notification) > 0
-                        && isYourPermission('Contract', 'approved', $this->permission_set) ):
-                        ?>
-                        <div class="col-md-12">
-                            <div class="card-box">
-
-                                <!-- end page title end breadcrumb -->
-                                <?php
-                                if($this->session->has_userdata('fast_notify')) {
-                                    $flash_mess = $this->session->flashdata('fast_notify')['message'];
-                                    $flash_status = $this->session->flashdata('fast_notify')['status'];
-                                    unset($_SESSION['fast_notify']);
-                                    ?>
-
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                        <?= $flash_mess ?>
-                                    </div>
-                                    <?php
-                                }
-                                ?>
-                                <table style="font-size: 13px;" id="listPending" class="table table-dark">
-                                    <thead>
-                                    <tr class="">
-                                        <th width="150px" class="text-center font-weight-bold">ID HỢP ĐỒNG</th>
-                                        <th class="text-center font-weight-bold">NỘI DUNG</th>
-                                        <th width="100px" class="text-center font-weight-bold">TÙY CHỌN</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    foreach($list_notification as $row ):
-                                        ?>
-                                        <tr>
-                                            <td class="text-center"><a target = '_blank'
-                                                                       href="/admin/detail-contract?id=<?= $row['object_id']
-                                                                       ?>">#<?= 1000+ $row['object_id'] ?></a></td>
-                                            <td>
-                                                <strong>
-                                                    <?= $row['message'] ?>
-                                                </strong>
-                                                <p><small><?= date('d/m/Y H:i', $row['time_insert'])?></small></p>
-
-                                            </td>
-                                            <td class="text-center">
-                                                <div>
-                                                    <a class="btn btn-danger btn-sm"
-                                                       href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>">  Duyệt </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                    <div class="col-md-12">
-                        <div class="card-box">
-                            <h4 class="font-weight-bold text-danger">THÔNG BÁO</h4>
-                            <div class="alert alert-danger" role="alert">
-                                Không có Hợp đồng nào đang chờ chờ duyệt!
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <?php endif; ?>
-                </div>
-
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="card-box">
                     <h4 class="font-weight-bold text-danger">Danh Sách Hợp Đồng Thuê Phòng</h4>
-                    <table class="table-contract table table-dark table-bordered">
+                    <table class="table-contract table-responsive table table-dark table-bordered">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -365,7 +344,9 @@ foreach ($list_contract as $row) {
                     </table>
                 </div>
             </div>
+
         </div>
+
     </div>
 </div>
 
