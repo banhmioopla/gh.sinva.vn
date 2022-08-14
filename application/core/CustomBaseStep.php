@@ -121,13 +121,19 @@ class CustomBaseStep extends CI_Controller {
             'Dashboard' => ['showSale', 'showListProject', 'showByUserCollectedOverview'],
             'ApartmentRequest' => ['exportApartmentExcel'],
             'ApartmentReport' => ['updateIssueApartmentInfo'],
-            'SystemIncomeRunning' => ['show', 'chartData'],
+            'SystemIncomeRunning' => ['show', 'chartData', 'ajaxGetIncomePersonal'],
             'HomeTown' => ['show'],
             'User' => ['showProfile'],
             'UserConfig' => ['update'],
             'CronCustomer' => ['removeImg'],
         ];
 
+        $from_date = date("01-m-Y");
+        $to_month = date("m");
+        $to_year = date("Y");
+        $day_last = cal_days_in_month(CAL_GREGORIAN, $to_month, $to_year);
+        $to_date = $day_last."-".$to_month."-".$to_year;
+        $this->income_pack = $this->ghContract->getTotalIncomeByUser($this->auth['account_id'], $from_date, $to_date);
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 
             if(!$this->checkCurrentPermission($this->permission_set)) {

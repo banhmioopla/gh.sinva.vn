@@ -87,10 +87,12 @@
                 <li class="has-submenu">
                     <a href="#"><i class="icon-layers"></i>Chi Phí</a>
                     <ul class="submenu">
+                        <li><a href="/admin/income-202111"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> TÀI CHÍNH</a></li>
+
                         <li><a href="/admin/list-service"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Danh Mục Chi Phí</a></li>
-                        <li><a href="/admin/income-202111"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> SÂN CHƠI TÀI CHÍNH <strong>mới nhất</strong></a></li>
+
                         <?php /* if(isYourPermission('Fee', 'showUserCumulativeSale',$this->permission_set)):?>
                             <li><a href="/admin/list-user-cumulative-sale"><i class="mdi
                             mdi-chevron-double-right text-warning"></i> Quản Lý Doanh Số Tích Lũy</a></li>

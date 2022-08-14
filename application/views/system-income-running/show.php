@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item active">Starter</li>
                         </ol>
                     </div>
-                    <h2 class="text-danger font-weight-bold">SÂN CHƠI TÀI CHÍNH (bản mới)</h2>
+                    <h2 class="text-danger font-weight-bold">TÀI CHÍNH</h2>
                 </div>
             </div>
         </div>

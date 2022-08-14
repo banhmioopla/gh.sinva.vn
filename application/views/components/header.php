@@ -106,8 +106,11 @@ include VIEWPATH.'functions.php';
                         <!-- Text Logo -->
                         <!-- <a href="index.html" class="logo"><span class="logo-small"><i class="mdi mdi-radar"></i></span><span class="logo-large"><i class="mdi mdi-radar"></i> Highdmin</span></a> -->
                         <!-- Image Logo -->
-                        <a href="/admin/list-apartment/<?= $this->session->has_userdata("switch_product_type") ? $this->session->userdata("switch_product_type") : 1 ?>" class="logo">
-                            <h3 class="text-danger font-weight-bold"><?= $this->ghApartment->getTitleProductType($this->product_type) ?></h3>
+                        <!--<a href="/admin/list-apartment/<?/*= $this->session->has_userdata("switch_product_type") ? $this->session->userdata("switch_product_type") : 1 */?>" class="logo">
+                            <h3 class="text-danger font-weight-bold"><?/*= $this->ghApartment->getTitleProductType($this->product_type) */?></h3>
+                        </a>-->
+                        <a href="#" class="logo">
+                            <h4 class="text-success bg-dark p-1 rounded font-weight-bold">Tn: <?= number_format($this->income_pack['total_income']) ?></h4>
                         </a>
                     </div>
                     <!-- End Logo container-->
