@@ -166,11 +166,12 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                     <?php foreach($list_contract_30d_remain as $row ):
                         $apm_30d_checker = $this->ghApartment->getFirstById($row['apartment_id']);
+                        $room_checker = $this->ghRoom->getFirstById($row['room_id']);
                             ?>
                         <div class="col-12 col-md-4">
                             <div class="alert alert-danger" role="alert">
-                                Hợp đồng sắp hết hạn <?= $apm_30d_checker['address_street'] ?>  - ngày hết hạn: <?= date("d/m/Y", $row['time_expire']) ?>,
-                                <a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank">Link hợp đồng</a>
+                                <strong><?= $apm_30d_checker['address_street'] ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
+                                <a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank" class="float-right"> Chi tiết</a>
                             </div>
                         </div>
                     <?php endforeach; ?>
