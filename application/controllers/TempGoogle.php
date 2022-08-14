@@ -10,7 +10,7 @@ class TempGoogle extends CustomBaseStep {
 
 	public function show() {
         /*--- Load View ---*/
-        $data =['list_linkdrive' => $this->json_to_arr(file_get_contents("application/config/googledrive.json"))];
+        $data =['list_linkdrive' => $this->json_to_arr(file_get_contents("application/config/data-resources/googledrive.json"))];
 		$this->load->view('components/header');
 		$this->load->view('temp-google/show', $data);
 		$this->load->view('components/footer');

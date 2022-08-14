@@ -1,6 +1,9 @@
 <?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
-<div id="listPrice" class="card-box mb-1 mt-1">
-    <h4 class="text-danger font-weight-bold" data-toggle="collapse" aria-expanded="true" aria-controls="searchApartment" href="#searchApartment">Tìm Dự Án <i class="mdi mdi-arrow-down-drop-circle-outline"></i></h4>
+<div id="listPrice" class="mb-1">
+    <h4 class="text-danger font-weight-bold"
+        data-toggle="collapse"
+        aria-expanded="true" aria-controls="searchApartment"
+        href="#searchApartment"><i class="mdi mdi-arrow-right-drop-circle-outline"></i> Tìm kiếm DA</h4>
     <div class="form-group row collapse" role="tabpanel" id="searchApartment">
         <span class="col-md-4 col-6 mb-2">
             <strong>Quận</strong>

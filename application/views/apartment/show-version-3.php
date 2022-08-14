@@ -118,9 +118,6 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
     <?php if($check_update_room): ?>
         <div class="row">
-            <div class="col-md-12">
-                <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
-            </div>
             <div class="col-md-12  mt-3">
                 <div class="card-box">
                     <div class="row">
@@ -158,62 +155,51 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     </div>
                 </div>
             </div>
-
         </div>
-        <hr>
-    <?php else: ?>
-        <div class="row">
-            <div class="col-md-12">
-                <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
-            </div>
-        </div>
-
     <?php endif;?>
-
-
     <div class="row">
         <div class="col-12">
             <div class="card-box">
+                <?php if(!empty($list_contract_30d_remain)): ?>
                 <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-arrow-right-drop-circle-outline"></i> Hợp đồng sắp hết hạn (30 ngày)</h4></div>
+                    <div class="col-12"><h4 class="font-weight-bold text-danger"><i class=" mdi mdi-bell-outline"></i> Hợp đồng sắp hết hạn (30 ngày)</h4></div>
 
-                    <?php foreach($list_customer["customers"] as $row ):
-                        $contract_checker = $this->ghCustomer->getCustomerOfExpireDays(30, $row['id'], $this->auth['account_id']);
-                        if($contract_checker !== false):
-                            $contract_apartment = $this->ghApartment->getFirstById($contract_checker['apartment_id']);
+                    <?php foreach($list_contract_30d_remain as $row ):
+                        $apm_30d_checker = $this->ghApartment->getFirstById($row['apartment']);
                             ?>
-                            <div class="col-12 col-md-6">
-                                <div class="alert alert-danger" role="alert">
-                                    Hợp đồng sắp hết hạn <?= $contract_apartment['address_street'] ?>  - ngày hết hạn: <?= date("d/m/Y", $contract_checker['time_expire']) ?>,
-                                    <a href="/admin/detail-contract?id=<?= $contract_checker['id'] ?>" target="_blank">Link hợp đồng</a>
-                                </div>
+                        <div class="col-12 col-md-6">
+                            <div class="alert alert-danger" role="alert">
+                                Hợp đồng sắp hết hạn <?= $apm_30d_checker['address_street'] ?>  - ngày hết hạn: <?= date("d/m/Y", $row['time_expire']) ?>,
+                                <a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank">Link hợp đồng</a>
                             </div>
-                        <?php endif; ?>
+                        </div>
                     <?php endforeach; ?>
                 </div>
+                <?php endif; ?>
+
+
+                <?php if(!empty($list_customer_birth_10d_remain)): ?>
                 <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-arrow-right-drop-circle-outline"></i> KH sắp đến sinh nhựt (10 ngày)</h4></div>
-
-                    <?php foreach($list_customer["customers"] as $row ):
-                        $customer_checker = $this->ghCustomer->getCustomerBirthDateOfRemainDays(10, $row['id']);
-                        if($customer_checker !== false):
-
+                    <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-bell-outline"></i> Sinh nhật khách (10 ngày)</h4></div>
+                    <?php foreach($list_customer_birth_10d_remain as $row ):
                             ?>
-                            <div class="col-12 col-md-6">
-                                <div class="alert alert-danger" role="alert">
-                                    KH <?= $customer_checker['name'] ?>  - sinh nhật: <?= date("d/m/Y", $customer_checker['birthdate']) ?>,
-                                    <a href="/admin/detail-customer?id=<?= $customer_checker['id'] ?>" target="_blank">Link KH</a>
-                                </div>
+                        <div class="col-12 col-md-6">
+                            <div class="alert alert-danger" role="alert">
+                                KH <?= $customer_checker['name'] ?>  - sinh nhật: <?= date("d/m/Y", $customer_checker['birthdate']) ?>,
+                                <a href="/admin/detail-customer?id=<?= $customer_checker['id'] ?>" target="_blank">Link KH</a>
                             </div>
-                        <?php endif; ?>
+                        </div>
                     <?php endforeach; ?>
                 </div>
-                <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Dự án sắp trống (30 ngày)</h4></div>
+                <?php endif; ?>
 
-                    <?php foreach ($list_apm_ready as $apm_move):
+                <?php if(!empty($list_customer_birth_10d_remain)): ?>
+                <div class="row">
+                    <div class="col-12"><h4 class="font-weight-bold text-danger"> <i class="mdi mdi-bell-outline"></i> Dự án sắp trống (30 ngày)</h4></div>
+
+                    <?php foreach ($list_apm_30d_available as $apm_move):
                         $apm_checker = $this->ghApartment->getApmWithTimeAvailableRemain(30, $apm_move['id']);
-                        if($apm_checker !== false):
+
                             $room_info = []; $apm_model = $this->ghApartment->getFirstById($apm_move['id']);
                                 foreach ($apm_checker as $room_checker):
 
@@ -226,8 +212,15 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                     <a href="/admin/list-apartment?current_apm_id=<?= $room_checker['apartment_id'] ?>" target="_blank">Link DA</a>
                                 </div>
                             </div>
-                        <?php endif; ?>
+
                     <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -259,7 +252,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 >
                     <?php foreach ($list_apartment as $apm): ?>
                         <li class="mb-3 address-item">
-                            <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-bookmark"></i> <?= $apm['address_street'] ?></a> </h5>
+                            <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm['address_street'] ?></a> </h5>
                             <div class="text-right text-muted"><i class="mdi mdi-clock"></i> <?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apm['id'])) ?></div>
                             <div class="clearfix"></div>
                         </li>
@@ -267,13 +260,13 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </ul>
 
             </div>
-
+            <?php if(false):?>
             <div class="card-box">
                 <?php $this->load->view('apartment/components/five-days-ago',[
                     'check_profile' => $check_profile
                 ]) ?>
-
             </div>
+            <?php endif; ?>
         </div>
         <div class="col-md-9 col-12">
             <div class="text-right mb-2 mb-2">

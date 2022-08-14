@@ -161,7 +161,7 @@ class Apartment extends CustomBaseStep {
 
 
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES'], 'district_code DESC');
-        $list_apm_ready = $list_apm_5days_CURD = [];
+        $list_apm_ready = $list_apm_5days_CURD = $list_apm_30d_available =  [];
 
         foreach ($list_apm_temp as $apm ) {
             $time_update = $this->ghApartment->getUpdateTimeByApm($apm['id']);
@@ -187,6 +187,9 @@ class Apartment extends CustomBaseStep {
 
 
             $list_apm_ready[] = $apm;
+            if($this->ghApartment->getApmWithTimeAvailableRemain(30, $apm['id']) !== false){
+                $list_apm_30d_available[] = $apm;
+            }
         }
 
         usort($list_apm_5days, function($a, $b)
@@ -210,7 +213,7 @@ class Apartment extends CustomBaseStep {
         $hidden_service = isset($current_apartment['hidden_service'])
             ? json_decode($current_apartment['hidden_service'], true) : [];
 
-        $cb_room = [];
+        $cb_room = []; $list_customer_birth_10d_remain = []; $list_contract_30d_remain = [];
         if($current_apartment) {
             $list_room = $this->ghRoom->get(['apartment_id' => $current_apartment['id'], 'active' => 'YES']);
             foreach ($list_room as $room) {
@@ -219,6 +222,20 @@ class Apartment extends CustomBaseStep {
         }
 
         $list_customer = $this->ghCustomer->getCustomerOfConsultant($this->auth['account_id']);
+        if(!empty($list_customer["customers"])){
+            foreach ($list_customer["customers"] as $cus){
+                $customer_checker = $this->ghCustomer->getCustomerBirthDateOfRemainDays(10, $cus["id"]);
+                if($customer_checker !== false){
+                    $list_customer_birth_10d_remain[] = $cus;
+                }
+
+                $contract_checker = $this->ghCustomer->getCustomerOfExpireDays(30, $cus["id"], $this->auth['account_id']);
+                if($contract_checker !== false) {
+                    $list_contract_30d_remain[] = $contract_checker;
+                }
+            }
+        }
+
 
 		/*--- Load View ---*/
 		$this->load->view('components/header');
@@ -238,7 +255,9 @@ class Apartment extends CustomBaseStep {
             'list_price' => $this->ghRoom->getPriceList('gh_room.status = "Available" ', 'gh_room.price'),
             'list_type' => $this->ghRoom->getTypeByDistrict(),
             'list_ready_room_type' => $this->ghRoom->getTypeByDistrict($district_code, 'gh_room.time_available > 0 '),
-            'list_customer' => $list_customer,
+            'list_customer_birth_10d_remain' => $list_customer_birth_10d_remain,
+            'list_contract_30d_remain' => $list_contract_30d_remain,
+            'list_apm_30d_available' => $list_apm_30d_available,
         ]);
 		$this->load->view('components/footer');
 	}
