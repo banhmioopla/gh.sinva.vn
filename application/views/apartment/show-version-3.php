@@ -165,7 +165,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12"><h4 class="font-weight-bold text-danger"><i class=" mdi mdi-bell-outline"></i> Hợp đồng sắp hết hạn (30 ngày)</h4></div>
 
                     <?php foreach($list_contract_30d_remain as $row ):
-                        $apm_30d_checker = $this->ghApartment->getFirstById($row['apartment']);
+                        $apm_30d_checker = $this->ghApartment->getFirstById($row['apartment_id']);
                             ?>
                         <div class="col-12 col-md-6">
                             <div class="alert alert-danger" role="alert">
