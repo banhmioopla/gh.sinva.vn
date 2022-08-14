@@ -33,6 +33,7 @@ class CustomBaseStep extends CI_Controller {
 		$this->list_apartment_CRUD = [];
         $temp_district_arr = [];
         $this->yourTeam = false;
+        $this->income_personal = 0;
         $this->list_report_issue = $this->ghNotification->get(['controller' => 'ApartmentReport']);
         $this->product_type = null;
 
@@ -87,13 +88,6 @@ class CustomBaseStep extends CI_Controller {
         $this->pin_notification = json_decode($this->load->view('json-content/pin-notification.json', '',true), true);
 
 		$this->permission_set = json_decode($this->role['list_function'], true);
-		$current_user = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
-		$authorised_user = $this->ghUser->get(['account_id' => $current_user[0]['authorised_user_id']]);
-		$this->authorised_mode = false;
-		if(!empty($authorised_user)) {
-			$this->authorised_user = $authorised_user;
-			$this->authorised_mode = true;
-		}
 		$this->permission_controller_set = array_keys($this->permission_set);
 		if(isset($this->permission_set[$this->current_controller])) {
 			$this->permission_action_set = $this->permission_set[$this->current_controller];
@@ -133,7 +127,11 @@ class CustomBaseStep extends CI_Controller {
         $to_year = date("Y");
         $day_last = cal_days_in_month(CAL_GREGORIAN, $to_month, $to_year);
         $to_date = $day_last."-".$to_month."-".$to_year;
-        $this->income_pack = $this->ghContract->getTotalIncomeByUser($this->auth['account_id'], $from_date, $to_date);
+        if($this->session->has_userdata('has_income_personal') !== false){
+            $this->session->set_userdata(['has_income_personal' => true]);
+            $this->income_personal = $this->ghContract->getTotalIncomeByUser($this->auth['account_id'], $from_date, $to_date)["total_income"];
+        }
+
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 
             if(!$this->checkCurrentPermission($this->permission_set)) {

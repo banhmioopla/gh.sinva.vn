@@ -110,7 +110,7 @@ include VIEWPATH.'functions.php';
                             <h3 class="text-danger font-weight-bold"><?/*= $this->ghApartment->getTitleProductType($this->product_type) */?></h3>
                         </a>-->
                         <a href="#" class="logo">
-                            <h4 class="text-success bg-dark p-1 rounded font-weight-bold">Tn: <?= number_format($this->income_pack['total_income']) ?></h4>
+                            <h4 class="text-success bg-dark p-1 rounded font-weight-bold">Tn: <?= number_format($this->income_personal) ?></h4>
                         </a>
                     </div>
                     <!-- End Logo container-->
