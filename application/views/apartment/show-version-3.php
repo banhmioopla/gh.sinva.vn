@@ -171,7 +171,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <div class="col-12 col-md-4">
                             <div class="alert alert-danger" role="alert">
                                 <strong><?= $apm_30d_checker['address_street'] ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
-                                <div><a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank" class="float-right"> Chi tiết</a></div>
+                                <a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank" class="float-right">Chi tiết</a>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -186,9 +186,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             ?>
                         <div class="col-12 col-md-4">
                             <div class="alert alert-danger" role="alert">
-                                KH <?= $row['name'] ?>  - sinh nhật: <?= date("d/m/Y", $row['birthdate']) ?>,
-                                <div><a href="/admin/detail-customer?id=<?= $row['id'] ?>" target="_blank">Link KH</a></div>
-
+                                <strong><?= $row['name'] ?></strong> (<?= date("d/m/Y", $row['birthdate']) ?>)
+                                <a href="/admin/detail-customer?id=<?= $row['id'] ?>" target="_blank" class="float-right">Chi tiết</a>
                             </div>
                         </div>
                     <?php endforeach; ?>

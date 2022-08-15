@@ -33,7 +33,7 @@ class CustomBaseStep extends CI_Controller {
 		$this->list_apartment_CRUD = [];
         $temp_district_arr = [];
         $this->yourTeam = false;
-        $this->income_personal = 0;
+
         $this->list_report_issue = $this->ghNotification->get(['controller' => 'ApartmentReport']);
         $this->product_type = null;
 
@@ -127,9 +127,8 @@ class CustomBaseStep extends CI_Controller {
         $to_year = date("Y");
         $day_last = cal_days_in_month(CAL_GREGORIAN, $to_month, $to_year);
         $to_date = $day_last."-".$to_month."-".$to_year;
-        if($this->session->has_userdata('has_income_personal') !== false){
-            $this->session->set_userdata(['has_income_personal' => true]);
-            $this->income_personal = $this->ghContract->getTotalIncomeByUser($this->auth['account_id'], $from_date, $to_date)["total_income"];
+        if($this->session->has_userdata('income_personal') === false){
+            $this->session->set_userdata(['income_personal' => $this->ghContract->getTotalIncomeByUser($this->auth['account_id'], $from_date, $to_date)["total_income"]]);
         }
 
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
