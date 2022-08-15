@@ -159,71 +159,83 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     <?php endif;?>
     <div class="row">
         <div class="col-12">
-            <div class="card-box">
+
                 <?php if(!empty($list_contract_30d_remain)): ?>
-                <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger"><i class=" mdi mdi-bell-outline"></i> Hợp đồng sắp hết hạn (30 ngày)</h4></div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-12"><h4 class="font-weight-bold text-danger"><i class=" mdi mdi-bell-outline"></i> Hợp đồng sắp hết hạn (30 ngày)</h4></div>
 
-                    <?php foreach($list_contract_30d_remain as $row ):
-                        $apm_30d_checker = $this->ghApartment->getFirstById($row['apartment_id']);
-                        $room_checker = $this->ghRoom->getFirstById($row['room_id']);
-                            ?>
-                        <div class="col-12 col-md-4">
-                            <div class="alert alert-danger" role="alert">
-                                <strong><?= $apm_30d_checker['address_street'] ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
-                                <a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank" class="float-right">Chi tiết</a>
-                            </div>
+                            <?php foreach($list_contract_30d_remain as $row ):
+                                $apm_30d_checker = $this->ghApartment->getFirstById($row['apartment_id']);
+                                $room_checker = $this->ghRoom->getFirstById($row['room_id']);
+                                ?>
+                                <div class="col-12 col-md-4">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong><?= $apm_30d_checker['address_street'] ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
+                                        <a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank" class="float-right">Chi tiết</a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
-                    <?php endforeach; ?>
-                </div>
+                    </div>
+
                 <?php endif; ?>
 
 
                 <?php if(!empty($list_customer_birth_10d_remain)): ?>
-                <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-bell-outline"></i> Sinh nhật khách (10 ngày)</h4></div>
-                    <?php foreach($list_customer_birth_10d_remain as $row ):
-                            ?>
-                        <div class="col-12 col-md-4">
-                            <div class="alert alert-danger" role="alert">
-                                <strong><?= $row['name'] ?></strong> (<?= date("d/m/Y", $row['birthdate']) ?>)
-                                <a href="/admin/detail-customer?id=<?= $row['id'] ?>" target="_blank" class="float-right">Chi tiết</a>
-                            </div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-bell-outline"></i> Sinh nhật khách (10 ngày)</h4></div>
+                            <?php foreach($list_customer_birth_10d_remain as $row ):
+                                ?>
+                                <div class="col-12 col-md-4">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong><?= $row['name'] ?></strong> (<?= date("d/m/Y", $row['birthdate']) ?>)
+                                        <a href="/admin/detail-customer?id=<?= $row['id'] ?>" target="_blank" class="float-right">Chi tiết</a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
-                    <?php endforeach; ?>
-                </div>
+                    </div>
+
                 <?php endif; ?>
 
                 <?php if(!empty($list_customer_birth_10d_remain)): ?>
-                <div class="row">
-                    <div class="col-12"><h4 class="font-weight-bold text-danger"> <i class="mdi mdi-bell-outline"></i> Dự án sắp trống (30 ngày)</h4></div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-12"><h4 class="font-weight-bold text-danger"> <i class="mdi mdi-bell-outline"></i> Dự án sắp trống (30 ngày)</h4></div>
 
-                    <?php foreach ($list_apm_30d_available as $apm_move):
-                        $apm_checker = $this->ghApartment->getApmWithTimeAvailableRemain(30, $apm_move['id']);
+                            <?php foreach ($list_apm_30d_available as $apm_move):
+                                $apm_checker = $this->ghApartment->getApmWithTimeAvailableRemain(30, $apm_move['id']);
 
-                            $room_info = []; $apm_model = $this->ghApartment->getFirstById($apm_move['id']);
+                                $room_info = []; $apm_model = $this->ghApartment->getFirstById($apm_move['id']);
                                 foreach ($apm_checker as $room_checker):
 
                                     $room_info []= $room_checker['code'] . ' ('. date("d/m/Y", $room_checker['time_available']) . ') ';
                                 endforeach; ?>
-                            <div class="col-12 col-md-4">
-                                <div class="alert alert-danger" role="alert">
-                                    <strong><?= $apm_model['address_street'] ?>:</strong>
-                                    <?= implode(", ", $room_info) ?>,
-                                    <a href="/admin/list-apartment?current_apm_id=<?= $room_checker['apartment_id'] ?>" target="_blank">Link DA</a>
+                                <div class="col-12 col-md-4">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong><?= $apm_model['address_street'] ?>:</strong>
+                                        <?= implode(", ", $room_info) ?>,
+                                        <a href="/admin/list-apartment?current_apm_id=<?= $room_checker['apartment_id'] ?>" target="_blank">Link DA</a>
+                                    </div>
                                 </div>
-                            </div>
 
-                    <?php endforeach; ?>
-                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
                 <?php endif; ?>
 
+            <div class="card-box">
                 <div class="row">
                     <div class="col-md-12">
                         <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
                     </div>
                 </div>
             </div>
+
+
         </div>
 
     </div>
@@ -453,7 +465,11 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="font-weight-bold text-danger">Danh sách phòng</h4>
+                        <h4 class="font-weight-bold text-danger">Danh sách phòng <a href="/admin/room/show-create?apartment-id=<?= $current_apartment['id'] ?>">
+                                <?php if($is_editable_apartment): ?>
+                                <button class="btn btn-sm btn-outline-primary float-right btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
+                                <?php endif;?>
+                        </h4>
                     </div>
                     <div class="col-12">
                         <?php $this->load->view('apartment/room',[
