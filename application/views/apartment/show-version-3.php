@@ -240,6 +240,16 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
     </div>
     <div class="row">
+        <div class="col-12">
+            <div class="text-right mb-2 mb-2">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+                </div>
+            </div>
+        </div>
         <div class="col-md-3 col-12">
             <div class="card-box">
                 <div class="d-flex justify-content-center flex-wrap ">
@@ -255,6 +265,10 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             Q. <?= $district['name'] ?> </a>
 
                     <?php endforeach; ?>
+                    <?php foreach ($list_features as $feature_k => $feature_v):?>
+                        <a href="<?= base_url().'admin/list-apartment?feature-code='.$feature_k ?>"
+                           class="btn m-1 btn-sm btn-rounded btn-outline-danger waves-light waves-effect"> <?= $feature_v ?> </a>
+                    <?php endforeach;?>
                 </div>
                 <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
                 <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
@@ -282,14 +296,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             <?php endif; ?>
         </div>
         <div class="col-md-9 col-12">
-            <div class="text-right mb-2 mb-2">
-                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
-                </div>
-            </div>
+
             <?php
             $apartment_score = $this->ghApartmentComment->getScoreByApm($current_apartment['id'], $from_date, $to_date);
             $list_comment = $this->ghApartmentComment->get(['apartment_id' => $current_apartment['id']]);
@@ -299,8 +306,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 <div class="row">
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
-                            <h2 class="font-weight-bold text-danger"><?= $current_apartment['address_street'] . ", phường" . $current_apartment["address_ward"] ?></h2>
-                            <div class="rating-score pl-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="badge badge-warning"><?= count($list_comment) ?> </span> </div>
+                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $current_apartment['address_street'] . ", phường" . $current_apartment["address_ward"] ?></h2>
+                            <div class="rating-score pl-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </div>
                         </div>
                     </div>
 
@@ -364,6 +371,10 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             <div class="col-md-2 col-4 text-warning mb-4">
                                 <div> <i class="mdi mdi-cube"></i> Sắp trống</div>
                                 <div class="font-weight-bold pl-2"><?= $this->ghRoom->getNumberByTimeavailable($current_apartment['id']) ?></div>
+                            </div>
+                            <div class="col-md-2 col-4 text-info mb-4">
+                                <div> <i class="mdi mdi-cube"></i>Hợp đồng tháng <?= date("m/Y") ?></div>
+                                <div class="font-weight-bold pl-2"><?= count($list_contract) ?></div>
                             </div>
                         </div>
                     </div>
@@ -559,6 +570,20 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </div>
                 <div class="row mt-5">
                     <div class="col-12">
+                        <h4 class="font-weight-bold text-danger">Hợp đồng tháng <?= date("m/Y") ?></h4>
+                    </div>
+                    <?php foreach ($list_contract as $contract):
+                        $room_info = $this->ghRoom->getFirstById($contract["room_id"]);
+                        ?>
+                        <div class="col-12">
+                            <div class="alert alert-info" role="alert">
+                                Phòng <strong><?= $room_info["code"] ?></strong>  <span class="float-right"> <i class=" mdi mdi-tag"></i> <strong><?= number_format($contract["room_price"]) ?></strong> | ký ngày: <?= date("d-m-Y", $contract["time_check_in"]) ?></span>
+                            </div>
+                        </div>
+                    <?php endforeach;?>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
                         <h4 class="font-weight-bold text-danger">Bình luận</h4>
                     </div>
                     <?php foreach ($list_comment as $rating): ?>
@@ -602,8 +627,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             starOn: 'fa fa-star text-danger',
         });
         $('.rating-score').raty({
-            starOff: 'fa fa-star-o text-warning',
-            starOn: 'fa fa-star text-warning',
+            starOff: 'fa fa-star-o text-danger',
+            starOn: 'fa fa-star text-danger',
             click:function (score, evt) {
                 let apm_id = $(this).data('apm-id');
                 swal({

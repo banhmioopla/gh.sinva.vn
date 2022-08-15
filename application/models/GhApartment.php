@@ -67,6 +67,19 @@ class GhApartment extends CI_Model {
 
         return $this->db->get_where($this->table, $where)->result_array();
 	}
+
+	public function getListContractById($id, $timeFrom, $timeTo){
+        $apm = $this->getFirstById($id);
+        $list_contract = [];
+        if(!empty($apm)){
+            $list_contract = $this->ghContract->get([
+                "time_check_in >=" => strtotime($timeFrom),
+                "time_check_in <=" => strtotime($timeFrom)+86399,
+            ]);
+        }
+        return $list_contract;
+
+    }
 	
 	public function getByDistrictId($district_id) {
         $where = [

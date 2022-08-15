@@ -73,7 +73,10 @@ class Apartment extends CustomBaseStep {
         $this->product_type = $product_type;
 
         $this->session->set_userdata(['switch_product_type' => $this->ghApartment->switchProductType($product_type)]);
-
+        $list_features = [
+            "new" => "Dự án mới",
+            "best_contract_performance" => "Sale hot",
+        ];
 		$data = [];
         if(empty($this->product_category)) {
             $this->load->view('components/header');
@@ -219,6 +222,10 @@ class Apartment extends CustomBaseStep {
             foreach ($list_room as $room) {
                 $cb_room[] = ['value' => $room['id'], 'text' => $room['code'] . ' - '. number_format($room['price'])];
             }
+            $timeFrom = date("01-m-Y");
+            $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
+            $list_contract = $this->ghApartment->getListContractById($current_apartment['id'], $timeFrom, $timeTo);
+
         }
 
         $list_customer = $this->ghCustomer->getCustomerOfConsultant($this->auth['account_id']);
@@ -245,6 +252,8 @@ class Apartment extends CustomBaseStep {
             'current_apartment' => $current_apartment,
             'list_ward' => $list_ward,
             'list_district' => $list_district,
+            'list_features' => [],
+            "list_contract" => $list_contract,
             'list_apartment' => $list_apartment,
             'cb_room' => $cb_room,
             'list_apm_5days' => $list_apm_5days,
