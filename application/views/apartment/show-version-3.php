@@ -298,15 +298,14 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             <div class="card-box">
                 <div class="row">
                     <div class="col-12  mt-2 mb-1">
-                        <div class="card m-b-30 bg-dark">
-                            <h2 class="font-weight-bold pl-2 text-warning"><?= $current_apartment['address_street'] ?></h2>
-                            <div class="rating-score text-right p-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="badge badge-warning"><?= count($list_comment) ?> </span> </div>
+                        <div class="card">
+                            <h2 class="font-weight-bold text-danger"><?= $current_apartment['address_street'] . ", phường" . $current_apartment["address_ward"] ?></h2>
+                            <div class="rating-score pl-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="badge badge-warning"><?= count($list_comment) ?> </span> </div>
                         </div>
                     </div>
 
                     <!--BUTTONS ACTioNS-->
-                    <div class="col-12 list-action mt-2" >
-                        <h4 class="font-weight-bold text-danger">Tuỳ chọn <i class="mdi mdi-settings"></i></h4>
+                    <div class="col-12 list-action" >
                         <div class="text-md-right text-center">
                             <?php if($is_editable_apartment): ?>
                                 <a class="m-1" href="/admin/apartment/duplicate?id=<?= $current_apartment['id'] ?>" >
