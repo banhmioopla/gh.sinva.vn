@@ -69,14 +69,12 @@ class GhApartment extends CI_Model {
 	}
 
 	public function getListContractById($id, $timeFrom, $timeTo){
-        $list_contract = [];
-        if(!empty($apm)){
-            $list_contract = $this->ghContract->get([
-                "time_check_in >=" => strtotime($timeFrom),
-                "time_check_in <=" => strtotime($timeTo)+86399,
-                "apartment_id" => $id
-            ]);
-        }
+        $this->load->model('ghContract');
+        $list_contract = $this->ghContract->get([
+            "time_check_in >=" => strtotime($timeFrom),
+            "time_check_in <=" => strtotime($timeTo)+86399,
+            "apartment_id" => $id
+        ]);
         return $list_contract;
 
     }
