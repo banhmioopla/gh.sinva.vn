@@ -475,8 +475,9 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="font-weight-bold text-danger">Danh sách phòng <a href="/admin/room/show-create?apartment-id=<?= $current_apartment['id'] ?>">
+                        <h4 class="font-weight-bold text-danger">Danh sách phòng
                                 <?php if($is_editable_apartment): ?>
+                                    <a href="/admin/room/show-create?apartment-id=<?= $current_apartment['id'] ?>">
                                 <button class="btn btn-sm btn-outline-primary float-right btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
                                 <?php endif;?>
                         </h4>
