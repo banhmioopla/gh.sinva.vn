@@ -158,6 +158,18 @@ class Media extends CustomBaseStep {
                         </div>
                     </div>
                 </div>';
+        $item_html_vid ='
+                <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
+                    <div class="portfolio-masonry-box mt-0">
+                    <a href="%URL%" class="image-popup %CLASS_MEDIA%">
+                        <div class="portfolio-masonry-img">
+                            <video class="img-fluid" controls><source src="%URL%" type="video/mp4"></video>
+                        </div></a>
+                        <div class="portfolio-masonry-detail">
+                            <button class="btn btn-danger btn-delete-img" data-id="%ID_IMG%">Xoá</button>
+                        </div>
+                    </div>
+                </div>';
         $item_html_end = '</div>';
         $list_img = $this->ghImage->get(['room_id' => $room_id, "controller" => "Apartment", 'active' => 'YES']);
         $result = []; $html = ""; $num = 4; $index = 1;
@@ -170,7 +182,12 @@ class Media extends CustomBaseStep {
             if($index === 1 || (($index-1)%$num ===0 )) {
                 $html .= $item_html_start;
             }
-            $item_img = str_replace("%MEDIA_TAG%", $media_tag, $item_html);
+            if($this->isVideo($img) === false){
+                $item_img = str_replace("%MEDIA_TAG%", $media_tag, $item_html);
+            }else{
+                $item_img = str_replace("%MEDIA_TAG%", $media_tag, $item_html_vid);
+            }
+
             $item_img = str_replace("%URL%", $root_url.$img['name'], $item_img);
             $item_img = str_replace("%ID_IMG%", $img['id'], $item_img);
             $item_img = str_replace("%CLASS_MEDIA%", $media_class, $item_img);
@@ -206,6 +223,20 @@ class Media extends CustomBaseStep {
                         </div>
                     </div>
                 </div>';
+
+        $item_html_vid ='
+                <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
+                    <div class="portfolio-masonry-box mt-0">
+                    <a href="%URL%" class="image-popup mfp-iframe">
+                        <div class="portfolio-masonry-img">
+                            <video class="img-fluid" controls><source src="%URL%" type="video/mp4"></video>
+                        </div></a>
+                        <div class="portfolio-masonry-detail">
+                            <button class="btn btn-danger btn-delete-img" data-id="%ID_IMG%">Xoá</button>
+                        </div>
+                    </div>
+                </div>';
+
         $item_html_end = '</div>';
         $list_img = $this->ghImage->get([
             'apartment_id' => $this->input->post('apartment_id'),
@@ -218,8 +249,13 @@ class Media extends CustomBaseStep {
             if($index === 1 || (($index-1)%$num ===0 )) {
                 $html .= $item_html_start;
             }
-            $item_img = str_replace("%URL%", $root_url.$img['name'], $item_html);
-            $item_img = str_replace("%ID_IMG%", $img['id'], $item_img);
+            if($this->isVideo($img) === false){
+                $item_img = str_replace("%URL%", $root_url.$img['name'], $item_html);
+                $item_img = str_replace("%ID_IMG%", $img['id'], $item_img);
+            }else{
+                $item_img = str_replace("%URL%", $root_url.$img['name'], $item_html_vid);
+                $item_img = str_replace("%ID_IMG%", $img['id'], $item_img);
+            }
 
             $html .= $item_img;
             if($index % $num === 0 || $i+1 === count($list_img)){
@@ -232,6 +268,13 @@ class Media extends CustomBaseStep {
         echo json_encode([
             'html' => $html
         ]); die;
+    }
+
+    private function isVideo($item){
+        if(in_array(strtoupper($item['file_type']), ["MP4", "MOV"])){
+            return true;
+        }
+        return false;
     }
 
     public function uploadImgService(){

@@ -34,6 +34,10 @@
                 $('#gallery-service-container').magnificPopup({
                     delegate: '.image-popup',
                     type: 'image',
+                    disableOn: 700,
+                    mainClass: 'mfp-fade',
+                    removalDelay: 160,
+                    preloader: false,
                     gallery: {
                         enabled:true
                     },
