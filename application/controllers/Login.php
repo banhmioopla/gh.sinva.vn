@@ -67,6 +67,7 @@ class Login extends CI_Controller {
 		unset($_COOKIE['gh_account_id']);
 		unset($_COOKIE['gh_password']);
 		unset($_SESSION['auth']);
+		unset($_SESSION['income_personal']);
 		unset($_SESSION['isTriggerFiveDay']);
 		delete_cookie('gh_account_id');
 		delete_cookie('gh_password');
