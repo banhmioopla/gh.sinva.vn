@@ -521,7 +521,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </div>
                 <div class="row mt-5">
                     <div class="col-12">
-                        <h4 class="font-weight-bold text-danger">Ảnh / Video | Phòng</h4>
+                        <h4 class="font-weight-bold text-danger">Ảnh / Video | Phòng <span class="float-right"><a href="/admin/download-all-image-apartment?apm=<?= $current_apartment['id'] ?>"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
+</span></h4>
                         <form action="/admin/apartment/upload-img"
                               method="POST" enctype="multipart/form-data">
                             <div class="form-group m-b-0">
