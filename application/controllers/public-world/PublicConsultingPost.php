@@ -6,9 +6,8 @@ class PublicConsultingPost extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(['ghRoom', 'ghContract']);
+        $this->load->model(['ghRoom', 'ghContract', 'ghUser']);
         $this->load->model('ghApartment');
-        $this->load->model('ghUser');
         $this->load->model('ghImage');
         $this->load->model('ghApartment');
         $this->load->model('ghRoom');
@@ -60,17 +59,23 @@ class PublicConsultingPost extends CI_Controller {
         $timeFrom = date("01-m-Y");
         $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
 
-        $list_contract = $this->ghContract->get([
-            "time_check_in >=" => strtotime($timeFrom),
-            "time_check_in <=" => strtotime($timeTo)+86399,
-        ]);
+
+
 
         if(!empty($token)){
-            echo json_encode([
-                "source" => "Giỏ hàng Sinva",
-                "title" => "Hợp đồng tháng " . date("m-Y"),
-                "data" => $list_contract
-            ]); die;
+            switch ($token){
+
+                case "hop_dong_thanh_vien":
+                    break;
+                default: // hợp đồng - hop_dong
+                    $list_contract = $this->ghContract->get([
+                        "time_check_in >=" => strtotime($timeFrom),
+                        "time_check_in <=" => strtotime($timeTo)+86399,
+                    ]);
+                    $data = $list_contract;
+            }
+
+            echo json_encode($data); die;
         }
         return false;
     }
