@@ -378,6 +378,11 @@ $route['admin/list-crawler'] = function($params = []) {
     $action = '/show';
     return $controller.$action;
 };
+$route['public/export-gg-sheet'] = function($params = []) {
+    $controller = '/public-world/PublicConsultingPost';
+    $action = '/exportToGoogleSheet';
+    return $controller.$action;
+};
 
 // track apartment
 $route['admin/list-apartment-track'] = function($params = []) {
@@ -520,12 +525,6 @@ $route['normal/list-apartment'] = function($params = []) {
 $route['admin/income-202111'] = function($params = []) {
     $controller = 'SystemIncomeRunning';
     $action = '/show';
-    return $controller.$action;
-};
-
-$route['admin/income/data-personal'] = function($params = []) {
-    $controller = 'SystemIncomeRunning';
-    $action = '/ajaxGetIncomePersonal';
     return $controller.$action;
 };
 
