@@ -76,16 +76,20 @@ class PublicConsultingPost extends CI_Controller {
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
                         $user = $this->ghUser->getFirstByAccountId($contract['consultant_id']);
+                        $customer = $this->ghCustomer->getFirstById($contract['customer_id']);
                         $data[] = [
                             "Source" => "GH",
                             "ID" => $contract["id"],
-                            "Dự án" =>$apm["address_street"] . "Phường". $apm["address_ward"],
+                            "Dự án" =>$apm["address_street"] . "Phường ". $apm["address_ward"],
                             "Mã phòng" => $room["code"],
                             "Giá thuê" => $contract["room_price"],
                             "Sale" => $user["name"],
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
                             "Số tháng" => $contract["number_of_month"],
                             "Hết Hạn" => date("d-m-Y", $contract["time_expire"]),
+                            "Hoa hồng" => $contract['commission_rate'],
+                            "Khách Hàng" => $customer["name"],
+                            "Phone" => $customer["phone"],
                         ];
                     }
             }
