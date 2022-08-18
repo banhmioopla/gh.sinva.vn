@@ -77,6 +77,7 @@ class PublicConsultingPost extends CI_Controller {
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
                         $user = $this->ghUser->getFirstByAccountId($contract['consultant_id']);
                         $data[] = [
+                            "Source" => "GH",
                             "ID" => $contract["id"],
                             "Dự án" =>$apm["address_street"] . "Phường". $apm["address_ward"],
                             "Mã phòng" => $room["code"],
