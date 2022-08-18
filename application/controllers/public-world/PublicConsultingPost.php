@@ -6,7 +6,7 @@ class PublicConsultingPost extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(['ghRoom', 'ghContract', 'ghUser']);
+        $this->load->model(['ghRoom', 'ghContract', 'ghUser','ghCustomer']);
         $this->load->model('ghApartment');
         $this->load->model('ghImage');
         $this->load->model('ghApartment');
