@@ -351,11 +351,13 @@ class Contract extends CustomBaseStep {
 			'apartment_id' => $service_set['id'],
 			'consultant_id' => $post['consultant_id'],
 			'room_price' => $contract_room_price,
+			'deposit_price' => $post['deposit_price'],
 			'time_check_in' => strlen($post['time_check_in']) ? strtotime($post['time_check_in']) : null,
 			'time_expire' => strlen($post['time_expire']) ? strtotime($post['time_expire']) :null ,
 			'number_of_month' => $post['number_of_month'],
 			'service_set' => json_encode($service_set), // apartment data
 			'status' => $status_contract,
+            'rate_type' => $post['rate_type'],
 			'note' => $post['note'],
 			'room_code' => $post['room_code'],
 			'commission_rate' => $post['commission_rate'],

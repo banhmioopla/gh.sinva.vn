@@ -41,14 +41,15 @@
 
             <div class="btn-group">
                 <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"><i class="fa fa-grav"></i> Của Tôi</button>
+                        aria-expanded="false"><i class="fa fa-grav"></i> <?= $this->auth["name"] ?></button>
                 <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/admin/consultant-post/your-list"> <i class="mdi mdi-library-plus mr-1"></i> Bài Đăng Tư Vấn</a>
-                    <a class="dropdown-item" href="/personal/customer-feedback/list"> <i class="mdi mdi-library-plus mr-1"></i> Feedback KH</a>
-                    <a class="dropdown-item" href="/admin/customer/show-your"> <i class="mdi mdi-library-plus mr-1"></i> Danh Sách KH</a>
+                    <a class="dropdown-item" href="/personal/customer-feedback/list"> <i class="mdi mdi-library-plus mr-1"></i> Feedback</a>
+                    <a class="dropdown-item" href="/admin/customer/show-your"> <i class="mdi mdi-library-plus mr-1"></i> Khách Hàng</a>
+                    <a class="dropdown-item" href="/admin/list-personal-contract"> <i class="mdi mdi-library-plus mr-1"></i> Hợp đồng</a>
                 </div>
             </div>
 

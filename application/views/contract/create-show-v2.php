@@ -143,19 +143,38 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                                 </div>
                             <?php else: ?>
                                 <div class="col-md-6 col-12">
-                                    <input type="text" class="form-control"
+                                    <input type="text" class="form-control "
                                            id="consultant_id" readonly name="consultant_id" value="<?= $this->auth['account_id']?>">
                                     <p class="p-2 text-light bg-dark text-right"><?= $this->auth['name'] ?></p>
                                 </div>
                             <?php endif; ?>
                         </div>
                         <div class="form-group row">
-                            <label for="consultant_support_id" class="col-12 col-md-4 col-form-label text-right">Thành Viên Hỗ Trợ (-30%)</span></label>
+                            <label for="consultant_support_id" class="col-12 col-md-4 col-form-label text-right">Thành Viên Hỗ Trợ</span></label>
                             <div class="col-md-6 col-12">
-                                <select type="number" class="form-control"
+                                <select type="number" class="form-control select2"
                                         id="consultant_support_id" name="consultant_support_id">
                                     <?= $select_user?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-md-4 col-form-label text-right">Chấm *</label>
+                            <div class="col-md-6 col-12">
+                                <div class="radio radio-danger">
+                                    <input type="radio" name="rate_type" id="one-star" value="1" checked>
+                                    <label for="one-star">1 (*)</label>
+                                </div>
+                                <div class="radio radio-danger">
+                                    <input type="radio" name="rate_type" id="70-star" value=".7">
+                                    <label for="70-star">0.7 (*)</label>
+                                </div>
+
+                                <div class="radio radio-danger">
+                                    <input type="radio" name="rate_type" id="60-star" value=".6">
+                                    <label for="60-star">0.6 (*)</label>
+                                </div>
+
                             </div>
                         </div>
                         <hr>
@@ -319,6 +338,17 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="room_price" class="col-12 col-md-4
+                            col-form-label text-right">Giá Cọc <span class="text-danger">*</span></label>
+                            <div class="col-md-6 col-12">
+                                <input  type="text"
+                                        required class="form-control"
+                                        id="deposit_price"
+                                        value=""
+                                        name="deposit_price">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="commission_rate" class="col-12 col-md-4
                             col-form-label text-right">Hoa Hồng Ký Gửi</label>
                             <div class="col-md-6 col-12">
@@ -388,6 +418,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
 
 <script>
     commands.push(function(){
+        $('.select2').select2();
         $('.datepicker').datepicker({
             format: "dd-mm-yyyy"
         });

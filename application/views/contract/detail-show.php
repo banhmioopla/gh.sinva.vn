@@ -121,22 +121,7 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                                         $libUser->getNameByAccountid($contract['consultant_support_id']) : '[không có thông tin]' ?></div>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="text-right"><strong>Sinva Hỗ Trợ (-10%TN)
-                                    <strong></td>
-                            <td>
-                                <div class="d-flex justify-content-start">
-                                    <div class="checkbox checkbox-success is_support_control">
-                                        <input id="contract-<?= $contract['id'] ?>"
-                                               value="<?= $contract['is_support_control'] ?>"
-                                               type="checkbox"
-                                            <?= $contract['is_support_control'] =='YES' ? 'checked':'' ?>>
-                                        <label for="contract-<?= $contract['id'] ?>">
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+
                         <tr>
                             <td class="text-right"><strong>Hình Ảnh <strong></td>
                             <td>

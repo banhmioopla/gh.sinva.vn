@@ -3,7 +3,7 @@
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <!-- Page-Title -->
         <div class="row">
             <div class="col-sm-12">
@@ -39,6 +39,8 @@
                         <th>#</th>
                         <th width="350px">Khách thuê</th>
                         <th>Giá thuê</th>
+                        <th>Giá cọc</th>
+                        <th>(*)</th>
                         <th>Ngày ký</th>
                         <th>Ngày hết hạn</th>
                         <th class="text-center">Thời hạn</th>
@@ -58,18 +60,15 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="text-muted"><?= $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']) ?> </div>
-                                <div class="font-weight-bold text-primary">
+                                <div><?= $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']) ?> </div>
+                                <div class="font-weight-bold text-primary"> <i class=" dripicons-home"></i>
                                     <?php
                                     $apartment = $ghApartment->get(['id' => $row['apartment_id']]);
                                     $room = $ghRoom->get(['id' => $row['room_id']]);
                                     $room = $room ? $room[0]:null;
                                     ?>
-                                    <?= $apartment ? $apartment[0]['address_street']:'' ?>
+                                    <?= $apartment ? $apartment[0]['address_street']:'' ?> <?= $room ? "(" . $room['code']. ")" : '[không có mp]' ?>
                                 </div>
-                                <h6 class="text-danger">
-                                    <?= $room ? 'mã phòng: '.$room['code'] : '[không có thông tin]' ?>
-                                </h6>
                             </td>
                             <td>
                                 <div class="contract-room_price font-weight-bold"
@@ -79,6 +78,8 @@
                                     <?= number_format($row['room_price']) ?>
                                 </div>
                             </td>
+                            <td class="font-weight-bold"><?= number_format($row["deposit_price"]) ?></td>
+                            <td class="font-weight-bold"><?= $row["rate_type"] *1 ?></td>
                             <td>
                                 <div class="contract-time_check_in"
                                      data-pk="<?= $row['id'] ?>"
