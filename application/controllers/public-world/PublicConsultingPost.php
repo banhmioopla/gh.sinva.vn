@@ -59,15 +59,60 @@ class PublicConsultingPost extends CI_Controller {
         $timeFrom = date("01-m-Y");
         $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
 
-
+        $income_standard_rate = .55;
 
 
         if(!empty($token)){
             switch ($token){
 
-                case "hop_dong_thanh_vien":
+                case 1: // danh sách thành viên
+                        $list_user = $this->ghUser->get(['active' => 'YES']);
+                        foreach ($list_user as $user) {
+                            $rate_star = $count_contract = $income = 0;
+
+                            $list_contract = $this->ghContract->get([
+                                'time_check_in >=' => $timeFrom,
+                                'time_check_in <=' => $timeTo +86399,
+                                'consultant_support_id' => $timeTo +86399,
+                            ]);
+                            $count_contract+= count($list_contract);
+                            foreach ($list_contract as $con) {
+                                $rate_star += $con['rate_type'];
+                            }
+
+                            $list_contract = $this->ghContract->get([
+                                'time_check_in >=' => $timeFrom,
+                                'time_check_in <=' => $timeTo +86399,
+                                'consultant_id' => $timeTo +86399,
+                            ]);
+                            $count_contract+= count($list_contract);
+                            foreach ($list_contract as $con) {
+                                $rate_star += $con['rate_type'];
+                            }
+
+
+                            if($rate_star >= 6){
+                                foreach ($list_contract as $con){
+                                    $income += $con['commission_rate']*$con['room_price']/100 * $income_standard_rate;
+                                }
+                            } else {
+                                foreach ($list_contract as $con){
+                                    $income += $con['commission_rate']*$con['room_price']/100 * (1-$income_standard_rate);
+                                }
+                            }
+
+                            $data[] = [
+                                "Source" => "GH",
+                                "Account" => $user["account_id"],
+                                "Tên" => $user["name"],
+                                "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
+                                "Số (*)" => $rate_star,
+                                "Số hợp đồng" => $count_contract,
+                                "Thu nhập" => $income
+                            ];
+                        }
                     break;
-                default: // hợp đồng - hop_dong
+                default: // Hợp đồng tháng hiện tại
                     $list_contract = $this->ghContract->get([
                         "time_check_in >=" => strtotime($timeFrom),
                         "time_check_in <=" => strtotime($timeTo)+86399,
@@ -76,6 +121,7 @@ class PublicConsultingPost extends CI_Controller {
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
                         $user = $this->ghUser->getFirstByAccountId($contract['consultant_id']);
+                        $user_support = $this->ghUser->getFirstByAccountId($contract['consultant_support_id']);
                         $customer = $this->ghCustomer->getFirstById($contract['customer_id']);
                         $data[] = [
                             "Source" => "GH",
@@ -83,11 +129,14 @@ class PublicConsultingPost extends CI_Controller {
                             "Dự án" =>$apm["address_street"] . "Phường ". $apm["address_ward"],
                             "Mã phòng" => $room["code"],
                             "Giá thuê" => $contract["room_price"],
-                            "Sale" => $user["name"],
+                            "Giá cọc" => $contract["deposit_price"],
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
                             "Số tháng" => $contract["number_of_month"],
                             "Hết Hạn" => date("d-m-Y", $contract["time_expire"]),
                             "Hoa hồng" => $contract['commission_rate'],
+                            "Số (*)" => $contract["rate_type"],
+                            "Sale Chốt" => $user["name"],
+                            "Sale Hỗ trợ" => $user_support["name"],
                             "Khách Hàng" => $customer["name"],
                             "Phone" => $customer["phone"],
                         ];
