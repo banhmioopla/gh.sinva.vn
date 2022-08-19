@@ -100,16 +100,18 @@ class PublicConsultingPost extends CI_Controller {
                                     $income += $con['commission_rate']*$con['room_price']/100 * (1-$income_standard_rate);
                                 }
                             }
+                            if($count_contract) {
+                                $data[] = [
+                                    "Source" => "GH",
+                                    "Account" => $user["account_id"],
+                                    "Tên" => $user["name"],
+                                    "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
+                                    "Số (*)" => $rate_star,
+                                    "Số hợp đồng" => $count_contract,
+                                    "Thu nhập" => $income
+                                ];
+                            }
 
-                            $data[] = [
-                                "Source" => "GH",
-                                "Account" => $user["account_id"],
-                                "Tên" => $user["name"],
-                                "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
-                                "Số (*)" => $rate_star,
-                                "Số hợp đồng" => $count_contract,
-                                "Thu nhập" => $income
-                            ];
                         }
                     break;
                 default: // Hợp đồng tháng hiện tại
