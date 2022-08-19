@@ -126,7 +126,7 @@ class PublicConsultingPost extends CI_Controller {
                         $data[] = [
                             "Source" => "GH",
                             "ID" => $contract["id"],
-                            "Dự án" =>$apm["address_street"] . "Phường ". $apm["address_ward"],
+                            "Dự án" =>$apm["address_street"] . ", Phường ". $apm["address_ward"],
                             "Mã phòng" => $room["code"],
                             "Giá thuê" => $contract["room_price"],
                             "Giá cọc" => $contract["deposit_price"],
