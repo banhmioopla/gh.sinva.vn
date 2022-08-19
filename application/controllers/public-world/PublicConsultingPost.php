@@ -71,9 +71,9 @@ class PublicConsultingPost extends CI_Controller {
                             $rate_star = $count_contract = $income = 0;
 
                             $list_contract = $this->ghContract->get([
-                                'time_check_in >=' => $timeFrom,
-                                'time_check_in <=' => $timeTo +86399,
-                                'consultant_support_id' => $timeTo +86399,
+                                'time_check_in >=' => strtotime($timeFrom),
+                                'time_check_in <=' => strtotime($timeTo) +86399,
+                                'consultant_support_id' => $user['account_id'],
                             ]);
                             $count_contract+= count($list_contract);
                             foreach ($list_contract as $con) {
@@ -81,9 +81,9 @@ class PublicConsultingPost extends CI_Controller {
                             }
 
                             $list_contract = $this->ghContract->get([
-                                'time_check_in >=' => $timeFrom,
-                                'time_check_in <=' => $timeTo +86399,
-                                'consultant_id' => $timeTo +86399,
+                                'time_check_in >=' => strtotime($timeFrom),
+                                'time_check_in <=' => strtotime($timeTo) +86399,
+                                'consultant_id' =>$user['account_id'],
                             ]);
                             $count_contract+= count($list_contract);
                             foreach ($list_contract as $con) {
