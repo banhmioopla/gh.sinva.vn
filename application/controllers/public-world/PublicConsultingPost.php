@@ -108,7 +108,7 @@ class PublicConsultingPost extends CI_Controller {
                                     "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
                                     "Số (*)" => $rate_star,
                                     "Số hợp đồng" => $count_contract,
-                                    "Thu nhập" => $income
+                                    "Thu nhập" => round($income,2)
                                 ];
                             }
 
