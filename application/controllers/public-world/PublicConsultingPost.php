@@ -134,6 +134,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Số tháng" => $contract["number_of_month"],
                             "Hết Hạn" => date("d-m-Y", $contract["time_expire"]),
                             "Hoa hồng" => $contract['commission_rate'],
+                            "Doanh thu" => $contract['room_price']*$contract['commission_rate']/100,
                             "Số (*)" => $contract["rate_type"],
                             "Sale Chốt" => $user["name"],
                             "Sale Hỗ trợ" => $user_support["name"],
