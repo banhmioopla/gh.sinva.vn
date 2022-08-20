@@ -92,11 +92,19 @@ class Apartment extends CustomBaseStep {
         if($this->input->get('current_apm_id')){
             $current_apartment = $this->ghApartment->getFirstById($this->input->get('current_apm_id'));
             $district_code = $current_apartment['district_code'];
-            $this->ghApartmentView->insert([
+            $apm_view = $this->ghApartmentView->get([
                 'apartment_id' => $this->input->get('current_apm_id'),
                 'user_id' => $this->auth['account_id'],
-                'time_create' => time()
+                'time_create >' => strtotime(date('d-m-Y'))
             ]);
+            if(count($apm_view) == 0){
+                $this->ghApartmentView->insert([
+                    'apartment_id' => $this->input->get('current_apm_id'),
+                    'user_id' => $this->auth['account_id'],
+                    'time_create' => time()
+                ]);
+            }
+
         }
 
 		$params = [
