@@ -6,7 +6,7 @@ class Apartment extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict', 'ghImage',
+		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict', 'ghImage', 'ghApartmentView',
             'ghApartmentPromotion', 'ghApartmentRequest', 'ghApartmentView', 'ghConsultantBooking', 'ghApartmentShaft',
             'ghTag', 'ghApartmentComment', 'ghConsultantBooking', 'ghBaseRoomType']);
 		$this->load->config('label.apartment');
@@ -92,6 +92,11 @@ class Apartment extends CustomBaseStep {
         if($this->input->get('current_apm_id')){
             $current_apartment = $this->ghApartment->getFirstById($this->input->get('current_apm_id'));
             $district_code = $current_apartment['district_code'];
+            $this->ghApartmentView->insert([
+                'apartment_id' => $this->input->get('current_apm_id'),
+                'user_id' => $this->auth['account_id'],
+                'time_create' => time()
+            ]);
         }
 
 		$params = [
