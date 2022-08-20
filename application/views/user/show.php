@@ -62,67 +62,7 @@ foreach ($list_user as $row) {
 
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="card-box">
-                    <table class="table table-dark">
-                        <tr>
-                            <td colspan="2"><h4 class="text-center">TỔNG QUAN</h4></td>
-                        </tr>
-                        <tr>
-                            <td><i class="mdi mdi-chevron-double-right text-warning"></i> Số Lượng Thành Viên</td>
-                            <td class="text-right"><?= $metric['quantity'] ?></td>
-                        </tr>
-                        <tr>
-                            <td><i class="mdi mdi-chevron-double-right text-warning"></i> VH. Chung</td>
-                            <td class="text-right" width="350px">
-                                <?= $metric['cd_general'] ?>
-                                <hr class="border border-light">
-                                <div class="text-left">
-                                    <?php foreach ($this->arr_general as $item): ?>
-                                        <strong><?= $libUser->getNameByAccountid($item) . ' | ' ?></strong>
-                                    <?php endforeach; ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                        <tr>
-                            <td><i class="mdi mdi-chevron-double-right text-warning"></i> VH. Cấp Cao</td>
-                            <td class="text-right" width="350px">
-                                <?= $metric['cd_high'] ?>
-                                <hr class="border border-light">
-                                <div class="text-left">
-                                    <?php foreach ($user_cd_high as $item): ?>
-                                        <strong><?= $libUser->getNameByAccountid($item) . ' | ' ?></strong>
-                                    <?php endforeach; ?>
-                                </div>
-
-                            </td>
-                        </tr>
-                        </tr>
-                    </table>
-
-                    <div class="mt-3">
-                      <strong>Tìm Sinh Nhật</strong>
-                        <select name="" id="find-birthday" class="form-control mt-2">
-                            <option value="">Chọn Tháng</option>
-                            <?php for($i = 1; $i <= 12; $i++):?>
-                            <option value="<?= $i ?>" <?= $this->input->get('birthDay') == $i ? 'selected':'' ?>>Tháng <?= $i ?></option>
-                            <?php endfor;?>
-                        </select>
-                    </div>
-
-                    <script>
-                        commands.push(function () {
-                            $('#find-birthday').change(function(){
-                                window.location = '/admin/list-user?birthDay='+$(this).val();
-                            });
-                        });
-                    </script>
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card-box">
                     <?php if(count($user_birth_this_month)):
                         ?>
