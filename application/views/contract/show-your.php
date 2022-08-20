@@ -107,24 +107,26 @@
                             <td class="text-center">
                                 <div>
                                     <?php
-                                    $statusClass = 'muted';
+                                    $statusClass = 'muted'; $doc_type = "Cọc ";
                                     if($row['status'] == 'Active') {
                                         $statusClass = 'success';
                                     }
                                     if($row['status'] == 'Pending') {
                                         $statusClass = 'warning';
-                                    }
-                                    if($row['status'] == 'Cancel') {
-                                        $statusClass = 'danger';
+                                        $doc_type .= " Chờ duyệt";
                                     }
 
-                                    if($row['status'] == 'Expired') {
+                                    if(time() >= $row["time_check_in"]){
+                                        $doc_type = "HĐ đã ký ";
+                                    }
+                                    if(time() >= $row["time_expire"]){
+                                        $doc_type = "HĐ hết hạn ";
                                         $statusClass = 'secondary';
                                     }
                                     ?>
                                     <span class="badge badge-<?= $statusClass ?>
                                     font-weight-bold">
-                                    <?= $label_apartment['contract.'.$row['status']] ?>
+                                    <?=  $doc_type ?>
                                     </span>
 
                                 </div>

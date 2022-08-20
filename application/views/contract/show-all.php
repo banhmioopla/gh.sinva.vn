@@ -206,7 +206,9 @@ foreach ($list_contract as $row) {
                             <th>#</th>
                             <th width="350px">Khách thuê</th>
                             <th class="text-right">Giá thuê <small>x1000</small></th>
-                            <th class="text-right">Đã Thu <small>x1000</small></th>
+                            <th class="text-right">Giá cọc <small>x1000</small></th>
+                            <th class="text-right">(*)</th>
+
                             <th width="250px">Thành Viên Chốt</th>
                             <th>Ngày ký</th>
                             <th>Ngày hết hạn</th>
@@ -259,13 +261,15 @@ foreach ($list_contract as $row) {
 
                                     </div>
                                 </td>
-                                <td class="text-warning">
-                                    <div class="mt-1">
+                                <td>
+                                    <div><?= $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']) ?> </div>
+                                    <div class="font-weight-bold text-warning"> <i class=" dripicons-home"></i>
                                         <?php
-
-                                        echo $apartment_info;
+                                        $apartment = $ghApartment->get(['id' => $row['apartment_id']]);
+                                        $room = $ghRoom->get(['id' => $row['room_id']]);
+                                        $room = $room ? $room[0]:null;
                                         ?>
-
+                                        <?= $apartment ? $apartment[0]['address_street']:'' ?> <?= $room ? "(" . $room['code']. ")" : '[không có mp]' ?>
                                     </div>
                                 </td>
                                 <td class="text-right">
@@ -276,10 +280,8 @@ foreach ($list_contract as $row) {
                                         <?= number_format($row['room_price']/1000) ?>
                                     </div>
                                 </td>
-
-                                <td class="text-right">
-                                    <?= number_format($partial_amount/1000) ?>
-                                </td>
+                                <td class="font-weight-bold"><?= number_format($row["deposit_price"]) ?></td>
+                                <td class="font-weight-bold"><?= $row["rate_type"] *1 ?></td>
                                 <td>
                                     <div class="consultant_id text-warning font-weight-bold"
                                          data-pk="<?= $row['id'] ?>"
@@ -316,25 +318,25 @@ foreach ($list_contract as $row) {
                                 <td class="text-center">
                                     <div>
                                         <?php
-                                        $statusClass = 'muted';
+                                        $statusClass = 'muted'; $doc_type = "Cọc ";
                                         if($row['status'] == 'Active') {
                                             $statusClass = 'success';
                                         }
                                         if($row['status'] == 'Pending') {
                                             $statusClass = 'warning';
-                                        }
-                                        if($row['status'] == 'Cancel') {
-                                            $statusClass = 'danger';
+                                            $doc_type .= " Chờ duyệt";
                                         }
 
-                                        if($row['status'] == 'Expired') {
+                                        if(time() >= $row["time_check_in"]){
+                                            $doc_type = "HĐ đã ký ";
+                                        }
+                                        if(time() >= $row["time_expire"]){
+                                            $doc_type = "HĐ hết hạn ";
                                             $statusClass = 'secondary';
                                         }
                                         ?>
                                         <span class="badge badge-<?= $statusClass ?>
-                                    font-weight-bold">
-                                    <?= $label_apartment['contract.'.$row['status']] ?>
-                                    </span>
+                                    font-weight-bold"><?=  $doc_type ?></span>
 
                                     </div>
                                 </td>

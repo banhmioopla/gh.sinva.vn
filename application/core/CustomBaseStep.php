@@ -111,6 +111,7 @@ class CustomBaseStep extends CI_Controller {
             'Team' => ['detail'],
             'ApartmentView' => ['create'],
             'ApartmentTrack' => ['show'],
+            'Contract' => ['showYour'],
 
             'Dashboard' => ['showSale', 'showListProject', 'showByUserCollectedOverview'],
             'ApartmentRequest' => ['exportApartmentExcel'],

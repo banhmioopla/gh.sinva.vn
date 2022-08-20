@@ -125,6 +125,10 @@ class PublicConsultingPost extends CI_Controller {
                         $user = $this->ghUser->getFirstByAccountId($contract['consultant_id']);
                         $user_support = $this->ghUser->getFirstByAccountId($contract['consultant_support_id']);
                         $customer = $this->ghCustomer->getFirstById($contract['customer_id']);
+                        $status = "Cọc";
+                        if(time() >= $contract["time_check_in"]){
+                            $status = "Đã ký";
+                        }
                         $data[] = [
                             "Source" => "GH",
                             "ID" => $contract["id"],

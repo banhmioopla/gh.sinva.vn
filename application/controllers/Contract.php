@@ -109,18 +109,18 @@ class Contract extends CustomBaseStep {
 	public function show(){
 	    $params = [];
         $time_from = date('01-m-Y');
-        $time_to = date(cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')).'-m-Y');
+        $time_to = date("d-m-Y",strtotime('last day of this month', time()));
 
         $timeCheckInFrom = $time_from;
         $timeCheckInTo = $time_to;
 
-        $params['time_check_in >='] = $timeCheckInFrom;
+        $params['time_check_in >='] = strtotime($timeCheckInFrom);
         if($this->input->get('timeCheckInFrom')) {
             $timeCheckInFrom = $this->input->get('timeCheckInFrom');
             $params['time_check_in >='] = strtotime($timeCheckInFrom);
         }
 
-        $params['time_check_in <='] = $timeCheckInTo;
+        $params['time_check_in <='] = strtotime($timeCheckInTo);
         if($this->input->get('timeCheckInTo')) {
             $timeCheckInTo = $this->input->get('timeCheckInTo');
             $params['time_check_in <='] = strtotime($this->input->get('timeCheckInTo'))+86399;
@@ -199,100 +199,6 @@ class Contract extends CustomBaseStep {
 		$this->load->view('components/header');
 		$this->load->view('contract/detail-show', $data);
 		$this->load->view('components/footer');
-	}
-
-	public function createTemp() {
-        if($this->input->get('controller-name') =='Contract') {
-            $this->uploadFile($this->input->get('contract-id'));
-            return redirect($_SERVER['HTTP_REFERER']);
-        }
-		$post = $this->input->post();
-		
-		if($post['time_open']) {
-			$dt = DateTime::createFromFormat('d/m/Y', $post['time_open']);
-			$post['time_open'] = $dt->getTimestamp();
-		} else {
-			$post['time_open'] = 0;
-		}
-
-		if($post['time_expire']) {
-			$dt = DateTime::createFromFormat('d/m/Y', $post['time_expire']);
-			$post['time_expire'] = $dt->getTimestamp();
-		} else {
-			$post['time_expire'] = 0;
-		}
-
-		if(isset($post['customer_name_new']) and !empty($post['customer_name_new'])) {
-			$birth_date_new = $post['birthdate_new'] ? strtotime(str_replace('/', '-', $post['birthdate_new'])) : 0;
-			
-			$new_customer_data = [
-				'name' => $post['customer_name_new'],
-				'gender' => $post['gender_new'],
-				'birthdate' => $birth_date_new,
-				'phone' => $post['phone_new'],
-				'email' => $post['email_new'],
-				'ID_card' => $post['ID_card_new'],
-				'status' => $this->ghCustomer::CUSTOMER_STATUS_SINVA_RENTED,
-				'source' => $post['source_new'],
-				'user_insert_id' => $this->auth['account_id'],
-				'time_insert' => time()
-			];
-		
-			$customer_id = $this->ghCustomer->insert($new_customer_data);
-		} else {
-			$customer_id = $post['customer_name'];
-			$update_customer = ['status' => $this->ghCustomer::CUSTOMER_STATUS_SINVA_RENTED];
-			$customer_model = $this->ghCustomer->updateById($customer_id, $update_customer);
-		}
-		
-		$service_set = $this->ghApartment->get(['id' =>$post['apartment_id']])[0];
-
-		$contract_room_price = $post['room_price'] > 0 ? 
-		(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT) 
-			: $service_set['price'];
-
-		$status_contract = $post['status'];
-		if($this->isYourPermission('Contract', 'pendingForApprove')) {
-			$status_contract = 'Pending';
-		}
-		$contract = [
-			'customer_id' => $customer_id,
-			'room_id' => $post['room_id'],
-			'apartment_id' => $service_set['id'],
-			'consultant_id' => $post['consultant_id'],
-			'room_price' => $contract_room_price,
-			'time_check_in' => $post['time_open'],
-			'time_expire' => $post['time_expire'],
-			'number_of_month' => $post['number_of_month'],
-			'service_set' => json_encode($service_set), // apartment data
-			'status' => $status_contract,
-			'note' => $post['note'],
-			'room_code' => $post['room_code'],
-			'commission_rate' => $post['commission_rate'],
-			'user_create_id' => $this->auth['account_id'],
-			'time_insert' => time(),
-		];
-		
-		$result = $this->ghContract->insert($contract);
-		$this->uploadFile($result);
-		if($this->isYourPermission('Contract', 'pendingForApprove')) {
-			$this->ghNotification->insert(
-				[
-					'message' => '['.$this->auth['name'].'] đã tạo hợp đồng ID = '.$result,
-					'create_user_id' => $this->auth['account_id'],
-					'time_insert' => time(),
-					'controller' => 'Contract',
-					'object_id' => $result
-				]
-			);
-		}
-		
-
-        $this->session->set_flashdata('fast_notify', [
-            'message' => 'Tạo hợp đồng thành công ',
-            'status' => 'success'
-        ]);
-        return redirect('admin/list-contract');
 	}
 
 	public function createPartial(){
