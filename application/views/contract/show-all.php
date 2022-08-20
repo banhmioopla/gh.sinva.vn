@@ -186,8 +186,7 @@ foreach ($list_contract as $row) {
                                     '&timeCheckInFrom='+$('#time_check_in_from').val()+
                                     '&timeCheckInTo='+$('#time_check_in_to').val()+
                                     '&timeExpireFrom='+$('#time_expire_from').val()+
-                                    '&timeExpireTo='+$('#time_expire_to').val()+
-                                    '&department='+$('#department').val();
+                                    '&timeExpireTo='+$('#time_expire_to').val();
                                     window.location = url;
 
                                 });
