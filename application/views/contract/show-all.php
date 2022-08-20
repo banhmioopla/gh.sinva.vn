@@ -198,9 +198,9 @@ foreach ($list_contract as $row) {
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="card-box">
+                <div class="card-box table-responsive">
                     <h4 class="font-weight-bold text-danger">Danh Sách Hợp Đồng Thuê Phòng</h4>
-                    <table class="table-contract table-responsive table table-dark table-bordered">
+                    <table class="table-contract  table table-dark table-bordered">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -219,32 +219,7 @@ foreach ($list_contract as $row) {
                         <tbody>
                         <?php foreach($list_contract as $row ): ?>
                             <?php
-
-
-                            if($this->input->get('department')== 'sale') {
-                                if(in_array($row['consultant_id'],$this->arr_general) || $row['is_control_department'] == "YES") {
-                                    continue;
-                                }
-                            }
-
-                            if($this->input->get('department')== 'cd') {
-                                if(!in_array($row['consultant_id'],$this->arr_general)) {
-                                    if($row['is_control_department'] == "NO")
-                                        continue;
-                                }
-                            }
-
                             $service = json_decode($row['service_set'], true);
-                            $apartment = $ghApartment->getFirstById($row['apartment_id']);
-                            $room = $ghRoom->getFirstById($row['room_id']);
-                            $customer_info = $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']);
-                            $apartment_info = "";
-                            if($apartment) {
-                                $apartment_info =
-                                    "<span class='badge badge-purple'># {$customer_info}</span> 
-                                                <span class='badge badge-secondary'># ĐC {$apartment['address_street']}</span> 
-                                                <span class='badge badge-secondary'># MP {$room['code']}</span> ";
-                            }
                             $partial_amount = 0;
                             $list_partial = $ghContractPartial->get(['contract_id' => $row['id']]);
                             foreach ($list_partial as $item) {
@@ -335,8 +310,7 @@ foreach ($list_contract as $row) {
                                             $statusClass = 'secondary';
                                         }
                                         ?>
-                                        <span class="badge badge-<?= $statusClass ?>
-                                    font-weight-bold"><?=  $doc_type ?></span>
+                                        <span class="badge badge-<?= $statusClass ?> font-weight-bold"><?=  $doc_type ?></span>
 
                                     </div>
                                 </td>

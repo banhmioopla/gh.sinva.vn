@@ -245,10 +245,7 @@ class Contract extends CustomBaseStep {
 		(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT)
 			: $service_set['price'];
 
-		$status_contract = $post['status'];
-		if($this->isYourPermission('Contract', 'pendingForApprove')) {
-			$status_contract = 'Pending';
-		}
+        $status_contract = 'Pending';
 
 		$contract = [
 			'customer_id' => $customer_id,

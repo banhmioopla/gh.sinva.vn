@@ -360,24 +360,6 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                                         name="commission_rate">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="" class="col-12 col-md-4 col-form-label text-right">Trạng thái Hợp đồng </label>
-                            <div class="col-md-8 col-12">
-                                <div class="radio radio-danger">
-                                    <input type="radio" name="status" checked id="sinva-Active" value="Active">
-                                    <label for="sinva-Active">
-                                        Đang Còn Hạn
-                                    </label>
-                                </div>
-                                <div class="radio radio-danger">
-                                    <input type="radio" name="status" disabled id="sinva-Pending" value="Pending">
-                                    <label for="sinva-Pending">
-                                        Đợi Duyệt
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
 
                         <div class="form-group row">
                             <label for="file" class="col-12 col-md-4

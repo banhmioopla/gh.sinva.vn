@@ -74,6 +74,7 @@ class PublicConsultingPost extends CI_Controller {
                                 'time_check_in >=' => strtotime($timeFrom),
                                 'time_check_in <=' => strtotime($timeTo) +86399,
                                 'consultant_support_id' => $user['account_id'],
+                                'status' => "Active"
                             ]);
                             $count_contract+= count($list_contract);
                             foreach ($list_contract as $con) {
@@ -84,6 +85,7 @@ class PublicConsultingPost extends CI_Controller {
                                 'time_check_in >=' => strtotime($timeFrom),
                                 'time_check_in <=' => strtotime($timeTo) +86399,
                                 'consultant_id' =>$user['account_id'],
+                                'status' => "Active"
                             ]);
                             $count_contract+= count($list_contract);
                             foreach ($list_contract as $con) {
