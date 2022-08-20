@@ -46,22 +46,28 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
             $service = $contract['service_set'] ? json_decode($contract['service_set'],true) : null;
 
             $image = $ghImage->getContract($contract['id']);
-            $status = 'warning';
-
-            if ($contract['status'] == 'Active') {
-                $status = 'success';
-            }
-            if ($contract['status'] == 'Pending') {
-                $status = 'warning';
-            }
-            if ($contract['status'] == 'Cancel') {
-                $status = 'danger';
-            }
-            if ($contract['status'] == 'Expired') {
-                $status = 'secondary';
-            }
 
             ?>
+
+            <?php
+            $status = 'muted'; $doc_type = "Cọc ";
+            if($contract['status'] == 'Active') {
+                $status = 'success';
+            }
+            if($contract['status'] == 'Pending') {
+                $status = 'warning';
+                $doc_type .= " Chờ duyệt";
+            }
+
+            if(time() >= $contract["time_check_in"]){
+                $status = "HĐ đã ký ";
+            }
+            if(time() >= $contract["time_expire"]){
+                $doc_type = "HĐ hết hạn ";
+                $status = 'secondary';
+            }
+            ?>
+
             <div class="col-12">
                 <div class="card-box shadow">
                     <h3 class="text-center">Chi tiết hợp đồng</h3>
@@ -91,10 +97,7 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                                     <strong></td>
                             <td>
                                 <div class=" w-100 "><span class="badge
-                                     badge-<?= $status ?> font-weight-bold contract-status"><?=
-                                        $label['contract.'
-                                        . $contract['status']]
-                                        ?></span> <?= $txt_partial ?>
+                                     badge-<?= $status ?> font-weight-bold contract-status"><?= $doc_type ?></span> <?= $txt_partial ?>
                                 </div>
                             </td>
                         </tr>
