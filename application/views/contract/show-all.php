@@ -252,8 +252,8 @@ foreach ($list_contract as $row) {
                                         <?= number_format($row['room_price']/1000) ?>
                                     </div>
                                 </td>
-                                <td class="font-weight-bold"><?= number_format($row["deposit_price"]) ?></td>
-                                <td class="font-weight-bold"><?= $row["rate_type"] *1 ?></td>
+                                <td class="font-weight-bold text-right"><?= number_format($row["deposit_price"]) ?></td>
+                                <td class="font-weight-bold text-right"><?= $row["rate_type"] *1 ?></td>
                                 <td>
                                     <div class="consultant_id text-warning font-weight-bold"
                                          data-pk="<?= $row['id'] ?>"
