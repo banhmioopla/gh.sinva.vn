@@ -126,6 +126,7 @@ class GhContract extends CI_Model {
 	        'consultant_id' => $account_id,
             'time_check_in >=' => strtotime($from_date),
             'time_check_in <=' => strtotime($to_date)+86399,
+            'status <>' => 'Cancel'
         ]);
         $total = 0;
 	    foreach ($list_con as $con){

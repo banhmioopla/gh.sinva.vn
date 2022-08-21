@@ -73,7 +73,8 @@ class GhApartment extends CI_Model {
         $list_contract = $this->ghContract->get([
             "time_check_in >=" => strtotime($timeFrom),
             "time_check_in <=" => strtotime($timeTo)+86399,
-            "apartment_id" => $id
+            "apartment_id" => $id,
+            'status <>' => 'Cancel'
         ]);
         return $list_contract;
 

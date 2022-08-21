@@ -60,6 +60,7 @@ foreach ($list_contract as $row) {
                                 <?php if(count($list_notification) > 0
                                     && isYourPermission('Contract', 'approved', $this->permission_set) ):
                                     ?>
+                                    <div class="col-md-12 text-danger font-weight-bold" id="alert-msg"></div>
                                     <div class="col-md-12">
                                         <!-- end page title end breadcrumb -->
                                         <?php
@@ -107,10 +108,15 @@ foreach ($list_contract as $row) {
 
                                                     </td>
                                                     <td class="text-center"><?= date('d/m/Y H:i', $row['time_insert'])?></td>
-                                                    <td class="text-center">
+                                                    <td class="text-center w-25">
+                                                        <div class="list-action">
+                                                            <a class="m-1" href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>" >
+                                                                <button class="btn btn-sm btn-outline-light btn-rounded waves-light waves-effect">Duyệt</button>
+                                                            </a>
+                                                            <button data-contract-id="<?= $row['object_id'] ?>" class="contract-cancel btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect">Huỷ</button>
+                                                        </div>
                                                         <div>
-                                                            <a class="btn btn-danger btn-sm"
-                                                               href="/admin/contract/approved?contract-id=<?= $row['object_id'] ?>&id=<?= $row['id'] ?>">  Duyệt </a>
+
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -327,7 +333,19 @@ foreach ($list_contract as $row) {
         $('.datepicker').datepicker({
             format: "dd-mm-yyyy"
         });
-
+        $('.contract-cancel').click(function(){
+            let _this = $(this);
+            let contract_id = $(this).data('contract-id');
+            $.ajax({
+                url: '<?= base_url() ?>admin/update-contract-editable',
+                data: {value: 'Cancel', name: 'status', pk: contract_id},
+                method: 'POST',
+                success:function(){
+                    $('#alert-msg').text("đã huỷ hợp đồng thành công!");
+                    _this.closest("tr").remove();
+                }
+            });
+        });
         $('.table-contract').DataTable({
             "pageLength": 10,
             'pagingType': "full_numbers",
