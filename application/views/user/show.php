@@ -186,8 +186,8 @@ foreach ($list_user as $row) {
                                 <td>
                                     <ul>
                                         <li>Ngày làm: <strong><?= $row['time_joined'] > 0 ? date('d-m-Y',$row['time_joined']) :'' ?></strong></li>
-                                        <li>Phone: <strong><?= $row['phone_number'] ?></strong></li>
-                                        <li>Mail: <strong><?= $row['email'] ?></strong></li>
+                                        <li>Phone: <strong class="user-phone_number" data-name="phone_number" data-value ="<?= $row['phone_number'] ?>" data-pk="<?= $row['id'] ?>"><?= $row['phone_number'] ?></strong></li>
+                                        <li>Mail: <strong class="user-email" data-name="email" data-value ="<?= $row['email'] ?>" data-pk="<?= $row['id'] ?>"><?= $row['email'] ?></strong></li>
                                     </ul>
                                 </td>
 
