@@ -19,12 +19,12 @@ $arr_room_id = [];
     <table class="table list-room table-bordered ">
         <thead class="table-dark">
         <tr>
-            <th>Mã Phòng</th>
+            <th class="text-center">MP</th>
             <th>Loại Phòng</th>
             <th>Giá <small>x1000</small></th>
-            <th>Diện Tích</th>
-            <th>Trạng Thái</th>
-            <th>Ng.Trống</th>
+            <th class="text-center">Diện Tích</th>
+            <th class="text-center">Trống</th>
+            <th>Ngày Trống</th>
             <?php if($check_option):?>
                 <th>Tùy chọn</th>
             <?php endif; ?>
@@ -44,40 +44,35 @@ $arr_room_id = [];
                     $bg_for_available = '';
                     $color_for_available = '';
                 }
-                ?>
-                <tr class='<?= $bg_for_available ?>'>
-                    <td>
-                        <div>
-                            <?= $room['code'] ?>
-                        </div>
-                    </td>
-                    <?php
-                    $list_type_id = json_decode($room['room_type_id'], true);
-                    $js_list_type = "";
-                    $text_type_name = "";
 
-                    $type_arr = [];
-                    if($list_type_id) {
-                        $js_list_type = implode(",", $list_type_id);
-                        if ($list_type_id && count($list_type_id) > 0) {
-                            foreach ($list_type_id as $type_id) {
-                                $typeModel = $this->ghBaseRoomType->getFirstById($type_id);
-                                $type_arr[]= $typeModel['name'];
-                            }
+                $list_type_id = json_decode($room['room_type_id'], true);
+                $js_list_type = "";
+                $text_type_name = "";
+
+                $type_arr = [];
+                if($list_type_id) {
+                    $js_list_type = implode(",", $list_type_id);
+                    if ($list_type_id && count($list_type_id) > 0) {
+                        foreach ($list_type_id as $type_id) {
+                            $typeModel = $this->ghBaseRoomType->getFirstById($type_id);
+                            $type_arr[]= $typeModel['name'];
                         }
                     }
-                    $text_type_name = implode(", ",$type_arr );
+                }
+                $text_type_name = implode(", ",$type_arr );
 
-                    $status_txt = '<span class="badge badge-danger">Full</span>';
-                    if($room['status'] === 'Available'){
-                        $status_txt = '<span class="badge badge-success">Trống</span>';
-                    }
+                $status_txt = '<span class="badge badge-danger">Full</span>';
+                if($room['status'] === 'Available'){
+                    $status_txt = '<span class="badge badge-success">Trống</span>';
+                }
+                ?>
 
+                <tr class='<?= $bg_for_available ?>'>
+                    <td class="text-center"> <?= $room['code'] ?></td>
 
-                    ?>
                     <td><div><?= $text_type_name ?></div> <div class="text-primary"><?= !empty($room['type']) ? $room['type'] : '' ?></div></td>
                     <td><div class="font-weight-bold"><?= number_format($room['price']/1000) ?></div></td>
-                    <td><div><?= $room['area'] ?></div></td>
+                    <td class="text-center"><?= $room['area'] ?></td>
                     <td class="text-center"><div><?= $status_txt ?></div></td>
                     <td class="text-center"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?></td>
                     <?php if($check_option):?>

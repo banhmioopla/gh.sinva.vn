@@ -589,8 +589,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <h4 class="font-weight-bold text-danger">Bình luận</h4>
                     </div>
                     <?php foreach ($list_comment as $rating): ?>
-                        <div class="col-12">
-                            <div class="comment-list slimscroll" style="max-height: 370px">
+                        <div class="col-12 mt-2">
+                            <div class="comment-list">
                                 <div class="comment-box-item p-2 bg-comment">
                                     <div class="rated-star" data-score="<?= $rating['score'] ?>"></div>
                                     <p class="commnet-item-date"><?= date("d/m/Y H:i",$rating['time_insert']) ?></p>
