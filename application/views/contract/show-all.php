@@ -90,6 +90,11 @@ foreach ($list_contract as $row) {
                                             <tbody>
                                             <?php
                                             foreach($list_notification as $row ):
+                                                $contract_checker = $this->ghContract->get([
+                                                        'id' => $row["object_id"],
+                                                        'status <>' => 'Cancel',
+                                                ]);
+                                                if(!$contract_checker) continue;
                                                 ?>
                                                 <tr>
                                                     <td class="text-center"><a target = '_blank'
