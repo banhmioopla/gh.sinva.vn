@@ -232,6 +232,15 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                             </td>
                         </tr>
                         <tr>
+                            <td class="text-right"><strong>Giá Cọc<strong></td>
+                            <td>
+                                <div class="contract-deposit_price w-50"
+                                     data-name="deposit_price"
+                                     data-pk="<?= $contract['id'] ?>"
+                                     data-value="<?= $contract['deposit_price'] ?>"><?= number_format($contract['deposit_price']) . ' VND' ?></div>
+                            </td>
+                        </tr>
+                        <tr>
                             <td class="text-right"><strong>Hoa Hồng Ký Gửi<strong></td>
                             <td>
                                 <div class="contract-commission_rate w-50"
@@ -474,7 +483,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                 }
             });
 
-            $('.contract-room_price, .contract-number_of_month, .contract-commission_rate').editable({
+            $('.contract-room_price, .contract-deposit_price, .contract-number_of_month, .contract-commission_rate').editable({
                 type: "text",
                 url: '<?= base_url() ?>admin/update-contract-editable',
                 inputclass: '',
