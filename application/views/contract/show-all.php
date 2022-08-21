@@ -300,6 +300,11 @@ foreach ($list_contract as $row) {
                                             $doc_type = "HĐ hết hạn ";
                                             $statusClass = 'secondary';
                                         }
+
+                                        if($row['status'] == 'Cancel') {
+                                            $statusClass = 'warning';
+                                            $doc_type .= " Đã huỷ";
+                                        }
                                         ?>
                                         <span class="badge badge-<?= $statusClass ?> font-weight-bold"><?=  $doc_type ?></span>
 

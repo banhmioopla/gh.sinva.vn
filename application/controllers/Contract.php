@@ -135,6 +135,7 @@ class Contract extends CustomBaseStep {
             $timeCheckInTo = $this->input->get('timeExpireTo');
             $params['time_expire <='] = strtotime($timeCheckInTo)+86399;
         }
+        $params['gh_contract.status <>'] = "'Cancel'";
 
 		$data['list_contract'] = $this->ghContract->getBySearch($params);
 		$data['list_notification'] = $this->ghNotification->get([
