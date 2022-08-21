@@ -109,7 +109,7 @@ class Contract extends CustomBaseStep {
 	public function show(){
 	    $params = [];
         $time_from = date('01-m-Y');
-        $time_to = date("d-m-Y",strtotime('last day of this month', time()));
+        $time_to = date("d-m-Y",strtotime('last day of this month +1 month', time()));
 
         $timeCheckInFrom = $time_from;
         $timeCheckInTo = $time_to;
