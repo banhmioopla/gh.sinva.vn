@@ -38,8 +38,8 @@
                     <tr>
                         <th>#</th>
                         <th width="350px">Khách thuê</th>
-                        <th>Giá thuê</th>
-                        <th>Giá cọc</th>
+                        <th>Giá thuê <small>x1000</small></th>
+                        <th>Giá cọc <small>x1000</small></th>
                         <th>(*)</th>
                         <th>Ngày ký</th>
                         <th>Ngày hết hạn</th>
@@ -75,10 +75,10 @@
                                      data-pk="<?= $row['id'] ?>"
                                      data-value="<?= $row['room_price'] ?>"
                                      data-name="room_price">
-                                    <?= number_format($row['room_price']) ?>
+                                    <?= number_format($row['room_price']/1000) ?>
                                 </div>
                             </td>
-                            <td class="font-weight-bold"><?= number_format($row["deposit_price"]) ?></td>
+                            <td class="font-weight-bold"><?= number_format($row["deposit_price"]/1000) ?></td>
                             <td class="font-weight-bold"><?= $row["rate_type"] *1 ?></td>
                             <td>
                                 <div class="contract-time_check_in"
