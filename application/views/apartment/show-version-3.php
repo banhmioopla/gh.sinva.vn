@@ -255,19 +255,25 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 <div class="d-flex justify-content-center flex-wrap ">
                     <?php
                     foreach($list_district as $district):
-                        $district_btn = 'btn-outline-success';
+                        $district_btn = 'btn-outline-success'; $active_element = "";
+                        if(!empty($current_apartment) && $district['code'] == $current_apartment["district_code"]){
+                            $active_element = "active";
+                        }
                         ?>
 
                         <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
-                           class="btn m-1 btn-sm <?= $district_btn ?>
-                        <?= $district_code == $district['code'] ? 'active':'' ?>
-                        btn-rounded waves-light waves-effect">
+                           class="btn m-1 btn-sm <?= $district_btn ?> <?= $active_element ?> btn-rounded waves-light waves-effect">
                             Q. <?= $district['name'] ?> </a>
 
                     <?php endforeach; ?>
-                    <?php foreach ($list_features as $feature_k => $feature_v):?>
+                    <?php foreach ($list_features as $feature_k => $feature_v):
+                        $active_element = "";
+                        if(!empty($this->input->get('feature')) && $this->input->get('feature') == $feature_k){
+                            $active_element = "active";
+                        }
+                        ?>
                         <a href="<?= base_url().'admin/list-apartment?feature='.$feature_k ?>"
-                           class="btn m-1 btn-sm btn-rounded btn-outline-danger waves-light waves-effect"> <?= $feature_v ?> </a>
+                           class="btn m-1 btn-sm btn-rounded btn-outline-danger <?= $active_element ?> waves-light waves-effect"> <?= $feature_v ?> </a>
                     <?php endforeach;?>
                 </div>
                 <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
@@ -295,6 +301,17 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             </div>
             <?php endif; ?>
         </div>
+        <?php if(empty($current_apartment)): ?>
+            <div class="col-md-9 col-12">
+                <div class="card-box">
+                    <div class="alert alert-danger" role="alert">
+                        Rất tiếc, Không tồn tại dự án!
+                    </div>
+                </div>
+
+            </div>
+        <?php endif; ?>
+        <?php if(!empty($current_apartment)): ?>
         <div class="col-md-9 col-12">
             <!--DETAIL CURRENT APARTMENT-->
 
@@ -613,6 +630,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </div>
             </div>
         </div>
+        <?php endif; ?>
     </div>
     <?php $this->load->view('apartment/components/modals') ?>
 </div>
