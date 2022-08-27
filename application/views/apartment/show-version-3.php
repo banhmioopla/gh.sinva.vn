@@ -243,7 +243,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 button-list">
             <div class="float-right btn-group mb-2 mb-2">
                 <button type="button" class="btn btn-danger" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
