@@ -66,6 +66,9 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     .bg-comment{
         background-color: #fcffd4;
     }
+    .item-feature {
+        display:none;
+    }
 
     @media (min-width: 768px) {
         .carousel-multi-item-2 .col-md-3 {
@@ -253,19 +256,6 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
         <div class="col-md-3 col-12">
             <div class="card-box">
                 <div class="d-flex justify-content-center flex-wrap ">
-                    <?php
-                    foreach($list_district as $district):
-                        $district_btn = 'btn-outline-success'; $active_element = "";
-                        if(!empty($current_apartment) && $district['code'] == $current_apartment["district_code"]){
-                            $active_element = "active";
-                        }
-                        ?>
-
-                        <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
-                           class="btn m-1 btn-sm <?= $district_btn ?> <?= $active_element ?> btn-rounded waves-light waves-effect">
-                            Q. <?= $district['name'] ?> </a>
-
-                    <?php endforeach; ?>
                     <?php foreach ($list_features as $feature_k => $feature_v):
                         $active_element = "";
                         if(!empty($this->input->get('feature')) && $this->input->get('feature') == $feature_k){
@@ -273,9 +263,30 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         }
                         ?>
                         <a href="<?= base_url().'admin/list-apartment?feature='.$feature_k ?>"
-                           class="btn m-1 btn-sm btn-rounded btn-outline-danger <?= $active_element ?> waves-light waves-effect"> <?= $feature_v ?> </a>
+                           class="btn m-1 btn-sm item-feature btn-rounded btn-outline-danger <?= $active_element ?> waves-light waves-effect"> <?= $feature_v ?> </a>
                     <?php endforeach;?>
+
+                    <?php
+                    foreach($list_district as $district):
+                        $active_element = "";
+                        if(!empty($current_apartment) && $district['code'] == $current_apartment["district_code"]){
+                            $active_element = "active";
+                        }
+                        ?>
+
+                        <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
+                           class="btn m-1 btn-sm item-feature btn-outline-success <?= $active_element ?> btn-rounded waves-light waves-effect">
+                            Q. <?= $district['name'] ?> </a>
+
+                    <?php endforeach; ?>
+
+
                 </div>
+                <div class="d-flex justify-content-center flex-wrap border-bottom mt-2 mb-3">
+                    <div id="loadMore" class="m-1 badge badge-pill badge-primary"> <i class="fa fa-arrow-circle-down"></i> Mở rộng</div>
+                    <div id="showLess" class="m-1 badge badge-pill badge-primary"> <i class="fa fa-arrow-circle-up"></i> Thu gọn</div>
+                </div>
+
                 <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
                 <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
 
@@ -636,6 +647,19 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 </div>
 <script>
     commands.push(function () {
+        // item-feature
+        let size_li = $(".item-feature").length;
+        x=3;
+        $('.item-feature:lt('+x+')').show();
+        $('#loadMore').click(function () {
+            x= (x+5 <= size_li) ? x+5 : size_li;
+            $('.item-feature:lt('+x+')').show();
+        });
+        $('#showLess').click(function () {
+            x=(x-5<0) ? 3 : x-5;
+            $('.item-feature').not(':lt('+x+')').hide();
+        });
+
         $('.search-address').on('keyup', function(){
             var value = $(this).val().toLowerCase();
             $(".address-item").filter(function() {
