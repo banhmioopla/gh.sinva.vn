@@ -43,14 +43,6 @@ include VIEWPATH.'functions.php';
         <link href="<?= $assets_path ?>css/custom.css?v=20201115" rel="stylesheet"
               type="text/css" />
 
-        <link rel="stylesheet" href="<?= $assets_path ?>stories-board/zuck.css">
-
-        <!-- lib skins -->
-        <link rel="stylesheet" href="<?= $assets_path ?>stories-board/skins/snapgram.css">
-        <link rel="stylesheet" href="<?= $assets_path ?>stories-board/skins/vemdezap.css">
-        <link rel="stylesheet" href="<?= $assets_path ?>stories-board/skins/facesnap.css">
-        <link rel="stylesheet" href="<?= $assets_path ?>stories-board/skins/snapssenger.css">
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw==" crossorigin="anonymous" />
 		<script src="<?= $assets_path ?>js/modernizr.min.js"></script>
 		<script src="<?= base_url() ?>js/custom-header.js"></script>

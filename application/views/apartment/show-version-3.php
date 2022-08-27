@@ -244,17 +244,33 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="m-1 float-right">
-                <button type="button" class="btn btn-danger" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
-                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+            <!--<div class="m-1 float-right">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+                    </div>
+                </div>
+            </div>-->
+            <div class="float-right">
+                <div class="btn-group mb-2 dropleft">
+                    <button type="button"
+                            class="btn btn-danger waves-effect waves-light dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tuỳ Chọn
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+
+                    </div>
                 </div>
             </div>
+
+        </div>
+        <div class="col-12">
 
         </div>
         <div class="col-md-3 col-12">
