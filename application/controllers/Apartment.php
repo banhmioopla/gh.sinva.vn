@@ -74,7 +74,7 @@ class Apartment extends CustomBaseStep {
 
         $this->session->set_userdata(['switch_product_type' => $this->ghApartment->switchProductType($product_type)]);
         $list_features = [
-            "new" => "Mới (30d)",
+            "new" => " <i class='fa fa-bookmark'></i> Mới (30d)",
             "best_seller_month" => " <i class='fa fa-flash'></i> Best seller ".date("m-Y"),
 //            "best_view" => "Xem nhiều trong tháng",
         ];
