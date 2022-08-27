@@ -49,6 +49,10 @@ class GhApartment extends CI_Model {
         }
         return $this->db->get_where($this->table, $where)->result_array();
     }
+    public function get_where_in($col = 'id', $arr = []) {
+        $this->db->where_in($col, $arr);
+        return $this->db->get($this->table)->result_array();
+    }
 
     public function getLike($like = []) {
         $this->db->from($this->table);

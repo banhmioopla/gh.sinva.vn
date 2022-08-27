@@ -266,7 +266,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                     <?php endforeach; ?>
                     <?php foreach ($list_features as $feature_k => $feature_v):?>
-                        <a href="<?= base_url().'admin/list-apartment?feature-code='.$feature_k ?>"
+                        <a href="<?= base_url().'admin/list-apartment?feature='.$feature_k ?>"
                            class="btn m-1 btn-sm btn-rounded btn-outline-danger waves-light waves-effect"> <?= $feature_v ?> </a>
                     <?php endforeach;?>
                 </div>
@@ -296,6 +296,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             <?php endif; ?>
         </div>
         <div class="col-md-9 col-12">
+            <!--DETAIL CURRENT APARTMENT-->
 
             <?php
             $apartment_score = $this->ghApartmentComment->getScoreByApm($current_apartment['id'], $from_date, $to_date);
@@ -351,12 +352,16 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <h4 class="font-weight-bold text-danger">Tổng quan</h4>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
-                        <div> <i class="mdi mdi-cube"></i> Quản lý dự án</div>
+                        <div> <i class="fa fa-user"></i> Quản lý dự án</div>
                         <div class="font-weight-bold pl-2"><?= $this->libUser->getNameByAccountid($current_apartment['user_collected_id']) . " | ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ?></div>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
-                        <div> <i class="mdi mdi-cube"></i> Thời gian cập nhật</div>
+                        <div> <i class="fa fa-calendar"></i> Thời gian cập nhật</div>
                         <div class="font-weight-bold pl-2"><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-4">
+                        <div> <i class="fa fa-calendar"></i> Ngày nhập</div>
+                        <div class="font-weight-bold pl-2"><?= $current_apartment["time_insert"] > 0 ? date("d/m/Y",$current_apartment["time_insert"]) : "..." ?></div>
                     </div>
                     <div class="col-12">
                         <div class="row">

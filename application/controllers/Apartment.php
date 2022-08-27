@@ -74,9 +74,13 @@ class Apartment extends CustomBaseStep {
 
         $this->session->set_userdata(['switch_product_type' => $this->ghApartment->switchProductType($product_type)]);
         $list_features = [
-            "new" => "Dự án mới",
-            "best_contract_performance" => "Sale hot",
+            "new" => "Mới (30d)",
+            "best_seller_month" => " <i class='fa fa-flash'></i> Best seller ".date("m-Y"),
+//            "best_view" => "Xem nhiều trong tháng",
         ];
+        $timeFrom = date("01-m-Y");
+        $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
+
 		$data = [];
         if(empty($this->product_category)) {
             $this->load->view('components/header');
@@ -89,6 +93,7 @@ class Apartment extends CustomBaseStep {
         if(!empty( $this->input->get('district-code'))){
             $district_code = $this->input->get('district-code');
         }
+
         if($this->input->get('current_apm_id')){
             $current_apartment = $this->ghApartment->getFirstById($this->input->get('current_apm_id'));
             $district_code = $current_apartment['district_code'];
@@ -111,6 +116,31 @@ class Apartment extends CustomBaseStep {
             'district_code' => $district_code,
             'active' => 'YES'
         ];
+        if(!empty( $this->input->get('feature'))){
+            $feature = $this->input->get('feature');
+            if($feature == "best_seller_month"){
+                $feature_list_contract = $this->ghContract->get([
+                    "time_check_in >=" => strtotime($timeFrom),
+                    "time_check_in <=" => strtotime($timeTo)+86399,
+                    'status <>' => 'Cancel'
+                ]);
+                $feature_list_apm_id = [];
+                foreach ($feature_list_contract as $item){
+                    $feature_list_apm_id[] = $item["apartment_id"];
+                }
+                $params = [];
+                $list_apartment = $this->ghApartment->get_where_in("id", array_unique($feature_list_apm_id));
+            }
+
+            if($feature == "new"){
+                $params = [
+                    'time_insert >=' => strtotime("-30days"),
+                    'active' => 'YES'
+                ];
+            }
+
+        }
+
         $this->session->set_userdata(['current_district_code' => $district_code]);
 
 		$list_district = $this->ghDistrict->get(['active' => 'YES'],'length(name),name', '');
@@ -121,13 +151,13 @@ class Apartment extends CustomBaseStep {
         }
 
 		$list_ward = $this->ghRoom->getWardByDistrict($district_code);
-        if(strlen($this->input->get('apmTag')) || strlen($this->input->get('rangeTime'))){
-            $params = ['active' => 'YES'];
+
+        if(!empty($params)){
+            $list_apartment = $this->ghApartment->get($params, 'time_update DESC,  id DESC, address_street ASC');
         }
 
-		$list_apartment = $this->ghApartment->get($params, 'time_update DESC,  id DESC, address_street ASC');
 		$today = time();
-        $list_apm_5days = [];
+        $list_apm_5days = $list_contract = [];
         $data['today'] = $today;  $data['list_apartment'] = [];
 		foreach($list_apartment as $item) {
 			if($this->input->get('apmTag') && !$this->input->get('apmTag') == $item['tag_id']) {
@@ -172,6 +202,10 @@ class Apartment extends CustomBaseStep {
 		}
 
         if(empty($this->input->get('current_apm_id')) && count($data['list_apartment'])) {
+
+            $current_apartment = $list_apartment[0];
+        }
+        if(!empty($this->input->get('feature')) && count($list_apartment)){
             $current_apartment = $list_apartment[0];
         }
 
@@ -235,10 +269,8 @@ class Apartment extends CustomBaseStep {
             foreach ($list_room as $room) {
                 $cb_room[] = ['value' => $room['id'], 'text' => $room['code'] . ' - '. number_format($room['price'])];
             }
-            $timeFrom = date("01-m-Y");
-            $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
-            $list_contract = $this->ghApartment->getListContractById($current_apartment['id'], $timeFrom, $timeTo);
 
+            $list_contract = $this->ghApartment->getListContractById($current_apartment['id'], $timeFrom, $timeTo);
         }
 
         $list_customer = $this->ghCustomer->getCustomerOfConsultant($this->auth['account_id']);
@@ -260,12 +292,13 @@ class Apartment extends CustomBaseStep {
 		/*--- Load View ---*/
 		$this->load->view('components/header');
         $template =  'apartment/show-version-3';
+
 		$this->load->view($template, [
 		    'district_code' => $district_code,
             'current_apartment' => $current_apartment,
             'list_ward' => $list_ward,
             'list_district' => $list_district,
-            'list_features' => [],
+            'list_features' => $list_features,
             "list_contract" => $list_contract,
             'list_apartment' => $list_apartment,
             'cb_room' => $cb_room,
