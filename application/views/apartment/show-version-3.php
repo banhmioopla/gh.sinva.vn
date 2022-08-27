@@ -346,7 +346,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 <div class="row">
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
-                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $current_apartment['address_street'] . ", phường" . $current_apartment["address_ward"] ?></h2>
+                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $current_apartment['address_street'] . " ,phường " . $current_apartment["address_ward"] ?></h2>
                             <div class="rating-score pl-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </div>
                         </div>
                     </div>
