@@ -243,41 +243,21 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
     </div>
     <div class="row">
-        <div class="col-12 button-list">
-            <div class="float-right btn-group mb-2 mb-2">
-                <button type="button" class="btn btn-danger" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
-                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+        <div class="col-12">
+            <div class="button-list">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Tuỳ chọn</button>
+                    <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+                    </div>
                 </div>
             </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"><i class="fa fa-tasks"></i> Dự Án</button>
-                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu">
 
-
-                    <a class="dropdown-item" href="/admin/list-apartment"> <i class="fa fa-tasks mr-1"></i> Danh Sách Dự Án</a>
-
-
-                    <?php if(isYourPermission('Image', 'show',$this->permission_set)):?>
-                        <a class="dropdown-item" href="/admin/show-image-apartment"> <i class="fa fa-tasks mr-1"></i> Kho Hình Ảnh</a>
-                    <?php endif; ?>
-
-                    <?php if(isYourPermission('Mapbox', 'show',$this->permission_set)):?>
-                        <a class="dropdown-item" href="/admin/list-mapbox"> <i class="mdi mdi-google-maps mr-1"></i> Bản Đồ Dự Án</a>
-                    <?php endif; ?>
-
-                    <a class="dropdown-item" href="/admin/list-apartment-track"> <i class="mdi mdi-timetable mr-1"></i> Nhật Ký Dự Án</a>
-                </div>
-            </div>
         </div>
         <div class="col-md-3 col-12">
             <div class="card-box">
