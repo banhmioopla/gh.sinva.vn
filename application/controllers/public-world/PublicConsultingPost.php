@@ -57,7 +57,7 @@ class PublicConsultingPost extends CI_Controller {
         $token = $this->input->get('token');
         $data = [];
         $timeFrom = date("06-m-Y");
-        $timeTo = date("05-m-Y",strtotime('+1 month', time()));
+        $timeTo = date("05-m-Y",strtotime('+1 month'));
 
         $income_standard_rate = .55;
 
