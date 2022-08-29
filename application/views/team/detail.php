@@ -85,6 +85,7 @@
                                     'consultant_id' => $row['user_id'],
                                     'time_insert >= ' => strtotime($timeFrom),
                                     'time_insert <= ' => strtotime($timeTo) + 86399,
+                                    'status <>' => 'Cancel'
                             ]));
 
                             $total = $ghContract->getTotalSaleByConsultant($row['user_id'], $timeFrom, $timeTo);
