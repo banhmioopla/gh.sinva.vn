@@ -30,7 +30,7 @@ class Team extends CustomBaseStep {
 	    $id = $this->input->get('id');
 	    $list_member = $this->ghTeamUser->get(['team_id' => $id]);
         $team = $this->ghTeam->getFirstById($id);
-        $timeFrom = date('01-m-Y');
+        $timeFrom = date("06-m-Y");
         $timeTo = date("05-m-Y",strtotime('+1 month', time()));
         if($this->input->get('timeFrom')){
             $timeFrom = $this->input->get('timeFrom');
