@@ -56,8 +56,8 @@ class PublicConsultingPost extends CI_Controller {
     public function exportToGoogleSheet(){
         $token = $this->input->get('token');
         $data = [];
-        $timeFrom = date("01-m-Y");
-        $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
+        $timeFrom = date("06-m-Y");
+        $timeTo = date("05-m-Y",strtotime('+1 month', time()));
 
         $income_standard_rate = .55;
 
