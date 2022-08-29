@@ -111,6 +111,7 @@ class LibUser {
                 'consultant_id' => $uu['user_id'],
                 'time_check_in >=' => $from_date,
                 'time_check_in <=' => $to_date +  86399,
+                'status <>' => 'Cancel'
             ]);
 
             $total += count($list_contract);
