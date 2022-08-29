@@ -113,7 +113,7 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-right"><strong>Thành Viên Hỗ Trợ (-30%TN)
+                            <td class="text-right"><strong>Thành Viên Hỗ Trợ
                                     <strong></td>
                             <td>
                                 <div class="consultant_support_id w-50"
