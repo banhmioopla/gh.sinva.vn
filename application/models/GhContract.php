@@ -30,6 +30,7 @@ class GhContract extends CI_Model {
             'consultant_id' => $user_id,
             'time_insert >= ' => strtotime($timeFrom),
             'time_insert <= ' => strtotime($timeTo) + 86399,
+            'status <>' => 'Cancel'
             ])->result_array();
 
         $total = 0;
