@@ -108,8 +108,8 @@ class Contract extends CustomBaseStep {
 
 	public function show(){
 	    $params = [];
-        $time_from = date('01-m-Y');
-        $time_to = date("d-m-Y",strtotime('last day of this month +1 month', time()));
+        $timeFrom = date("06-m-Y");
+        $timeTo = date("05-m-Y",strtotime('+1 month', time()));
 
         $timeCheckInFrom = $time_from;
         $timeCheckInTo = $time_to;
@@ -246,9 +246,7 @@ class Contract extends CustomBaseStep {
 
 		$service_set = $this->ghApartment->get(['id' =>$post['apartment_id']])[0];
 
-		$contract_room_price = $post['room_price'] > 0 ?
-		(int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT)
-			: $service_set['price'];
+		$contract_room_price = (int) filter_var($post["room_price"], FILTER_SANITIZE_NUMBER_INT);
 
         $status_contract = 'Pending';
 
@@ -259,7 +257,7 @@ class Contract extends CustomBaseStep {
 			'apartment_id' => $service_set['id'],
 			'consultant_id' => $post['consultant_id'],
 			'room_price' => $contract_room_price,
-			'deposit_price' => $post['deposit_price'],
+			'deposit_price' =>(int) filter_var($post["deposit_price"],FILTER_SANITIZE_NUMBER_INT),
 			'time_check_in' => strlen($post['time_check_in']) ? strtotime($post['time_check_in']) : null,
 			'time_expire' => strlen($post['time_expire']) ? strtotime($post['time_expire']) :null ,
 			'number_of_month' => $post['number_of_month'],

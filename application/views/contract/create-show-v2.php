@@ -338,7 +338,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="room_price" class="col-12 col-md-4
+                            <label for="deposit_price" class="col-12 col-md-4
                             col-form-label text-right">Giá Cọc <span class="text-danger">*</span></label>
                             <div class="col-md-6 col-12">
                                 <input  type="text"
@@ -571,9 +571,9 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
             });
         });
 
-        $( 'input[name=room_price]' ).on('keyup', function() {
+        $( 'input[name=room_price], input[name=deposit_price]' ).on('keyup', function() {
             // 1
-            var $this = $( 'input[name=room_price]');
+            var $this = $(this);
             var input = $this.val();
             console.log(input);
             // 2

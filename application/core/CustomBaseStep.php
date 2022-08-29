@@ -123,8 +123,8 @@ class CustomBaseStep extends CI_Controller {
             'CronCustomer' => ['removeImg'],
         ];
 
-        $timeFrom = date("01-m-Y");
-        $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
+        $timeFrom = date("06-m-Y");
+        $timeTo = date("05-m-Y",strtotime('+1 month', time()));
         if($this->session->has_userdata('total_sale_personal') === false){
             $this->session->set_userdata(['total_sale_personal' => $this->ghContract->getTotalSaleByUser($this->auth['account_id'], $timeFrom, $timeTo)]);
         }
