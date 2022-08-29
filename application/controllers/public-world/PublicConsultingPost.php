@@ -120,6 +120,7 @@ class PublicConsultingPost extends CI_Controller {
                     $list_contract = $this->ghContract->get([
                         "time_check_in >=" => strtotime($timeFrom),
                         "time_check_in <=" => strtotime($timeTo)+86399,
+                        'status' => "Active"
                     ]);
                     foreach ($list_contract as $contract){
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
