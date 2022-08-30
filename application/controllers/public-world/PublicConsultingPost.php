@@ -78,7 +78,7 @@ class PublicConsultingPost extends CI_Controller {
                             ]);
                             $count_contract+= count($list_contract);
                             foreach ($list_contract as $con) {
-                                $rate_star += $con['rate_type'];
+                                $rate_star += (float)$con['rate_type'];
                             }
 
                             $list_contract = $this->ghContract->get([
@@ -89,7 +89,7 @@ class PublicConsultingPost extends CI_Controller {
                             ]);
                             $count_contract+= count($list_contract);
                             foreach ($list_contract as $con) {
-                                $rate_star += $con['rate_type'];
+                                $rate_star += (float)$con['rate_type'];
                             }
 
 
