@@ -147,7 +147,7 @@ class PublicConsultingPost extends CI_Controller {
                         $user = $this->ghUser->getFirstByAccountId($contract['consultant_id']);
                         $user_support = "";
                         if(!empty($contract["arr_supporter_id"])){
-                            $arr = json_decode($con["arr_supporter_id"], true);
+                            $arr = json_decode($contract["arr_supporter_id"], true);
                             $user_support = implode(" ,", $arr);
                         }
 
