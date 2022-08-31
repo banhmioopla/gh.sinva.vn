@@ -127,7 +127,7 @@ class PublicConsultingPost extends CI_Controller {
                                     "Account" => $user["account_id"],
                                     "Tên" => $user["name"],
                                     "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
-                                    "Số (*)" => (string)$rate_star,
+                                    "Số (*)" => $rate_star,
                                     "Số hợp đồng" => $count_contract,
                                     "Thu nhập" => round($income,2)
                                 ];
