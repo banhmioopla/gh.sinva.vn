@@ -15,6 +15,14 @@ class PublicConsultingPost extends CI_Controller {
         $this->load->model('ghPublicConsultingPost');
         $this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
         $this->public_dir = 'public-world/';
+
+        $this->timeFrom = date("06-m-Y");
+        $this->timeTo = date("05-m-Y",strtotime($this->timeFrom.' +1 month'));
+        if(strtotime(date("d-m-Y")) < strtotime(date("5-m-Y"))){
+            $this->timeFrom = date("06-m-Y", strtotime("-1 month"));
+            $this->timeTo = date("05-m-Y");
+        }
+
     }
 
     public function detailShow(){
@@ -57,8 +65,8 @@ class PublicConsultingPost extends CI_Controller {
     public function exportToGoogleSheet(){
         $token = $this->input->get('token');
         $data = [];
-        $timeFrom = date("06-m-Y");
-        $timeTo = date("05-m-Y",strtotime($timeFrom.' +1 month'));
+        $timeFrom = $this->timeFrom;
+        $timeTo = $this->timeTo;
 
         $income_standard_rate = .55;
 
