@@ -64,7 +64,7 @@ class PublicConsultingPost extends CI_Controller {
             'time_check_in <=' => strtotime($timeTo) +86399,
         ]);
 
-        foreach ($master_contract as $item ){
+        /*foreach ($master_contract as $item ){
             if(!empty($item['consultant_support_id'])){
                 $this->ghContract->updateById($item["id"], [
                     "arr_supporter_id" => json_encode([$item['consultant_support_id']])
@@ -75,7 +75,7 @@ class PublicConsultingPost extends CI_Controller {
                 ]);
             }
 
-        }
+        }*/
         $income_standard_rate = .55;
 
         if(!empty($token)){
@@ -148,7 +148,12 @@ class PublicConsultingPost extends CI_Controller {
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
                         $user = $this->ghUser->getFirstByAccountId($contract['consultant_id']);
-                        $user_support = $this->ghUser->getFirstByAccountId($contract['consultant_support_id']);
+                        $user_support = "";
+                        if(!empty($contract["arr_supporter_id"])){
+                            $arr = json_decode($con["arr_supporter_id"], true);
+                            $user_support = implode(" ,", $arr);
+                        }
+
                         $customer = $this->ghCustomer->getFirstById($contract['customer_id']);
                         $status = "Cọc";
                         if(time() >= $contract["time_check_in"]){
