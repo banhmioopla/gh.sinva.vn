@@ -170,7 +170,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Doanh thu" => $contract['room_price']*$contract['commission_rate']/100,
                             "Số (*)" => $contract["rate_type"],
                             "Sale Chốt" => $user["name"],
-                            "Sale Hỗ trợ" => $user_support["name"],
+                            "Sale Hỗ trợ" => $user_support,
                             "Khách Hàng" => $customer["name"],
                             "Phone" => $customer["phone"],
                         ];
