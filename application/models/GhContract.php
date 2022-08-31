@@ -122,6 +122,27 @@ class GhContract extends CI_Model {
         return round($con['commission_rate']/100*$con['room_price'],2);
     }
 
+    public function getTotalRateStar($account_id, $from_date, $to_date){
+        $list_con = $this->get([
+            'time_check_in >=' => strtotime($from_date),
+            'time_check_in <=' => strtotime($to_date)+86399,
+            'status <>' => 'Cancel'
+        ]);
+        $rate = 0;
+        foreach ($list_con as $con) {
+            if(!empty($con['arr_supporter_id'])){
+                $arr = json_decode($con['arr_supporter_id'], true);
+                if(in_array($account_id, $arr)){
+                    $rate += (1-$con['rate_type']) / (count($arr));
+                }
+            }
+            if($con['consultant_id'] == $account_id){
+                $rate += $con['rate_type'];
+            }
+        }
+        return (string) $rate;
+    }
+
     public function getTotalSaleByUser($account_id, $from_date, $to_date){
 	    $list_con = $this->get([
 	        'consultant_id' => $account_id,

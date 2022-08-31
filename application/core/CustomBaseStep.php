@@ -124,9 +124,12 @@ class CustomBaseStep extends CI_Controller {
         ];
 
         $timeFrom = date("06-m-Y");
-        $timeTo = date("05-m-Y",strtotime('+1 month'));
-        if($this->session->has_userdata('total_sale_personal') === false){
-            $this->session->set_userdata(['total_sale_personal' => $this->ghContract->getTotalSaleByUser($this->auth['account_id'], $timeFrom, $timeTo)]);
+        $timeTo = date("05-m-Y",strtotime($timeFrom.' +1 month'));
+        if($this->session->has_userdata('personal_data') === false){
+            $this->session->set_userdata(['personal_data' => [
+                'total_sale' => $this->ghContract->getTotalSaleByUser($this->auth['account_id'], $timeFrom, $timeTo),
+                'rate_star' => $this->ghContract->getTotalRateStar($this->auth['account_id'], $timeFrom, $timeTo)
+            ]]);
         }
 
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {

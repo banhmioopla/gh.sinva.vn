@@ -102,7 +102,7 @@ include VIEWPATH.'functions.php';
                             <h3 class="text-danger font-weight-bold"><?/*= $this->ghApartment->getTitleProductType($this->product_type) */?></h3>
                         </a>-->
                         <a href="#" class="logo">
-                            <h4 class="text-success bg-dark p-1 rounded font-weight-bold">D.thu: <?= number_format($this->session->has_userdata("total_sale_personal") ? $this->session->userdata("total_sale_personal") : 0) ?></h4>
+                            <h4 class="text-success bg-dark p-1 rounded font-weight-bold"><?= ($this->session->has_userdata("personal_data") ? number_format((float)$this->session->userdata("personal_data")["total_sale"]/1000) . '<span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> '.$this->session->userdata("personal_data")["rate_star"].' <i class="mdi mdi-star-circle"></i> </span>' : 0) ?></h4>
                         </a>
                     </div>
                     <!-- End Logo container-->
