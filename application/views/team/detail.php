@@ -83,8 +83,8 @@
                         <?php foreach($list_member as $row ):
                             $contract =count($ghContract->get([
                                     'consultant_id' => $row['user_id'],
-                                    'time_insert >= ' => strtotime($timeFrom),
-                                    'time_insert <= ' => strtotime($timeTo) + 86399,
+                                    'time_check_in >= ' => strtotime($timeFrom),
+                                    'time_check_in <= ' => strtotime($timeTo) + 86399,
                                     'status <>' => 'Cancel'
                             ]));
 

@@ -17,6 +17,7 @@ class GhContract extends CI_Model {
 
         $this->general_fund = 0.02;
         $this->product_manager_fund = 0.05;
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
     }
 
     public function get($where = [], $order_column  = 'id', $trend = 'DESC') {
@@ -28,8 +29,8 @@ class GhContract extends CI_Model {
         $this->db->order_by('id','DESC');
         $list = $this->db->get_where($this->table, [
             'consultant_id' => $user_id,
-            'time_insert >= ' => strtotime($timeFrom),
-            'time_insert <= ' => strtotime($timeTo) + 86399,
+            'time_check_in >= ' => strtotime($timeFrom),
+            'time_check_in <= ' => strtotime($timeTo) + 86399,
             'status <>' => 'Cancel'
             ])->result_array();
 
