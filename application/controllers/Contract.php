@@ -110,7 +110,6 @@ class Contract extends CustomBaseStep {
 	    $params = [];
         $time_from = date("06-m-Y");
         $time_to = date("05-m-Y",strtotime($time_from.' +1 month'));
-
         $timeCheckInFrom = $time_from;
         $timeCheckInTo = $time_to;
 
@@ -143,15 +142,29 @@ class Contract extends CustomBaseStep {
             'time_insert >=' =>strtotime($timeCheckInFrom),
             'time_insert <=' =>strtotime($timeCheckInTo)+86399
         ]);
-		
+
+		/*view handle*/
+        $partialGroup = "contract/table-default";
+		if(!empty($this->input->get("partialGroup"))){
+		    $partialGroup = $this->input->get("partialGroup");
+		    switch ($partialGroup){
+                case "consultant":
+                    $partialGroup = "contract/group-by-consultant";
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+
 		$data['libCustomer'] = $this->libCustomer;
 		$data['libUser'] = $this->libUser;
 		$data['ghApartment'] = $this->ghApartment;
 		$data['ghRoom'] = $this->ghRoom;
-		$data['ghImage'] = $this->ghImage;
 		$data['ghContractPartial'] = $this->ghContractPartial;
-		$data['libRoom'] = $this->libRoom;
-		$data['label_apartment'] =  $this->config->item('label.apartment');
+		$data['partialGroup'] = $partialGroup;
+
 		/*--- Load View ---*/
         $data['time_from'] = $time_from;
         $data['time_to'] = $time_to;
