@@ -5,6 +5,7 @@ class PublicConsultingPost extends CI_Controller {
 
     public function __construct()
     {
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
         parent::__construct();
         $this->load->model(['ghRoom', 'ghContract', 'ghUser','ghCustomer']);
         $this->load->model('ghApartment');
