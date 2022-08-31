@@ -252,7 +252,6 @@ class Contract extends CustomBaseStep {
 
 		$contract = [
 			'customer_id' => $customer_id,
-			'consultant_support_id' => $post['consultant_support_id'],
 			'room_id' => $post['room_id'],
 			'apartment_id' => $service_set['id'],
 			'consultant_id' => $post['consultant_id'],
@@ -270,6 +269,11 @@ class Contract extends CustomBaseStep {
 			'user_create_id' => $this->auth['account_id'],
 			'time_insert' => time(),
 		];
+
+        $contract["arr_supporter_id"] = null;
+		if(!empty($post['arr_supporter_id']) && is_array($post['arr_supporter_id']) && count($post['arr_supporter_id'])){
+            $contract["arr_supporter_id"] = json_encode($post['arr_supporter_id']);
+        }
 
 		$result = $this->ghContract->insert($contract);
 		$this->uploadFile($result);

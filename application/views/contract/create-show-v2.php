@@ -150,10 +150,10 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             <?php endif; ?>
                         </div>
                         <div class="form-group row">
-                            <label for="consultant_support_id" class="col-12 col-md-4 col-form-label text-right">Thành Viên Hỗ Trợ</span></label>
+                            <label for="arr_supporter_id" class="col-12 col-md-4 col-form-label text-right">Thành Viên Hỗ Trợ</span></label>
                             <div class="col-md-6 col-12">
-                                <select type="number" class="form-control select2"
-                                        id="consultant_support_id" name="consultant_support_id">
+                                <select type="number" class="form-control select2" multiple
+                                        id="arr_supporter_id" name="arr_supporter_id[]">
                                     <?= $select_user?>
                                 </select>
                             </div>

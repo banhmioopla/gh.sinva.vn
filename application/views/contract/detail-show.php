@@ -109,19 +109,28 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                                      data-placement="top"
                                      data-name="consultant_id">
                                     <?= $contract['consultant_id'] >= 171020000 ?
-                                    $libUser->getNameByAccountid($contract['consultant_id']) : '[không có thông tin]' ?></div>
+                                        $libUser->getNameByAccountid($contract['consultant_id']) : '[không có thông tin]' ?> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> <?= (float) $contract['rate_type'] ?></span></div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-right"><strong>Thành Viên Hỗ Trợ
-                                    <strong></td>
+                            <?php
+                            $supporter = [];
+                            if(!empty($contract['arr_supporter_id'])){
+                                $list_supporter = json_decode($contract['arr_supporter_id'], true);
+                                foreach ($list_supporter as $item){
+                                    $supporter [] = $libUser->getNameByAccountid($item);
+                                }
+                            }
+
+                            ?>
+                            <td class="text-right"><strong>Thành Viên Hỗ Trợ (<?= count($supporter) ?>) <strong></td>
                             <td>
-                                <div class="consultant_support_id w-50"
+
+                                <div class="arr_supporter_id w-50"
                                      data-pk="<?= $contract['id'] ?>"
                                      data-placement="top"
-                                     data-name="consultant_support_id">
-                                    <?= $contract['consultant_support_id'] >= 171020000 ?
-                                        $libUser->getNameByAccountid($contract['consultant_support_id']) : '[không có thông tin]' ?></div>
+                                     data-name="arr_supporter_id">
+                                    <?= count($supporter) > 0 ? implode(", ",$supporter): '[không có thông tin]' ?></div>
                             </td>
                         </tr>
 
@@ -437,22 +446,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                 })
             });
 
-            $('.is_support_control input[type=checkbox]').click(function() {
-                var is_support_control = 'NO';
-                var this_id = $(this).attr('id');
-                var matches = this_id.match(/(\d+)/);
-                var contract_id = matches[0];
-                if($(this).is(':checked')) {
-                    is_support_control = 'YES';
-                }
-                console.log(contract_id);
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>admin/update-contract-editable',
-                    data: {name: 'is_support_control', pk: contract_id, value :is_support_control},
-                    async: false
-                });
-            });
+
 
             $('.consultant_support_id').editable({
                 type: 'select',

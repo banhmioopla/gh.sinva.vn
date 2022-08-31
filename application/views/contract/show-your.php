@@ -40,7 +40,7 @@
                         <th width="350px">Khách thuê</th>
                         <th>Giá thuê <small>x1000</small></th>
                         <th>Giá cọc <small>x1000</small></th>
-                        <th>(*)</th>
+                        <th class="text-center"><span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> </span></th>
                         <th>Ngày ký</th>
                         <th>Ngày hết hạn</th>
                         <th class="text-center">Thời hạn</th>
@@ -71,20 +71,30 @@
                                 </div>
                             </td>
                             <td>
+                                <?php
+                                $supporter = [];
+                                if(!empty($row['arr_supporter_id'])){
+                                    $list_supporter = json_decode($row['arr_supporter_id'], true);
+                                    foreach ($list_supporter as $item){
+                                        $supporter [] = $libUser->getNameByAccountid($item);
+                                    }
+                                }
+
+                                ?>
                                 <div class="contract-room_price font-weight-bold"
                                      data-pk="<?= $row['id'] ?>"
                                      data-value="<?= $row['room_price'] ?>"
                                      data-name="room_price">
                                     <?= number_format($row['room_price']/1000) ?>
                                 </div>
-                                <?php if(!empty($row['consultant_support_id'])): ?>
-                                    <div class="font-weight-bold">
-                                        (H.trợ: <?= $libUser->getNameByAccountid($row['consultant_support_id']) ?>)
+                                <?php if(count($supporter)): ?>
+                                    <div class=" text-light font-weight-bold">
+                                        (H.trợ: <?= implode(", ",$supporter) ?>)
                                     </div>
                                 <?php endif; ?>
                             </td>
                             <td class="font-weight-bold"><?= number_format($row["deposit_price"]/1000) ?></td>
-                            <td class="font-weight-bold"><?= $row["rate_type"] *1 ?></td>
+                            <td class="font-weight-bold text-center"><?= $row["rate_type"] *1 ?></td>
                             <td>
                                 <div class="contract-time_check_in"
                                      data-pk="<?= $row['id'] ?>"

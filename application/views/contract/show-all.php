@@ -204,7 +204,7 @@ foreach ($list_contract as $row) {
                             <th width="350px">Khách thuê</th>
                             <th class="text-right">Giá thuê <small>x1000</small></th>
                             <th class="text-right">Giá cọc <small>x1000</small></th>
-                            <th class="text-right">(*)</th>
+                            <th class="text-right"> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> </span></th>
 
                             <th width="250px">Thành Viên Chốt</th>
                             <th>Ngày ký</th>
@@ -253,17 +253,28 @@ foreach ($list_contract as $row) {
                                     </div>
                                 </td>
                                 <td class="font-weight-bold text-right"><?= number_format($row['deposit_price']/1000) ?></td>
-                                <td class="font-weight-bold text-right"><?= $row["rate_type"] *1 ?></td>
+                                <td class="font-weight-bold text-center"> <?= (float) $row['rate_type'] ?></td>
                                 <td>
+                                    <?php
+                                    $supporter = [];
+                                    if(!empty($row['arr_supporter_id'])){
+                                        $list_supporter = json_decode($row['arr_supporter_id'], true);
+                                        foreach ($list_supporter as $item){
+                                            $supporter [] = $libUser->getNameByAccountid($item);
+                                        }
+                                    }
+
+                                    ?>
                                     <div class="consultant_id text-warning font-weight-bold"
                                          data-pk="<?= $row['id'] ?>"
                                          data-value="<?= $row['consultant_id'] ?>"
                                          data-name="consultant_id">
                                         <?= $libUser->getNameByAccountid($row['consultant_id']) ?>
                                     </div>
-                                    <?php if(!empty($row['consultant_support_id'])): ?>
+
+                                    <?php if(count($supporter)): ?>
                                     <div class=" text-light font-weight-bold">
-                                        (H.trợ: <?= $libUser->getNameByAccountid($row['consultant_support_id']) ?>)
+                                        (H.trợ: <?= implode(", ",$supporter) ?>)
                                     </div>
                                     <?php endif; ?>
                                 </td>

@@ -59,6 +59,23 @@ class PublicConsultingPost extends CI_Controller {
         $timeFrom = date("06-m-Y");
         $timeTo = date("05-m-Y",strtotime($timeFrom.' +1 month'));
 
+        $master_contract = $this->ghContract->get([
+            'time_check_in >=' => strtotime($timeFrom),
+            'time_check_in <=' => strtotime($timeTo) +86399,
+        ]);
+
+        foreach ($master_contract as $item ){
+            if(!empty($item['consultant_support_id'])){
+                $this->ghContract->updateById($item["id"], [
+                    "arr_supporter_id" => json_encode([$item['consultant_support_id']])
+                ]);
+            } else {
+                $this->ghContract->updateById($item["id"], [
+                    "arr_supporter_id" => null
+                ]);
+            }
+
+        }
         $income_standard_rate = .55;
 
         if(!empty($token)){
@@ -66,18 +83,24 @@ class PublicConsultingPost extends CI_Controller {
 
                 case 1: // danh sách thành viên
                         $list_user = $this->ghUser->get(['active' => 'YES']);
+                        $list_contract_supporter = $this->ghContract->get([
+                            'time_check_in >=' => strtotime($timeFrom),
+                            'time_check_in <=' => strtotime($timeTo) +86399,
+                            'arr_supporter_id <>' => null,
+                            'status' => "Active"
+                        ]);
                         foreach ($list_user as $user) {
                             $rate_star = $count_contract = $income = 0;
 
-                            $list_contract = $this->ghContract->get([
-                                'time_check_in >=' => strtotime($timeFrom),
-                                'time_check_in <=' => strtotime($timeTo) +86399,
-                                'consultant_support_id' => $user['account_id'],
-                                'status' => "Active"
-                            ]);
-                            $count_contract+= count($list_contract);
-                            foreach ($list_contract as $con) {
-                                $rate_star += 1-(float)$con['rate_type'];
+
+                            foreach ($list_contract_supporter as $con) {
+                                if(!empty($con["arr_supporter_id"])){
+                                    $arr = json_decode($con["arr_supporter_id"], true);
+                                    if(in_array($user['account_id'], $arr)){
+                                        $rate_star += (1-(float)$con['rate_type'])/count($arr);
+                                        $count_contract++;
+                                    }
+                                }
                             }
 
                             $list_contract = $this->ghContract->get([
