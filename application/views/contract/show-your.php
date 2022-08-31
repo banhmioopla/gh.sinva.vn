@@ -77,6 +77,11 @@
                                      data-name="room_price">
                                     <?= number_format($row['room_price']/1000) ?>
                                 </div>
+                                <?php if(!empty($row['consultant_support_id'])): ?>
+                                    <div class="font-weight-bold">
+                                        (H.trợ: <?= $libUser->getNameByAccountid($row['consultant_support_id']) ?>)
+                                    </div>
+                                <?php endif; ?>
                             </td>
                             <td class="font-weight-bold"><?= number_format($row["deposit_price"]/1000) ?></td>
                             <td class="font-weight-bold"><?= $row["rate_type"] *1 ?></td>

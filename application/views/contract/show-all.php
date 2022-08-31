@@ -259,9 +259,13 @@ foreach ($list_contract as $row) {
                                          data-pk="<?= $row['id'] ?>"
                                          data-value="<?= $row['consultant_id'] ?>"
                                          data-name="consultant_id">
-                                        <?= $libUser->getNameByAccountid
-                                        ($row['consultant_id']) ?>
+                                        <?= $libUser->getNameByAccountid($row['consultant_id']) ?>
                                     </div>
+                                    <?php if(!empty($row['consultant_support_id'])): ?>
+                                    <div class=" text-light font-weight-bold">
+                                        (H.trợ: <?= $libUser->getNameByAccountid($row['consultant_support_id']) ?>)
+                                    </div>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
                                     <div class="contract-time_check_in text-warning"
