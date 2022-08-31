@@ -59,23 +59,6 @@ class PublicConsultingPost extends CI_Controller {
         $timeFrom = date("06-m-Y");
         $timeTo = date("05-m-Y",strtotime($timeFrom.' +1 month'));
 
-        $master_contract = $this->ghContract->get([
-            'time_check_in >=' => strtotime($timeFrom),
-            'time_check_in <=' => strtotime($timeTo) +86399,
-        ]);
-
-        /*foreach ($master_contract as $item ){
-            if(!empty($item['consultant_support_id'])){
-                $this->ghContract->updateById($item["id"], [
-                    "arr_supporter_id" => json_encode([$item['consultant_support_id']])
-                ]);
-            } else {
-                $this->ghContract->updateById($item["id"], [
-                    "arr_supporter_id" => null
-                ]);
-            }
-
-        }*/
         $income_standard_rate = .55;
 
         if(!empty($token)){
