@@ -90,14 +90,13 @@ class PublicConsultingPost extends CI_Controller {
                             'status' => "Active"
                         ]);
                         foreach ($list_user as $user) {
-                            $rate_star = $count_contract = $income = 0;
+                            $count_contract = $income = 0;
 
 
                             foreach ($list_contract_supporter as $con) {
                                 if(!empty($con["arr_supporter_id"])){
                                     $arr = json_decode($con["arr_supporter_id"], true);
                                     if(in_array($user['account_id'], $arr)){
-                                        $rate_star += (1-(float)$con['rate_type'])/count($arr);
                                         $count_contract++;
                                     }
                                 }
@@ -110,9 +109,7 @@ class PublicConsultingPost extends CI_Controller {
                                 'status' => "Active"
                             ]);
                             $count_contract+= count($list_contract);
-                            foreach ($list_contract as $con) {
-                                $rate_star += (float)$con['rate_type'];
-                            }
+                            $rate_star = $this->ghContract->getTotalRateStar($user['account_id'], $timeFrom, $timeTo);
 
 
                             if($rate_star >= 6){
