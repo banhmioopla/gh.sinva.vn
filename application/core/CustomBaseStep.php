@@ -132,8 +132,8 @@ class CustomBaseStep extends CI_Controller {
 
         if($this->session->has_userdata('personal_data') === false){
             $this->session->set_userdata(['personal_data' => [
-                'total_sale' => $this->ghContract->getTotalSaleByUser($this->auth['account_id'], $timeFrom, $timeTo),
-                'rate_star' => $this->ghContract->getTotalRateStar($this->auth['account_id'], $timeFrom, $timeTo)
+                'total_sale' => $this->ghContract->getTotalSaleByUser($this->auth['account_id'], $this->timeFrom, $this->timeTo),
+                'rate_star' => $this->ghContract->getTotalRateStar($this->auth['account_id'], $this->timeFrom, $this->timeTo)
             ]]);
         }
 
