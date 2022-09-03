@@ -262,6 +262,12 @@ $route['admin/detail-contract'] = function($params = []) {
 	$action = '/detailShow';
 	return $controller.$action;
 };
+
+$route['admin/ajax/contract/chart'] = function($params = []) {
+    $controller = 'Contract';
+    $action = '/drawChart';
+    return $controller.$action;
+};
 $route['admin/contract/sync-status-expire'] = function($params = []) {
 	$controller = 'Contract';
 	$action = '/syncStatusExpire';

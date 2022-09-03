@@ -18,6 +18,8 @@ class GhContract extends CI_Model {
         $this->general_fund = 0.02;
         $this->product_manager_fund = 0.05;
         date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $this->load->model('ghApartment');
+        $this->load->model('ghRoom');
     }
 
     public function get($where = [], $order_column  = 'id', $trend = 'DESC') {
@@ -157,6 +159,66 @@ class GhContract extends CI_Model {
         }
 
         return $total;
+    }
+
+    public function getTotalSaleByDistrict($district, $from_date, $to_date){
+        $list_con = $this->get([
+            'time_check_in >=' => strtotime($from_date),
+            'time_check_in <=' => strtotime($to_date)+86399,
+            'status <>' => 'Cancel'
+        ]);
+        $arr_district_apm = [];
+        $list_apm = $this->ghApartment->get(['active' => 'YES', 'district_code' => $district]);
+        foreach ($list_apm as $apm){
+            $arr_district_apm[] = $apm['id'];
+        }
+        if(empty($arr_district_apm)){
+            return 0;
+        }
+
+        $total = 0;
+        foreach ($list_con as $con){
+            if(in_array($con['apartment_id'], $arr_district_apm)){
+                $total += $this->getTotalSaleByContract($con['id']);
+            }
+        }
+
+        return $total;
+    }
+
+    public function getCountContractByDistrict($district, $from_date, $to_date){
+        $list_con = $this->get([
+            'time_check_in >=' => strtotime($from_date),
+            'time_check_in <=' => strtotime($to_date)+86399,
+            'status <>' => 'Cancel'
+        ]);
+        $arr_district_apm = [];
+        $list_apm = $this->ghApartment->get(['active' => 'YES', 'district_code' => $district]);
+        foreach ($list_apm as $apm){
+            $arr_district_apm[] = $apm['id'];
+        }
+        $count = 0;
+        if(empty($arr_district_apm)){
+            return 0;
+        }
+        foreach ($list_con as $con){
+            if(in_array($con['apartment_id'], $arr_district_apm)){
+                $count ++;
+            }
+        }
+
+        return $count;
+    }
+
+    public function getCountContractByUser($account_id, $from_date, $to_date){
+        $list_con = $this->get([
+            'consultant_id' => $account_id,
+            'time_check_in >=' => strtotime($from_date),
+            'time_check_in <=' => strtotime($to_date)+86399,
+            'status <>' => 'Cancel'
+        ]);
+
+        return count($list_con);
     }
 
     public function getTotalIncomeByUser($account_id, $from_date, $to_date){
@@ -317,8 +379,7 @@ class GhContract extends CI_Model {
 
         $arr = [];
         foreach ($list_contract as $con){
-            $this->load->model('ghApartment');
-            $this->load->model('ghRoom');
+
             $room = $this->ghRoom->getFirstById($con['room_id']);
             $apm = $this->ghApartment->getFirstById($room['apartment_id']);
             $arr[] = [

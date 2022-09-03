@@ -17,7 +17,8 @@ class Contract extends CustomBaseStep {
 		$this->load->library('LibDistrict', null, 'libDistrict');
 		$this->load->library('LibUser', null, 'libUser');
 		$this->load->library('LibRoom', null, 'libRoom');
-		$this->load->config('label.apartment');
+
+		$this->current_query = http_build_query($this->input->get());
 	}
 
 	public function showYour(){
@@ -29,7 +30,6 @@ class Contract extends CustomBaseStep {
         $data['ghRoom'] = $this->ghRoom;
         $data['ghImage'] = $this->ghImage;
         $data['libRoom'] = $this->libRoom;
-        $data['label_apartment'] =  $this->config->item('label.apartment');
         $data['flash_mess'] = "";
         $data['flash_status'] = "";
         if($this->session->has_userdata('fast_notify')) {
@@ -151,6 +151,10 @@ class Contract extends CustomBaseStep {
                 case "consultant":
                     $partialGroup = "contract/group-by-consultant";
                     break;
+
+                case "Chart":
+                    $partialGroup = "contract/group-by-chart";
+                    break;
                 default:
                     break;
             }
@@ -174,6 +178,40 @@ class Contract extends CustomBaseStep {
 		$this->load->view('contract/show-all', $data);
 		$this->load->view('components/footer');
 	}
+
+	public function drawChart(){
+	    $groupBy = $this->input->post("groupBy");
+	    $res = [];
+	    switch ($groupBy){
+            case "Consultant":
+                $res[] = ["Sale", "Doanh số", "Hợp đồng"];
+                $list_user = $this->ghUser->get(["active" => "YES"]);
+                foreach ($list_user as $user) {
+                    $total_sale = $this->ghContract->getTotalSaleByUser($user["account_id"],$this->timeFrom,$this->timeTo);
+                    if($total_sale > 0) {
+                        $con_counter = $this->ghContract->getCountContractByUser($user["account_id"],$this->timeFrom,$this->timeTo);
+                        $res[] = [$user["name"], round($total_sale/1000000,1), $con_counter];
+                    }
+                }
+                break;
+
+                case "District":
+                $res[] = ["Quận", "Doanh số", "Hợp đồng"];
+                $list_d= $this->ghDistrict->get(["active" => "YES"]);
+                foreach ($list_d as $d) {
+                    $total_sale = $this->ghContract->getTotalSaleByDistrict($d["code"],$this->timeFrom,$this->timeTo);
+                    if($total_sale > 0) {
+                        $con_counter = $this->ghContract->getCountContractByDistrict($d["code"],$this->timeFrom,$this->timeTo);
+                        $res[] = ["Q.".$d["name"], round($total_sale/1000000,1), $con_counter];
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        echo json_encode($res);
+    }
 
 	public function createShow(){
 		$room_id = $this->input->get('room-id');
@@ -205,9 +243,7 @@ class Contract extends CustomBaseStep {
 		$data['ghCustomer'] = $this->ghCustomer;
 		$data['ghRoom'] = $this->ghRoom;
         $data['libUser'] = $this->libUser;
-        $data['label'] =  $this->config->item('label.apartment');
 		$data['ghImage'] = $this->ghImage;
-		$data['label'] =  $this->config->item('label.apartment');
 		$data['list_partial'] = $this->ghContractPartial->get(['contract_id' => $contract_id]);
         $current_partial_amount = 0;
 		foreach ($data['list_partial'] as $item) {
