@@ -152,6 +152,10 @@ class Contract extends CustomBaseStep {
                     $partialGroup = "contract/group-by-consultant";
                     break;
 
+                case "apartment":
+                    $partialGroup = "contract/group-by-apartment";
+                    break;
+
                 case "Chart":
                     $partialGroup = "contract/group-by-chart";
                     break;
@@ -197,6 +201,18 @@ class Contract extends CustomBaseStep {
 
                 case "District":
                 $res[] = ["Quận", "Doanh số", "Hợp đồng"];
+                $list_d= $this->ghDistrict->get(["active" => "YES"]);
+                foreach ($list_d as $d) {
+                    $total_sale = $this->ghContract->getTotalSaleByDistrict($d["code"],$this->timeFrom,$this->timeTo);
+                    if($total_sale > 0) {
+                        $con_counter = $this->ghContract->getCountContractByDistrict($d["code"],$this->timeFrom,$this->timeTo);
+                        $res[] = ["Q.".$d["name"], round($total_sale/1000000,1), $con_counter];
+                    }
+                }
+                break;
+
+                case "TimeLine":
+                $res[] = ["Ngày", "Doanh số", "Hợp đồng"];
                 $list_d= $this->ghDistrict->get(["active" => "YES"]);
                 foreach ($list_d as $d) {
                     $total_sale = $this->ghContract->getTotalSaleByDistrict($d["code"],$this->timeFrom,$this->timeTo);

@@ -11,6 +11,10 @@
         <div class="col-md-6 col-12">
             <div id="daily-chart"></div>
         </div>
+
+        <div class="col-md-12 col-12">
+            <div id="timeLine-chart"></div>
+        </div>
     </div>
 
 
@@ -97,6 +101,20 @@
                 contract_consultant_data = response;
             });
             $this.createColumnChart($('#district-chart')[0], contract_consultant_data, 'Quận', ['#02c0ce','#0acf97', '#ebeff2'], "Quận");
+
+
+            $.ajax({
+                url: "/admin/ajax/contract/chart?groupBy=TimeLine",
+                type: "POST",
+                data: {groupBy: "TimeLine"},
+                dataType: "json",
+                async: false,
+
+            }).done(function(response) { // <--- notice the argument here
+                console.log(response); // <---- this will be the data you want to work with
+                contract_consultant_data = response;
+            });
+            $this.createColumnChart($('#timeLine-chart')[0], contract_consultant_data, 'Quận', ['#02c0ce','#0acf97', '#ebeff2'], "Quận");
 
         },
         //init GoogleChart
