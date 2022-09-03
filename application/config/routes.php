@@ -98,28 +98,8 @@ $route['admin/update-userpenalty-editable'] = function($params = []) {
     $action = '/updateEditable';
     return $controller.$action;
 };
-$route['admin/list-dashboard'] = function($params = []) {
-	$controller = 'Dashboard';
-	$action = '/show';
-	return $controller.$action;
-};
 
-$route['admin/dashboard/show/sale'] = function($params = []) {
-    $controller = 'Dashboard';
-    $action = '/showSale';
-    return $controller.$action;
-};
-$route['admin/dashboard/show/project'] = function($params = []) {
-    $controller = 'Dashboard';
-    $action = '/showListProject';
-    return $controller.$action;
-};
 
-$route['admin/dashboard/show/user-collected-overview'] = function($params = []) {
-    $controller = 'Dashboard';
-    $action = '/showByUserCollectedOverview';
-    return $controller.$action;
-};
 
 $route['admin/list-department'] = function($params = []) {
     $controller = 'Department';
@@ -134,11 +114,6 @@ $route['admin/create-merge-apartment-business'] = function($params = []) {
     return $controller.$action;
 };
 
-$route['admin/dashboard/list-chart'] = function($params = []) {
-    $controller = 'Dashboard';
-    $action = '/showTest';
-    return $controller.$action;
-};
 // report - booking customer
 $route['admin/list-consultant-booking'] = function($params = []) {
 	$controller = 'ConsultantBooking';
@@ -528,12 +503,6 @@ $route['normal/list-apartment'] = function($params = []) {
 	return $controller.$action;
 };
 
-$route['admin/income-202111'] = function($params = []) {
-    $controller = 'SystemIncomeRunning';
-    $action = '/show';
-    return $controller.$action;
-};
-
 $route['chart/get-data'] = function($params = []) {
     $controller = 'SystemIncomeRunning';
     $action = '/chartData';
@@ -791,37 +760,6 @@ $route['sale/apartment-export'] = function($params = []) {
     $controller = 'ApartmentRequest';
     $action = '/exportApartmentExcel';
     return $controller.$action;
-};
-
-// -- service
-$route['admin/list-service'] = function($params = []) {
-	$controller = 'Service';
-	$action = '/show';
-	return $controller.$action;
-};
-
-$route['admin/create-service'] = function($params = []) {
-	$controller = 'Service';
-	$action = '/create';
-	return $controller.$action;
-};
-
-$route['admin/update-service'] = function($params = []) {
-	$controller = 'Service';
-	$action = '/update';
-	return $controller.$action;
-};
-
-$route['admin/delete-service'] = function($params = []) {
-	$controller = 'Service';
-	$action = '/delete';
-	return $controller.$action;
-};
-
-$route['admin/update-service-editable'] = function($params = []) {
-	$controller = 'Service';
-	$action = '/updateEditable';
-	return $controller.$action;
 };
 
 // -- room

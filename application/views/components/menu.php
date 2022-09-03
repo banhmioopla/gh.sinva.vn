@@ -83,47 +83,6 @@
                 </li>
                 <?php endif;?>
 
-
-                <li class="has-submenu">
-                    <a href="#"><i class="icon-layers"></i>Chi Phí</a>
-                    <ul class="submenu">
-                        <li><a href="/admin/income-202111"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> TÀI CHÍNH</a></li>
-
-                        <li><a href="/admin/list-service"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Danh Mục Chi Phí</a></li>
-
-                        <?php /* if(isYourPermission('Fee', 'showUserCumulativeSale',$this->permission_set)):?>
-                            <li><a href="/admin/list-user-cumulative-sale"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Quản Lý Doanh Số Tích Lũy</a></li>
-                        <?php endif; */?>
-                    </ul>
-                </li>
-
-                <?php if(isYourPermission('Dashboard', 'show',$this->permission_set)):?>
-                    <li class="has-submenu">
-                        <a href="#"><i class="icon-layers"></i>Bảng điều khiển</a>
-                        <ul class="submenu">
-                            <li><a href="/admin/list-dashboard"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Bảng điều khiển</a></li>
-                            <li><a href="/admin/dashboard/show/sale"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Bảng điều khiển - V2</a></li>
-                            <?php if(isYourPermission('Fee', 'showIncomeMechanism',$this->permission_set)):?>
-                                <li><a href="/admin/list-fee-income-mechanism"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Cơ Chế
-                                        Thu Nhập Theo Hợp Đồng</a></li>
-                            <?php endif;?>
-
-                            <li><a href="/admin/report/apartment-updating"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Báo Cáo Tiến Độ Cập Nhật Dự Án</a></li>
-
-                            <li><a href="/admin/dashboard/show/user-collected-overview"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Tổng quan DA - QLDA</a></li>
-                        </ul>
-                    </li>
-
-                <?php endif;?>
-
                 <?php if(isYourPermission('User', 'show',$this->permission_set)):?>
                 <li class="has-submenu">
                     <a href="#"><i class="icon-layers"></i>Thành Viên</a>
