@@ -29,7 +29,7 @@ $list_apartment = $this->ghApartment->get([
             'status <>' => 'Cancel',
             'time_check_in >=' => strtotime($time_from),
             'time_check_in <=' => strtotime($time_to)+86399,
-            'apartment_id' => $apm["address_street"]
+            'apartment_id' => $apm["id"]
         ]);
         if(count($apm_list_contract) == 0 ) continue;
 
