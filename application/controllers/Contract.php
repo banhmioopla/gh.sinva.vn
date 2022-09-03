@@ -213,13 +213,22 @@ class Contract extends CustomBaseStep {
 
                 case "TimeLine":
                 $res[] = ["Ngày", "Doanh số", "Hợp đồng"];
-                $list_d= $this->ghDistrict->get(["active" => "YES"]);
-                foreach ($list_d as $d) {
-                    $total_sale = $this->ghContract->getTotalSaleByDistrict($d["code"],$this->timeFrom,$this->timeTo);
-                    if($total_sale > 0) {
-                        $con_counter = $this->ghContract->getCountContractByDistrict($d["code"],$this->timeFrom,$this->timeTo);
-                        $res[] = ["Q.".$d["name"], round($total_sale/1000000,1), $con_counter];
+                $month_end = strtotime($this->timeTo);
+                $time_line  = strtotime($this->timeFrom);
+
+                while($time_line <= $month_end){
+                    $list = $this->ghContract->get([
+                        'time_check_in >=' => $time_line,
+                        'time_check_in <=' => $time_line+86399,
+                        'status <>' => 'Cancel'
+                    ]);
+                    $total_sale = 0;
+                    foreach ($list as $contract) {
+                        $total_sale += $this->ghContract->getTotalSaleByContract($contract['id']);
                     }
+
+                    $res[] =[date("d/m",$time_line), $total_sale/1000000, count($list)];
+                    $time_line+= 86400;
                 }
                 break;
             default:

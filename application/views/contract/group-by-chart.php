@@ -87,7 +87,7 @@
                 contract_consultant_data = response;
             });
 
-            $this.createColumnChart($('#consultant-chart')[0], contract_consultant_data, 'Thành viên', ['#02c0ce','#0acf97', '#ebeff2'], "Thành viên");
+            $this.createColumnChart($('#consultant-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Thành viên");
 
             $.ajax({
                 url: "/admin/ajax/contract/chart?groupBy=district",
@@ -100,7 +100,7 @@
                 console.log(response); // <---- this will be the data you want to work with
                 contract_consultant_data = response;
             });
-            $this.createColumnChart($('#district-chart')[0], contract_consultant_data, 'Quận', ['#02c0ce','#0acf97', '#ebeff2'], "Quận");
+            $this.createColumnChart($('#district-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Quận");
 
 
             $.ajax({
@@ -114,7 +114,7 @@
                 console.log(response); // <---- this will be the data you want to work with
                 contract_consultant_data = response;
             });
-            $this.createColumnChart($('#timeLine-chart')[0], contract_consultant_data, 'Quận', ['#02c0ce','#0acf97', '#ebeff2'], "Quận");
+            $this.createColumnChart($('#timeLine-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Tháng hiện tại");
 
         },
         //init GoogleChart
