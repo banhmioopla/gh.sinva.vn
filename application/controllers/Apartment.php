@@ -131,7 +131,9 @@ class Apartment extends CustomBaseStep {
                     $feature_list_apm_id[] = $item["apartment_id"];
                 }
                 $params = [];
-                $list_apartment = $this->ghApartment->get_where_in("id", array_unique($feature_list_apm_id));
+                if(!empty($feature_list_apm_id)){
+                    $list_apartment = $this->ghApartment->get_where_in("id", array_unique($feature_list_apm_id));
+                }
             }
 
             if($feature == "new"){
@@ -150,7 +152,10 @@ class Apartment extends CustomBaseStep {
                     $feature_list_apm_id[] = $item["apartment_id"];
                 }
                 $params = [];
-                $list_apartment = $this->ghApartment->get_where_in("id", array_unique($feature_list_apm_id));
+
+                if(!empty($feature_list_apm_id)){
+                    $list_apartment = $this->ghApartment->get_where_in("id", array_unique($feature_list_apm_id));
+                }
             }
 
         }
