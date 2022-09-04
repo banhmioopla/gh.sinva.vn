@@ -341,12 +341,18 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             $apartment_score = $this->ghApartmentComment->getScoreByApm($current_apartment['id'], $from_date, $to_date);
             $list_comment = $this->ghApartmentComment->get(['apartment_id' => $current_apartment['id']]);
             $surrounding_facilities = !empty($current_apartment['surrounding_facilities']) ? json_decode($current_apartment['surrounding_facilities'], true) : [];
+            $following = $this->ghApartmentUserFollow->isFollowing($current_apartment['id'], $this->auth['account_id']);
             ?>
             <div class="card-box">
                 <div class="row">
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
-                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $current_apartment['address_street'] . " ,phường " . $current_apartment["address_ward"] ?></h2>
+                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $current_apartment['address_street'] . " ,phường " . $current_apartment["address_ward"] ?>
+                                <button data-apm_id="<?= $current_apartment['id'] ?>"
+                                        data-status_following="<?= json_encode($following) ?>"
+                                        id="apm-following"
+                                        class="btn btn-sm <?= $following ? 'active':'' ?>  float-right btn-outline-danger btn-rounded waves-light waves-effect"><i class="fa fa-heart"></i></button>
+                            </h2>
                             <div class="rating-score pl-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </div>
                         </div>
                     </div>
@@ -677,6 +683,31 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+        $('#apm-following').on('click', function () {
+            let _this = $(this);
+            let status = $(this).data('status_following');
+            let apm_id = $(this).data('apm_id');
+            console.log("status ", status);
+            console.log("!status ", !status);
+            console.log("apm_id ", apm_id);
+            $.ajax({
+                url: '/admin/apartment/following/update',
+                type: "POST",
+                dataType: 'json',
+                data: {apm_id: apm_id, status: !status},
+                success: function (res) {
+                    console.log("res", res);
+                    _this.data('status_following', !status);
+                    _this.removeClass("active");
+                    if(!status === true){
+                        _this.addClass("active");
+                    }
+
+                    
+                }
+            });
+
+        });
 
         $('.rated-star').raty({
             score: function () {
@@ -714,7 +745,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 }).then(function (inputVal) {
                     let pack = {apm_id: apm_id, score: score, content: inputVal};
 
-                    console.log(pack);
+
                     $.ajax({
                         url: '/admin/apartment/rating',
                         type: "POST",
@@ -733,58 +764,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 return $(this).data('score');
             },
         });
-        $('#update-time_available').click(function () {
-            $.ajax({
-                type: 'GET',
-                url:'<?= base_url()."admin/room/time-available/get" ?>',
-                dataType: 'json',
-                success:function(response) {
-                    let title = 'Không có dự án nào có ngày sắp trống "Không hợp lệ" !';
-                    let has_available_time = false;
-                    let html = "<ul class='text-left m'>";
-                    for (const [key, value] of Object.entries(response)) {
-                        has_available_time = true;
 
-                        html += "<li class='mt-2'>" + value['address'] + ": <ul>";
-                        for (const _room of value['list_room']) {
-                            html += '<li class="font-weight-bold"> ' + _room + ' </li>';
-                        }
-                        html += "</ul></li>";
-                    }
-                    html += "</ul>";
-                    if(has_available_time) {
-                        title = 'Review thông tin "Ngày sắp trống" ';
-                    }
-                    swal({
-                        title: title,
-                        type: 'warning',
-                        html: html,
-                        showCancelButton: true,
-                        showConfirmButton: has_available_time,
-                        confirmButtonClass: 'btn btn-confirm mt-2',
-                        cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
-                        confirmButtonText: 'Xác nhận Xóa',
-                        cancelButtonText: 'Huỷ'
-                    }).then(function () {
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?= base_url() . "admin/update-room-editable" ?>',
-                            data: {mode: 'empty_time_available'},
-                            dataType: 'json',
-                            success: function (response) {
-                                console.log(response);
-                                swal({
-                                    title: response.content,
-                                    type: 'success',
-                                    confirmButtonClass: 'btn btn-confirm mt-2'
-                                });
-                            }
-                        });
-
-                    });
-                }
-            });
-        });
         $('#setting_default_district').change(function () {
             let _this = $(this);
             let keyword = _this.data('keyword');
@@ -792,14 +772,12 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             let value = _this.val();
 
             let data = {keyword: keyword, account_id: account_id, value: value};
-            console.log(data);
             $.ajax({
                 dataType : 'json',
                 data: data,
                 url: "/admin/user-setting/update",
                 method: "POST",
                 success: function (res) {
-                    console.log(res);
                     if(res.status === true){
                         $('#setting-msg').text(res.msg);
                     }

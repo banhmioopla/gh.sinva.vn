@@ -8,6 +8,7 @@ class Apartment extends CustomBaseStep {
 		parent::__construct(); 
 		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict', 'ghImage', 'ghApartmentView',
             'ghApartmentPromotion', 'ghApartmentRequest', 'ghApartmentView', 'ghConsultantBooking', 'ghApartmentShaft',
+            'ghApartmentUserFollow',
             'ghTag', 'ghApartmentComment', 'ghConsultantBooking', 'ghBaseRoomType']);
 		$this->load->config('label.apartment');
 		$this->load->helper('money');
@@ -76,6 +77,7 @@ class Apartment extends CustomBaseStep {
         $list_features = [
             "new" => " <i class='fa fa-bookmark'></i> Mới (30d)",
             "best_seller_month" => " <i class='fa fa-flash'></i> Best seller ".date("m-Y"),
+            "following" => " <i class='fa fa-heart'></i> Theo dõi",
 //            "best_view" => "Xem nhiều trong tháng",
         ];
         $timeFrom = date("01-m-Y");
@@ -137,6 +139,18 @@ class Apartment extends CustomBaseStep {
                     'time_insert >=' => strtotime("-30days"),
                     'active' => 'YES'
                 ];
+            }
+
+            if($feature == "following"){
+                $feature_list_follow_apm = $this->ghApartmentUserFollow->get([
+                    'account_id' => $this->auth['account_id']
+                ]);
+                $feature_list_apm_id = [];
+                foreach ($feature_list_follow_apm as $item){
+                    $feature_list_apm_id[] = $item["apartment_id"];
+                }
+                $params = [];
+                $list_apartment = $this->ghApartment->get_where_in("id", array_unique($feature_list_apm_id));
             }
 
         }
@@ -291,7 +305,7 @@ class Apartment extends CustomBaseStep {
 
 		/*--- Load View ---*/
 		$this->load->view('components/header');
-        $template =  'apartment/show-version-3';
+        $template =  'apartment/show';
 
 		$this->load->view($template, [
 		    'district_code' => $district_code,
@@ -343,6 +357,36 @@ class Apartment extends CustomBaseStep {
             'time_insert' => time(),
             'score' => $post['score'],
         ]);
+    }
+
+    public function updateFollowing(){
+        $post = $this->input->post();
+        $follow_apm = $this->ghApartmentUserFollow->getFirst([
+            'apartment_id' => $post['apm_id'],
+            'account_id' => $this->auth['account_id'],
+        ]);
+
+        if($post['status'] === 'true'){
+            $checker = $this->ghApartmentUserFollow->insert([
+                'apartment_id' => $post['apm_id'],
+                'account_id' => $this->auth['account_id'],
+                'insert_time' => time(),
+            ]);
+
+            echo json_encode([
+                'status' => true
+            ]); die;
+        }
+
+
+        if(!empty($follow_apm)){
+            $this->ghApartmentUserFollow->delete($follow_apm['id']);
+        }
+
+        echo json_encode([
+            'status' => false
+        ]); die;
+
     }
 
 	public function pendingForApprove(){

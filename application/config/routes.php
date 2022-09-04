@@ -1001,6 +1001,11 @@ $route['admin/apartment/create'] = function($params = []) {
     $action = '/showCreate';
     return $controller.$action;
 };
+$route['admin/apartment/following/update'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/updateFollowing';
+    return $controller.$action;
+};
 
 $route['admin/apartment/rating'] = function($params = []) {
     $controller = 'Apartment';
