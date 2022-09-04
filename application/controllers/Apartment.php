@@ -83,7 +83,7 @@ class Apartment extends CustomBaseStep {
         $timeFrom = date("01-m-Y");
         $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
 
-		$data = [];
+		$data = $list_apartment = [];
         if(empty($this->product_category)) {
             $this->load->view('components/header');
             $this->load->view('apartment/error');
