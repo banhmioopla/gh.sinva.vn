@@ -172,10 +172,18 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 $apm_30d_checker = $this->ghApartment->getFirstById($row['apartment_id']);
                                 $room_checker = $this->ghRoom->getFirstById($row['room_id']);
                                 ?>
+
+
+
                                 <div class="col-12 col-md-4">
-                                    <div class="alert alert-danger" role="alert">
-                                        <strong><?= $apm_30d_checker['address_street'] ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
-                                        <a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank" class="float-right">Chi tiết</a>
+                                    <div class="card m-b-30 text-white bg-dark text-xs-center">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote">
+                                                <strong><?= $apm_30d_checker['address_street'] ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
+                                                <footer class="mt-2"><a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank" class="float-right btn-danger btn-rounded btn text-white">Chi tiết</a></cite>
+                                                </footer>
+                                            </blockquote>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -191,10 +199,16 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-bell-outline"></i> Sinh nhật khách (10 ngày)</h4></div>
                             <?php foreach($list_customer_birth_10d_remain as $row ):
                                 ?>
+
                                 <div class="col-12 col-md-4">
-                                    <div class="alert alert-danger" role="alert">
-                                        <strong><?= $row['name'] ?></strong> (<?= date("d/m/Y", $row['birthdate']) ?>)
-                                        <a href="/admin/detail-customer?id=<?= $row['id'] ?>" target="_blank" class="float-right">Chi tiết</a>
+                                    <div class="card m-b-30 text-white bg-dark text-xs-center">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote">
+                                                <strong><?= $row['name'] ?></strong> (<?= date("d/m/Y", $row['birthdate']) ?>)
+                                                <footer class="mt-2"><a href="/admin/detail-customer?id=<?= $row['id'] ?>" target="_blank" class="float-right btn-danger btn-rounded btn text-white">Chi tiết</a></cite>
+                                                </footer>
+                                            </blockquote>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -216,11 +230,17 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                                     $room_info []= $room_checker['code'] . ' ('. date("d/m/Y", $room_checker['time_available']) . ') ';
                                 endforeach; ?>
+
                                 <div class="col-12 col-md-4">
-                                    <div class="alert alert-danger" role="alert">
-                                        <strong><?= $apm_model['address_street'] ?>:</strong>
-                                        <?= implode(", ", $room_info) ?>,
-                                        <a href="/admin/list-apartment?current_apm_id=<?= $room_checker['apartment_id'] ?>" target="_blank">Link DA</a>
+                                    <div class="card m-b-30 text-white bg-dark text-xs-center">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote">
+                                                <strong><?= $apm_model['address_street'] ?>:</strong>
+                                                <?= implode(", ", $room_info) ?>
+                                                <footer class="mt-2"><a href="/admin/list-apartment?current_apm_id=<?= $room_checker['apartment_id'] ?>" target="_blank" class="float-right btn-danger btn-rounded btn text-white">Chi tiết</a></cite>
+                                                </footer>
+                                            </blockquote>
+                                        </div>
                                     </div>
                                 </div>
 

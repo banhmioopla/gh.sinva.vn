@@ -14,23 +14,51 @@
                             <li class="breadcrumb-item active">Hợp đồng của tôi</li>
                         </ol>
                     </div>
-                    <h2 class="font-weight-bold text-danger">Hợp Đồng Của <?= $this->auth['name'] ?></h2>
+                    <h2 class="font-weight-bold text-danger">Hợp Đồng - <?= $this->auth['name'] ?></h2>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <?php $this->load->view('components/list-navigation')?>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12 card-box">
+                <h4><strong class="text-danger">Tìm kiếm</strong></h4>
+                <div class="row">
+
+                    <div class="col-12">Chọn khoảng <strong>ngày ký</strong></div>
+                    <div class="col-6">
+                        <input type="text" class="form-control datepicker"
+                               id="time_check_in_from"
+                               value="<?= $timeCheckInFrom?>">
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control datepicker"
+                               id="time_check_in_to"
+                               value="<?= $timeCheckInTo  ?>">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-4 offset-4">
+                        <button id="search" class="btn btn-danger w-100">Áp Dụng</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <?php $this->load->view('components/list-navigation')?>
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-layers float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Doanh số</h6>
+                    <h2 class="m-b-20" data-plugin="counterup"><?= number_format($this->ghContract->getTotalSaleByUser($this->auth['account_id'], $timeCheckInFrom, $timeCheckInTo)) ?></h2>
+                    <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <?= $this->ghContract->getTotalRateStar($this->auth['account_id'], $timeCheckInFrom, $timeCheckInTo) ?> </span>
+                </div>
+            </div>
         </div>
-        <?php if($flash_mess):?>
-        <div class="row">
-            <div class="col-md-8 offset-md-"><div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <?= $flash_mess ?>
-                </div></div>
-        </div>
-        <?php endif;?>
+
         <div class="row">
             <div class="col-12 card-box">
                 <table class="table-contract table">
@@ -158,7 +186,21 @@
 <script>
     commands.push(function(){
         $('.table-contract').dataTable({
-            "order": []
+            "pageLength": 10,
+            'pagingType': "full_numbers",
+            "aaSorting": [],
+            "responsive": true,
+        });
+
+        $('#search').click(function(){
+            let url = '/admin/list-personal-contract?'+
+                '&timeCheckInFrom='+$('#time_check_in_from').val()+
+                '&timeCheckInTo='+$('#time_check_in_to').val();
+            window.location = url;
+
+        });
+        $('.datepicker').datepicker({
+            format: "dd-mm-yyyy"
         });
     });
 </script>

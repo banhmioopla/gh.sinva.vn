@@ -22,7 +22,23 @@ class Contract extends CustomBaseStep {
 	}
 
 	public function showYour(){
-	    $data['list_contract'] = $this->ghContract->get(['consultant_id' => $this->auth['account_id']]);
+	    $timeCheckInFrom = $this->timeFrom;
+	    $timeCheckInTo = $this->timeTo;
+
+	    if(!empty($this->input->get("timeCheckInFrom"))){
+            $timeCheckInFrom = $this->input->get("timeCheckInFrom");
+        }
+
+        if(!empty($this->input->get("timeCheckInTo"))){
+            $timeCheckInTo = $this->input->get("timeCheckInTo");
+        }
+
+	    $data['list_contract'] = $this->ghContract->get([
+	        'consultant_id' => $this->auth['account_id'],
+            'time_check_in >=' => strtotime($timeCheckInFrom),
+            'time_check_in <=' => strtotime($timeCheckInTo)+86399,
+            'status <>' => 'Cancel'
+        ]);
 
         $data['libCustomer'] = $this->libCustomer;
         $data['libUser'] = $this->libUser;
@@ -30,6 +46,8 @@ class Contract extends CustomBaseStep {
         $data['ghRoom'] = $this->ghRoom;
         $data['ghImage'] = $this->ghImage;
         $data['libRoom'] = $this->libRoom;
+        $data['timeCheckInFrom'] = $timeCheckInFrom;
+        $data['timeCheckInTo'] = $timeCheckInTo;
         $data['flash_mess'] = "";
         $data['flash_status'] = "";
         if($this->session->has_userdata('fast_notify')) {
