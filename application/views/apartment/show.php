@@ -84,9 +84,11 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     body.noscroll {
         overflow-y: hidden!important;
     }
+
 </style>
 <div class="container-fluid">
     <!-- Page-Title -->
+
     <div class="row">
         <div class="col-sm-12">
             <div class="page-title-box">
@@ -118,10 +120,14 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             <?php $this->load->view('components/list-navigation'); ?>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-12 d-block d-md-none">
+            <?php $this->load->view('apartment/components/circle-menu'); ?>
+        </div>
+    </div>
     <?php if($check_update_room): ?>
         <div class="row">
-            <div class="col-md-12  mt-3">
+            <div class="col-md-12 d-block d-md-none mt-3">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-md-4">
@@ -161,10 +167,10 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
         </div>
     <?php endif;?>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 ">
 
                 <?php if(!empty($list_contract_30d_remain)): ?>
-                    <div class="card-box">
+                    <div class="card-box d-none d-md-block">
                         <div class="row">
                             <div class="col-12"><h4 class="font-weight-bold text-danger"><i class=" mdi mdi-bell-outline"></i> Hợp đồng sắp hết hạn (30 ngày)</h4></div>
 
@@ -194,7 +200,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
 
                 <?php if(!empty($list_customer_birth_10d_remain)): ?>
-                    <div class="card-box">
+                    <div class="card-box d-none d-md-block">
                         <div class="row">
                             <div class="col-12"><h4 class="font-weight-bold text-danger"><i class="mdi mdi-bell-outline"></i> Sinh nhật khách (10 ngày)</h4></div>
                             <?php foreach($list_customer_birth_10d_remain as $row ):
@@ -218,7 +224,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 <?php endif; ?>
 
                 <?php if(!empty($list_customer_birth_10d_remain)): ?>
-                    <div class="card-box">
+                    <div class="card-box d-none d-md-block">
                         <div class="row">
                             <div class="col-12"><h4 class="font-weight-bold text-danger"> <i class="mdi mdi-bell-outline"></i> Dự án sắp trống (30 ngày)</h4></div>
 
@@ -281,10 +287,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             </div>
 
         </div>
-        <div class="col-12">
 
-        </div>
-        <div class="col-md-3 col-12">
+        <div class="col-lg-3 col-12 d-md-block d-none">
             <div class="card-box">
                 <div class="d-flex justify-content-center flex-wrap ">
                     <?php foreach ($list_features as $feature_k => $feature_v):
@@ -314,8 +318,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                 </div>
                 <div class="d-flex justify-content-center flex-wrap border-bottom mt-2 mb-3">
-                    <div id="loadMore" class="m-1 badge badge-pill badge-primary"> <i class="fa fa-arrow-circle-down"></i> Mở rộng</div>
-                    <div id="showLess" class="m-1 badge badge-pill badge-primary"> <i class="fa fa-arrow-circle-up"></i> Thu gọn</div>
+                    <div class="m-1 loadMore badge badge-pill badge-primary"> <i class="fa fa-arrow-circle-down"></i> Mở rộng</div>
+                    <div class="m-1 showLess badge badge-pill badge-primary"> <i class="fa fa-arrow-circle-up"></i> Thu gọn</div>
                 </div>
 
                 <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
@@ -354,7 +358,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             </div>
         <?php endif; ?>
         <?php if(!empty($current_apartment)): ?>
-        <div class="col-md-9 col-12">
+        <div class="col-lg-9 col-12">
             <!--DETAIL CURRENT APARTMENT-->
 
             <?php
@@ -688,11 +692,11 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
         let size_li = $(".item-feature").length;
         x=5;
         $('.item-feature:lt('+x+')').show();
-        $('#loadMore').click(function () {
+        $('.loadMore').click(function () {
             x= (x+5 <= size_li) ? x+5 : size_li;
             $('.item-feature:lt('+x+')').show();
         });
-        $('#showLess').click(function () {
+        $('.showLess').click(function () {
             x=(x-5<0) ? 5 : x-5;
             $('.item-feature').not(':lt('+x+')').hide();
         });

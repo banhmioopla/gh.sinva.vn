@@ -297,6 +297,12 @@ include VIEWPATH.'functions.php';
                 <span class="p-2 font-weight-bold text-danger" id="pin-notification"><?= $this->pin_notification['content'] ?></span>
             </div>
             <?php endif; ?>
+            <?php
+            if(!empty($this->head_title)):?>
+                <div class="text-center">
+                    <h4 class="pb-1 font-weight-bold text-primary" ><?= $this->head_title ?></h4>
+                </div>
+            <?php endif; ?>
             <!-- end navbar-custom -->
             <div id="gh-loader">
                 <div class="sk-wave">
