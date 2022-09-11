@@ -290,7 +290,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
         <div class="col-lg-3 col-12 d-md-block d-none">
             <div class="card-box">
-                <div class="d-flex justify-content-center flex-wrap ">
+                <div class="d-flex list-feature justify-content-center flex-wrap ">
                     <?php foreach ($list_features as $feature_k => $feature_v):
                         $active_element = "";
                         if(!empty($this->input->get('feature')) && $this->input->get('feature') == $feature_k){
@@ -689,19 +689,19 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 <script>
     commands.push(function () {
         // item-feature
-        let size_li = $(".item-feature").length;
-        let x=5;
-        $('.item-feature:lt('+x+')').show();
-        $('.loadMore').click(function () {
-            x= (x+5 <= size_li) ? x+5 : size_li;
-            $('.item-feature:lt('+x+')').show();
+        let feature_size_li = $(".list-feature .item-feature").length;
+        let feature_x=5;
+        $('.list-feature .item-feature:lt('+feature_x+')').show();
+        $('.list-feature .loadMore').click(function () {
+            feature_x= (feature_x+5 <= feature_size_li) ? feature_x+5 : feature_size_li;
+            $('.list-feature .item-feature:lt('+feature_x+')').show();
         });
-        $('.showLess').click(function () {
-            x=(x-5<0) ? 5 : x-5;
-            $('.item-feature').not(':lt('+x+')').hide();
+        $('.list-feature .showLess').click(function () {
+            feature_x=(feature_x-5<0) ? 5 : feature_x-5;
+            $('.list-feature .item-feature').not(':lt('+feature_x+')').hide();
         });
 
-        $('.search-address').on('keyup', function(){
+        $('.list-feature .search-address').on('keyup', function(){
             var value = $(this).val().toLowerCase();
             $(".address-item").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)

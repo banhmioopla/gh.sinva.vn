@@ -235,7 +235,7 @@
 </style>
 
 
-<div id="circleMenuModal" class="modal fade" tabindex="-1" role="dialog"
+<div id="circleMenuModal" class="modal circle-menu fade" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog mt-5">
         <div class="modal-content">
@@ -246,14 +246,14 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex justify-content-center flex-wrap ">
-                    <?php foreach ($list_features as $feature_k => $feature_v):
+                    <?php foreach ($list_features as $circle_k => $circle_v):
                         $active_element = "";
-                        if(!empty($this->input->get('feature')) && $this->input->get('feature') == $feature_k){
+                        if(!empty($this->input->get('feature')) && $this->input->get('feature') == $circle_k){
                             $active_element = "active";
                         }
                         ?>
-                        <a href="<?= base_url().'admin/list-apartment?feature='.$feature_k ?>"
-                           class="btn m-1 btn-sm item-feature btn-rounded btn-outline-danger <?= $active_element ?> waves-light waves-effect"> <?= $feature_v ?> </a>
+                        <a href="<?= base_url().'admin/list-apartment?feature='.$circle_k ?>"
+                           class="btn m-1 btn-sm item-feature btn-rounded btn-outline-danger <?= $active_element ?> waves-light waves-effect"> <?= $circle_v ?> </a>
                     <?php endforeach;?>
 
                     <?php
@@ -317,7 +317,7 @@
     <div class="itemMenuBox contact"><a href="javascript:void(0)" class="itemMenu "><i class="fa fa-phone" aria-hidden="true"></i></a></div>-->
 
 
-    <a href="javascript:void(0)" data-toggle="modal" data-target="#circleMenuModal" class="toggleMenu circle-menu floating" ><i class="fa fa-bars" aria-hidden="true"></i>XXX</a>
+    <a href="javascript:void(0)" data-toggle="modal" data-target="#circleMenuModal" class="toggleMenu floating" ><i class="fa fa-bars" aria-hidden="true"></i></a>
 </div>
 
 <script>
@@ -325,8 +325,18 @@
         /*$(".toggleMenu").on('click', function () {
             $("#mainMenu").toggleClass('open');
         });*/
-        $(".circle-menu").click(function () {
-            
+
+        // item-feature
+        let circle_size_li = $(".circle-menu .item-feature").length;
+        let circle_x=5;
+        $('.circle-menu .item-feature:lt('+circle_x+')').show();
+        $('.circle-menu .loadMore').click(function () {
+            circle_x= (circle_x+5 <= circle_size_li) ? circle_x+5 : circle_size_li;
+            $('.circle-menu .item-feature:lt('+circle_x+')').show();
+        });
+        $('.circle-menu .showLess').click(function () {
+            circle_x=(circle_x-5<0) ? 5 : circle_x-5;
+            $('.circle-menu .item-feature').not(':lt('+circle_x+')').hide();
         });
     });
 </script>
