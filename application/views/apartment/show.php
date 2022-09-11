@@ -690,7 +690,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     commands.push(function () {
         // item-feature
         let size_li = $(".item-feature").length;
-        x=5;
+        let x=5;
         $('.item-feature:lt('+x+')').show();
         $('.loadMore').click(function () {
             x= (x+5 <= size_li) ? x+5 : size_li;
