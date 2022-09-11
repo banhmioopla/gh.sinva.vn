@@ -289,8 +289,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
         </div>
 
         <div class="col-lg-3 col-12 d-md-block d-none">
-            <div class="card-box">
-                <div class="d-flex list-feature justify-content-center flex-wrap ">
+            <div class="card-box list-feature">
+                <div class="d-flex justify-content-center flex-wrap ">
                     <?php foreach ($list_features as $feature_k => $feature_v):
                         $active_element = "";
                         if(!empty($this->input->get('feature')) && $this->input->get('feature') == $feature_k){
