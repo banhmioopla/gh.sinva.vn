@@ -209,6 +209,25 @@ class GhApartment extends CI_Model {
         }
         return false;
     }
+
+    public function getRoomPriceRange($apm_id){
+        $list_room = $this->ghRoom->get([
+            'apartment_id' => $apm_id,
+            'active' => 'YES',
+        ]);
+        $list_price = [];
+        foreach ($list_room as $room){
+            if(!in_array($room["price"], $list_price)){
+                $list_price[] = $room["price"];
+            }
+
+        }
+        if(count($list_price) > 0) {
+            return [min($list_price), max($list_price)];
+        }
+        return [0, 0];
+    }
+
 }
 
 /* End of file mApartment.php */

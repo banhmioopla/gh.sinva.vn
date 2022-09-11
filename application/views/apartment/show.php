@@ -332,7 +332,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <?php foreach ($list_apartment as $apm): ?>
                         <li class="mb-3 address-item">
                             <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm['address_street'] ?></a> </h5>
-                            <div class="text-right text-muted"><i class="mdi mdi-clock"></i> <?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apm['id'])) ?></div>
+                            <div class="text-right text-danger"> giá: <?= implode(" đến ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
                             <div class="clearfix"></div>
                         </li>
                     <?php endforeach;?>
