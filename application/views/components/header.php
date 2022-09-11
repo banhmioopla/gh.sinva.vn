@@ -300,7 +300,7 @@ include VIEWPATH.'functions.php';
             <?php
             if(!empty($this->head_title)):?>
                 <div class="text-center">
-                    <h4 class="pb-1 font-weight-bold text-primary" ><?= $this->head_title ?></h4>
+                    <h4 class=" p-1 m-0 font-weight-bold text-primary" ><?= $this->head_title ?></h4>
                 </div>
             <?php endif; ?>
             <!-- end navbar-custom -->
