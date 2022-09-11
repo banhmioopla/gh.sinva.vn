@@ -13,6 +13,7 @@ class GhRoom extends CI_Model {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();
     }
     public function getByApartmentIdAndActive($apartment_id) {
+        $this->db->order_by("status", 'ASC');
         return $this->db->get_where($this->table, ['active' => 'YES', 'apartment_id' => $apartment_id ])->result_array();
     }
 

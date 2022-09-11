@@ -847,9 +847,10 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
         });
 
         $('.list-room').DataTable({
-            columnDefs: [
+            /*columnDefs: [
                 { type: 'sort-numbers-ignore-text', targets : 0 }
-            ],
+            ],*/
+            "aaSorting": [],
             pageLength: 5
         });
 
