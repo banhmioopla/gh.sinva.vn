@@ -86,7 +86,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     }
 
 </style>
-<div class="container-fluid">
+<div class="container-fluid mt-4">
     <!-- Page-Title -->
 
     <div class="row">
@@ -179,10 +179,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 $room_checker = $this->ghRoom->getFirstById($row['room_id']);
                                 ?>
 
-
-
                                 <div class="col-12 col-md-4">
-                                    <div class="card m-b-30 text-white bg-dark text-xs-center">
+                                    <div class="card  text-white bg-dark text-xs-center">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote">
                                                 <strong><?= $apm_30d_checker['address_street'] ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
@@ -207,7 +205,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 ?>
 
                                 <div class="col-12 col-md-4">
-                                    <div class="card m-b-30 text-white bg-dark text-xs-center">
+                                    <div class="card  text-white bg-dark text-xs-center">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote">
                                                 <strong><?= $row['name'] ?></strong> (<?= date("d/m/Y", $row['birthdate']) ?>)
@@ -238,7 +236,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 endforeach; ?>
 
                                 <div class="col-12 col-md-4">
-                                    <div class="card m-b-30 text-white bg-dark text-xs-center">
+                                    <div class="card  text-white bg-dark text-xs-center">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote">
                                                 <strong><?= $apm_model['address_street'] ?>:</strong>
@@ -703,8 +701,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             $('.list-feature .item-feature').not(':lt('+feature_x+')').hide();
         });
 
-        $('.list-feature .search-address').on('keyup', function(){
-            var value = $(this).val().toLowerCase();
+        $('.search-address').on('keyup', function(){
+            let value = $(this).val().toLowerCase();
             $(".address-item").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
@@ -857,7 +855,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
         });
 
         function sortNumbersIgnoreText(a, b, high) {
-            var reg = /[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?/;
+            let reg = /[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?/;
             a = a.match(reg);
             a = a !== null ? parseFloat(a[0]) : high;
             b = b.match(reg);
