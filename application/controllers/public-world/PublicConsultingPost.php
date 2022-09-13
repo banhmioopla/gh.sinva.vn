@@ -158,6 +158,7 @@ class PublicConsultingPost extends CI_Controller {
                         $data[] = [
                             "Source" => "GH",
                             "ID" => $contract["id"],
+                            "Sale Chốt" => $user["name"],
                             "Dự án" =>$apm["address_street"] . ", Phường ". $apm["address_ward"],
                             "Mã phòng" => $room["code"],
                             "Giá thuê" => $contract["room_price"],
@@ -169,7 +170,6 @@ class PublicConsultingPost extends CI_Controller {
                             "Doanh số" => $contract['room_price']*$contract['commission_rate']/100,
                             "Doanh thu" => $this->ghContractPartial->getTotalByContractId($contract['id']),
                             "Số (*)" => $contract["rate_type"],
-                            "Sale Chốt" => $user["name"],
                             "Sale Hỗ trợ" => $user_support,
                             "Khách Hàng" => $customer["name"],
                             "Phone" => $customer["phone"],
