@@ -3,28 +3,33 @@ $list_user = $this->ghUser->get([
     "active" => "YES"
 ]);
 
-
+$list_team = $this->ghTeam->get();
 ?>
 
+<?php foreach ($list_team as $team):
+    $list_user = $this->ghTeamUser->getByTeamId($team['id']);
 
-<table class="table-contract  table table-dark table-bordered">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th width="350px">Khách thuê</th>
-        <th class="text-right">Giá thuê <small>x1000</small></th>
-        <th class="text-right">Giá cọc <small>x1000</small></th>
-        <th class="text-right"> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> </span></th>
+    ?>
+    <h4 class="font-weight-bold text-danger mt-md-2">Nhóm <?= $team["name"] ?></h4>
+    <table class="table-contract  table table-dark table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th width="350px">Khách thuê</th>
+            <th class="text-right">Giá thuê <small>x1000</small></th>
+            <th class="text-right">Giá cọc <small>x1000</small></th>
+            <th class="text-right"> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> </span></th>
 
-        <th>Ngày ký</th>
-        <th>Ngày hết hạn</th>
-        <th class="text-center">Thời hạn</th>
-        <th class="text-center" width="100px">Trạng Thái</th>
-    </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($list_user as $user): ?>
+            <th>Ngày ký</th>
+            <th>Ngày hết hạn</th>
+            <th class="text-center">Thời hạn</th>
+            <th class="text-center" width="100px">Trạng Thái</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($list_user as $member): ?>
             <?php
+            $user = $this->ghUser->getFirstByAccountId($member['user_id']);
             $user_list_contract = $this->ghContract->get([
                 'status <>' => 'Cancel',
                 'time_check_in >=' => strtotime($time_from),
@@ -148,5 +153,6 @@ $list_user = $this->ghUser->get([
             <?php endforeach; ?>
 
         <?php endforeach; ?>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+<?php endforeach; ?>

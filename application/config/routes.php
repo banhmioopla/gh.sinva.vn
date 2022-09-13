@@ -226,6 +226,12 @@ $route['admin/create-contract-partial'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/contract/partial/delete'] = function($params = []) {
+    $controller = 'Contract';
+    $action = '/deletePartial';
+    return $controller.$action;
+};
+
 $route['admin/list-personal-contract'] = function($params = []) {
     $controller = 'Contract';
     $action = '/showYour';

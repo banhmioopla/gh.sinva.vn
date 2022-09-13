@@ -14,6 +14,7 @@ class PublicConsultingPost extends CI_Controller {
         $this->load->model('ghRoom');
         $this->load->model('ghPublicConsultingPost');
         $this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
+        $this->load->library('LibUser', null, 'libUser');
         $this->public_dir = 'public-world/';
 
         $this->timeFrom = date("06-m-Y");
@@ -64,6 +65,8 @@ class PublicConsultingPost extends CI_Controller {
 
     public function exportToGoogleSheet(){
         $token = $this->input->get('token');
+        $timeFrom = $this->input->get('timeFrom');
+        $timeTo = $this->input->get('timeTo');
         $data = [];
         $timeFrom = $this->timeFrom;
         $timeTo = $this->timeTo;
@@ -73,7 +76,7 @@ class PublicConsultingPost extends CI_Controller {
         if(!empty($token)){
             switch ($token){
 
-                case 1: // danh sách thành viên
+                case 1: // Đội nhóm Thu nhập
                         $list_user = $this->ghUser->get(['active' => 'YES']);
                         $list_contract_supporter = $this->ghContract->get([
                             'time_check_in >=' => strtotime($timeFrom),
@@ -127,7 +130,7 @@ class PublicConsultingPost extends CI_Controller {
 
                         }
                     break;
-                default: // Hợp đồng tháng hiện tại
+                case 2: // Hợp đồng tháng hiện tại
                     $list_contract = $this->ghContract->get([
                         "time_check_in >=" => strtotime($timeFrom),
                         "time_check_in <=" => strtotime($timeTo)+86399,
@@ -140,7 +143,11 @@ class PublicConsultingPost extends CI_Controller {
                         $user_support = "";
                         if(!empty($contract["arr_supporter_id"])){
                             $arr = json_decode($contract["arr_supporter_id"], true);
-                            $user_support = implode(" ,", $arr);
+                            $arr_name = [];
+                            foreach ($arr as $aid){
+                                $arr_name[] = $this->libUser->getNameByAccountid($aid);
+                            }
+                            $user_support = implode(" ,", $arr_name);
                         }
 
                         $customer = $this->ghCustomer->getFirstById($contract['customer_id']);
@@ -159,7 +166,8 @@ class PublicConsultingPost extends CI_Controller {
                             "Số tháng" => $contract["number_of_month"],
                             "Hết Hạn" => date("d-m-Y", $contract["time_expire"]),
                             "Hoa hồng" => $contract['commission_rate'],
-                            "Doanh thu" => $contract['room_price']*$contract['commission_rate']/100,
+                            "Doanh số" => $contract['room_price']*$contract['commission_rate']/100,
+                            "Doanh thu" => $this->ghContractPartial->getTotalByContractId($contract['id']),
                             "Số (*)" => $contract["rate_type"],
                             "Sale Chốt" => $user["name"],
                             "Sale Hỗ trợ" => $user_support,
@@ -167,6 +175,9 @@ class PublicConsultingPost extends CI_Controller {
                             "Phone" => $customer["phone"],
                         ];
                     }
+                    break;
+                default: //
+
             }
 
             echo json_encode($data); die;

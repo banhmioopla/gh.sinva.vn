@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '306b1380b76e442f95ae3c1a50a25f3219a97b7c',
+    'reference' => '30e76d424b884bb35ae4a3d0245baf4c3fc7c8be',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '306b1380b76e442f95ae3c1a50a25f3219a97b7c',
+      'reference' => '30e76d424b884bb35ae4a3d0245baf4c3fc7c8be',
     ),
     'chriskacerguis/codeigniter-restserver' => 
     array (

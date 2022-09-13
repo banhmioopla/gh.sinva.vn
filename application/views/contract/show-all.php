@@ -49,7 +49,8 @@ foreach ($list_contract as $row) {
                             <table class="table-hover table table-dark">
                                 <tbody>
                                 <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Số lượng</td> <td class="text-right font-weight-bold"><?= $metric['quantity'] ?></td></tr>
-                                <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng doanh thu</td> <td class="text-right font-weight-bold"><?= number_format($metric['total_sale']) ?> vnđ</td></tr>
+                                <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng doanh số</td> <td class="text-right font-weight-bold"><?= number_format($metric['total_sale']) ?> vnđ</td></tr>
+                                <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng doanh thu</td> <td class="text-right font-weight-bold"> vnđ</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -234,33 +235,8 @@ foreach ($list_contract as $row) {
             "fnDrawCallback": function() {
                 // x editable
                 <?php if($check_edit): ?>
-                $('.contract-room_price, .contract-number_of_month').editable({
-                    type: "number",
-                    url: '<?= base_url() ?>admin/update-contract-editable',
-                    inputclass: '',
-                    success: function(response) {
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.contract-alert').html(notify_html_success);
-                        } else {
-                            $('.contract-alert').html(notify_html_fail);
-                        }
-                    }
-                });
-                $('.contract-note').editable({
-                    type: "textarea",
-                    url: '<?= base_url() ?>admin/update-contract-editable',
-                    inputclass: '',
-                    success: function(response) {
-                        var data = JSON.parse(response);
-                        if(data.status == true) {
-                            $('.contract-alert').html(notify_html_success);
-                        } else {
-                            $('.contract-alert').html(notify_html_fail);
-                        }
-                    }
-                });
-                $('.contract-time_expire, .contract-time_check_in').editable({
+
+                $('.contract-time_check_in').editable({
                     placement: 'right',
                     type: 'combodate',
                     template:"D / MM / YYYY",
@@ -284,29 +260,6 @@ foreach ($list_contract as $row) {
                     }
                 });
 
-                $('.consultant_id').editable({
-                    url: '<?= base_url() ?>admin/update-contract-editable',
-                    inputclass: '',
-                    type: 'select2',
-                    mode: 'inline',
-                    source: function() {
-                        data = [];
-                        $.ajax({
-                            url: '<?= base_url() ?>admin/user/get-select',
-                            dataType: 'json',
-                            async: false,
-                            success: function(res) {
-                                data = res;
-                                return res;
-                            }
-                        });
-                        return data;
-                    },
-                    select2:{
-                        placeholder: 'Chọn thành viên...',
-                        minimumInputLength: 1
-                    },
-                });
                 <?php endif; ?>
             } // end fnDrawCallback
         });

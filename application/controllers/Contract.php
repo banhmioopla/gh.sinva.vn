@@ -292,7 +292,7 @@ class Contract extends CustomBaseStep {
 		foreach ($data['list_partial'] as $item) {
             $current_partial_amount += $item['amount'];
         }
-		$data['remaining_amount'] = $model['room_price'] - $current_partial_amount;
+		$data['remaining_amount'] = $model['room_price']*$model["commission_rate"]/100 - $current_partial_amount;
 		$this->load->view('components/header');
 		$this->load->view('contract/detail-show', $data);
 		$this->load->view('components/footer');
@@ -308,6 +308,20 @@ class Contract extends CustomBaseStep {
         ];
         $this->ghContractPartial->insert($data_insert);
         return redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function deletePartial(){
+        $id = $this->input->post('id');
+        if(!empty($id)) {
+            $result = $this->ghContractPartial->delete($id);
+
+            if($result > 0) {
+                echo json_encode(['status' => true]); die;
+            }
+
+            echo json_encode(['status' => false]); die;
+        }
+        echo json_encode(['status' => false]); die;
     }
 
 	public function create() {

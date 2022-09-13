@@ -16,6 +16,22 @@ class GhContractPartial extends CI_Model {
     public function getFirstById($id) {
         return $this->db->get_where($this->table, ['id' => $id])->row_array();
     }
+
+    public function getTotalByContractId($con_id) {
+        $list_con = $this->db->get_where($this->table, ['contract_id' => $con_id])->result_array();
+        $total = 0;
+
+        foreach ($list_con as $item) {
+            $total += $item['amount'];
+        }
+        return $total;
+    }
+    public function delete($id) {
+        $this->db->where('id' , $id);
+        $this->db->delete($this->table);
+        $result = $this->db->affected_rows();
+        return $result;
+    }
 }
 
 /* End of file mApartment.php */
