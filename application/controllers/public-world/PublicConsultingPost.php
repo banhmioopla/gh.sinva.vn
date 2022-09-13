@@ -135,7 +135,7 @@ class PublicConsultingPost extends CI_Controller {
                         "time_check_in >=" => strtotime($timeFrom),
                         "time_check_in <=" => strtotime($timeTo)+86399,
                         'status' => "Active"
-                    ]);
+                    ],'consultant_id', 'ASC');
                     foreach ($list_contract as $contract){
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
