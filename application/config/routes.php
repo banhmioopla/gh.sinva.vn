@@ -1305,6 +1305,12 @@ $route['public/consulting-post-detail'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['sinva-home/post/detail-editorial'] = function($params = []) {
+    $controller = '/public-world/PublicConsultingPost';
+    $action = '/detailEditorial';
+    return $controller.$action;
+};
+
 $route['public/customer-feedback/show'] = function($params = []) {
     $controller = '/public-world/PublicCustomerFeedback';
     $action = '/show';

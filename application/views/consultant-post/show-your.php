@@ -37,13 +37,16 @@
                                     $room = $ghRoom->getFirstById($post['room_id']);
                                     $apm = $ghApartment->getFirstById($room['apartment_id']);
 
-                                    $room_text = "{$apm['address_street']}  <strong class='text-warning'>{$room['code']}</strong> ";
+                                    $room_text = "{$apm['address_street']} <br> <strong class='text-warning'> mã phòng {$room['code']}</strong> ";
                                     ?>
                                     <tr>
                                         <td><?= $post['title'] ? $post['title'] :'<i>không tiêu đề</i>' ?> </td>
                                         <td><?= $room_text ?> </td>
                                         <td><?= date('d-m-Y h:i', $post['time_create']) ?></td>
-                                        <td><a class="text-primary font-weight-bold" href="/admin/consultant-post/detail?id=<?= $post['id'] ?>">Chỉnh Sửa</a> </td>
+                                        <td>
+                                            <a class="btn-danger btn btn-rounded font-weight-bold" href="/admin/consultant-post/detail?id=<?= $post['id'] ?>">Chỉnh Sửa </a>
+                                            <a class="btn-danger btn btn-rounded font-weight-bold" target="_blank" href="/sinva-home/post/detail-editorial?pid=<?= $post['id'] ?>">Xem</a>
+                                        </td>
                                     </tr>
                                 <?php endforeach;?>
                                 </tbody>

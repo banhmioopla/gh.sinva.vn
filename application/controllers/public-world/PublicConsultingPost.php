@@ -24,6 +24,8 @@ class PublicConsultingPost extends CI_Controller {
             $this->timeTo = date("05-m-Y");
         }
 
+        $this->view_notfound = "";
+
     }
 
     public function detailShow(){
@@ -61,6 +63,46 @@ class PublicConsultingPost extends CI_Controller {
         ]);
         $this->load->view($this->public_dir.'components/footer');
 
+    }
+
+
+    public function detailEditorial(){
+        $post_id = $this->input->get('pid');
+
+        $main_template = 'editorial/templates/detail-show';
+        if(empty($post_id)){
+            $main_template = $this->view_notfound;
+        }
+
+        $this_post = $this->ghPublicConsultingPost->getFirstById($post_id);
+        $this_post_img = json_decode($this_post['image_set'], true);
+        $room = $this->ghRoom->getFirstById($this_post['room_id']);
+        $user = $this->ghUser->getFirstByAccountId($this_post['user_create_id']);
+        $apartment = null;
+        if($room) {
+            $apartment = $this->ghApartment->getFirstById($room['apartment_id']);
+        }
+
+        $list_img = [];
+        if($this_post_img && count($this_post_img)) {
+            foreach ($this_post_img as $img_id) {
+                $img_model = $this->ghImage->getFirstById($img_id);
+                if($img_model) {
+                    $list_img[] = $img_model;
+                }
+            }
+        }
+
+
+        $this->load->view($this->public_dir.'editorial/templates/header', [
+
+        ]);
+        $this->load->view($this->public_dir.$main_template, [
+            'user' => $user,
+            'post' => $this_post
+
+        ]);
+        $this->load->view($this->public_dir.'editorial/templates/footer');
     }
 
     public function exportToGoogleSheet(){
