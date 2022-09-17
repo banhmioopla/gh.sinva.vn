@@ -366,12 +366,17 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             $list_comment = $this->ghApartmentComment->get(['apartment_id' => $current_apartment['id']]);
             $surrounding_facilities = !empty($current_apartment['surrounding_facilities']) ? json_decode($current_apartment['surrounding_facilities'], true) : [];
             $following = $this->ghApartmentUserFollow->isFollowing($current_apartment['id'], $this->auth['account_id']);
+            $apm_full_address = "{$current_apartment['address_street']}";
+            if(!empty($current_apartment['address_ward'])){
+                $apm_full_address .= ", phường {$current_apartment['address_ward']}";
+            }
+            $apm_full_address .= ", quận {$this->libDistrict->getNameByCode($current_apartment['district_code'])}";
             ?>
             <div class="card-box">
                 <div class="row">
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
-                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $current_apartment['address_street'] . " ,phường " . $current_apartment["address_ward"] ?>
+                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $apm_full_address ?>
                                 <button data-apm_id="<?= $current_apartment['id'] ?>"
                                         data-status_following="<?= json_encode($following) ?>"
                                         id="apm-following"

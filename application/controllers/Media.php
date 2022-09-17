@@ -175,6 +175,10 @@ class Media extends CustomBaseStep {
         $result = []; $html = ""; $num = 4; $index = 1;
 
         foreach ($list_img as $i =>  $img) {
+            if(!file_exists($root_url.$img['name'])){
+                continue;
+            }
+
             $media_tag = $img_tag; $media_class = "app-image";
             if(in_array(strtolower($img['file_type']),['mov', 'mp4'])){
                 $media_tag = $video_tag; $media_class = "app-video";
@@ -245,7 +249,9 @@ class Media extends CustomBaseStep {
         $result = []; $html = ""; $num = 4; $index = 1;
 
         foreach ($list_img as $i =>  $img) {
-
+            if(!file_exists($root_url.$img['name'])){
+                continue;
+            }
             if($index === 1 || (($index-1)%$num ===0 )) {
                 $html .= $item_html_start;
             }
