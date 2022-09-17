@@ -364,7 +364,9 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             }
             $apm_full_address .= ", quận {$this->libDistrict->getNameByCode($current_apartment['district_code'])}";
             $following_number = $this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']) ? '<span class="badge badge-danger ml-2"><i class="fa fa-heart"></i> '.$this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']).' theo dõi</span>' : '';
+            $visit_account = count($this->ghApartment->visitedAccount($current_apartment['id'], ""))  ? '<small class="text-muted">Tuần này <strong>'.implode(", ", $this->ghApartment->visitedAccount($current_apartment['id'], "")).'</strong></small>' : '';
             ?>
+
             <div class="card-box">
                 <div class="row">
                     <div class="col-12">
@@ -392,8 +394,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                         class="btn btn-sm <?= $following ? 'active':'' ?>  float-right btn-outline-danger btn-rounded waves-light waves-effect"><i class="fa fa-heart"></i></button>
                             </h2>
                             <div class="pl-2">
-                                <small class="text-muted">Tuần này <strong><?= implode(", ", $this->ghApartment->visitedAccount($current_apartment['id'], "")) ?></strong> đã ghé thăm</small>
-
+                                <?= $visit_account ?>
                             </div>
                             <div class="pl-2">
                                 <span class="rating-score" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </span>
