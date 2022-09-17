@@ -287,10 +287,14 @@
                     class="list-unstyled slimscroll mb-0 mt-1"
                     style="max-height: 300px"
                 >
-                    <?php foreach ($list_apartment as $apm): ?>
+                    <?php foreach ($list_apartment as $apm):
+
+                        $count_available =  $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '<div class="badge badge-pill badge-success font-weight-bold ">'.$this->ghRoom->getNumberByStatus($apm['id'], 'Available').'</div>' : '';
+                        $partner_name = '<span class="badge badge-primary ml-2">'.$this->ghPartner->getNameById($apm['partner_id']).'</span> ';
+                        ?>
                         <li class="mb-3 address-item">
                             <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm['address_street'] ?></a> </h5>
-                            <div class="text-right text-danger"> giá: <?= implode(" đến ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
+                            <div class="text-right text-danger">  <?= $partner_name . $count_available ?> <i class="mdi mdi-tag"></i> <?= implode(" - ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
                             <div class="clearfix"></div>
                         </li>
                     <?php endforeach;?>

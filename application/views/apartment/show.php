@@ -315,11 +315,13 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         style="max-height: 300px"
                 >
                     <?php foreach ($list_apartment as $apm):
-                        $count_available =  $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '<div class="badge badge-pill badge-success font-weight-bold ">'.$this->ghRoom->getNumberByStatus($apm['id'], 'Available').'</div>' : '';
-                        ?>
+                        $count_available =  $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '<div class="badge badge-success font-weight-bold ">'.$this->ghRoom->getNumberByStatus($apm['id'], 'Available').'</div>' : '';
+                        $partner_name = '<span class="badge badge-primary mb-2 ml-2">'.$this->ghPartner->getNameById($apm['partner_id']).'</span> ';
+                    ?>
                         <li class="mb-3 address-item mt-1 mb-1 card-header click-view" data-apm="<?= $apm['id'] ?>">
                             <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm['address_street'] ?></a> </h5>
-                            <div class="text-right text-danger"> <?= $count_available ?>  giá: <?= implode(" đến ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
+
+                            <div class="text-right text-danger"> <?= $partner_name . $count_available ?> <i class="mdi mdi-tag"></i> <?= implode(" - ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
                             <div class="clearfix"></div>
                         </li>
                     <?php endforeach;?>
@@ -365,6 +367,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             $apm_full_address .= ", quận {$this->libDistrict->getNameByCode($current_apartment['district_code'])}";
             $following_number = $this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']) ? '<span class="badge badge-danger ml-2"><i class="fa fa-heart"></i> '.$this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']).' theo dõi</span>' : '';
             $visit_account = count($this->ghApartment->visitedAccount($current_apartment['id'], ""))  ? '<small class="text-muted">Tuần này <strong>'.implode(", ", $this->ghApartment->visitedAccount($current_apartment['id'], "")).'</strong> đã ghé thăm</small>' : '';
+            $partner_name = '<span class="badge badge-primary ml-2">'.$this->ghPartner->getNameById($current_apartment['partner_id']).'</span>';
             ?>
 
             <div class="card-box">
@@ -387,7 +390,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     </div>
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
-                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $apm_full_address ?>
+                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i>  <?= $apm_full_address ?>
                                 <button data-apm_id="<?= $current_apartment['id'] ?>"
                                         data-status_following="<?= json_encode($following) ?>"
                                         id="apm-following"
@@ -398,6 +401,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             </div>
                             <div class="pl-2">
                                 <span class="rating-score" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </span>
+                                <?= $partner_name ?>
                                 <?= $following_number ?>
                             </div>
                         </div>
@@ -448,7 +452,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     </div>
 
                     <div class="col-12">
-                        <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" đến ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
+                        <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" - ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
                     </div>
                     <div class="col-12">
                         <div class="row justify-content-md-center">

@@ -71,6 +71,16 @@ class Apartment extends CustomBaseStep {
 
 	public function showNotificaton(){}
 
+	public function showDashboard(){
+	    $params = $this->input->get();
+	    if(empty($params)){
+            $this->load->view('components/header');
+            $this->load->view('apartment/show-dashboard', [
+            ]);
+            $this->load->view('components/footer');
+        }
+    }
+
 	public function show($product_type = 1){
         $this->product_type = $product_type;
 
@@ -213,12 +223,7 @@ class Apartment extends CustomBaseStep {
 
             }
 
-            if($this->product_category == "APARTMENT_GROUP" && !in_array($item['id'], $this->list_OPEN_APARTMENT)) {
-                continue;
-            }
-            if($this->product_category == "DISTRICT_GROUP" && !in_array($item['district_code'], $this->list_OPEN_DISTRICT)) {
-                continue;
-            }
+            if(!$this->isValidUserApartment($item)) continue;
 
             $data['list_apartment'][] = $item;
 		}
@@ -238,14 +243,7 @@ class Apartment extends CustomBaseStep {
         foreach ($list_apm_temp as $apm ) {
             $time_update = $this->ghApartment->getUpdateTimeByApm($apm['id']);
             $isFiveDays = $this->libTime->calDay2Time($today, $time_update);
-
-
-            if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
-                continue;
-            }
-            if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
-                continue;
-            }
+            if(!$this->isValidUserApartment($apm)) continue;
 
             if($isFiveDays > 4) {
                 if(in_array($apm['id'], $this->list_apartment_CRUD) || in_array($apm['district_code'], $this->list_district_CRUD))
@@ -690,12 +688,7 @@ class Apartment extends CustomBaseStep {
         $list_apm_temp = $this->ghApartment->get(['active' => 'NO']);
         $list_apm = [];
         foreach ($list_apm_temp as $apm ) {
-            if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
-                continue;
-            }
-            if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
-                continue;
-            }
+            if(!$this->isValidUserApartment($apm)) continue;
 
             $list_apm[] = $apm;
         }
@@ -814,13 +807,7 @@ class Apartment extends CustomBaseStep {
         $list_apm_temp = $this->ghApartment->get(['active' => 'YES']);
 	    $list_apm = [];
 	    foreach ($list_apm_temp as $apm ) {
-            if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
-                continue;
-            }
-            if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
-                continue;
-            }
-
+	        if(!$this->isValidUserApartment($apm)) continue;
             $list_apm[] = $apm;
         }
 
@@ -874,14 +861,7 @@ class Apartment extends CustomBaseStep {
         $list_apm_ready = [];
 
         foreach ($list_apm_temp as $apm ) {
-            if($this->product_category == "APARTMENT_GROUP" && !in_array($apm['id'], $this->list_OPEN_APARTMENT)) {
-                continue;
-            }
-            if($this->product_category == "DISTRICT_GROUP" && !in_array($apm['district_code'], $this->list_OPEN_DISTRICT)) {
-                continue;
-            }
-
-
+            if(!$this->isValidUserApartment($apm)) continue;
             $list_apm_ready[] = $apm;
         }
 
@@ -1238,6 +1218,17 @@ class Apartment extends CustomBaseStep {
 
         }
         echo json_encode($data);
+    }
+
+
+    private function isValidUserApartment($apartment){
+        if($this->product_category == "APARTMENT_GROUP" && !in_array($apartment['id'], $this->list_OPEN_APARTMENT)) {
+            return false;
+        }
+        if($this->product_category == "DISTRICT_GROUP" && !in_array($apartment['district_code'], $this->list_OPEN_DISTRICT)) {
+            return false;
+        }
+        return true;
     }
 
 }
