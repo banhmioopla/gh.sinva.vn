@@ -175,7 +175,7 @@ class Media extends CustomBaseStep {
         $result = []; $html = ""; $num = 4; $index = 1;
 
         foreach ($list_img as $i =>  $img) {
-            if(!file_exists($root_url.$img['name'])){
+            if(!file_exists(substr($root_url.$img['name'],1))){
                 continue;
             }
 
@@ -249,7 +249,7 @@ class Media extends CustomBaseStep {
         $result = []; $html = ""; $num = 4; $index = 1;
 
         foreach ($list_img as $i =>  $img) {
-            if(!file_exists($root_url.$img['name'])){
+            if(!file_exists(substr($root_url.$img['name'],1))){
                 continue;
             }
             if($index === 1 || (($index-1)%$num ===0 )) {
