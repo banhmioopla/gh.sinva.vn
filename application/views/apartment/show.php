@@ -339,6 +339,11 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </ul>
 
             </div>
+
+            <div class="card-box">
+                <h4 class="font-weight-bold text-center text-danger">Online hôm nay</h4>
+                <?= $this->ghUser->getOnlineToday() ?>
+            </div>
             <?php if(false):?>
             <div class="card-box">
                 <?php $this->load->view('apartment/components/five-days-ago',[

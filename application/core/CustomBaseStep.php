@@ -140,6 +140,7 @@ class CustomBaseStep extends CI_Controller {
                 'rate_star' => $this->ghContract->getTotalRateStar($this->auth['account_id'], $this->timeFrom, $this->timeTo)
             ]]);
         }
+
         $this->updateLatestOnline();
 
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {

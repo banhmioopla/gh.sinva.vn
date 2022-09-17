@@ -36,6 +36,20 @@ class GhUser extends CI_Model {
         return $this->db->insert($this->table, $data);
     }
 
+    public function getOnlineToday(){
+	    $list_account = $this->get([
+	        'active' => "YES",
+            'latest_online_time >' => strtotime(date("d-m-Y",strtotime('-1 day')))
+        ]);
+        $arr_name =[];
+        foreach ($list_account as $account) {
+            $arr_name[] = $account["name"];
+        }
+
+
+	    if(count($list_account)) return implode(", ", $arr_name);
+    }
+
     public function updateById($user_id, $data) {
         $this->db->where('id', $user_id);
         $this->db->update($this->table, $data);
