@@ -269,20 +269,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
     <div class="row">
         <div class="col-12">
 
-            <div class="float-right">
-                <div class="btn-group mb-2 dropleft">
-                    <button type="button"
-                            class="btn btn-danger waves-effect waves-light dropdown-toggle"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Tuỳ Chọn
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
 
-                    </div>
-                </div>
-            </div>
 
         </div>
 
@@ -376,9 +363,26 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 $apm_full_address .= ", phường {$current_apartment['address_ward']}";
             }
             $apm_full_address .= ", quận {$this->libDistrict->getNameByCode($current_apartment['district_code'])}";
+            $following_number = $this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']) ? '<span class="badge badge-danger ml-2"><i class="fa fa-heart"></i> '.$this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']).' theo dõi</span>' : '';
             ?>
             <div class="card-box">
                 <div class="row">
+                    <div class="col-12">
+                        <div class="float-right">
+                            <div class="btn-group mb-2 dropleft">
+                                <button type="button"
+                                        class="btn btn-danger waves-effect waves-light dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Tuỳ Chọn
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/admin/apartment/create"><i class="mdi mdi-comment-plus-outline"></i> Tạo dự án mới</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#setting"><i class="fi-cog"></i> Cài đặt dự án</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
                             <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i> <?= $apm_full_address ?>
@@ -387,7 +391,10 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                         id="apm-following"
                                         class="btn btn-sm <?= $following ? 'active':'' ?>  float-right btn-outline-danger btn-rounded waves-light waves-effect"><i class="fa fa-heart"></i></button>
                             </h2>
-                            <div class="rating-score pl-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </div>
+                            <div>
+                                <span class="rating-score pl-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </span>
+                                <?= $following_number ?>
+                            </div>
                         </div>
                     </div>
 

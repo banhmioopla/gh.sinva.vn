@@ -20,6 +20,18 @@ class GhApartmentUserFollow extends CI_Model {
         return false;
     }
 
+    public function getNumberFollow($apartment_id){
+        $list_fl = $this->get([
+            'apartment_id' => $apartment_id
+        ]);
+
+        if(count($list_fl)){
+            return count($list_fl);
+        }
+
+        return false;
+    }
+
     public function getById($id) {
         return $this->db->get_where($this->table, ['id' => $id])->result_array();
     }
