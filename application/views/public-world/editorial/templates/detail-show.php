@@ -11,7 +11,7 @@ $template_lib_path = base_url()."editorial-asset/";
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="Untree.co">
-    <link rel="shortcut icon" href="<?= $template_lib_path ?>favicon.png">
+    <link rel="shortcut icon" href="https://designimages.appypie.com/favicon/realestatefavicon-6-firstaid-symbol.jpg">
 
     <meta name="description" content="" />
     <meta name="keywords" content="bootstrap, bootstrap4" />
@@ -29,7 +29,7 @@ $template_lib_path = base_url()."editorial-asset/";
     <link rel="stylesheet" href="<?= $template_lib_path ?>css/aos.css">
     <link rel="stylesheet" href="<?= $template_lib_path ?>css/style.css">
 
-    <title>Append Free HTML Template by Untree.co</title>
+    <title><?= $post['title'] ?></title>
 </head>
 <body>
 
@@ -47,7 +47,7 @@ $template_lib_path = base_url()."editorial-asset/";
 
 
     <nav class="site-nav">
-        <div class="logo">
+        <div class="logo ">
             <a href="#" class="text-white">SinvaHome - Chi tiết dự án<span class="text-black">.</span></a>
         </div>
     </nav> <!-- END nav -->
@@ -61,56 +61,51 @@ $template_lib_path = base_url()."editorial-asset/";
         <div class="row align-items-center justify-content-between">
             <div class="col-lg-9 intro">
                 <h1 class="text-white font-weight-bold mb-4" data-aos="fade-up" data-aos-delay="0"><?= $post['title'] ?></h1>
-                <p class="text-white mb-4" data-aos="fade-up" data-aos-delay="100">SinvaHome - Slogan gì đấy quên rồi</p>
+                <p class="text-white mb-4" data-aos="fade-up" data-aos-delay="100">SinvaHome - Uy tín của chúng tôi chắc như bê tông</p>
                 <form action="#" class="sign-up-form d-flex" data-aos="fade-up" data-aos-delay="200">
                     <input type="text" class="form-control" readonly value="<?= $user["phone_number"] ?>">
                     <input type="button" class="btn btn-primary" value="<?= $user["name"] ?>">
                 </form>
-
             </div>
-
-
         </div>
-
-
     </div>
 
     <div class="slant" style="background-image: url('<?= $template_lib_path ?>images/slant.svg');"></div>
 </div>
 
-<div class="py-3">
-    <div class="container">
 
-        <div class="owl-logos owl-carousel">
-            <div class="item">
-                NHÀ MẶT PHỐ
-            </div>
-            <div class="item">
-                CHUNG CƯ MINI
-            </div>
-            <div class="item">
-                VĂN PHÒNG
-            </div>
-            <div class="item">
-                BIỆT THỰ MINI
-            </div>
-            <div class="item">
-                SIÊU THỊ MINI
-            </div>
-        </div>
-
-    </div>
-
-</div>
-<div class="features-lg ">
+<div >
     <div class="container">
         <div class="row feature align-items-center justify-content-between">
 
             <div class="col-lg-7 section-title" data-aos="fade-up" data-aos-delay="100">
 
                 <h2 class="font-weight-bold mb-4 heading"><?= $post['title'] ?></h2>
-                <p class="mb-4"><?= $post['content'] ?></p>
+                <p class="mb-4" style="white-space: pre-wrap"><?= $post['content'] ?></p>
+            </div>
+            <div class=" pricing-section  col-md-6 col-lg-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="0">
+                <div class="pricing-item shadow">
+                    <h3>Phòng <?= $room["code"] . "" ?></h3>
+                    <div class="description">
+                        <p><?= $apartment["address_street"] ?></p>
+                    </div>
+                    <div class="period-change mb-4 d-block">
+                        <div class="price-wrap">
+                            <div class="price">
+                                <div>
+                                    <div><?= number_format($room["price"]) ?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-inline-flex align-items-center text-center period-wrap">
+                            <div class="d-inline-block mr-1">1 </div>
+                            <div class="d-block text-left period">
+                                <div>Tháng</div>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
 
         </div>
@@ -121,260 +116,191 @@ $template_lib_path = base_url()."editorial-asset/";
     <div class="container">
         <div class="row mb-5">
             <div class="col-12 text-center"  data-aos="fade-up">
-                <h2 class="heading font-weight-bold mb-3">Thông tin tiện ích</h2>
+                <h2 class="heading font-weight-bold mb-3">Chi tiết</h2>
             </div>
         </div>
         <div class="row align-items-stretch">
+            <!--ITEM-->
             <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
                 <div class="unit-4 d-flex">
                     <div class="unit-4-icon mr-4">
                         <span class="feather-layers"></span>
                     </div>
                     <div>
-                        <h3>Modern Design</h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                        
+                        <h3>Cọc</h3>
+                        <p><?= $apartment["deposit"] ?></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="100">
+
+            <!--ITEM-->
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
                 <div class="unit-4 d-flex">
                     <div class="unit-4-icon mr-4">
                         <span class="feather-layers"></span>
                     </div>
                     <div>
-                        <h3>High Performance</h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                        
+                        <h3>Điện</h3>
+                        <p><?= $apartment["electricity"] ?></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="200">
+
+            <!--ITEM-->
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
                 <div class="unit-4 d-flex">
                     <div class="unit-4-icon mr-4">
                         <span class="feather-layers"></span>
                     </div>
                     <div>
-                        <h3>Flexible Layout</h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                        
+                        <h3>Nước</h3>
+                        <p><?= $apartment["electricity"] ?></p>
                     </div>
                 </div>
             </div>
 
-
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <!--ITEM-->
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
                 <div class="unit-4 d-flex">
                     <div class="unit-4-icon mr-4">
                         <span class="feather-layers"></span>
                     </div>
                     <div>
-                        <h3>Free Support</h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                        
+                        <h3>Internet</h3>
+                        <p><?= $apartment["electricity"] ?></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="400">
+
+            <!--ITEM-->
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
                 <div class="unit-4 d-flex">
                     <div class="unit-4-icon mr-4">
-                        <span class="feather-shopping-bag"></span>
+                        <span class="feather-layers"></span>
                     </div>
                     <div>
-                        <h3>Cool Pricing</h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                        
+                        <h3>Giữ xe</h3>
+                        <p><?= $apartment["parking"] ?></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="500">
+
+            <!--ITEM-->
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
                 <div class="unit-4 d-flex">
                     <div class="unit-4-icon mr-4">
-                        <span class="feather-smartphone"></span>
+                        <span class="feather-layers"></span>
                     </div>
                     <div>
-                        <h3>Mobile Apps</h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                        
+                        <h3>Thang máy</h3>
+                        <p><?= $apartment["elevator"] ?></p>
                     </div>
                 </div>
             </div>
 
-        </div>
-    </div>
-</div>
-
-
-<div class="site-section overlay site-cover-2" style="background-image: url('<?= $template_lib_path ?>images/img_v_3-min.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7 mx-auto text-center">
-                <h2 class="text-white mb-4">Hình Ảnh / Video Dự Án</h2>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<div class="features-lg">
-    <div class="container">
-
-        <div class="row feature align-items-center justify-content-between">
-            <div class="col-lg-7 mb-4 mb-lg-0 section-stack" data-aos="fade-up" data-aos-delay="0">
-                <img src="<?= $template_lib_path ?>images/img_h_5-min.jpg" alt="Image" class="img-fluid">
-            </div>
-            <div class="col-lg-4 section-title" data-aos="fade-up" data-aos-delay="100">
-
-                <h2 class="font-weight-bold mb-4">Far far away, behind the word mountains</h2>
-                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live.</p>
-                <p><a href="#" class="btn btn-primary">Get Started</a></p>
-
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-
-
-<div class="site-section bg-light" id="blog-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-7 mb-4 position-relative text-center mx-auto">
-                <h2 class="font-weight-bold text-center">Our Blog Posts</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-            </div>
-
-        </div>
-        <div class="row">
-
-
-            <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
-                <div class="blog_entry">
-                    <a href="#"><img src="<?= $template_lib_path ?>images/img_h_3-min.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid"></a>
-                    <div class="p-4 bg-white">
-                        <h3><a href="#">Far far away, behind the word mountains</a></h3>
-                        <span class="date">April 25, 2019</span>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                        <p class="more"><a href="#">Continue reading...</a></p>
+            <!--ITEM-->
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
+                <div class="unit-4 d-flex">
+                    <div class="unit-4-icon mr-4">
+                        <span class="feather-layers"></span>
+                    </div>
+                    <div>
+                        <h3>Máy giặt</h3>
+                        <p><?= $apartment["washing_machine"] ?></p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
-                <div class="blog_entry">
-                    <a href="#"><img src="<?= $template_lib_path ?>images/img_h_5-min.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid"></a>
-                    <div class="p-4 bg-white">
-                        <h3><a href="#">Far far away, behind the word mountains</a></h3>
-                        <span class="date">April 25, 2019</span>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                        <p class="more"><a href="#">Continue reading...</a></p>
+            <!--ITEM-->
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
+                <div class="unit-4 d-flex">
+                    <div class="unit-4-icon mr-4">
+                        <span class="feather-layers"></span>
+                    </div>
+                    <div>
+                        <h3>Dọn phòng</h3>
+                        <p><?= $apartment["room_cleaning"] ?></p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 mb-5 mb-lg-0 col-lg-4">
-                <div class="blog_entry">
-                    <a href="#"><img src="<?= $template_lib_path ?>images/img_h_7-min.jpg" alt="Free Website Template by Free-Template.co" class="img-fluid"></a>
-                    <div class="p-4 bg-white">
-                        <h3><a href="#">Far far away, behind the word mountains</a></h3>
-                        <span class="date">April 25, 2019</span>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                        <p class="more"><a href="#">Continue reading...</a></p>
-                    </div>
-                </div>
-            </div>
+
         </div>
-        <div class="row mt-5">
-            <div class="col-lg-4 mx-auto">
-                <a href="#" class="btn btn-primary btn-block">See All Posts</a>
-            </div>
-        </div>
+
     </div>
 </div>
 
-<div class="site-section overlay site-cover-2" style="background-image: url('<?= $template_lib_path ?>images/img_v_4-min.jpg')">
+<div class="site-section" id="portfolio-section">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-7 mx-auto text-center">
-                <h2 class="text-white mb-4">Get this template for free! :)</h2>
-                <p class="mb-0"><a href="https://untree.co/" rel="noopener" class="btn btn-primary">Get it for free!</a></p>
+        <h2 class="font-weight-bold text-center">Ảnh/Video</h2>
+
+        <div class="filters-content mb-5" data-aos="fade-up" data-aos-delay="200">
+            <div class="row grid">
+
+                <?php foreach ($list_img as $img):
+                        $url_img ='media/apartment/'.$img['name'];
+                        if(file_exists($url_img) == false){
+                            continue;
+                        }
+                        $is_video = false;
+                        if(in_array(strtoupper($img['file_type']), ["MP4", "MOV"])){
+                            $is_video = true;
+                        }
+
+                    ?>
+
+                    <?php if(!$is_video): ?>
+                    <div class="isotope-card col-sm-4 all mockup">
+                        <a href="<?= base_url().'media/apartment/'.$img['name'] ?>" data-fancybox="gal">
+                            <img src="<?= base_url().'media/apartment/'.$img['name'] ?>" alt="Image" class="img-fluid">
+                            <div class="contents">
+                                <h3><?= $room["code"] ?></h3>
+                            </div>
+                        </a>
+                    </div>
+                    <?php else: ?>
+                    <div class="isotope-card col-sm-4 all mockup">
+                        <a href="<?= base_url().'media/apartment/'.$img['name'] ?>" href="#vid-<?= $img['name'] ?>" data-fancybox="gal">
+                            <img class="img-fluid" src="https://www.imcrc.org/wp-content/uploads/2017/06/video-placeholder.png" />
+                        </a>
+                        <video  controls id="vid-<?= $img['name'] ?>" style="display:none;">
+                            <source src="<?= base_url().'media/apartment/'.$img['name'] ?>" type="video/mp4">
+                            <source src="<?= base_url().'media/apartment/'.$img['name'] ?>" type="video/webm">
+                            <source src="<?= base_url().'media/apartment/'.$img['name'] ?>" type="video/ogg">
+                            Trình duyệt không hỗ trợ xem định dạng Video
+                        </video>
+
+                    </div>
+                    <?php endif; ?>
+                <?php endforeach;?>
+
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="site-footer">
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-lg-4">
                 <div class="widget">
-                    <h3>About</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live.</p>
+                    <h3>SinvaHome</h3>
+                    <p>Công ty cổ phần địa ốc SinvaHome</p>
                 </div>
                 <div class="widget">
-                    <h3>Connect with us</h3>
+                    <h3>Mạng xã hội</h3>
                     <ul class="social list-unstyled">
-                        <li><a href="#"><span class="icon-facebook"></span></a></li>
-                        <li><a href="#"><span class="icon-twitter"></span></a></li>
-                        <li><a href="#"><span class="icon-instagram"></span></a></li>
-                        <li><a href="#"><span class="icon-dribbble"></span></a></li>
-                        <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                        <li><a href="https://www.facebook.com/Sinvahome"><span class="icon-facebook"></span></a></li>
                     </ul>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="widget">
-                            <h3>Navigations</h3>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-4">
-                        <div class="widget">
-                            <ul class="links list-unstyled">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Work</a></li>
-                                <li><a href="#">Process</a></li>
-                                <li><a href="#">About Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-4">
-                        <div class="widget">
-                            <ul class="links list-unstyled">
-                                <li><a href="#">Press</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Support</a></li>
-                                <li><a href="#">Privacy</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-4">
-                        <div class="widget">
-                            <ul class="links list-unstyled">
-                                <li><a href="#">Privacy</a></li>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Process</a></li>
-                                <li><a href="#">About Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row justify-content-center text-center copyright">
             <div class="col-md-8">
-                <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> <!-- License information: https://untree.co/license/ -->
+                <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="#">Sinva</a> <!-- License information: https://untree.co/license/ -->
                 </p> </br>
-                <p> Dsitributed by <a href="https://themewagon.com">themewagon</a> </p>
             </div>
         </div>
     </div>

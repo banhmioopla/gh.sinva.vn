@@ -99,8 +99,10 @@ class PublicConsultingPost extends CI_Controller {
         ]);
         $this->load->view($this->public_dir.$main_template, [
             'user' => $user,
-            'post' => $this_post
-
+            'post' => $this_post,
+            'room' => $room,
+            'apartment' => $apartment,
+            'list_img' => $list_img,
         ]);
         $this->load->view($this->public_dir.'editorial/templates/footer');
     }
