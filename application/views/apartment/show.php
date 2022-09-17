@@ -498,7 +498,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger">Mô tả</h4>
-                        <blockquote class="blockquote">
+                        <blockquote class="blockquote" style="white-space: pre-line">
                             <?= $current_apartment['description'] ?>
                         </blockquote>
                     </div>
