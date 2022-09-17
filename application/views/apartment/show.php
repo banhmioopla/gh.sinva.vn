@@ -438,20 +438,28 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" đến ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
                     </div>
-                    <div class="col-md-3 col-6 mb-4 censorship" data-censorship="user_collected_id">
-                        <div> <i class="fa fa-user"></i> Quản lý dự án</div>
-                        <div class="font-weight-bold pl-2"><?= $this->libUser->getNameByAccountid($current_apartment['user_collected_id']) . "<br>  <span class='text-primary'><i class='mdi mdi-phone-classic'></i> ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ."</span>" ?></div>
-                    </div>
-                    <div class="col-md-3 col-6 mb-4">
-                        <div> <i class="fa fa-calendar"></i> Thời gian cập nhật</div>
-                        <div class="font-weight-bold pl-2"><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></div>
-                    </div>
-                    <div class="col-md-3 col-6 mb-4">
-                        <div> <i class="fa fa-calendar"></i> Ngày nhập</div>
-                        <div class="font-weight-bold pl-2"><?= $current_apartment["time_insert"] > 0 ? date("d/m/Y",$current_apartment["time_insert"]) : "..." ?></div>
-                    </div>
                     <div class="col-12">
-                        <div class="row">
+                        <div class="row justify-content-center">
+                            <div class="col-md-3 col-6 m-2 shadow p-4 " data-censorship="user_collected_id">
+                                <div> <i class="fa fa-user"></i> Quản lý dự án</div>
+                                <?php if($current_apartment['user_collected_id']):?>
+                                    <div class="font-weight-bold text-right"><?= $this->libUser->getNameByAccountid($current_apartment['user_collected_id']) . "<br>  <span class='text-primary'><i class='mdi mdi-phone-classic'></i> ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ."</span>" ?></div>
+                                <?php endif;?>
+                            </div>
+                            <div class="col-md-3 col-6 m-2 shadow p-4">
+                                <div> <i class="fa fa-calendar"></i> Thời gian cập nhật</div>
+                                <div class="font-weight-bold text-right"><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></div>
+                            </div>
+                            <div class="col-md-3 col-6 m-2 shadow p-4">
+                                <div> <i class="fa fa-calendar"></i> Ngày nhập</div>
+                                <div class="font-weight-bold text-right"><?= $current_apartment["time_insert"] > 0 ? date("d/m/Y",$current_apartment["time_insert"]) : "..." ?></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="row row justify-content-center">
                             <div class="col-md-2 col-4 text-success mb-4">
                                 <div class="card-box shadow mb-0 widget-chart-two">
                                     <div class="widget-chart-two-content">
