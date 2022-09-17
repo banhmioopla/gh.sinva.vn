@@ -33,7 +33,7 @@ class CustomBaseStep extends CI_Controller {
 		$this->list_apartment_CRUD = [];
         $temp_district_arr = [];
         $this->yourTeam = false;
-
+        $this->except_account = [171020095,171020099];
         $this->list_report_issue = $this->ghNotification->get(['controller' => 'ApartmentReport']);
         $this->product_type = null;
 

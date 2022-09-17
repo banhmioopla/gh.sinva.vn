@@ -6,7 +6,7 @@ class Apartment extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct(); 
-		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict', 'ghImage', 'ghApartmentView',
+		$this->load->model(['ghApartment','ghNotification', 'ghContract', 'ghDistrict', 'ghImage',
             'ghApartmentPromotion', 'ghApartmentRequest', 'ghApartmentView', 'ghConsultantBooking', 'ghApartmentShaft',
             'ghApartmentUserFollow',
             'ghTag', 'ghApartmentComment', 'ghConsultantBooking', 'ghBaseRoomType']);
@@ -106,11 +106,13 @@ class Apartment extends CustomBaseStep {
                 'time_create >' => strtotime(date('d-m-Y'))
             ]);
             if(count($apm_view) == 0){
-                $this->ghApartmentView->insert([
-                    'apartment_id' => $this->input->get('current_apm_id'),
-                    'user_id' => $this->auth['account_id'],
-                    'time_create' => time()
-                ]);
+                if(!in_array($this->auth['account_id'],$this->except_account)){
+                    $this->ghApartmentView->insert([
+                        'apartment_id' => $this->input->get('current_apm_id'),
+                        'user_id' => $this->auth['account_id'],
+                        'time_create' => time()
+                    ]);
+                }
             }
 
         }
@@ -1210,17 +1212,6 @@ class Apartment extends CustomBaseStep {
 			return die($this->updateEditable()); 
 		}
 		echo json_encode($result); die;
-	}
-
-	public function dashboard() {
-		$data['product_total'] = count($this->ghApartment->get(['active' => 'YES'])); 
-		$data['available_room_total'] = count($this->ghRoom->get(['active' => 'YES', 'status' => 'Available']));
-		$data['full_room_total'] = count($this->ghRoom->get(['active' => 'YES', 'status' => 'Full']));
-		$data['list_district'] = [];
-		/*--- Load View ---*/
-		$this->load->view('components/header');
-		$this->load->view('apartment/dashboard', $data);
-		$this->load->view('components/footer');
 	}
 
     public function searchApartment(){
