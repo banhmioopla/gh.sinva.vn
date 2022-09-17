@@ -140,6 +140,7 @@ class CustomBaseStep extends CI_Controller {
                 'rate_star' => $this->ghContract->getTotalRateStar($this->auth['account_id'], $this->timeFrom, $this->timeTo)
             ]]);
         }
+        $this->updateLatestOnline();
 
         if(!(isset($open_modules[$this->current_controller]) && in_array($this->current_action,$open_modules[$this->current_controller]))) {
 
@@ -183,6 +184,19 @@ class CustomBaseStep extends CI_Controller {
             }
             rmdir($path);
         }
+    }
+
+    private function updateLatestOnline(){
+
+	    if(isset($this->auth)  && array_key_exists("latest_online_time", $this->auth)){
+
+            if((strtotime(date('d-m-Y')) >  $this->auth['latest_online_time'])){
+                $this->ghUser->updateById($this->auth['id'], [
+                    'latest_online_time' => strtotime(date('d-m-Y'))
+                ]);
+            }
+        }
+
     }
 
 	
