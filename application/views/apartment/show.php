@@ -391,8 +391,12 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                         id="apm-following"
                                         class="btn btn-sm <?= $following ? 'active':'' ?>  float-right btn-outline-danger btn-rounded waves-light waves-effect"><i class="fa fa-heart"></i></button>
                             </h2>
-                            <div>
-                                <span class="rating-score pl-2" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </span>
+                            <div class="pl-2">
+                                <small class="text-muted">Tuần này <strong><?= implode(", ", $this->ghApartment->visitedAccount($current_apartment['id'], "")) ?></strong> đã ghé thăm</small>
+
+                            </div>
+                            <div class="pl-2">
+                                <span class="rating-score" data-score="<?= $apartment_score ?>" data-apm-id="<?=$current_apartment['id']?>"> <span class="text-danger">(<?= count($list_comment) ?> bình luận)</span> </span>
                                 <?= $following_number ?>
                             </div>
                         </div>

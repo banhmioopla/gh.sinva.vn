@@ -224,6 +224,35 @@ class GhApartment extends CI_Model {
         return false;
     }
 
+    public function visitedAccount($apm_id, $except_account){
+        $this->load->model(["ghApartmentView","ghUser"]);
+        $list_view = $this->ghApartmentView->get([
+            'apartment_id' => $apm_id,
+            'user_id <>' => $except_account,
+            'time_create >=' => strtotime('-1 week'),
+        ]);
+        $arr_account = $arr_account_name = [];
+        foreach ($list_view as $view){
+            if(!in_array($view["user_id"],$arr_account)){
+                $account = $this->ghUser->getFirstByAccountId($view["user_id"]);
+                if(!empty($account)){
+                    $arr_account[] = $account["account_id"];
+                    $split_name = explode(' ', $account["name"]);
+                    $account_name = $split_name[count($split_name)-1];
+                    if(count($split_name) > 1){
+                        $account_name = $split_name[count($split_name)-2]." ".$account_name;
+                    }
+                    $arr_account_name[] =$account_name;
+                }
+
+            }
+        }
+
+        return $arr_account_name;
+
+
+    }
+
     public function getRoomPriceRange($apm_id){
         $list_room = $this->ghRoom->get([
             'apartment_id' => $apm_id,
