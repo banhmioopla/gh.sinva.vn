@@ -328,9 +328,9 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         style="max-height: 300px"
                 >
                     <?php foreach ($list_apartment as $apm):
-                        $count_available =  $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '<span class="badge badge-pill badge-success font-weight-bold ">'.$this->ghRoom->getNumberByStatus($apm['id'], 'Available').'</span>' : '';
+                        $count_available =  $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '<div class="badge badge-pill badge-success font-weight-bold ">'.$this->ghRoom->getNumberByStatus($apm['id'], 'Available').'</div>' : '';
                         ?>
-                        <li class="mb-3 address-item">
+                        <li class="mb-3 address-item mt-1 mb-1 card-header">
                             <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm['address_street'] ?></a> </h5>
                             <div class="text-right text-danger"> <?= $count_available ?>  giá: <?= implode(" đến ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
                             <div class="clearfix"></div>
