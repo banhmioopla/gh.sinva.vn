@@ -79,7 +79,7 @@ class Apartment extends CustomBaseStep {
             "new" => " <i class='fa fa-bookmark'></i> Mới (30d)",
             "best_seller_month" => " <i class='fa fa-flash'></i> Best seller ".date("m-Y"),
             "following" => " <i class='fa fa-heart'></i> Theo dõi",
-//            "best_view" => "Xem nhiều trong tháng",
+//            "best_view_month" => "Xem nhiều trong tháng",
         ];
         $timeFrom = date("01-m-Y");
         $timeTo = date("d-m-Y",strtotime('last day of this month', time()));

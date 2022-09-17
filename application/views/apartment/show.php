@@ -417,12 +417,20 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         </div>
                         <hr>
                     </div>
-                    <div class="col-12">
-                        <h4 class="font-weight-bold text-danger">Tổng quan</h4>
+                    <div class="col-md-8">
+                        <?= $this->ghContract->getAlertNewestByApartment($current_apartment["id"]) ?>
                     </div>
-                    <div class="col-md-3 col-6 mb-4">
+
+                    <div class="col-md-8">
+                        <?= $this->ghApartment->isEmptyRoomPrice($current_apartment["id"]) ?>
+                    </div>
+
+                    <div class="col-12">
+                        <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" đến ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
+                    </div>
+                    <div class="col-md-3 col-6 mb-4 censorship" data-censorship="user_collected_id">
                         <div> <i class="fa fa-user"></i> Quản lý dự án</div>
-                        <div class="font-weight-bold pl-2"><?= $this->libUser->getNameByAccountid($current_apartment['user_collected_id']) . " | ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ?></div>
+                        <div class="font-weight-bold pl-2"><?= $this->libUser->getNameByAccountid($current_apartment['user_collected_id']) . "<br>  <span class='text-primary'><i class='mdi mdi-phone-classic'></i> ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ."</span>" ?></div>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <div> <i class="fa fa-calendar"></i> Thời gian cập nhật</div>
@@ -435,21 +443,38 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12">
                         <div class="row">
                             <div class="col-md-2 col-4 text-success mb-4">
-                                <div> <i class="mdi mdi-cube"></i> Trống</div>
-                                <div class="font-weight-bold pl-2"><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Available") ?></div>
+                                <div class="card-box shadow mb-0 widget-chart-two">
+                                    <div class="widget-chart-two-content">
+                                        <p class="text-muted mb-0">Trống</p>
+                                        <h3 class=""><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Available") ?></h3>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-2 col-4 text-danger mb-4">
-                                <div> <i class="mdi mdi-cube"></i> Full</div>
-                                <div class="font-weight-bold pl-2"><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Full") ?></div>
+                                <div class="card-box shadow mb-0 widget-chart-two">
+                                    <div class="widget-chart-two-content">
+                                        <p class="text-muted mb-0">Full</p>
+                                        <h3 class=""><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Full") ?></h3>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-2 col-4 text-warning mb-4">
-                                <div> <i class="mdi mdi-cube"></i> Sắp trống</div>
-                                <div class="font-weight-bold pl-2"><?= $this->ghRoom->getNumberByTimeavailable($current_apartment['id']) ?></div>
+                                <div class="card-box shadow mb-0 widget-chart-two">
+                                    <div class="widget-chart-two-content">
+                                        <p class="text-muted mb-0">Sắp trống</p>
+                                        <h3 class=""><?= $this->ghRoom->getNumberByTimeavailable($current_apartment['id']) ?></h3>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-2 col-4 text-info mb-4">
-                                <div> <i class="mdi mdi-cube"></i>Hợp đồng tháng <?= date("m/Y") ?></div>
-                                <div class="font-weight-bold pl-2"><?= count($list_contract) ?></div>
+                                <div class="card-box shadow mb-0 widget-chart-two">
+                                    <div class="widget-chart-two-content">
+                                        <p class="text-muted mb-0">HĐ <?= date("m/Y") ?></p>
+                                        <h3 class=""><?= count($list_contract) ?></h3>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -633,7 +658,9 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             'controller' => 'Apartment',
                             'active' => 'YES'
                         ]);
+                        if(count($img_count) == 0) continue;
                         $img_count = count($img_count) > 0 ? ' ('.count($img_count).')': '';
+
                         ?>
                             <button type="button"
                                     data-id="<?= $_room['id'] ?>"

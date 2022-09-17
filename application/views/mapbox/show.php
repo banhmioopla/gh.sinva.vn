@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-box">
-                    <div id='map' style='width: 100%; height: 550px;'></div>
+                    <div id='map' style='width: 100%; height: 650px;'></div>
                 </div>
             </div>
 
@@ -37,15 +37,8 @@
                 type="text/css"
             />
             <style>
-                .marker {
-                    background-image: url('https://i.ibb.co/WDNbfCC/unnamed.png');
-                    background-size: cover;
-                    width: 15px;
-                    height: 15px;
-                    cursor: pointer;
-                }
                 .mapboxgl-popup {
-                    max-width: 200px;
+                    max-width: 250px;
                 }
 
                 .mapboxgl-popup-content {
@@ -74,15 +67,21 @@
                 };
                 // add markers to map
                 geojson.features.forEach(function(marker) {
-                    let el = document.createElement('div');
-                    el.className = 'marker';
-
-                    let coo = marker.geometry.coordinates;
+                    let coordinates = marker.geometry.coordinates;
                     let title = marker.properties.title;
-                    new mapboxgl.Marker(el)
-                        .setLngLat(coo)
+                    let popCard = `
+                    <div class="card m-b-30 card-body">
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.</p>
+                            <a href="#" class="btn btn-custom waves-effect waves-light">Go somewhere</a>
+                        </div>
+                    `;
+
+                    new mapboxgl.Marker({color: "red"})
+                        .setLngLat(coordinates)
                         .setPopup(new mapboxgl.Popup({ offset: 25 })
-                            .setHTML('<h5 class="text-danger">' + title + '</h5>'))
+                            .setHTML(popCard))
                         .addTo(map);
                 });
 
@@ -126,6 +125,14 @@
                     map.on('mouseleave', 'places', function () {
                         map.getCanvas().style.cursor = '';
                     });
+
+                    const geocoder = new MapboxGeocoder({
+                        accessToken: mapboxgl.accessToken,
+                        language: 'vi-VI',
+                        country: 'VN',
+                        mapboxgl: mapboxgl
+                    });
+                    map.addControl(geocoder);
                 });
             </script>
         </div>

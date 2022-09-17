@@ -27,6 +27,23 @@ class GhContract extends CI_Model {
         return $this->db->get_where($this->table, $where)->result_array();
     }
 
+    public function getAlertNewestByApartment($apm_id) {
+
+        $last_contract = $this->get([
+            "apartment_id" => $apm_id,
+            'time_check_in >=' => strtotime("-6 month"),
+            'time_check_in <=' => strtotime("+1 year"),
+        ]);
+        if(count($last_contract) == 0){
+            return '<div class="alert alert-warning bg-warning text-white border-0" role="alert">
+                            <i class="dripicons-rocket"></i> ... đã hơn <strong> 6 tháng</strong> chưa có hợp đồng
+                        </div>';
+        }
+        return '<div class="alert alert-warning bg-warning text-white border-0" role="alert">
+                            <i class="fa fa-twitter"></i> Hợp đồng cuối cùng ký vào <strong>'.date("d/m/Y",$last_contract[0]["time_check_in"]).'</strong>
+                        </div>';
+    }
+
     public function getTotalSaleByConsultant($user_id, $timeFrom, $timeTo) {
         $this->db->order_by('id','DESC');
         $list = $this->db->get_where($this->table, [

@@ -210,6 +210,20 @@ class GhApartment extends CI_Model {
         return false;
     }
 
+    public function isEmptyRoomPrice($apm_id){
+        $this->load->model("ghRoom");
+        $list_room = $this->ghRoom->get([
+            'apartment_id' => $apm_id,
+            'active' => 'YES',
+            'price' => 0
+        ]);
+        if(count($list_room)) return '<div class="alert alert-warning bg-warning text-white border-0" role="alert">
+                            <i class="fa fa-twitter"></i> Có một số phòng <strong>chưa cập nhật giá </strong>
+                        </div>';
+
+        return false;
+    }
+
     public function getRoomPriceRange($apm_id){
         $list_room = $this->ghRoom->get([
             'apartment_id' => $apm_id,
