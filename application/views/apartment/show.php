@@ -364,7 +364,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             }
             $apm_full_address .= ", quận {$this->libDistrict->getNameByCode($current_apartment['district_code'])}";
             $following_number = $this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']) ? '<span class="badge badge-danger ml-2"><i class="fa fa-heart"></i> '.$this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']).' theo dõi</span>' : '';
-            $visit_account = count($this->ghApartment->visitedAccount($current_apartment['id'], ""))  ? '<small class="text-muted">Tuần này <strong>'.implode(", ", $this->ghApartment->visitedAccount($current_apartment['id'], "")).'</strong></small>' : '';
+            $visit_account = count($this->ghApartment->visitedAccount($current_apartment['id'], ""))  ? '<small class="text-muted">Tuần này <strong>'.implode(", ", $this->ghApartment->visitedAccount($current_apartment['id'], "")).'</strong> đã ghé thăm</small>' : '';
             ?>
 
             <div class="card-box">
