@@ -145,9 +145,9 @@ class Media extends CustomBaseStep {
                                  alt="%URL%">';
 
         $html = "";
-        $item_html_start = '<div class="carousel-item">';
+        $item_html_start = '<div class="carousel-item"><div class="row">';
         $item_html ='
-                <div class="col-md-3 mb-3 col-6" id="img-box-%ID_IMG%">
+                <div class="col-md-3 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup %CLASS_MEDIA%">
                         <div class="portfolio-masonry-img">
@@ -159,7 +159,7 @@ class Media extends CustomBaseStep {
                     </div>
                 </div>';
         $item_html_vid ='
-                <div class="col-md-3 mb-3 col-6" id="img-box-%ID_IMG%">
+                <div class="col-md-3 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup %CLASS_MEDIA%">
                         <div class="portfolio-masonry-img">
@@ -170,7 +170,7 @@ class Media extends CustomBaseStep {
                         </div>
                     </div>
                 </div>';
-        $item_html_end = '</div>';
+        $item_html_end = '</div></div>';
         $list_img = $this->ghImage->get(['room_id' => $room_id, "controller" => "Apartment", 'active' => 'YES']);
         $result = []; $html = ""; $num = 4; $index = 1;
 
@@ -213,7 +213,7 @@ class Media extends CustomBaseStep {
         $root_url = "/media/service-apartment/";
 
         $html = "";
-        $item_html_start = '<div class="carousel-item">';
+        $item_html_start = '<div class="carousel-item"><div class="row"> ';
         $item_html ='
                 <div class="col-md-3 mb-3 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
@@ -241,7 +241,7 @@ class Media extends CustomBaseStep {
                     </div>
                 </div>';
 
-        $item_html_end = '</div>';
+        $item_html_end = '</div></div>';
         $list_img = $this->ghImage->get([
             'apartment_id' => $this->input->post('apartment_id'),
             'controller' => 'ServiceApartment',

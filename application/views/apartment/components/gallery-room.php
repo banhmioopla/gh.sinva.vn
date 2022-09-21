@@ -1,5 +1,5 @@
 <!--Carousel Wrapper-->
-<div id="gallery-room" class="carousel slide carousel-multi-item carousel-multi-item-2" data-ride="carousel">
+<div id="gallery-room" class="carousel slide carousel-multi-item carousel-multi-item-2" data-interval="false" data-ride="carousel">
 
     <!--Controls-->
     <div class="controls-top text-center mb-1 mt-4">
