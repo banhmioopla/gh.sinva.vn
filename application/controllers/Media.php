@@ -147,7 +147,7 @@ class Media extends CustomBaseStep {
         $html = "";
         $item_html_start = '<div class="carousel-item">';
         $item_html ='
-                <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
+                <div class="col-md-3 mb-3 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup %CLASS_MEDIA%">
                         <div class="portfolio-masonry-img">
@@ -159,7 +159,7 @@ class Media extends CustomBaseStep {
                     </div>
                 </div>';
         $item_html_vid ='
-                <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
+                <div class="col-md-3 mb-3 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup %CLASS_MEDIA%">
                         <div class="portfolio-masonry-img">
@@ -215,7 +215,7 @@ class Media extends CustomBaseStep {
         $html = "";
         $item_html_start = '<div class="carousel-item">';
         $item_html ='
-                <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
+                <div class="col-md-3 mb-3 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup">
                         <div class="portfolio-masonry-img">
@@ -229,7 +229,7 @@ class Media extends CustomBaseStep {
                 </div>';
 
         $item_html_vid ='
-                <div class="col-md-3 mb-3" id="img-box-%ID_IMG%">
+                <div class="col-md-3 mb-3 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup mfp-iframe">
                         <div class="portfolio-masonry-img">

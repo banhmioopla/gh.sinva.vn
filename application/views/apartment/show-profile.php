@@ -214,28 +214,17 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                 <div class="card-box">
                     <div class="row">
                         <div class="col-12">
-                            <h3 class="font-weight-bold text-danger text-center">Mô Tả / Ghi Chú</h3>
+                            <h3 class="font-weight-bold text-danger text-center">Mô Tả</h3>
                         </div>
                         <div class="col-md-12">
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <strong class="col-form-strong">Mô Tả Dự Án</strong>
+                                <div class="form-group col-md-12">
                                     <div class="mb-1">
                                         <?php foreach ($short_fill as $term): ?>
                                             <span class="fill-term-description badge badge-info"><?= $term ?></span>
                                         <?php endforeach; ?>
                                     </div>
                                     <textarea name="description" id="description" class="form-control"><?= $apartment['description'] ?></textarea>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <strong class="col-form-strong">Ghi Chú</strong>
-                                    <div class="mb-1">
-                                        <?php foreach ($short_fill as $term): ?>
-                                            <span class="fill-term-note badge badge-info"><?= $term ?></span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                    <textarea name="note" id="note" class="form-control" ><?= $apartment['note'] ?></textarea>
-
                                 </div>
                             </div>
                             <div class="form-row float-right">

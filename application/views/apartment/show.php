@@ -179,7 +179,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 $room_checker = $this->ghRoom->getFirstById($row['room_id']);
                                 ?>
 
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-4 mb-2">
                                     <div class="card  text-white bg-dark text-xs-center">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote">
@@ -204,7 +204,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             <?php foreach($list_customer_birth_10d_remain as $row ):
                                 ?>
 
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-4 mb-2">
                                     <div class="card  text-white bg-dark text-xs-center">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote">
@@ -235,7 +235,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                     $room_info []= $room_checker['code'] . ' ('. date("d/m/Y", $room_checker['time_available']) . ') ';
                                 endforeach; ?>
 
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-4 mb-2">
                                     <div class="card  text-white bg-dark text-xs-center">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote">

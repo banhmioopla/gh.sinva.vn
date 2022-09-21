@@ -298,7 +298,7 @@ include VIEWPATH.'functions.php';
             </div>
             <?php endif; ?>
             <?php
-            if(!empty($this->head_title)):?>
+            if(!empty($this->head_title) && false):?>
                 <div class="text-center">
                     <h4 class=" p-1 m-0 font-weight-bold text-primary" ><?= $this->head_title ?></h4>
                 </div>
