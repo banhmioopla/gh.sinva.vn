@@ -244,8 +244,14 @@ $route['admin/detail-contract'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/room/copyClipboard'] = function($params = []) {
+    $controller = 'Room';
+    $action = '/copyClipboard';
+    return $controller.$action;
+};
+
 $route['admin/ajax/contract/chart'] = function($params = []) {
-    $controller = 'Contract';
+    $controller = 'Room';
     $action = '/drawChart';
     return $controller.$action;
 };

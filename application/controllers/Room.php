@@ -25,6 +25,25 @@ class Room extends CustomBaseStep {
 		$this->load->view('components/footer');
 	}
 
+	public function copyClipboard(){
+        $post_data = $this->input->post();
+        $result = [];
+        if($post_data["apartment_id"]){
+            $list_room = $this->ghRoom->getByApartmentId($post_data["apartment_id"]);
+            $apartment = $this->ghApartment->getFirstById($post_data["apartment_id"]);
+            if(isset($post_data["more_field"])){
+                $result[] = strip_tags($apartment[$post_data["more_field"]]) . " \n";
+            }
+            foreach ($list_room as $room) {
+                if($room["status"] == "Available"){
+                    $result[] = $room["code"] . " (".number_format($room["price"]/1000).") ";
+                }
+            }
+        }
+
+        echo json_encode($result); die;
+	}
+
 	public function getListRoomOldTimeAvailable(){
 	    $list_room = $this->ghRoom->get(['time_available >' => 0 ,'active' => 'YES', 'time_available < ' =>  strtotime(date('d-m-Y'))]);
 	    $data = [];

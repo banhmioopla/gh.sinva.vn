@@ -28,6 +28,7 @@
     <script type="text/javascript" src="<?= $js_plugins_path ?>jquery-knob/excanvas.js"></script>
     <![endif]-->
     <script src="<?= $js_plugins_path ?>jquery-knob/jquery.knob.js"></script>
+    <script src="<?= $js_plugins_path ?>jquery-toastr/jquery.toast.min.js"></script>
     <!-- Required datatable js -->
     <script src="<?= $js_plugins_path ?>datatables/jquery.dataTables.min.js"></script>
     <script src="<?= $js_plugins_path ?>datatables/dataTables.bootstrap4.min.js"></script>

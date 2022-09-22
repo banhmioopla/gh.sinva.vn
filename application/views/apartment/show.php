@@ -390,7 +390,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     </div>
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
-                            <h2 class="font-weight-bold text-danger"><i class=" mdi mdi-home-map-marker"></i>  <?= $apm_full_address ?>
+                            <h2 class="font-weight-bold text-danger"><iclass=" mdi mdi-home-map-marker"></i>  <?= $apm_full_address ?>
                                 <button data-apm_id="<?= $current_apartment['id'] ?>"
                                         data-status_following="<?= json_encode($following) ?>"
                                         id="apm-following"
@@ -410,10 +410,15 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <!--BUTTONS ACTioNS-->
                     <div class="col-12 list-action" >
                         <div class="text-md-right text-center">
+                            <?php if($this->ghRoom->getNumberByStatus($current_apartment['id'], "Available")): ?>
+                            <button id="copy-room-info" data-apartment-id="<?= $current_apartment['id'] ?>"
+                                    class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class=" mdi mdi-content-copy"></i> Copy P.trống</button>
+                            <?php endif;?>
+
                             <?php if($is_editable_apartment): ?>
-                                <a class="m-1" href="/admin/apartment/duplicate?id=<?= $current_apartment['id'] ?>" >
+                                <!--<a class="m-1" href="/admin/apartment/duplicate?id=<?/*= $current_apartment['id'] */?>" >
                                     <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-credit-card-multiple"></i> Copy DA</button>
-                                </a>
+                                </a>-->
                                 <a class="m-1" href="/admin/profile-apartment?id=<?= $current_apartment['id'] ?>" >
                                     <button class="btn btn-sm btn-outline-primary m-1 btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> DA</button>
                                 </a>
@@ -890,6 +895,78 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 }
             })
         });
+
+        var copy_room_timer = 0;
+        var copy_room_delay = 200;
+        var copy_room_prevent = false;
+        $('#copy-room-info').click(function (event) {
+            let apartment_id  = $(this).data('apartment-id');
+            copy_room_timer = setTimeout(function () {
+                if(!copy_room_prevent){
+                    $.ajax({
+                        url: '/admin/room/copyClipboard',
+                        dataType: 'json',
+                        async: false,
+                        type: 'POST',
+                        data: {apartment_id: apartment_id},
+                        success: function(data){
+                            let copyFrom = document.createElement("textarea");
+                            document.body.appendChild(copyFrom);
+                            copyFrom.textContent = data;
+                            copyFrom.select();
+                            document.execCommand("copy");
+                            copyFrom.remove();
+                            console.log("toast");
+                            $.toast({
+                                heading: 'Đã copy phòng',
+                                text: data,
+                                position: 'top-right',
+                                loaderBg: '#4ab583',
+                                icon: 'info',
+                                hideAfter: 3000,
+                                stack: 1
+                            });
+                        }
+                    });
+                }
+                copy_room_prevent = false;
+
+
+            },copy_room_delay);
+
+        }).dblclick(function () {
+            clearTimeout(copy_room_timer);
+            copy_room_prevent = true;
+            let apartment_id  = $(this).data('apartment-id');
+
+            $.ajax({
+                url: '/admin/room/copyClipboard',
+                dataType: 'json',
+                async: false,
+                type: 'POST',
+                data: {apartment_id: apartment_id, more_field: "description"},
+                success: function(data){
+                    let copyFrom = document.createElement("textarea");
+                    document.body.appendChild(copyFrom);
+                    copyFrom.textContent = data;
+                    copyFrom.select();
+                    document.execCommand("copy");
+                    copyFrom.remove();
+                    console.log("double");
+                    $.toast({
+                        heading: 'Đã copy phòng & mô tả',
+                        text: data,
+                        position: 'top-right',
+                        loaderBg: '#4ab583',
+                        icon: 'info',
+                        hideAfter: 3000,
+                        stack: 1
+                    });
+                }
+            });
+        });
+
+
 
         $('#apartment_update_ready').change(function () {
             window.location = '/admin/room/show-create?apartment-id='+$(this).val();
