@@ -6,6 +6,7 @@ class GhApartment extends CI_Model {
     const REAL_ESTATE_FOR_RENT = 1;
     const REAL_ESTATE_FOR_SALE = 2;
     const REAL_ESTATE_NONE = 3;
+    private $product_type = null;
 
     public function getTitleProductType($type_id){
         $list =  [

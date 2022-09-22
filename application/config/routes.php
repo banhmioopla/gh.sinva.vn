@@ -251,7 +251,7 @@ $route['admin/room/copyClipboard'] = function($params = []) {
 };
 
 $route['admin/ajax/contract/chart'] = function($params = []) {
-    $controller = 'Room';
+    $controller = 'Contract';
     $action = '/drawChart';
     return $controller.$action;
 };
