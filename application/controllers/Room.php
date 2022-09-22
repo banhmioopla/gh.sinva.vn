@@ -29,14 +29,19 @@ class Room extends CustomBaseStep {
         $post_data = $this->input->post();
         $result = [];
         if($post_data["apartment_id"]){
-            $list_room = $this->ghRoom->getByApartmentId($post_data["apartment_id"]);
             $apartment = $this->ghApartment->getFirstById($post_data["apartment_id"]);
+            $list_room = $this->ghRoom->get([
+                'apartment_id' => $post_data["apartment_id"],
+                'active' => 'YES',
+            ]);
+            $result[] = $apartment["address_street"]  . " \n";
+
             if(isset($post_data["more_field"])){
                 $result[] = strip_tags($apartment[$post_data["more_field"]]) . " \n";
             }
             foreach ($list_room as $room) {
                 if($room["status"] == "Available"){
-                    $result[] = $room["code"] . " (".number_format($room["price"]/1000).") ";
+                    $result[] = " ".$room["code"] . " (".number_format($room["price"]/1000).") \n";
                 }
             }
         }
