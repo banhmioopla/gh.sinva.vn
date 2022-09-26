@@ -375,7 +375,7 @@ class Apartment extends CustomBaseStep {
             'account_id' => $this->auth['account_id'],
         ]);
 
-        if($post['status'] === 'true'){
+        if($post['status'] === 'true' && empty($follow_apm)){
             $checker = $this->ghApartmentUserFollow->insert([
                 'apartment_id' => $post['apm_id'],
                 'account_id' => $this->auth['account_id'],
@@ -383,7 +383,7 @@ class Apartment extends CustomBaseStep {
             ]);
 
             echo json_encode([
-                'status' => true
+                'status' => true,'msg' => 'Cập nhật thành công'
             ]); die;
         }
 
@@ -393,7 +393,7 @@ class Apartment extends CustomBaseStep {
         }
 
         echo json_encode([
-            'status' => false
+            'status' => false, 'msg' => 'Cập nhật fail'
         ]); die;
 
     }

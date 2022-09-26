@@ -57,7 +57,7 @@ include VIEWPATH.'functions.php';
                                     <?php if(count($list_apm)): ?>
                                         <ul class="list-unstyled pt-1 border-top border-muted">
                                             <?php foreach ($list_apm as $apm):
-                                                $this_apm = $ghApartment->getById($apm['apartment_id'])[0];
+                                                $this_apm = $ghApartment->getFirstById($apm['apartment_id']);
 
                                                 ?>
                                                 <li><i class="mdi mdi-tag-heart"></i> <small><?= $this_apm['address_street'] ?></small></li>

@@ -17,38 +17,8 @@ class Crawler extends CustomBaseStep {
 
 // Find all images
         $data = [];
-        foreach ($district as $d) {
-            foreach ($page as $p) {
-                $url = 'https://nha.chotot.com/tp-ho-chi-minh/quan-'.$d.'/thue-can-ho-chung-cu?page='.$p;
-                // Create DOM from URL or file
-                $html = file_get_html($url);
-
-                foreach($html->find('.wrapperAdItem___2woJ1') as $element){
-                    $title = '';
-                    $price = '';
-                    $last_time = '';
-                    foreach ($element->find('h3') as $x) {
-                        $title = $x->plaintext;
-                    }
-
-                    foreach ($element->find('.adPriceNormal___puYxd') as $x) {
-                        $price =  $x->plaintext;
-                    }
-
-                    foreach ($element->find('.text___1ZBGX') as $x) {
-                        $last_time =  $x->outertext;
-                    }
-                    $data[] = [
-                        'district' => $d,
-                        'page' => $p,
-                        'title' => $title,
-                        'price' => $price,
-                        'bottom' =>$last_time
-                    ];
-
-                }
-            }
-        }
+        $url = 'https://www.nhatot.com/du-an-tp-ho-chi-minh';
+        // Create DOM from URL or file https://docs.flarum.org/install/
 
 
         $this->load->view('components/header');
