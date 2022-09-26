@@ -721,6 +721,7 @@ class Apartment extends CustomBaseStep {
 	    if(isset($_POST['submit'])) {
             $update_data = [
                 'address_street' => $this->input->post('address_street'),
+                'zalo_group_url' => $this->input->post('zalo_group_url'),
                 'address_ward' => $this->input->post('address_ward'),
                 'district_code' => $this->input->post('district_code'),
                 'description' => $this->input->post('description'),

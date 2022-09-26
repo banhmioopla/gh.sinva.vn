@@ -414,6 +414,11 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             <button id="copy-room-info" data-apartment-id="<?= $current_apartment['id'] ?>"
                                     class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class=" mdi mdi-content-copy"></i> Copy P.trống</button>
                             <?php endif;?>
+                            <?php if(!empty($current_apartment['zalo_group_url'])): ?>
+                                <a class="m-1" href="<?= $current_apartment['zalo_group_url'] ?>" target="_blank">
+                                    <button class="btn btn-sm btn-outline-primary m-1 btn-rounded waves-light waves-effect"><i class="mdi mdi-share-variant"></i> Zalo Group</button>
+                                </a>
+                            <?php endif; ?>
 
                             <?php if($is_editable_apartment): ?>
                                 <!--<a class="m-1" href="/admin/apartment/duplicate?id=<?/*= $current_apartment['id'] */?>" >

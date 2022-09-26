@@ -105,6 +105,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                         </div>
                         <div class="col-md-12">
                             <div class="form-row">
+
                                 <div class="form-group col-md-4">
                                     <strong class="col-form-strong">Đường</strong>
                                     <input type="text" class="form-control"
@@ -197,6 +198,12 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                             <option <?= $slc ?> value="<?= $tag['id'] ?>"><?= $tag['name'] ?></option>
                                         <?php endforeach;?>
                                     </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <strong class="col-form-strong">Zalo Group</strong>
+                                    <input type="text" class="form-control"
+                                           name="zalo_group_url"
+                                           value="<?= $apartment['zalo_group_url'] ?>" >
                                 </div>
 
 
