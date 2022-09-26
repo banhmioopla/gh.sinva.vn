@@ -22,7 +22,6 @@ class Apartment extends CustomBaseStep {
 		$this->load->library('LibUser', null, 'libUser');
 		$this->load->library('LibApartment', null, 'libApartment');
 		$this->load->library('LibCustomer', null, 'libCustomer');
-		$this->head_title = null;
 	}
 
 	public function showTrending(){
@@ -309,7 +308,7 @@ class Apartment extends CustomBaseStep {
         }
 
         if(!empty($current_apartment)){
-            $this->head_title = $current_apartment['address_street'];
+            $this->head_title = "GH - ". $current_apartment['address_street'];
         }
 		/*--- Load View ---*/
 		$this->load->view('components/header');
@@ -822,6 +821,7 @@ class Apartment extends CustomBaseStep {
 
 
         $list_user = $this->ghUser->get(['active' => "YES"]);
+        $this->head_title = "GH Update - ". $apartment['address_street'];
         $this->load->view('components/header');
         $this->load->view('apartment/show-profile', [
             'apartment' => $apartment,

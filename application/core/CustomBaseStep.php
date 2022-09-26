@@ -8,7 +8,7 @@ class CustomBaseStep extends CI_Controller {
 		date_default_timezone_set('Asia/Ho_Chi_Minh');
 		$this->current_controller =  $this->router->fetch_class();
 		$this->current_action =  $this->router->fetch_method();
-
+        $this->head_title = "Giỏ Hàng - Pro & Vip system management";
 
 		if(!$this->session->has_userdata('auth'))
 		{
