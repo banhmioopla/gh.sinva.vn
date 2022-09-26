@@ -7,6 +7,9 @@ class TelegramBot extends CustomBaseStep {
     {
         parent::__construct();
     }
+    public function index(){
+
+    }
 
     public function show(){
         $input = file_get_contents("php://input");

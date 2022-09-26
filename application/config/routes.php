@@ -371,6 +371,12 @@ $route['external-api/telegram-bot'] = function($params = []) {
     $action = '/show';
     return $controller.$action;
 };
+
+$route['external-api/telegram-bot/index'] = function($params = []) {
+    $controller = 'TelegramBot';
+    $action = '/index';
+    return $controller.$action;
+};
 $route['public/export-gg-sheet'] = function($params = []) {
     $controller = '/public-world/PublicConsultingPost';
     $action = '/exportToGoogleSheet';
