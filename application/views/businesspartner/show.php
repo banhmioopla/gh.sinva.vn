@@ -2,7 +2,7 @@
 include VIEWPATH.'functions.php';
 ?>
 <div class="wrapper">
-    <div class="container">
+    <div class="container-fluid">
 
         <!-- Page-Title -->
         <div class="row">

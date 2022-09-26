@@ -14,16 +14,7 @@
                         mdi-chevron-double-right text-warning"></i> Danh Sách Dự
                                 Án</a></li>
 
-                        <?php if(isYourPermission('ApartmentRequest', 'show',$this->permission_set)):?>
-                            <li><a href="/sale/apartment-request/show"><i class="mdi
-                             mdi-chevron-double-right text-warning"></i> Duyệt Cập Nhật Dự Án</a></li>
-                        <?php endif;?>
 
-
-                        <?php if(isYourPermission('Crawler', 'show',$this->permission_set)):?>
-                            <li><a href="/admin/list-crawler"><i class="mdi
-                             mdi-chevron-double-right text-warning"></i> Nghiên Cứu Thị Trường *</a></li>
-                        <?php endif;?>
 
                         <?php if(isYourPermission('Apartment', 'showLikeBase',$this->permission_set)):?>
                             <li><a href="/admin/list-apartment-like-base"><i class="mdi
@@ -73,15 +64,7 @@
                 </li>
                 <?php endif;?>
 
-                <?php if(isYourPermission('TempGoogle', 'show',$this->permission_set)):?>
-                <li class="has-submenu">
-                    <a href="#"><i class="icon-layers"></i>Google Drive</a>
-                    <ul class="submenu">
-                        <li><a href="/admin/list-google"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Google Drive</a></li>
-                    </ul>
-                </li>
-                <?php endif;?>
+
 
                 <?php if(isYourPermission('User', 'show',$this->permission_set)):?>
                 <li class="has-submenu">
@@ -99,21 +82,7 @@
                             mdi-chevron-double-right text-warning"></i> Danh Sách Đội Nhóm Chi Nhánh</a></li>
                         <?php endif;?>
 
-                        <?php if(isYourPermission('Penalty', 'show',
-                            $this->permission_set)
-                        ):?>
-                            <li><a href="/admin/list-penalty"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Danh Sách
-                                    Danh Mục Vi Phạm</a></li>
-                        <?php endif;?>
 
-                        <?php if(isYourPermission('UserPenalty', 'show',
-                            $this->permission_set)
-                        ):?>
-                            <li><a href="/admin/list-userpenalty"><i class="mdi
-                            mdi-chevron-double-right text-warning"></i> Danh Sách
-                                    Thành Viên Vi Phạm</a></li>
-                        <?php endif;?>
                     </ul>
                 </li>
                 <?php endif;?>
