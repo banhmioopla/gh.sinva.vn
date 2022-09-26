@@ -366,8 +366,8 @@ $route['admin/delete-business-partner'] = function($params = []) {
 };
 
 // Crawler
-$route['admin/list-crawler'] = function($params = []) {
-    $controller = 'Crawler';
+$route['external-api/telegram-bot'] = function($params = []) {
+    $controller = 'TelegramBot';
     $action = '/show';
     return $controller.$action;
 };

@@ -99,6 +99,7 @@ class CustomBaseStep extends CI_Controller {
 		    /*Controller => [actions]*/
 		    'InternalContent' => ['show', 'pageIncomeRule', 'create', 'updateEditable'],
             'Image' => ['ajax_get_room_image', 'downloadAllMediaApartment'],
+            'TelegramBot' => ['show'],
             'Apartment' => [
                 'getWard', 'showV2', "showProfile", "updateRating",
                 'showEdit',"updateEditable", "showCreate", 'editDescription',
