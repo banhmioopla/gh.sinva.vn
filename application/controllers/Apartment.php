@@ -72,12 +72,10 @@ class Apartment extends CustomBaseStep {
 
 	public function showDashboard(){
 	    $params = $this->input->get();
-	    if(empty($params)){
-            $this->load->view('components/header');
-            $this->load->view('apartment/show-dashboard', [
-            ]);
-            $this->load->view('components/footer');
-        }
+        $this->load->view('components/header');
+        $this->load->view('apartment/show-dashboard', [
+        ]);
+        $this->load->view('components/footer');
     }
 
 	public function show($product_type = 1){
