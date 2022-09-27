@@ -272,7 +272,7 @@ class GhApartment extends CI_Model {
         return [0, 0];
     }
 
-    public function getListAvailableApartmentSimilarity($apm_id = null, $tag = 'room_price'){
+    public function getListAvailableApartmentSimilarity($apm_id = null){
         $range = $this->getRoomPriceRange($apm_id);
         if($range[0] == 1000000 || $range[1] == 1000000) return [];
 
@@ -286,14 +286,31 @@ class GhApartment extends CI_Model {
 
         $list_apm_id = [];
         foreach ($list_room as $room){
+
+            if(!$this->isValidUserApartment($this->getFirstById($room["apartment_id"]))) {
+                continue;
+            }
             if(!in_array($room["apartment_id"], $list_apm_id)){
                 $list_apm_id[] = $room["apartment_id"];
             }
 
         }
-        return array_slice($list_apm_id, 0, 15);
+        if(count($list_apm_id) > 10){
+            return array_slice($list_apm_id, 0, 10);
+        }
+
+        return $list_apm_id;
     }
 
+    public function isValidUserApartment($apartment){
+        if($this->product_category == "APARTMENT_GROUP" && !in_array($apartment['id'], $this->list_OPEN_APARTMENT)) {
+            return false;
+        }
+        if($this->product_category == "DISTRICT_GROUP" && !in_array($apartment['district_code'], $this->list_OPEN_DISTRICT)) {
+            return false;
+        }
+        return true;
+    }
 }
 
 /* End of file mApartment.php */
