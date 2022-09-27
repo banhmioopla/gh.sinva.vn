@@ -397,6 +397,44 @@ class Apartment extends CustomBaseStep {
 
     }
 
+    public function drawChart(){
+        $groupBy = $this->input->post('groupBy');
+        $res = [];
+        switch ($groupBy) {
+            case "District":
+                $res[] = ["Quận", "Dự án", "Trống"];
+                $list_district = $this->ghDistrict->get(['active' => 'YES']);
+                foreach ($list_district as $district) {
+                    $list_apartment = $this->ghApartment->get(['active' => 'YES', 'district_code' => $district['code']]);
+                    $count_apm_available = 0;
+                    foreach ($list_apartment as $apm) {
+                        $room_available = $this->ghRoom->get(["status" => 'Available' , "apartment_id" => $apm['id'] ]);
+                        if(count($room_available)) {
+                            $count_apm_available++;
+                        }
+                    }
+                    if(count($list_apartment) ==0 && $count_apm_available == 0 ) {
+                        continue;
+                    }
+
+
+                    $res[] = [
+                        "Q. ".$district['name'],
+                        count($list_apartment),
+                        $count_apm_available
+
+                    ];
+                }
+
+                break;
+
+        }
+
+
+        echo json_encode($res);
+
+    }
+
 	public function pendingForApprove(){
 
     }

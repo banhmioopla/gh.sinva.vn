@@ -101,7 +101,7 @@ class CustomBaseStep extends CI_Controller {
             'Image' => ['ajax_get_room_image', 'downloadAllMediaApartment'],
             'TelegramBot' => ['show','index'],
             'Apartment' => [
-                'getWard', 'showV2', "showProfile", "updateRating",
+                'getWard', 'showV2', "showProfile", "updateRating", 'showDashboard', 'drawChart',
                 'showEdit',"updateEditable", "showCreate", 'editDescription',
                 'showTrending', 'duplicateApartment', 'updateFollowing'
             ],

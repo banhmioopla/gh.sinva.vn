@@ -293,7 +293,7 @@ include VIEWPATH.'functions.php';
             </div>
             <!-- end topbar-main -->
             <?php $this->load->view('components/menu')?>
-            <?php if(!empty($this->pin_notification['content'])):?>
+            <?php if(!empty($this->pin_notification['content']) && false):?>
             <div class="text-center" id="pin-notification-section">
                 <span class="p-2 font-weight-bold text-danger" id="pin-notification"><?= $this->pin_notification['content'] ?></span>
             </div>

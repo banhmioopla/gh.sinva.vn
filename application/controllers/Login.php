@@ -8,7 +8,7 @@ class Login extends CI_Controller {
 		$this->load->model('ghUser');
 		$this->load->model('ghRole');
 		$this->load->model('ghUserConfig');
-		$this->default_url = '/admin/list-apartment';
+		$this->default_url = '/admin/apartment/dashboard/show';
 		$this->logout_url = '/admin/logout';
 	}
 	public function show()
@@ -24,9 +24,7 @@ class Login extends CI_Controller {
 
                 $role = $this->ghRole->getFirstByCode($user_profile['role_code']);
                 $permission_set = json_decode($role['list_function'], true);
-                if($this->isYourPermission('Dashboard', 'showListProject', $permission_set)){
-                    $this->default_url = '/admin/dashboard/show/project';
-                }
+
                 set_cookie('gh_account_id',$user_profile['account_id'], time()+60*60*24*365);
                 set_cookie('gh_password',$user_profile['password'], time()+60*60*24*365);
                 $default_district = $this->ghUserConfig->getFirstByKeywordAndUser($this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT, $user_profile['account_id']);

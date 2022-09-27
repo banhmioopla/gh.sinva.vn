@@ -485,6 +485,17 @@ $route['admin/apartment/trending'] = function($params = []) {
     $action = '/showTrending';
     return $controller.$action;
 };
+
+$route['admin/apartment/dashboard/show'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/showDashboard';
+    return $controller.$action;
+};
+$route['admin/ajax/apartment/chart'] = function($params = []) {
+    $controller = 'Apartment';
+    $action = '/drawChart';
+    return $controller.$action;
+};
 $route['admin/apartment/show-edit'] = function($params = []) {
     $controller = 'Apartment';
     $action = '/showEdit';

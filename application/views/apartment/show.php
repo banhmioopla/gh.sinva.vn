@@ -464,67 +464,66 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" - ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
                     </div>
-                    <div class="col-12">
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-3 col-12 m-md-2 shadow p-4 " data-censorship="user_collected_id">
-                                <div> <i class="fa fa-user"></i> Quản lý dự án</div>
-                                <?php if($current_apartment['user_collected_id']):?>
-                                    <div class="font-weight-bold text-right"><?= $this->libUser->getNameByAccountid($current_apartment['user_collected_id']) . "<br>  <span class='text-primary'><i class='mdi mdi-phone-classic'></i> ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ."</span>" ?></div>
-                                <?php endif;?>
-                            </div>
-                            <div class="col-md-3 col-6 mt-md-0 mt-3 m-md-2 shadow p-4">
-                                <div> <i class="fa fa-calendar"></i> Thời gian cập nhật</div>
-                                <div class="font-weight-bold text-right"><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></div>
-                            </div>
-                            <div class="col-md-3 col-6 mt-md-0 mt-3 m-md-2 shadow p-4">
-                                <div> <i class="fa fa-calendar"></i> Ngày nhập</div>
-                                <div class="font-weight-bold text-right"><?= $current_apartment["time_insert"] > 0 ? date("d/m/Y",$current_apartment["time_insert"]) : "..." ?></div>
-                            </div>
+
+                    <div class="col-12 col-md-6 mt-md-2 mt-5">
+                        <div class="justify-content-md-center">
+                            <table class="table font-weight-bold table-dark">
+                                <tbody>
+                                <tr class="text-white">
+                                    <th scope="row"><i class="mdi mdi-checkbox-blank-circle"></i></th>
+                                    <td>
+                                        <?php if($current_apartment['user_collected_id']):?>
+                                            <?= "(QLDA) ". $this->libUser->getNameByAccountid($current_apartment['user_collected_id'])  ?>
+                                        <?php endif;?>
+                                    </td>
+                                    <td class="text-right">
+                                        <?php if($current_apartment['user_collected_id']):?>
+                                            <div class="text-right"><?= "<i class='mdi mdi-phone-classic'></i> ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ?></div>
+                                        <?php endif;?>
+                                    </td>
+                                </tr>
+                                <tr class="text-white">
+                                    <th scope="row"><i class="mdi mdi-checkbox-blank-circle"></i></th>
+                                    <td>Tgian cập nhật</td>
+                                    <td class="text-right"><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></td>
+                                </tr>
+                                <tr class="text-white">
+                                    <th scope="row"><i class="mdi mdi-checkbox-blank-circle"></i></th>
+                                    <td>Ngày nhập</td>
+                                    <td class="text-right"><?= $current_apartment["time_insert"] > 0 ? date("d/m/Y",$current_apartment["time_insert"]) : "..." ?></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-
-                    <div class="col-12 mt-md-0 mt-5">
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-2 col-4 text-success mb-4">
-                                <div class="card-box shadow mb-0 widget-chart-two">
-                                    <div class="widget-chart-two-content">
-                                        <p class="text-muted mb-0">Trống</p>
-                                        <h3 class=""><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Available") ?></h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-4 text-danger mb-4">
-                                <div class="card-box shadow mb-0 widget-chart-two">
-                                    <div class="widget-chart-two-content">
-                                        <p class="text-muted mb-0">Full</p>
-                                        <h3 class=""><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Full") ?></h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-4 text-warning mb-4">
-                                <div class="card-box shadow mb-0 widget-chart-two">
-                                    <div class="widget-chart-two-content">
-                                        <p class="text-muted mb-0">S.Trống</p>
-                                        <h3 class=""><?= $this->ghRoom->getNumberByTimeavailable($current_apartment['id']) ?></h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-12 text-info mb-4">
-                                <div class="card-box shadow mb-0 widget-chart-two">
-                                    <div class="widget-chart-two-content">
-                                        <p class="text-muted mb-0">HĐ <?= date("m/Y") ?></p>
-                                        <h3 class=""><?= count($list_contract) ?></h3>
-                                    </div>
-                                </div>
-                            </div>
-
+                    <div class="col-12 col-md-6 mt-md-2 mt-5">
+                        <div class="justify-content-md-center">
+                            <table class="table font-weight-bold table-dark">
+                                <tbody>
+                                <tr class="text-success">
+                                    <th scope="row"><i class="mdi mdi-square "></i></th>
+                                    <td>Trống</td>
+                                    <td class="text-right"><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Available") ?></td>
+                                </tr>
+                                <tr class="text-danger">
+                                    <th scope="row"><i class="mdi mdi-square text-danger"></i></th>
+                                    <td>Full</td>
+                                    <td class="text-right"><?= $this->ghRoom->getNumberByStatus($current_apartment['id'], "Full") ?></td>
+                                </tr>
+                                <tr class="text-warning">
+                                    <th scope="row"><i class="mdi mdi-square text-warning"></i></th>
+                                    <td>Sắp trống</td>
+                                    <td class="text-right"><?= $this->ghRoom->getNumberByTimeavailable($current_apartment['id']) ?></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger">Mô tả</h4>
-                        <blockquote class="blockquote" style="white-space: pre-line">
+                        <blockquote class="blockquote border p-1" style="white-space: pre-line">
                             <?= $current_apartment['description'] ?>
                         </blockquote>
                     </div>
