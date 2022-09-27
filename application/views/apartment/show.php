@@ -1,4 +1,20 @@
 <?php
+$product_category = $this->product_category;
+$list_OPEN_APARTMENT = $this->list_OPEN_APARTMENT;
+$list_OPEN_DISTRICT = $this->list_OPEN_DISTRICT;
+function isValidUserApartment($apartment){
+    global $product_category;
+    global $list_OPEN_APARTMENT;
+    global $list_OPEN_DISTRICT;
+    if($product_category == "APARTMENT_GROUP" && !in_array($apartment['id'], $list_OPEN_APARTMENT)) {
+        return false;
+    }
+    if($product_category == "DISTRICT_GROUP" && !in_array($apartment['district_code'], $list_OPEN_DISTRICT)) {
+        return false;
+    }
+    return true;
+}
+
 
 $check_contract = in_array($this->auth['role_code'], ['human-resources','product-manager', 'ceo', 'customer-care']);
 $check_consultant_booking = false;
@@ -368,6 +384,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             $following_number = $this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']) ? '<span class="badge badge-danger ml-2"><i class="fa fa-heart"></i> '.$this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']).' theo dõi</span>' : '';
             $visit_account = count($this->ghApartment->visitedAccount($current_apartment['id'], ""))  ? '<small class="text-muted">Tuần này <strong>'.implode(", ", $this->ghApartment->visitedAccount($current_apartment['id'], "")).'</strong> đã ghé thăm</small>' : '';
             $partner_name = '<span class="badge badge-primary ml-2">'.$this->ghPartner->getNameById($current_apartment['partner_id']).'</span>';
+            $list_similar = $this->ghApartment->getListAvailableApartmentSimilarity($current_apartment["id"]);
+
             ?>
 
             <div class="card-box">
@@ -463,7 +481,20 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" - ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
+                        <div><small> <strong><?= count($list_similar) ?></strong> Dự án <strong class="text-success">đang trống</strong> có mức tương đồng , Click để xem dự án </small></div>
+                        <div class="list-similar">
+                            <?php
+                            foreach($list_similar as $similar_id):
+                                $sim_apm = $this->ghApartment->getFirstById($similar_id);
+                                if(!isValidUserApartment($sim_apm)) continue;
+                                ?>
+                                <a href="/admin/list-apartment?current_apm_id=<?= $similar_id ?>"> <span class="badge badge-secondary m-1">#<?= $sim_apm['address_street'] ?> <span class="text-dark"><?= implode(" - ",array_map(function($val) { return number_format($val/1000); } , $this->ghApartment->getRoomPriceRange($similar_id))) ?></span> </span></a>
+
+                            <?php endforeach;?>
+                        </div>
+
                     </div>
+
 
                     <div class="col-12 col-md-6 mt-md-2 mt-5">
                         <div class="justify-content-md-center">

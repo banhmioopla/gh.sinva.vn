@@ -1258,7 +1258,7 @@ class Apartment extends CustomBaseStep {
     }
 
 
-    private function isValidUserApartment($apartment){
+    public function isValidUserApartment($apartment){
         if($this->product_category == "APARTMENT_GROUP" && !in_array($apartment['id'], $this->list_OPEN_APARTMENT)) {
             return false;
         }
