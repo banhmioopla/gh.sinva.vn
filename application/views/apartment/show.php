@@ -408,7 +408,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     </div>
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
-                            <h2 class="font-weight-bold text-danger"><iclass=" mdi mdi-home-map-marker"></i>  <?= $apm_full_address ?>
+                            <h2 id="address-full" class="font-weight-bold text-danger"><iclass=" mdi mdi-home-map-marker"></i>  <?= $apm_full_address ?>
                                 <button data-apm_id="<?= $current_apartment['id'] ?>"
                                         data-status_following="<?= json_encode($following) ?>"
                                         id="apm-following"
@@ -488,7 +488,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 $sim_apm = $this->ghApartment->getFirstById($similar_id);
                                 if(!isValidUserApartment($sim_apm)) continue;
                                 ?>
-                                <a href="/admin/list-apartment?current_apm_id=<?= $similar_id ?>"> <span class="badge badge-secondary m-1">#<?= $sim_apm['address_street'] ?> <span class="text-dark"><?= implode(" - ",array_map(function($val) { return number_format($val/1000); } , $this->ghApartment->getRoomPriceRange($similar_id))) ?></span> </span></a>
+                                <a href="/admin/list-apartment?current_apm_id=<?= $similar_id ?>"> <span class="badge badge-secondary m-1"># <?= $sim_apm['address_street'] ?> <span class="text-dark"><?= implode(" - ",array_map(function($val) { return number_format($val/1000); } , $this->ghApartment->getRoomPriceRange($similar_id))) ?></span> </span></a>
 
                             <?php endforeach;?>
                         </div>
@@ -1043,5 +1043,6 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 return sortNumbersIgnoreText(a, b, Number.NEGATIVE_INFINITY) * -1;
             }
         });
+        $('html, body').animate({scrollTop: $('#address-full').offset().top -150 }, 'slow');
     })
 </script>
