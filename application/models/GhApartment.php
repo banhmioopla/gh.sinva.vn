@@ -274,8 +274,7 @@ class GhApartment extends CI_Model {
 
     public function getListAvailableApartmentSimilarity($apm_id = null){
         $range = $this->getRoomPriceRange($apm_id);
-        if($range[0] == 1000000 || $range[1] == 1000000) return [];
-
+        if($range[0] == 0 || $range[1] == 0) return [];
         $list_room = $this->ghRoom->get([
             'apartment_id <>' => $apm_id,
             'active' => 'YES',
