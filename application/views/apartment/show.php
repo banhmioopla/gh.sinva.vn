@@ -321,10 +321,12 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <?php foreach ($list_apartment as $apm):
                         $count_available =  $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '<div class="badge badge-success font-weight-bold ">'.$this->ghRoom->getNumberByStatus($apm['id'], 'Available').'</div>' : '';
                         $partner_name = '<span class="badge badge-primary mb-2 ml-2">'.$this->ghPartner->getNameById($apm['partner_id']).'</span> ';
+                        $is_full_ribbon = $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '' : 'ribbon-box';
+                        $is_full_ribbon_html = $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '' : '<div class="ribbon ribbon-dark"><span>Full</span></div>';
                     ?>
-                        <li class="mb-3 address-item mt-1 mb-1 card-header click-view" data-apm="<?= $apm['id'] ?>">
+                        <li class="mb-3 address-item mt-1 mb-1 <?= $is_full_ribbon ?> card-header click-view" data-apm="<?= $apm['id'] ?>">
+                            <?= $is_full_ribbon_html ?>
                             <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm['address_street'] ?></a> </h5>
-
                             <div class="text-right text-danger"> <?= $partner_name . $count_available ?> <i class="mdi mdi-tag"></i> <?= implode(" - ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
                             <div class="clearfix"></div>
                         </li>

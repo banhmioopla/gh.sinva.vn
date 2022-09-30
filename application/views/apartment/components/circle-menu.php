@@ -291,11 +291,19 @@
 
                         $count_available =  $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '<div class="badge badge-pill badge-success font-weight-bold ">'.$this->ghRoom->getNumberByStatus($apm['id'], 'Available').'</div>' : '';
                         $partner_name = '<span class="badge badge-primary ml-2">'.$this->ghPartner->getNameById($apm['partner_id']).'</span> ';
+
+                        $is_full_ribbon = $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '' : '  ribbon-box';
+                        $is_full_ribbon_html = $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '' : '<div class="ribbon ribbon-dark"><span>Full</span></div>';
                         ?>
+
                         <li class="mb-3 address-item">
-                            <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm['address_street'] ?></a> </h5>
-                            <div class="text-right text-danger">  <?= $partner_name . $count_available ?> <i class="mdi mdi-tag"></i> <?= implode(" - ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
-                            <div class="clearfix"></div>
+                            <div class="<?= $is_full_ribbon ?> card-header">
+                                <?= $is_full_ribbon_html ?>
+                                <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm['address_street'] ?></a> </h5>
+                                <div class="text-right text-danger">  <?= $partner_name . $count_available ?> <i class="mdi mdi-tag"></i> <?= implode(" - ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
+                                <div class="clearfix"></div>
+                            </div>
+
                         </li>
                     <?php endforeach;?>
                 </ul>
