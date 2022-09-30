@@ -431,11 +431,11 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                     <button class="btn btn-sm btn-outline-primary btn-rounded waves-light waves-effect"><i class="mdi mdi-credit-card-multiple"></i> Copy DA</button>
                                 </a>-->
                                 <a class="m-1" href="/admin/profile-apartment?id=<?= $current_apartment['id'] ?>" >
-                                    <button class="btn btn-sm btn-outline-primary m-1 btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> DA</button>
+                                    <button class="btn btn-sm btn-outline-primary m-1 btn-rounded waves-light waves-effect"><i class="mdi mdi-tooltip-edit"></i> DA</button>
                                 </a>
 
                                 <a href="/admin/room/show-create?apartment-id=<?= $current_apartment['id'] ?>">
-                                    <button class="btn btn-sm btn-outline-primary m-1 btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
+                                    <button class="btn btn-sm btn-outline-primary m-1 btn-rounded waves-light waves-effect"><i class="mdi mdi-tooltip-edit"></i> Phòng </button></a>
 
                             <?php endif;?>
 
@@ -638,7 +638,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         <h4 class="font-weight-bold text-danger">Danh sách phòng
                                 <?php if($is_editable_apartment): ?>
                                     <a href="/admin/room/show-create?apartment-id=<?= $current_apartment['id'] ?>">
-                                <button class="btn btn-sm btn-outline-primary float-right btn-rounded waves-light waves-effect"><i class="mdi mdi-lead-pencil"></i> Phòng </button></a>
+                                <button class="btn btn-sm btn-outline-primary float-right btn-rounded waves-light waves-effect"><i class="mdi mdi-tooltip-edit"></i> Phòng </button></a>
                                 <?php endif;?>
                         </h4>
                     </div>
