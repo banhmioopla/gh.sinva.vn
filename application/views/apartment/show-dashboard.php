@@ -82,11 +82,61 @@
         </div>
 
     </div>
-
-    <div class="row">
+    <div class="row mt-2">
         <div class="col-md-6">
             <section>
-                <h4 class="text-danger">Bảng xếp hạng số lượng hợp đồng <?= $n_day ?> ngày</h4>
+                <h4 class="text-danger">TOP 10 dự án - số lượng hợp đồng <?= $n_day ?> ngày</h4>
+                <table class="table table-dark">
+                    <thead>
+                    <tr class="">
+                        <th class="text-center font-weight-bold">Top</th>
+                        <th class="text-center font-weight-bold">Dự án</th>
+                        <th class="text-center font-weight-bold">Số lượng</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($ranking_apartment_total as $index => $item): ?>
+                        <tr>
+                            <td class="text-center"><?= $index+1 ?></td>
+                            <td class="text-center"><?= $item['address_full'] ?></td>
+                            <td class="text-center"><?= $item['contract_total'] ?></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <div class="col-md-6">
+            <section>
+                <h4 class="text-danger">TOP 10 dự án - doanh só <?= $n_day ?> ngày</h4>
+                <table class="table table-dark">
+                    <thead>
+                    <tr class="">
+                        <th class="text-center font-weight-bold">Top</th>
+                        <th class="text-center font-weight-bold">Dự án</th>
+                        <th class="text-center font-weight-bold">Doanh số</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($ranking_apartment_total_sale as $index => $item):
+                        ?>
+                        <tr>
+                            <td class="text-center"><?= $index+1 ?></td>
+                            <td class="text-center"><?= $item['address_full'] ?></td>
+                            <td class="text-center"><?= number_format($item['contract_total_sale']) ?></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <section>
+                <h4 class="text-danger">TOP 10 số lượng hợp đồng <?= $n_day ?> ngày</h4>
                 <table class="table table-dark">
                     <thead>
                     <tr class="">
@@ -109,13 +159,13 @@
         </div>
         <div class="col-md-6">
             <section>
-                <h4 class="text-danger">Bảng xếp hạng doanh số <?= $n_day ?> ngày</h4>
+                <h4 class="text-danger">TOP 10 doanh số <?= $n_day ?> ngày</h4>
                 <table class="table table-dark">
                     <thead>
                     <tr class="">
                         <th class="text-center font-weight-bold">Top</th>
                         <th class="text-center font-weight-bold">Chuyên viên</th>
-                        <th class="text-center font-weight-bold">Số lượng</th>
+                        <th class="text-center font-weight-bold">Doanh số</th>
                     </tr>
                     </thead>
                     <tbody>

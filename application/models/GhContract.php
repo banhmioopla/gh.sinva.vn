@@ -375,6 +375,21 @@ class GhContract extends CI_Model {
         return $result->result_array();
     }
 
+    public function getTotalSaleByApartment($apm_id,$from_time, $to_time){
+        $total = 0;
+        $list_con = $this->get([
+            'apartment_id' => $apm_id,
+            'time_check_in >=' => strtotime($from_time),
+            'time_check_in <=' => strtotime($to_time)+86399,
+        ]);
+        foreach ($list_con as $con) {
+
+            $total +=$this->getTotalSaleByContract($con['id']);
+        }
+
+        return $total;
+    }
+
     public function getTotalSaleByUserLimit($account_id, $n, $from, $to){
         $list_con = $this->getLimitByUser($account_id, $n, $from, $to);
 
