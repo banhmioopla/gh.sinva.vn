@@ -89,7 +89,33 @@
             <div id="chart-apartment-group-district"></div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-6">
+            <section>
+                <h4 class="text-danger">Xếp hạng doanh số theo phân khúc giá <?= $n_day ?> ngày</h4>
+                <table class="table table-dark">
+                    <thead>
+                    <tr class="">
+                        <th class="text-center font-weight-bold">Top</th>
+                        <th class="text-center font-weight-bold">Phân khúc giá</th>
+                        <th class="text-center font-weight-bold">Số lượng</th>
+                        <th class="text-center font-weight-bold">Doanh số</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($ranking_price_segment as $index => $item): ?>
+                        <tr>
+                            <td class="text-center"><?= $index+1 ?></td>
+                            <td class="text-center"><?= $item['price_segment'] ?></td>
+                            <td class="text-center"><?= $item['contract_number'] ?></td>
+                            <td class="text-center"><?= number_format($item['contract_total_sale']) ?></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
     <div class="row mt-2">
         <div class="col-md-6">
             <section>

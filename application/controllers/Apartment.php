@@ -74,9 +74,44 @@ class Apartment extends CustomBaseStep {
 	    $list_user = $this->ghUser->get(["active" =>  "YES"]);
 
 
-	    $ranking_user_contract = [];
+	    $ranking_user_contract = $ranking_price_segment = [];
 	    $arr_user_id = [];
 	    $n_day = 90;
+
+	    $price_segment = [
+	        ["min" => 0         , 'max' => 2999999],
+	        ["min" => 3000000   , 'max' => 5999999],
+	        ["min" => 6000000   , 'max' => 8999999],
+	        ["min" => 9000000   , 'max' => 11999999],
+	        ["min" => 12000000   , 'max' => 50000000],
+        ];
+
+	    foreach ($price_segment as $segment) {
+            $list_contract_segment = $this->ghContract->get([
+                'time_check_in >=' => strtotime("-{$n_day}days"),
+                'status' => 'Active',
+                'room_price >=' => $segment['min'],
+                'room_price <=' => $segment['max'],
+            ]);
+
+            if(count($list_contract_segment)){
+                $price_segment_name = number_format($segment['min']) . " - " . number_format($segment['max']);
+                $total_sale = 0;
+                foreach ($list_contract_segment as $con) {
+                    $total_sale += $this->ghContract->getTotalSaleByContract($con['id']);
+                }
+                $ranking_price_segment[] =[
+                    'price_segment' =>  $price_segment_name ,
+                    'contract_number' => count($list_contract_segment),
+                    'contract_total_sale' => $total_sale,
+                ];
+            }
+        }
+
+        usort($ranking_price_segment, function ($item1, $item2) {
+            return $item2['contract_total_sale'] <=> $item1['contract_total_sale'];
+        });
+
 	    foreach ($list_user as $user) {
             $list_contract = $this->ghContract->get([
                 'time_check_in >=' => strtotime("-{$n_day}days"),
@@ -145,6 +180,7 @@ class Apartment extends CustomBaseStep {
             'ranking_contract_total_sale' => $ranking_contract_total_sale,
             'ranking_apartment_total' => $ranking_apartment_total,
             'ranking_apartment_total_sale' => $ranking_apartment_total_sale,
+            'ranking_price_segment' => $ranking_price_segment,
             'n_day' => $n_day,
         ]);
         $this->load->view('components/footer');
