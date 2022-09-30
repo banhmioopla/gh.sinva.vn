@@ -7,6 +7,14 @@ class GhBaseRoomType extends CI_Model {
 	public function get($where = []) {
         return $this->db->get_where($this->table, $where)->result_array();
     }
+    public function getNameById($id) {
+	    $type = $this->getFirstById($id);
+	    if($type){
+	        return $type['name'];
+        }
+
+        return "[không tên]";
+    }
 
     public function getByActive() {
         return $this->db->get_where($this->table, ['active' => 'YES'])->result_array();

@@ -115,6 +115,30 @@
                 </table>
             </section>
         </div>
+
+        <div class="col-md-6">
+            <section>
+                <h4 class="text-danger">Xếp hạng doanh số theo phân khúc giá <?= $n_day ?> ngày</h4>
+                <table class="table table-dark">
+                    <thead>
+                    <tr class="">
+                        <th class="text-center font-weight-bold">Top</th>
+                        <th class="text-center font-weight-bold">Loại phòng</th>
+                        <th class="text-center font-weight-bold">Doanh số</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($ranking_room_type as $index => $item): ?>
+                        <tr>
+                            <td class="text-center"><?= $index+1 ?></td>
+                            <td class="text-center"><?= $item['type_name'] ?></td>
+                            <td class="text-center"><?= number_format($item['total_sale']) ?></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </section>
+        </div>
     </div>
     <div class="row mt-2">
         <div class="col-md-6">

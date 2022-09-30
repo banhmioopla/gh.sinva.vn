@@ -74,9 +74,42 @@ class Apartment extends CustomBaseStep {
 	    $list_user = $this->ghUser->get(["active" =>  "YES"]);
 
 
-	    $ranking_user_contract = $ranking_price_segment = [];
+	    $ranking_user_contract = $ranking_price_segment = $ranking_room_type = $ranking_room_type_temp = [];
 	    $arr_user_id = [];
 	    $n_day = 90;
+
+	    $list_contract = $this->ghContract->get([
+            'time_check_in >=' => strtotime("-{$n_day}days"),
+            'status' => 'Active',
+        ]);
+
+        $arr_type_id = [];
+	    foreach ($list_contract as $contract) {
+	        $room = $this->ghRoom->getFirstById($contract['room_id']);
+	        if($room) {
+	            if(!empty($room['room_type_id'])){
+                    $arr_this_type_id = json_decode($room['room_type_id'],true);
+                    foreach ($arr_this_type_id as $type_id){
+                        if(in_array($type_id, $arr_type_id)){
+                            $ranking_room_type_temp[$type_id] += $this->ghContract->getTotalSaleByContract($contract['id']);
+                        } else {
+                            $ranking_room_type_temp[$type_id] = $this->ghContract->getTotalSaleByContract($contract['id']);
+                            $arr_type_id[] = $type_id;
+                        }
+
+                    }
+                }
+            }
+        }
+        foreach ($ranking_room_type_temp as $k => $v){
+            $ranking_room_type[] = [
+                'type_name' => $this->ghBaseRoomType->getNameById($k),
+                'total_sale' => $v
+            ];
+        }
+        usort($ranking_room_type, function ($item1, $item2) {
+            return $item2['total_sale'] <=> $item1['total_sale'];
+        });
 
 	    $price_segment = [
 	        ["min" => 0         , 'max' => 2999999],
@@ -181,6 +214,7 @@ class Apartment extends CustomBaseStep {
             'ranking_apartment_total' => $ranking_apartment_total,
             'ranking_apartment_total_sale' => $ranking_apartment_total_sale,
             'ranking_price_segment' => $ranking_price_segment,
+            'ranking_room_type' => $ranking_room_type,
             'n_day' => $n_day,
         ]);
         $this->load->view('components/footer');
