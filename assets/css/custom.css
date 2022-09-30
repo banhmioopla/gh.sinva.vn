@@ -59,7 +59,7 @@
 }
 
 #topnav .navbar-custom {
-    background-color: #f9a50b;
+    background-color: #f1556c !important;
 }
 #topnav .has-submenu.active a {
     color: #f9a50b;
