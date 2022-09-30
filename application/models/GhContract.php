@@ -26,6 +26,10 @@ class GhContract extends CI_Model {
         $this->db->order_by($order_column, $trend);
         return $this->db->get_where($this->table, $where)->result_array();
     }
+    public function getFirst($where = [], $order_column  = 'id', $trend = 'DESC') {
+        $this->db->order_by($order_column, $trend);
+        return $this->db->get_where($this->table, $where)->row_array();
+    }
 
     public function getAlertNewestByApartment($apm_id) {
 

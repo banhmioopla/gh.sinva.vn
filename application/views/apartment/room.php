@@ -16,6 +16,7 @@ $arr_room_id = [];
 ?>
 
 <div class="table-responsive mt-3">
+    <div><small class="text-info">Cột mã phòng hiển thị hợp đồng của cá nhân nếu có!!!</small></div>
     <table class="table list-room table-bordered ">
         <thead class="table-dark">
         <tr>
@@ -65,10 +66,22 @@ $arr_room_id = [];
                 if($room['status'] === 'Available'){
                     $status_txt = '<span class="badge badge-success">Trống</span>';
                 }
+
+                $personal_contract = $this->ghContract->get([
+                        'consultant_id' => $this->auth['account_id'],
+                        'room_id' => $room['id']
+                ]);
+                $personal_contract_txt = [];
+                foreach ($personal_contract as $con){
+                    $personal_contract_txt[] ="<div><small class='text-info' > <i class='mdi mdi-file-document'></i> Hđ hết hạn ".  date('d/m/Y', $con['time_expire']) . "</small></div>";
+                }
                 ?>
 
                 <tr class='<?= $bg_for_available ?>'>
-                    <td class="text-center"> <?= $room['code'] ?> <div class="d-block d-md-none"><?= $status_txt ?></div></td>
+                    <td class="text-center">
+                        <?= $room['code'] ?> <div class="d-block d-md-none"><?= $status_txt ?></div>
+                        <?= implode('', $personal_contract_txt) ?>
+                    </td>
 
                     <td><div><?= $text_type_name ?></div> <div class="text-primary"><?= !empty($room['type']) ? $room['type'] : '' ?></div></td>
                     <td><div class="font-weight-bold"><?= number_format($room['price']/1000) ?></div></td>
