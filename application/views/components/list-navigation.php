@@ -11,7 +11,8 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/admin/apartment/trending">Trending</a>
+                    <a class="dropdown-item" href="/admin/apartment/dashboard/show">Bảng điều khiển</a>
+                    <a class="dropdown-item" href="/admin/apartment/trending">Lượt xem</a>
                 </div>
             </div>
 

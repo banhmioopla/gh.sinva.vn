@@ -84,7 +84,52 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">TOP 10 CĂN HỘ BEST SELLER</div>
+        <div class="col-md-6">
+            <section>
+                <h4 class="text-danger">Bảng xếp hạng số lượng hợp đồng <?= $n_day ?> ngày</h4>
+                <table class="table table-dark">
+                    <thead>
+                    <tr class="">
+                        <th class="text-center font-weight-bold">Top</th>
+                        <th class="text-center font-weight-bold">Chuyên viên</th>
+                        <th class="text-center font-weight-bold">Số lượng</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($ranking_contract_total as $index => $item): ?>
+                        <tr>
+                            <td class="text-center"><?= $index+1 ?></td>
+                            <td class="text-center"><?= $item['consultant_name'] ?></td>
+                            <td class="text-center"><?= $item['contract_total'] ?></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+        <div class="col-md-6">
+            <section>
+                <h4 class="text-danger">Bảng xếp hạng doanh số <?= $n_day ?> ngày</h4>
+                <table class="table table-dark">
+                    <thead>
+                    <tr class="">
+                        <th class="text-center font-weight-bold">Top</th>
+                        <th class="text-center font-weight-bold">Chuyên viên</th>
+                        <th class="text-center font-weight-bold">Số lượng</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($ranking_contract_total_sale as $index => $item): ?>
+                        <tr>
+                            <td class="text-center"><?= $index+1 ?></td>
+                            <td class="text-center"><?= $item['consultant_name'] ?></td>
+                            <td class="text-center"><?= number_format($item['contract_total_sale']) ?></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </section>
+        </div>
         <div class="col-md-3">
             <h4>Chart bánh : Phân khúc giá</h4>
             <div id="chart-pricing-segment"></div>
@@ -106,7 +151,7 @@
                     title:title,
                     fontName: 'Roboto',
                     height: 650,
-                    width: '100%',
+                    width: '80%',
                     fontSize: 12,
 
                     tooltip: {

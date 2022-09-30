@@ -71,9 +71,47 @@ class Apartment extends CustomBaseStep {
 	public function showNotificaton(){}
 
 	public function showDashboard(){
-	    $params = $this->input->get();
+	    $list_user = $this->ghUser->get(["active" =>  "YES"]);
+
+
+	    $ranking_user_contract = [];
+	    $arr_user_id = [];
+	    $n_day = 90;
+	    foreach ($list_user as $user) {
+            $list_contract = $this->ghContract->get([
+                'time_check_in >=' => strtotime("-{$n_day}days"),
+                'status' => 'Active',
+                'consultant_id' => $user['account_id'],
+            ]);
+            if(count($list_contract) > 0) {
+                $ranking_user_contract[] = [
+                    'consultant_name' => $user["name"],
+                    'contract_total' => count($list_contract),
+                    'contract_total_sale' => $this->ghContract->getTotalSaleByUser($user['account_id'], date('d-m-Y', strtotime("-{$n_day}days")), date('d-m-Y', strtotime("+{$n_day}days"))),
+                ];
+            }
+        }
+
+        $ranking_contract_total = $ranking_user_contract;
+        usort($ranking_contract_total, function ($item1, $item2) {
+            return $item2['contract_total'] <=> $item1['contract_total'];
+        });
+        $ranking_contract_total = array_slice($ranking_contract_total, 0,10);
+
+
+        $ranking_contract_total_sale = $ranking_user_contract;
+        usort($ranking_contract_total_sale, function ($item1, $item2) {
+            return $item2['contract_total_sale'] <=> $item1['contract_total_sale'];
+        });
+        $ranking_contract_total_sale = array_slice($ranking_contract_total_sale, 0,10);
+
+
+
         $this->load->view('components/header');
         $this->load->view('apartment/show-dashboard', [
+            'ranking_contract_total' => $ranking_contract_total,
+            'ranking_contract_total_sale' => $ranking_contract_total_sale,
+            'n_day' => $n_day,
         ]);
         $this->load->view('components/footer');
     }
