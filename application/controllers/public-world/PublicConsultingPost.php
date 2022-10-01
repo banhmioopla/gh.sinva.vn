@@ -114,10 +114,10 @@ class PublicConsultingPost extends CI_Controller {
         $timeTo = $this->timeTo;
 
         if(strlen($token) > 3){
-            $time_token = explode('__', $token);
+            $time_token = explode('_', $token);
             if(count($time_token) == 2){
                 $timeFrom = $time_token[0];
-                $timeTo = $timeTo[1];
+                $timeTo = $time_token[1];
                 $token = 3;
             }
         }
@@ -228,11 +228,13 @@ class PublicConsultingPost extends CI_Controller {
                     }
                     break;
                 case 3: // Hợp đồng tháng hiện tại
+
                     $list_contract = $this->ghContract->get([
                         "time_check_in >=" => strtotime($timeFrom),
                         "time_check_in <=" => strtotime($timeTo)+86399,
                         'status' => "Active"
                     ],'consultant_id', 'ASC');
+
                     foreach ($list_contract as $contract){
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
@@ -274,6 +276,7 @@ class PublicConsultingPost extends CI_Controller {
                     }
                     break;
                 default: //
+                    echo json_decode(["msg" => "INVALID TOKEN DATA"]);
 
             }
 
