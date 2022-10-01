@@ -118,6 +118,7 @@ class PublicConsultingPost extends CI_Controller {
             if(count($time_token) == 2){
                 $timeFrom = $time_token[0];
                 $timeTo = $timeTo[1];
+                $token = 3;
             }
         }
 
