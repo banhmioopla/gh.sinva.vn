@@ -230,8 +230,8 @@ class Apartment extends CustomBaseStep {
             "following" => " <i class='fa fa-heart'></i> Theo dõi",
 //            "best_view_month" => "Xem nhiều trong tháng",
         ];
-        $timeFrom = date("01-m-Y");
-        $timeTo = date("d-m-Y",strtotime('last day of this month', time()));
+        $timeFrom = $this->timeFrom;
+        $timeTo = $this->timeTo;
 
 		$data = $list_apartment = [];
         if(empty($this->product_category)) {

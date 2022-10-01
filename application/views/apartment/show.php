@@ -736,14 +736,14 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                 </div>
                 <div class="row mt-5">
                     <div class="col-12">
-                        <h4 class="font-weight-bold text-danger">Hợp đồng tháng <?= date("m/Y") ?></h4>
+                        <h4 class="font-weight-bold text-danger">Hợp đồng tháng <?= date("m/Y", strtotime($this->timeFrom)) ?></h4>
                     </div>
                     <?php foreach ($list_contract as $contract):
                         $room_info = $this->ghRoom->getFirstById($contract["room_id"]);
                         ?>
                         <div class="col-12">
                             <div class="alert alert-info" role="alert">
-                                Phòng <strong><?= $room_info["code"] ?></strong>  <span class="float-right"> <i class=" mdi mdi-tag"></i> <strong><?= number_format($contract["room_price"]) ?></strong> | ký ngày: <?= date("d-m-Y", $contract["time_check_in"]) ?></span>
+                                Phòng <strong><?= $room_info["code"] ?></strong>  <span class="float-right"> <i class=" mdi mdi-tag"></i> <strong><?= number_format($contract["room_price"]) ?></strong> | ký ngày: <?= date("d/m/Y", $contract["time_check_in"]) ?></span>
                             </div>
                         </div>
                     <?php endforeach;?>

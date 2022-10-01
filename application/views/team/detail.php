@@ -16,13 +16,11 @@
                 </div>
             </div>
         </div>
-        <!-- end page title end breadcrumb -->
-        <?php if($this->session->has_userdata('fast_notify')) {
-            $flash_mess = $this->session->flashdata('fast_notify')['message'];
-            $flash_status = $this->session->flashdata('fast_notify')['status'];
-            unset($_SESSION['fast_notify']);
-        }
-        ?>
+        <div class="row">
+            <div class="col-md text-center">
+                <?php $this->load->view('components/list-navigation'); ?>
+            </div>
+        </div>
         <div class="district-alert"></div>
         <div class="row">
             <div class="col-xs-12 col-md-3 ">

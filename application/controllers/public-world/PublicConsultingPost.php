@@ -109,11 +109,17 @@ class PublicConsultingPost extends CI_Controller {
 
     public function exportToGoogleSheet(){
         $token = $this->input->get('token');
-        $timeFrom = $this->input->get('timeFrom');
-        $timeTo = $this->input->get('timeTo');
         $data = [];
         $timeFrom = $this->timeFrom;
         $timeTo = $this->timeTo;
+
+        if(strlen($token) > 3){
+            $time_token = explode('__', $token);
+            if(count($time_token) == 2){
+                $timeFrom = $time_token[0];
+                $timeTo = $timeTo[1];
+            }
+        }
 
         $income_standard_rate = .55;
 
@@ -175,6 +181,52 @@ class PublicConsultingPost extends CI_Controller {
                         }
                     break;
                 case 2: // Hợp đồng tháng hiện tại
+                    $list_contract = $this->ghContract->get([
+                        "time_check_in >=" => strtotime($timeFrom),
+                        "time_check_in <=" => strtotime($timeTo)+86399,
+                        'status' => "Active"
+                    ],'consultant_id', 'ASC');
+                    foreach ($list_contract as $contract){
+                        $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
+                        $room = $this->ghRoom->getFirstById($contract['room_id']);
+                        $user = $this->ghUser->getFirstByAccountId($contract['consultant_id']);
+                        $user_support = "";
+                        if(!empty($contract["arr_supporter_id"])){
+                            $arr = json_decode($contract["arr_supporter_id"], true);
+                            $arr_name = [];
+                            foreach ($arr as $aid){
+                                $arr_name[] = $this->libUser->getNameByAccountid($aid);
+                            }
+                            $user_support = implode(" ,", $arr_name);
+                        }
+
+                        $customer = $this->ghCustomer->getFirstById($contract['customer_id']);
+                        $status = "Cọc";
+                        if(time() >= $contract["time_check_in"]){
+                            $status = "Đã ký";
+                        }
+                        $data[] = [
+                            "Source" => "GH",
+                            "ID" => $contract["id"],
+                            "Sale Chốt" => $user["name"],
+                            "Dự án" =>$apm["address_street"] . ", Phường ". $apm["address_ward"],
+                            "Mã phòng" => $room["code"],
+                            "Giá thuê" => $contract["room_price"],
+                            "Giá cọc" => $contract["deposit_price"],
+                            "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
+                            "Số tháng" => $contract["number_of_month"],
+                            "Hết Hạn" => date("d-m-Y", $contract["time_expire"]),
+                            "Hoa hồng" => $contract['commission_rate'],
+                            "Doanh số" => $contract['room_price']*$contract['commission_rate']/100,
+                            "Doanh thu" => $this->ghContractPartial->getTotalByContractId($contract['id']),
+                            "Số (*)" => $contract["rate_type"],
+                            "Sale Hỗ trợ" => $user_support,
+                            "Khách Hàng" => $customer["name"],
+                            "Phone" => $customer["phone"],
+                        ];
+                    }
+                    break;
+                case 3: // Hợp đồng tháng hiện tại
                     $list_contract = $this->ghContract->get([
                         "time_check_in >=" => strtotime($timeFrom),
                         "time_check_in <=" => strtotime($timeTo)+86399,
