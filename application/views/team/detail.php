@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item active"><?= $team['name'] ?></li>
                         </ol>
                     </div>
-                    <h2 class="text-danger font-weight-bold">Chi nhánh: <?= $team['name'] ?></h2>
+                    <h2 class="text-danger font-weight-bold">Team | <?= $team['name'] ?></h2>
                 </div>
             </div>
         </div>
@@ -25,27 +25,22 @@
         ?>
         <div class="district-alert"></div>
         <div class="row">
-            <div class="col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $libUser->getTotalBookingByTeam($team['id'], $timeFrom, $timeTo) ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng Số Lượt Book</p>
+            <div class="col-xs-12 col-md-3 ">
+                <div class="card-box tilebox-one">
+                    <i class="icon-chart float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Tổng Số Lượng Hợp Đồng</h6>
+                    <h2 class="m-b-20"><span ><?= $libUser->getNumberContractByTeam($team['id'], $timeFrom, $timeTo) ?></span></h2>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $libUser->getNumberContractByTeam($team['id'], $timeFrom, $timeTo) ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng Số Lượng Hợp Đồng</p>
+
+            <div class="col-xs-12 col-md-3 ">
+                <div class="card-box tilebox-one">
+                    <i class="icon-chart float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Tổng Doanh Số</h6>
+                    <h2 class="m-b-20"><span ><?= $libUser->getTotalSaleByTeam($team['id'], $timeFrom, $timeTo) ?></span></h2>
                 </div>
             </div>
-            <div class="col-3">
-                <div class="card-box widget-flat border-primary bg-primary text-white">
-                    <i class="fi-tag"></i>
-                    <h3 class="m-b-10"><?= $libUser->getTotalSaleByTeam($team['id'], $timeFrom, $timeTo) ?></h3>
-                    <p class="text-uppercase m-b-5 font-13 font-600">Tổng Doanh Số</p>
-                </div>
-            </div>
+
             <div class="col-12">
                 <div class="card-box">
                     <form>
@@ -69,32 +64,25 @@
             <div class="col-12 col-md-7">
                 <div class="card-box table-responsive">
                     <h3 class="text-danger font-weight-bold">Danh Sách Thành Viên</h3>
-                    <table id="table-district" class="table table-hover table-bordered">
+                    <table id="table-member" class="table table-hover table-bordered">
                         <thead>
                         <tr >
                             <th>Tên Thành Viên</th>
-                            <th class="text-center">Số Lượng Hợp Đồng</th>
-                            <th class="text-center">Số Lượt Book</th>
+                            <th class="text-center">Hợp đồng  <br> <small>Click để xem chi tiết</small></th>
                             <th class="text-right">Doanh Số <br> <small>(x1000)</small></th>
                             <th>Tùy Chọn</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach($list_member as $row ):
-                            $contract =count($ghContract->get([
-                                    'consultant_id' => $row['user_id'],
-                                    'time_check_in >= ' => strtotime($timeFrom),
-                                    'time_check_in <= ' => strtotime($timeTo) + 86399,
-                                    'status <>' => 'Cancel'
-                            ]));
+                            $contract = $ghContract->get([
+                                'consultant_id' => $row['user_id'],
+                                'time_check_in >= ' => strtotime($timeFrom),
+                                'time_check_in <= ' => strtotime($timeTo) + 86399,
+                                'status <>' => 'Cancel'
+                            ]);
 
                             $total = $ghContract->getTotalSaleByConsultant($row['user_id'], $timeFrom, $timeTo);
-
-                            $booking =count($ghConsultantBooking->get([
-                                    'booking_user_id' => $row['user_id'],
-                                    'time_booking >=' => strtotime($timeFrom),
-                                    'time_booking <=' => strtotime($timeTo) + 86399,
-                            ]));
 
                             ?>
                             <tr>
@@ -105,12 +93,23 @@
                                         <?= $libUser->getNameByAccountid($row['user_id']) . ' <br> <small>(' . $row['user_id'] . ')</small>'?>
                                     </div>
                                 </td>
-                                <td class="text-center"><?= $contract ?></td>
-                                <td class="text-center"><?= $booking ?></td>
+                                <td>
+                                    <ul>
+                                        <?php foreach ($contract as $item):
+                                            $room = $this->ghRoom->getFirstById($item['room_id']);
+                                            $apm = $this->ghApartment->getFirstById($item['apartment_id']);
+                                            ?>
+                                            <li><a href="/admin/detail-contract?id=<?= $item['id'] ?>"
+                                                   target="_blank">  <?= $apm['address_street'] ." <strong>({$room['code']})</strong>  Ký ngày " . date('d/m/Y',$item['time_check_in']) ?></a></li>
+                                        <?php endforeach;?>
+
+                                    </ul>
+                                </td>
                                 <td class="text-right"><?= number_format($total/1000) ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
-                                    <button type="button" class="btn btn-sm btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
+                                    <button type="button"
+                                            data-member-id="<?= $row['user_id'] ?>"
+                                            class="btn btn-sm delete-member btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -152,7 +151,7 @@
     commands.push(function() {
         $(document).ready(function() {
             $('select').select2();
-            $('#table-district').DataTable({
+            $('#table-member').DataTable({
                 "pageLength": 10,
                 'pagingType': "full_numbers",
                 responsive: true

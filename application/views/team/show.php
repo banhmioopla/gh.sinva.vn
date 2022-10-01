@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="container">
+    <div class="container-fluid">
 
         <!-- Page-Title -->
         <div class="row">
@@ -16,62 +16,58 @@
                 </div>
             </div>
         </div>
-        <!-- end page title end breadcrumb -->
-        <?php if($this->session->has_userdata('fast_notify')) {
-                $flash_mess = $this->session->flashdata('fast_notify')['message'];
-                $flash_status = $this->session->flashdata('fast_notify')['status'];
-                unset($_SESSION['fast_notify']);
-            }  
-        ?>
-        <div class="district-alert"></div>
+
         <div class="row">
-            <div class="col-12 col-md-7">
-                <div class="card-box table-responsive">
-                    <table id="table-district" class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Tên Chi Nhánh <br><small>tên nhóm</small></th>
-                            <th class="text-center">Giám Đốc Chi Nhánh <br><small>leader</small></th>
-                            <th class="text-center">Thành Viên </th>
-                            <th class="text-right">Doanh Số <br><small>tháng hiện tại</small></th>
-                            <th class="text-center">Tùy Chọn</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+            <div class="col-md text-center">
+                <?php $this->load->view('components/list-navigation'); ?>
+            </div>
+        </div>
+        <div class="row">
+            <?php foreach($list_team as $row ): ?>
+            <div class="col-md-4">
+                <div class="text-center card-box">
 
-                            <?php
-                            $from_time = date('01-m-Y');
-                            $num_days = $libTime->calDayInMonthThisYear(date('m'));
-                            $to_time = date($num_days.'-m-Y');
+                    <div class="member-card pt-2 pb-2">
+                        <div class="thumb-lg member-thumb m-b-10 mx-auto">
+                            <img src="https://media.istockphoto.com/vectors/1901m30i010n010fc061016785900-business-characters-team-work-office-vector-id1144185187?k=20&m=1144185187&s=612x612&w=0&h=8ByWeD4adfl2NV9q_c8c9YRUm6xMqHbhiD0b2FJibJg="
+                                 class="rounded-circle img-thumbnail" alt="profile-image">
+                        </div>
 
-                            ?>
-                            <?php foreach($list_team as $row ): ?>
-                            <tr>
-                                <td>
-                                    <div class="team-name" 
-                                        data-pk="<?= $row['id'] ?>" 
-                                        data-name="name">
-                                            <?= $row['name'] ?>
+                        <div class="">
+                            <h4 class="m-b-5 team-name border-0"
+                                data-pk="<?= $row['id'] ?>"
+                                data-name="name"><?= $row['name'] ?></h4>
+                            <p class="text-muted">Lead <span> </span> <span> <span class=" font-weight-bold text-secondary"><?= $libUser->getNameByAccountid($row['leader_user_id']) ?></span> </span></p>
+                        </div>
+
+                        <a type="button" href="/admin/team/detail?id=<?= $row['id'] ?>" class="btn btn-danger m-t-20 btn-rounded btn-bordered waves-effect w-md waves-light">Chi tiết</a>
+
+                        <div class="mt-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mt-3">
+                                        <h4 class="m-b-5"><?= $libUser->getTotalUserByTeam($row['id']) ?></h4>
+                                        <p class="mb-0 text-muted">Thành Viên</p>
                                     </div>
-                                </td>
-                                <td>
-                                    <?= $libUser->getNameByAccountid($row['leader_user_id']) ?>
-                                </td>
-                                <td class="text-center"><?= $libUser->getTotalUserByTeam($row['id']) ?></td>
-                                <td class="text-right"><?= $libUser->getTotalSaleByTeam($row['id'], $from_time, $to_time) ?></td>
-                                <td class="text-center">
-                                    <a target="_blank" href="/admin/team/detail?id=<?= $row['id'] ?>" class="btn btn-danger">chi tiết</a>
-                                </td>
-                                
-                            </tr>      
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mt-3">
+                                        <h4 class="m-b-5"><?= $libUser->getTotalSaleByTeam($row['id'], $this->timeFrom, $this->timeTo) ?></h4>
+                                        <p class="mb-0 text-muted">Doanh số</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
+            <?php endforeach; ?>
+
             <div class="col-12 col-md-5">
                 <div class="card-box">
-                    <h4 class="header-title m-t-0">Thêm mới</h4>
+                    <h4 class="header-title m-t-0 text-danger">Tạo Nhóm Mới</h4>
                     <form role="form" method="post" action="<?= base_url()?>admin/create-team">
                         <div class="form-group row">
                             <label for="name" class="col-4 col-form-label">Tên team<span class="text-danger">*</span></label>
@@ -109,27 +105,11 @@
 <script type="text/javascript">
     commands.push(function() {
         $(document).ready(function() {
-            $('select').select2();
-            $('#table-district').DataTable({
-                "pageLength": 10,
-                'pagingType': "full_numbers",
-                responsive: true,
-                "fnDrawCallback": function() {
-                    // x editable
-                    $('.team-name').editable({
-                        type: "text",
-                        url: '<?= base_url() ?>admin/update-team-editable',
-                        inputclass: '',
-                        success: function(response) {
-                            var data = JSON.parse(response);
-                            if(data.status == true) {
-                                $('.district-alert').html(notify_html_success);
-                            } else {
-                                $('.district-alert').html(notify_html_fail);
-                            }
-                        }
-                    });
-                } // end fnDrawCallback
+            $('.team-name').editable({
+                type: "text",
+                url: '<?= base_url() ?>admin/update-team-editable',
+                inputclass: '',
+                mode: 'inline'
             });
         });
     });
