@@ -98,8 +98,10 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                         <?php  foreach ($this->ghRoom->getRoomRequiredToFullStatus($apartment['id']) as $rq_id):
                             $this_room = $this->ghRoom->getFirstById($rq_id);
                             ?>
-                            <div class="alert col-4 alert-warning alert-dismissible bg-warning text-white border-0 fade show" role="alert">
-                                Phòng <strong><?= $this_room['code'] ?></strong> ! đang có hợp đồng còn hạn - vui lòng cập nhật trạng thái <strong>FULL</strong>
+                            <div class="col-md-8">
+                                <div class="alert  alert-warning alert-dismissible bg-warning text-white border-0 fade show" role="alert">
+                                    Phòng <strong><?= $this_room['code'] ?></strong> ! đang có hợp đồng còn hạn - vui lòng cập nhật trạng thái <strong>FULL</strong>
+                                </div>
                             </div>
                         <?php  endforeach;?>
                     </div>
