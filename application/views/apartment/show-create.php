@@ -123,7 +123,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <strong class="col-form-strong">Mô Tả Dự Án</strong> <span class="text-danger">*</span>
-                                        <textarea required name="description" id="description" class="form-control"></textarea>
+                                        <textarea name="description" id="description" class="form-control"></textarea>
                                     </div>
                                     <!--<div class="form-group col-md-6">
                                         <strong class="col-form-strong">Ghi Chú</strong> <span class="text-danger">*</span>
