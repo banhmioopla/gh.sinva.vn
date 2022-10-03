@@ -804,6 +804,12 @@ $route['room/import-from-excel'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/room/fastUpdatedSlc'] = function($params = []) {
+    $controller = 'Room';
+    $action = '/fastUpdatedSlc';
+    return $controller.$action;
+};
+
 $route['admin/create-room'] = function($params = []) {
 	$controller = 'Room';
 	$action = '/create';

@@ -43,19 +43,49 @@ foreach ($list_contract as $row) {
         <div class="row">
             <div class="col-md-12">
                 <div class="card-box">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h4><strong class="text-danger">Tổng quan</strong></h4>
-                            <table class="table-hover table table-dark">
-                                <tbody>
-                                <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Số lượng</td> <td class="text-right font-weight-bold"><?= $metric['quantity'] ?></td></tr>
-                                <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng doanh số</td> <td class="text-right font-weight-bold"><?= number_format($metric['total_sale']) ?> vnđ</td></tr>
-                                <tr><td> <i class="mdi mdi-chevron-double-right text-warning"></i> Tổng doanh thu</td> <td class="text-right font-weight-bold"> vnđ</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-                        <div class="col-md-8">
+                    <h4><strong class="text-danger">Tìm kiếm</strong></h4>
+                    <div class="row">
+
+                        <div class="col-12">Chọn khoảng <strong>ngày ký</strong></div>
+                        <div class="col-6">
+                            <input type="text" class="form-control datepicker"
+                                   id="time_check_in_from"
+                                   value="<?= $timeCheckInFrom?>">
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control datepicker"
+                                   id="time_check_in_to"
+                                   value="<?= $timeCheckInTo  ?>">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">Chọn khoảng <strong>ngày hết hạn</strong></div>
+                        <div class="col-6">
+                            <input type="text"
+                                   id="time_expire_from"
+                                   class="form-control datepicker"
+                                   value="<?= $this->input->get('timeExpireFrom') ?>">
+                        </div>
+                        <div class="col-6">
+                            <input type="text"
+                                   id="time_expire_to"
+                                   class="form-control datepicker"
+                                   value="<?= $this->input->get('timeExpireTo') ?>">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-4 offset-4">
+                            <button id="search" class="btn btn-danger w-100">Áp Dụng</button>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <div class="col-md-12">
                             <h4><strong class="text-danger">Chờ duyệt</strong></h4>
                             <div class="row">
                                 <?php if(count($list_notification) > 0
@@ -129,7 +159,6 @@ foreach ($list_contract as $row) {
                                 <?php else: ?>
                                     <div class="col-md-12">
                                         <div class="card-box">
-                                            <h4 class="font-weight-bold text-danger">THÔNG BÁO</h4>
                                             <div class="alert alert-danger" role="alert">
                                                 Không có Hợp đồng nào đang chờ chờ duyệt!
                                             </div>
@@ -143,58 +172,40 @@ foreach ($list_contract as $row) {
 
                         </div>
                     </div>
-                    <h4><strong class="text-danger">Tìm kiếm</strong></h4>
-                    <div class="row">
 
-                        <div class="col-12">Chọn khoảng <strong>ngày ký</strong></div>
-                        <div class="col-6">
-                            <input type="text" class="form-control datepicker"
-                                   id="time_check_in_from"
-                                   value="<?= $timeCheckInFrom?>">
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control datepicker"
-                                   id="time_check_in_to"
-                                   value="<?= $timeCheckInTo  ?>">
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-12">Chọn khoảng <strong>ngày hết hạn</strong></div>
-                        <div class="col-6">
-                            <input type="text"
-                                   id="time_expire_from"
-                                   class="form-control datepicker"
-                                   value="<?= $this->input->get('timeExpireFrom') ?>">
-                        </div>
-                        <div class="col-6">
-                            <input type="text"
-                                   id="time_expire_to"
-                                   class="form-control datepicker"
-                                   value="<?= $this->input->get('timeExpireTo') ?>">
-                        </div>
-                    </div>
 
-                    <div class="row mt-2">
-                        <div class="col-4 offset-4">
-                            <button id="search" class="btn btn-danger w-100">Áp Dụng</button>
-                        </div>
-                    </div>
-
-                    <script>
-                        commands.push(function(){
-                            $('#search').click(function(){
-                                let url = '/admin/list-contract?'+
-                                    '&timeCheckInFrom='+$('#time_check_in_from').val()+
-                                    '&timeCheckInTo='+$('#time_check_in_to').val()+
-                                    '&timeExpireFrom='+$('#time_expire_from').val()+
-                                    '&timeExpireTo='+$('#time_expire_to').val();
-                                window.location = url;
-
-                            });
-                        });
-                    </script>
                 </div>
             </div>
+
+            <div class="col-xs-12 col-md-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-chart float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Số lượng</h6>
+                    <h2 class="m-b-20"><span><?= $metric['quantity'] ?></span></h2>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-chart float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Doanh số</h6>
+                    <h2 class="m-b-20"><span><?= number_format($metric['total_sale']) ?></span></h2>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-chart float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Doanh thu</h6>
+                    <h2 class="m-b-20"><span>...</span></h2>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-chart float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">[...]</h6>
+                    <h2 class="m-b-20"><span>...</span></h2>
+                </div>
+            </div>
+
             <div class="col-md-12">
                 <div class="card-box table-responsive">
                     <h4 class="font-weight-bold text-danger">Danh Sách Hợp Đồng Thuê Phòng</h4>
@@ -211,6 +222,17 @@ foreach ($list_contract as $row) {
 
 <script>
     commands.push(function(){
+        $('#search').click(function(){
+            let url = '/admin/list-contract?'+
+                '&timeCheckInFrom='+$('#time_check_in_from').val()+
+                '&timeCheckInTo='+$('#time_check_in_to').val()+
+                '&timeExpireFrom='+$('#time_expire_from').val()+
+                '&timeExpireTo='+$('#time_expire_to').val();
+            window.location = url;
+
+        });
+
+
         $('.datepicker').datepicker({
             format: "dd-mm-yyyy"
         });

@@ -56,9 +56,24 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             </div>
             <div class="col-12">
                 <div class="card-box table-responsive">
-                    <div class="row">
+                    <div class="row mb-3">
                         <h4 class="font-weight-bold text-danger col-12">Danh Sách Phòng | Cập Nhật <span id="time-info"><?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apartment['id'])) ?></span></h4>
-                        <div class="col-12 ">
+                        <form method="POST" action="/admin/room/fastUpdatedSlc" class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="hidden" name="apmId" value="<?= $apartment['id'] ?>">
+                                    <select name="fastUpdatedSlc" id="" class="form-control">
+                                        <option value="allAvailable">Cập nhật TRỐNG toàn bộ</option>
+                                        <option value="allFull">Cập nhật FULL toàn bộ</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-danger"> Cập nhật</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="col-md-6">
                             <div class="pull-right text-md text-center">
                                 <?php if($this->session->has_userdata('current_district_code')):?>
                                     <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
@@ -77,8 +92,6 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
 
                             </div>
                         </div>
-
-
                     </div>
 
                     <table id="list-room-<?= $apartment['id'] ?>"

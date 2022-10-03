@@ -49,6 +49,42 @@ class Room extends CustomBaseStep {
         echo json_encode($result); die;
 	}
 
+	public function fastUpdatedSlc(){
+	    $apm_id = $this->input->post('apmId');
+	    $slc = $this->input->post('fastUpdatedSlc');
+	    switch ($slc){
+            case 'allAvailable':
+                $this->ghRoom->updateByApartmentId($apm_id,[
+                   'status' => 'Available',
+                    'time_update' => time()
+                ]);
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Cập nhật thành công',
+                    'status' => 'success'
+                ]);
+                return redirect('/admin/room/show-create?apartment-id='.$apm_id, 'refresh');
+                break;
+
+                case 'allFull':
+                $this->ghRoom->updateByApartmentId($apm_id,[
+                   'status' => 'Full',
+                    'time_update' => time()
+                ]);
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Cập nhật thành công',
+                    'status' => 'success'
+                ]);
+                    return redirect('/admin/room/show-create?apartment-id='.$apm_id, 'refresh');
+                break;
+            default:
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Not woking',
+                    'status' => 'danger'
+                ]);
+                return redirect('/admin/room/show-create?apartment-id='.$apm_id, 'refresh');
+        }
+    }
+
 	public function getListRoomOldTimeAvailable(){
 	    $list_room = $this->ghRoom->get(['time_available >' => 0 ,'active' => 'YES', 'time_available < ' =>  strtotime(date('d-m-Y'))]);
 	    $data = [];

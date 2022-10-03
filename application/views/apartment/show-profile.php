@@ -156,7 +156,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                 <div class="form-group col-md-4">
                                     <strong class="col-form-strong">Thương Hiệu Hợp Tác</strong>
                                     <select name="partner_id" id="partner_id" class="form-control">
-                                        <option value="">Thương Hiệu Hợp Tác</option>
+                                        <option value="">Cá nhân</option>
                                         <?php foreach ($list_brand as $brand):
                                             $slc = '';
                                             if($brand['id'] == $apartment['partner_id']) {
