@@ -223,7 +223,8 @@
                     <tr class="">
                         <th class="text-center font-weight-bold">Top</th>
                         <th class="text-center font-weight-bold">Chuyên viên</th>
-                        <th class="text-center font-weight-bold">Doanh số</th>
+                        <th class="text-right font-weight-bold">(Doanh số)/ngày</th>
+                        <th class="text-right font-weight-bold">Doanh số <small>x1000</small></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -231,18 +232,14 @@
                         <tr>
                             <td class="text-center"><?= $index+1 ?></td>
                             <td class="text-center"><?= $item['consultant_name'] ?></td>
-                            <td class="text-center"><?= number_format($item['contract_total_sale']) ?></td>
+                            <td class="text-right"><?= number_format($item['contract_total_sale']/$n_day) ?></td>
+                            <td class="text-right"><?= number_format($item['contract_total_sale']) ?></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>
                 </table>
             </section>
         </div>
-        <div class="col-md-3">
-            <h4>Chart bánh : Phân khúc giá</h4>
-            <div id="chart-pricing-segment"></div>
-        </div>
-        <div class="col-md-3">Hợp đồng gần đây</div>
     </div>
 </div>
 
