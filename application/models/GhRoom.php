@@ -36,6 +36,25 @@ class GhRoom extends CI_Model {
         return $this->db->get_where($this->table)->result_array();
     }
 
+    public function getRoomRequiredToFullStatus($apartment_id) {
+        $this->load->model('ghContract');
+	    $list_contract = $this->ghContract->get([
+	        'time_expire >=' => strtotime(date('d-m-Y')),
+            'apartment_id' => $apartment_id
+        ]);
+	    $arr_room_id = [];
+	    foreach ($list_contract as $item) {
+	        if(!in_array($item["room_id"],$arr_room_id)){
+	            $this_room = $this->getFirstById($item["room_id"]);
+	            if(!empty($this_room) && $this_room['status'] == 'Available'){
+                    $arr_room_id[] = $item["room_id"];
+                }
+            }
+        }
+
+        return $arr_room_id;
+    }
+
     public function insert($data) {
         $this->db->insert($this->table, $data);
         return $this->db->insert_id();
