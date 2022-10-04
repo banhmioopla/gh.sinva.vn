@@ -301,6 +301,12 @@ class Image extends CustomBaseStep
         $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm_id]);
         $apartment_path = $download_path. '/' . $this->convert_vi_to_en($address). '/';
         $has_img = false;
+
+        $imgConfig = array();
+        $imgConfig['image_library'] = 'GD2';
+        $imgConfig['wm_type']       = 'overlay';
+        $imgConfig['wm_overlay_path'] = 'media/template-export/sinvahome-logo.png';
+        $this->load->library('image_lib', $imgConfig);
         if( is_dir($apartment_path) === false )
         {
             mkdir($apartment_path);
@@ -317,6 +323,12 @@ class Image extends CustomBaseStep
                             $has_img = true;
                             copy($rootPath.$img['name'], $room_path.$img['name']);
 //                            $zipFile->addFile($room_path.$img['name']);
+                            if($this->input->get("watermark") == "true"){
+                                $imgConfig['source_image']  = $room_path.$img['name'];
+                                $this->image_lib->initialize($imgConfig);
+                                $this->image_lib->watermark();
+                            }
+
                         }
                     }
                 }

@@ -436,10 +436,6 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             <?php endif;?>
 
 
-                            <span class="m-1"><button data-address="<?= $current_apartment['address_street'] ?>"
-                                                      data-apm="<?= $current_apartment['id'] ?>"
-                                                      class="btn m-1 report-issue-apm-info btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-alert-box"></i></button></span>
-                            <a href="/admin/download-all-image-apartment?apm=<?= $current_apartment['id'] ?>"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
 
                             <a class="m-1" href="/sale/apartment-export?id=<?= $current_apartment['id'] ?>" >
                                 <button class="btn btn-sm m-1 btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-file-excel"></i> Excel</button>
@@ -453,7 +449,15 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 </a>
                             <?php endif; ?>
                         </div>
-                        <hr>
+
+                    </div>
+                    <div class="col-12 list-action mt-1">
+                        <div class="text-md-right text-center">
+                            <a href="/admin/download-all-image-apartment?apm=<?= $current_apartment['id'] ?>"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
+                            <a href="/admin/download-all-image-apartment?apm=<?= $current_apartment['id'] ?>&watermark=true"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh Kèm Logo</button></a>
+                            <hr>
+                        </div>
+
                     </div>
                     <div class="col-md-8">
                         <?= $this->ghContract->getAlertNewestByApartment($current_apartment["id"]) ?>
