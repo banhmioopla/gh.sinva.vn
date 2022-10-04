@@ -242,6 +242,11 @@ class Apartment extends CustomBaseStep {
         }
         $current_apartment = null;
         $district_code = $this->list_OPEN_DISTRICT[0];
+
+        if(!empty($this->default_district)){
+            $district_code = $this->default_district;
+        }
+
         if(!empty( $this->input->get('district-code'))){
             $district_code = $this->input->get('district-code');
         }

@@ -27,11 +27,7 @@ class Login extends CI_Controller {
 
                 set_cookie('gh_account_id',$user_profile['account_id'], time()+60*60*24*365);
                 set_cookie('gh_password',$user_profile['password'], time()+60*60*24*365);
-                $default_district = $this->ghUserConfig->getFirstByKeywordAndUser($this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT, $user_profile['account_id']);
-                if($default_district && !empty($default_district['value'])) {
-                    $this->default_url .= "?district-code=".$default_district['value'];
-                    $this->session->set_userdata([$this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT => $default_district['value']]);
-                }
+
 
                 return redirect($this->default_url);
 			} else {

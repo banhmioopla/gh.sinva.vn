@@ -25,6 +25,7 @@ class CustomBaseStep extends CI_Controller {
             'ghUserDistrict', 'ghApartment', 'ghRole',
             'ghConfig', 'ghUserConfig',
             'ghTeam']);
+
 		$this->auth = $this->session->userdata('auth');
 		$this->role = $this->ghRole->getFirstByCode($this->auth['role_code']);
         $this->default_district =  $this->session->userdata($this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT);
@@ -43,6 +44,12 @@ class CustomBaseStep extends CI_Controller {
         $this->product_category = null;
         $this->list_OPEN_DISTRICT = [];
         $this->list_OPEN_APARTMENT = [];
+
+        $this->default_district = null;
+        if(!empty($this->ghUserConfig->getFirstByKeywordAndUser($this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT, $this->auth['account_id']))){
+            $this->default_district = $this->ghUserConfig->getFirstByKeywordAndUser($this->ghUserConfig::KEYWORD_DEFAULT_DISTRICT, $this->auth['account_id'])["value"];
+        }
+
         if(!empty($oneUD['apartment_id'])) {
             $this->product_category = "APARTMENT_GROUP";
             foreach($ghUserDistrict as $ud){
