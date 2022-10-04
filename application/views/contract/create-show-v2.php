@@ -386,7 +386,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                         </div>
                         <div class="form-group row">
                             <div class="col-8 offset-4">
-                                <button type="button" id="submitNewContract" class="btn btn-danger waves-effect waves-light">
+                                <button type="button" id="submitNewContract"  onclick="this.disabled='disabled'" class="btn btn-danger waves-effect waves-light">
                                     Thêm mới
                                 </button>
                             </div>
