@@ -324,9 +324,11 @@ class Image extends CustomBaseStep
                             copy($rootPath.$img['name'], $room_path.$img['name']);
 //                            $zipFile->addFile($room_path.$img['name']);
                             if($this->input->get("watermark") == "true"){
-                                $imgConfig['source_image']  = $room_path.$img['name'];
-                                $this->image_lib->initialize($imgConfig);
-                                $this->image_lib->watermark();
+                                if(file_exists($room_path.$img['name']) === true){
+                                    $imgConfig['source_image']  = $room_path.$img['name'];
+                                    $this->image_lib->initialize($imgConfig);
+                                    $this->image_lib->watermark();
+                                }
                             }
 
                         }
