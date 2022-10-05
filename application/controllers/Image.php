@@ -297,6 +297,8 @@ class Image extends CustomBaseStep
         $apartment = $this->ghApartment->getFirstById($apm_id);
         $address = trim(str_replace("/","_",$apartment['address_street']));
         $address = trim(str_replace(",","_",$address));
+        $address = trim(str_replace("(","_",$address));
+        $address = trim(str_replace(")","_",$address));
 
         $list_room = $this->ghRoom->get(['active' => 'YES', 'apartment_id' => $apm_id]);
         $apartment_path = $download_path. '/' . $this->convert_vi_to_en($address). '/';

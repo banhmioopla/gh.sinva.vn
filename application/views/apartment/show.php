@@ -390,6 +390,13 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             </div>
                         </div>
                     </div>
+                    <?php  if($this->session->has_userdata('fast_notify')): ?>
+                        <div class="col-md-12 offset-md-3">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <?= $this->session->flashdata('fast_notify')['message'] ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
                             <h2 id="address-full" class="font-weight-bold text-danger"><iclass=" mdi mdi-home-map-marker"></i>  <?= $apm_full_address ?>
