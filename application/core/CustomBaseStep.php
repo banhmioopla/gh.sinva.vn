@@ -139,7 +139,7 @@ class CustomBaseStep extends CI_Controller {
 
         $this->timeFrom = date("06-m-Y");
         $this->timeTo = date("05-m-Y",strtotime($this->timeFrom.' +1 month'));
-        if(strtotime(date("d-m-Y")) < strtotime(date("5-m-Y"))){
+        if(strtotime(date("d-m-Y")) < strtotime(date("5-m-Y"))+86399){
             $this->timeFrom = date("06-m-Y", strtotime("-1 month"));
             $this->timeTo = date("05-m-Y");
         }
