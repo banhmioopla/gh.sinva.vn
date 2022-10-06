@@ -157,8 +157,6 @@ class Contract extends CustomBaseStep {
 		$data['list_contract'] = $this->ghContract->getBySearch($params);
 		$data['list_notification'] = $this->ghNotification->get([
 		    'is_approve' => 'NO',
-            'time_insert >=' =>strtotime($timeCheckInFrom),
-            'time_insert <=' =>strtotime($timeCheckInTo)+86399
         ]);
 
 		/*view handle*/
