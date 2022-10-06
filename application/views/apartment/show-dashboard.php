@@ -89,6 +89,8 @@
             <div id="chart-apartment-group-district"></div>
         </div>
     </div>
+    <?php $this->load->view("contract/group-by-chart") ?>
+
     <div class="row">
         <div class="col-md-6">
             <section>
@@ -245,86 +247,10 @@
 
 <script>
     commands.push(function () {
-        ! function($){
-            "use strict";
 
-            var GoogleChart = function() {
-                this.$body = $("#contract-chart");
-            };
-            GoogleChart.prototype.createColumnChart = function(selector, data, axislabel, colors, title) {
-                var options = {
-                    title:title,
-                    fontName: 'Roboto',
-                    height: 650,
-                    width: '80%',
-                    fontSize: 12,
 
-                    tooltip: {
-                        textStyle: {
-                            fontName: 'Roboto',
-                            fontSize: 12
-                        }
-                    },
-                    vAxis: {
-                        title: axislabel,
-                        titleTextStyle: {
-                            fontSize: 12,
-                            italic: false
-                        },
-                        gridlines:{
-                            color: '#f5f5f5',
-                            count: 10
-                        },
-                        minValue: 0
-                    },
-                    legend: {
-                        position: 'top',
-                        alignment: 'center',
-                        textStyle: {
-                            fontSize: 13
-                        }
-                    },
-                    colors: colors
-                };
+        let chart_data;
 
-                var google_chart_data = google.visualization.arrayToDataTable(data);
-                var column_chart = new google.visualization.ColumnChart(selector);
-                column_chart.draw(google_chart_data, options);
-                return column_chart;
-            },
-
-                //init
-                GoogleChart.prototype.init = function () {
-                    var $this = this;
-                    //creating column chart
-
-                    let chart_data;
-                    $.ajax({
-                        url: "/admin/ajax/apartment/chart?groupBy=district",
-                        type: "POST",
-                        data: {groupBy: "District"},
-                        dataType: "json",
-                        async: false,
-                    }).done(function(response) { // <--- notice the argument here
-                        chart_data = response;
-                        console.log(response);
-                    });
-                    $this.createColumnChart($('#chart-apartment-group-district')[0], chart_data, null, ['#02c0ce','#0acf97', '#ebeff2'], "Số lượng dự án");
-
-                },
-                //init GoogleChart
-                $.GoogleChart = new GoogleChart, $.GoogleChart.Constructor = GoogleChart
-
-        }(window.jQuery),
-            //initializing GoogleChart
-
-            function($) {
-                "use strict";
-                //loading visualization lib - don't forget to include this
-                google.load("visualization", "1", {packages:["corechart"]});
-                //after finished load, calling init method
-                google.setOnLoadCallback(function() {$.GoogleChart.init();});
-            }(window.jQuery);
 
     });
 

@@ -116,6 +116,21 @@
             });
             $this.createColumnChart($('#timeLine-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Tháng hiện tại");
 
+            if($('#chart-apartment-group-district').length > 0){
+                $.ajax({
+                    url: "/admin/ajax/apartment/chart?groupBy=district",
+                    type: "POST",
+                    data: {groupBy: "District"},
+                    dataType: "json",
+                    async: false,
+                }).done(function(response) { // <--- notice the argument here
+                    contract_consultant_data = response;
+                    console.log(response);
+                });
+                $this.createColumnChart($('#chart-apartment-group-district')[0], contract_consultant_data, null, ['#02c0ce','#0acf97', '#ebeff2'], "Số lượng dự án");
+
+            }
+
         },
         //init GoogleChart
         $.GoogleChart = new GoogleChart, $.GoogleChart.Constructor = GoogleChart
