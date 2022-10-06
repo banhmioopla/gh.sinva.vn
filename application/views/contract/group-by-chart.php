@@ -1,18 +1,18 @@
 <div id="contract-chart">
     <div class="row">
-        <div class="col-md-6 col-12">
+        <div class="col-md-6 mb-2 col-12">
             <div id="consultant-chart"></div>
         </div>
 
-        <div class="col-md-6 col-12">
+        <div class="col-md-6 mb-2 col-12">
             <div id="district-chart"></div>
         </div>
 
-        <div class="col-md-6 col-12">
+        <div class="col-md-12 col-12">
             <div id="daily-chart"></div>
         </div>
 
-        <div class="col-md-12 col-12">
+        <div class="col-md-12  col-12">
             <div id="timeLine-chart"></div>
         </div>
     </div>
@@ -87,7 +87,7 @@
                 contract_consultant_data = response;
             });
 
-            $this.createColumnChart($('#consultant-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Thành viên");
+            $this.createColumnChart($('#consultant-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Hiệu suất thành viên");
 
             $.ajax({
                 url: "/admin/ajax/contract/chart?groupBy=district",
@@ -100,7 +100,7 @@
                 console.log(response); // <---- this will be the data you want to work with
                 contract_consultant_data = response;
             });
-            $this.createColumnChart($('#district-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Quận");
+            $this.createColumnChart($('#district-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Hiệu suất quận");
 
 
             $.ajax({
@@ -114,7 +114,7 @@
                 console.log(response); // <---- this will be the data you want to work with
                 contract_consultant_data = response;
             });
-            $this.createColumnChart($('#timeLine-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Tháng hiện tại");
+            $this.createColumnChart($('#timeLine-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Time line tháng hiện tại");
 
             if($('#chart-apartment-group-district').length > 0){
                 $.ajax({

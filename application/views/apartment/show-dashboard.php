@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-2">
         <div class="col-md-12">
             <div id="chart-apartment-group-district"></div>
         </div>
@@ -244,14 +244,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    commands.push(function () {
-
-
-        let chart_data;
-
-
-    });
-
-</script>
