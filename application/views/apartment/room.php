@@ -46,6 +46,9 @@ $arr_room_id = [];
                     $color_for_available = '';
                 }
 
+                $bg_for_available = '';
+                $color_for_available = '';
+
                 $list_type_id = json_decode($room['room_type_id'], true);
                 $js_list_type = "";
                 $text_type_name = "";
