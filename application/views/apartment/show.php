@@ -476,8 +476,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" - ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
-                        <div><small> <strong><?= count($list_similar) ?></strong> Dự án <strong class="text-success">đang trống</strong> có mức giá tương đồng , Click để xem dự án </small></div>
-                        <!--<div class="list-similar">
+<!--                        <div><small> <strong><?/*= count($list_similar) */?></strong> Dự án <strong class="text-success">đang trống</strong> có mức giá tương đồng , Click để xem dự án </small></div>
+-->                        <!--<div class="list-similar">
                             <?php
 /*                            foreach($list_similar as $similar_id):
                                 $sim_apm = $this->ghApartment->getFirstById($similar_id);
