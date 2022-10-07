@@ -115,8 +115,8 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                             <th>Loại Phòng</th>
                             <th>Giá <small>x1000</small></th>
                             <th class="text-center">Diện Tích</th>
-                            <th>Trạng Thái</th>
-                            <th>Ng.Trống</th>
+<!--                            <th>Trạng Thái</th>-->
+<!--                            <th>Ng.Trống</th>-->
                             <?php if($check_option):?>
                                 <th>Tùy chọn</th>
                             <?php endif; ?>
@@ -194,16 +194,16 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                              data-pk= "<?= $room['id'] ?>"
                                              data-value= "<?= $room['area'] > 0 ? $room['area']:'' ?>"
                                              data-name="area"><?= $room['area'] > 0 ? $room['area']: '-' ?></div></td>
-                                    <td><div class="room-select-status text-center <?= $color_for_available ?>"
-                                             data-gh-status="<?= $room['status'] ?>"
-                                             id="room-status-<?= $room['id'] ?>"
-                                             data-id="<?= $room['id'] ?>"><?= $status_txt ?></div></td>
-                                    <td><div class="room-time_available text-center"
-                                             data-pk="<?= $room['id'] ?>"
-                                             <?php if($room['time_available'] > 0):?>
-                                             data-value="<?= date('d-m-Y',$room['time_available']) ?>"
-                                             <?php endif ?>
-                                             data-name="time_available"><?= $room['time_available'] > 0 ? date('d-m-Y',$room['time_available']) :' - ' ?></div></td>
+<!--                                    <td><div class="room-select-status text-center --><?//= $color_for_available ?><!--"-->
+<!--                                             data-gh-status="--><?//= $room['status'] ?><!--"-->
+<!--                                             id="room-status---><?//= $room['id'] ?><!--"-->
+<!--                                             data-id="--><?//= $room['id'] ?><!--">--><?//= $status_txt ?><!--</div></td>-->
+<!--                                    <td><div class="room-time_available text-center"-->
+<!--                                             data-pk="--><?//= $room['id'] ?><!--"-->
+<!--                                             --><?php //if($room['time_available'] > 0):?>
+<!--                                             data-value="--><?//= date('d-m-Y',$room['time_available']) ?><!--"-->
+<!--                                             --><?php //endif ?>
+<!--                                             data-name="time_available">--><?//= $room['time_available'] > 0 ? date('d-m-Y',$room['time_available']) :' - ' ?><!--</div></td>-->
 
                                     <?php if($check_option):?>
                                         <td class="">

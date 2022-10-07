@@ -24,8 +24,8 @@ $arr_room_id = [];
             <th>Loại Phòng</th>
             <th>Giá <small>x1000</small></th>
             <th class="text-center">Diện Tích</th>
-            <th class="text-center d-none d-md-table-cell">Trống</th>
-            <th>Ngày Trống</th>
+<!--            <th class="text-center d-none d-md-table-cell">Trống</th>-->
+<!--            <th>Ngày Trống</th>-->
             <?php if($check_option):?>
                 <th>Tùy chọn</th>
             <?php endif; ?>
@@ -86,8 +86,8 @@ $arr_room_id = [];
                     <td><div><?= $text_type_name ?></div> <div class="text-primary"><?= !empty($room['type']) ? $room['type'] : '' ?></div></td>
                     <td><div class="font-weight-bold"><?= number_format($room['price']/1000) ?></div></td>
                     <td class="text-center"><?= $room['area'] ?></td>
-                    <td class="text-center d-none d-md-table-cell"><div><?= $status_txt ?></div></td>
-                    <td class="text-center"><?= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?></td>
+<!--                    <td class="text-center d-none d-md-table-cell"><div>--><?//= $status_txt ?><!--</div></td>-->
+<!--                    <td class="text-center">--><?//= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?><!--</td>-->
                     <?php if($check_option):?>
                         <td class="d-flex flex-column flex-md-row justify-content-center">
                             <?php if($check_contract):?>

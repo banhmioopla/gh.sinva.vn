@@ -150,8 +150,8 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                                             <th>Loại</th>
                                                             <th>Giá</th>
                                                             <th>Diện tích</th>
-                                                            <th class="d-none d-md-table-cell">Trạng Thái</th>
-                                                            <th>Sắp Trống</th>
+<!--                                                            <th class="d-none d-md-table-cell">Trạng Thái</th>-->
+<!--                                                            <th>Sắp Trống</th>-->
                                                             <th>Tùy Chọn</th>
                                                             </thead>
                                                             <tbody>
@@ -162,8 +162,8 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                                                         <td><?= $room['room_type'] ?></td>
                                                                         <td><?= $room['room_price'] ?></td>
                                                                         <td><?= $room['room_area'] ?></td>
-                                                                        <td class="d-none d-md-table-cell"><?= $room['room_status'] ?></td>
-                                                                        <td><?= $room['room_time_available'] ?></td>
+<!--                                                                        <td class="d-none d-md-table-cell">--><?//= $room['room_status'] ?><!--</td>-->
+<!--                                                                        <td>--><?//= $room['room_time_available'] ?><!--</td>-->
                                                                         <td class="d-flex flex-column flex-md-row justify-content-center">
                                                                             <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['room_id'] ?>">
                                                                                 <button data-room-id="<?= $room['room_id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">
