@@ -477,15 +477,15 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" - ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
                         <div><small> <strong><?= count($list_similar) ?></strong> Dự án <strong class="text-success">đang trống</strong> có mức giá tương đồng , Click để xem dự án </small></div>
-                        <div class="list-similar">
+                        <!--<div class="list-similar">
                             <?php
-                            foreach($list_similar as $similar_id):
+/*                            foreach($list_similar as $similar_id):
                                 $sim_apm = $this->ghApartment->getFirstById($similar_id);
-                                ?>
-                                <a href="/admin/list-apartment?current_apm_id=<?= $similar_id ?>"> <span class="badge badge-secondary m-1"># <?= $sim_apm['address_street'] ?> <span class="text-dark"><?= implode(" - ",array_map(function($val) { return number_format($val/1000); } , $this->ghApartment->getRoomPriceRange($similar_id))) ?></span> </span></a>
+                                */?>
+                                <a href="/admin/list-apartment?current_apm_id=<?/*= $similar_id */?>"> <span class="badge badge-secondary m-1"># <?/*= $sim_apm['address_street'] */?> <span class="text-dark"><?/*= implode(" - ",array_map(function($val) { return number_format($val/1000); } , $this->ghApartment->getRoomPriceRange($similar_id))) */?></span> </span></a>
 
-                            <?php endforeach;?>
-                        </div>
+                            <?php /*endforeach;*/?>
+                        </div>-->
 
                     </div>
 
@@ -498,12 +498,12 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                     <th scope="row"><i class="mdi mdi-checkbox-blank-circle"></i></th>
                                     <td>
                                         <?php if($current_apartment['user_collected_id']):?>
-                                            <?= "(QLDA) ". $this->libUser->getNameByAccountid($current_apartment['user_collected_id'])  ?>
+                                            QLDA
                                         <?php endif;?>
                                     </td>
                                     <td class="text-right">
                                         <?php if($current_apartment['user_collected_id']):?>
-                                            <div class="text-right"><?= "<i class='mdi mdi-phone-classic'></i> ". $this->libUser->getPhoneByAccountid($current_apartment['user_collected_id']) ?></div>
+                                            <div class="text-right"><?= $this->libUser->getNameByAccountid($current_apartment['user_collected_id'])  ?></div>
                                         <?php endif;?>
                                     </td>
                                 </tr>
