@@ -158,7 +158,7 @@ if(isYourPermission('ConsultantBooking', 'show', $this->permission_set)){
                                                             <?php if(isset($arr_apartment_room[$apm_id])):  ?>
                                                                 <?php foreach ($arr_apartment_room[$apm_id] as $room):?>
                                                                     <tr class="<?= $room['room_high_light'] ?>">
-                                                                        <td><?= $room['room_code'] ?> <div class="d-block d-md-none"><?= $room['room_status'] ?></div> </td>
+                                                                        <td><?= $room['room_code'] ?> <div class="d-block d-md-none"><?//= $room['room_status'] ?></div> </td>
                                                                         <td><?= $room['room_type'] ?></td>
                                                                         <td><?= $room['room_price'] ?></td>
                                                                         <td><?= $room['room_area'] ?></td>

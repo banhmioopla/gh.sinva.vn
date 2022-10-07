@@ -79,7 +79,7 @@ $arr_room_id = [];
 
                 <tr class='<?= $bg_for_available ?>'>
                     <td class="text-center">
-                        <?= $room['code'] ?> <div class="d-block d-md-none"><?= $status_txt ?></div>
+                        <?= $room['code'] ?> <div class="d-block d-md-none"><?//= $status_txt ?></div>
                         <?= implode('', $personal_contract_txt) ?>
                     </td>
 
