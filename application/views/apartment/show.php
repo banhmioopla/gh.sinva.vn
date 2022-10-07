@@ -473,16 +473,6 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-md-8">
                         <?= $this->ghApartment->isEmptyRoomPrice($current_apartment["id"]) ?>
                     </div>
-                    <?php  foreach ($this->ghRoom->getRoomRequiredToFullStatus($current_apartment['id']) as $rq_id):
-                        $this_room = $this->ghRoom->getFirstById($rq_id);
-                        ?>
-                        <div class="col-md-8">
-                            <div class="alert  alert-warning alert-dismissible bg-warning text-white border-0 fade show" role="alert">
-                                Phòng <strong><?= $this_room['code'] ?></strong> ! đang có hợp đồng còn hạn - vui lòng cập nhật trạng thái <strong>FULL</strong>
-                            </div>
-                        </div>
-
-                    <?php  endforeach;?>
 
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" - ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
