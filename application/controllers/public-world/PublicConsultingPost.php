@@ -232,7 +232,7 @@ class PublicConsultingPost extends CI_Controller {
                         ];
                     }
                     break;
-                case 4: // Hợp đồng tháng hiện tại
+                case 3: // Hợp đồng tháng hiện tại
 
                     $list_contract = $this->ghContract->get([
                         "time_check_in >=" => strtotime($timeFrom),
@@ -281,7 +281,7 @@ class PublicConsultingPost extends CI_Controller {
                     }
                     break;
 
-                case 1: // Thu nhập cá nhân
+                case 4: // Thu nhập cá nhân
                     $list_user = $this->ghUser->get(['active' => 'YES']);
                     $list_contract_supporter = $this->ghContract->get([
                         'time_check_in >=' => strtotime($timeFrom),
