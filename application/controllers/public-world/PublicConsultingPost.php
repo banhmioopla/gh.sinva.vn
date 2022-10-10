@@ -178,9 +178,8 @@ class PublicConsultingPost extends CI_Controller {
                                     "Hệ số" => $final_rate,
                                     "Số hợp đồng" => $count_contract,
                                     "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
-                                    "TN Chính" => $count_contract,
-                                    "TN Hỗ trợ" => $count_contract,
-                                    "TN (Chính + Hỗ trợ)" => round($income,2)
+
+                                    "Thu nhập" => round($income,2)
                                 ];
                             }
 
@@ -292,8 +291,6 @@ class PublicConsultingPost extends CI_Controller {
 
                     foreach ($list_user as $user) {
                         $count_contract = $income = 0;
-
-
                         foreach ($list_contract_supporter as $con) {
                             if(!empty($con["arr_supporter_id"])){
                                 $arr = json_decode($con["arr_supporter_id"], true);
