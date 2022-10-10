@@ -127,7 +127,7 @@ class PublicConsultingPost extends CI_Controller {
         if(!empty($token)){
             switch ($token){
 
-                case 1: // Thu nhập cá nhân
+                case 1: // Thu nhập - tháng hiện tại
                         $list_user = $this->ghUser->get(['active' => 'YES']);
                         $list_contract_supporter = $this->ghContract->get([
                             'time_check_in >=' => strtotime($timeFrom),
@@ -163,9 +163,9 @@ class PublicConsultingPost extends CI_Controller {
                                     $income += $con['commission_rate']*$con['room_price']/100 * $income_standard_rate;
                                 }
                             } else {
+                                $final_rate = 1-$income_standard_rate;
                                 foreach ($list_contract as $con){
-                                    $income += $con['commission_rate']*$con['room_price']/100 * (1-$income_standard_rate);
-                                    $final_rate = 1-$income_standard_rate;
+                                    $income += $con['commission_rate']*$con['room_price']/100 * $final_rate;
                                 }
                             }
                             if($count_contract) {
@@ -232,7 +232,7 @@ class PublicConsultingPost extends CI_Controller {
                         ];
                     }
                     break;
-                case 3: // Hợp đồng tháng hiện tại
+                case 3: // Hợp đồng - mốc tgian
 
                     $list_contract = $this->ghContract->get([
                         "time_check_in >=" => strtotime($timeFrom),
@@ -281,7 +281,7 @@ class PublicConsultingPost extends CI_Controller {
                     }
                     break;
 
-                case 4: // Thu nhập cá nhân
+                case 4: // Thu nhập - mốc tgian
                     $list_user = $this->ghUser->get(['active' => 'YES']);
                     $list_contract_supporter = $this->ghContract->get([
                         'time_check_in >=' => strtotime($timeFrom),
@@ -289,6 +289,7 @@ class PublicConsultingPost extends CI_Controller {
                         'arr_supporter_id <>' => null,
                         'status' => "Active"
                     ]);
+
                     foreach ($list_user as $user) {
                         $count_contract = $income = 0;
 
@@ -317,9 +318,9 @@ class PublicConsultingPost extends CI_Controller {
                                 $income += $con['commission_rate']*$con['room_price']/100 * $income_standard_rate;
                             }
                         } else {
+                            $final_rate = 1-$income_standard_rate;
                             foreach ($list_contract as $con){
-                                $income += $con['commission_rate']*$con['room_price']/100 * (1-$income_standard_rate);
-                                $final_rate = 1-$income_standard_rate;
+                                $income += $con['commission_rate']*$con['room_price']/100 * $final_rate;
                             }
                         }
                         if($count_contract) {
@@ -329,12 +330,10 @@ class PublicConsultingPost extends CI_Controller {
                                 "Tên" => $user["name"],
                                 "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
                                 "Số (*)" => $rate_star,
-                                "Hệ số" => $final_rate,
+                                "Hệ số" => (string)$final_rate,
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
-                                "TN Chính" => $count_contract,
-                                "TN Hỗ trợ" => $count_contract,
-                                "TN (Chính + Hỗ trợ)" => round($income,2)
+                                "Thu Nhập" => round($income,2)
                             ];
                         }
 
