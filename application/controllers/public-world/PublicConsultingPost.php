@@ -113,12 +113,12 @@ class PublicConsultingPost extends CI_Controller {
         $timeFrom = $this->timeFrom;
         $timeTo = $this->timeTo;
 
-        if(strlen($token) > 3){
+        if(strlen($token) > 20){
             $time_token = explode('_', $token);
-            if(count($time_token) == 2){
+            if(count($time_token) == 3){
                 $timeFrom = $time_token[0];
                 $timeTo = $time_token[1];
-                $token = 3;
+                $token = $time_token[2];
             }
         }
 
@@ -127,7 +127,7 @@ class PublicConsultingPost extends CI_Controller {
         if(!empty($token)){
             switch ($token){
 
-                case 1: // Đội nhóm Thu nhập
+                case 1: // Thu nhập cá nhân
                         $list_user = $this->ghUser->get(['active' => 'YES']);
                         $list_contract_supporter = $this->ghContract->get([
                             'time_check_in >=' => strtotime($timeFrom),
@@ -157,7 +157,7 @@ class PublicConsultingPost extends CI_Controller {
                             $count_contract+= count($list_contract);
                             $rate_star = $this->ghContract->getTotalRateStar($user['account_id'], $timeFrom, $timeTo);
 
-
+                            $final_rate = $income_standard_rate;
                             if($rate_star >= 6){
                                 foreach ($list_contract as $con){
                                     $income += $con['commission_rate']*$con['room_price']/100 * $income_standard_rate;
@@ -165,6 +165,7 @@ class PublicConsultingPost extends CI_Controller {
                             } else {
                                 foreach ($list_contract as $con){
                                     $income += $con['commission_rate']*$con['room_price']/100 * (1-$income_standard_rate);
+                                    $final_rate = 1-$income_standard_rate;
                                 }
                             }
                             if($count_contract) {
@@ -174,8 +175,12 @@ class PublicConsultingPost extends CI_Controller {
                                     "Tên" => $user["name"],
                                     "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
                                     "Số (*)" => $rate_star,
+                                    "Hệ số" => $final_rate,
                                     "Số hợp đồng" => $count_contract,
-                                    "Thu nhập" => round($income,2)
+                                    "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
+                                    "TN Chính" => $count_contract,
+                                    "TN Hỗ trợ" => $count_contract,
+                                    "TN (Chính + Hỗ trợ)" => round($income,2)
                                 ];
                             }
 
@@ -227,7 +232,7 @@ class PublicConsultingPost extends CI_Controller {
                         ];
                     }
                     break;
-                case 3: // Hợp đồng tháng hiện tại
+                case 4: // Hợp đồng tháng hiện tại
 
                     $list_contract = $this->ghContract->get([
                         "time_check_in >=" => strtotime($timeFrom),
@@ -275,6 +280,67 @@ class PublicConsultingPost extends CI_Controller {
                         ];
                     }
                     break;
+
+                case 1: // Thu nhập cá nhân
+                    $list_user = $this->ghUser->get(['active' => 'YES']);
+                    $list_contract_supporter = $this->ghContract->get([
+                        'time_check_in >=' => strtotime($timeFrom),
+                        'time_check_in <=' => strtotime($timeTo) +86399,
+                        'arr_supporter_id <>' => null,
+                        'status' => "Active"
+                    ]);
+                    foreach ($list_user as $user) {
+                        $count_contract = $income = 0;
+
+
+                        foreach ($list_contract_supporter as $con) {
+                            if(!empty($con["arr_supporter_id"])){
+                                $arr = json_decode($con["arr_supporter_id"], true);
+                                if(in_array($user['account_id'], $arr)){
+                                    $count_contract++;
+                                }
+                            }
+                        }
+
+                        $list_contract = $this->ghContract->get([
+                            'time_check_in >=' => strtotime($timeFrom),
+                            'time_check_in <=' => strtotime($timeTo) +86399,
+                            'consultant_id' =>$user['account_id'],
+                            'status' => "Active"
+                        ]);
+                        $count_contract+= count($list_contract);
+                        $rate_star = $this->ghContract->getTotalRateStar($user['account_id'], $timeFrom, $timeTo);
+
+                        $final_rate = $income_standard_rate;
+                        if($rate_star >= 6){
+                            foreach ($list_contract as $con){
+                                $income += $con['commission_rate']*$con['room_price']/100 * $income_standard_rate;
+                            }
+                        } else {
+                            foreach ($list_contract as $con){
+                                $income += $con['commission_rate']*$con['room_price']/100 * (1-$income_standard_rate);
+                                $final_rate = 1-$income_standard_rate;
+                            }
+                        }
+                        if($count_contract) {
+                            $data[] = [
+                                "Source" => "GH",
+                                "Account" => $user["account_id"],
+                                "Tên" => $user["name"],
+                                "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
+                                "Số (*)" => $rate_star,
+                                "Hệ số" => $final_rate,
+                                "Số hợp đồng" => $count_contract,
+                                "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
+                                "TN Chính" => $count_contract,
+                                "TN Hỗ trợ" => $count_contract,
+                                "TN (Chính + Hỗ trợ)" => round($income,2)
+                            ];
+                        }
+
+                    }
+                    break;
+
                 default: //
                     echo json_decode(["msg" => "INVALID TOKEN DATA"]);
 
