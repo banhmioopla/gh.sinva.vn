@@ -98,7 +98,7 @@
                             <span data-plugin="counterup"><?= round($commission_rate_average_this_month,2) ?>%</span>
                         </h2>
                         <span class="badge badge-<?= $commission_rate_average_this_month > $commission_rate_average_previous_month ? 'success':'danger' ?>"> <?= $commission_rate_average_this_month > $commission_rate_average_previous_month ? "+":"" ?><?= round($commission_rate_average_this_month - $commission_rate_average_previous_month, 2) ?>% </span>
-                        <span class="text-muted">Tháng trước: <?= round($commission_rate_average_previous_month,2) ?></span>
+                        <span class="text-muted">Tháng trước: <?= round($commission_rate_average_previous_month,2) ?>%</span>
                     </div>
                     <div class="card-box tilebox-one">
                         <i class="icon-paypal float-right text-muted"></i>
