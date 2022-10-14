@@ -36,60 +36,122 @@
         <div class="col-md-12">
             <h4>Giỏ Hàng - Hệ thống quản trị nội bộ <span class="text-danger font-weight-bold">SINVA</span> </h4>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div class="row">
+        <div class="col-md-5">
             <div class="row">
-                <div class="col-xs-12 col-md-12">
+                <div class="col-md-12">
                     <a href="/admin/list-apartment">
                         <div class="card-box bg-danger tilebox-one">
                             <h2 class="text-white text-uppercase mt-0"> <i class="mdi mdi-arrow-right-bold-box"></i> Xem dự án</h2>
                         </div>
                     </a>
-
                 </div>
 
+                <div class="col-xs-12 col-md-6">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-chart float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Dự án</h6>
+                        <h2 class="m-b-20"><span><?= count($this->ghApartment->get(['active' => 'YES'])) ?></span></h2>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-chart float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Nhân sự</h6>
+                        <h2 class="m-b-20"><span ><?= count($this->ghUser->get(['active' => 'YES'])) ?></span></h2>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-chart float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Hợp đồng <?= date('Y') ?></h6>
+                        <h2 class="m-b-20"><span ><?= count($this->ghContract->get(['time_check_in >=' => strtotime(date('01-01-Y'))])) ?></span></h2>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-chart float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Khách thuê</h6>
+                        <h2 class="m-b-20"><span ><?= count($this->ghCustomer->get([])) ?></span></h2>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-paypal float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Doanh số <?= date('m/Y') ?></h6>
+                        <h2 class="m-b-20">
+                            <span data-plugin="counterup"><?= number_format($total_sale_this_month) ?></span>
+                        </h2>
+                        <span class="badge badge-<?= ($total_sale_this_month)-$total_sale_previous_month > 0 ? 'success':'danger' ?>"> <?= ($total_sale_this_month-$total_sale_previous_month) > 0? "+" : "-"  ?><?= (round(($total_sale_this_month-$total_sale_previous_month)*100/$total_sale_previous_month,2)) ?>%</span>
+                        <span class="text-muted"> So với tháng trước: <?= number_format($total_sale_previous_month) ?></span>
+                    </div>
 
+                    <div class="card-box tilebox-one">
+                        <i class="icon-paypal float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Demo ???</h6>
+                        <h2 class="m-b-20">
+                            $<span data-plugin="counterup">...</span>
+                        </h2>
+                        <span class="badge badge-danger"> -...% </span>
+                        <span class="text-muted">...</span>
+                    </div>
+                    <div class="card-box tilebox-one">
+                        <i class="icon-paypal float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Demo ???</h6>
+                        <h2 class="m-b-20">
+                            $<span data-plugin="counterup">...</span>
+                        </h2>
+                        <span class="badge badge-danger"> -...% </span>
+                        <span class="text-muted">...</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-box tilebox-one">
+                        <i class="icon-paypal float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Demo ???</h6>
+                        <h2 class="m-b-20">
+                            $<span data-plugin="counterup">...</span>
+                        </h2>
+                        <span class="badge badge-danger"> -...% </span>
+                        <span class="text-muted">...</span>
+                    </div>
+                    <div class="card-box tilebox-one">
+                        <i class="icon-paypal float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Demo ???</h6>
+                        <h2 class="m-b-20">
+                            $<span data-plugin="counterup">...</span>
+                        </h2>
+                        <span class="badge badge-danger"> -...% </span>
+                        <span class="text-muted">...</span>
+                    </div>
+                    <div class="card-box tilebox-one">
+                        <i class="icon-paypal float-right text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Demo ???</h6>
+                        <h2 class="m-b-20">
+                            $<span data-plugin="counterup">...</span>
+                        </h2>
+                        <span class="badge badge-danger"> -...% </span>
+                        <span class="text-muted">...</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-
-    <div class="row">
-        <div class="col-xs-12 col-md-3">
-            <div class="card-box tilebox-one">
-                <i class="icon-chart float-right text-muted"></i>
-                <h6 class="text-muted text-uppercase mt-0">Dự án</h6>
-                <h2 class="m-b-20"><span><?= count($this->ghApartment->get(['active' => 'YES'])) ?></span></h2>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-3 ">
-            <div class="card-box tilebox-one">
-                <i class="icon-chart float-right text-muted"></i>
-                <h6 class="text-muted text-uppercase mt-0">Nhân sự</h6>
-                <h2 class="m-b-20"><span ><?= count($this->ghUser->get(['active' => 'YES'])) ?></span></h2>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-3 ">
-            <div class="card-box tilebox-one">
-                <i class="icon-chart float-right text-muted"></i>
-                <h6 class="text-muted text-uppercase mt-0">Hợp đồng <?= date('Y') ?></h6>
-                <h2 class="m-b-20"><span ><?= count($this->ghContract->get(['time_check_in >=' => strtotime(date('01-01-Y'))])) ?></span></h2>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-3 ">
-            <div class="card-box tilebox-one">
-                <i class="icon-chart float-right text-muted"></i>
-                <h6 class="text-muted text-uppercase mt-0">Khách thuê</h6>
-                <h2 class="m-b-20"><span ><?= count($this->ghCustomer->get([])) ?></span></h2>
-            </div>
-        </div>
-    </div>
+    <?php $this->load->view("contract/group-by-chart") ?>
 
     <div class="row mb-2">
         <div class="col-md-12">
             <div id="chart-apartment-group-district"></div>
         </div>
     </div>
-    <?php $this->load->view("contract/group-by-chart") ?>
+
 
     <div class="row">
         <div class="col-md-6">

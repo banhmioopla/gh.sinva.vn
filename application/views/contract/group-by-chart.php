@@ -28,6 +28,47 @@
         var GoogleChart = function() {
             this.$body = $("#contract-chart");
         };
+        GoogleChart.prototype.createBarChart = function(selector, data, colors, lengthx, title) {
+            let options = {
+                title:title,
+                fontName: 'Roboto',
+                height: (80 * lengthx) + 100,
+                fontSize: 12,
+                chartArea: {
+                    left: '8%',
+                    width: '100%',
+                    height: 80 * lengthx
+                },
+                tooltip: {
+                    textStyle: {
+                        fontName: 'Roboto',
+                        fontSize: 12
+                    }
+                },
+                vAxis: {
+                    gridlines:{
+                        color: '#f5f5f5',
+                        count: 10
+                    },
+                    minValue: 0
+                },
+                legend: {
+                    position: 'top',
+                    alignment: 'center',
+                    textStyle: {
+                        fontSize: 13
+                    }
+                },
+                colors: colors
+            };
+
+            var google_chart_data = google.visualization.arrayToDataTable(data);
+            var bar_chart = new google.visualization.BarChart(selector);
+            bar_chart.draw(google_chart_data, options);
+            return bar_chart;
+        },
+
+
         GoogleChart.prototype.createColumnChart = function(selector, data, axislabel, colors, title) {
             var options = {
                 title:title,
