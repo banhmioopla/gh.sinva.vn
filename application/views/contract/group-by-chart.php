@@ -114,7 +114,7 @@
                 console.log(response); // <---- this will be the data you want to work with
                 contract_consultant_data = response;
             });
-            $this.createColumnChart($('#timeLine-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Time line tháng hiện tại");
+            $this.createColumnChart($('#timeLine-chart')[0], contract_consultant_data, 'Doanh số', ['#02c0ce','#0acf97', '#ebeff2'], "Time line " + '<?= date('Y') ?>');
 
             if($('#chart-apartment-group-district').length > 0){
                 $.ajax({
