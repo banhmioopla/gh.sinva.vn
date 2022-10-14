@@ -84,8 +84,8 @@ class Apartment extends CustomBaseStep {
         ]);
 
         $list_contract_this_month = $this->ghContract->get([
-            'time_check_in >=' => strtotime(date('01-m-Y')),
-            'time_check_in <=' => strtotime(date("d-m-Y",strtotime('last day of this month'))),
+            'time_check_in >=' => strtotime($this->timeFrom),
+            'time_check_in <=' => strtotime($this->timeTo),
             'status' => 'Active',
         ]);
 
@@ -94,9 +94,13 @@ class Apartment extends CustomBaseStep {
             $total_sale_this_month+= $this->ghContract->getTotalSaleByContract($con['id']);
         }
 
+        $previousMonth_timeFrom = date("06-m-Y", strtotime($this->timeFrom . ' -1month'));
+
+        $previousMonth_timeTo = date("05-m-Y",strtotime($previousMonth_timeFrom.' +1 month'));
+
         $list_contract_previous_month = $this->ghContract->get([
-            'time_check_in >=' => strtotime(date('01-m-Y',strtotime('-1month'))),
-            'time_check_in <=' => strtotime(date('d-m-Y', strtotime('last day of this month', strtotime('-1month')))),
+            'time_check_in >=' => strtotime($previousMonth_timeFrom),
+            'time_check_in <=' => strtotime($previousMonth_timeTo),
             'status' => 'Active',
         ]);
 
