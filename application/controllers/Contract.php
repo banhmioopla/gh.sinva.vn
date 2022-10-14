@@ -245,7 +245,8 @@ class Contract extends CustomBaseStep {
                     }
 
                     $res[] =[date("m/Y",$time_line), $total_sale/1000000, count($list)];
-                    $time_line += 86399* date('t');
+
+                    $time_line = strtotime("+1month", $time_line);;
                 }
                 break;
             default:
