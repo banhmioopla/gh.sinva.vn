@@ -83,7 +83,7 @@
                 <div class="col-md-6">
                     <div class="card-box tilebox-one">
                         <i class="icon-paypal float-right text-muted"></i>
-                        <h6 class="text-muted text-uppercase mt-0">Doanh số <?= date('m/Y') ?></h6>
+                        <h6 class="text-muted text-uppercase mt-0">Doanh số (<?= $this->timeFrom . ' đến ' . $this->timeTo ?>)</h6>
                         <h2 class="m-b-20">
                             <span data-plugin="counterup"><?= number_format($total_sale_this_month) ?></span>
                         </h2>
