@@ -168,7 +168,7 @@
                     contract_consultant_data = response;
                     console.log(response);
                 });
-                $this.createColumnChart($('#chart-apartment-group-district')[0], contract_consultant_data, null, ['#02c0ce','#0acf97', '#ebeff2'], "Số lượng dự án");
+//                $this.createColumnChart($('#chart-apartment-group-district')[0], contract_consultant_data, null, ['#02c0ce','#0acf97', '#ebeff2'], "Số lượng dự án");
 
             }
 

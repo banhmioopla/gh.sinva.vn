@@ -93,11 +93,11 @@
 
                     <div class="card-box tilebox-one">
                         <i class="icon-paypal float-right text-muted"></i>
-                        <h6 class="text-muted text-uppercase mt-0">Demo ???</h6>
+                        <h6 class="text-muted text-uppercase mt-0">Hoa hồng ký gửi trung bình </h6>
                         <h2 class="m-b-20">
-                            $<span data-plugin="counterup">...</span>
+                            <span data-plugin="counterup"><?= round($commission_rate_average_previous_month,2) ?>%</span>
                         </h2>
-                        <span class="badge badge-danger"> -...% </span>
+                        <span class="badge badge-danger"> ...% </span>
                         <span class="text-muted">...</span>
                     </div>
                     <div class="card-box tilebox-one">

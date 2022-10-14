@@ -89,9 +89,14 @@ class Apartment extends CustomBaseStep {
             'status' => 'Active',
         ]);
 
-        $total_sale_this_month = 0;
+        $total_sale_this_month = $total_sale_previous_month = $commission_rate_average_this_month = $commission_rate_average_previous_month =  0;
+        $temp = 0;
         foreach ($list_contract_this_month as $con){
             $total_sale_this_month+= $this->ghContract->getTotalSaleByContract($con['id']);
+            $temp+= $con['commission_rate'];
+        }
+        if(count($list_contract_this_month)){
+            $commission_rate_average_this_month = $temp/count($list_contract_this_month);
         }
 
         $previousMonth_timeFrom = date("06-m-Y", strtotime($this->timeFrom . ' -1month'));
@@ -103,10 +108,14 @@ class Apartment extends CustomBaseStep {
             'time_check_in <=' => strtotime($previousMonth_timeTo),
             'status' => 'Active',
         ]);
-
-        $total_sale_previous_month = 0;
+        $temp = 0;
         foreach ($list_contract_previous_month as $con){
             $total_sale_previous_month+= $this->ghContract->getTotalSaleByContract($con['id']);
+            $temp+= $con['commission_rate'];
+        }
+
+        if(count($list_contract_previous_month)){
+            $commission_rate_average_previous_month = $temp/count($list_contract_previous_month);
         }
 
         $arr_type_id = [];
@@ -243,6 +252,8 @@ class Apartment extends CustomBaseStep {
             'ranking_room_type' => $ranking_room_type,
             'total_sale_this_month' => $total_sale_this_month,
             'total_sale_previous_month' => $total_sale_previous_month,
+            'commission_rate_average_previous_month' => $commission_rate_average_previous_month,
+            'commission_rate_average_this_month' => $commission_rate_average_this_month,
             'n_day' => $n_day,
         ]);
         $this->load->view('components/footer');
