@@ -87,7 +87,7 @@
                         <h2 class="m-b-20">
                             <span data-plugin="counterup"><?= number_format($total_sale_this_month) ?></span>
                         </h2>
-                        <span class="badge badge-<?= ($total_sale_this_month)-$total_sale_previous_month > 0 ? 'success':'danger' ?>"> <?= ($total_sale_this_month-$total_sale_previous_month) > 0? "+" : "-"  ?><?= (round(($total_sale_this_month-$total_sale_previous_month)*100/$total_sale_previous_month,2)) ?>%</span>
+                        <span class="badge badge-<?= ($total_sale_this_month)-$total_sale_previous_month > 0 ? 'success':'danger' ?>"> <?= ($total_sale_this_month-$total_sale_previous_month) > 0? "+" : ""  ?><?= (round(($total_sale_this_month-$total_sale_previous_month)*100/$total_sale_previous_month,2)) ?>%</span>
                         <span class="text-muted"> So với tháng trước: <?= number_format($total_sale_previous_month) ?></span>
                     </div>
 
