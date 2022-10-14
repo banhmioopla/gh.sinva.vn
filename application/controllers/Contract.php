@@ -229,13 +229,14 @@ class Contract extends CustomBaseStep {
 
                 case "TimeLine":
                 $res[] = ["Ngày", "Doanh số", "Hợp đồng"];
-                $month_end = strtotime($this->timeTo);
-                $time_line  = strtotime($this->timeFrom);
+                $month_end = strtotime("+2month");
+                $time_line  = strtotime(date('01-01-Y'));
 
                 while($time_line <= $month_end){
+                    $last_day_this_month = strtotime('last day of this month', $time_line);
                     $list = $this->ghContract->get([
                         'time_check_in >=' => $time_line,
-                        'time_check_in <=' => $time_line+86399,
+                        'time_check_in <=' => $last_day_this_month,
                         'status <>' => 'Cancel'
                     ]);
                     $total_sale = 0;
@@ -243,8 +244,8 @@ class Contract extends CustomBaseStep {
                         $total_sale += $this->ghContract->getTotalSaleByContract($contract['id']);
                     }
 
-                    $res[] =[date("d/m",$time_line), $total_sale/1000000, count($list)];
-                    $time_line+= 86400;
+                    $res[] =[date("m/Y",$time_line), $total_sale/1000000, count($list)];
+                    $time_line += 86399*30;
                 }
                 break;
             default:
