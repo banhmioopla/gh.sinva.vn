@@ -556,6 +556,12 @@ $route['user/profile'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['user/dashboard'] = function($params = []) {
+    $controller = 'User';
+    $action = '/showDashboard';
+    return $controller.$action;
+};
+
 $route['admin/list-share-customer-user'] = function($params = []) {
     $controller = 'ShareCustomerUser';
     $action = '/show';

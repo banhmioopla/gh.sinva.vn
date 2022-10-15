@@ -6,11 +6,59 @@ class User extends CustomBaseStep {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('ghUser');
+		$this->load->model(['ghUser', 'ghContract', 'ghCustomer']);
 		$this->load->model('ghRole');
 		$this->load->library('LibRole', null, 'libRole');
 		$this->load->library('LibUser', null, 'libUser');
 	}
+
+	public function showDashboard(){
+        $list_customer = $arr_customer_id = $list_apm_contract_signed = [];
+
+
+
+        /*showDashboard*/
+	    $account = $this->input->get('account');
+	    $user_profile = $this->ghUser->getFirstByAccountId($account);
+
+	    $list_contract = $this->ghContract->get(["consultant_id" => $account]);
+
+	    foreach ($list_contract as $con) {
+            if(!in_array($con["customer_id"],$arr_customer_id)){
+                $arr_customer_id[] = $con["customer_id"];
+                $customer = $this->ghCustomer->getFirstById($con["customer_id"]);
+                if($customer){
+                    $list_customer[] =$customer;
+                }
+
+            }
+        }
+
+	    $list_customer = $this->ghCustomer->get();
+
+	    /*Profile this month*/
+	    $this_month_list_contract = $this->ghContract->get([
+	        "consultant_id" => $account,
+            "status <>" => 'Cancel',
+            "time_check_in >=" => strtotime($this->timeFrom),
+            "time_check_in <=" => strtotime($this->timeTo),
+        ]);
+
+
+	    /*Profile previous month*/
+
+	    /*View*/
+        $this->load->view('components/header');
+        $this->load->view('user/show-dashboard', [
+            "list_contract" => $list_contract,
+            "list_customer" => $list_customer,
+            "user_profile" => $user_profile,
+            "this_month_list_contract" => $this_month_list_contract,
+            "this_month_total_sale" => $this->ghContract->getTotalSaleByConsultant($account, $this->timeFrom, $this->timeTo),
+            "total_sale" => $this->ghContract->getTotalSaleByConsultant($account, "01-01-2015", $this->timeTo),
+        ]);
+        $this->load->view('components/footer');
+    }
 
 	public function show(){
 		$data['list_user'] = $this->ghUser->get(['account_id >' => 171020000, "active" => "YES"]);

@@ -132,7 +132,7 @@ class CustomBaseStep extends CI_Controller {
             'ApartmentReport' => ['updateIssueApartmentInfo'],
             'SystemIncomeRunning' => ['show', 'chartData', 'ajaxGetIncomePersonal'],
             'HomeTown' => ['show'],
-            'User' => ['showProfile'],
+            'User' => ['showProfile', 'showDashboard'],
             'UserConfig' => ['update'],
             'CronCustomer' => ['removeImg'],
         ];
