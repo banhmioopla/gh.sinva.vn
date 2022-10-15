@@ -34,8 +34,6 @@ class User extends CustomBaseStep {
             }
         }
 
-	    $list_customer = $this->ghCustomer->get();
-
 	    /*Profile this month*/
 	    $this_month_list_contract = $this->ghContract->get([
 	        "consultant_id" => $account,
