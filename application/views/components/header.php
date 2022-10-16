@@ -266,7 +266,7 @@ include VIEWPATH.'functions.php';
                                         <?php endif;?>
                                     </div>
                                     <!-- item-->
-                                    <a href="/user/profile" class="dropdown-item notify-item">
+                                    <a href="/user/dashboard?account=<?= $this->auth['account_id'] ?>" class="dropdown-item notify-item">
                                         <i class="fi-head"></i>
                                         <span>Tài khoản</span>
                                     </a>

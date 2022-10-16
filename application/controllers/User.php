@@ -141,16 +141,15 @@ class User extends CustomBaseStep {
     }
 
 	public function changePassword() {
-		$user_profile = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
-		/*--- Load View ---*/
-		if(isset($_POST['submitForm'])) {
-			$new_password = $this->input->post('password');
-			$this->ghUser->updateById($this->auth['id'], ['password' => $new_password]);
-			$user_profile = $this->ghUser->get(['account_id' => $this->auth['account_id']]);
-		}
-		$this->load->view('components/header');
-		$this->load->view('user/change-password', $user_profile[0]);
-		$this->load->view('components/footer');
+        $new_password = $this->input->post('password');
+        $this->ghUser->updateById($this->auth['id'], [
+            'password' => $new_password
+        ]);
+        echo json_encode([
+            'status' => true,
+            'msg' => "Đổi mật khẩu thành công"
+        ]); die;
+
 	}
 
 	// Ajax
