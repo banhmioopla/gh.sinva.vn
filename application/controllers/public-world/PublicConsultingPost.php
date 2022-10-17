@@ -7,7 +7,7 @@ class PublicConsultingPost extends CI_Controller {
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         parent::__construct();
-        $this->load->model(['ghRoom', 'ghContract', 'ghUser','ghCustomer', 'ghContractPartial']);
+        $this->load->model(['ghRoom', 'ghContract', 'ghUser','ghCustomer', 'ghContractPartial', 'ghTeamUser', 'ghTeam']);
         $this->load->model('ghApartment');
         $this->load->model('ghImage');
         $this->load->model('ghApartment');
@@ -137,7 +137,14 @@ class PublicConsultingPost extends CI_Controller {
                         ]);
                         foreach ($list_user as $user) {
                             $count_contract = $income = 0;
-
+                            $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
+                            $team_name = "";
+                            if(!empty($teamUser)){
+                                $team = $this->ghTeam->getFirstById($teamUser['team_id']);
+                                if(!empty($team)){
+                                    $team_name = $team['name'];
+                                }
+                            }
 
                             foreach ($list_contract_supporter as $con) {
                                 if(!empty($con["arr_supporter_id"])){
@@ -169,16 +176,17 @@ class PublicConsultingPost extends CI_Controller {
                                 }
                             }
                             if($count_contract) {
+
                                 $data[] = [
                                     "Source" => "GH",
+                                    "Team" => $team_name,
                                     "Account" => $user["account_id"],
                                     "Tên" => $user["name"],
                                     "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
                                     "Số (*)" => $rate_star,
-                                    "Hệ số" => $final_rate,
+                                    "Hệ số" => $final_rate*100,
                                     "Số hợp đồng" => $count_contract,
                                     "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
-
                                     "Thu nhập" => round($income,2)
                                 ];
                             }
@@ -210,17 +218,25 @@ class PublicConsultingPost extends CI_Controller {
                         if(time() >= $contract["time_check_in"]){
                             $status = "Đã ký";
                         }
+                        $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
+                        $team_name = "";
+                        if(!empty($teamUser)){
+                            $team = $this->ghTeam->getFirstById($teamUser['team_id']);
+                            if(!empty($team)){
+                                $team_name = $team['name'];
+                            }
+                        }
+
                         $data[] = [
                             "Source" => "GH",
+                            "Team" => $team_name,
                             "ID" => $contract["id"],
                             "Sale Chốt" => $user["name"],
                             "Dự án" =>$apm["address_street"] . ", Phường ". $apm["address_ward"],
                             "Mã phòng" => $room["code"],
                             "Giá thuê" => $contract["room_price"],
-                            "Giá cọc" => $contract["deposit_price"],
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
                             "Số tháng" => $contract["number_of_month"],
-                            "Hết Hạn" => date("d-m-Y", $contract["time_expire"]),
                             "Hoa hồng" => $contract['commission_rate'],
                             "Doanh số" => $contract['room_price']*$contract['commission_rate']/100,
                             "Doanh thu" => $this->ghContractPartial->getTotalByContractId($contract['id']),
@@ -258,17 +274,25 @@ class PublicConsultingPost extends CI_Controller {
                         if(time() >= $contract["time_check_in"]){
                             $status = "Đã ký";
                         }
+                        $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
+                        $team_name = "";
+                        if(!empty($teamUser)){
+                            $team = $this->ghTeam->getFirstById($teamUser['team_id']);
+                            if(!empty($team)){
+                                $team_name = $team['name'];
+                            }
+                        }
+
                         $data[] = [
                             "Source" => "GH",
+                            "Team" => $team_name,
                             "ID" => $contract["id"],
                             "Sale Chốt" => $user["name"],
                             "Dự án" =>$apm["address_street"] . ", Phường ". $apm["address_ward"],
                             "Mã phòng" => $room["code"],
                             "Giá thuê" => $contract["room_price"],
-                            "Giá cọc" => $contract["deposit_price"],
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
                             "Số tháng" => $contract["number_of_month"],
-                            "Hết Hạn" => date("d-m-Y", $contract["time_expire"]),
                             "Hoa hồng" => $contract['commission_rate'],
                             "Doanh số" => $contract['room_price']*$contract['commission_rate']/100,
                             "Doanh thu" => $this->ghContractPartial->getTotalByContractId($contract['id']),
@@ -321,13 +345,22 @@ class PublicConsultingPost extends CI_Controller {
                             }
                         }
                         if($count_contract) {
+                            $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
+                            $team_name = "";
+                            if(!empty($teamUser)){
+                                $team = $this->ghTeam->getFirstById($teamUser['team_id']);
+                                if(!empty($team)){
+                                    $team_name = $team['name'];
+                                }
+                            }
                             $data[] = [
                                 "Source" => "GH",
+                                "Team" => $team_name,
                                 "Account" => $user["account_id"],
                                 "Tên" => $user["name"],
                                 "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
                                 "Số (*)" => $rate_star,
-                                "Hệ số" => (string)$final_rate,
+                                "Hệ số" => $final_rate*100,
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
                                 "Thu Nhập" => round($income,2)
