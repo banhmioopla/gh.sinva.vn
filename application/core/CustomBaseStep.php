@@ -9,7 +9,9 @@ class CustomBaseStep extends CI_Controller {
 		$this->current_controller =  $this->router->fetch_class();
 		$this->current_action =  $this->router->fetch_method();
         $this->head_title = "Giỏ Hàng - Pro & Vip system management";
-
+        if($this->session->has_userdata('REQUEST_URI') === false){
+            $this->session->set_userdata(['REQUEST_URI' => $_SERVER['REQUEST_URI']]);
+        }
 		if(!$this->session->has_userdata('auth'))
 		{
 //			$this->session->sess_destroy();

@@ -9,6 +9,11 @@ class Login extends CI_Controller {
 		$this->load->model('ghRole');
 		$this->load->model('ghUserConfig');
 		$this->default_url = '/admin/apartment/dashboard/show';
+        if($this->session->has_userdata('REQUEST_URI') === true){
+            if(!empty($this->session->userdata("REQUEST_URI")))
+            $this->default_url = $this->session->userdata("REQUEST_URI");
+        }
+
 		$this->logout_url = '/admin/logout';
 	}
 	public function show()
