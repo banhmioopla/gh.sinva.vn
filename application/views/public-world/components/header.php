@@ -40,7 +40,7 @@ $assets_path  = base_url().'assets/';
         <div class="container-fluid">
             <div class="menu-extras topbar-custom">
 
-                <h3 class="text-center text-danger">SINVAHOME KÍNH CHÀO QUÝ KHÁCH</h3>
+                <h1 class="text-center welcome-text text-danger font-weight-bold">CÔNG TY CỔ PHẦN ĐỊA ỐC SINVA</h1>
 
             </div>
         </div> <!-- end container -->

@@ -21,19 +21,28 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="col-md-12">
                 <div class="card-box">
-                    <input type="text" class="form-control" value="<?= $timeFrom ?>">
-                    <input type="text" class="form-control" value="<?= $timeTo ?>">
+                    <form method="GET" class="row">
+                        <div class="col-md-4 offset-md-2">
+                            <strong>Ngày Ký Bắt Đầu</strong>
+                            <input type="text" name="timeFrom" class="form-control" value="<?= $timeFrom ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Ngày Ký Kết Thúc</strong>
+                            <input type="text" name="timeTo" class="form-control" value="<?= $timeTo ?>">
+                        </div>
+                        <div class="col-md-12 mt-2 text-center">
+                            <button type="submit" class="btn btn-danger" id="submitTimeRange">Áp Dụng</button>
+                        </div>
+                    </form>
                 </div>
-
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card-box">
-                    <h4 class="m-t-0 header-title">Danh sách hợp đồng</h4>
+                    <h4 class="font-weight-bold text-danger">THÔNG TIN PHIẾU THU (<?= $timeFrom ?> đến <?= $timeTo ?>)</h4>
                     <table class="table table-dark">
                         <thead>
                         <tr>
@@ -64,8 +73,9 @@
                             ?>
                             <tr scope="row" class="mt-2">
                                 <td colspan="12" >
-                                    <h3 class="ml-3"><?= $apartment["address_street"] ?> </h3>
+                                    <h3 class="ml-3"><?= $apartment["address_street"] .", phường " .$apartment["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apartment["district_code"]))  ?> </h3>
                                     <div class="ml-3 text-warning">Tổng thanh toán: <span ><?= number_format($total_billing_amount) ?></span></div>
+                                    <div class="ml-3 text-warning"><a target="_blank" href="<?= $public_url[$apartment['id']] ?>"> <i class="mdi mdi-link"></i> Link gửi đối tác </a></div>
                                 </td>
 <!--                                <td colspan="2">--><?//= $public_url[$apartment['id']] ?><!--</td>-->
                             </tr>
@@ -80,7 +90,7 @@
                                     <td><?= $room["code"] ?></td>
                                     <td><?= number_format($contract["room_price"]) ?></td>
                                     <td class="text-warning"><?= number_format($contract["room_price"]*$contract["commission_rate"]/100) ?></td>
-                                    <td><?= $contract["commission_rate"] ?></td>
+                                    <td><?= $contract["commission_rate"] ?>%</td>
                                     <td><?= $contract["number_of_month"] ?></td>
                                 </tr>
                             <?php $stt++; endforeach;?>
