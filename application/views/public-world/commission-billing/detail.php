@@ -41,7 +41,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="card-box">
-                    <h4 class="font-weight-bold text-danger">Danh sách chi tiết (<?= $timeFrom ?> đến <?= $timeTo ?>)</h4>
+                    <h4 class="font-weight-bold text-danger">Danh sách chi tiết</h4>
                     <table class="table table-dark">
                         <thead>
                         <tr>
