@@ -36,11 +36,12 @@ $assets_path  = base_url().'assets/';
 
 <!-- Navigation Bar-->
 <header id="topnav">
+
     <div class="topbar-main">
         <div class="container-fluid">
-            <div class="menu-extras topbar-custom">
-
-                <h1 class="text-center welcome-text text-danger font-weight-bold">CÔNG TY CỔ PHẦN ĐỊA ỐC SINVA</h1>
+            <div class="menu-extras topbar-custom justify-content-center">
+<!--                <img src='https://i.postimg.cc/MMjMnLDz/Sinva-vn-Logo-QB-updated.png' border='0' height="80" alt='Sinva-vn-Logo-QB-updated'/>-->
+                <h1 class="text-center text-danger font-weight-bold">CÔNG TY CỔ PHẦN ĐỊA ỐC SINVA</h1>
 
             </div>
         </div> <!-- end container -->

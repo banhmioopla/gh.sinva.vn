@@ -8,13 +8,20 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
-                    <h2 class="text-danger font-weight-bold">SINVA | PHIẾU ĐỀ NGHỊ THANH TOÁN : <?= $apartment["address_street"] ?> </h2>
+                    <h5 class="text-danger font-weight-bold">SINVA | PHIẾU ĐỀ NGHỊ THANH TOÁN </h5>
+                    <h1 class="text-danger font-weight-bold"><?= $apartment["address_street"] ?> </h1>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+
+            <!--<div class="col-md-4">
+                <div class="card-box">
+                    <img src='https://i.postimg.cc/MMjMnLDz/Sinva-vn-Logo-QB-updated.png' border='0' alt='Sinva-vn-Logo-QB-updated'/>
+                </div>
+            </div>-->
+            <div class="col-md-4">
                 <div class="card-box">
                     <ul>
                         <li>
@@ -27,17 +34,18 @@
                             STK: <strong>19033059780014</strong>
                         </li>
                         <li>
-                            Nội dung: <strong>địa chỉ toà nhà</strong>
+                            Nội dung: <strong><?= $apartment_address_payment ?></strong>
+                        </li>
+                        <li >
+                            Tổng thanh toán: <strong class="text-primary "><?= number_format($total_billing_amount) ?></strong>
                         </li>
                         <hr>
-                        <li class="mt-3"> <i>Người đề nghị: <strong>Trần Thị Trâm Anh</strong></i> </li>
-                        <li >
-                           <i>Tổng thanh toán: <strong><?= number_format($total_billing_amount) ?></strong></i>
-                        </li>
+                        <li> Bộ Phận: <strong>Quản Lý Dự Án</strong> </li>
+                        <li> Người đề nghị: <strong>Trần Thị Trâm Anh</strong> </li>
+                        <li> Ngày: <strong><?= date("d/m/Y") ?></strong> </li>
+
                     </ul>
                 </div>
-
-
             </div>
             <div class="col-lg-12">
                 <div class="card-box">
@@ -83,9 +91,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-
-    $('.welcome-text').text("HELLO");
-</script>
