@@ -9,7 +9,7 @@
             <div class="col-sm-12">
                 <div class="page-title-box">
                     <h5 class="text-danger font-weight-bold">SINVA | PHIẾU ĐỀ NGHỊ THANH TOÁN </h5>
-                    <h1 class="text-danger font-weight-bold"><?= $apartment["address_street"] ?> </h1>
+                    <h1 class="text-danger font-weight-bold"><?= $apartment["address_street"] .", phường " .$apartment["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apartment["district_code"]))  ?> </h1>
                 </div>
             </div>
         </div>

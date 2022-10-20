@@ -15,6 +15,7 @@ class PublicCommissionBilling extends CI_Controller {
         $this->load->model('ghPublicConsultingPost');
         $this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
         $this->load->library('LibUser', null, 'libUser');
+        $this->load->library('LibDistrict', null, 'libDistrict');
         $this->public_dir = 'public-world/';
 
         $this->timeFrom = date("06-m-Y");
