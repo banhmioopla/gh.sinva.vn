@@ -10,11 +10,13 @@
                 <li class="has-submenu">
                     <a href="#"><i class="icon-layers"></i>Dự Án</a>
                     <ul class="submenu">
+
                         <li><a href="/admin/list-apartment"><i class="mdi
                         mdi-chevron-double-right text-warning"></i> Danh Sách Dự
                                 Án</a></li>
 
-
+                        <li><a href="/admin/apartment/create"><i class="mdi
+                        mdi-chevron-double-right text-warning"></i> Tạo Dự Án Mới</a></li>
 
                         <?php if(isYourPermission('Apartment', 'showLikeBase',$this->permission_set)):?>
                             <li><a href="/admin/list-apartment-like-base"><i class="mdi
@@ -103,6 +105,10 @@
                             mdi-chevron-double-right text-warning"></i> Tất Cả Hợp Đồng</a></li>
                         <?php endif;?>
 
+                        <?php if(isYourPermission('CommissionBilling', 'show',$this->permission_set)):?>
+                            <li><a href="/admin/list-commission-billing"><i class="mdi
+                            mdi-chevron-double-right text-warning"></i> Phiếu thu</a></li>
+                        <?php endif;?>
 
                         <?php if(isYourPermission('Apartment', 'showCommmissionRate',
                             $this->permission_set)):?>

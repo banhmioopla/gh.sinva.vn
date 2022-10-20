@@ -213,6 +213,13 @@ $route['admin/update-apartment-promotion-editable'] = function($params = []) {
     return $controller.$action;
 };
 
+// CommissionBilling
+$route['admin/list-commission-billing'] = function($params = []) {
+    $controller = 'CommissionBilling';
+    $action = '/show';
+    return $controller.$action;
+};
+
 // contract
 $route['admin/list-contract'] = function($params = []) {
 	$controller = 'Contract';
