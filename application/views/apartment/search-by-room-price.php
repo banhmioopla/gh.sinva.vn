@@ -1,9 +1,23 @@
 <?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
 <div id="listPrice" class="mb-1">
+    <div class="row">
+         <span class="col-md-8 col-12 mb-2">
+            <strong>Tìm địa chỉ dự án (thử nghiệm)</strong>
+            <select id="search_address_street" class="form-control">
+                <?php foreach ($list_apm_ready as $apm):
+                    ?>
+                    <option value="<?= $apm['id'] ?>"><?= $apm["address_street"] .", phường " .$apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"]))  ?></option>
+                <?php endforeach; ?>
+            </select>
+        </span>
+    </div>
+
     <h4 class="text-danger font-weight-bold"
         data-toggle="collapse"
         aria-expanded="true" aria-controls="searchApartment"
         href="#searchApartment"><i class="mdi mdi-arrow-right-drop-circle-outline"></i> Tìm kiếm phòng</h4>
+
+
     <div class="form-group row collapse" role="tabpanel" id="searchApartment">
         <span class="col-md-4 col-6 mb-2">
             <strong>Quận</strong>
@@ -124,6 +138,10 @@
                 + '&contractTerm=' + $('#contractTerm').val()
                 + '&inUpdate24h=' + $('#inUpdate24h').val()
             ;
+        });
+        $('#search_address_street').select2();
+        $('#search_address_street').on("change",function () {
+            window.location = "/admin/list-apartment?current_apm_id=" + $(this).val();
         });
         $('#roomDistrict').change(function () {
             let district = $(this).val();
