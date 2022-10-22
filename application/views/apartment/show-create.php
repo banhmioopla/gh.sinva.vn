@@ -81,7 +81,7 @@
 
                                     <div class="form-group col-md-4">
                                         <strong class="col-form-strong">Thương Hiệu Hợp Tác</strong> <span class="text-danger">*</span>
-                                        <select required name="partner_id" id="partner_id" class="form-control">
+                                        <select name="partner_id" id="partner_id" class="form-control">
                                             <option value="">Thương Hiệu Hợp Tác</option>
                                             <?php foreach ($list_brand as $brand):
 
