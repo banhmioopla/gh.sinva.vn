@@ -184,7 +184,7 @@ class PublicConsultingPost extends CI_Controller {
                                     "Tên" => $user["name"],
                                     "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
                                     "Số (*)" => $rate_star,
-                                    "Hệ số" => $final_rate*100,
+                                    "Hệ số" => (string)($final_rate*100),
                                     "Số hợp đồng" => $count_contract,
                                     "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
                                     "Thu nhập" => round($income,2)
@@ -360,7 +360,7 @@ class PublicConsultingPost extends CI_Controller {
                                 "Tên" => $user["name"],
                                 "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
                                 "Số (*)" => $rate_star,
-                                "Hệ số" => $final_rate*100,
+                                "Hệ số" => (string)($final_rate*100),
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
                                 "Thu Nhập" => round($income,2)
