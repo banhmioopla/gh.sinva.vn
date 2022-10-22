@@ -121,7 +121,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-12">
                                         <strong class="col-form-strong">Mô Tả Dự Án</strong> <span class="text-danger">*</span>
                                         <textarea name="description" id="description" class="form-control"></textarea>
                                     </div>
