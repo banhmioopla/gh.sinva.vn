@@ -297,7 +297,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                         <hr>
                         <h5 class="font-weight-bold"><u>Thông Tin Hợp Đồng</u></h5>
                         <div class="form-group row">
-                            <label for="time_check_in" class="col-12 col-md-4 col-form-label text-right">Ngày ký</label>
+                            <label class="col-12 col-md-4 col-form-label text-right">Ngày ký</label>
                             <div class="col-md-6 col-12">
                                 <input type="text" required class="form-control datepicker"
                                        autocomplete="autocomplete_off_hack_xfr4!k"
@@ -306,7 +306,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="number_of_month" class="col-12 col-md-4 col-form-label text-right">Số
+                            <label class="col-12 col-md-4 col-form-label text-right">Số
                                 tháng thuê</label>
                             <div class="col-md-6 col-12">
                                 <input  type="number"
@@ -319,7 +319,7 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
 
                         </div>
                         <div class="form-group row">
-                            <label for="time_expire" class="col-12 col-md-4 col-form-label text-right">Ngày Hết Hạn</label>
+                            <label class="col-12 col-md-4 col-form-label text-right">Ngày Hết Hạn</label>
                             <div class="col-md-6 col-12">
                                 <input type="text" class="form-control datepicker"
                                        autocomplete="autocomplete_off_hack_xfr4!k"
@@ -414,6 +414,10 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
             let cr_6m = $('#cr_6m').data('cr');
             let cr_9m = $('#cr_9m').data('cr');
             let cr_12m = $('#cr_12m').data('cr');
+            let month_num = $(this).val();
+            let time_check_in = $("#time_check_in").val();
+
+            $("#time_expire").val(moment(moment(time_check_in).format('DD-MM-YYYY')).add(month_num, 'M').format('DD-MM-YYYY'));
 
             let contract_cr = $('input[name=commission_rate]');
             contract_cr.val(0);
@@ -494,9 +498,6 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
             if(number_of_month <= 6 && cr_6m > 0) {
                 contract_cr.val(cr_6m/6*number_of_month);
             }
-
-            console.log(contract_cr.val());
-
 
         });
 
