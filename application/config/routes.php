@@ -220,6 +220,12 @@ $route['admin/list-commission-billing'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/commission-billing/update-full-contract-partial'] = function($params = []) {
+    $controller = 'CommissionBilling';
+    $action = '/updateFullContractPartial';
+    return $controller.$action;
+};
+
 // contract
 $route['admin/list-contract'] = function($params = []) {
 	$controller = 'Contract';

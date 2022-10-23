@@ -66,16 +66,31 @@
                                 "apartment_id" => $apartment['id'],
                             ]);
                             $total_billing_amount = 0;
+                            $total_partial_amount = 0;
                             foreach ($list_contract as $contract){
                                 $total_billing_amount += $contract["room_price"]*$contract["commission_rate"]/100;
+                                $total_partial_amount += $this->ghContractPartial->getTotalByContractId($contract['id']);
                             }
                             $stt = 1;
                             ?>
-                            <tr scope="row" class="mt-2">
+                            <tr scope="row" class="mt-3">
                                 <td colspan="12" >
                                     <h3 class="ml-3"><?= $apartment["address_street"] .", phường " .$apartment["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apartment["district_code"]))  ?> </h3>
+
+                                    <div class="ml-3 text-warning">
+                                        <a target="_blank" href="<?= $public_url[$apartment['id']] ?>"> <i class="mdi mdi-link"></i> Link gửi đối tác </a>
+                                        <a href="javascript:void(0)"
+                                           data-apartment_id="<?= $apartment["id"] ?>"
+                                           data-time_from="<?= $timeFrom ?>"
+                                           data-time_to="<?= $timeTo ?>"
+                                           class="ml-3 update-full-contract-partial"> <i class="mdi mdi-cash-multiple"></i> Cập nhật doanh thu vào GH </a>
+                                        <p class="msg-line text-success" id="msg-line-<?= $apartment["id"] ?>"></p>
+                                    </div>
+
+
                                     <div class="ml-3 text-warning">Tổng thanh toán: <span ><?= number_format($total_billing_amount) ?></span></div>
-                                    <div class="ml-3 text-warning"><a target="_blank" href="<?= $public_url[$apartment['id']] ?>"> <i class="mdi mdi-link"></i> Link gửi đối tác </a></div>
+                                    <div class="ml-3 text-warning" id="total-partial-amount-<?= $apartment["id"] ?>" >Tổng doanh thu: <span ><?= number_format($total_partial_amount) ?></span></div>
+
                                 </td>
 <!--                                <td colspan="2">--><?//= $public_url[$apartment['id']] ?><!--</td>-->
                             </tr>
@@ -110,6 +125,24 @@
     commands.push(function() {
         $(function () {
             $('.select2').select2();
+            $('.update-full-contract-partial').click(function () {
+               let apm_id = $(this).data("apartment_id");
+               let time_from = $(this).data("time_from");
+               let time_to = $(this).data("time_to");
+               let _this = $(this);
+               $.ajax({
+                   url: '/admin/commission-billing/update-full-contract-partial',
+                   method: "POST",
+                   data: {apm_id: apm_id, time_from: time_from, time_to: time_to},
+                   dataType: "json",
+                   success: function (res) {
+                       if(res.status === true){
+                           $("#msg-line-"+apm_id).text(res.msg).fadeOut(4000);
+                           $('#total-partial-amount-'+apm_id).text("Tổng doanh thu: "+res.amount);
+                       }
+                   }
+               });
+            });
         });
     });
 </script>

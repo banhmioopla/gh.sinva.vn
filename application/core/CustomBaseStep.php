@@ -115,6 +115,7 @@ class CustomBaseStep extends CI_Controller {
                 'showTrending', 'duplicateApartment', 'updateFollowing'
             ],
             'Customer' => ['exportExcel', 'showYour'],
+            'CommissionBilling' => ['updateFullContractPartial'],
             'CustomerFeedback' => ['detail', 'show', 'showYour'],
             'Room' => ['syncStatusRoom', 'fastUpdate', 'getShaft','update',
                 'updateEditable', 'getListRoomOldTimeAvailable', 'showCreate', 'copyClipboard', 'fastUpdatedSlc',
