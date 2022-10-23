@@ -366,7 +366,6 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                             col-form-label text-right">Ảnh Hợp Đồng</label>
                             <div class="col-md-8 col-12">
                                 <input type="file"
-                                       required
                                        id="file"
                                        multiple
                                        class="filestyle"
@@ -616,13 +615,6 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
                 $('.msg-phone').text('');
             }
 
-            if($('#file')[0].files.length == 0){
-                $('.msg-file').text('vui lòng chọn ảnh hợp đồng');
-                check = false;
-            } else {
-                check = true;
-                $('.msg-file').text('');
-            }
 
 
             if(check) {
