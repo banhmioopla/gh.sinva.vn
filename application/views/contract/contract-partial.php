@@ -5,7 +5,7 @@
                 <input type="hidden" name="contract_id" value="<?= $contract['id'] ?>">
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="text-danger font-weight-bold">Tạo Phiếu Thu</h4>
+                        <h4 class="text-danger font-weight-bold">Nhập Doanh Thu</h4>
                     </div>
                     <div class="col-12">
                         <div class="form-group row">
@@ -16,7 +16,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-12 col-form-label text-right" for="example-input-normal">Số Tiền</label>
+                            <label class="col-md-3 col-12 col-form-label text-right" for="example-input-normal">Số Tiền Cần Thu</label>
                             <div class="col-md-9 col-12">
                                 <input type="text" required name="amount" class="form-control" value="<?= $remaining_amount ?>">
                             </div>

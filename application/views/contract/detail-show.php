@@ -14,7 +14,37 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
 }
 
 ?>
+<?php
+$customer = $ghCustomer->get(['id' => $contract['customer_id']]);
+$customer  = $customer ? $customer[0] : null;
+$room = $ghRoom->get(['id' => $contract['room_id']]);
+$room = $room ? $room[0] : null;
+$apartment = $ghApartment->get(['id' => $contract['apartment_id']]);
+$apartment = $apartment ? $apartment[0] : null;
+$service = $contract['service_set'] ? json_decode($contract['service_set'],true) : null;
 
+$image = $ghImage->getContract($contract['id']);
+
+?>
+
+<?php
+$status = 'muted'; $doc_type = "Cọc ";
+if($contract['status'] == 'Active') {
+    $status = 'success';
+}
+if($contract['status'] == 'Pending') {
+    $status = 'warning';
+    $doc_type .= " Chờ duyệt";
+}
+
+if(time() >= $contract["time_check_in"]){
+    $status = "HĐ đã ký ";
+}
+if(time() >= $contract["time_expire"]){
+    $doc_type = "HĐ hết hạn ";
+    $status = 'secondary';
+}
+?>
 
 <div class="wrapper">
     <div class="sk-wandering-cubes" style="display:none" id="loader">
@@ -33,52 +63,19 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                             <li class="breadcrumb-item active"># <?= $contract['id'] ?></li>
                         </ol>
                     </div>
+                    <h4 class="font-weight-bold text-danger">Thông tin <?= $doc_type ?></h4>
+                    <h2 class="font-weight-bold text-danger"><?= $apartment["address_street"] .", phường "
+                        . $apartment["address_ward"] .", Quận "
+                        . ($this->libDistrict->getNameByCode($apartment["district_code"])) . " | Phòng " . $room['code'] ?></h2>
                 </div>
-
             </div>
-            <?php
-            $customer = $ghCustomer->get(['id' => $contract['customer_id']]);
-            $customer  = $customer ? $customer[0] : null;
-            $room = $ghRoom->get(['id' => $contract['room_id']]);
-            $room = $room ? $room[0] : null;
-            $apartment = $ghApartment->get(['id' => $contract['apartment_id']]);
-            $apartment = $apartment ? $apartment[0] : null;
-            $service = $contract['service_set'] ? json_decode($contract['service_set'],true) : null;
 
-            $image = $ghImage->getContract($contract['id']);
-
-            ?>
-
-            <?php
-            $status = 'muted'; $doc_type = "Cọc ";
-            if($contract['status'] == 'Active') {
-                $status = 'success';
-            }
-            if($contract['status'] == 'Pending') {
-                $status = 'warning';
-                $doc_type .= " Chờ duyệt";
-            }
-
-            if(time() >= $contract["time_check_in"]){
-                $status = "HĐ đã ký ";
-            }
-            if(time() >= $contract["time_expire"]){
-                $doc_type = "HĐ hết hạn ";
-                $status = 'secondary';
-            }
-            ?>
 
             <div class="col-12">
                 <div class="card-box shadow">
-                    <h3 class="text-center">Chi tiết hợp đồng</h3>
-                    <p class="text-center text-dark"><?= $apartment ? $apartment['address_street'] : '[không có thông tin]'
-                        ?></p>
-                    <p class="text-center text-warning font-weight-bold">Mã Phòng: <?=
-                        $room ? $room['code'] : '[không có thông tin]' ?></p>
                     <p><a href="/admin/list-contract" class="text-danger"><i class="mdi
                      mdi-arrow-left-bold-circle"></i> Quay Lại Danh Sách</a></p>
                     <table class="table table-bordered table-hover">
-
                         <tr class="text-right">
                             <td colspan="2" class="text-right" width="250px">
                                 <div class="customer-name w-100">
@@ -121,7 +118,6 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                                     $supporter [] = $libUser->getNameByAccountid($item);
                                 }
                             }
-
                             ?>
                             <td class="text-right"><strong>Thành Viên Hỗ Trợ (<?= count($supporter) ?>) <strong></td>
                             <td>
@@ -176,15 +172,12 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                                                        name="files[]" multiple
                                                        data-input="false"
                                                        data-text="chọn ảnh..."
-                                                       data-btnClass="btn-danger
-                                                           btn-sm">
+                                                       data-btnClass="btn-custom btn btn-sm">
                                             </div>
                                             <div class="col-md-2">
                                                 <button type="submit" name="fileSubmit"
-                                                        value="UPLOAD" class=" btn
-                                                    btn-custom waves-effect waves-light">
-                                                    <i class="mdi mdi-upload"> thêm
-                                                        mới</i>
+                                                        value="UPLOAD" class=" btn btn-danger btn-sm waves-effect waves-light">
+                                                    <i class="mdi mdi-upload"> Upload</i>
                                                 </button>
                                             </div>
                                         </div>
@@ -319,7 +312,9 @@ if($total_partial >= ($contract['room_price']*$contract['commission_rate'])/100)
                                     (tại thời điểm tạo HD) <strong></td>
                             <td>
                                 <div class="customer-name" data-name="name">
-                                    <?php if($service && count($service) > 0):?>
+                                    <?php if($service && count($service) > 0):
+                                        $label = $this->config->item("label_service");
+                                        ?>
                                     <?php foreach ($service as $k => $v): ?>
                                         <?= isset($label[$k]) && $k != 'commission_rate' ? '<strong>'
                                             . $label[$k]

@@ -9,7 +9,7 @@ $assets_path  = base_url().'assets/';
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                2018 © Highdmin. - Coderthemes.com
+                CÔNG TY CỔ PHẦN ĐỊA ỐC SINVA
             </div>
         </div>
     </div>

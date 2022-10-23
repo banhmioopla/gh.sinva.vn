@@ -15,7 +15,7 @@ $assets_path  = base_url().'assets/';
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?= $assets_path ?>images/favicon.ico">
+    <link rel="shortcut icon" href="<?= $assets_path ?>images/favicon.png">
 
     <!--venobox lightbox-->
     <link rel="stylesheet" href="<?= $js_plugins_path ?>magnific-popup/css/magnific-popup.css" />

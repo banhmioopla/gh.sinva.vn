@@ -103,7 +103,7 @@ $autoload['helper'] = array('url', 'money','cookie', 'file');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array("label_service");
 
 /*
 | -------------------------------------------------------------------
