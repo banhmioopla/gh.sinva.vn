@@ -71,10 +71,9 @@
                 <div class="font-weight-bold text-warning"> <i class=" dripicons-home"></i>
                     <?php
                     $apartment = $this->ghApartment->getFirstById($row['apartment_id']);
-                    $room = $ghRoom->get(['id' => $row['room_id']]);
-                    $room = $room ? $room[0]:null;
+                    $room = $ghRoom->getFirstById($contract_checker['room_id']);
                     ?>
-                    <?= $apartment ? $apartment[0]['address_street']:'' ?> <?= $room ? "(" . $room['code']. ")" : '[không có mp]' ?>
+                    <?= $apartment ? $apartment['address_street']:'' ?> <?= $room ? "(" . $room['code']. ")" : '[không có mp]' ?>
                 </div>
             </td>
             <td>
