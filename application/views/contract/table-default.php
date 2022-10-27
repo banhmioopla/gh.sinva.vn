@@ -71,7 +71,7 @@
                 <div class="font-weight-bold text-warning"> <i class=" dripicons-home"></i>
                     <?php
                     $apartment = $this->ghApartment->getFirstById($row['apartment_id']);
-                    $room = $ghRoom->getFirstById($contract_checker['room_id']);
+                    $room = $ghRoom->getFirstById($row['room_id']);
                     ?>
                     <?= $apartment ? $apartment['address_street']:'' ?> <?= $room ? "(" . $room['code']. ")" : '[không có mp]' ?>
                 </div>
