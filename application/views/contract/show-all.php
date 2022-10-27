@@ -122,21 +122,28 @@ foreach ($list_contract as $row) {
                                             <tbody>
                                             <?php
                                             foreach($list_notification as $row ):
-                                                $contract_checker = $this->ghContract->get([
+                                                $contract_checker = $this->ghContract->getFirst([
                                                         'id' => $row["object_id"],
                                                         'status <>' => 'Cancel',
                                                 ]);
+
                                                 if(!$contract_checker) continue;
+
+                                                $apartment = $this->ghApartment->getFirstById($contract_checker['apartment_id']);
+                                                $room = $ghRoom->getFirstById($contract_checker['room_id']);
                                                 ?>
+
+
                                                 <tr>
                                                     <td class="text-center"><a target = '_blank'
                                                                                href="/admin/detail-contract?id=<?= $row['object_id']
                                                                                ?>">#<?= 1000+ $row['object_id'] ?></a></td>
                                                     <td>
-                                                        <strong>
-                                                            <?= $row['message'] ?>
-                                                        </strong>
-
+                                                        <i><?= $row['message'] ?></i>
+                                                        <br>
+                                                        <?= $apartment ? $apartment['address_street']:'' ?> <?= $room ? " | Phòng " . $room['code'] : '[không có mp]' ?>
+                                                        <br>
+                                                        Giá: <?= number_format($contract_checker['room_price']) ?>
                                                     </td>
                                                     <td class="text-center"><?= date('d/m/Y H:i', $row['time_insert'])?></td>
                                                     <td class="text-center w-25">

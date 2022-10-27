@@ -70,7 +70,7 @@
                 <div><?= $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']) ?> </div>
                 <div class="font-weight-bold text-warning"> <i class=" dripicons-home"></i>
                     <?php
-                    $apartment = $ghApartment->get(['id' => $row['apartment_id']]);
+                    $apartment = $this->ghApartment->getFirstById($row['apartment_id']);
                     $room = $ghRoom->get(['id' => $row['room_id']]);
                     $room = $room ? $room[0]:null;
                     ?>
