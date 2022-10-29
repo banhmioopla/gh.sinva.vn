@@ -226,7 +226,7 @@ class PublicConsultingPost extends CI_Controller {
                                 $team_name = $team['name'];
                             }
                         }
-
+                        $total_partial = $this->ghContractPartial->getTotalByContractId($contract['id']);
                         $data[] = [
                             "Source" => "GH",
                             "Team" => $team_name,
@@ -239,7 +239,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Số tháng" => $contract["number_of_month"],
                             "Hoa hồng" => round($contract['commission_rate'],2),
                             "Doanh số" => $contract['room_price']*$contract['commission_rate']/100,
-                            "Doanh thu" => $this->ghContractPartial->getTotalByContractId($contract['id']),
+                            "Doanh thu" => $total_partial > 0 ? $total_partial: "",
                             "Số (*)" => $contract["rate_type"],
                             "Sale Hỗ trợ" => $user_support,
                             "Khách Hàng" => $customer["name"],

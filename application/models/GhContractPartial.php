@@ -18,7 +18,7 @@ class GhContractPartial extends CI_Model {
     }
 
     public function getTotalByContractId($con_id) {
-        $list_con = $this->db->get_where($this->table, ['contract_id' => $con_id])->result_array();
+        $list_con = $this->get(['contract_id' => $con_id]);
         $total = 0;
 
         foreach ($list_con as $item) {
