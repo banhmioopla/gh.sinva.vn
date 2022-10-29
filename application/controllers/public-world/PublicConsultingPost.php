@@ -254,7 +254,7 @@ class PublicConsultingPost extends CI_Controller {
                         "time_check_in <=" => strtotime($timeTo)+86399,
                         'status' => "Active"
                     ],'consultant_id', 'ASC');
-                    $total_partial = $this->ghContractPartial->getTotalByContractId($contract['id']);
+
                     foreach ($list_contract as $contract){
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
@@ -282,7 +282,7 @@ class PublicConsultingPost extends CI_Controller {
                                 $team_name = $team['name'];
                             }
                         }
-
+                        $total_partial = $this->ghContractPartial->getTotalByContractId($contract['id']);
                         $data[] = [
                             "Source" => "GH",
                             "Team" => $team_name,
