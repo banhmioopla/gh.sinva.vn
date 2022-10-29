@@ -295,7 +295,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Số tháng" => $contract["number_of_month"],
                             "Hoa hồng" => round($contract['commission_rate'],2),
                             "Doanh số" => $this->ghContract->getTotalSaleByContract($contract["id"]),
-                            "Doanh thu" => $total_partial > 0 ? $total_partial : "",
+                            "Doanh thu" => $contract["id"],
                             "Số (*)" => $contract["rate_type"],
                             "Sale Hỗ trợ" => $user_support,
                             "Khách Hàng" => $customer["name"],
