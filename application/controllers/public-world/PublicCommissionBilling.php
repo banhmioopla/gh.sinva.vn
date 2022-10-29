@@ -51,7 +51,7 @@ class PublicCommissionBilling extends CI_Controller {
             "timeFrom" => $timeFrom,
             "timeTo" => $timeTo,
             "total_billing_amount" => $total_billing_amount,
-            "apartment_address_payment" => $this->convert_vi_to_en($apartment['address_street']),
+            "apartment_address_payment" => $this->convert_vi_to_en("quyết toán phí hoa hồng nhà " . $apartment['address_street']),
         ]);
         $this->load->view($this->public_dir.'components/footer');
 
