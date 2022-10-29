@@ -363,7 +363,7 @@ class PublicConsultingPost extends CI_Controller {
                                 "Hệ số" => (string)($final_rate*100),
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo),
-                                "Thu Nhập" => round($income,2)
+                                "Thu Nhập" => number_format(round($income,2), 0, ",",".")
                             ];
                         }
 
