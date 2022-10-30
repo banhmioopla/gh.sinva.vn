@@ -220,7 +220,8 @@ $route['admin/list-commission-billing'] = function($params = []) {
     return $controller.$action;
 };
 
-$route['admin/commission-billing/update-full-contract-partial'] = function($params = []) {
+$route['
+'] = function($params = []) {
     $controller = 'CommissionBilling';
     $action = '/updateFullContractPartial';
     return $controller.$action;
@@ -1344,12 +1345,6 @@ $route['admin/get-room-shaft'] = function($params = []) {
 $route['admin/ajax/create-consulting-post'] = function($params = []) {
     $controller = 'Image';
     $action = '/createConsultingPost';
-    return $controller.$action;
-};
-
-$route['public/consulting-post-detail'] = function($params = []) {
-    $controller = '/public-world/PublicConsultingPost';
-    $action = '/detailShow';
     return $controller.$action;
 };
 

@@ -28,44 +28,6 @@ class PublicConsultingPost extends CI_Controller {
 
     }
 
-    public function detailShow(){
-        $post_id = $this->input->get('id');
-        $this_post = $this->ghPublicConsultingPost->getFirstById($post_id);
-        $this_post_img = json_decode($this_post['image_set'], true);
-        $room = $this->ghRoom->getFirstById($this_post['room_id']);
-        $user = $this->ghUser->getFirstByAccountId($this_post['user_create_id']);
-        $apartment = null;
-        if($room) {
-            $apartment = $this->ghApartment->getFirstById($room['apartment_id']);
-        }
-
-        $list_img = [];
-        if($this_post_img && count($this_post_img)) {
-            foreach ($this_post_img as $img_id) {
-                $img_model = $this->ghImage->getFirstById($img_id);
-                if($img_model) {
-                    $list_img[] = $img_model;
-                }
-            }
-        }
-
-        $this->load->view($this->public_dir.'components/header', [
-            'title_page' => "Sinva Home - Dự Án ". $this_post['title'],
-            'post_title' => $this_post['title'],
-        ]);
-        $this->load->view($this->public_dir.'consulting-post/detail-show', [
-            'list_img' => $list_img,
-            'apartment' => $apartment,
-            'room' => $room,
-            'post' => $this_post,
-            'user' => $user,
-            'libBaseRoomType' => $this->libBaseRoomType
-        ]);
-        $this->load->view($this->public_dir.'components/footer');
-
-    }
-
-
     public function detailEditorial(){
         $post_id = $this->input->get('pid');
 
@@ -238,12 +200,12 @@ class PublicConsultingPost extends CI_Controller {
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
                             "Số tháng" => $contract["number_of_month"],
                             "Hoa hồng" => round($contract['commission_rate'],2),
-                            "Doanh số" => number_format($this->ghContract->getTotalSaleByContract($contract["id"]), 0, ',', '.'),
-                            "Doanh thu" => $total_partial > 0 ? number_format($total_partial, 0, ',', '.'): " ",
+                            "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByContract($contract["id"])),
+                            "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): " ",
                             "Số (*)" => $contract["rate_type"],
-                            "Sale Hỗ trợ" => $user_support,
-                            "Khách Hàng" => $customer["name"],
-                            "Phone" => $customer["phone"],
+                            "Sale Hỗ trợ" => $user_support ?? " ",
+                            "Khách Hàng" => $customer["name"] ?? " ",
+                            "Phone" => $customer["phone"] ?? " ",
                         ];
                     }
                     break;
@@ -293,9 +255,9 @@ class PublicConsultingPost extends CI_Controller {
                             "Giá thuê" => $contract["room_price"],
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
                             "Số tháng" => $contract["number_of_month"],
-                            "Hoa hồng" => round($contract['commission_rate'],2),
-                            "Doanh số" => number_format($this->ghContract->getTotalSaleByContract($contract["id"]), 0, ',', '.') ,
-                            "Doanh thu" => $total_partial > 0 ? number_format($total_partial, 0, ',', '.'): " ",
+                            "Hoa hồng" => $contract['commission_rate'] ? round($contract['commission_rate'],2) : " ",
+                            "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByContract($contract["id"])),
+                            "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): " ",
                             "Số (*)" => $contract["rate_type"],
                             "Sale Hỗ trợ" => $user_support,
                             "Khách Hàng" => $customer["name"],
@@ -362,8 +324,8 @@ class PublicConsultingPost extends CI_Controller {
                                 "Số (*)" => $rate_star,
                                 "Hệ số" => (string)($final_rate*100),
                                 "Số hợp đồng" => $count_contract,
-                                "Doanh số" => number_format($this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo), 0, ",","."),
-                                "Thu Nhập" => number_format(round($income,2), 0, ",",".")
+                                "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo)),
+                                "Thu Nhập" => $this->sheet_money_format(round($income,2))
                             ];
                         }
 
@@ -375,9 +337,14 @@ class PublicConsultingPost extends CI_Controller {
 
             }
 
-            echo json_encode($data); die;
+            echo json_encode(array_map("trim",$data)); die;
         }
         return false;
+    }
+
+    private function sheet_money_format($number){
+        return number_format($number, 2, ",", ".");
+
     }
 
 }
