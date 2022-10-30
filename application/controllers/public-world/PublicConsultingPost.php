@@ -15,6 +15,7 @@ class PublicConsultingPost extends CI_Controller {
         $this->load->model('ghPublicConsultingPost');
         $this->load->library('LibBaseRoomType', null, 'libBaseRoomType');
         $this->load->library('LibUser', null, 'libUser');
+        $this->load->library('LibDistrict', null, 'libDistrict');
         $this->public_dir = 'public-world/';
 
         $this->timeFrom = date("06-m-Y");
@@ -194,7 +195,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Team" => $team_name,
                             "ID" => $contract["id"],
                             "Sale Chốt" => $user["name"],
-                            "Dự án" =>$apm["address_street"] . ", Phường ". $apm["address_ward"],
+                            "Dự án" =>$apm["address_street"] . ", Phường ". $apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"])),
                             "Mã phòng" => $room["code"],
                             "Giá thuê" => $contract["room_price"],
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
@@ -247,10 +248,10 @@ class PublicConsultingPost extends CI_Controller {
                         $total_partial = $this->ghContractPartial->getTotalByContractId($contract['id']);
                         $data[] = [
                             "Source" => "GH",
-                            "Team" => $team_name,
+                            "Team" => $team_name ?? "-",
                             "ID" => $contract["id"],
                             "Sale Chốt" => $user["name"],
-                            "Dự án" =>$apm["address_street"] . ", Phường ". $apm["address_ward"],
+                            "Dự án" => $apm["address_street"] . ", Phường ". $apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"])),
                             "Mã phòng" => $room["code"],
                             "Giá thuê" => $contract["room_price"],
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
@@ -258,9 +259,9 @@ class PublicConsultingPost extends CI_Controller {
                             "Hoa hồng" => $contract['commission_rate'] ? round($contract['commission_rate'],2) : "-",
                             "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByContract($contract["id"])),
                             "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): "-",
-                            "Số (*)" => $contract["rate_type"],
-                            "Sale Hỗ trợ" => $user_support,
-                            "Khách Hàng" => $customer["name"],
+                            "Số (*)" => $contract["rate_type"] ?? "-",
+                            "Sale Hỗ trợ" => $user_support ?? "-",
+                            "Khách Hàng" => $customer["name"] ?? "-",
                             "Phone" => $customer["phone"] ?? "-",
                         ];
                     }
