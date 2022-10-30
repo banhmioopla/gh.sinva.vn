@@ -261,7 +261,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Số (*)" => $contract["rate_type"],
                             "Sale Hỗ trợ" => $user_support,
                             "Khách Hàng" => $customer["name"],
-                            "Phone" => $customer["phone"],
+                            "Phone" => $customer["phone"] ?? "-",
                         ];
                     }
                     break;
