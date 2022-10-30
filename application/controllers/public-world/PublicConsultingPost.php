@@ -201,11 +201,11 @@ class PublicConsultingPost extends CI_Controller {
                             "Số tháng" => $contract["number_of_month"],
                             "Hoa hồng" => round($contract['commission_rate'],2),
                             "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByContract($contract["id"])),
-                            "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): " ",
+                            "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): "-",
                             "Số (*)" => $contract["rate_type"],
-                            "Sale Hỗ trợ" => $user_support ?? " ",
-                            "Khách Hàng" => $customer["name"] ?? " ",
-                            "Phone" => $customer["phone"] ?? " ",
+                            "Sale Hỗ trợ" => $user_support ?? "-",
+                            "Khách Hàng" => $customer["name"] ?? "-",
+                            "Phone" => $customer["phone"] ?? "-",
                         ];
                     }
                     break;
@@ -255,9 +255,9 @@ class PublicConsultingPost extends CI_Controller {
                             "Giá thuê" => $contract["room_price"],
                             "Ngày ký" => date("d-m-Y", $contract["time_check_in"]),
                             "Số tháng" => $contract["number_of_month"],
-                            "Hoa hồng" => $contract['commission_rate'] ? round($contract['commission_rate'],2) : " ",
+                            "Hoa hồng" => $contract['commission_rate'] ? round($contract['commission_rate'],2) : "-",
                             "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByContract($contract["id"])),
-                            "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): " ",
+                            "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): "-",
                             "Số (*)" => $contract["rate_type"],
                             "Sale Hỗ trợ" => $user_support,
                             "Khách Hàng" => $customer["name"],
