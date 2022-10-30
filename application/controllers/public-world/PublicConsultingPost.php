@@ -337,7 +337,8 @@ class PublicConsultingPost extends CI_Controller {
 
             }
 
-            echo json_encode(array_map("trim",$data)); die;
+            array_walk_recursive($data, function(&$v) { $v = trim($v); });
+            echo json_encode($data); die;
         }
         return false;
     }
