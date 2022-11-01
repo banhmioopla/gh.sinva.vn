@@ -123,6 +123,12 @@
                                 $doc_type .= " Đã huỷ";
                             }
 
+                            $contract_total_sale = $this->ghContract->getTotalSaleByContract($contract['id']);
+                            $contract_total_partial = $this->ghContractPartial->getTotalByContractId($contract['id']);
+                            $txt_contract_total_sale = "<span>".number_format($contract_total_sale)."</span>";
+                            if($contract_total_sale <= $contract_total_partial){
+                                $txt_contract_total_sale = "<i class='mdi mdi-check-circle text-success'></i> <span class='text-success'>".number_format($contract_total_sale)."</span> <br> <small class='text-success'>thu đủ</small>";
+                            }
                             ?>
                                 <tr  class="text-center group-tr-apm_id-<?= $apartment["id"] ?>">
                                     <th scope="row">
@@ -138,7 +144,7 @@
                                     <td><?= date("d/m/Y",$contract['time_check_in']) ?></td>
                                     <td><?= $room["code"] ?></td>
                                     <td><?= number_format($contract["room_price"]) ?></td>
-                                    <td class="text-warning"><?= number_format($contract["room_price"]*$contract["commission_rate"]/100) ?></td>
+                                    <td class="text-warning"><a target="_blank" href="/admin/detail-contract?id=<?= $contract['id'] ?>"> <i class="mdi mdi-open-in-new"></i> </a> <?= $txt_contract_total_sale ?></td>
                                     <td><?= $contract["commission_rate"] ?>%</td>
                                     <td><?= $contract["number_of_month"] ?></td>
                                     <td style="max-width: 280px" class="text-left"><i><?= trim($contract["note"]) ?></i></td>
