@@ -130,12 +130,12 @@ class PublicConsultingPost extends CI_Controller {
                             $final_rate = $income_standard_rate;
                             if($rate_star >= 6){
                                 foreach ($list_contract as $con){
-                                    $income += $con['commission_rate']*$con['room_price']/100 * $income_standard_rate;
+                                    $income += $this->ghContractPartial->getTotalByContractId($con['id']) * $final_rate;
                                 }
                             } else {
                                 $final_rate = 1-$income_standard_rate;
                                 foreach ($list_contract as $con){
-                                    $income += $con['commission_rate']*$con['room_price']/100 * $final_rate;
+                                    $income += $this->ghContractPartial->getTotalByContractId($con['id']) * $final_rate;
                                 }
                             }
                             if($count_contract) {
@@ -304,14 +304,15 @@ class PublicConsultingPost extends CI_Controller {
                         $final_rate = $income_standard_rate;
                         if($rate_star >= 6){
                             foreach ($list_contract as $con){
-                                $income += $con['commission_rate']*$con['room_price']/100 * $income_standard_rate;
+                                $income += $this->ghContractPartial->getTotalByContractId($con['id']) * $final_rate;
                             }
                         } else {
                             $final_rate = 1-$income_standard_rate;
                             foreach ($list_contract as $con){
-                                $income += $con['commission_rate']*$con['room_price']/100 * $final_rate;
+                                $income += $this->ghContractPartial->getTotalByContractId($con['id']) * $final_rate;
                             }
                         }
+
                         if($count_contract) {
                             $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
                             $team_name = "";
