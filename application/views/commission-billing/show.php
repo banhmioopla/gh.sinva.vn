@@ -141,7 +141,7 @@
                                     <td class="text-warning"><?= number_format($contract["room_price"]*$contract["commission_rate"]/100) ?></td>
                                     <td><?= $contract["commission_rate"] ?>%</td>
                                     <td><?= $contract["number_of_month"] ?></td>
-                                    <td class="text-left"><?= trim($contract["note"]) ?></td>
+                                    <td style="max-width: 280px" class="text-left"><i><?= trim($contract["note"]) ?></i></td>
                                     <td><span class="badge badge-<?= $statusClass ?> font-weight-bold"><?=  $doc_type ?></span></td>
                                 </tr>
                             <?php $stt++; endforeach;?>
