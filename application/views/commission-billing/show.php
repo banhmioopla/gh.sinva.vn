@@ -54,13 +54,15 @@
                                 'status <>' => 'Cancel',
                                 "apartment_id" => $apartment['id'],
                             ]);
-                            $total_billing_amount = 0;
+
                             $total_partial_amount = 0;
+                            $total_sale_amount = 0;
                             foreach ($list_contract as $contract){
-                                $total_billing_amount += $contract["room_price"]*$contract["commission_rate"]/100;
+                                $total_sale_amount += $contract["room_price"]*$contract["commission_rate"]/100;
                                 $total_partial_amount += $this->ghContractPartial->getTotalByContractId($contract['id']);
                             }
                             $stt = 1;
+                            $total_billing_amount = $total_sale_amount - $total_partial_amount;
                             ?>
                             <tr scope="row " class="mt-3">
                                 <td colspan="15" >
@@ -80,8 +82,10 @@
                                     </div>
 
 
-                                    <div class="ml-3">Tổng thanh toán: <span ><?= number_format($total_billing_amount) ?></span></div>
+
+                                    <div class="ml-3" >Tổng doanh số: <span ><?= number_format($total_sale_amount) ?></span></div>
                                     <div class="ml-3" id="total-partial-amount-<?= $apartment["id"] ?>" >Tổng doanh thu: <span ><?= number_format($total_partial_amount) ?></span></div>
+                                    <div class="ml-3">Tổng thanh toán: <span ><?= number_format($total_billing_amount) ?></span></div>
 
                                 </td>
 <!--                                <td colspan="2">--><?//= $public_url[$apartment['id']] ?><!--</td>-->
@@ -125,7 +129,7 @@
 
                             $contract_total_sale = $this->ghContract->getTotalSaleByContract($contract['id']);
                             $contract_total_partial = $this->ghContractPartial->getTotalByContractId($contract['id']);
-                            $txt_contract_total_sale = "<span>".number_format($contract_total_sale)."</span>";
+                            $txt_contract_total_sale = "<span>".number_format($contract_total_sale-$contract_total_partial)."</span>";
                             if($contract_total_sale <= $contract_total_partial){
                                 $txt_contract_total_sale = "<i class='mdi mdi-check-circle text-success'></i> <span class='text-success'>".number_format($contract_total_sale)."</span> <br> <small class='text-success'>thu đủ</small>";
                             }
