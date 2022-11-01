@@ -44,17 +44,6 @@
                 <div class="card-box">
                     <h4 class="font-weight-bold text-danger">THÔNG TIN PHIẾU THU (<?= $timeFrom ?> đến <?= $timeTo ?>)</h4>
                     <table class="table table-dark">
-                        <thead>
-                        <tr>
-                            <th class="text-center">STT</th>
-                            <th class="text-center">Ngày cọc</th>
-                            <th class="text-center">Mã Phòng</th>
-                            <th class="text-center">Giá Phòng</th>
-                            <th class="text-center">Số tiền phải thanh toán</th>
-                            <th class="text-center">Hoa Hồng</th>
-                            <th class="text-center">Số Tháng</th>
-                        </tr>
-                        </thead>
                         <tbody>
                         <?php
 
@@ -73,12 +62,15 @@
                             }
                             $stt = 1;
                             ?>
-                            <tr scope="row" class="mt-3">
-                                <td colspan="12" >
+                            <tr scope="row " class="mt-3">
+                                <td colspan="15" >
                                     <h3 class="ml-3"><?= $apartment["address_street"] .", phường " .$apartment["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apartment["district_code"]))  ?> </h3>
 
                                     <div class="ml-3 text-warning">
-                                        <a target="_blank" href="<?= $public_url[$apartment['id']] ?>"> <i class="mdi mdi-link"></i> Link gửi đối tác </a>
+                                        <a target="_blank"
+                                           id="billing-public-url-<?= $apartment["id"] ?>"
+                                           data-public_url_origin="<?= $public_url[$apartment['id']] ?>"
+                                           href="<?= $public_url[$apartment['id']] ?>"> <i class="mdi mdi-link"></i> Link gửi đối tác </a>
                                         <a href="javascript:void(0)"
                                            data-apartment_id="<?= $apartment["id"] ?>"
                                            data-time_from="<?= $timeFrom ?>"
@@ -94,19 +86,61 @@
                                 </td>
 <!--                                <td colspan="2">--><?//= $public_url[$apartment['id']] ?><!--</td>-->
                             </tr>
+                            <tr>
+                                <th class="text-center">Chọn</th>
+                                <th class="text-center">STT</th>
+                                <th class="text-center">Ngày cọc</th>
+                                <th class="text-center">Ngày ký</th>
+                                <th class="text-center">Mã Phòng</th>
+                                <th class="text-center">Giá Phòng</th>
+                                <th class="text-center">Số tiền phải thanh toán</th>
+                                <th class="text-center">Hoa Hồng</th>
+                                <th class="text-center">Số Tháng</th>
+                                <th class="text-center">Trạng Thái</th>
+                            </tr>
                             <?php foreach ($list_contract as $contract):
                             $room = $this->ghRoom->getFirstById($contract['room_id']);
+                            $statusClass = 'muted'; $doc_type = "Cọc ";
+                            if($contract['status'] == 'Active') {
+                                $statusClass = 'success';
+                            }
+                            if($contract['status'] == 'Pending') {
+                                $statusClass = 'warning';
+                                $doc_type .= " Chờ duyệt";
+                            }
 
+                            if(time() >= $contract["time_check_in"]){
+                                $doc_type = "HĐ đã ký ";
+                            }
+                            if(time() >= $contract["time_expire"]){
+                                $doc_type = "HĐ hết hạn ";
+                                $statusClass = 'secondary';
+                            }
+
+                            if($contract['status'] == 'Cancel') {
+                                $statusClass = 'warning';
+                                $doc_type .= " Đã huỷ";
+                            }
 
                             ?>
-                                <tr  class="text-center">
-                                    <th scope="row"><?= $stt ?></th>
+                                <tr  class="text-center group-tr-apm_id-<?= $apartment["id"] ?>">
+                                    <th scope="row">
+                                        <div class="checkbox checkbox-warning checkbox-single">
+                                            <input type="checkbox"
+                                                   data-contract_id="<?= $contract['id'] ?>"
+                                                   data-apm_id="<?= $apartment["id"] ?>" class="billing-check-box" value="<?= $contract['id'] ?>">
+                                            <label></label>
+                                        </div>
+                                    </th>
+                                    <td scope="row"><?= $stt ?></td>
                                     <td><?= date("d/m/Y",$contract['time_insert']) ?></td>
+                                    <td><?= date("d/m/Y",$contract['time_check_in']) ?></td>
                                     <td><?= $room["code"] ?></td>
                                     <td><?= number_format($contract["room_price"]) ?></td>
                                     <td class="text-warning"><?= number_format($contract["room_price"]*$contract["commission_rate"]/100) ?></td>
                                     <td><?= $contract["commission_rate"] ?>%</td>
                                     <td><?= $contract["number_of_month"] ?></td>
+                                    <td><span class="badge badge-<?= $statusClass ?> font-weight-bold"><?=  $doc_type ?></span></td>
                                 </tr>
                             <?php $stt++; endforeach;?>
                         <?php endforeach;?>
@@ -142,6 +176,29 @@
                        }
                    }
                });
+            });
+
+            $('.billing-check-box').click(function () {
+                let _this = $(this);
+                let apm_id = _this.data("apm_id");
+                let arr_contract_id = [];
+                let public_url = $('#billing-public-url-'+apm_id).attr("href");
+                let public_url_origin = $('#billing-public-url-'+apm_id).data("public_url_origin");
+
+                let arr_billing_checked = $('.group-tr-apm_id-'+apm_id+' .billing-check-box');
+                arr_billing_checked.each(function () {
+                    let _bill_checked = $(this).is(":checked");
+                    if(_bill_checked === true){
+                        arr_contract_id.push($(this).data("contract_id"));
+                    }
+                    $(this).is(":checked");
+                });
+
+
+                public_url = public_url_origin +arr_contract_id.join(",");
+                $('#billing-public-url-'+apm_id).attr("href", public_url);
+
+                console.log("new url", $('#billing-public-url-'+apm_id).attr("href"));
             });
         });
     });

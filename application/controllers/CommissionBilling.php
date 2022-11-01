@@ -35,7 +35,7 @@ class CommissionBilling extends CustomBaseStep
                 $apartment = $this->ghApartment->getFirstById($contract["apartment_id"]);
                 if($apartment){
                     $list_apartment[] = $apartment;
-                    $public_url[$contract["apartment_id"]] = "/sinva/commission-billing/detail?cbid=".$contract["apartment_id"]."&fromDate=".$timeFrom."&toDate=".$timeTo;
+                    $public_url[$contract["apartment_id"]] = "/sinva/commission-billing/detail?cbid=".$contract["apartment_id"]."&fromDate=".$timeFrom."&toDate=".$timeTo."&listContract=";
                 }
             }
         }

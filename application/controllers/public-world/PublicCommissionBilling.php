@@ -28,13 +28,30 @@ class PublicCommissionBilling extends CI_Controller {
         $apm_id = $this->input->get("cbid");
         $timeFrom = $this->input->get("fromDate");
         $timeTo = $this->input->get("toDate");
+        $list_contract_checked = $this->input->get("listContract");
+        $total_billing_amount = 0;
+        $arr_contract_id_checked = [];
+
         $list_contract = $this->ghContract->get([
             'time_check_in >=' => strtotime($timeFrom),
             'time_check_in <=' => strtotime($timeTo)+86399,
             'apartment_id' => $apm_id,
             'status <>' => 'Cancel'
         ]);
-        $total_billing_amount = 0;
+
+        if(!empty($list_contract_checked)){
+            $arr_contract_id_checked = explode(",",$list_contract_checked);
+            if(count($arr_contract_id_checked)){
+                $list_contract = [];
+                foreach ($arr_contract_id_checked as $contract_id){
+                    $checker_con = $this->ghContract->getFirstById($contract_id);
+                    if($checker_con){
+                        $list_contract[] = $checker_con;
+                    }
+                }
+            }
+        }
+
         foreach ($list_contract as $contract){
             $total_billing_amount += $contract["room_price"]*$contract["commission_rate"]/100;
         }
