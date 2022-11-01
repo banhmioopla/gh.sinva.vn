@@ -43,7 +43,7 @@
             <div class="col-lg-12">
                 <div class="card-box">
                     <h4 class="font-weight-bold text-danger">THÔNG TIN PHIẾU THU (<?= $timeFrom ?> đến <?= $timeTo ?>)</h4>
-                    <table class="table table-dark">
+                    <table class="table table-dark table-hover">
                         <tbody>
                         <?php
 
@@ -96,6 +96,7 @@
                                 <th class="text-center">Số tiền phải thanh toán</th>
                                 <th class="text-center">Hoa Hồng</th>
                                 <th class="text-center">Số Tháng</th>
+                                <th class="text-left">Ghi Chú</th>
                                 <th class="text-center">Trạng Thái</th>
                             </tr>
                             <?php foreach ($list_contract as $contract):
@@ -140,6 +141,7 @@
                                     <td class="text-warning"><?= number_format($contract["room_price"]*$contract["commission_rate"]/100) ?></td>
                                     <td><?= $contract["commission_rate"] ?>%</td>
                                     <td><?= $contract["number_of_month"] ?></td>
+                                    <td class="text-left"><?= trim($contract["note"]) ?></td>
                                     <td><span class="badge badge-<?= $statusClass ?> font-weight-bold"><?=  $doc_type ?></span></td>
                                 </tr>
                             <?php $stt++; endforeach;?>
