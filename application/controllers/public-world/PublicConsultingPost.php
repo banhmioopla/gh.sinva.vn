@@ -246,6 +246,10 @@ class PublicConsultingPost extends CI_Controller {
                             }
                         }
                         $total_partial = $this->ghContractPartial->getTotalByContractId($contract['id']);
+                        $user_collected_id = "-";
+                        if($apm['user_collected_id'] == $user['account_id']){
+                            $user_collected_id = "YES";
+                        }
                         $data[] = [
                             "Source" => "GH",
                             "Team" => $team_name ?? "-",
@@ -261,6 +265,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): "-",
                             "Số (*)" => $contract["rate_type"] ?? "-",
                             "Sale Hỗ trợ" => $user_support ?? "-",
+                            "Người Lấy Dự Án" => $user_collected_id,
                             "Khách Hàng" => $customer["name"] ?? "-",
                             "Phone" => $customer["phone"] ?? "-",
                         ];
@@ -316,6 +321,11 @@ class PublicConsultingPost extends CI_Controller {
                                     $team_name = $team['name'];
                                 }
                             }
+                            $total_partial = 0;
+                            foreach ($list_contract as $con){
+                                $total_partial += $this->ghContractPartial->getTotalByContractId($con['id']);
+                            }
+
                             $data[] = [
                                 "Source" => "GH",
                                 "Team" => $team_name,
@@ -326,6 +336,7 @@ class PublicConsultingPost extends CI_Controller {
                                 "Hệ số" => (string)($final_rate*100),
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo)),
+                                "Doanh thu" => $this->sheet_money_format($total_partial),
                                 "Thu Nhập" => $this->sheet_money_format(round($income,2))
                             ];
                         }
@@ -345,6 +356,9 @@ class PublicConsultingPost extends CI_Controller {
     }
 
     private function sheet_money_format($number){
+        if(empty($number)){
+            return "-";
+        }
         return number_format($number, 2, ",", ".");
 
     }
