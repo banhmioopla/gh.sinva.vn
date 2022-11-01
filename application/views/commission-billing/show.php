@@ -141,7 +141,10 @@
                                 foreach ($list_partial as $p){
                                     $list_partial_arr []= number_format($p['amount']);
                                 }
-                                $list_partial_txt = "<div class='text-success'>(".implode(" + ", $list_partial_arr) .")</div>";
+                                if(count($list_partial_arr)){
+                                    $list_partial_txt = "<div class='text-success'>(".implode(" + ", $list_partial_arr) .")</div>";
+                                }
+
                             }
 
                             ?>
