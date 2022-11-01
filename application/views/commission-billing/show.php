@@ -80,8 +80,8 @@
                                     </div>
 
 
-                                    <div class="ml-3 text-warning">Tổng thanh toán: <span ><?= number_format($total_billing_amount) ?></span></div>
-                                    <div class="ml-3 text-warning" id="total-partial-amount-<?= $apartment["id"] ?>" >Tổng doanh thu: <span ><?= number_format($total_partial_amount) ?></span></div>
+                                    <div class="ml-3">Tổng thanh toán: <span ><?= number_format($total_billing_amount) ?></span></div>
+                                    <div class="ml-3" id="total-partial-amount-<?= $apartment["id"] ?>" >Tổng doanh thu: <span ><?= number_format($total_partial_amount) ?></span></div>
 
                                 </td>
 <!--                                <td colspan="2">--><?//= $public_url[$apartment['id']] ?><!--</td>-->
