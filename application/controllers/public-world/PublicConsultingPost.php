@@ -101,7 +101,7 @@ class PublicConsultingPost extends CI_Controller {
                         foreach ($list_user as $user) {
                             $count_contract = $income = 0;
                             $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
-                            $team_name = "";
+                            $team_name = "-";
                             if(!empty($teamUser)){
                                 $team = $this->ghTeam->getFirstById($teamUser['team_id']);
                                 if(!empty($team)){
@@ -182,7 +182,7 @@ class PublicConsultingPost extends CI_Controller {
                             $status = "Đã ký";
                         }
                         $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
-                        $team_name = "";
+                        $team_name = "-";
                         if(!empty($teamUser)){
                             $team = $this->ghTeam->getFirstById($teamUser['team_id']);
                             if(!empty($team)){
@@ -238,7 +238,7 @@ class PublicConsultingPost extends CI_Controller {
                             $status = "Đã ký";
                         }
                         $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
-                        $team_name = "";
+                        $team_name = "-";
                         if(!empty($teamUser)){
                             $team = $this->ghTeam->getFirstById($teamUser['team_id']);
                             if(!empty($team)){
@@ -315,7 +315,7 @@ class PublicConsultingPost extends CI_Controller {
 
                         if($count_contract) {
                             $teamUser = $this->ghTeamUser->getFirstByUserId($user["account_id"]);
-                            $team_name = "";
+                            $team_name = "-";
                             if(!empty($teamUser)){
                                 $team = $this->ghTeam->getFirstById($teamUser['team_id']);
                                 if(!empty($team)){
