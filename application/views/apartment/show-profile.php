@@ -90,7 +90,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                                     <a  href="<?= '/admin/list-apartment?district-code='.$this->session->userdata('current_district_code') ?>"><button type="button" class="btn btn-secondary m-1"><i class="mdi mdi-arrow-left-bold-circle"></i> Back</button></a>
                                 <?php endif; ?>
                                 <?php if($check_create_promotion): ?>
-                                    <a class="" href="/admin/list-apartment-promotion?apartment-id=290">
+                                    <a class="" href="/admin/list-apartment-promotion?apartment-id=<?= $apartment['id'] ?>">
                                         <button class="btn btn-primary m-1"><i class="mdi mdi-gift"></i></button></a>
                                 <?php endif; ?>
                                 <?php if($check_consultant_booking): ?>

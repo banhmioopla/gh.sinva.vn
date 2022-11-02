@@ -10,7 +10,6 @@
         <title>GH [demo] - Giỏ Hàng Mới Sinva</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta content="Giỏ hàng Sinva - Web quản lý căn hộ tuyệt vời thấy mẹ luôn nha, quản lý Căn hộ, Khách hàng, +100 điểm nha" name="description" />
-        <meta content="Chào Việt Nam, tôi là Quốc Bình, quê ở Long An" name="Quốc.Bình" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         <!-- App favicon -->

@@ -261,8 +261,8 @@
                                            value="">
                                 </div>
                                 <div class="form-group">
-                                    <strong class="text-primary">Hoa Hồng 9 Tháng</strong> <span class="text-danger">*</span>
-                                    <input type="text" class="form-control" required
+                                    <strong class="text-primary">Hoa Hồng 9 Tháng</strong>
+                                    <input type="text" class="form-control"
                                            name="commission_rate_9m"
                                            value="">
                                 </div>
