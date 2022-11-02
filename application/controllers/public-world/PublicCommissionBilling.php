@@ -51,10 +51,12 @@ class PublicCommissionBilling extends CI_Controller {
                 }
             }
         }
-
+        $total_partial_amount = $total_sale_amount = 0;
         foreach ($list_contract as $contract){
-            $total_billing_amount += $contract["room_price"]*$contract["commission_rate"]/100;
+            $total_sale_amount += $contract["room_price"]*$contract["commission_rate"]/100;
+            $total_partial_amount += $this->ghContractPartial->getTotalByContractId($contract['id']);
         }
+        $total_billing_amount = $total_sale_amount - $total_partial_amount;
         /*--- Load View ---*/
         $apartment = $this->ghApartment->getFirstById($apm_id);
         $this->load->view($this->public_dir.'components/header', [

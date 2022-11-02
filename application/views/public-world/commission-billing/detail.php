@@ -69,8 +69,25 @@
                             ?>
 
                             <?php foreach ($list_contract as $contract):
-                            $room = $this->ghRoom->getFirstById($contract['room_id']);
+                                $room = $this->ghRoom->getFirstById($contract['room_id']);
+                                $contract_total_sale = $this->ghContract->getTotalSaleByContract($contract['id']);
+                                $contract_total_partial = $this->ghContractPartial->getTotalByContractId($contract['id']);
+                                $txt_contract_total_sale = "<span>".number_format($contract_total_sale-$contract_total_partial)."</span>";
+                                $list_partial_arr = []; $list_partial_txt = "";
 
+                                if($contract_total_sale <= $contract_total_partial){
+                                    $txt_contract_total_sale = "<i class='mdi mdi-check-circle text-success'></i> <span class='text-success'>".number_format($contract_total_sale)."</span> <br> <small class='text-success'>thu đủ</small>";
+                                } else {
+                                    $list_partial = $this->ghContractPartial->get(['contract_id' => $contract['id']]);
+
+                                    foreach ($list_partial as $p){
+                                        $list_partial_arr []= number_format($p['amount']);
+                                    }
+                                    if(count($list_partial_arr)){
+                                        $list_partial_txt = "<div class='text-success'>(".implode(" + ", $list_partial_arr) .")</div>";
+                                    }
+
+                                }
 
                             ?>
                             <tr  class="text-center">
@@ -78,7 +95,7 @@
                                 <td><?= date("d/m/Y",$contract['time_insert']) ?></td>
                                 <td><?= $room["code"] ?></td>
                                 <td><?= number_format($contract["room_price"]) ?></td>
-                                <td class="text-warning"><?= number_format($contract["room_price"]*$contract["commission_rate"]/100) ?></td>
+                                <td class="text-warning"><?= $txt_contract_total_sale ?></td>
                                 <td><?= $contract["commission_rate"] ?></td>
                                 <td><?= $contract["number_of_month"] ?></td>
                             </tr>
