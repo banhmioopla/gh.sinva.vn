@@ -176,7 +176,25 @@ class GhContract extends CI_Model {
         ]);
         $total = 0;
 	    foreach ($list_con as $con){
-            $total += $this->getTotalSaleByContract($con['id']);
+            $total += $con['rate_type'] * $this->getTotalSaleByContract($con['id']);
+        }
+
+        $list_contract_supporter = $this->ghContract->get([
+            'time_check_in >=' => strtotime($from_date),
+            'time_check_in <=' => strtotime($to_date)+86399,
+            'arr_supporter_id <>' => null,
+            'status' => "Active"
+        ]);
+
+        foreach ($list_contract_supporter as $con) {
+            if(!empty($con["arr_supporter_id"])){
+                $arr = json_decode($con["arr_supporter_id"], true);
+                if(in_array($account_id, $arr)){
+                    if($con['rate_type'] < 1){
+                        $total += (1- $con['rate_type']) * $this->getTotalSaleByContract($con['id']);
+                    }
+                }
+            }
         }
 
         return $total;
