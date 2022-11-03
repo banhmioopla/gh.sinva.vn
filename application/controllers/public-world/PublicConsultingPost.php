@@ -323,7 +323,7 @@ class PublicConsultingPost extends CI_Controller {
 
                             foreach ($list_contract as $con){
                                 $partial_amount_consultant += $con['rate_type'] * $this->ghContractPartial->getTotalByContractId($con['id']);
-                                $total_sale += $con['rate_type'] * $this->ghContract->getTotalByContractId($con['id']);
+                                $total_sale += $con['rate_type'] * $this->ghContract->getTotalSaleByContract($con['id']);
                             }
 
                             $final_rate = $income_standard_rate;
