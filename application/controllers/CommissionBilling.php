@@ -15,6 +15,13 @@ class CommissionBilling extends CustomBaseStep
         $timeFrom = $this->input->get("timeFrom");
         $timeTo = $this->input->get("timeTo");
 
+        $metric = [
+            'total_partial_amount' => 0,
+            'total_sale_amount' => 0,
+            'total_billing_amount' => 0,
+            'contract_count' => 0,
+        ];
+
         if(empty($timeFrom)){
             $timeFrom = $this->timeFrom;
         }
@@ -28,6 +35,7 @@ class CommissionBilling extends CustomBaseStep
             'time_check_in <=' => strtotime($timeTo)+86399,
             'status <>' => 'Cancel'
         ]);
+        $metric['contract_count'] = count($list_contract);
 
         foreach ($list_contract as $contract) {
             if(!in_array($contract["apartment_id"],$arr_apm_id)){
@@ -38,7 +46,12 @@ class CommissionBilling extends CustomBaseStep
                     $public_url[$contract["apartment_id"]] = "/sinva/commission-billing/detail?cbid=".$contract["apartment_id"]."&fromDate=".$timeFrom."&toDate=".$timeTo."&listContract=";
                 }
             }
+            $metric['total_sale_amount'] += $contract["room_price"]*$contract["commission_rate"]/100;
+            $metric['total_partial_amount'] += $this->ghContractPartial->getTotalByContractId($contract['id']);
+
         }
+
+        $metric['total_billing_amount'] = $metric['total_sale_amount'] - $metric['total_partial_amount'];
 
         /*--- Load View ---*/
         $this->load->view('components/header');
@@ -47,6 +60,7 @@ class CommissionBilling extends CustomBaseStep
             "public_url" => $public_url,
             "timeFrom" => $timeFrom,
             "timeTo" => $timeTo,
+            "metric" => $metric
         ]);
         $this->load->view('components/footer');
     }

@@ -40,6 +40,47 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-paypal float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Hợp đồng</h6>
+                    <h2 class="m-b-20">
+                        <span data-plugin="counterup"><?= $metric['contract_count'] ?></span>
+                    </h2>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-paypal float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Doanh số</h6>
+                    <h2 class="m-b-20">
+                        <span data-plugin="counterup"><?= number_format($metric['total_sale_amount']) ?></span>
+                    </h2>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-paypal float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Doanh thu</h6>
+                    <h2 class="m-b-20">
+                        <span data-plugin="counterup"><?= number_format($metric['total_partial_amount']) ?></span>
+                    </h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-paypal float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Cần thu</h6>
+                    <h2 class="m-b-20">
+                        <span data-plugin="counterup"><?= number_format($metric['total_billing_amount']) ?></span>
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <div class="card-box">
                     <h4 class="font-weight-bold text-danger">THÔNG TIN PHIẾU THU (<?= $timeFrom ?> đến <?= $timeTo ?>)</h4>
