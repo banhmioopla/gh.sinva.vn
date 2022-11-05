@@ -200,7 +200,7 @@ if(time() >= $contract["time_expire"]){
                         <tr>
                             <td class="text-right"><strong>Số điện thoại <strong></td>
                             <td>
-                                <div><?= $customer['phone'] ?></div>
+                                <div><?= $this->libCustomer->getPhoneById($customer['id']) ?></div>
                             </td>
                         </tr>
                         <tr>

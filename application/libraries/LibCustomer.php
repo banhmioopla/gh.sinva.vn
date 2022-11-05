@@ -6,6 +6,9 @@ class LibCustomer {
     public function __construct () {
         $this->CI =& get_instance();
         $this->CI->load->model('ghCustomer');
+        $this->CI->load->library('session');
+        $auth = $this->CI->session->userdata('auth');
+        $this->list_customer_arr_id = $this->CI->ghCustomer->getCustomerOfConsultant($auth['account_id'])["arr_id"];
     }
 
     public function getNameById($id){
@@ -15,6 +18,10 @@ class LibCustomer {
         return $name;
     }
     public function getPhoneById($id){
+        if(!in_array($id, $this->list_customer_arr_id)){
+            return "[đã ẩn sđt]";
+        }
+
         $customer = $this->CI->ghCustomer->getById($id);
 
         $phone = $customer ? $customer[0]['phone'] : '';

@@ -179,7 +179,7 @@
                             <th scope="row"><?= $customer['id'] ?></th>
                             <td>
                                 <div><?= $customer['name'] ?></div>
-                                <div> <small><?= $customer['phone'] ?></small></div>
+                                <div> <small><?= $this->libCustomer->getPhoneById($customer['id']) ?></small></div>
                             </td>
                             <td class="text-right"><?= count($customer_list_contract) ?></td>
                         </tr>
