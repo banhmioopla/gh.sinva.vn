@@ -87,8 +87,6 @@
                                 'time_check_in <=' => strtotime($timeTo)+86399,
                                 'consultant_id' => $user["account_id"]
                             ]);
-                            if(count($user_list_contract) == 0 ) continue;
-
                             ?>
                             <tr class="border border-warning mt-2">
                                 <td colspan="3"><h4><?= $user["name"] ?></h4> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> <?= $this->ghContract->getTotalRateStar($user["account_id"], $timeFrom, $timeTo) ?></span></td>
