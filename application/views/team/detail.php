@@ -59,57 +59,150 @@
                     </form>
                 </div>
             </div>
-            <div class="col-12 col-md-7">
+            <div class="col-12">
                 <div class="card-box table-responsive">
-                    <h3 class="text-danger font-weight-bold">Danh Sách Thành Viên</h3>
-                    <table id="table-member" class="table table-hover table-bordered">
+                    <h3 class="text-danger font-weight-bold"><?= $team['name'] ?> | Danh Sách Hợp Đồng</h3>
+                    <table class="table-contract  table table-dark table-bordered">
                         <thead>
-                        <tr >
-                            <th>Tên Thành Viên</th>
-                            <th class="text-center">Hợp đồng  <br> <small>Click để xem chi tiết</small></th>
-                            <th class="text-right">Doanh Số <br> <small>(x1000)</small></th>
-                            <th>Tùy Chọn</th>
+                        <tr>
+                            <th>#</th>
+                            <th width="350px">Khách thuê</th>
+                            <th class="text-right">Giá thuê <small>x1000</small></th>
+                            <th class="text-right">Giá cọc <small>x1000</small></th>
+                            <th class="text-right"> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> </span></th>
+
+                            <th>Ngày ký</th>
+                            <th>Ngày hết hạn</th>
+                            <th class="text-center">Thời hạn</th>
+                            <th class="text-center" width="100px">Trạng Thái</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($list_member as $row ):
-                            $contract = $ghContract->get([
-                                'consultant_id' => $row['user_id'],
-                                'time_check_in >= ' => strtotime($timeFrom),
-                                'time_check_in <= ' => strtotime($timeTo) + 86399,
-                                'status <>' => 'Cancel'
+                        <?php foreach ($list_member as $member): ?>
+                            <?php
+                            $user = $this->ghUser->getFirstByAccountId($member['user_id']);
+                            $user_list_contract = $this->ghContract->get([
+                                'status <>' => 'Cancel',
+                                'time_check_in >=' => strtotime($timeFrom),
+                                'time_check_in <=' => strtotime($timeTo)+86399,
+                                'consultant_id' => $user["account_id"]
                             ]);
-
-                            $total = $ghContract->getTotalSaleByConsultant($row['user_id'], $timeFrom, $timeTo);
+                            if(count($user_list_contract) == 0 ) continue;
 
                             ?>
-                            <tr>
-                                <td>
-                                    <div class="team-name"
-                                         data-pk="<?= $row['id'] ?>"
-                                         data-name="name">
-                                        <?= $libUser->getNameByAccountid($row['user_id']) . ' <br> <small>(' . $row['user_id'] . ')</small>'?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <ul>
-                                        <?php foreach ($contract as $item):
-                                            $room = $this->ghRoom->getFirstById($item['room_id']);
-                                            $apm = $this->ghApartment->getFirstById($item['apartment_id']);
-                                            ?>
-                                            <li><a href="/admin/detail-contract?id=<?= $item['id'] ?>"
-                                                   target="_blank">  <?= $apm['address_street'] ." <strong>({$room['code']})</strong>  Ký ngày " . date('d/m/Y',$item['time_check_in']) ?></a></li>
-                                        <?php endforeach;?>
-
-                                    </ul>
-                                </td>
-                                <td class="text-right"><?= number_format($total/1000) ?></td>
-                                <td>
-                                    <button type="button"
-                                            data-member-id="<?= $row['user_id'] ?>"
-                                            class="btn btn-sm delete-member btn-icon waves-effect waves-light btn-danger"> <i class="fa fa-trash"></i> </button>
-                                </td>
+                            <tr class="border border-warning mt-2">
+                                <td colspan="3"><h4><?= $user["name"] ?></h4> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> <?= $this->ghContract->getTotalRateStar($user["account_id"], $timeFrom, $timeTo) ?></span></td>
+                                <td colspan="10"> <?= count($user_list_contract) ?> hợp đồng </td>
                             </tr>
+                            <?php foreach($user_list_contract as $row ): ?>
+                                <?php
+                                $service = json_decode($row['service_set'], true);
+                                $partial_amount = 0;
+                                $list_partial = $this->ghContractPartial->get(['contract_id' => $row['id']]);
+                                foreach ($list_partial as $item) {
+                                    $partial_amount += $item['amount'];
+                                }
+
+                                ?>
+                                <tr>
+                                    <td class="text-right">
+                                        <a target = '_blank'
+                                           href="/admin/detail-contract?id=<?= $row['id']
+                                           ?>">#<?= (10000 + $row['id']) ?></a>
+                                    </td>
+                                    <td>
+                                        <div><?= $this->libCustomer->getNameById($row['customer_id']).' - '. $this->libCustomer->getPhoneById($row['customer_id']) ?> </div>
+                                        <div class="font-weight-bold text-warning"> <i class=" dripicons-home"></i>
+                                            <?php
+                                            $apartment = $this->ghApartment->get(['id' => $row['apartment_id']]);
+                                            $room = $this->ghRoom->get(['id' => $row['room_id']]);
+                                            $room = $room ? $room[0]:null;
+                                            ?>
+                                            <?= $apartment ? $apartment[0]['address_street']:'' ?> <?= $room ? "(" . $room['code']. ")" : '[không có mp]' ?>
+                                        </div>
+                                        <?php
+                                        $supporter = [];
+                                        if(!empty($row['arr_supporter_id'])){
+                                            $list_supporter = json_decode($row['arr_supporter_id'], true);
+                                            foreach ($list_supporter as $item){
+                                                $supporter [] = $libUser->getNameByAccountid($item);
+                                            }
+                                        }
+
+                                        ?>
+
+                                        <?php if(count($supporter)): ?>
+                                            <div class=" text-light text-right font-weight-bold">
+                                                (H.trợ: <?= implode(", ",$supporter) ?>)
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="contract-room_price text-warning font-weight-bold"
+                                             data-pk="<?= $row['id'] ?>"
+                                             data-value="<?= $row['room_price'] ?>"
+                                             data-name="room_price">
+                                            <?= number_format($row['room_price']/1000) ?>
+                                        </div>
+                                    </td>
+                                    <td class="font-weight-bold text-right"><?= number_format($row['deposit_price']/1000) ?></td>
+                                    <td class="font-weight-bold text-center"> <?= (float) $row['rate_type'] ?></td>
+                                    <td>
+                                        <div class="contract-time_check_in text-warning"
+                                             data-pk="<?= $row['id'] ?>"
+                                             data-value="<?= date('d/m/Y',$row['time_check_in']) ?>"
+                                             data-name="time_check_in">
+                                            <?=$row['time_check_in'] ? date('d/m/Y',$row['time_check_in']):'-' ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="contract-time_expire text-warning"
+                                             data-pk="<?= $row['id'] ?>"
+                                             data-value="<?= date('d/m/Y',$row['time_expire']) ?>"
+                                             data-name="time_expire">
+                                            <?=$row['time_expire'] ? date('d/m/Y',$row['time_expire']):'-' ?>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="contract-number_of_month text-warning"
+                                             data-pk="<?= $row['id'] ?>"
+                                             data-value="<?= $row['number_of_month'] ?>"
+                                             data-name="number_of_month">
+                                            <?=$row['number_of_month'] ?>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div>
+                                            <?php
+                                            $statusClass = 'muted'; $doc_type = "Cọc ";
+                                            if($row['status'] == 'Active') {
+                                                $statusClass = 'success';
+                                            }
+                                            if($row['status'] == 'Pending') {
+                                                $statusClass = 'warning';
+                                                $doc_type .= " Chờ duyệt";
+                                            }
+
+                                            if(time() >= $row["time_check_in"]){
+                                                $doc_type = "HĐ đã ký ";
+                                            }
+                                            if(time() >= $row["time_expire"]){
+                                                $doc_type = "HĐ hết hạn ";
+                                                $statusClass = 'secondary';
+                                            }
+
+                                            if($row['status'] == 'Cancel') {
+                                                $statusClass = 'warning';
+                                                $doc_type .= " Đã huỷ";
+                                            }
+                                            ?>
+                                            <span class="badge badge-<?= $statusClass ?> font-weight-bold"><?=  $doc_type ?></span>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
                         <?php endforeach; ?>
                         </tbody>
                     </table>

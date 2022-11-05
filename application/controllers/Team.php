@@ -10,8 +10,10 @@ class Team extends CustomBaseStep {
 		$this->load->model('ghTeamUser');
 		$this->load->model('ghContract');
 		$this->load->model('ghConsultantBooking');
+		$this->load->model('ghContractPartial');
         $this->load->library('LibUser', null, 'libUser');
         $this->load->library('LibTime', null, 'libTime');
+        $this->load->library('LibCustomer', null, 'libCustomer');
 	}
 
 	public function show(){
