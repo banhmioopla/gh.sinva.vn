@@ -10,12 +10,14 @@ if(isYourPermission($this->current_controller, 'isCollapse', $this->permission_s
 $metric = [
     'quantity' => 0,
     'total_sale' => 0,
+    'total_partial' => 0,
 ];
 
 $current_month = strtotime(date('01-m-Y'));
 foreach ($list_contract as $row) {
     $metric['quantity'] ++;
     $metric['total_sale'] += $row['room_price']*$row['commission_rate']/100;
+    $metric['total_partial'] += $this->ghContractPartial->getTotalByContractId($row['id']);
 }
 ?>
 
@@ -202,7 +204,7 @@ foreach ($list_contract as $row) {
                 <div class="card-box tilebox-one">
                     <i class="icon-chart float-right text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Doanh thu</h6>
-                    <h2 class="m-b-20"><span>...</span></h2>
+                    <h2 class="m-b-20"><span><?= number_format($metric['total_partial']) ?></span></h2>
                 </div>
             </div>
             <div class="col-xs-12 col-md-3">
