@@ -206,7 +206,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Số (*)" => $contract["rate_type"],
                             "Sale Hỗ trợ" => $user_support ?? "-",
                             "Khách Hàng" => $customer["name"] ?? "-",
-                            "Phone" => $customer["phone"] ?? "-",
+                            "Phone" => "-",
                         ];
                     }
                     break;
@@ -268,7 +268,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Sale Hỗ trợ" => $user_support ?? "-",
                             "Người Lấy Dự Án" => $user_collected_id,
                             "Khách Hàng" => $customer["name"] ?? "-",
-                            "Phone" => $customer["phone"] ?? "-",
+                            "Phone" => "-",
                         ];
                     }
                     break;
