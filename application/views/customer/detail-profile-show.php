@@ -11,7 +11,7 @@
                                 <h4 class="mt-1 font-18"><?= $customer['name'] ?></h4>
                                 <div class="row pl-2">
                                     <div class="col-12 p-1"><i class="mdi mdi-cake-variant"></i> <?= strlen($customer['birthdate']) ? date('d/m/Y',$customer['birthdate']): '' ?></div>
-                                    <div class="col-12 p-1"><i class="mdi mdi-cellphone-android"></i> <?= $customer['phone'] ?></div>
+                                    <div class="col-12 p-1"><i class="mdi mdi-cellphone-android"></i> <?= $this->libCustomer->getPhoneById($customer['id']) ?></div>
                                     <div class="col-12 p-1"><i class="mdi mdi-email-open-outline"></i> <?= $customer['email'] ?></div>
                                 </div>
                             </div>
@@ -79,10 +79,8 @@
                             <tr>
                                 <td class="font-weight-bold">Số Điện Thoại </td>
                                 <td class="text-right">
-                                    <div class="customer-update"
-                                         data-pk="<?= $customer['id'] ?>"
-                                         data-value="<?= $customer['phone'] ?>"
-                                         data-name="phone"><?= $customer['phone'] ?></div>
+                                    <div
+                                         ><?= $this->libCustomer->getPhoneById($customer['id']) ?></div>
                                 </td>
                             </tr>
                             <tr>

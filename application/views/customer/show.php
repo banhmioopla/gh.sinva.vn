@@ -175,11 +175,8 @@ $check_editable  = in_array($this->auth['role_code'], ['customer-care']);
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="customer-data" 
-                                        data-pk="<?= $row['id'] ?>"
-                                        data-value ="<?= $row['phone'] ?>"
-                                        data-name="phone">
-                                            <?= $row['phone'] ?>
+                                    <div>
+                                            <?= $this->libCustomer->getPhoneById($row['id']) ?>
                                     </div>
                                 </td>
                                 <td>

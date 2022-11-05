@@ -80,10 +80,8 @@ $check_delete = isYourPermission('Image', 'delete', $this->permission_set);
                         <tr>
                             <td class="text-right"><strong>Số điện thoại <strong></td>
                             <td>
-                                <div class="customer-phone w-50"
-                                     data-pk="<?= $customer['id'] ?>"
-                                     data-value="<?= $customer['phone'] ?>"
-                                     data-name="phone"><?= $customer['phone'] ?></div>
+                                <div class=" w-50"
+                                     ><?= $this->libCustomer->getPhoneById($customer['id']) ?></div>
                             </td>
                         </tr>
                         <tr>
