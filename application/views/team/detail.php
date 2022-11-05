@@ -62,21 +62,7 @@
             <div class="col-12">
                 <div class="card-box table-responsive">
                     <h3 class="text-danger font-weight-bold"><?= $team['name'] ?> | Danh Sách Hợp Đồng</h3>
-                    <table class="table-contract  table table-dark table-bordered">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th width="350px">Khách thuê</th>
-                            <th class="text-right">Giá thuê <small>x1000</small></th>
-                            <th class="text-right">Giá cọc <small>x1000</small></th>
-                            <th class="text-right"> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> </span></th>
-
-                            <th>Ngày ký</th>
-                            <th>Ngày hết hạn</th>
-                            <th class="text-center">Thời hạn</th>
-                            <th class="text-center" width="100px">Trạng Thái</th>
-                        </tr>
-                        </thead>
+                    <table class="table-contract table-hover table table-dark table-bordered">
                         <tbody>
                         <?php foreach ($list_member as $member): ?>
                             <?php
@@ -90,8 +76,26 @@
                             ?>
                             <tr class="border border-warning mt-2">
                                 <td colspan="3"><h4><?= $user["name"] ?></h4> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> <?= $this->ghContract->getTotalRateStar($user["account_id"], $timeFrom, $timeTo) ?></span></td>
-                                <td colspan="10"> <?= count($user_list_contract) ?> hợp đồng </td>
+                                <td colspan="15">
+                                    <div><?= "Số lượng hợp đồng: " . count($user_list_contract) ?> </div>
+                                    <div>Doanh số: <?= number_format($this->ghContract->getTotalSaleByUser($user["account_id"], $timeFrom, $timeTo)) ?></div>
+                                </td>
+
                             </tr>
+
+                            <tr>
+                                <th>#</th>
+                                <th width="350px">Khách thuê</th>
+                                <th class="text-right">Giá thuê <small>x1000</small></th>
+                                <th class="text-right">Giá cọc <small>x1000</small></th>
+                                <th class="text-center"> <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <i class="mdi mdi-star-circle"></i> </span></th>
+
+                                <th>Ngày ký</th>
+                                <th>Ngày hết hạn</th>
+                                <th class="text-center">Thời hạn</th>
+                                <th class="text-center" width="100px">Trạng Thái</th>
+                            </tr>
+
                             <?php foreach($user_list_contract as $row ): ?>
                                 <?php
                                 $service = json_decode($row['service_set'], true);
