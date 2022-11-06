@@ -1,8 +1,8 @@
 <?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
 <div id="listPrice" class="mb-1">
     <div class="row">
-         <span class="col-md-8 col-12 mb-2">
-            <strong>Tìm địa chỉ dự án (thử nghiệm)</strong>
+         <span class="col-md-12 col-12 mb-2">
+            <h4 class="text-danger font-weight-bold"> <i class="mdi mdi-arrow-right-drop-circle-outline"></i> Tìm địa chỉ</h4>
             <select id="search_address_street" class="form-control">
                 <?php foreach ($list_apm_ready as $apm):
                     ?>
