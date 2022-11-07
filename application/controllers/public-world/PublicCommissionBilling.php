@@ -61,7 +61,7 @@ class PublicCommissionBilling extends CI_Controller {
         $apartment = $this->ghApartment->getFirstById($apm_id);
         $this->load->view($this->public_dir.'components/header', [
             'title_page' => "Phiếu Thu Hoa Hồng | SINVA",
-            "post_title" => ""
+            "post_title" => "Phiếu Thu Hoa Hồng | SINVA"
         ]);
 
         $this->load->view($this->public_dir.'commission-billing/detail', [
