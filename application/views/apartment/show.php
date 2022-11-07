@@ -263,6 +263,17 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-md-12">
                         <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
                     </div>
+                    <div class="col-md-12">
+                        <?php foreach ($list_features as $feature_k => $feature_v):
+                            $active_element = "";
+                            if(!empty($this->input->get('feature')) && $this->input->get('feature') == $feature_k){
+                                $active_element = "active";
+                            }
+                            ?>
+                            <a href="<?= base_url().'admin/list-apartment?feature='.$feature_k ?>"
+                               class="btn m-1 btn-sm btn-rounded btn-outline-danger <?= $active_element ?> waves-light waves-effect"> <?= $feature_v ?> </a>
+                        <?php endforeach;?>
+                    </div>
                 </div>
             </div>
 
@@ -274,16 +285,6 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
         <div class="col-lg-4 col-12 d-md-block d-none">
             <div class="card-box list-feature">
                 <div class="d-flex justify-content-center flex-wrap ">
-                    <?php foreach ($list_features as $feature_k => $feature_v):
-                        $active_element = "";
-                        if(!empty($this->input->get('feature')) && $this->input->get('feature') == $feature_k){
-                            $active_element = "active";
-                        }
-                        ?>
-                        <a href="<?= base_url().'admin/list-apartment?feature='.$feature_k ?>"
-                           class="btn m-1 btn-sm item-feature btn-rounded btn-outline-danger <?= $active_element ?> waves-light waves-effect"> <?= $feature_v ?> </a>
-                    <?php endforeach;?>
-
                     <?php
                     foreach($list_district as $district):
                         $active_element = "";
@@ -320,7 +321,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     ?>
                         <li class="mb-3 address-item mt-1 mb-1 <?= $is_full_ribbon ?> card-header click-view" data-apm="<?= $apm['id'] ?>">
                             <?= $is_full_ribbon_html ?>
-                            <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm["address_street"] .", phường " .$apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"]))  ?></a> </h5>
+                            <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>" class="text-danger"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm["address_street"] .", phường " .$apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"]))  ?></a> </h5>
                             <div class="text-right text-danger"> <?= $partner_name . $count_available ?> <i class="mdi mdi-tag"></i> <?= implode(" - ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
                             <div class="clearfix"></div>
                         </li>

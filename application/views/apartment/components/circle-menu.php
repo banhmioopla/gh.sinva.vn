@@ -299,7 +299,7 @@
                         <li class="mb-3 address-item">
                             <div class="<?= $is_full_ribbon ?> card-header">
                                 <?= $is_full_ribbon_html ?>
-                                <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm["address_street"] .", phường " .$apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"]))  ?></a> </h5>
+                                <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>" class="text-danger"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm["address_street"] .", phường " .$apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"]))  ?></a> </h5>
                                 <div class="text-right text-danger">  <?= $partner_name . $count_available ?> <i class="mdi mdi-tag"></i> <?= implode(" - ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
                                 <div class="clearfix"></div>
                             </div>
