@@ -38,7 +38,9 @@
                     <h2 class="m-b-20"><span ><?= $libUser->getTotalSaleByTeam($team['id'], $timeFrom, $timeTo) ?></span></h2>
                 </div>
             </div>
-
+            <div class="col-md-8">
+                <?= $noted ?>
+            </div>
             <div class="col-12">
                 <div class="card-box">
                     <form>

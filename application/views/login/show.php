@@ -27,7 +27,7 @@
     <body class="account-pages">
 
         <!-- Begin page -->
-        <div class="accountbg" style="background: url('<?= $assets_path ?>images/bg-03.gif');background-size: cover;"></div>
+        <div class="accountbg" style="background: url('<?= $assets_path ?>images/login-background.jpg');background-size: cover;"></div>
 
         <div class="wrapper-page account-page-full">
 
@@ -36,7 +36,7 @@
 
                     <div class="account-box">
 
-                        <div class="card-box p-5">
+                        <div class="card-box pl-5 pr-5 pb-1">
                             <div class="text-center">
                                 <span><img src="<?= $assets_path ?>images/Gio-hang-logo.png" alt="" height="250"></span>
                             </div>
@@ -44,7 +44,7 @@
                             <form method="post" action="<?= base_url().'admin/login' ?>">
                                 <div class="form-group m-b-20 row">
                                     <div class="col-12">
-                                        <label for="account_id">Tài khoản</label>
+                                        <label for="account_id" class="text-danger">Tài khoản</label>
                                         <input class="form-control" 
                                         type="number" 
                                         name="account_id"
@@ -54,7 +54,7 @@
 
                                 <div class="form-group row m-b-20">
                                     <div class="col-12">
-                                        <label for="password">Mật Khẩu</label>
+                                        <label for="password" class="text-danger">Mật Khẩu</label>
                                         <input class="form-control" 
                                         type="password" 
                                         name="password"
@@ -71,6 +71,13 @@
                                 </div>
 
                             </form>
+                            <div class="text-center">
+                                <ul class="social-links list-inline m-t-20">
+                                    <li class="list-inline-item">
+                                        <a href="https://www.facebook.com/Sinvahome" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
 
                         </div>
                     </div>

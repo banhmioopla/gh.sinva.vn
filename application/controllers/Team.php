@@ -42,6 +42,16 @@ class Team extends CustomBaseStep {
             $timeTo = $this->input->get('timeTo');
         }
 
+        foreach ($list_member as $member){
+            $_user = $this->ghUser->getFirstByAccountId($member['user_id']);
+            if($_user['active'] === "NO"){
+                $contract_total_sale = $this->ghContract->getTotalSaleByUser($member['user_id'], date("d-m-Y",strtotime("-60days")) , $timeTo);
+                if(empty($contract_total_sale)){
+                    $this->ghTeamUser->delete($member['id']);
+                }
+            }
+        }
+
         /*--- Load View ---*/
         $this->load->view('components/header');
         $this->load->view('team/detail', [
@@ -53,7 +63,13 @@ class Team extends CustomBaseStep {
             'ghTeam' => $this->ghTeam,
             'timeFrom' => $timeFrom,
             'timeTo' => $timeTo,
-            'list_user' => $this->libUser->cb()
+            'list_user' => $this->libUser->cb(),
+            'noted' => '<div class="alert alert-warning alert-dismissible bg-warning text-white border-0 fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                Nếu Nhân sự bị khoá ID , GH sẽ tự động loại thành viên ra khỏi Team sau  khoảng 60 ngày
+                            </div>',
         ]);
         $this->load->view('components/footer');
     }

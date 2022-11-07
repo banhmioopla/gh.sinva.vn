@@ -48,7 +48,7 @@ foreach ($list_user as $row) {
                             <li class="breadcrumb-item active">Thành Viên</li>
                         </ol>
                     </div>
-                    <h2 class="font-weight-bold text-danger">Thành Viên</h2>
+                    <h2 class="font-weight-bold text-danger">Danh sách nhân sự</h2>
                 </div>
             </div>
         </div>
@@ -60,45 +60,6 @@ foreach ($list_user as $row) {
             }  
         ?>
 
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-box">
-                    <?php if(count($user_birth_this_month)):
-                        ?>
-
-                        <table class="table table-dark">
-                            <thead>
-                            <tr class="font-weight-bold">
-                                <td><h5>THÀNH VIÊN</h5></td>
-                                <td class="text-center"><h5>SINH NHẬT</h5></td></tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            foreach ($user_birth_this_month as $row):
-                                ?>
-                                <tr>
-                                    <td>
-                                        <i class="mdi mdi-chevron-double-right text-warning"></i> <?= $row['name'] ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?= date('d/m/Y',$row['date_of_birth']) ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach;?>
-                            </tbody>
-
-                        </table>
-                    <?php else: ?>
-                        <div class="alert alert-danger" role="alert">
-                            Không có sinh nhật nào!
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="user-alert"></div>
@@ -108,7 +69,7 @@ foreach ($list_user as $row) {
         <div class="row">
             <div class="col-12">
                 <div class="card-box table-responsive">
-                    <h4 class="text-danger font-weight-bold">Danh sách thành viên</h4>
+                    <h4 class="text-danger font-weight-bold">Danh sách nhân sự</h4>
                     <form class="row mb-3" method="GET">
                         <div class="col-md-3">
                             <select name="" id="" class="form-control select2">
@@ -147,9 +108,9 @@ foreach ($list_user as $row) {
                             <th>Tên</th>
 
                             <th>Quyền</th>
-                            <th>...</th>
+                            <th>Thông tin</th>
                             <th>Người Tuyển</th>
-                            <th class="text-center">Trạng thái</th>
+                            <th class="text-center">Mở</th>
                             <th class="text-center">Tùy chọn</th>
                             <!-- <th class="text-center">Tùy Chọn</th> -->
                         </tr>
@@ -173,7 +134,7 @@ foreach ($list_user as $row) {
                                         data-name="name">
                                         <?= $row['name'] ?>
                                     </div>
-                                    <p><small>SN: <?= $row['date_of_birth'] > 0 ? date('d-m-Y',$row['date_of_birth']) :'' ?></small></p>
+                                    <p><small></small></p>
                                 </td>
 
                                 <td>
@@ -182,12 +143,13 @@ foreach ($list_user as $row) {
                                         data-value = "<?= $row['role_code'] ?>"
                                         data-name="role_code"><?= $libRole->getNameByCode($row['role_code']) ?></div>
                                 </td>
-
                                 <td>
                                     <ul>
-                                        <li>Ngày làm: <strong><?= $row['time_joined'] > 0 ? date('d-m-Y',$row['time_joined']) :'' ?></strong></li>
+                                        <li>Sinh nhật: <strong><?= $row['date_of_birth'] > 0 ? date('d-m-Y',$row['date_of_birth']) :'' ?></strong></li>
+
                                         <li>Phone: <strong class="user-phone_number" data-name="phone_number" data-value ="<?= $row['phone_number'] ?>" data-pk="<?= $row['id'] ?>"><?= $row['phone_number'] ?></strong></li>
                                         <li>Mail: <strong class="user-email" data-name="email" data-value ="<?= $row['email'] ?>" data-pk="<?= $row['id'] ?>"><?= $row['email'] ?></strong></li>
+                                        <li>Ngày làm: <strong><?= $row['time_joined'] > 0 ? date('d-m-Y',$row['time_joined']) :'' ?></strong></li>
                                     </ul>
                                 </td>
 
