@@ -7,13 +7,13 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>GH [demo] - Giỏ Hàng Mới Sinva</title>
+        <title>Giỏ hàng SINVA - Hệ thống quản trị nội bộ</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta content="Giỏ hàng Sinva - Web quản lý căn hộ tuyệt vời thấy mẹ luôn nha, quản lý Căn hộ, Khách hàng, +100 điểm nha" name="description" />
+        <meta content="Giỏ hàng SINVA - Hệ thống quản trị nội bộ" name="description" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="<?= $assets_path ?>images/favicon.ico">
+        <link rel="shortcut icon" href="<?= $assets_path ?>images/favicon.png">
 
         <!-- App css -->
         <link href="<?= $assets_path ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -37,27 +37,23 @@
                     <div class="account-box">
 
                         <div class="card-box p-5">
-                            <h2 class="text-uppercase text-center pb-4">
-                                <a href="index.html" class="text-success">
-                                    <span><img src="<?= $assets_path ?>images/logo-gh.png" alt="" height="40"></span>
-                                </a>
-                            </h2>
+                            <div class="text-center">
+                                <span><img src="<?= $assets_path ?>images/Gio-hang-logo.png" alt="" height="250"></span>
+                            </div>
 
-                            <form class="" method="post" action="<?= base_url().'admin/login' ?>">
-
+                            <form method="post" action="<?= base_url().'admin/login' ?>">
                                 <div class="form-group m-b-20 row">
                                     <div class="col-12">
-                                        <label for="account_id">ID Của Bạn</label>
+                                        <label for="account_id">Tài khoản</label>
                                         <input class="form-control" 
                                         type="number" 
                                         name="account_id"
-                                        id="account_id" required="" placeholder="Nhập ID 17102001">
+                                        id="account_id" required="" placeholder="17102001">
                                     </div>
                                 </div>
 
                                 <div class="form-group row m-b-20">
                                     <div class="col-12">
-                                        <a href="#" class="text-muted pull-right"><small>quên mật khẩu?</small></a>
                                         <label for="password">Mật Khẩu</label>
                                         <input class="form-control" 
                                         type="password" 
@@ -66,34 +62,15 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="form-group row m-b-20">
-                                    <div class="col-12">
-
-                                        <div class="checkbox checkbox-custom">
-                                            <input id="remember" type="checkbox" checked="">
-                                            <label for="remember">
-                                                Remember me
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div> -->
-
                                 <div class="form-group row text-center m-t-10">
                                     <div class="col-12">
-                                        <button class="btn btn-block btn-custom waves-effect waves-light" 
+                                        <button class="btn btn-block btn-danger waves-effect waves-light"
                                         name='submit'
-                                        type="submit">Sign In</button>
+                                        type="submit">Đăng nhập</button>
                                     </div>
                                 </div>
 
                             </form>
-
-                            <div class="row m-t-50">
-                                <div class="col-sm-12 text-center">
-                                    <p class="text-muted">Bạn muốn tham gia hệ thống quản lý căn hộ? <br> <a href="#" class="text-dark m-l-5"><b>Đăng ký ngay</b></a></p>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -102,7 +79,7 @@
             </div>
 
             <div class="m-t-40 text-center">
-                <p class="account-copyright"><?= date('Y') ?> © GH Mới [demo] - gh.sinva.vn</p>
+                <p class="account-copyright"><?= date('Y') ?> © Gio Hang SINVA - gh.sinva.vn</p>
             </div>
 
         </div>
