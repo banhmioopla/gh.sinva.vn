@@ -59,9 +59,10 @@ class PublicCommissionBilling extends CI_Controller {
         $total_billing_amount = $total_sale_amount - $total_partial_amount;
         /*--- Load View ---*/
         $apartment = $this->ghApartment->getFirstById($apm_id);
+        $address_full = $apartment["address_street"] .", phường " .$apartment["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apartment["district_code"]));
         $this->load->view($this->public_dir.'components/header', [
             'title_page' => "Phiếu Thu Hoa Hồng | SINVA",
-            "post_title" => "Phiếu Thu Hoa Hồng | SINVA"
+            "post_title" => "SINVA| PTHH: ".$address_full
         ]);
 
         $this->load->view($this->public_dir.'commission-billing/detail', [
