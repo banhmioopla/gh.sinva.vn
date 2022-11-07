@@ -61,7 +61,7 @@ class PublicCommissionBilling extends CI_Controller {
         $apartment = $this->ghApartment->getFirstById($apm_id);
         $address_full = $apartment["address_street"] .", phường " .$apartment["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apartment["district_code"]));
         $this->load->view($this->public_dir.'components/header', [
-            'title_page' => "Phiếu Thu Hoa Hồng | SINVA",
+            'title_page' => "SINVA| PTHH: ".$address_full,
             "post_title" => "SINVA| PTHH: ".$address_full
         ]);
 
