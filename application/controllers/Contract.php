@@ -25,6 +25,8 @@ class Contract extends CustomBaseStep {
 	    $timeCheckInFrom = $this->timeFrom;
 	    $timeCheckInTo = $this->timeTo;
         $list_contract = $list_contract_supporter = [];
+        $count_contract = $partial_total = 0;
+
 	    if(!empty($this->input->get("timeCheckInFrom"))){
             $timeCheckInFrom = $this->input->get("timeCheckInFrom");
         }
@@ -43,6 +45,7 @@ class Contract extends CustomBaseStep {
                 $arr = json_decode($item["arr_supporter_id"], true);
                 if(in_array($this->auth['account_id'], $arr)){
                     $count_contract++;
+                    $partial_total += (1- $con['rate_type']) * $this->ghContractPartial->getTotalByContractId($item['id']);
                     $list_contract [] = $item;
                 }
             }
@@ -54,21 +57,25 @@ class Contract extends CustomBaseStep {
             'time_check_in <=' => strtotime($timeCheckInTo)+86399,
             'status <>' => 'Cancel'
         ]);
-        $list_contract = array_merge($list_contract,$list_contract_consultant);
+        foreach ($list_contract_consultant as $item){
+            $list_contract[] = $item;
+            $partial_total += $con['rate_type'] * $this->ghContractPartial->getTotalByContractId($item['id']);
+        }
 
         $data['list_contract'] = $list_contract;
         $data['timeCheckInFrom'] = $timeCheckInFrom;
         $data['timeCheckInTo'] = $timeCheckInTo;
-        $data['flash_mess'] = "";
-        $data['flash_status'] = "";
-        if($this->session->has_userdata('fast_notify')) {
-            $data['flash_mess']= $this->session->flashdata('fast_notify')['message'];
-            $data['flash_status']= $this->session->flashdata('fast_notify')['status'];
-            unset($_SESSION['fast_notify']);
-        }
+
 
         $this->load->view('components/header');
-        $this->load->view('contract/show-your', $data);
+        $this->load->view('contract/show-your', [
+            'list_contract' => $list_contract,
+            'timeCheckInFrom' => $timeCheckInFrom,
+            'timeCheckInTo' => $timeCheckInTo,
+            'flash_mess' => "",
+            'flash_status' => "",
+            'total_partial' => $partial_total,
+        ]);
         $this->load->view('components/footer');
 
 	}

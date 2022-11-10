@@ -57,6 +57,14 @@
                     <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <?= $this->ghContract->getTotalRateStar($this->auth['account_id'], $timeCheckInFrom, $timeCheckInTo) ?> </span>
                 </div>
             </div>
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+                <div class="card-box tilebox-one">
+                    <i class="icon-layers float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Doanh thu</h6>
+                    <h2 class="m-b-20" data-plugin="counterup"><?= number_format($total_partial) ?></h2>
+                    <span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> <?= $this->ghContract->getTotalRateStar($this->auth['account_id'], $timeCheckInFrom, $timeCheckInTo) ?> </span>
+                </div>
+            </div>
         </div>
 
         <div class="row">
