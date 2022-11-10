@@ -45,7 +45,7 @@ class Contract extends CustomBaseStep {
                 $arr = json_decode($item["arr_supporter_id"], true);
                 if(in_array($this->auth['account_id'], $arr)){
                     $count_contract++;
-                    $partial_total += (1- $con['rate_type']) * $this->ghContractPartial->getTotalByContractId($item['id']);
+                    $partial_total += (1- $item['rate_type']) * $this->ghContractPartial->getTotalByContractId($item['id']);
                     $list_contract [] = $item;
                 }
             }
@@ -59,7 +59,7 @@ class Contract extends CustomBaseStep {
         ]);
         foreach ($list_contract_consultant as $item){
             $list_contract[] = $item;
-            $partial_total += $con['rate_type'] * $this->ghContractPartial->getTotalByContractId($item['id']);
+            $partial_total += $item['rate_type'] * $this->ghContractPartial->getTotalByContractId($item['id']);
         }
 
         $data['list_contract'] = $list_contract;
