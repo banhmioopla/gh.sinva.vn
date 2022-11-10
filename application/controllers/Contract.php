@@ -24,7 +24,7 @@ class Contract extends CustomBaseStep {
 	public function showYour(){
 	    $timeCheckInFrom = $this->timeFrom;
 	    $timeCheckInTo = $this->timeTo;
-
+        $list_contract = $list_contract_supporter = [];
 	    if(!empty($this->input->get("timeCheckInFrom"))){
             $timeCheckInFrom = $this->input->get("timeCheckInFrom");
         }
@@ -33,19 +33,30 @@ class Contract extends CustomBaseStep {
             $timeCheckInTo = $this->input->get("timeCheckInTo");
         }
 
-	    $data['list_contract'] = $this->ghContract->get([
+        $list_contract_supporter = $this->ghContract->get([
+            'time_check_in >=' => strtotime($timeCheckInFrom),
+            'time_check_in <=' => strtotime($timeCheckInTo)+86399,
+            'status <>' => 'Cancel'
+        ]);
+        foreach ($list_contract_supporter as $item){
+            if(!empty($item["arr_supporter_id"])){
+                $arr = json_decode($item["arr_supporter_id"], true);
+                if(in_array($this->auth['account_id'], $arr)){
+                    $count_contract++;
+                    $list_contract [] = $item;
+                }
+            }
+        }
+
+        $list_contract_consultant = $this->ghContract->get([
 	        'consultant_id' => $this->auth['account_id'],
             'time_check_in >=' => strtotime($timeCheckInFrom),
             'time_check_in <=' => strtotime($timeCheckInTo)+86399,
             'status <>' => 'Cancel'
         ]);
+        $list_contract = array_merge($list_contract,$list_contract_consultant);
 
-        $data['libCustomer'] = $this->libCustomer;
-        $data['libUser'] = $this->libUser;
-        $data['ghApartment'] = $this->ghApartment;
-        $data['ghRoom'] = $this->ghRoom;
-        $data['ghImage'] = $this->ghImage;
-        $data['libRoom'] = $this->libRoom;
+        $data['list_contract'] = $list_contract;
         $data['timeCheckInFrom'] = $timeCheckInFrom;
         $data['timeCheckInTo'] = $timeCheckInTo;
         $data['flash_mess'] = "";

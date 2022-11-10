@@ -22,7 +22,7 @@
         $service = json_decode($row['service_set'], true);
         $partial_amount = 0; $partial_status = "";
         $total_sale = $this->ghContract->getTotalSaleByContract($row['id']);
-        $list_partial = $ghContractPartial->get(['contract_id' => $row['id']]);
+        $list_partial = $this->ghContractPartial->get(['contract_id' => $row['id']]);
         foreach ($list_partial as $item) {
             $partial_amount += $item['amount'];
         }
@@ -67,11 +67,11 @@
                 </div>
             </td>
             <td>
-                <div><?= $libCustomer->getNameById($row['customer_id']).' - '. $libCustomer->getPhoneById($row['customer_id']) ?> </div>
+                <div><?= $this->libCustomer->getNameById($row['customer_id']).' - '. $this->libCustomer->getPhoneById($row['customer_id']) ?> </div>
                 <div class="font-weight-bold text-warning"> <i class=" dripicons-home"></i>
                     <?php
                     $apartment = $this->ghApartment->getFirstById($row['apartment_id']);
-                    $room = $ghRoom->getFirstById($row['room_id']);
+                    $room = $this->ghRoom->getFirstById($row['room_id']);
                     ?>
                     <?= $apartment ? $apartment['address_street']:'' ?> <?= $room ? "(" . $room['code']. ")" : '[không có mp]' ?>
                 </div>
@@ -82,7 +82,7 @@
                 if(!empty($row['arr_supporter_id'])){
                     $list_supporter = json_decode($row['arr_supporter_id'], true);
                     foreach ($list_supporter as $item){
-                        $supporter [] = $libUser->getNameByAccountid($item);
+                        $supporter [] = $this->libUser->getNameByAccountid($item);
                     }
                 }
 
@@ -91,7 +91,7 @@
                      data-pk="<?= $row['id'] ?>"
                      data-value="<?= $row['consultant_id'] ?>"
                      data-name="consultant_id">
-                    <?= $libUser->getNameByAccountid($row['consultant_id']) ?>
+                    <?= $this->libUser->getNameByAccountid($row['consultant_id']) ?>
                 </div>
 
                 <?php if(count($supporter)): ?>
