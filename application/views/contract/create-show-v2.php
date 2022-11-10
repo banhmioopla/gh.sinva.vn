@@ -378,6 +378,12 @@ if(in_array($this->auth['role_code'], ['customer-care'])){
 
 
                         <div class="form-group row">
+
+                            <div class="col-12">
+                                <div class="alert alert-warning bg-warning text-white border-0" role="alert">
+                                    <i class="fa fa-twitter"></i> Bổ sung vào ghi chú hợp đồng nếu có hỗ trợ cọc!!!</strong>
+                                </div>
+                                </div>
                             <label class="col-12 col-md-4 col-form-label text-right">Ghi chú</label>
                             <div class="col-md-8 col-12">
                                 <textarea class="form-control" rows="4" name="note"></textarea>
