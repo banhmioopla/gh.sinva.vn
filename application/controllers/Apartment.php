@@ -163,7 +163,7 @@ class Apartment extends CustomBaseStep {
             ]);
 
             if(count($list_contract_segment)){
-                $price_segment_name = number_format($segment['min']) . " - " . number_format($segment['max']);
+                $price_segment_name = shortMoneyFormat($segment['min']) . " - " . shortMoneyFormat($segment['max']);
                 $total_sale = 0;
                 foreach ($list_contract_segment as $con) {
                     $total_sale += $this->ghContract->getTotalSaleByContract($con['id']);
