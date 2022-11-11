@@ -11,7 +11,7 @@ include VIEWPATH.'functions.php';
         <meta charset="utf-8" />
         <title><?= $this->head_title ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta content="Giỏ hàng SINVA - Hệ thống quản trị nội bộ" name="description" />
+        <meta content="<?= $this->head_title ?>" name="description" />
         <meta content="Quoc Binh" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
@@ -99,14 +99,16 @@ include VIEWPATH.'functions.php';
                 <div class="container-fluid">
                     <!-- Logo container-->
                     <div class="logo">
-                        <!-- Text Logo -->
-                        <!-- <a href="index.html" class="logo"><span class="logo-small"><i class="mdi mdi-radar"></i></span><span class="logo-large"><i class="mdi mdi-radar"></i> Highdmin</span></a> -->
-                        <!-- Image Logo -->
-                        <!--<a href="/admin/list-apartment/<?/*= $this->session->has_userdata("switch_product_type") ? $this->session->userdata("switch_product_type") : 1 */?>" class="logo">
-                            <h3 class="text-danger font-weight-bold"><?/*= $this->ghApartment->getTitleProductType($this->product_type) */?></h3>
-                        </a>-->
                         <a href="#" class="logo">
-                            <h4 class="text-success bg-dark p-1 rounded font-weight-bold"><?= ($this->session->has_userdata("personal_data") ? number_format((float)$this->session->userdata("personal_data")["total_sale"]/1000) . '<span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> '.$this->session->userdata("personal_data")["rate_star"].' <i class="mdi mdi-star-circle"></i> </span>' : 0) ?></h4>
+                            <?php if($this->session->has_userdata("personal_data") && $this->session->userdata("personal_data")["total_sale"] > 0):?>
+                                <h4 class="text-success bg p-1 rounded font-weight-bold">
+                                    <?= number_format((float)$this->session->userdata("personal_data")["total_sale"]/1000)
+                                    . '<span class="badge ml-2 badge-pill badge-primary font-weight-bold contract-status"> '
+                                    .$this->session->userdata("personal_data")["rate_star"]
+                                    .' <i class="mdi mdi-star-circle"></i> </span>'?></h4>
+                            <?php else:?>
+                                <h4 class="font-weight-bold text-danger">Giỏ hàng</h4>
+                            <?php endif;?>
                         </a>
                     </div>
                     <!-- End Logo container-->
@@ -124,25 +126,6 @@ include VIEWPATH.'functions.php';
                                 <!-- End mobile menu toggle-->
                             </li>
 
-                            <li class="dropdown notification-list hide-phone">
-                                <!--<a class="nav-link dropdown-toggle waves-effect nav-user"
-                                   data-toggle="dropdown"
-                                   href="#" role="button"
-                                   aria-haspopup="false" aria-expanded="false">
-                                    <i class="mdi mdi-earth"></i> English
-                                    <i class="mdi mdi-chevron-down"></i>
-                                </a>-->
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <!-- item-->
-                                     <a href="javascript:void(0);" class="dropdown-item">
-                                        Spanish
-                                    </a>
-                                    <!-- item-->
-                                     <a href="javascript:void(0);" class="dropdown-item">
-                                        Italian
-                                    </a>
-                                </div>
-                            </li>
                             <li class="dropdown notification-list" id="bell-notification">
                                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="fi-bell noti-icon"></i>
@@ -256,34 +239,20 @@ include VIEWPATH.'functions.php';
                                     </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right profile-dropdown">
-                                    <!-- item-->
-                                    <div class="dropdown-item noti-title">
-                                        <?php if(isYourPermission('ShAgencyGroup', 'show', $this->permission_set)):?>
-                                            <a class="text-danger" href="/share/agency-group/dashboard/show">
-                                               <h4 class="text-overflow">Đi đến <strong>SHARE</strong> </h4>
-                                            </a>
-                                            <hr>
-                                        <?php endif;?>
-                                    </div>
-                                    <!-- item-->
+
                                     <a href="/user/dashboard?account=<?= $this->auth['account_id'] ?>" class="dropdown-item notify-item">
                                         <i class="fi-head"></i>
-                                        <span>Tài khoản</span>
+                                        <span><?= $this->cfg_label['account'] ?></span>
                                     </a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="fi-cog"></i>
-                                        <span>Cài đặt</span>
-                                    </a>
-                                    <!-- item-->
+
                                     <a href="<?= base_url().'admin/change-password-user'?>" class="dropdown-item notify-item">
                                         <i class="fi-help"></i>
-                                        <span>Đổi mật khẩu</span>
+                                        <span><?= $this->cfg_label['change_password'] ?></span>
                                     </a>
                                     <!-- item-->
                                     <a href="<?= base_url().'admin/logout'?>" class="dropdown-item notify-item">
                                         <i class="fi-power"></i>
-                                        <span>Đăng xuất</span>
+                                        <span><?= $this->cfg_label['logout'] ?></span>
                                     </a>
                                 </div>
                             </li>

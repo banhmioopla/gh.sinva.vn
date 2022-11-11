@@ -41,8 +41,8 @@ class LibDistrict {
     }
 
     public function getNameByCode($district_code) {
-        $district = $this->CI->ghDistrict->get(['code' => $district_code]);
-        return $district ? $district[0]['name'] :'';
+        $district = $this->CI->ghDistrict->getFirstByCode($district_code);
+        return !empty($district) ? $district['name'] :'';
     }
 }
 ?>

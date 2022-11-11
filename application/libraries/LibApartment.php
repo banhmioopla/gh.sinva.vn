@@ -8,6 +8,16 @@ class LibApartment {
         $this->CI =& get_instance();
         $this->CI->load->model('ghApartment');
         $this->CI->load->model('ghRoom');
+        $this->CI->load->library('LibDistrict', null, 'libDistrict');
+    }
+
+
+    public function getFullAddress($apm_object){
+        if(is_array($apm_object)){
+            $district = " " . $this->CI->libDistrict->getNameByCode($apm_object['district_code']);
+            return $apm_object['address_street'] . ", phường ". $apm_object['address_ward'] . ", quận ". $district;
+        }
+        return "[warning] need object apm!!!";
     }
 
     public function sortByKey($your_data, $key) {

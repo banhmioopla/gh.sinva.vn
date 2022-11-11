@@ -140,7 +140,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 <select id="apartment_update_ready" class=" form-control">
                                     <option value="">Cập nhật thông tin phòng</option>
                                     <?php foreach ($list_apm_ready as $apm_move): ?>
-                                        <option value="<?= $apm_move['id'] ?>"><?= $apm_move['address_street'] ?></option>
+                                        <option value="<?= $apm_move['id'] ?>"><?= $this->libApartment->getFullAddress($apm_move) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -187,7 +187,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                     <div class="card  text-white bg-dark text-xs-center">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote">
-                                                <strong><?= $apm_30d_checker['address_street'] ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
+                                                <strong><?= $this->libApartment->getFullAddress($apm_30d_checker) ?> (<?= $room_checker["code"] ?>)</strong> <?= date("d/m/Y", $row['time_expire']) ?>
                                                 <footer class="mt-2"><a href="/admin/detail-contract?id=<?= $row['id'] ?>" target="_blank" class="float-right btn-danger btn-rounded btn text-white">Chi tiết</a></cite>
                                                 </footer>
                                             </blockquote>
@@ -361,11 +361,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
             $list_comment = $this->ghApartmentComment->get(['apartment_id' => $current_apartment['id']]);
             $surrounding_facilities = !empty($current_apartment['surrounding_facilities']) ? json_decode($current_apartment['surrounding_facilities'], true) : [];
             $following = $this->ghApartmentUserFollow->isFollowing($current_apartment['id'], $this->auth['account_id']);
-            $apm_full_address = "{$current_apartment['address_street']}";
-            if(!empty($current_apartment['address_ward'])){
-                $apm_full_address .= ", phường {$current_apartment['address_ward']}";
-            }
-            $apm_full_address .= ", quận {$this->libDistrict->getNameByCode($current_apartment['district_code'])}";
+            $apm_full_address = $this->libApartment->getFullAddress($current_apartment);
             $following_number = $this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']) ? '<span class="badge badge-danger ml-2"><i class="fa fa-heart"></i> '.$this->ghApartmentUserFollow->getNumberFollow($current_apartment['id']).' theo dõi</span>' : '';
             $visit_account = count($this->ghApartment->visitedAccount($current_apartment['id'], ""))  ? '<small class="text-muted">Tuần này <strong>'.implode(", ", $this->ghApartment->visitedAccount($current_apartment['id'], "")).'</strong> đã ghé thăm</small>' : '';
             $partner_name = '<span class="badge badge-primary ml-2">'.$this->ghPartner->getNameById($current_apartment['partner_id']).'</span>';

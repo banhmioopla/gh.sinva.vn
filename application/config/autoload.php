@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'money','cookie', 'file');
+$autoload['helper'] = array('url', 'money','cookie', 'file', 'custom_general');
 
 /*
 | -------------------------------------------------------------------
@@ -103,7 +103,7 @@ $autoload['helper'] = array('url', 'money','cookie', 'file');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array("label_service");
+$autoload['config'] = array("label", "description");
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$autoload['model'] = array("ghApartment" , "ghRoom", "ghUser", "ghContract", "ghContractPartial");

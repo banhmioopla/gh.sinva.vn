@@ -6,9 +6,24 @@ class CustomBaseStep extends CI_Controller {
 	{
 		parent::__construct();
 		date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $this->load->library('LibRole', null, 'libRole');
+        $this->load->library('LibConfig', null, 'libConfig');
+        $this->load->library('LibUuid', null, 'libUuid');
+        $this->load->library('LibTime', null, 'libTime');
+        $this->load->library('LibUser', null, 'libUser');
+        $this->load->model([
+            'ghActivityTrack', 'ghUser', 'ghNotification',
+            'ghUserDistrict',  'ghRole', 'ghConfig', 'ghUserConfig', 'ghTeam'
+        ]);
+        $this->cfg_description = $this->config->item('description');
+        $this->cfg_label = $this->config->item('label');
+
 		$this->current_controller =  $this->router->fetch_class();
 		$this->current_action =  $this->router->fetch_method();
-        $this->head_title = "Giỏ Hàng - Pro & Vip system management";
+
+
+        $this->head_title = $this->cfg_description['app_title'];
+
         if($this->session->has_userdata('REQUEST_URI') === false){
             $this->session->set_userdata(['REQUEST_URI' => $_SERVER['REQUEST_URI']]);
         }
@@ -17,16 +32,7 @@ class CustomBaseStep extends CI_Controller {
 //			$this->session->sess_destroy();
 			return redirect('/');
 		}
-        $this->load->library('LibRole', null, 'libRole');
-        $this->load->library('LibConfig', null, 'libConfig');
-        $this->load->library('LibUuid', null, 'libUuid');
-        $this->load->library('LibTime', null, 'libTime');
-        $this->load->library('LibUser', null, 'libUser');
-		$this->load->model([
-		    'ghActivityTrack', 'ghUser', 'ghNotification',
-            'ghUserDistrict', 'ghApartment', 'ghRole',
-            'ghConfig', 'ghUserConfig',
-            'ghTeam']);
+
 
 		$this->auth = $this->session->userdata('auth');
 		$this->role = $this->ghRole->getFirstByCode($this->auth['role_code']);

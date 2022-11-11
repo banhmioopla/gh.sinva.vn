@@ -492,13 +492,11 @@ class Apartment extends CustomBaseStep {
         }
 
         if(!empty($current_apartment)){
-            $this->head_title = "GH - ". $current_apartment['address_street'];
+            $this->head_title = "Dự án | ". $this->libApartment->getFullAddress($current_apartment);
         }
 		/*--- Load View ---*/
 		$this->load->view('components/header');
         $template =  'apartment/show';
-
-
 		$this->load->view($template, [
 		    'district_code' => $district_code,
             'current_apartment' => $current_apartment,
