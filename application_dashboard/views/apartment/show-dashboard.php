@@ -172,7 +172,7 @@
                             <td class="text-center"><?= $index+1 ?></td>
                             <td class="text-center"><?= $item['price_segment'] ?></td>
                             <td class="text-center"><?= $item['contract_number'] ?></td>
-                            <td class="text-center"><?= number_format($item['contract_total_sale']) ?></td>
+                            <td class="text-center"><?= shortMoneyFormat($item['contract_total_sale']) ?></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>
@@ -196,7 +196,7 @@
                         <tr>
                             <td class="text-center"><?= $index+1 ?></td>
                             <td class="text-center"><?= $item['type_name'] ?></td>
-                            <td class="text-center"><?= number_format($item['total_sale']) ?></td>
+                            <td class="text-center"><?= shortMoneyFormat($item['total_sale']) ?></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>
@@ -213,7 +213,7 @@
                     <tr class="">
                         <th class="text-center font-weight-bold">Top</th>
                         <th class="text-center font-weight-bold">Dự án</th>
-                        <th class="text-center font-weight-bold">Số lượng</th>
+                        <th class="text-right font-weight-bold">Số lượng</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -221,7 +221,7 @@
                         <tr>
                             <td class="text-center"><?= $index+1 ?></td>
                             <td class="text-center"><?= $item['address_full'] ?></td>
-                            <td class="text-center"><?= $item['contract_total'] ?></td>
+                            <td class="text-right"><?= $item['contract_total'] ?></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>
@@ -246,7 +246,7 @@
                         <tr>
                             <td class="text-center"><?= $index+1 ?></td>
                             <td class="text-center"><?= $item['address_full'] ?></td>
-                            <td class="text-center"><?= number_format($item['contract_total_sale']) ?></td>
+                            <td class="text-right"><?= shortMoneyFormat($item['contract_total_sale']) ?></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>
