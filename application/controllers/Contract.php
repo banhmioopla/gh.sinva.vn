@@ -311,8 +311,13 @@ class Contract extends CustomBaseStep {
             $current_partial_amount += $item['amount'];
         }
 		$data['remaining_amount'] = $model['room_price']*$model["commission_rate"]/100 - $current_partial_amount;
+
+		$main_template = "contract/detail-show";
+		if($this->input->get('viewMode') == "confirmPublic"){
+            $main_template = "contract/detail-confirm-public";
+        }
 		$this->load->view('components/header');
-		$this->load->view('contract/detail-show', $data);
+		$this->load->view($main_template, $data);
 		$this->load->view('components/footer');
 	}
 

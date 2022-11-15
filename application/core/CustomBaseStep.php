@@ -144,6 +144,7 @@ class CustomBaseStep extends CI_Controller {
             'User' => ['showProfile', 'showDashboard'],
             'UserConfig' => ['update'],
             'CronCustomer' => ['removeImg'],
+            'Role' => ['notfound'],
         ];
 
         $this->timeFrom = date("06-m-Y");

@@ -74,7 +74,8 @@ if(time() >= $contract["time_expire"]){
             <div class="col-12">
                 <div class="card-box shadow">
                     <p><a href="/admin/list-contract" class="text-danger"><i class="mdi
-                     mdi-arrow-left-bold-circle"></i> Quay Lại Danh Sách</a></p>
+                     mdi-arrow-left-bold-circle"></i> Quay Lại Danh Sách</a> <a href="/admin/detail-contract?id=<?= $contract['id'] ?>">Xem xác nhận</a></p>
+                    <p></p>
                     <table class="table table-bordered table-hover">
                         <tr class="text-right">
                             <td colspan="2" class="text-right" width="250px">
