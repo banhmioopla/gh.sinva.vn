@@ -45,7 +45,7 @@ switch (ENVIRONMENT)
  * Set the path if it is not in the same directory as this file.
  */
 	$system_path = 'system';
-	$application_folder = 'application_dashboard';
+	$application_folder = 'application';
 	$view_folder = '';
 
 
