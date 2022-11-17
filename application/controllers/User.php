@@ -10,6 +10,7 @@ class User extends CustomBaseStep {
 		$this->load->model('ghRole');
 		$this->load->library('LibRole', null, 'libRole');
 		$this->load->library('LibUser', null, 'libUser');
+		$this->load->library('LibCustomer', null, 'libCustomer');
 	}
 
 	public function showDashboard(){
