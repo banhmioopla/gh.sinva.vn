@@ -57,7 +57,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             <div class="col-12">
                 <div class="card-box table-responsive">
                     <div class="row mb-3">
-                        <h4 class="font-weight-bold text-danger col-12">Danh Sách Phòng | Cập Nhật <span id="time-info"><?= date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apartment['id'])) ?></span></h4>
+                        <h4 class="font-weight-bold text-danger col-12">Danh Sách Phòng | Cập Nhật <span id="time-info"><?=  date('d/m/Y H:i', $this->ghApartment->getUpdateTimeByApm($apartment['id'])) ?></span></h4>
                         <form method="POST" action="/admin/room/fastUpdatedSlc" class="col-md-6">
                             <div class="row">
                                 <div class="col-md-8">
@@ -194,16 +194,16 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
                                              data-pk= "<?= $room['id'] ?>"
                                              data-value= "<?= $room['area'] > 0 ? $room['area']:'' ?>"
                                              data-name="area"><?= $room['area'] > 0 ? $room['area']: '-' ?></div></td>
-<!--                                    <td><div class="room-select-status text-center --><?//= $color_for_available ?><!--"-->
-<!--                                             data-gh-status="--><?//= $room['status'] ?><!--"-->
-<!--                                             id="room-status---><?//= $room['id'] ?><!--"-->
-<!--                                             data-id="--><?//= $room['id'] ?><!--">--><?//= $status_txt ?><!--</div></td>-->
-<!--                                    <td><div class="room-time_available text-center"-->
-<!--                                             data-pk="--><?//= $room['id'] ?><!--"-->
-<!--                                             --><?php //if($room['time_available'] > 0):?>
-<!--                                             data-value="--><?//= date('d-m-Y',$room['time_available']) ?><!--"-->
-<!--                                             --><?php //endif ?>
-<!--                                             data-name="time_available">--><?//= $room['time_available'] > 0 ? date('d-m-Y',$room['time_available']) :' - ' ?><!--</div></td>-->
+                                    <!--<td><div class="room-select-status text-center <?/*= $color_for_available */?>"
+                                             data-gh-status="<?/*= $room['status'] */?>"
+                                             id="room-status-<?/*= $room['id'] */?>"
+                                             data-id="<?/*= $room['id'] */?>"><?/*= $status_txt */?></div></td>
+                                    <td><div class="room-time_available text-center"
+                                             data-pk="<?/*= $room['id'] */?>"
+                                             <?php /*if($room['time_available'] > 0):*/?>
+                                             data-value="<?/*= date('d-m-Y',$room['time_available']) */?>"
+                                             <?php /*endif */?>
+                                             data-name="time_available"><?/*= $room['time_available'] > 0 ? date('d-m-Y',$room['time_available']) :' - ' */?></div></td>-->
 
                                     <?php if($check_option):?>
                                         <td class="">
@@ -365,6 +365,7 @@ if(isYourPermission('ApartmentPromotion', 'create', $this->permission_set)){
             <div class="col-md-6">
                 <form method="post" action="/room/import-from-excel?apm_id=<?= $apartment['id']?>" class="card-box" enctype="multipart/form-data">
                     <h4 class="font-weight-bold text-danger">Tạo Phòng Nhanh</h4>
+                    <p><a href="/documents/Import-Room.xlsx">Tải mẫu excel Import-Room.xlsx</a></p>
                     <div class="row">
                         <div class="col-12">
                             <input type="file" name="fileImport" required class="form-control">
