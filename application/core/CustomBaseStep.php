@@ -118,7 +118,7 @@ class CustomBaseStep extends CI_Controller {
             'Apartment' => [
                 'getWard', 'showV2', "showProfile", "updateRating", 'drawChart',
                 'showEdit',"updateEditable", "showCreate", 'editDescription',
-                'showTrending', 'duplicateApartment', 'updateFollowing'
+                'showTrending', 'duplicateApartment', 'updateFollowing', 'show'
             ],
             'Customer' => ['exportExcel', 'showYour'],
             'CommissionBilling' => ['updateFullContractPartial'],
