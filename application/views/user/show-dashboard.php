@@ -122,7 +122,11 @@
                     <?php foreach ($list_contract as $contract):
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
-                        $address = $apm['address_street'] . ", phường ". $apm['address_ward'];
+                        $address = "[không thông tin]";
+                        if(!empty($apm)){
+                            $address = $apm['address_street'] . ", phường ". $apm['address_ward'];
+                        }
+
 
                         $statusClass = 'muted'; $doc_type = "Cọc ";
                         if($contract['status'] == 'Active') {

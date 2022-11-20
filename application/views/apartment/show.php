@@ -263,7 +263,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-md-12">
                         <?php  $this->load->view('apartment/search-by-room-price', ['list_price' => $list_price]); ?>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 text-center">
                         <?php foreach ($list_features as $feature_k => $feature_v):
                             $active_element = "";
                             if(!empty($this->input->get('feature')) && $this->input->get('feature') == $feature_k){
