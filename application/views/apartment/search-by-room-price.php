@@ -1,4 +1,4 @@
-<?php if(isYourPermission('Apartment', 'showBySearch',$this->permission_set)):?>
+
 <div id="listPrice" class="mb-1">
     <div class="row">
          <span class="col-md-12 col-12 mb-2">
@@ -164,5 +164,3 @@
         });
     });
 </script>
-
-<?php endif; ?>
