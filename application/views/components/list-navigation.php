@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-12">
         <div class="m-1 button-list">
+            <?php if(isYourPermission('Apartment', 'showDashboard',$this->permission_set)):?>
             <div class="btn-group">
                 <button type="button" class="btn btn-danger"
                         data-toggle="dropdown" aria-haspopup="true"
@@ -15,6 +16,7 @@
                     <a class="dropdown-item" href="/admin/apartment/trending">Lượt xem</a>
                 </div>
             </div>
+            <?php endif; ?>
 
             <div class="btn-group">
                 <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
