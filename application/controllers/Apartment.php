@@ -980,22 +980,10 @@ class Apartment extends CustomBaseStep {
                 'time_insert' => strtotime($this->input->post('time_insert')),
                 'hidden_service' => $this->input->post("hidden_cols") && count($this->input->post("hidden_cols")) ? json_encode($this->input->post("hidden_cols")) : "[]",
                 'surrounding_facilities' => $this->input->post("surrounding_facilities") && count($this->input->post("surrounding_facilities")) ? json_encode($this->input->post("surrounding_facilities")) : "[]",
-
+                'user_updated_id' => $this->auth['account_id'],
             ];
             $old_log = json_encode($apartment);
-            /*if($this->isYourPermission('Apartment', 'pendingForApprove')){
-                $this->ghApartmentRequest->insert([
-                    'account_id' => $this->auth['account_id'],
-                    'apartment_id' => $apartment['id'],
-                    'status' => 'Pending',
-                    'request_data' => json_encode($update_data),
-                    'time_update' => time()
-                ]);
-                $this->session->set_flashdata('fast_notify', [
-                    'message' => 'Yêu cầu Update của bạn đã được tạo thành công',
-                    'status' => 'warning'
-                ]);
-            }*/
+
 
             $ok = $this->ghApartment->updateById($apartment['id'], $update_data);
 
@@ -1242,6 +1230,7 @@ class Apartment extends CustomBaseStep {
 			$data = [
 				$field_name => $field_value
 			];
+			$data['user_updated_id'] = $this->auth['account_id'];
 			$result = $this->ghApartment->updateById($apartment_id, $data);
 			echo json_encode(['status' => $result]); die;
 		}
@@ -1288,7 +1277,8 @@ class Apartment extends CustomBaseStep {
             $counter = 0;
             foreach ($arr_pk as $apm_id){
                 $is_update = $this->ghApartment->updateById($apm_id, [
-                    'time_update' => $time
+                    'time_update' => $time,
+                    'user_updated_id' => $this->auth['account_id']
                 ]);
                 if($is_update) {
                     $counter++;

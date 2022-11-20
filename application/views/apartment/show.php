@@ -495,7 +495,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                     <th scope="row"><i class="mdi mdi-checkbox-blank-circle"></i></th>
                                     <td>
                                         <?php if($current_apartment['user_collected_id']):?>
-                                            QLDA
+                                            Người lấy dự án
                                         <?php endif;?>
                                     </td>
                                     <td class="text-right">
@@ -507,7 +507,12 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                 <tr class="text-white">
                                     <th scope="row"><i class="mdi mdi-checkbox-blank-circle"></i></th>
                                     <td>Tgian cập nhật</td>
-                                    <td class="text-right"><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></td>
+                                    <td class="text-right">
+                                        <div><?= date("d/m/Y H:i",$this->ghApartment->getUpdateTimeByApm($current_apartment['id'])) ?></div>
+                                        <?php if($current_apartment['user_updated_id']):?>
+                                        <div><small>cập nhật bởi </small> Bui Quoc Binh</div>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                                 <tr class="text-white">
                                     <th scope="row"><i class="mdi mdi-checkbox-blank-circle"></i></th>
