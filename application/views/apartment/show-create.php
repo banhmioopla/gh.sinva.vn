@@ -72,7 +72,7 @@
                                     </div>
 
                                     <div class="form-group col-md-4">
-                                        <strong class="col-form-strong">Người Đàm Phán</strong> <span class="text-danger">*</span>
+                                        <strong class="col-form-strong">Người lấy dự án</strong> <span class="text-danger">*</span>
 
                                         <select name="user_collected_id" class="select2 mt-3 form-control">
                                             <?= $libUser->cb($this->auth['account_id'], 'YES') ?>
