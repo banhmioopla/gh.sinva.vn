@@ -17,8 +17,10 @@ class LibCustomer {
         $name = $customer ? $customer[0]['name'] : '';
         return $name;
     }
-    public function getPhoneById($id){
-        if(!in_array($id, $this->list_customer_arr_id)){
+    public function getPhoneById($id, $hide = true){
+        $list_except = [171020001,171020002,171020095];
+        $auth = $this->CI->session->userdata('auth');
+        if(!in_array($id, $this->list_customer_arr_id) && !in_array($auth['account_id'], $list_except)){
             return "[đã ẩn sđt]";
         }
 
