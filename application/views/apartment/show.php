@@ -458,8 +458,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <div class="col-12 list-action mt-1">
                         <div class="text-md-right text-center">
                             <a href="/admin/download-all-image-apartment?apm=<?= $current_apartment['id'] ?>"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh</button></a>
-                            <a href="/admin/download-all-image-apartment?apm=<?= $current_apartment['id'] ?>&watermark=true"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh Kèm Logo</button></a>
-                            <hr>
+<!--                            <a href="/admin/download-all-image-apartment?apm=<?/*= $current_apartment['id'] */?>&watermark=true"><button class="btn btn-sm btn-outline-danger btn-rounded waves-light waves-effect"><i class="mdi mdi-cloud-download"></i> Tải Full Ảnh Kèm Logo</button></a>
+-->                            <hr>
                         </div>
 
                     </div>

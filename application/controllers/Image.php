@@ -375,6 +375,72 @@ class Image extends CustomBaseStep
 
     }
 
+    public function downloadByRoom() {
+        ini_set('memory_limit', '20000M');
+        set_time_limit(180);
+        $rootPath = 'media/apartment/';
+        $download_path = 'ImFineThanks';
+        foreach (glob($_SERVER['DOCUMENT_ROOT'].'/*.zip') as $filename) {
+            unlink($filename);
+        }
+        $arr_img = [];
+        $list_district = $this->ghDistrict->get(['active' => 'YES']);
+        if(is_dir($download_path)){
+            $this->my_folder_delete($download_path);
+        }
+        mkdir($download_path);
+
+        $room_id = $this->input->get('room_id');
+
+
+        $room = $this->ghRoom->getFirstById($room_id);
+
+        $room_path = $download_path. '/' . $this->convert_vi_to_en($room['code']). '/';
+        $has_img = false;
+        $imgConfig = array();
+
+        if( is_dir($room_path) === false )
+        {
+            mkdir($room_path);
+            $img_model = $this->ghImage->get(['active' => 'YES' , 'room_id' => $room['id']]);
+            foreach ($img_model as $img) {
+
+                if(file_exists($rootPath.$img['name']) === true) {
+                    $has_img = true;
+                    copy($rootPath.$img['name'], $room_path.$img['name']);
+                }
+            }
+        }
+
+        if($has_img) {
+            $this->load->library('LibZipper', null, 'libZipper');
+            $zipName =  'Album '.$this->convert_vi_to_en($room['code'])." - date ".date('d-m-Y') . '.zip';
+            $zipArchive = new ZipArchive;
+            $zipArchive->open($zipName, ZipArchive::CREATE);
+            $this->createZip($zipArchive, $download_path."/");
+            $zipArchive->close();
+
+            if(file_exists($zipName)){
+
+                ini_set('memory_limit', '512M');
+                $this->libZipper->downloadSample($zipName);
+
+            } else {
+                $this->session->set_flashdata('fast_notify', [
+                    'message' => 'Zip file thất bại',
+                    'status' => 'danger'
+                ]);
+                return redirect('/admin/list-apartment?district-code='.$this->session->userdata('current_district_code'));
+            }
+        }
+        $this->session->set_flashdata('fast_notify', [
+            'message' => 'Dự án '.$address.' không có hình ảnh',
+            'status' => 'danger'
+        ]);
+        return redirect('/admin/list-apartment?district-code='.$this->session->userdata('current_district_code'));
+
+    }
+
     function createZip(&$zip,$dir){
         if (is_dir($dir)){
 

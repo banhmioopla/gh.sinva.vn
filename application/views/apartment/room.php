@@ -93,6 +93,11 @@ $arr_room_id = [];
 <!--                    <td class="text-center">--><?//= $room['time_available'] ? date('d-m-Y',$room['time_available']) :'' ?><!--</td>-->
                     <?php if($check_option):?>
                         <td class="d-flex flex-column flex-md-row justify-content-center">
+                            <a href="/admin/download-image-by-room?room_id=<?= $room['id'] ?>">
+                                <button  type="button" class="btn m-1 btn-sm btn-outline-danger btn-rounded waves-light waves-effect">
+                                    <i class="mdi mdi-arrow-down-bold-circle-outline"></i>
+                                </button>
+                            </a>
                             <?php if($check_contract):?>
                                 <a href="<?= base_url() ?>admin/create-contract-show?room-id=<?= $room['id'] ?>">
                                     <button data-room-id="<?= $room['id'] ?>" type="button" class="btn m-1 btn-sm btn-outline-success btn-rounded waves-light waves-effect">

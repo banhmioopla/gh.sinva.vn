@@ -113,7 +113,7 @@ class CustomBaseStep extends CI_Controller {
 		$open_modules = [
 		    /*Controller => [actions]*/
 		    'InternalContent' => ['show', 'pageIncomeRule', 'create', 'updateEditable'],
-            'Image' => ['ajax_get_room_image', 'downloadAllMediaApartment'],
+            'Image' => ['ajax_get_room_image', 'downloadAllMediaApartment', 'downloadByRoom'],
             'TelegramBot' => ['show','index'],
             'Apartment' => [
                 'getWard', 'showV2', "showProfile", "updateRating", 'drawChart',
