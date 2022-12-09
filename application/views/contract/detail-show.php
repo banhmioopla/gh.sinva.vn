@@ -234,6 +234,15 @@ if(time() >= $contract["time_expire"]){
                                      data-value="<?= $contract['room_price'] ?>"><?= number_format($contract['room_price']) . ' VND' ?></div>
                             </td>
                         </tr>
+						<tr>
+							<td class="text-right"><strong>Chi phí hỗ trợ khách thuê<strong></td>
+							<td>
+								<div class="contract-contract_cost w-50"
+									 data-name="contract_cost"
+									 data-pk="<?= $contract['id'] ?>"
+									 data-value="<?= $contract['contract_cost'] ?>"><?= number_format($contract['contract_cost']) . ' VND' ?></div>
+							</td>
+						</tr>
                         <tr>
                             <td class="text-right"><strong>Giá Cọc<strong></td>
                             <td>
@@ -417,7 +426,7 @@ if (isYourPermission($this->current_controller, 'updateEditable', $this->permiss
                 }
             });
 
-            $('.contract-room_price, .contract-deposit_price, .contract-number_of_month, .contract-commission_rate').editable({
+            $('.contract-room_price, .contract-contract_cost, .contract-deposit_price, .contract-number_of_month, .contract-commission_rate').editable({
                 type: "text",
                 url: '<?= base_url() ?>admin/update-contract-editable',
                 inputclass: '',
