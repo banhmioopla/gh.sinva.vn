@@ -90,7 +90,7 @@ class PublicConsultingPost extends CI_Controller {
         if(!empty($token)){
             switch ($token){
 
-                case 1: // Thu nhập - tháng hiện tại
+               /* case 1: // Thu nhập - tháng hiện tại
                         $list_user = $this->ghUser->get(['active' => 'YES']);
                         $list_contract_supporter = $this->ghContract->get([
                             'time_check_in >=' => strtotime($timeFrom),
@@ -211,7 +211,8 @@ class PublicConsultingPost extends CI_Controller {
                             "Phone" => "-",
                         ];
                     }
-                    break;
+                    break;*/
+
                 case 3: // Hợp đồng - mốc tgian
 
                     $list_contract = $this->ghContract->get([
@@ -352,6 +353,7 @@ class PublicConsultingPost extends CI_Controller {
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->sheet_money_format($total_sale),
                                 "Doanh thu" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter),
+                                "COST" => $contract_cost,
                                 "Doanh thu trừ phí" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter - $contract_cost),
                                 "Thu Nhập" => $this->sheet_money_format(round($income,2))
                             ];
