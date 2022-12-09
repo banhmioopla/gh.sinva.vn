@@ -353,7 +353,7 @@ class PublicConsultingPost extends CI_Controller {
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->sheet_money_format($total_sale),
                                 "Doanh thu" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter),
-                                "COST" => $contract_cost,
+                                "COST" => $contract_cost > 0 ? $contract_cost : '-',
                                 "Doanh thu trừ phí" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter - $contract_cost),
                                 "Thu Nhập" => $this->sheet_money_format(round($income,2))
                             ];
