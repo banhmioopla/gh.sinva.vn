@@ -266,7 +266,8 @@ class PublicConsultingPost extends CI_Controller {
                             "Hoa hồng" => $contract['commission_rate'] ? round($contract['commission_rate'],2) : "-",
                             "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByContract($contract["id"])),
                             "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): "-",
-                            "Số (*)" => $contract["rate_type"],
+							"Doanh thu trừ hỗ trợ" => ($total_partial-$contract["contract_cost"]) > 0 ? $this->sheet_money_format($total_partial- $contract["contract_cost"]): "-",
+							"Số (*)" => $contract["rate_type"],
                             "Sale Hỗ trợ" => !empty(trim($user_support)) ? $user_support : "-",
                             "Ghi chú" => !empty(trim($contract["note"])) ? $contract["note"] : "-",
                             "Người Lấy Dự Án" => $user_collected_id,
@@ -287,9 +288,10 @@ class PublicConsultingPost extends CI_Controller {
 
                     foreach ($list_user as $user) {
 
-                        $count_contract = $income = $total_sale = $partial_amount_supporter = $partial_amount_consultant = 0;
+                        $count_contract = $income = $total_sale = $partial_amount_supporter = $partial_amount_consultant = $contract_cost = 0;
 
                         foreach ($list_contract_supporter as $con) {
+							$contract_cost += $contract["contract_cost"];
                             $con_partial_amount = $this->ghContractPartial->getTotalByContractId($con['id']);
                             if(!empty($con["arr_supporter_id"])){
                                 $arr = json_decode($con["arr_supporter_id"], true);
@@ -325,6 +327,7 @@ class PublicConsultingPost extends CI_Controller {
                             }
 
                             foreach ($list_contract as $con){
+								$contract_cost += $contract["contract_cost"];
                                 $partial_amount_consultant += $con['rate_type'] * $this->ghContractPartial->getTotalByContractId($con['id']);
                                 $total_sale += $con['rate_type'] * $this->ghContract->getTotalSaleByContract($con['id']);
                             }
@@ -334,7 +337,7 @@ class PublicConsultingPost extends CI_Controller {
                                 $final_rate = 1 - $income_standard_rate;
                                 $income = $final_rate * ($partial_amount_consultant + $partial_amount_supporter);
                             }
-                            $income = $final_rate * ($partial_amount_consultant + $partial_amount_supporter);
+                            $income = $final_rate * ($partial_amount_consultant + $partial_amount_supporter - $contract_cost);
 
                             // Thu nhập - mốc tgian
                             $data[] = [
@@ -348,6 +351,7 @@ class PublicConsultingPost extends CI_Controller {
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->sheet_money_format($total_sale),
                                 "Doanh thu" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter),
+                                "Doanh thu trừ phí" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter - $contract_cost),
                                 "Thu Nhập" => $this->sheet_money_format(round($income,2))
                             ];
                         }
