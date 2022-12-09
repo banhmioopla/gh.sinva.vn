@@ -222,7 +222,7 @@ class PublicConsultingPost extends CI_Controller {
                         $apm = $this->ghApartment->getFirstById($contract['apartment_id']);
                         $room = $this->ghRoom->getFirstById($contract['room_id']);
                         $user = $this->ghUser->getFirstByAccountId($contract['consultant_id']);
-                        $user_support = "";
+                        $user_support = "-";
                         if(!empty($contract["arr_supporter_id"])){
                             $arr = json_decode($contract["arr_supporter_id"], true);
                             $arr_name = [];
@@ -265,7 +265,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByContract($contract["id"])),
                             "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): "-",
                             "Số (*)" => $contract["rate_type"],
-                            "Sale Hỗ trợ" => !empty($user_support) ?? "-",
+                            "Sale Hỗ trợ" => empty(trim($user_support)) ? $user_support : "-",
                             "Ghi chú" => trim($contract["note"]) ?? "-",
                             "Người Lấy Dự Án" => $user_collected_id,
                             "Khách Hàng" => $customer["name"] ?? "-",
