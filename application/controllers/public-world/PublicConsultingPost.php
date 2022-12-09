@@ -204,7 +204,7 @@ class PublicConsultingPost extends CI_Controller {
                             "Doanh số" => $this->sheet_money_format($this->ghContract->getTotalSaleByContract($contract["id"])),
                             "Doanh thu" => $total_partial > 0 ? $this->sheet_money_format($total_partial): "-",
                             "Số (*)" => $contract["rate_type"],
-                            "Sale Hỗ trợ" => !empty($user_support) ?? "-",
+                            "Sale Hỗ trợ" => empty(trim($user_support)) ?? "-",
                             "Khách Hàng" => $customer["name"] ?? "-",
                             "Phone" => "-",
                         ];
