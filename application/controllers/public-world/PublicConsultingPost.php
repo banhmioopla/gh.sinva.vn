@@ -299,8 +299,9 @@ class PublicConsultingPost extends CI_Controller {
                                 $arr = json_decode($con["arr_supporter_id"], true);
                                 if(in_array($user['account_id'], $arr)){
                                     $count_contract++;
-									$contract_cost += $con["contract_cost"];
+
                                     if($con['rate_type'] < 1){
+										$contract_cost += (1- $con['rate_type'])* $con["contract_cost"];
                                         $partial_amount_supporter += (1- $con['rate_type']) * $con_partial_amount;
                                         $total_sale += (1- $con['rate_type']) * $this->ghContract->getTotalSaleByContract($con['id']);
                                     }
@@ -329,7 +330,7 @@ class PublicConsultingPost extends CI_Controller {
                             }
 
                             foreach ($list_contract as $con){
-								$contract_cost += $con["contract_cost"];
+								$contract_cost += $con['rate_type'] * $con["contract_cost"];
                                 $partial_amount_consultant += $con['rate_type'] * $this->ghContractPartial->getTotalByContractId($con['id']);
                                 $total_sale += $con['rate_type'] * $this->ghContract->getTotalSaleByContract($con['id']);
                             }
