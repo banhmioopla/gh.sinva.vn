@@ -349,7 +349,7 @@ class PublicConsultingPost extends CI_Controller {
                                 "Account" => $user["account_id"],
                                 "Tên" => $user["name"],
                                 "Ngày vào làm" => date("d-m-Y", $user["time_joined"]),
-                                "Số (*)" => $rate_star,
+                                "Số (*)" => $this->sheet_money_format($rate_star,1),
                                 "Hệ số" => (string)($final_rate*100),
                                 "Số hợp đồng" => $count_contract,
                                 "Doanh số" => $this->sheet_money_format($total_sale),
@@ -374,11 +374,11 @@ class PublicConsultingPost extends CI_Controller {
         return false;
     }
 
-    private function sheet_money_format($number){
+    private function sheet_money_format($number,$dec = 2){
         if(empty($number)){
             return "-";
         }
-        return number_format($number, 2, ",", ".");
+        return number_format($number, $dec, ",", ".");
 
     }
 
