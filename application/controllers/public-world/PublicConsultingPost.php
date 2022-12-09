@@ -328,7 +328,7 @@ class PublicConsultingPost extends CI_Controller {
                             }
 
                             foreach ($list_contract as $con){
-								$contract_cost += $contract["contract_cost"];
+								$contract_cost += $con["contract_cost"];
                                 $partial_amount_consultant += $con['rate_type'] * $this->ghContractPartial->getTotalByContractId($con['id']);
                                 $total_sale += $con['rate_type'] * $this->ghContract->getTotalSaleByContract($con['id']);
                             }
