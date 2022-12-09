@@ -293,13 +293,13 @@ class PublicConsultingPost extends CI_Controller {
                         $count_contract = $income = $total_sale = $partial_amount_supporter = $partial_amount_consultant = $contract_cost = 0;
 
                         foreach ($list_contract_supporter as $con) {
-							$contract_cost += $con["contract_cost"];
+
                             $con_partial_amount = $this->ghContractPartial->getTotalByContractId($con['id']);
                             if(!empty($con["arr_supporter_id"])){
                                 $arr = json_decode($con["arr_supporter_id"], true);
                                 if(in_array($user['account_id'], $arr)){
                                     $count_contract++;
-
+									$contract_cost += $con["contract_cost"];
                                     if($con['rate_type'] < 1){
                                         $partial_amount_supporter += (1- $con['rate_type']) * $con_partial_amount;
                                         $total_sale += (1- $con['rate_type']) * $this->ghContract->getTotalSaleByContract($con['id']);
