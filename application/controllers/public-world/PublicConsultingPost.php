@@ -296,7 +296,7 @@ class PublicConsultingPost extends CI_Controller {
 
                                     if($con['rate_type'] < 1){
                                         $partial_amount_supporter += (1- $con['rate_type']) * $con_partial_amount;
-                                        $total_sale += (1- $con['rate_type']) * $this->ghContract->getTotalByContractId($con['id']);
+                                        $total_sale += (1- $con['rate_type']) * $this->ghContract->getTotalSaleByContract($con['id']);
                                     }
                                 }
                             }
