@@ -184,7 +184,7 @@ $checkPartial = isYourPermission('Contract', 'approved', $this->permission_set);
 
                         <?php if(isset($request_data->management_fee) && $request_data->management_fee != $apartment['management_fee']): ?>
                             <tr>
-                                <td>Phí Quản Lý</td>
+                                <td>Ra vào</td>
                                 <td><?= $request_data->parking ?></td>
                                 <td><?= $apartment['parking'] ?></td>
                             </tr>

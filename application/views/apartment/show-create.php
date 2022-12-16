@@ -172,7 +172,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <strong class="text-primary">Phí Quản Lý</strong> <span class="text-danger">*</span>
+                                    <strong class="text-primary">Ra vào</strong> <span class="text-danger">*</span>
                                     <input type="text" class="form-control" required
                                            name="management_fee"
                                            value="">

@@ -156,7 +156,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <div class="mt-2">
-                                <label for="inputEmail4" class="col-form-label">Phí Quản Lý</label>
+                                <label for="inputEmail4" class="col-form-label">Ra vào</label>
                                 <input type="email" class="form-control" readonly value="<?= $apartment['management_fee'] ?>">
                             </div>
 

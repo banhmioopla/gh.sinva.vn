@@ -181,7 +181,7 @@ include VIEWPATH . 'functions.php';
                         </div>
                         <div class="col-6 col-md-3 shadow-sm">
                             <div class="mt-3">
-                                <p class="mb-0 text-danger ">Phí Quản Lý</p>
+                                <p class="mb-0 text-danger ">Ra vào</p>
                                 <h4 class="mb-2"><?= $apartment['management_fee'] ?></h4>
                             </div>
                         </div>

@@ -296,7 +296,7 @@ $hidden_service = count(json_decode($apartment['hidden_service'], true)) ? json_
                             </div>
 
                             <div class="form-group p-2 hover-hidden-service">
-                                <strong class="text-primary">Phí Quản Lý</strong>
+                                <strong class="text-primary">Ra vào</strong>
                                 <div class="checkbox checkbox-dark checkbox-single pull-right">
                                     <input type="checkbox" name="hidden_cols[]" <?= in_array('management_fee', $hidden_service) ? 'checked':'' ?> value="management_fee">
                                     <label></label>
