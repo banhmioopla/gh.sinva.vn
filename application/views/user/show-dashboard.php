@@ -147,7 +147,7 @@
 
                         ?>
                         <tr>
-                            <th scope="row"><?= $contract['id'] ?></th>
+                            <th scope="row"><a href="/admin/detail-contract?id=<?= $contract['id'] ?>"><?= $contract['id'] ?></a></th>
                             <td>
                                 <div><?= "Phòng ".$room['code'] ?></div>
                                 <div><small><?= $address ?></small></div>

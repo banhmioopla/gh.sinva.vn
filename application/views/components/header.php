@@ -245,10 +245,6 @@ include VIEWPATH.'functions.php';
                                         <span><?= $this->cfg_label['account'] ?></span>
                                     </a>
 
-                                    <a href="<?= base_url().'admin/change-password-user'?>" class="dropdown-item notify-item">
-                                        <i class="fi-help"></i>
-                                        <span><?= $this->cfg_label['change_password'] ?></span>
-                                    </a>
                                     <!-- item-->
                                     <a href="<?= base_url().'admin/logout'?>" class="dropdown-item notify-item">
                                         <i class="fi-power"></i>
