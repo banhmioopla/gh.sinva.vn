@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="card-box">
                     <form method="GET" class="row">
-                        <div class="col-md-4 offset-md-2">
+                        <div class="col-md-4">
                             <strong>Ngày Ký Bắt Đầu</strong>
                             <input type="text" name="timeFrom" class="form-control" value="<?= $timeFrom ?>">
                         </div>
@@ -32,6 +32,14 @@
                             <strong>Ngày Ký Kết Thúc</strong>
                             <input type="text" name="timeTo" class="form-control" value="<?= $timeTo ?>">
                         </div>
+						<div class="col-md-4">
+							<strong>Bộ lọc</strong>
+							<select name="filter" class="form-control">
+								<option value="">Tuỳ chọn</option>
+								<option value="PendingPartial" <?= $filter =='PendingPartial' ? 'selected':'' ?>>Chưa thu đủ</option>
+								<option value="HasContractCost" <?= $filter =='HasContractCost' ? 'selected':'' ?>>Hỗ trợ giá thuê</option>
+							</select>
+						</div>
                         <div class="col-md-12 mt-2 text-center">
                             <button type="submit" class="btn btn-danger" id="submitTimeRange">Áp Dụng</button>
                         </div>

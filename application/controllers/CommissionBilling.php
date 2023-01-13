@@ -14,6 +14,7 @@ class CommissionBilling extends CustomBaseStep
     public function show(){
         $timeFrom = $this->input->get("timeFrom");
         $timeTo = $this->input->get("timeTo");
+        $filter = $this->input->get("filter");
 
         $metric = [
             'total_partial_amount' => 0,
@@ -38,6 +39,18 @@ class CommissionBilling extends CustomBaseStep
         $metric['contract_count'] = count($list_contract);
 
         foreach ($list_contract as $contract) {
+        	if($filter == 'HasContractCost'){
+        		if(empty($contract['contract_cost'])){
+        			continue;
+				}
+			}
+
+			if($filter == 'PendingPartial'){
+				if($this->ghContractPartial->getTotalByContractId($contract['id']) >= $this->ghContract->getTotalSaleByContract($contract['id'])){
+					continue;
+				}
+			}
+
             if(!in_array($contract["apartment_id"],$arr_apm_id)){
                 $arr_apm_id[] = $contract["apartment_id"];
                 $apartment = $this->ghApartment->getFirstById($contract["apartment_id"]);
@@ -46,7 +59,7 @@ class CommissionBilling extends CustomBaseStep
                     $public_url[$contract["apartment_id"]] = "/sinva/commission-billing/detail?cbid=".$contract["apartment_id"]."&fromDate=".$timeFrom."&toDate=".$timeTo."&listContract=";
                 }
             }
-            $metric['total_sale_amount'] += $contract["room_price"]*$contract["commission_rate"]/100;
+            $metric['total_sale_amount'] += $this->ghContract->getTotalSaleByContract($contract['id']);
             $metric['total_partial_amount'] += $this->ghContractPartial->getTotalByContractId($contract['id']);
 
         }
@@ -60,6 +73,7 @@ class CommissionBilling extends CustomBaseStep
             "public_url" => $public_url,
             "timeFrom" => $timeFrom,
             "timeTo" => $timeTo,
+            'filter' => $filter,
             "metric" => $metric
         ]);
         $this->load->view('components/footer');
