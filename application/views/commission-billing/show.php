@@ -106,7 +106,7 @@
 
                             $total_partial_amount = 0;
                             $total_sale_amount = 0;
-                            foreach ($list_contract as $contract){
+                            foreach ($list_con_apm[$apartment['id']] as $contract){
                                 $total_sale_amount += $contract["room_price"]*$contract["commission_rate"]/100;
                                 $total_partial_amount += $this->ghContractPartial->getTotalByContractId($contract['id']);
                             }
@@ -153,7 +153,7 @@
                                 <th class="text-left">Ghi Chú</th>
                                 <th class="text-center">Trạng Thái</th>
                             </tr>
-                            <?php foreach ($list_contract as $contract):
+                            <?php foreach ($list_con_apm[$apartment['id']] as $contract):
                             $room = $this->ghRoom->getFirstById($contract['room_id']);
                             $statusClass = 'muted'; $doc_type = "Cọc ";
                             if($contract['status'] == 'Active') {

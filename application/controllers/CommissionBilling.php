@@ -30,7 +30,7 @@ class CommissionBilling extends CustomBaseStep
         if(empty($timeTo)){
             $timeTo = $this->timeTo;
         }
-        $billing = ""; $list_apartment = $arr_apm_id = $public_url =  [];
+        $billing = ""; $list_apartment = $arr_apm_id = $list_con_apm =  $public_url =  [];
         $list_contract = $this->ghContract->get([
             'time_check_in >=' => strtotime($timeFrom),
             'time_check_in <=' => strtotime($timeTo)+86399,
@@ -56,6 +56,7 @@ class CommissionBilling extends CustomBaseStep
                 $apartment = $this->ghApartment->getFirstById($contract["apartment_id"]);
                 if($apartment){
                     $list_apartment[] = $apartment;
+					$list_con_apm[$contract["apartment_id"]][] = $contract;
                     $public_url[$contract["apartment_id"]] = "/sinva/commission-billing/detail?cbid=".$contract["apartment_id"]."&fromDate=".$timeFrom."&toDate=".$timeTo."&listContract=";
                 }
             }
@@ -70,6 +71,7 @@ class CommissionBilling extends CustomBaseStep
         $this->load->view('components/header');
         $this->load->view('commission-billing/show', [
             "list_apartment" => $list_apartment,
+            "list_con_apm" => $list_con_apm,
             "public_url" => $public_url,
             "timeFrom" => $timeFrom,
             "timeTo" => $timeTo,
