@@ -149,15 +149,12 @@ class Contract extends CustomBaseStep {
         $timeCheckInFrom = $time_from;
         $timeCheckInTo = $time_to;
 
-        $params['time_check_in >='] = strtotime($timeCheckInFrom);
+        $params['gh_contract.time_check_in >='] = strtotime($timeCheckInFrom);
         if($this->input->get('timeCheckInFrom')) {
-        	echo "<pre>";
-        	var_dump($this->input->get('timeCheckInFrom'));
-        	die;
             $params['gh_contract.time_insert >='] = strtotime($this->input->get('timeCheckInFrom'));
         }
 
-        $params['time_check_in <='] = strtotime($timeCheckInTo);
+        $params['gh_contract.time_check_in <='] = strtotime($timeCheckInTo);
         if($this->input->get('timeCheckInTo')) {
             $timeCheckInTo = $this->input->get('timeCheckInTo');
             $params['gh_contract.time_insert <='] = strtotime($this->input->get('timeCheckInTo'))+86399;
