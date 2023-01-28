@@ -25,13 +25,13 @@
                 <div class="card-box">
                     <ul>
                         <li>
-                            Tài khoản giao dịch: <strong>Ngân hàng Techcombank</strong>
+                            Tài khoản giao dịch: <strong>Ngân hàng VPBank</strong>
                         </li>
                         <li>
                             Chủ tài khoản: <strong>Trần Thị Trâm Anh</strong>
                         </li>
                         <li>
-                            STK: <strong>19033059780014</strong>
+                            STK: <strong>0888900704</strong>
                         </li>
                         <li>
                             Nội dung: <strong><?= $apartment_address_payment ?></strong>
