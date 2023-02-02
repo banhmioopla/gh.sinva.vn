@@ -217,7 +217,7 @@ if(isYourPermission($this->current_controller, 'updateEditable', $this->permissi
             });
 
             $('.datepicker').datepicker({
-                format: "dd/mm/yyyy",
+                format: "dd-mm-yyyy",
             });
 
 
