@@ -48,7 +48,7 @@
             <div class="col-12">
                 <div class="card-box">
                     <h4 class="font-weight-bold text-center pb-1 border-bottom">Tìm Kiếm</h4>
-                    <form action="/admin/list-customer">
+                    <form>
                         <div class="row">
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
