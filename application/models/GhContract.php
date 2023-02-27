@@ -446,6 +446,18 @@ class GhContract extends CI_Model {
 
     }
 
+    public function getFirstSignContractOfApartment($apm_id){
+    	$con = $this->getFirst([
+			'apartment_id' =>  $apm_id,
+			'status <>' => 'Cancel',
+		], 'time_check_in','ASC');
+    	if($con){
+    		return $con;
+		}
+
+    	return false;
+	}
+
 
 }
 

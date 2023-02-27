@@ -1257,6 +1257,12 @@ $route['admin/gallery/delete'] = function($params = []) {
     return $controller.$action;
 };
 
+$route['admin/gallery/delete-by-room'] = function($params = []) {
+    $controller = 'Media';
+    $action = '/deleteByRoom';
+    return $controller.$action;
+};
+
 
 $route['admin/apartment/search'] = function($params = []) {
 	$controller = 'Apartment';

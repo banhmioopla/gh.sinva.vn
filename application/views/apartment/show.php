@@ -282,78 +282,8 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
     </div>
     <div class="row">
-        <div class="col-lg-4 col-12 d-md-block d-none">
-            <div class="card-box list-feature">
-                <div class="d-flex justify-content-center flex-wrap ">
-                    <?php
-                    foreach($list_district as $district):
-                        $active_element = "";
-                        if(!empty($current_apartment) && $district['code'] == $current_apartment["district_code"]){
-                            $active_element = "active";
-                        }
-                        ?>
-
-                        <a href="<?= base_url().'admin/list-apartment?district-code='.$district['code'] ?>"
-                           class="btn m-1 btn-sm item-feature btn-outline-success <?= $active_element ?> btn-rounded waves-light waves-effect">
-                            Q. <?= $district['name'] ?> </a>
-
-                    <?php endforeach; ?>
-
-
-                </div>
-                <div class="d-flex justify-content-center flex-wrap border-bottom mt-2 mb-3">
-                    <div class="m-1 loadMore badge badge-pill badge-primary"> <i class="fa fa-arrow-circle-down"></i> Mở rộng</div>
-                    <div class="m-1 showLess badge badge-pill badge-primary"> <i class="fa fa-arrow-circle-up"></i> Thu gọn</div>
-                </div>
-
-                <h4 class="font-weight-bold text-center text-danger">Danh sách dự án Q. <?= $this->libDistrict->getNameByCode($district_code) ?></h4>
-                <input type="text" placeholder="Tìm kiếm dự án, vui lòng nhập địa chỉ..." class="form-control search-address border border-info">
-
-                <ul
-                        class="list-unstyled slimscroll mb-0 mt-1"
-                        style="max-height: 300px"
-                >
-                    <?php foreach ($list_apartment as $apm):
-                        $count_available =  $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '<div class="badge badge-success font-weight-bold ">'.$this->ghRoom->getNumberByStatus($apm['id'], 'Available').'</div>' : '';
-                        $partner_name = '<span class="badge badge-primary mb-2 ml-2">'.$this->ghPartner->getNameById($apm['partner_id']).'</span> ';
-                        $is_full_ribbon = $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '' : 'ribbon-box';
-                        $is_full_ribbon_html = $this->ghRoom->getNumberByStatus($apm['id'], 'Available') > 0 ? '' : '<div class="ribbon ribbon-dark"><span>Full</span></div>';
-                    ?>
-                        <li class="mb-3 address-item mt-1 mb-1 <?= $is_full_ribbon ?> card-header click-view" data-apm="<?= $apm['id'] ?>">
-                            <?= $is_full_ribbon_html ?>
-                            <h5 class="font-weight-bold"><a href="/admin/list-apartment?current_apm_id=<?= $apm['id'] ?>" class="text-danger"><i class="mdi mdi-arrow-right-bold-circle-outline"></i> <?= $apm["address_street"] .", phường " .$apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"]))  ?></a> </h5>
-                            <div class="text-right text-danger"> <?= $partner_name . $count_available ?> <i class="mdi mdi-tag"></i> <?= implode(" - ",array_map(function($val) { return ($val /1000); } , $this->ghApartment->getRoomPriceRange($apm['id']))) ?> </div>
-                            <div class="clearfix"></div>
-                        </li>
-                    <?php endforeach;?>
-                </ul>
-
-            </div>
-
-            <div class="card-box">
-                <h4 class="font-weight-bold text-center text-danger">Online hôm nay</h4>
-                <?= $this->ghUser->getOnlineToday() ?>
-            </div>
-            <?php if(false):?>
-            <div class="card-box">
-                <?php $this->load->view('apartment/components/five-days-ago',[
-                    'check_profile' => $check_profile
-                ]) ?>
-            </div>
-            <?php endif; ?>
-        </div>
-        <?php if(empty($current_apartment)): ?>
-            <div class="col-md-8 col-12">
-                <div class="card-box">
-                    <div class="alert alert-danger" role="alert">
-                        Rất tiếc, Không tồn tại dự án!
-                    </div>
-                </div>
-
-            </div>
-        <?php endif; ?>
         <?php if(!empty($current_apartment)): ?>
-        <div class="col-lg-8 col-12">
+        <div class="col-lg-12 col-12">
             <!--DETAIL CURRENT APARTMENT-->
 
             <?php
@@ -396,7 +326,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                     <?php endif; ?>
                     <div class="col-12  mt-2 mb-1">
                         <div class="card">
-                            <h2 id="address-full" class="font-weight-bold text-danger"><iclass=" mdi mdi-home-map-marker"></i>  <?= $apm_full_address ?>
+                            <h2 id="address-full" class="font-weight-bold text-danger"><i class="mdi mdi-home-map-marker"></i>  <?= $apm_full_address ?>
                                 <button data-apm_id="<?= $current_apartment['id'] ?>"
                                         data-status_following="<?= json_encode($following) ?>"
                                         id="apm-following"
@@ -473,16 +403,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger"><i class="mdi mdi-tag"></i> Giá: <?= implode(" - ",array_map(function($val) { return number_format($val); } , $this->ghApartment->getRoomPriceRange($current_apartment['id']))) ?></h4>
-<!--                        <div><small> <strong><?/*= count($list_similar) */?></strong> Dự án <strong class="text-success">đang trống</strong> có mức giá tương đồng , Click để xem dự án </small></div>
--->                        <!--<div class="list-similar">
-                            <?php
-/*                            foreach($list_similar as $similar_id):
-                                $sim_apm = $this->ghApartment->getFirstById($similar_id);
-                                */?>
-                                <a href="/admin/list-apartment?current_apm_id=<?/*= $similar_id */?>"> <span class="badge badge-secondary m-1"># <?/*= $sim_apm['address_street'] */?> <span class="text-dark"><?/*= implode(" - ",array_map(function($val) { return number_format($val/1000); } , $this->ghApartment->getRoomPriceRange($similar_id))) */?></span> </span></a>
 
-                            <?php /*endforeach;*/?>
-                        </div>-->
 
                     </div>
 
@@ -492,8 +413,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                             <table class="table font-weight-bold table-dark">
                                 <tbody>
                                 <tr class="text-white">
-                                    <th scope="row"><i class="mdi mdi-checkbox-blank-circle"></i></th>
-                                    <td>
+                                    <td scope="row">
                                         <?php if($current_apartment['user_collected_id']):?>
                                             Người lấy dự án
                                         <?php endif;?>
@@ -550,7 +470,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                     <div class="col-12">
                         <h4 class="font-weight-bold text-danger">Mô tả</h4>
-                        <blockquote class="blockquote border p-1" style="white-space: pre-line">
+                        <blockquote class="blockquote" style="white-space: pre-line">
                             <?= $current_apartment['description'] ?>
                         </blockquote>
                     </div>
@@ -566,7 +486,7 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                                         <?= $promotion['title'] ?>
                                     </h5>
                                     <div class="text-center"><?= date("d/m/Y",$promotion['start_time']) ." . " .date("d/m/Y",$promotion['end_time']) ?></div>
-                                    <?= $promotion['description'] ? $promotion['description'] : '' ?>
+                                    <?= $promotion['description'] ?>
 
                                 </div>
                             <?php endforeach;?>
@@ -581,10 +501,9 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
 
                 <div class="row mt-3">
                     <div class="col-12">
-                        <h4 class="font-weight-bold text-danger" data-toggle="collapse" aria-expanded="true"
-                            aria-controls="commission-info" href="#commission-info">Cọc & Hoa Hồng <i class="mdi mdi-arrow-down-drop-circle-outline"></i></h4>
+                        <h4 class="font-weight-bold text-danger" >Cọc & Hoa Hồng <i class="mdi mdi-arrow-down-drop-circle-outline"></i></h4>
                     </div>
-                    <div class="col-12 collapse" id="commission-info" >
+                    <div class="col-12 " id="commission-info" >
                         <div class="row">
                             <?php if(!in_array('deposit', $hidden_service)): ?>
                                 <div class="col-md-3 col-6 mb-4">
@@ -733,9 +652,18 @@ if($this->product_category === "DISTRICT_GROUP" && in_array($current_apartment["
                         $img_count = count($img_count) > 0 ? ' ('.count($img_count).')': '';
 
                         ?>
-                            <button type="button"
-                                    data-id="<?= $_room['id'] ?>"
-                                    class="btn m-1 btn-secondary waves-light room-code waves-effect"> <?= $_room['code'] . $img_count?></button>
+						<div class="btn-group m-1">
+							<button type="button"
+									data-id="<?= $_room['id'] ?>"
+									class="btn btn-danger waves-light room-code waves-effect"> <?= $_room['code'] . $img_count?></button>
+							<?php if($is_editable_apartment): ?>
+							<button type="button"
+									data-id="<?= $_room['id'] ?>"
+									data-room-code="<?= $_room['code'] ?>"
+									class="btn btn-danger waves-light delete-media-in-room waves-effect"><i class="mdi text-white mdi-delete-forever"></i></button>
+							<?php endif;?>
+						</div>
+
                     <?php endforeach;?>
                     </div>
                     <div class="col-12">

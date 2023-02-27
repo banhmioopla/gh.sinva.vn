@@ -147,7 +147,7 @@ class Media extends CustomBaseStep {
         $html = "";
         $item_html_start = '<div class="carousel-item"><div class="row">';
         $item_html ='
-                <div class="col-md-3 col-6" id="img-box-%ID_IMG%">
+                <div class="col-md-2 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup %CLASS_MEDIA%">
                         <div class="portfolio-masonry-img">
@@ -159,7 +159,7 @@ class Media extends CustomBaseStep {
                     </div>
                 </div>';
         $item_html_vid ='
-                <div class="col-md-3 col-6" id="img-box-%ID_IMG%">
+                <div class="col-md-2 col-6" id="img-box-%ID_IMG%">
                     <div class="portfolio-masonry-box mt-0">
                     <a href="%URL%" class="image-popup %CLASS_MEDIA%">
                         <div class="portfolio-masonry-img">
@@ -489,6 +489,30 @@ class Media extends CustomBaseStep {
         }
         echo json_encode(['status' => true]); die;
     }
+
+	public function deleteByRoom(){
+		$room_id = $this->input->post('room_id');
+		$arr_id = [];
+		if(!empty($room_id)) {
+			$list = $this->ghImage->getByRoomId($room_id);
+			foreach ($list as $item){
+				if($item['controller'] === "Apartment"){
+					$media_path = "media/apartment/".$item['name'];
+					if(file_exists($media_path)){
+						if(unlink($media_path) === true) {
+							$arr_id[] = $item['id'];
+							$this->ghMedia->delete($item['id']);
+						}
+					}
+				}
+			}
+		}
+
+		echo json_encode([
+			'status' => true,
+			'list_media_id' =>$arr_id
+		]); die;
+	}
 
 }
 

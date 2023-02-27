@@ -149,9 +149,13 @@ class Contract extends CustomBaseStep {
         $timeCheckInFrom = $time_from;
         $timeCheckInTo = $time_to;
 
+        $timeExpireFrom = $time_from;
+        $timeExpireTo = $time_to;
+
         $params['gh_contract.time_check_in >='] = strtotime($timeCheckInFrom);
         if($this->input->get('timeCheckInFrom')) {
             $params['gh_contract.time_check_in >='] = strtotime($this->input->get('timeCheckInFrom'));
+			$timeCheckInFrom = $this->input->get('timeCheckInFrom');
         }
 
         $params['gh_contract.time_check_in <='] = strtotime($timeCheckInTo);
@@ -161,13 +165,13 @@ class Contract extends CustomBaseStep {
         }
 
         if($this->input->get('timeExpireFrom')) {
-            $timeCheckInFrom = $this->input->get('timeExpireFrom');
-            $params['time_expire >='] = strtotime($timeCheckInFrom);
+			$timeExpireFrom = $this->input->get('timeExpireFrom');
+            $params['time_expire >='] = strtotime($timeExpireFrom);
         }
 
         if($this->input->get('timeExpireTo')) {
-            $timeCheckInTo = $this->input->get('timeExpireTo');
-            $params['time_expire <='] = strtotime($timeCheckInTo)+86399;
+			$timeExpireTo = $this->input->get('timeExpireTo');
+            $params['time_expire <='] = strtotime($timeExpireTo)+86399;
         }
         $params['gh_contract.status <>'] = "'Cancel'";
 
@@ -209,8 +213,12 @@ class Contract extends CustomBaseStep {
 		/*--- Load View ---*/
         $data['time_from'] = $time_from;
         $data['time_to'] = $time_to;
+
         $data['timeCheckInFrom'] = $timeCheckInFrom;
         $data['timeCheckInTo'] = $timeCheckInTo;
+        $data['timeExpireFrom'] = $timeExpireFrom;
+        $data['timeExpireTo'] = $timeExpireTo;
+
 		$this->load->view('components/header');
 		$this->load->view('contract/show-all', $data);
 		$this->load->view('components/footer');
@@ -280,7 +288,10 @@ class Contract extends CustomBaseStep {
 		$data['select_customer'] = $this->libCustomer->cb();
 		$data['select_user'] = $this->libUser->cb(0,'YES');
 		$data['libDistrict'] = $this->libDistrict;
-		
+
+		$data["cash_in_row"] = 6;
+		$data["cash_out_row"] = 6;
+
 		/*--- Load View ---*/
 		$this->load->view('components/header');
 		$this->load->view('contract/create-show-v2', $data);

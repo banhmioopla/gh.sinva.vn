@@ -67,13 +67,13 @@ foreach ($list_contract as $row) {
                             <input type="text"
                                    id="time_expire_from"
                                    class="form-control datepicker"
-                                   value="<?= $this->input->get('timeExpireFrom') ?>">
+                                   value="<?= $timeExpireFrom ?>">
                         </div>
                         <div class="col-6">
                             <input type="text"
                                    id="time_expire_to"
                                    class="form-control datepicker"
-                                   value="<?= $this->input->get('timeExpireTo') ?>">
+                                   value="<?= $timeExpireTo ?>">
                         </div>
                     </div>
 

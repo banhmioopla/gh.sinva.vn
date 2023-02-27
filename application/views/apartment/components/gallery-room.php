@@ -64,6 +64,40 @@
             });
         });
 
+        $('.delete-media-in-room').click(function () {
+        	let _this = $(this);
+			swal({
+				title: 'Bạn Muốn Xóa Tất Cả Ảnh Phòng ' + _this.data('room-code'),
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonClass: 'btn btn-confirm mt-2',
+				cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+				confirmButtonText: 'Xóa',
+			}).then(function () {
+				$.ajax({
+					type: 'POST',
+					url:'/admin/gallery/delete-by-room',
+					data: {room_id: _this.data('id')},
+					dataType:'json',
+					success:function(response) {
+						if(response.status === true) {
+							for(const element of response.list_media_id){
+								$('#img-box-'+element).fadeOut( "slow", function() {
+									$('#img-box-'+element).remove();
+								});
+							}
+
+						}
+					}
+				});
+				swal({
+					title: 'Đã Xóa Thành Công!',
+					type: 'success',
+					confirmButtonClass: 'btn btn-confirm mt-2'
+				});
+			})
+		})
+
         $('body').delegate(".btn-delete-img","click",function () {
             var img_id = $(this).data('id');
             $.ajax({
@@ -78,5 +112,6 @@
                 }
             });
         });
+
     });
 </script>
