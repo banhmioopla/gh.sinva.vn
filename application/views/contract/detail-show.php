@@ -340,7 +340,10 @@ if(time() >= $contract["time_expire"]){
             </div>
         </div>
 
+
         <?php
+		$this->load->view('contract/contract-cashflow');
+
         if (isYourPermission($this->current_controller, 'deletePartial', $this->permission_set)){
             $this->load->view('contract/contract-partial');
         }

@@ -307,6 +307,12 @@ $route['admin/update-contract-editable'] = function($params = []) {
 	return $controller.$action;
 };
 
+$route['admin/contract-cashflow/ajax-update'] = function($params = []) {
+	$controller = 'ContractCashflow';
+	$action = '/ajaxUpdate';
+	return $controller.$action;
+};
+
 $route['admin/update-customer-editable'] = function($params = []) {
 	$controller = 'Customer';
 	$action = '/updateEditable';

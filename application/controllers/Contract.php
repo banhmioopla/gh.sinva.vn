@@ -305,6 +305,7 @@ class Contract extends CustomBaseStep {
             'is_approve' => 'NO',
             'object_id' => $contract_id
         ]);
+        $data['row_cash'] = 5;
 
         $data['notification_object_id'] = count($notification) ? $notification[0]['object_id'] : "";
 		$data['contract'] = $model;
