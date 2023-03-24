@@ -334,7 +334,7 @@ class PublicConsultingPost extends CI_Controller {
 					break;
 
                 default: //
-                    echo json_decode(["msg" => "INVALID TOKEN DATA"]);
+                    echo json_encode(["msg" => "INVALID TOKEN DATA"]); die();
 
             }
 
