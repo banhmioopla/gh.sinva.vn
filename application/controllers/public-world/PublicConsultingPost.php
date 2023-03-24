@@ -263,7 +263,7 @@ class PublicConsultingPost extends CI_Controller {
 									$partial_amount_supporter += (1- $con['rate_type']) * $con_partial_amount;
 									$total_sale += (1- $con['rate_type']) * $this->ghContract->getTotalSaleByContract($con['id']);
 
-									$data_contract[] = [
+									$data[] = [
 										"Source" => "GH",
 										"IDHĐ" => $con['id'],
 										"Team" => $team_name,
