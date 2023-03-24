@@ -79,7 +79,7 @@ class PublicConsultingPost extends CI_Controller {
 
         if(strlen($token) > 20){
             $time_token = explode('_', $token);
-            if(count($time_token) == 3){
+            if(count($time_token)){
                 $timeFrom = $time_token[0];
                 $timeTo = $time_token[1];
                 $token = $time_token[2];
@@ -88,7 +88,6 @@ class PublicConsultingPost extends CI_Controller {
         }
 
         $income_standard_rate = .55;
-
         if(!empty($token)){
             switch ($token){
                 case 3: // Hợp đồng - mốc tgian
