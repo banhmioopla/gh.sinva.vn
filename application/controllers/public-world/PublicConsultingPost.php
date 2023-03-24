@@ -331,6 +331,7 @@ class PublicConsultingPost extends CI_Controller {
 							"COST" => $contract_cost > 0 ? $contract_cost : '-',
 						];
 					}
+					break;
 
                 default: //
                     echo json_decode(["msg" => "INVALID TOKEN DATA"]);
