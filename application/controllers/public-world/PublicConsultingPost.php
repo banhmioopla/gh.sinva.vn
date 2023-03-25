@@ -251,6 +251,14 @@ class PublicConsultingPost extends CI_Controller {
 					$data_contract = [];
 					$count_contract = $income = $total_sale = $partial_amount_supporter = $partial_amount_consultant = $contract_cost = 0;
 					$teamUser = $this->ghTeamUser->getFirstByUserId($account_id);
+					$team_name = "-";
+					if(!empty($teamUser)){
+						$team = $this->ghTeam->getFirstById($teamUser['team_id']);
+						if(!empty($team)){
+							$team_name = $team['name'];
+						}
+					}
+
 					foreach ($list_contract_supporter as $con) {
 						$apm = $this->ghApartment->getFirstById($con['apartment_id']);
 						$room = $this->ghRoom->getFirstById($con['room_id']);
