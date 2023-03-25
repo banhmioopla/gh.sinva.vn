@@ -79,11 +79,11 @@ class PublicConsultingPost extends CI_Controller {
 
         if(strlen($token) > 20){
             $time_token = explode('_', $token);
-            if(count($time_token)){
+            if(count($time_token) > 2){
                 $timeFrom = $time_token[0];
                 $timeTo = $time_token[1];
                 $token = $time_token[2];
-				$account_id = $time_token[3];
+				$account_id = isset($time_token[3]) ? $time_token[3] : 0;
             }
         }
 
@@ -247,6 +247,7 @@ class PublicConsultingPost extends CI_Controller {
 						'arr_supporter_id <>' => null,
 						'status' => "Active"
 					]);
+					$user = $this->ghUser->getFirstByAccountId($account_id);
 					$data_contract = [];
 					$count_contract = $income = $total_sale = $partial_amount_supporter = $partial_amount_consultant = $contract_cost = 0;
 					$teamUser = $this->ghTeamUser->getFirstByUserId($account_id);
@@ -258,9 +259,9 @@ class PublicConsultingPost extends CI_Controller {
 							$arr = json_decode($con["arr_supporter_id"], true);
 							if(in_array($account_id, $arr)){
 								if($con['rate_type'] < 1){
-									$contract_cost += (1- $con['rate_type'])* $con["contract_cost"];
-									$partial_amount_supporter += (1- $con['rate_type']) * $con_partial_amount;
-									$total_sale += (1- $con['rate_type']) * $this->ghContract->getTotalSaleByContract($con['id']);
+									$contract_cost = (1- $con['rate_type'])* $con["contract_cost"];
+									$partial_amount_supporter = (1- $con['rate_type']) * $con_partial_amount;
+									$total_sale = (1- $con['rate_type']) * $this->ghContract->getTotalSaleByContract($con['id']);
 
 									$data[] = [
 										"Source" => "GH",
@@ -270,11 +271,13 @@ class PublicConsultingPost extends CI_Controller {
 										"Sale" => $user["name"],
 										"Ngày Ký" =>  date("d-m-Y", $con["time_check_in"]),
 										"Dự án - Phòng" => "(".$room['code'].") | ".$apm["address_street"] . ", Phường ". $apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"])). "",
-										"Số (*)" => $this->sheet_money_format((1- $con['rate_type']),1),
+										"Số (*)" => $this->sheet_money_format(($con['rate_type']),1),
+										"Giá thuê" => $this->sheet_money_format($con['room_price']),
+										"HH ký gửi" => $con['commission_rate'],
 										"Phí Hỗ Trợ" => $contract_cost > 0 ? $contract_cost : '-',
 										"Doanh Số" => $this->sheet_money_format($total_sale),
-										"D.Thu" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter),
-										"D.Thu Trừ Phí" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter - $contract_cost),
+										"D.Thu Cá Nhân" => $this->sheet_money_format($partial_amount_supporter),
+										"D.Thu Cá Nhân Trừ Phí" => $this->sheet_money_format($partial_amount_supporter - $contract_cost),
 									];
 								}
 							}
@@ -284,12 +287,12 @@ class PublicConsultingPost extends CI_Controller {
 					$list_contract = $this->ghContract->get([
 						'time_check_in >=' => strtotime($timeFrom),
 						'time_check_in <=' => strtotime($timeTo) +86399,
-						'consultant_id' =>$user['account_id'],
+						'consultant_id' =>$account_id,
 						'status' => "Active"
 					]);
 
 					$count_contract+= count($list_contract);
-					$rate_star = $this->ghContract->getTotalRateStar($user['account_id'], $timeFrom, $timeTo);
+					$rate_star = $this->ghContract->getTotalRateStar($account_id, $timeFrom, $timeTo);
 
 					if($count_contract) {
 
@@ -302,33 +305,30 @@ class PublicConsultingPost extends CI_Controller {
 						}
 
 						foreach ($list_contract as $con){
-							$contract_cost += $con['rate_type'] * $con["contract_cost"];
-							$partial_amount_consultant += $con['rate_type'] * $this->ghContractPartial->getTotalByContractId($con['id']);
-							$total_sale += $con['rate_type'] * $this->ghContract->getTotalSaleByContract($con['id']);
-						}
 
-						$final_rate = $income_standard_rate;
-						if($rate_star < 6){
-							$final_rate = 1 - $income_standard_rate;
-							$income = $final_rate * ($partial_amount_consultant + $partial_amount_supporter);
-						}
-						$income = $final_rate * ($partial_amount_consultant + $partial_amount_supporter - $contract_cost);
+							$apm = $this->ghApartment->getFirstById($con['apartment_id']);
+							$room = $this->ghRoom->getFirstById($con['room_id']);
+							$contract_cost = $con['rate_type']* $con["contract_cost"];
+							$partial_amount = $con['rate_type'] * $con_partial_amount;
+							$total_sale = $con['rate_type'] * $this->ghContract->getTotalSaleByContract($con['id']);
 
-						$data[] = [
-							"Source" => "GH",
-							"Team" => $team_name,
-							"Account" => $user["account_id"],
-							"Tên" => $user["name"],
-							"Dự án - Phòng" => "",
-							"Số (*)" => $this->sheet_money_format($rate_star,1),
-							"Hệ số" => (string)($final_rate*100),
-							"Số hợp đồng" => $count_contract,
-							"Doanh số" => $this->sheet_money_format($total_sale),
-							"Doanh thu" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter),
-							"Doanh thu trừ phí" => $this->sheet_money_format($partial_amount_consultant + $partial_amount_supporter - $contract_cost),
-							"Thu Nhập" => $this->sheet_money_format(round($income,2)),
-							"COST" => $contract_cost > 0 ? $contract_cost : '-',
-						];
+							$data[] = [
+								"Source" => "GH",
+								"IDHĐ" => $con['id'],
+								"Team" => $team_name,
+								"Account" => $account_id,
+								"Sale" => $user["name"],
+								"Ngày Ký" =>  date("d-m-Y", $con["time_check_in"]),
+								"Dự án - Phòng" => "(".$room['code'].") | ".$apm["address_street"] . ", Phường ". $apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"])). "",
+								"Số (*)" => $this->sheet_money_format(($con['rate_type']),1),
+								"Giá thuê" => $this->sheet_money_format($con['room_price']),
+								"HH ký gửi" => $con['commission_rate'],
+								"Phí Hỗ Trợ" => $contract_cost > 0 ? $contract_cost : '-',
+								"Doanh Số" => $this->sheet_money_format($total_sale),
+								"D.Thu Cá Nhân" => $this->sheet_money_format($partial_amount),
+								"D.Thu Cá Nhân Trừ Phí" => $this->sheet_money_format($partial_amount - $contract_cost),
+							];
+						}
 					}
 					break;
 
