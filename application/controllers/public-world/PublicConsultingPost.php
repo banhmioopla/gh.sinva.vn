@@ -275,17 +275,16 @@ class PublicConsultingPost extends CI_Controller {
 										"Source" => "GH",
 										"IDHĐ" => $con['id'],
 										"Team" => $team_name,
-										"Account" => $account_id,
-										"Sale" => $user["name"],
-										"Ngày Ký" =>  date("d-m-Y", $con["time_check_in"]),
-										"Dự án - Phòng" => "(".$room['code'].") | ".$apm["address_street"] . ", Phường ". $apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"])). "",
+										"SALE.ID" => $account_id,
+										"SALE.Tên" => $user["name"],
+										"Dự án" => "(".$room['code'].") | ".$apm["address_street"] . ", Phường ". $apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"])),
 										"Số (*)" => $this->sheet_money_format(($con['rate_type']),1),
 										"Giá thuê" => $this->sheet_money_format($con['room_price']),
-										"HH ký gửi" => $con['commission_rate'],
-										"Phí Hỗ Trợ" => $contract_cost > 0 ? $contract_cost : '-',
-										"Doanh Số" => $this->sheet_money_format($total_sale),
-										"D.Thu Cá Nhân" => $this->sheet_money_format($partial_amount_supporter),
-										"D.Thu Cá Nhân Trừ Phí" => $this->sheet_money_format($partial_amount_supporter - $contract_cost),
+										"HH.KGửi" => $con['commission_rate'],
+										"H.Trợ GT" => $this->sheet_money_format($contract_cost),
+										"DS.CNhân" => $this->sheet_money_format($total_sale),
+										"DT.CNhân" => $this->sheet_money_format($partial_amount),
+										"(DT.CNhân - H.Trợ GT)" => $this->sheet_money_format($partial_amount - $contract_cost),
 									];
 								}
 							}
@@ -316,7 +315,9 @@ class PublicConsultingPost extends CI_Controller {
 
 							$apm = $this->ghApartment->getFirstById($con['apartment_id']);
 							$room = $this->ghRoom->getFirstById($con['room_id']);
-							$contract_cost = $con['rate_type']* $con["contract_cost"];
+							$con_partial_amount = $this->ghContractPartial->getTotalByContractId($con['id']);
+
+							$contract_cost = $con["contract_cost"];
 							$partial_amount = $con['rate_type'] * $con_partial_amount;
 							$total_sale = $con['rate_type'] * $this->ghContract->getTotalSaleByContract($con['id']);
 
@@ -324,17 +325,16 @@ class PublicConsultingPost extends CI_Controller {
 								"Source" => "GH",
 								"IDHĐ" => $con['id'],
 								"Team" => $team_name,
-								"Account" => $account_id,
-								"Sale" => $user["name"],
-								"Ngày Ký" =>  date("d-m-Y", $con["time_check_in"]),
-								"Dự án - Phòng" => "(".$room['code'].") | ".$apm["address_street"] . ", Phường ". $apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"])). "",
+								"SALE.ID" => $account_id,
+								"SALE.Tên" => $user["name"],
+								"Dự án" => "(".$room['code'].") | ".$apm["address_street"] . ", Phường ". $apm["address_ward"] .", Quận ". ($this->libDistrict->getNameByCode($apm["district_code"])),
 								"Số (*)" => $this->sheet_money_format(($con['rate_type']),1),
 								"Giá thuê" => $this->sheet_money_format($con['room_price']),
-								"HH ký gửi" => $con['commission_rate'],
-								"Phí Hỗ Trợ" => $contract_cost > 0 ? $contract_cost : '-',
-								"Doanh Số" => $this->sheet_money_format($total_sale),
-								"D.Thu Cá Nhân" => $this->sheet_money_format($partial_amount),
-								"D.Thu Cá Nhân Trừ Phí" => $this->sheet_money_format($partial_amount - $contract_cost),
+								"HH.KGửi" => $con['commission_rate'],
+								"H.Trợ GT" => $this->sheet_money_format($contract_cost),
+								"DS.CNhân" => $this->sheet_money_format($total_sale),
+								"DT.CNhân" => $this->sheet_money_format($partial_amount),
+								"(DT.CNhân - H.Trợ GT)" => $this->sheet_money_format($partial_amount - $contract_cost),
 							];
 						}
 					}
