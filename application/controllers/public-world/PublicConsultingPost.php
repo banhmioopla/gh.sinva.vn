@@ -283,8 +283,8 @@ class PublicConsultingPost extends CI_Controller {
 										"HH.KGửi" => $con['commission_rate'],
 										"H.Trợ GT" => $this->sheet_money_format($contract_cost),
 										"DS.CNhân" => $this->sheet_money_format($total_sale),
-										"DT.CNhân" => $this->sheet_money_format($partial_amount),
-										"(DT.CNhân - H.Trợ GT)" => $this->sheet_money_format($partial_amount - $contract_cost),
+										"DT.CNhân" => $this->sheet_money_format($partial_amount_supporter),
+										"(DT.CNhân - H.Trợ GT)" => $this->sheet_money_format($partial_amount_supporter - $contract_cost),
 									];
 								}
 							}
