@@ -397,8 +397,8 @@ $route['external-api/telegram-bot/index'] = function($params = []) {
     return $controller.$action;
 };
 $route['public/export-gg-sheet'] = function($params = []) {
-    $controller = '/public-world/PublicConsultingPost';
-    $action = '/exportToGoogleSheet';
+    $controller = '/public-world/PublicGoogleSheet';
+    $action = '/getJsonData';
     return $controller.$action;
 };
 
