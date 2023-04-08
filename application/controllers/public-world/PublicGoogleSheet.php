@@ -310,11 +310,12 @@ class PublicGoogleSheet extends CI_Controller
 	}
 
 	private function getDescriptionContract($contract){
-		$des1 = $this->packParentheses($contract['room_price'] . " x " . $contract['commission_rate']);
-		$des2 = $this->packParentheses($des1 . " - " . $contract['contract_cost']);
-		$des3 = $this->packParentheses($contract['rate_type'] . " x " . $des2);
+		$des1 = $this->packParentheses($this->sheet_money_format($contract['room_price']) . " x " . $contract['commission_rate'] . "/ 100");
+		if(!empty($contract['contract_cost'])){
+			$des1 = $this->packParentheses($des1 . " - " . $contract['contract_cost']);
+		}
 
-		return $des3;
+		return $this->packParentheses($contract['rate_type'] . " x " . $des1);
 	}
 
 	private function packParentheses($string){
