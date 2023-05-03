@@ -238,7 +238,7 @@ class PublicGoogleSheet extends CI_Controller
 										"SALE.ID" => $account_id,
 										"SALE.Tên" => $user["name"],
 										"Dự án" => "(".$room['code'].") | ".$this->getFullAddress($apm),
-										"Mô tả" => $this->getDescriptionContract($con),
+										"Mô tả" => $this->getDescriptionContract($con,true),
 										"Còn lại" => $this->sheet_money_format($this->getIncomePreviewBySale($con,true))
 									];
 								}
@@ -309,10 +309,14 @@ class PublicGoogleSheet extends CI_Controller
 
 	}
 
-	private function getDescriptionContract($contract){
+	private function getDescriptionContract($contract, $is_support=false){
 		$des1 = $this->packParentheses($this->sheet_money_format($contract['room_price']) . " x " . $contract['commission_rate'] . "%");
 		if(!empty($contract['contract_cost'])){
 			$des1 = $this->packParentheses($des1 . " - " . $contract['contract_cost']);
+		}
+
+		if($is_support == true){
+			return $this->packParentheses($this->packParentheses("1 - ". $contract['rate_type'] ). " x " . $des1);
 		}
 
 		return $this->packParentheses($contract['rate_type'] . " x " . $des1);
