@@ -22,7 +22,11 @@ class User extends CustomBaseStep {
 	    $account = $this->input->get('account');
 	    $user_profile = $this->ghUser->getFirstByAccountId($account);
 
-	    $list_contract = $this->ghContract->get(["consultant_id" => $account]);
+	    $list_contract = $this->ghContract->get(
+	    	[
+	    		"consultant_id" => $account,
+				'status <>' => 'Cancel'
+			]);
 
 	    foreach ($list_contract as $con) {
             if(!in_array($con["customer_id"],$arr_customer_id)){
