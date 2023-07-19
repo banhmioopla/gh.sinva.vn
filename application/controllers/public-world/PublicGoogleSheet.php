@@ -238,6 +238,7 @@ class PublicGoogleSheet extends CI_Controller
 										"SALE.ID" => $account_id,
 										"SALE.Tên" => $user["name"],
 										"Dự án" => "(".$room['code'].") | ".$this->getFullAddress($apm),
+										"***" => (1- $con['rate_type']),
 										"Mô tả" => $this->getDescriptionContract($con,true),
 										"Còn lại" => $this->sheet_money_format($this->getIncomePreviewBySale($con,true))
 									];
@@ -283,6 +284,7 @@ class PublicGoogleSheet extends CI_Controller
 								"SALE.ID" => $account_id,
 								"SALE.Tên" => $user["name"],
 								"Dự án" => "(".$room['code'].") | ".$this->getFullAddress($apm),
+								"***" => $con['rate_type'],
 								"Mô tả" => $this->getDescriptionContract($con),
 								"Còn lại" => $this->sheet_money_format($this->getIncomePreviewBySale($con))
 							];

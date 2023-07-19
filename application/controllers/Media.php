@@ -386,7 +386,7 @@ class Media extends CustomBaseStep {
             // File upload configuration
             $uploadPath = 'media/apartment/';
             $config['upload_path'] = $uploadPath;
-            $config['allowed_types'] = 'jpg|jpeg|png|gif|mp4|mov';
+            $config['allowed_types'] = '*';
             $time = time();
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
